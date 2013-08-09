@@ -54,9 +54,9 @@ target_triplet = @target@
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure \
-	$(top_srcdir)/perl/Makefile.PL.in AUTHORS COPYING ChangeLog \
-	INSTALL TODO compile config.guess config.sub depcomp \
-	install-sh ltconfig ltmain.sh missing mkinstalldirs
+	$(top_srcdir)/perl/Makefile.PL.in AUTHORS ChangeLog INSTALL \
+	TODO compile config.guess config.sub depcomp install-sh \
+	ltconfig ltmain.sh missing mkinstalldirs
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
 	$(top_srcdir)/build/m4/docbook.m4 \
@@ -334,7 +334,7 @@ top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I build/m4
 AUTOMAKE_OPTIONS = foreign no-installinfo dist-bzip2 no-dist-gzip
 SUBDIRS = build include src doc etc create misc scripts test #php @BINDINGS@
-EXTRA_DIST = install.pl bootstrap acinclude.m4 README.XML BUGS \
+EXTRA_DIST = install.pl bootstrap acinclude.m4 README.XML README.md BUGS LICENSE \
 	perl/Makefile.PL.in perl/BUGS perl/README perl/INSTALL perl/test.pl perl/Dataparksearch.pm perl/Dataparksearch.xs \
 	perl/cat_ed/*.pl perl/cat_ed/*.gif perl/examples/* charset-Makefile.am charset-configure.in \
 	dp-Makefile.am dp-configure.in
@@ -349,10 +349,10 @@ src/uconv-gb2312.c src/uconv-gbk.c src/uconv-sjis.c src/uconv-sys.c src/uconv-ut
 src/uconv-tscii.c src/charset-utils.c src/xmalloc.c src/sgml.entities src/sgml.inc src/uconv-8bit.inc src/unidata.ch \
 include/dps_config.h.in include/dps_uniconv.h include/dps_sgml.h include/dps_unicode.h \
 include/dps_unidata.h src/uconv-8bit.h include/dps_charsetutils.h include/dps_filence.h include/dps_xmalloc.h \
-COPYING
+LICENSE
 
 charsetdistdir = libdpcharset-$(VERSION)
-DPDISTFILES = src/dp.c src/dps_memcpy.inc include/dps_config.h.in COPYING
+DPDISTFILES = src/dp.c src/dps_memcpy.inc include/dps_config.h.in LICENSE
 dpdistdir = libdp-$(VERSION)
 
 # Create a deb package

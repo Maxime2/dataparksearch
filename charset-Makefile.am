@@ -19,7 +19,7 @@ uninstall-local:
 	-rmdir $(DESTDIR)$(includedir)
 	-rmdir $(DESTDIR)$(prefix)
 
-EXTRA_DIST = src/uconv-8bit.h src/sgml.entities src/uconv-8bit.inc src/sgml.inc bootstrap src/unidata.ch
+EXTRA_DIST = LICENSE src/uconv-8bit.h src/sgml.entities src/uconv-8bit.inc src/sgml.inc bootstrap src/unidata.ch
 
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck

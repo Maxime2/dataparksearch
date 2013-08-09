@@ -25,7 +25,7 @@ bin-dist:
 	mv $(CDIR)/$(PACKAGE)-$(VERSION)$(prefix)/*.tar.bz2 $(CDIR)
 	rm -r $(CDIR)/$(PACKAGE)-$(VERSION)
 
-EXTRA_DIST = bootstrap
+EXTRA_DIST = LICENSE bootstrap
 
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
