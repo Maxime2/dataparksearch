@@ -1,0 +1,124 @@
+<sect1 id="cjk">
+	<title>Сегментеры фраз японского, тайского, корейского и китайского языков
+</title>
+
+<para>Традиционное японское, корейское, тайское или китайское письмо не предусматривает размещение между словами фразы
+символов-разделителей, аналогичных пробелу, используемому, например, в европейских языках.
+Поэтому при индексировании текстов на этих языках необходимо дополнительно производить разбиение
+фраз на отдельные слова.
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>ResegmentChinese</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>ResegmentJapanese</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>ResegmentKorean</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>ResegmentThai</secondary></indexterm>
+Иногда для красоты, текст на китайском, японском, корейском или тайском языке набирается с пробелом между каждым иероглифом.
+В этом случае для индексирования таких текстов, вы можете использовать команды <command>"ResegmentChinese yes"</command>, 
+<command>"ResegmentJapanese yes"</command>, <command>"ResegmentKorean yes"</command> or <command>"ResegmentThai yes"</command>.
+При включенном ресегментировании все пробелы между символами в тексте убираются, а затем весь текст целиком обрабатывается
+сегментерами DataparkSearch (см. ниже).
+</para>
+
+<sect2 id="ja-segment">
+<title>Сегментер фраз японского языка
+<indexterm><primary>Сегментер фраз</primary><secondary>японского языка</secondary></indexterm>
+</title>
+
+<para>Для разбиения на слова фраз японского языка используется система морфологического анализа японского
+языка <application><ulink url="http://chasen.aist-nara.ac.jp/">ChaSen</ulink></application> или
+морфологический анализатор японского языка <application><ulink url="http://cl.aist-nara.ac.jp/~taku-ku/software/mecab">
+MeCab</ulink></application>.
+Поэтому её необходимо установить одну из этих систем до начала сборки и установки <application>DataparkSearch</application>.
+</para>
+
+<para>Для включения поддержки разбиения фраз японского языка, вам необходимо указать для <command>configure</command>
+ключ <option>--enable-chasen</option> или <option>--enable-mecab</option>.
+</para>
+
+</sect2>
+
+<sect2 id="zh-segment">
+<title>Сегментер фраз китайского языка
+<indexterm><primary>Сегментер фраз</primary><secondary>китайского языка</secondary></indexterm>
+</title>
+
+<para>Для разбиения на слова фраз китайского языка используется частотный словарь китайского языка,
+а разбиение производится методом динамического программирования чтобы суммарная частота использования всех получаемых слов
+после разбиения была максимальной.
+</para>
+<para>
+Для включения поддержки сегментера фраз на китайском языке, необходимо при сборке <application>DataparkSearch</application>
+включить поддержку кодировки <literal>GB2312</literal>, если будет использоваться словарь упрощенного
+китайского <filename>mandarin.freq</filename>, или кодировки <literal>Big5</literal>, если будет использоваться
+словарь традиционного китайского <filename>TraditionalChinese.freq</filename>, 
+а также указать в <filename>indexer.conf</filename> при помощи команды
+<indexterm><primary>Команда</primary><secondary>LoadChineseList</secondary></indexterm>
+<command>LoadChineseList</command> частотный словарь слов китайского языка для загрузки.
+<programlisting>
+LoadChineseList [charset dictionaryfilename]
+</programlisting>
+</para>
+<para>По умолчанию используется кодировка <literal>GB2312</literal> и словарь <filename>mandarin.freq</filename>.
+Вы можете использовать свой собственный словарь в своей кодировке. Нужно только включить поддержку этой кодировки и
+указать кодировку и словаь в качестве параметров команды <command>LoadChineseList</command>
+</para>
+<note><para>Вам необходимо скачать частнотные словари с нашего сайта или с одного из зеркал,
+см. <xref linkend="get"/>.</para></note>
+
+</sect2>
+
+
+<sect2 id="th-segment">
+<title>Сегментер фраз тайского языка
+<indexterm><primary>Сегментер фраз</primary><secondary>тайского языка</secondary></indexterm>
+</title>
+
+<para>Для разбиения на слова фраз тайского языка используется тот же метод, что и для китайского языка,
+оличие заключается в использовании частотного словаря тайского языка.
+</para>
+<para>
+Для включения поддержки сегментера фраз на тайском языке, необходимо указать в <filename>indexer.conf</filename>
+при помощи команды <indexterm><primary>Команда</primary><secondary>LoadThaiList</secondary></indexterm>
+<command>LoadThaiList</command> частотный словарь слов тайского языка для загрузки.
+<programlisting>
+LoadThaiList [charset dictionaryfilename]
+</programlisting>
+</para>
+<para>
+По умолчанию используется кодировка <literal>tis-620</literal> и словарь <filename>thai.freq</filename>.
+Вы можете использовать свой собственный словарь в своей кодировке. Нужно только включить поддержку этой кодировки и
+указать кодировку и словаь в качестве параметров команды <command>LoadThaiList</command>
+</para>
+<note><para>Вам необходимо скачать частнотные словари с нашего сайта или с одного из зеркал,
+см. <xref linkend="get"/>.</para></note>
+
+</sect2>
+
+
+<sect2 id="ko-segment">
+<title>Сегментер фраз корейского языка
+<indexterm><primary>Сегментер фраз</primary><secondary>корейского языка</secondary></indexterm>
+</title>
+
+<para>Для разбиения на слова фраз корейского языка используется тот же метод, что и для китайского языка,
+оличие заключается в использовании частотного словаря корейского языка.
+</para>
+<para>
+Для включения поддержки сегментера фраз на корейском языке, необходимо указать в <filename>indexer.conf</filename>
+при помощи команды <indexterm><primary>Команда</primary><secondary>LoadKoreanList</secondary></indexterm>
+<command>LoadKoreanList</command> частотный словарь слов корейского языка для загрузки.
+<programlisting>
+LoadKoreanList [charset dictionaryfilename]
+</programlisting>
+</para>
+<para>
+По умолчанию используется кодировка <literal>euc-kr</literal> и словарь <filename>korean.freq</filename>.
+Вы можете использовать свой собственный словарь в своей кодировке. Нужно только включить поддержку этой кодировки и
+указать кодировку и словаь в качестве параметров команды <command>LoadKoreanList</command>
+</para>
+<note><para>Вам необходимо скачать частнотные словари с нашего сайта или с одного из зеркал,
+см. <xref linkend="get"/>.</para></note>
+
+</sect2>
+
+</sect1>

@@ -1,0 +1,205 @@
+<sect1 id="general">
+	<title>Общая информация об индексировании</title>
+	<sect2 id="general-conf">
+		<title>Конфигурирование</title>
+		<para>Сначала необходимо сконфигурировать <application>DataparkSearch</application>.
+Конфигурирование <command>indexer</command> полностью описано в файле
+<filename>indexer.conf-dist</filename>.
+Вы найдете его в директории <literal>etc</literal> исходников <application>DataparkSearch</application>.
+Вы также можете посмотреть примеры в директории <literal>doc/samples</literal>. </para>
+
+		<para>Для установки файла <filename>indexer.conf</filename>
+перейдите в директорию <application>DataparkSearch</application> <literal>/etc</literal>, скопируйте
+<filename>indexer.conf-dist</filename> в <filename>indexer.conf</filename> и отредактируйте последний.</para>
+
+		<para>Для конфигурирования CGI-программы поиска (<filename>search.cgi</filename> и/или <filename>search.php3</filename>,
+или другой), Вы должны в директории <application>DataparkSearch</application> <literal>/etc</literal> скопировать
+файл <filename>search.htm-dist</filename> в <filename>search.htm</filename> и отредактировать последний.
+См. <xref linkend="templates"/> для подробного описания.</para>
+	</sect2>
+
+	<sect2 id="general-run">
+		<title>Запуск <command>indexer</command></title>
+		<para>Просто запускайте <command>indexer</command> раз в неделю (в день, в час, ...)
+для обновления информации о Ваших серверах и страницах. Вы можете также вставить запуск <command>indexer</command>
+в Ваш файл заданий <literal>crontab</literal>.</para>
+
+<indexterm><primary>Команда</primary><secondary>Period</secondary></indexterm>
+		<para>По умолчанию, <command>indexer</command>, вызванный без всяких параметров командной строки, 
+переиндекирует, только устаревшие документы. Вы можете задать период "старения" при помощи команды <command>Period</command>
+в <filename>indexer.conf</filename>. Если Вам необходимо переиндекировать все документы, независимо от того, устарели
+они или нет, используйте ключ <option>-a</option>. <command>indexer</command> при запуске пометит все документы как
+устаревшие. </para>
+
+		<para>Запрашивая документы, <command>indexer</command> посылает HTTP заголовок
+<literal>If-Modified-Since</literal> для документов уже находящихся в базе.
+Когда <command>indexer</command> получает очередной документ, он вычисляет контрольную сумму документа,
+если она совпадает со старой контрольной суммой, хранящейся в базе данных, докумен заново не разбирается (считается неизменённым)
+Ключ  <command>indexer</command>а <option>-m</option> заставляет разбирать заново каждый документ, независимо от того, измён он или нет.
+Это может быть полезным, например, когда меняются правила <command>Allow/Disallow</command> в
+<filename>indexer.conf </filename> и необходимо добавить новые страницы, которые раньше были запрещены
+к обработке.</para>
+
+		<para>Если на запрос документа <application>DataparkSearch</application> получает HTTP-статусы переадресации
+301,302,303, он попытается проиндексировать URL, указанный в заголовке
+<literal>Location:</literal> ответа сервера.</para>
+
+	</sect2>
+
+	<sect2 id="general-create-tables">
+		<title>Создание SQL-таблиц
+<indexterm><primary>Создание SQL-таблиц</primary></indexterm>
+</title>
+		<para>Для создание SQL-таблиц, необходимых
+для работы <application>DataparkSearch</application>, 
+используйте <literal>indexer -Ecreate</literal>. При запуске с таким
+аргументом, indexer ищет файл, содержащий SQL-выражения, необходимые
+для создания всех таблиц, учитывая тип базы данных и режим
+хранения, указанные в команде <command>DBAddr</command> в <filename>indexer.conf</filename>. 
+Поиск файлов производится в каталоге <filename>/share</filename> инсталляции
+<application>DataparkSearch</application>, т.е. обычно в
+<filename>/usr/local/dpsearch/share/</filename>. </para>
+	</sect2>
+
+	<sect2 id="general-drop-tables">
+		<title>Удаление SQL-таблиц
+<indexterm><primary>Удаление SQL-таблиц</primary></indexterm>
+</title>
+		<para>Для удаления SQL-таблиц, созданных
+<application>DataparkSearch</application>,  используйте 
+<literal>indexer -Edrop</literal>.  Поиск файл с запросами для удаления
+таблиц производится в каталоге <filename>/share</filename> инсталляции 
+<application>DataparkSearch</application>. </para>
+	</sect2>
+
+	<sect2 id="general-subsect">
+		<title>Управление подсекциями</title>
+		<para><command>indexer</command> имеет ключи <option>-t, -g, -u, -s, -y</option>
+для ограничения работы только с чатью базы ссылок.
+<option>-t</option> соответсвует ограничению по тэгу,
+<option>-g</option> соответсвует ограничению по категории,
+<option>-u</option> - ограничение по части URL (поддерживаются шаблоны SQL LIKE с символами % и _),
+<option>-s</option> - ограничение по HTTP статусу документа,
+<option>-y</option> - ограничения по Content-Type. 
+Все ограничения для одного и того же ключа объединяются опрератором ИЛИ, а группы разных ключей - оператором И.
+</para>
+	</sect2>
+
+	<sect2 id="general-cleardb">
+		<title>Как очистить базу данных
+<indexterm><primary>Очистка базы данных</primary></indexterm>
+</title>
+		<para>Чтобы очистить всю базу данных, используйте команду <command>indexer
+-C</command>. Вы можете также удалить тольеко часть базы, используя ключи указания подсекций
+<option> -t,-g,-u,-s,-y</option>.</para>
+
+	</sect2>
+	<sect2 id="general-dbstat">
+		<title>Статистика базы данных
+<indexterm><primary>Статистика базы данных</primary></indexterm>
+</title>
+		<para>Если Вы запустите <command>indexer -S</command>, Вы получите статистику базы данных
+включающую общее число документов, и число устаревших документов для каждого статуса.
+Ключи указания подсекций также действуют для этой команды.</para>
+
+		<para>Значения кода статуса:</para>
+		<itemizedlist>
+			<listitem>
+				<para>0 - новый (еще ни разу не индексированный) документ</para>
+			</listitem>
+		</itemizedlist>
+		<para>Если статус не 0, он равен коду HTTP ответа, некоторые коды ответов HTTP:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<literal>200</literal> - "OK" (url успешно проиндексирован)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>301</literal> - "Moved Permanently" (переадресован на другой URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>302</literal> - "Moved Temporarily" (переадресован на другой URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>303</literal> - "See Other" (переадресован на другой URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>304</literal> - "Not modified" (url не модифицирован со времени предыдущего индексирования)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>401</literal> - "Authorization required" (нужен login/password для этого документа)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>403</literal> - "Forbidden" (нет доступа к этому документу)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>404</literal> - "Not found" (указаный документ не существует)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>500</literal> - "Internal Server Error" (ошибка в cgi, и т.д.)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>503</literal> - "Service Unavailable" (Хост недоступен, таймайт соединения)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>504</literal> - "Gateway Timeout" (таймаут при получении документа)</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+<indexterm><primary>Команда</primary><secondary>AuthBasic</secondary></indexterm>
+			Код ответа <literal>HTTP 401</literal> обозначает, что документ защищён паролем.
+Вы можете использовать команду <command>AuthBasic</command>
+в <filename>indexer.conf</filename> для указания <literal>login:password</literal> для URL.</para>
+
+		<para>
+			Код ответа <literal>HTTP 404</literal> означает, что на одной из Ваших страниц
+есть ссылка на несуществующий документ, или есть ошибка в указании URL..</para>
+
+		<para>Смотрите <ulink url="http://www.w3.org/Protocols/">документацию по HTTP</ulink> для
+подробного объяснения различных кодов ответа HTTP.</para>
+
+	</sect2>
+	<sect2 id="general-linkval">
+		<title>Проверка ссылок
+<indexterm><primary>Проверка ссылок</primary></indexterm>
+</title>
+		<para>Будучи запущенным с ключом <option>-I</option>,
+<command>indexer</command> показывает пары URL и страница, ссылающаяся на него.
+Это полезно для поиска битых ссылок на Ваших страницах.
+Вы также можете использовать ключи ограничений подсекций для этого режима. 
+Например, <literal>indexer -I -s 404</literal> покажет адреса всех ненайденных ('Not found') документов 
+вместе с адресами страницами, содержащими ссылки на эти документы.
+Таким образом Вы можете использовать <application>DataparkSearch</application> для проверки ссылок на Вашем сайте.</para>
+
+	</sect2>
+	<sect2 id="general-parallel">
+		<title>Параллельное индекирование
+<indexterm><primary>Параллельное индексирование</primary></indexterm>
+</title>
+		<para>Возможно запускать одновременно несколько <command>indexer</command> с одним и тем же файлом конфигурации
+<filename>indexer.conf</filename>. Мы успешно опробовали 30 одновременно работающих <command>indexer</command>
+использующих базу данных <application>MySQL</application>. По умолчанию, <command>indexer</command> помечает документы, 
+выбранные к индексированию, как устаревающие через 4 часа в будущем для избежания двойного
+индексирования одних и тех же документов разными одновременно работающими <command>indexer</command>.
+Однако это не дает 100% гарантии избежания повторного индексирования.
+Вы можете использовать многопоточную версию <command>indexer</command> c любым SQL сервером, поддерживающим
+параллельные соединения с базой. Многопоточная версия использует свой собственный механизм блокировки.</para>
+
+		<para>Не рекомендуется использовать одну и ту же базу с различными файлами конфигурации <filename>indexer.conf</filename>!
+Один процесс может добавлять некоторые документы в базу, в то время как другой - удалять эти же документы,
+и оба могут работать без остановки.</para>
+
+		<para>С другой стороны, Вы можете запускать несколько <command>indexer</command>
+c различными файлами конфигурации и различными базами для любого поддерживаемого SQL сервера.</para>
+	</sect2>
+</sect1>

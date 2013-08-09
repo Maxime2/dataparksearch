@@ -1,0 +1,462 @@
+<chapter id="install">
+	<title>Installation</title>
+<indexterm><primary>Installation</primary><secondary>requirements</secondary></indexterm>
+
+	<sect1 id="sqlreq">
+                <title>SQL database requirements</title>
+		<para>Note that if you want to compile <application>DataparkSearch</application>
+with one of supported SQL database you must have this database already
+installed before installing <application>DataparkSearch</application>.</para>
+
+		<para>It is possible to use <application>DataparkSearch</application> with several SQL databases.</para>
+		<para>You also should have enough permission to create new database or to write into already existing one.</para>
+		<para>
+			<emphasis>MySQL notes</emphasis>: If you
+want to build <application>DataparkSearch</application> with <application>MySQL</application>, 4.1 or later release
+required. 
+<application>libz</application> library must be installed from <command>zlib-devel</command> RPM to successfully compile
+<application>DataparkSearch</application> with <application>MySQL</application>.</para>
+
+		<para>
+			<emphasis>PostgreSQL notes</emphasis>: If you
+want to build <application>DataparkSearch</application> with <application>PostgreSQL</application>, 8.2 or later release
+required. The latest <application>PostgreSQL</application> version is recommended for the fresh install.</para>
+
+		<para>
+			<emphasis>iODBC notes</emphasis>: iodbc-2.50.22a is known to work.</para>
+		<para>
+			<emphasis>unixODBC notes</emphasis>: unixODBC-1.7 is known to work.</para>
+		<!--para>
+			<emphasis>Solid notes</emphasis>: 03.00.0043 version is known to work.</para-->
+		<para>
+			<emphasis>InterBase notes</emphasis>:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Interbase 4.0 is known to work.</para>
+			</listitem>
+			<listitem>
+				<para>InterBase CS 6.0 is known to work.</para>
+			</listitem>
+			<listitem>
+				<para>FirebirdCS-0.9-4 is known to work.</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			<emphasis>FreeTDS notes</emphasis>: 0.52 version is known to work with MS SQL 7.0.</para>
+		<para>
+			<emphasis>Oracle8 notes</emphasis>: 8.0.5.X is known to work.</para>
+		<para>
+			<emphasis>Oracle8i notes</emphasis>: 8.1.6 R2 EE is known to work.</para>
+		<!--para>
+			<emphasis>IBM DB2 notes</emphasis>: V7.1 EE is known to work.</para-->
+	</sect1>
+	<sect1 id="opsys">
+		<title>Supported operating systems</title>
+		<para>We use <application>GNU Autoconf</application>
+so it is possible to compile and use
+<application>DataparkSearch</application> on almost every modern UNIX
+system with a C compiler without any modifications. We develop the
+software on <application>FreeBSD 7.x</application> using <application>PostgreSQL 8.3</application>. </para>
+
+<para>Currently known systems where <application>DataparkSearch</application> has been successfully compiled and tested on 
+are:</para>
+		<itemizedlist>
+			<listitem>
+				<para>CentOS 3.1, CentOS 3.3</para>
+			</listitem>
+			<listitem>
+				<para>Debian GNU/Linux (Lenny, Etch) (i386)</para>
+			</listitem>
+			<listitem>
+				<para>FreeBSD 2.2.5, 3.x, 4.x, 5.x, 6.x, 7.x</para>
+			</listitem>
+			<listitem>
+				<para>Linux Fedora Core-1, Kernel 2.4.22-1.2174</para>
+			</listitem>
+			<listitem>
+				<para>Linux Mandrake 10.2</para>
+			</listitem>
+			<listitem>
+				<para>Linux Red Hat 8.0, 9.0</para>
+			</listitem>
+			<listitem>
+				<para>Solaris 9</para>
+			</listitem>
+			<listitem>
+				<para>Solaris 10 x86, gcc</para>
+			</listitem>
+			<listitem>
+				<para>Ubuntu Linux 6.10, 7.x, 8.x, 9.04 (i386 and amd)</para>
+			</listitem>
+			<listitem>
+				<para>Gentoo Linux 2007.0 amd64</para>
+			</listitem>
+			<listitem>
+				<para>SUSE Linux</para>
+			</listitem>
+			<listitem>
+				<para>OpenBSD 4.5 (i386)</para>
+			</listitem>
+		</itemizedlist>
+
+		<para>We hope <application>DataparkSearch</application> will work on other Unix
+platforms as well. Please report successful platforms 
+to <ulink url="mailto:maxime@maxime.net.ru">maxime@maxime.net.ru</ulink>.</para>
+
+<para><emphasis>NFS notes</emphasis>: There are some problems reported running <application>DataparkSearch</application> over 
+<application>NFS v4</application> on <application>Linux 2.6.17</application>. 
+Although, everything is OK on this system when <application>NFS v3</application> is used.
+</para>
+
+
+	</sect1>
+	<sect1 id="toolsreq">
+		<title>Tools required for installation</title>
+		<para>You need the following tools to build and install <application>DataparkSearch</application> from source:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+<ulink url="http://www.bzip.org/">Bzip2</ulink> to uncompress the distribution.</para>
+
+			</listitem>
+			<listitem>
+				<para>A reasonable tar to unpack the
+distribution. <ulink
+		     url="http://www.gnu.org/software/tar/tar.html">GNU tar</ulink> is known to work.</para>
+
+			</listitem>
+			<listitem>
+				<para>A working ANSI C compiler. <ulink url="http://gcc.gnu.org/">GNU gcc</ulink> is known to work.</para>
+			</listitem>
+			<listitem>
+<para>A good make program. <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink> 
+is recommended and sometimes required.</para>
+
+			</listitem>
+<listitem>
+<para>A <literal>sed</literal> - stream editor.</para>
+</listitem>
+<listitem>
+<para>A <literal>perl</literal> interpreter, if <command>install.pl</command> will be used for installation.</para>
+</listitem>
+<listitem>
+<para>To build documentation from XML sources, you need <filename>jade</filename> or <filename>openjade</filename>
+installed.</para> 
+<para>You need also <filename>jadetex</filename> installed to build documentation in <application>PDF</application>.
+Use <userinput>make book.pdf</userinput> command in <filename>doc/</filename> subdirectory to make that documentation.
+</para>
+</listitem>
+		</itemizedlist>
+	</sect1>
+	<sect1 id="installing">
+		<title>Installing <application>DataparkSearch</application></title>
+<indexterm><primary>Installation</primary><secondary>steps</secondary></indexterm>
+
+		<orderedlist>
+			<listitem>
+				<para>Unpack the distribution and
+change directory into the top-level directory of the unpacked
+distribution.</para>
+
+				<para>
+					<userinput>tar -xyf dpsearch-x.x.tar.bz2</userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>To simplify configuration
+process we included a configuration script with the package -
+<filename>install.pl</filename>. Run <filename>install.pl</filename>
+and select <application>DataparkSearch</application> configuration options in a question-and-answer
+manner. After you specify all the configuration options, the script
+will run <literal>./configure</literal> with the options you chose. It
+will also create install.options file containing your configuration
+preferences that you can use to run the script later bypassing
+questions. After configuration is finished, build and install the
+package as described in section 3.</para>
+
+				<para>In case you would like to
+configure <application>DataparkSearch</application> manually without using the configuration script,
+do the following:</para>
+
+				<para>If you would like to configure the package with SQL database support:</para>
+				<para>
+					<userinput>sh$ ./configure --with-mysql</userinput>
+				</para>
+				<para>or</para>
+				<para>
+					<userinput>sh$ ./configure --with-pgsql</userinput>
+				</para>
+				<para>or with another depending on what database you prefer,</para>
+				<para>or with multiple databases:</para>
+				<para>
+					<userinput>sh$ ./configure --with-mysql --with-pgsql --with-msql --with-freetds</userinput>
+				</para>
+				<para>By default, <application>DataparkSearch</application> is
+installed in <literal>/usr/local/dpsearch</literal> in the following
+subdirectories:</para>
+
+				<informaltable>
+					<tgroup cols="2">
+						<tbody>
+							<row>
+								<entry>Directory</entry>
+								<entry>Contents</entry>
+							</row>
+							<row>
+								<entry>bin</entry>
+								<entry>
+									<filename>search.cgi</filename>, <filename>storedoc.cgi</filename>, <filename>dps-config</filename>
+								</entry>
+							</row>
+							<row>
+								<entry>lib</entry>
+								<entry>
+									<filename>libdpsearch.a(so)</filename>,
+									<filename>libdpcharset.a(so)</filename>
+								</entry>
+							</row>
+							<row>
+								<entry>sbin</entry>
+								<entry>
+									<filename>indexer</filename>, <filename>cached</filename>,
+<filename>run-splitter</filename>,
+<filename>searchd</filename>, <filename>splitter</filename>, <filename>stored</filename>
+								</entry>
+							</row>
+							<row>
+								<entry>etc</entry>
+								<entry>
+									<filename>indexer.conf-dist, search.htm-dist</filename>,
+<filename>langmap.conf-dist</filename>,
+<filename>searchd.conf-dist</filename>,
+<filename>stopwords.conf-dist</filename>,
+<filename>stored.conf-dist</filename>, <filename>storedoc.htm-dist</filename>
+								</entry>
+							</row>
+							<!--row>
+								<entry>man</entry>
+								<entry>
+									<filename>indexer.1, indexer.conf.5</filename>
+								</entry>
+							</row-->
+							<row>
+								<entry>share</entry>
+								<entry>various documentation and sql scripts</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+				<para>If you have no permission to
+write to that directory or just want to install <application>DataparkSearch</application> to another
+location, please use configure with <option>--prefix</option> option,
+e.g.</para>
+
+				<para>
+					<userinput>./configure --prefix=/user/home/data --with-mysql</userinput>
+				</para>
+				<para>To install <application>DataparkSearch</application> with HTTPS support
+use configure with the following option:</para>
+				<para>
+					<userinput>./configure --with-openssl</userinput>
+				</para>
+				<para>or in case the OpenSSL library is installed in a non-standard location:</para>
+				<para>
+					<userinput>./configure --with-openssl=/path/to/library</userinput>
+				</para>
+				<note>
+					<para>Please note that OpenSSL
+library installed on your system is required for HTTPS support.</para>
+
+				</note>
+				<para>You can see all available options with <literal>./configure --help</literal>
+				</para>
+				<para>If you want to provide some
+specific flags to C compiler (for example, <literal>'-O7
+-mpentium'</literal> to build highly optimized binary for
+<trademark>Pentium</trademark> processor if you use egcs/pgcc), you
+can do so using command</para>
+
+				<para>
+					<userinput>sh$  CFLAGS="-O7 -mpentium"</userinput>
+				</para>
+				<para>
+					<emphasis>before</emphasis> running configure.</para>
+				<para>To compile <application>DataparkSearch</application> on FreeBSD with Solid in old aout format use</para>
+				<para>
+					<userinput>sh$ CFLAGS="-aout"</userinput>
+				</para>
+				<para>
+					<emphasis>before</emphasis> running configure.</para>
+				<para>To compile <application>DataparkSearch</application> on FreeBSD with aout InterBase use</para>
+				<para>
+					<userinput>sh$ CFLAGS="-aout -static"</userinput>
+				</para>
+				<para>
+					<emphasis>before</emphasis> running configure.</para>
+				<para>You may also specify
+<option>--enable-freebsd-pthreads</option> or
+<option>--enable-linux-pthreads</option> to compile multi-threaded
+indexer on FreeBSD and Linux machines.</para>
+
+				<para id="dmalloc-dbg">
+<indexterm><primary>DMALLOC</primary></indexterm>
+To enable <ulink url="http://sourceforge.net/projects/dmalloc/">DMALLOC memory debugger</ulink> support use <option>--enable-dmalloc</option>. </para>
+
+				<para>The euc-kr, big5, gb2312, tscii, gujarati and shift-jis character sets are not supported by default.
+To built <application>DataparkSearch</application> with these charsets support use
+configure with <option>--with-extra-charsets</option> command line
+argument.</para>
+
+				<para>To build <application>DataparkSearch</application> with all additional charsets support use:</para>
+				<para>
+					<userinput>./configure --with-extra-charsets=all</userinput>
+				</para>
+				<para>To build <application>DataparkSearch</application> with only one specified charset support use:</para>
+				<para>
+					<userinput>./configure --with-extra-charsets=tscii</userinput>
+				</para>
+<para>To build <application>DataparkSearch</application> with support for Chinese or Japanese charsets, use:</para>
+				<para>
+					<userinput>./configure --with-extra-charsets=japanese</userinput>
+or
+					<userinput>./configure --with-extra-charsets=chinese</userinput>
+				</para>
+				<para>To build <application>DataparkSearch</application> with support for several specified charsets, 
+use a comma separated list of charsets you want:</para>
+
+				<para>
+					<userinput>./configure --with-extra-charset=japanese,tscii</userinput>
+				</para>
+				<para>If you run into problems with configure, please see <xref linkend="installproblem"/>.</para>
+			</listitem>
+			<listitem>
+				<para>Build and install the package.</para>
+				<para>
+					<userinput>sh$ make</userinput>
+				</para>
+				<para>
+					<userinput>sh$ make install</userinput>
+				</para>
+				<para>If you run into problems with configure, please see <xref linkend="installproblem"/>.</para>
+			</listitem>
+			<listitem>
+				<para>Create database <literal>search</literal> (for SQL database only).</para>
+				<para>You can use existing database, skip this step in this case.</para>
+				<para>MySQL:</para>
+				<para>
+					<userinput>sh$ mysqladmin create search</userinput>
+				</para>
+				<para>PostgreSQL:</para>
+				<para>
+					<userinput>sh$ createdb search</userinput>
+				</para>
+				<para>See database specific information if you use another database.</para>
+			</listitem>
+<listitem><para>Create configuration files.</para>
+<para>Copy <filename>indexer.conf-dist</filename> to <filename>indexer.conf</filename> and <filename>search.htm-dist</filename> to <filename>search.htm</filename> in the configuration directory 
+(by default this directory is <filename>/usr/local/dpsearch/etc/</filename>). Then edit <filename>indexer.conf</filename> and <filename>search.htm</filename> according your needs.
+Basically your only have to edit <command>DBAddr</command> command in both of these files specifying a connection to SQL-server and desired dbmode.</para>
+</listitem>
+
+			<listitem>
+				<para>Create sql-tables</para>
+<para>Run the command:
+</para>
+<para>
+<userinput>sh$ indexer -Ecreate</userinput>
+</para>
+<para>
+<command>indexer</command> creates all tables automatically according to the dbmode selected in your <filename>indexer.conf</filename> file.
+</para>
+
+			</listitem>
+			<listitem>
+				<para>Install search scripts</para>
+				<para>Copy
+<filename>search.cgi</filename> to your web-server
+<literal>cgi-bin</literal> directory or make Apache alias to
+<application>DataparkSearch</application> bin directory. </para>
+
+			</listitem>
+		</orderedlist>
+	</sect1>
+
+	<sect1 id='installproblem'>
+		<title>Possible installation problems</title>
+<indexterm><primary>Installation</primary><secondary>problems</secondary></indexterm>
+
+		<itemizedlist>
+			<listitem>
+				<para>Every time you run
+<literal>configure</literal>, you must run <literal>make</literal>
+again to recompile.</para>
+
+				<para>To prevent old configuration
+information or object files from being used, run these commands before
+re-running <literal>configure</literal>:
+
+</para>
+				<para>
+					<userinput>sh$ rm config.cache</userinput>
+				</para>
+				<para>
+					<userinput>sh$ make clean</userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>If your compile fails with make
+errors, this can be because you are using the wrong version of
+make. The behavior of Solaris, FreeBSD, OpenBSD make is slightly
+different from <ulink
+		      url="http://www.gnu.org/software/make/make.html">GNU make</ulink>. If you have make-related problems, you should use <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink> instead, often installed as gmake.
+</para>
+				<para>GNU <filename>make</filename> version 3.77 is known to work.</para>
+			</listitem>
+<listitem>
+<para>If starting <application>Apache</application> with <application>mod_dpsearch</application> module, 
+you're getting the following error:
+<userinput>Undefined symbol "pthread_join"</userinput> (or something similar related to pthreads), 
+try to add the following commmand into <filename>httpd.conf</filename> file before loading <filename>mod_dpsearch.so</filename>:
+</para>
+<para><userinput>LoadFile /usr/lib/libpthread.so</userinput></para>
+</listitem>
+		</itemizedlist>
+
+<para>If above information doesn't help you, please feel free to contact DataparkSearch mailing list
+<email>dataparksearch@yahoogroups.com</email>.
+</para>
+
+	</sect1>
+
+	<sect1 id="binarydistrib">
+		<title>Creating binary distribution</title>
+		<para>You can create a binary distribution (tar.bz2 archive, Debian or RPM package) for your platform. 
+To create a binary do please the command <command>make bin-dist</command> for tar.bz2 archive; <command>make pkg-deb</command> for Debian package; 
+<command>make pkg-rpm</command> for RPM package.
+Please note, if you select the later option a Debian package will be created and then converted into RPM package with <application>alien</application> utility.
+</para>
+
+	</sect1>
+
+<sect1 id="quick-usage">
+<title>Quick usage tour</title>
+<para>Before running <command>indexer</command> first time, you need specify web space to index (see <xref linkend="follow" />). 
+Basically, if you want index one site, you should put a <command>Server</command> command similar to the following into your <filename>indexer.conf</filename> file:
+<programlisting>
+Server http://www.server.ext/
+</programlisting>
+</para>
+
+<para>Run the <command>indexer</command> to index your data and write URL data:</para>
+<para><userinput>sh$ /usr/local/dpsearch/sbin/indexer -W</userinput></para>
+
+</sect1>
+
+<!-- sect1 id="register">
+<title>Installation registration</title>
+<para>If you use <application>DataparkSearch</application> to build search on public accessible web site, you may
+register this site on <ulink url="http://www.dataparksearch.org/usersmap">our users page</ulink>.
+</para>
+</sect1-->
+
+</chapter>

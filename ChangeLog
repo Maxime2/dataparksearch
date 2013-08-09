@@ -1,0 +1,630 @@
+
+History
+-------
+
+Latest snapshot:
+	* RESTful interface has been added for searchd. Only the GET operation is supported.
+	* Multi-inserts were added for crossdict/ncrossdict and urlinfo tables.
+	* Asynchronous queries to MySQL were fixed.
+	* Added support for JSON string encoding for search template meta-variables.
+	* It can now specify regex pattern for HTDBDoc and HTDBText commands to parse URL into htdb:/ parameters.
+	* Added performance assessment for some libc functions at configuration.
+	* "CrossWordsSkipSameSite yes/no" command has been added.
+	* Added support for ISO 8601 date and time format.
+	* Added support for Sitemap: command in robots.txt file.
+	* Support for libextractor 0.6.x has been added.
+	* -G switch for indexer takes now an integral value for all indexing threads.
+	* Clones detection in search is now disabled by default.
+	* StopwordsLoose command has been added.
+	* hash32() function has been fixed for 64-bit systems. Total reindexing is required if affected.
+	* XML Entity Definitions for Characters have been updated to the W3C Recommendation 01 April 2010.
+	* Options "add", "update" or "delete" has been added the the ActionSQL command.
+	* Initialization of wf has been changed so the weight for highest section number specified is propagated for the rest sections.
+	* The "single" option for Section command has been added.
+	* Another URL randomazing for indexing algorithm has been implemented. Use -rr switch to indexer to activate.
+	* Unicode data has been updated to 5.2.0 version.
+	* aspell checking has been improved, configure doesn't stop anymore if there is no aspell installed and aspell support hasn't been enabled explicitly.
+	
+24 Jan 2010: 4.53
+	* ReverseAliasProg command has been added.
+	* A faster hash function implemented. You need to configure with --enable-hashcompatible switch when upgrade without reindexing.
+	* Template meta-variables are now rounded on a space or a puntuation mark.
+	* ExcerptMark command has been added. Use it to alter the delimiter of excerpt chunks.
+	* Match: command has been added for stopwords files.
+	* A bug of loosing last line before writing into storedoc database has been fixed.
+	* Added support for chunked Transfer Encoding.
+	* Improved support for Internationalized Domain Names (IDN).
+	* $(grand_total) template meta-variable has been added. Use it to show the number of URL found before grouping by site.
+	* -Esitemap command has been added for indexer. Use it to make a sitemap listing. All filtering options aplly.
+	* Multithreaded results sorting has been implemented.
+	* SectionSQL command has been added.
+	* Language and charset guesser has been modified for speed. It need to recreate language maps, if you've created yours own.
+	* <!IFREGEX conditional operator has been added for search template.
+	* Support for libextractor has been added.
+	* Acronym files have been extended by regex based transformations.
+	* cachedchk2 table has been added to SQL database. Please execute "indexer -Ecreate" command on upgrade.
+	* A function of canonical lanuage name has been fixed. The languages with names below "ru" in lexical order were affected.
+	* The maximim length of log records has been enlarged to 480 bytes, the MUST size for a syslog message.
+	* MaxHrefsPerServer command has been added. Uset it to limit the maximum number of hrefs accepted per server during one indexer run.
+	* Limit command has been extended to accept SQL-based limits.
+	
+25 Apr 2009: 4.52
+	* Busy timemout has been increased for SQLite.
+	* Fixes for sub-document recoding and content-length calculation for a document with sub-documents.
+	* A fix for incomplete passing text items from a subdocument to parant document.
+	* The command parser has been fixed for case when a section in allin<section>: operator contains character '_' or '-'.
+	* SkipHrefIn command has been added. Use it to skip some HTML tags from new href lookup.
+	* SEASections command has been added. Use it to specify the list of sections which are used to construct SEA summary.
+	* A possible trap on an empty document has been fixed.
+	* A Disallow command in robots.txt doesn't lead to document removal from database anymore.
+	* An error has been fixed in uncompression of big files.
+	* Quffix command has been added.
+	* Searchd cleans-up now the search cache on config loading/reloading.
+	* A bug in stored check-up has been fixed.
+	* Time zone processing has been added for Last-Modified header and meta.
+	* MakePrefixes command has been added. Use it to produce all prefixes for words in a document. This is suitable for making suggestions.
+	
+31 Dec 2008: 4.51
+	* Exact as in query string matching has been added for relevance calculation.
+	* CAS based synchronization has been implemented for i386/x86_64 platform.
+	* The ActionSQL command has been added. Use it to execute SQL-queries with document related data while indexing.
+	* The support for KOI8-C (an extension of KOI8-R with old-Russian letters) charset has been added.
+	* FastHrefCheck command has been added. Use it to skip href checking against server list during parsing.
+	* SubDocCnt command has been added. Use it to specity the maximal number of sub-documents indexed per one document.
+	* SubDocLevel command has been added. Use it to specify maximal nesting level for sub-documents.
+	* HrefSection proccessing has been fixed in XML parser.
+	* $(url.directory) meta-variable has been added.
+	* storedoc.cgi accepts now the name of template in &tmplt= CGI-parameter.
+	* Accept: HTTP header has been fixed for the case when pattern is used for Content-Type in MIME command.
+	* A bug in result merging has been fixed for multi-dbaddr mode.
+	* allin<section>: operator has been added to the search query language.
+	* storedoc.cgi takes now document from remote host if it unable to fetch it from stored database.
+	
+26 Jul 2008: 4.50
+	* Default value for PopRankSkipSameSite command has been changed to "yes".
+	* Possible memory leak has been fixed for a sub-document indexed from stored database.
+	* The "strict" option has been added for Section command.
+	* A word break has been added for French-style contractions.
+	* Big lists of Russian and English synonyms have been added.
+	* MaxSiteLevel command accept now a negative argument to group URLs on subdirectory basis.
+	* The SkipUnreferred command has been extended to delete unreferred documents if necessary.
+	* Del log processing has been fixed in splitter for case when cache log is empty.
+	* Some German letters automatically replace by bi-letter combinations in accent-free search mode.
+	  Eszett (scharfes S) -> SS, A with diaeresis -> AE, O with diaeresis -> OE, U with diaeresis -> UE.
+	* SQLite3 support has been added. Use --with-sqlite3 option for configure to enable it.
+	* Indexing has been fixed for documents with several versions in different languages. 
+	  You need to execute "indexer -Erehashstored" command when upgrade.
+	* HTML parser understands now <!-- google_ad_section_start -->, <!-- google_ad_section_start(weight=ignore) --> and
+	  <!-- google_ad_section_end --> comments as tags to include/exclude content for indexing.
+	* Relevance calculation has been improved for case when acronyms and abbreviations are used.
+	
+12 Feb 2008: 4.49
+	* String tokenization has been improved. For example, "c--" and "c#" are now cosidered as words.
+	* A subdocument indexing technique has been implemented.
+	* LongestTextItems command has been added. Use it to specify the number of longest text items to index.
+	* The support has been added for georgian-academy and georgian-ps charsets.
+	* URL data preloading has been fixed for multi-DBAddr configurations.
+	* HTML parser is now skiping indexing within tags with visibility set to "none" or "hidden" in "style" attribute.
+	* Subnet command has been fixed.
+	* $*(x) type of template meta-variable has been added. Use it to HTML-escape value without search words highlighting.
+	* $(np) and $(p) have been fixed in "resbot" and "bottom" sections of search template.
+	* PagesInGroup command has been added. Use it to specify the number of additional pages from the same site when google-like
+	  groupping is enabled.
+	* ServerWeight command has been fixed.
+	
+25 Oct 2007: 4.48
+	* A possible trap in multi-DBAddr configuration has been fixed.
+	* Pharse operator has been fixed.
+	* The NEAR and ANYWORD boolean operators have been fixed.
+	* The content of CDATA sections in XML documents parses now using HTML parser.
+	* Server nofollow processing has been fixed in XML parser.
+	* Sections handling has been fixed in XML parser for case of internal recursion.
+	* "link" cache mode limit type has been added.
+	* Support for libtre has been added.
+	* TrackDBAddr command has been added. Use it to specify SQL-database to store query tracking data.
+	* Processing has been fixed for NEAR NOT and ANYWORD NOT constructions in boolean search mode.
+	* Debian source package has been added. Thanks to Amit Joshi <ajoshi [at] optonline dot net>.
+	* label parameter has been added to DBAddr command.
+	* "Robots no" command has been fixed.
+	* -f switch can now be used to specify for indexer a list of files to index/reindex. 
+	* Several bugs were fixed.
+	
+09 July 2007: 4.47
+	* Tags and categories are now storing in urlinfo table and they can be set per document basis.
+	* Navigation through result pages has been fixed for search results caching.
+	* Support for crosswords has been implemented for cache dbmode.
+	* A possible trap has been fixed for the indexing via NNTP.
+	* Automatic phrase search has been implemented for compound words having dots, commas, dashes, underscores and slashes 
+	  as delimiters between word parts.
+	* Reconnection to MySQL has been improved in case of unexpected connection lost.
+	* The full method of relevance calculation has been modified.
+	* Conditional operators can now be used in variables section of template.
+	* Storing documents in stored database has been fixed for non-default value of StoredFiles.
+	* Word forms consruction has been improved for words not found in ispell dictionatries.
+	* mod_dpsearch is now supply BrowserCharset in server reply headers.
+	* -f switch has been added for cached, search and stored, use to run them foreground (don't demonize).
+	* Several bugs were fixed.
+	
+21 Apr 2007: 4.46
+	* The Summary Extraction Algorithm (SEA) has been slightly modified.
+	* -B switch has been added for indexer. Use it to reindex from stored database.
+	* An error in cache mode logs sorting has been fixed (introduced in 4.45 version). 
+	  Please shutdown cached, if running, and execute "indexer -Eresort" command to fix the database.
+	* The Neo PopRank has been modified.
+	* A segmentation fault has been fixed on 64 bit platforms.
+	* A trap in Apache internal redirect has been fixed.
+	* Support has been added for the c-ares library, an asynchronous DNS resolver.
+	* Several bugs were fixed.
+	
+23 Mar 2007: 4.45.1
+	* A bug in src/Makefile.am has been fixed.
+
+22 Mar 2007: 4.45
+	* -G switch for indexer has been added. Use it to limit indexer by total size of indexed documents, in megabytes per thread. 
+	* parser.c has been rewritten to avoid hanging external parsers of all types.
+	* A erroneous writing redundant records into "server" table has been fixed.
+	* A bug has been fixed in the flushing of unfilled cache mode buffers when no cached is used.
+	* A parser of the Verity Query Language (prefix variant) has been added. 
+	  Only the following operators are supporting at this time: <OR>, <AND>, <WORD>, <PHRASE>, <NEAR>, <NOT>, <ACCRUE>.
+	* MinSiteWeight and MinServerWeight commands were added. Use its to specify minimum weight of site or server to be indexed.
+	* High CPU usage by searchd has been fixed.
+	* A possible trap has been fixed on systems without setproctitle function defined.
+	* New algorithm to detect the need for east language segmenting.
+	* It can now show the last 128 bytes of a template variable using $(xx:128:right) type of template variable.
+	* Several bugs (include #180, #181) were fixed.
+	
+22 Jan 2007: 4.44
+	* The calculation of the Neo PopRank has been modified for better performance.
+	* Possible innuendo recursion has been fixed in the processing of acronyms and abbreviations.
+	* ResegmentChinese, ResegmentJapanese, ResegmentKorean and ResegmentThai commands were added.
+	* Possible trap in XML parser has been fixed.
+	* Smart phrase segmenting has been implemented for search queries in case when no language is specified exactly.
+	* Charset and language guessing has been improved for case when controversial data is provided in server reply headers 
+	  and in meta tags.
+	* Unicode data has been updated to 5.0.0 version.
+	* Query tracking has been rewritten for searchd. Message queue interface doesn't require anymore for this feature.
+	* More strict preconditions were imposed on automatic update of language maps. 
+	* Template loading has been fixed for Apache internal redirects.
+	* Words not listed in spell data are now checking only against data for language specified in language limit or as
+	  search template language.
+	* Suport has been added for Tajik KOI8-T charset.
+	* Search speed has been improved for searchd:// DBAddr scheme.
+	* searchd has been rewritten in prefork model.
+	* Hanging searchd children were fixed.
+	* The support has been added for multiline HTTP headers.
+	* Possible trap has been fixed for version compiled without pthreads support.
+	
+30 Oct 2006: 4.43
+	* Possible SQL injection has been fixed for malformed hostname in URL.
+	* "ProvideReferer yes/no" command has been added. Use it to provide Referer request header for HTTP and HTTPS connections.
+	* Support has been added for cp775 charset (Baltic Rim DOS codepage).
+	* ISO 639-2 and most widely used language aliases were added for charset and language guesser.
+	* Defalut value of &ps CGI-parameter has been changed to 10.
+	* Incorrect processing of round brackets has been fixed for non boolean search modes.
+	* MaxDepth command has been added. Use it to limit directory depth of url.
+	* ReplaceVar command is now accept variable value in BrowserCharset. 
+            To add variable in LocalCharset, use ReplaceVarLcs command.
+	* Possible trap has been fixed when Store/NoStore command is used.
+	* Alias command has been fixed in search.htm template.
+	* SEASentences and SEASentenceMinLength commands were added.
+	* Semantic for -r switch of indexer has been reverted. Seeding algorithm has been changed also.
+	* The Ultra relevance mode has been modified.
+	* MaxSiteLevel command has been added. (See blog entry: http://blog.dataparksearch.org/17 ).
+	* CrawlDelay command has been added. Use it to specify default pause in seconds between consecutive fetches from same server.
+	* The Neo PopRank can now be calculated using several indexer threads (ex.: "indexer -TRN4").
+	* Several bugs were fixed.
+	
+01 Sep 2006: 4.42
+	* Some modifications for speed performance has been made.
+	* XML parser has been improved.
+	* CRC32 has been totaly replaced by Hash32. Collisions are possible in clones detection when upgrade.
+	* cache:// dbtype has been fixed for searchd.
+	* Minor bug has been fixed in content decompressing.
+	* Indexer can now gather geopositions specified in special meta tags.
+	* &empty= CGI-parameter has been added. Use it to disable the using search limits to show results if no query words is entered.
+	* UseDateHeader command has been added. 
+	  Use it to get value of Date: HTTP header as date of document if no Last-Modified header is specified.
+	* Asynchronous SQL commands processing has been added for PgSQL.
+	* Clones detection has been modified for better performance.
+	* Possible trap on excerpt construction has been fixed.
+	* -z swicth for indexer has been added. Use it to limit indexer to documents with hops value no more than specified.
+	* Several bugs (#175, #176) were fixed.
+	
+22 Jul 2006: 4.41
+	* A small bug in optimisation of corrupted cache database has been fixed.
+	* The CharsToEscape command has beed added. 
+	  Use it to specify the list of characters to escape for $&(x) search template meta-variables.
+	* The Neo PopRank has been slightly modified.
+	* Incorrect processing of LocalCharset has been fixed for non-multithread version.
+	* exec: virtual scheme has been fixed.
+	* An option for install.pl has been added to select the support for extra charsets.
+	* "AddURl: URL not found" erroneous warning has been fixed for case when UseCRC32URLId is enabled.
+	* A new command "MarkForIndex yes/no" has been added.
+	* mod_dpsearch can now be built without SQL-server support for cache mode only version.
+	  Use --enable-apachecacheonly switch for configure to enable and cache:// dbtype for DBAddr command in mod_dpsearch
+	  related configuration files.
+	* The growing of error message has been fixed for mod_dpsearch.
+	* A new command "ReplaceVar name value" was added.
+	* The "near" search mode has been fixed.
+	* The Summary Extraction Algorithm (SEA) has been modified for better performance.
+	
+24 May 2006: 4.40
+	* A serious bug prevent index construction in cache mode has been fixed.
+	
+23 May 2006: 4.39
+	* Cached database checkup has been rewritten for better performance. 
+	  You need to create cachedchk table, if upgrade, using "indexer -Ecreate" command.
+	* Query string parsing has been fixed for case when both CGI and SGML character encodings are used.
+	* The support for HTTP cookies has been added. Use "Cookies yes" command to enable. This is a per Server command.
+	* "URLInfoSQL no" command has been added to disable storing URL Info into SQL database for cache dbmode.
+	* Storing of content-encoded documents has been fixed.
+	* Template variable can now be written in any charset supported, for example: $(q:UTF-8).
+	* The support for GB18030 charset has been added.
+	* The hops value can now be taking into account for the Neo Popularity Rank calculation. 
+	  Use --enable-pophops option for configure to enable.
+	* The pause on Crawl-delay directive from robots.txt doesn't block now other indexing threads.
+	* Possible indexer trap has been fixed for case when mirroring is used.
+	* A daemons trap starting from cron or at boot time has been fixed. 
+	* The ColdVar command has been added. Use it to disable file locking in read only search environment (for cache mode only).
+	* Possible memory leak with aspell support enabled has been fixed.
+	* The Ultra relevance mode has been changed for better performance.
+	* Compilation without zlib has been fixed.
+	
+13 Mar 2006: 4.38
+	* Default value of --with-wrdunifactor configure parameter has been changed to 1.5.
+	* The name of search template can now be passed via path_info part of the URL, e.g. http://localhost/cgi-bin/search.cgi/template.htm
+	* For ispell-based fuzzy search, if no exact match is found in dictionary, an entry with longest match suffix is taking
+	  to produce word forms.
+	* The indexer can now accepts DP.PopRank META-tag to assign initial value for page PopularityRank.
+	* A indexer trap on Debian Linux has been fixed.
+	* robots.txt processing has been fixed for records with two or more User-Agent fields.
+	
+08 Feb 2006: 4.37
+	* Document headers are now stores in stored database and can be used in storedoc template.
+	* A cross scripting vulnerability has been fixed. Please check and upddate your search templates, if upgrade.
+	* Automatic spelling correction has been replaced by suggestion of right spelled words.
+	  Use $(Suggest_url) and $(Suggest_q) meta-variables to construct suggestion (see etc/search.htm-dist for example).
+	* Possible trap has been fixed for boolean queries with missed arguments.
+	* The GuesserBytes command has been added.
+	* Language and charset guesser has been improved. You need to update your own created language maps.
+	* Erroneous deletion from "links" table has been fixed.
+	* Template variable truncuting has been fixed for multibyte charsets.
+	* The support has been added for Host: directive in robots.txt.
+	* Several bugs were fixed.
+	
+04 Jan 2006: 4.36
+	* The Neo PopRank has been slightly modified.
+	* Compilation with aspell support has been fixed for OpenBSD.
+	* The indexer can now conect to cached and stored via NAT system.
+	* The BodyPattern command has been added.
+	* The SEA performance has been improved.
+	* A possible trap has been fixed for incorrect value specified in <BASE HREF
+	* --enable-full-rel switch of configure has ben replaced by --enable-rel. Currently supported methods are: full, fast, ultra.
+	* The support has been added for Solaris libidnkit.
+	* The Store and NoStore commands were added.
+	* Several bugs were fixed.
+	
+02 Dec 2005: 4.35
+	* The Summary Extraction Algorithm (SEA) has been added.
+	* Possible coredump has been fixed for robots.txt proccessing with incorrect value specified in Content-Encoding header.
+	* The "robots" table has been added to cache robots.txt data for a period specified by RobotsPeriod command.
+	* Some indexing speed improvements were made.
+	* A new "wtime" column has been added to "qtrack" table to store time spent for search, in milliseconds.
+          When upgrade, you need to add this column (e.g. using ALTER TABLE command) or recreate "qtrack" table.
+	* Syntax error has been fixed in db creation script for MySQL.
+	* Subnet command processing has been fixed for CIDR network format.
+	* Memory leeak has been fixed in construction of all word forms using ispell data.
+	* More accurate phrase segmenting has been implemented for queries in UTF-8 charset.
+	* Language maps were added for several languages and UTF-8 charset.
+	* Search query segmenting has been fixed for UTF-8 BrowserCharset.
+	
+31 Oct 2005: 4.34
+	* Phrase segmenting has been fixed for mixed western and chinese, korean or thai writings.
+	* A new switch -d for indexer has been added. Use it to sort indexing targets by Popularity Rank.
+	* The ExpireAt command has been added to specify exactly time of document expiration.
+	* The support for Crawl-delay command in robots.txt file has been added.
+	* Internal text/xml parser has been rewritten, libexpat library isn't required anymore.
+	* HTDBText command has been added for htdb:/ virtual scheme.
+	* Word segmenter has been improved for Chinese, Korean and Thai.
+	* Undefined reference to dps_memmove has been fixed.
+	* A trap on empty search phrase has been fixed.
+	* Some speed improvements has been made for the full relevancy calculation.
+	* Rarery coredumping on language map update has been fixed.
+	* Counting of non-uniform word distribution has been fixed in relevancy calculation.
+	* Character set used with the MeCab has been fixed.
+	* The paranoia support has been enhanced for compilation with optimization.
+	* Several bugs were fixed.
+	
+16 Sep 2005: 4.33
+	* OpenSearch 1.0 template has been added.
+	* The ANYWORD (or '*') operator has been added for boolean search mode. This operator come true if both words have any
+	  word between.
+	* Search words highlighting has been fixed for $^(x) template variables.
+	* Excerpts construction has been improved.
+	* Excerpts recoding has been fixed for case when no stored nor "DoStore yes" command is used.
+	* Processing of ExcerptSize and ExcerptPadding commands has been fixed for searchd connection.
+	* Optional parameter &charset has been added for DBAddr command.
+	* Minor memory leak has been fixed for the Neo PopRank calculation.
+	* Automatic spelling correction has been added for indexing words. Use "AspellExtensions yes" command to enable. Aspell is required.
+	* Automatic spelling correction for search terms has been added. You need to install aspell on your system.
+	* Recoding of search query has been fixed for searchd connection.
+	* The "near" search mode has been added. It's equal to the "all" mode, but finds documents where all search terms are 
+	  within 16 words of each other.
+	* The NEAR operator has been added for boolean search mode. This operator come true if 
+	  both words are within 16 words of each other.
+	* GrBeg and GrEnd search template commands were added. Use these commands to highlight consecutive following results if
+	  Google-like results grouping has been enabled.
+	* Possible indexer trap with IDN support enabled has been fixed.
+	* The value of $(PerSite) has been fixed for cached search results.
+	* The support for libares library has been added.
+	* Several bugs (include #168) were fixed.
+
+30 Jul 2005: 4.32
+	* Synonyms searching has been fixed to produce complete list of synonyms.
+	* Processing of NOT boolean operator has been fixed for case when no documents found to delete.
+	* The algorithm of full relevancy has been modified to get more speed and to correct values for case of big 
+	  number of document sections.
+	* Language and charset guesser has been tuned for case when contradictory data specified in server headers and meta tags.
+	* The --with-bestavgpos switch for configure has been renamed to --with-bestpos.
+	* Processing has been fixed for complex search query with acronyms and stopwords.
+	* The dps_config script has been fixed to include MeCab related flags.
+	* A possible trap has been fixed for search request with unclosed included phrase.
+	* The Subnet command can now accepts subnet in forms: a.b.c.d/m, a.b.c, a.b, a
+	* robots.txt has been fixed for case when the "*" User-Agent is divided onto two or more parts.
+	* An unexpected exit of indexer has been fixed for cache dbmode when no cached is used.
+	* The $(FancySize) meta-variable has been added for search templates. 
+	  It show document size in bytes, kilobytes or megabytes, what match best.
+	* Google-like results grouping has been added, use --enable-googlegrp option for configure to enable.
+	* A possible trap has been fixed in case when a phrase specified inside search query.
+	* A possible trap of search.cgi has been fixed in case when Locale command is used.
+	* Several bugs (#164) were fixed.
+	
+17 Jun 2005: 4.31
+	* Crosswords searching has been restored for sql-based dbmodes.
+	* robots.txt processing has been fixed for gzip and deflate content encodings.
+	* A possible trap has been fixed in boolean search mode.
+	* Default comparison type has been fixed for ServerDB and SubnetDB commands.
+	* Unicode data has been updated to 4.1.0 version.
+	* Search words highlighting has been fixed in cached copy displaying.
+	* More economic memory allocation has been implemented for indexing.
+	* Several bugs were fixed.
+	
+31 May 2005: 4.30
+	* The PopRankPostpone command has been added. Use it to skip the Neo PopRank calculation at indexing.
+	* Fuzzy searching based on acronyms and abbreviations has been added.
+	* FlushServerTable command has been fixed.
+	* A database creation script has been corrected for Oracle.
+	* Locale command has been added for search templates. Use it to change LC_ALL locale settings for search results.
+	* Search query processing has been rewritten.
+	* Missed page number calculation has been restored in mod_dpsearch.
+	* Cached database checkup has been optimized for speed.
+	* Indonesian language map has been added for ISO-8859-1 charset.
+	* Several bugs were fixed.
+	
+08 Mar 2005: 4.29
+	* Several large data files were excluded from distribution. You may download them from our site separately.
+	* English, German and Polish synonyms list were added.
+	* Thesaurus mode for synonyms files has been added.
+	* A bug in section numbering for weighting at search time has been fixed.
+	* $(WS) template variable has been added, it shows search words statistic in short form.
+	* Possible memory leak has been fixed in cached when flushing empty buffer.
+	* Persian language maps for ISIRI-3342 and UTF-8 charsets were added.
+	* Error in processing of -w option on splitter has been fixed.
+	* mod_dpsearch.so installation error has been fixed for Apache 2.0.53.
+	* Maori and Maltese language maps for ISO-8859-1 and UTF-8 charsets were added.
+	* New switches for configure were added: --disable-reldistance, --disable-relposition, --disable-relwrdcount,
+	  --with-bestavgpos, --with-wrdcntfactor. Use these switches to tune relevancy calculation.
+	* Threadsafe hostname resolving has been added for FreeBSD.
+	* Support has been added for Google's anti comment spam initiative. 
+	  See: http://www.google.com/googleblog/2005/01/preventing-comment-spam.html
+	* IndexIf, NoIndexIf commands can now be loaded from server table using ServerTable command.
+	* Possible hang on Neo PopRank calculation has been fixed.
+	* Several bugs (include #158) were fixed.
+	
+17 Jan 2005: 4.28
+	* Search word highlighting has been fixed for cached results.
+	* Stored protocol has been changed. Please restart stored if upgrade.
+	* TagIf, CategoryIf commands can now be loaded from server table using ServerTable command.
+	* libidn detection has been fixed in configure.
+	* Frequency dictionaries loading has been fixed in searchd.
+	* A bug has been fixed in cached document displaying when stored is not used.
+	* Relevancy calculation has been modified for queries with two or more words.
+	* The URLCharset command has been added to specify character sets only for arguments in Server, Realm or URL commands.
+	* ServerDB, RealmDB, SubnetDB and URLDB commands were added. It's works as Server, Realm, Subnet and URL command respectively, 
+	  but takes arguments from field of SQL-table specified.
+	* Several bugs were fixed.
+	
+17 Dec 2004: 4.27
+	* Compilation problem with latest ChaSen version has been fixed.
+	* The values for cache mode limit on Content-Language is now computes on first 2 bytes of language code.
+	* The values for StoredFiles, URLDataFiles and WrdFiles can now be changed. 
+	  Simple specify values for OldStoredFiles, OldURLDataFiles and OldWrdFiles and run "indexer -T" on PC where cached or stored
+	  database is located. You should remove OldStoredFiles, OldURLDataFiles and OldWrdFiles commands after conversion.
+	* Support for MP3 ID3v2.0 and ID3v2.4 tags has been added. Support for MP3 ID3v2.3 tags has been improved.
+	* Units were changed from seconds to milliseconds for pause between indexing documents (-p switch for indexer).
+	* <!--noindex> and <!--/noindex--> tags can now be used to exclude the text between from indexing for compatibility with ASPSeek.
+	* Support for UTF-16LE and UTF-16BE encodings has been added. Language maps format has been changed. You need to replace
+	  used maps from distribution or recreate your own maps with new version of dpguesser.
+	* Excerpts construction time is now added to search time displayed.
+	* Occasional hang on queries with no result has been fixed.
+	* A possible memory corruption has been fixed in excerpt construction.
+	* The Indexer now sends Accept request headers according to MIME parsers configured.
+	* A possible memory corruption in mod_dpsearch has been fixed.
+	* Apache version detection has been improved.
+	* Quasi-ispell support for Japanese has been added. 
+	  You need to download the quasi-ispell data dpsearch-spell-ja.tgz from our site or from one of our mirrors.
+	* Some speed improvements has been made.
+	* Several bugs were fixed.
+	
+05 Nov 2004: 4.26
+	* Canonical charset names were adjusted according to the IANA preferred names.
+	* The HrefSection command has been added. Use it to extract links from any document section.
+	* Recoding for SGML entities in URL has been fixed.
+	* Arabic, Hebrew, Icelandic, Japanese, Latvian, Romanian and Thai stopword lists were added.
+	* The MaxDocsPerServer command has been added. No more than given number of pages will be indexed from one Server 
+	  during this run of indexer.
+	* TagIf and CategoryIf commands has been added. Use it to assign tag or category according pattern match on an document section.
+	* IndexIf and NoIndexIf commands has been added. Use these command to allow/disallow indexing by pattern match 
+	  on an document section.
+	* The value for a section can now extract from document content using regex-like pattern.
+	* The Bind command has been added. Use it to specify local IP address.
+	* Several bugs were fixed.
+	
+13 Oct 2004: 4.25
+	* Recoding from the Unicode to the EUC-JP, Big5, EUC-KR, GB2312, GBK, Gujarati, SJIS has been fixed.
+	* Due to conflict with other programs, mconv and mguesser utilities has been renamed to dpconv and dpguesser respectively.
+	* Support has been added for the cp866u and koi-7 codepages.
+	* Ability to sort search results by sum of relevancy and Popularity Rank has been added. Use 'A' or 'a' character in search
+	  pattern to sort in decreasing and increasing order respectively.
+	* The processing of SGML character entities was fixed.
+	* -l switch for run-splitter has been added. Use it to flush cached buffers only.
+	* The HoldCache command has been added. Use it to specify time period to hold search cache files.
+	* Several bugs were fixed.
+	
+14 Sep 2004: 4.24
+	* The PreloadLimit command was added. Use it to preload cache mode limits for most frequently used limit's values.
+	* For PostgreSQL connections can now specify a Unix socket as parameter in DBAddr command.
+	* The dpstoredoc handler was added for mod_dpsearch with fuctionality of storedoc.cgi. 
+	* The Spanish stopword list was enhanced.
+	* Support was added for the IBM cp037, cp1026, cp500, cp875, cp1133 and Iranian ISIRI3342 codepages.
+	* Cache mode bases are now compressed if zlib support is enabled.
+	  To upgrade from previous version, please, do the follow:
+	  - stop all dataparksearch's daemons.
+	  - backup your data. if conversation process will fail or aborted, you'll need restore data to complete later all at once.
+	  - compile and install new version.
+	  - on PC where cache mode data is located, remove cached and stored parameters from DBAddr in indexer.conf.
+	  - on PC where cache mode data is located, run "indexer -O" (don't run stored and cached)
+	  - restore your original DBAddr command in indexer.conf.
+	* zlib support is now enabled by default.
+	* Fast relevancy calculation was revesited.
+	* The English synonyms list was enhanced.
+	* Several bugs were fixed.
+	
+14 Aug 2004: 4.23
+	* The TrackHops command was added. Use it to enable hops tracking in reindexing.
+	* There are some improvements to speed-up searches.
+	* The Italian synonyms list was added.
+	* Fast relevancy calculation has been added and is enabled by default. 
+	  Use --enable-fullrel option for confugure to enable full relevancy calculation.
+	* The LINKS table structure was changed with the addition of the valid field.
+	* The SkipUnreferred command was added. Use it to skip reindexing for unreferred documents.
+	* A -b switch for splitter and run-splitter was added. Use it to force a base cheking/optimizing before cache update.
+	* Several bugs were fixed.
+	
+	
+20 Jul 2004: 4.22
+	* The PeriodByHops command was added. Use it to specify a reindexing period on a per-hops basis.
+	* Postponed query tracking for searchd was added. This feature require System V message queue support.
+	* SSLv2_client_method() was changed to SSLv23_client_method() for better compatibility.
+	* The splitter can now accept an alternative configfile name as a command line argument.
+	* -w switch processing for stored was fixed.
+	* Support for Windows cp950 and Big5-hkscs codepages was added.
+	* The IndexDocSizeLimit command was added. Use it to limit the amount of data stored in index per document.
+	* The PopRankNeoIterations command was added. It allows one to specify the number of iterations for the Neo PopRank calculation.
+	* Several bugs (#148, #149) were fixed.
+	
+15 Jun 2004: 4.21
+	* Doc directory layout was slightly changed according FreeBSD tree.
+	* The set of SGML character entities was extended.
+	* CacheLogWords and CacheLogDels commands were added to adjust size of shared memory buffers for cache mode.
+	* Excerpt construction was fixed.
+	* A new switch -H was added for indexer to send command to flush all cached buffers.
+	* Several memory leaks were fixed.
+	* Several bugs (#102, #106, #107, #108, #109, #110, #147) were fixed.
+	
+19 May 2004: 4.20
+	* Support for Internationalized Domain Names was added. Use --enable-idn option for configure to enable.
+	  You need GNU libidn to be installed on your system. 
+	  The URL table structure was changed with the addition of the charset_id field.
+	* A Korean language phrases segmenter was added. Use LoadKoreanList command to enable.
+	* Korean language maps for EUC-KR charset were added.
+	* Base hashing was changed, so you need to run cached and stored databases checkup with OptimizeRatio equal to 0 after upgrading.
+	* Cached and stored checkup was split into stages, use -Z option for indexer to optimize; -ZZ to optimize and checkup;
+	  -ZZZ to optimize, checkup and urls verify for cached database; -Y to optimize; -YY to optimize and checkup stored database.
+	* Polish language maps for cp1250 and cp852 were added.
+	* Support for the Apache2 web server was added for mod_dpsearch.
+	* The checkup for cached databases was made faster.
+	* A possible memory corruption was fixed for SQL-servers without subselect.
+	* Compilation errors on Solaris 9 were fixed.
+	
+16 Apr 2004: 4.19
+	* mod_dpsearch was added for the Apache web seraver. Use --enable-apache-module switch for configure to enable.
+	* A bug in Unicode canonical decomposition was fixed.
+	* A URLDumpCacheSize command was added. Use it to specify the number of urls selected at once to write cache mode indexes,
+	  or to preload url data, or to calculate the Popularity Rank. Default value is 100000.
+	* The Neo PopRank is now calculated during indexing/reindexing.
+	* Synonyms and Stopwords reduce to the Unicode normal form C when loading.
+	* An error in Neo PopRank calculation was fixed.
+	* A ResultContentType command was added. Use it to specify Content-Type header for search results page.
+	* By default, every indexer's thread is make a separate connection to database. Use -U option for indexer to make
+	  one shared connection to database for all threads.
+	* A possible indexer hang was fixed for a large amount indexing threads without cached nor stored usage.
+	* Several bugs (#10, #15, #16, #19, #20, #22, #23, #24, #25, #27) were fixed.
+
+15 Mar 2004: 4.18
+	* Redundant documents display in results for two or more stopwords inside quotes was fixed.
+	* Quotes detection for several charsets as LocalCharset was fixed.
+	* A new method for the PopRank calculation was added. Use "PopRankMethod" command to select desired method.
+	* Top100 and Top1000 stopwords lists were added for the English, French, German and Dutch languages.
+	* Large synonyms list was added for Russian. Synonyms list was added for French.
+	* The Russian stopwords list was updated.
+	* The clones display was fixed.
+	* An apostrophe can now can be part of a word, i.e. words like "men's" are considered as one unique word.
+	* Search term highlighting for LocalCharset UTF-8 was fixed.
+	* The cached database cheking loop was fixed.
+	* Compilation errors were fixed on systems with variable number of arguments for the gethostbyname_r function.
+	
+21 Feb 2004: 4.17
+	* Possible indexer hang on fast PC was fixed.
+	* Possible memory corruptions while indexing using ftp:// scheme were fixed.
+	* Unicode support extended. Unicode Letter, Mark, Number and Symbol classes are considered now as word's characters.
+	  All indexed words reduces now to Unicode normal form C before storing in database or searching.
+	  Accent insensitive search added. Use "AccentExtensions yes" command to enable.
+	* Unicode data was updated to 4.0.1 version.
+	* url.since field was added to track DeleteOlder for pages when no Last-Modified header is present in server response.
+	  This field hold the time when pages were added into database.
+	* Common large files support option for configure was added.
+	* Now url data can be preloaded by searchd to speed-up searches. Use "PreloadURLData yes" command
+	  in your searchd.conf to enable. This worth about 20 bytes of memory per url.
+	* Default value for URLSelectCacheSize parameter was increased to 1024.
+	* Empty results for double entered query words was fixed.
+	
+16 Jan 2004: 4.16
+	* Compilation flags were added to build using LFS API on 32-bit Linux systems (for support files larger 2GB).
+	* Now by default indexer in cache mode do not send to cached command to write url data and limits at exit.
+	  Use indexer -W switch to send this command if you need. Or send HUP signal to cached to do the same.
+	* New URLs is now checks against robots.txt before storing in database.
+	* Search can now order results by importance (i.e. by multiplication of relevancy and popularity).
+	* Documents size added for databases statistics. Use -SS switch for indexer to display.
+	* MinDocSize command was added. Use it to checkonly documents with size less than specified.
+	* image/gif mime-type internal parser was added. Only the comment and the plain text extensions is taken for index.
+	* More accurate excerpts construction.
+	* Lost records in cache mode due using "indexer -C" by category or by url were fixed.
+	* One now can increase and decrease cached, stored and searchd log level using SIGUSR1 and SIGUSR2 signals.
+	* -p switch for splitter to setup pause in seconds after each log buffer update was added.
+	* -v switch for splitter to setup log level was added.
+	* CollectLinks command was added. Use "CollectLinks yes" to enable links information collection.
+	  By default links collection is disabled (note: this was enabled by default in previous versions).
+	* Language varying was switched off for documents with erroneous status (400 or above).
+	* Cache mode bugs from mnoGoSearch 3.2.16 CVS were fixed.
+
+27 Nov 2003: Datapark Search Engine 4.16 started from current mnoGoSearch CVS version.
+
+
+
+mnoGoSearch 3.2.16 ChangeLog till splitting
+-------------------------------------------
+	
+3.2.16 CVS:
+	* Traditional chinese frequency dictionary added.
+	* LoadChineseList and LoadThaiList command's syntax modified.
+	* libparanoia-like checking added. Use --with-paranoia switch for configure to enable.
+	* Date range calculation fixed for cache mode time limits.
+	* Cache mode modified. Use "indexer -O" to convert to new base format, if upgrade.
+	* <!IFLIKE, <!ELIKE, <!ELSELIKE conditional operators in template were added.
+	* Stored database may be used without stored daemon. Use "DoStore yes" command to enable.
+	* Ability to specify srvinfo table name as parameter in ServerTable command was added.
+	* stored database modified. You need delete all data and reindex all, if upgrade.
+	* robots.txt processing was fixed.
+	* MimerSQL support (http://www.mimer.com/) via UnixODBC was added.
+	* Several bugs (#442, #445, #448, #449, #453, #454, #458, #461, #479, #480, #481) were fixed.

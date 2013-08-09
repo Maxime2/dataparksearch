@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Подсекции</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Oracle notes
+"
+HREF="dpsearch-oracle.ru.html"><LINK
+REL="NEXT"
+TITLE="Категории
+"
+HREF="dpsearch-categories.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-oracle.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-categories.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="SUBSECTIONS"
+></A
+>&#1043;&#1083;&#1072;&#1074;&#1072; 6. Подсекции</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>&#1057;&#1086;&#1076;&#1077;&#1088;&#1078;&#1072;&#1085;&#1080;&#1077;</B
+></DT
+><DT
+>6.1. <A
+HREF="dpsearch-subsections.ru.html#TAGS"
+>Тэги
+<A
+NAME="AEN4113"
+></A
+></A
+></DT
+><DT
+>6.2. <A
+HREF="dpsearch-categories.ru.html"
+>Категории
+<A
+NAME="AEN4170"
+></A
+></A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="TAGS"
+>6.1. Тэги
+<A
+NAME="AEN4113"
+></A
+></A
+></H1
+><P
+>Тэг - специальный параметр, который присваивается группе документов.
+Основная задача тэгов заключается в возможности группировать документы 
+для ограничения результатов поиска только этой группой документов.
+ </P
+><P
+><A
+NAME="AEN4117"
+></A
+>
+Для присвоения тэга серверу, или части сервера, вы должны использовать команду <KBD
+CLASS="USERINPUT"
+>Tag</KBD
+> в
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>, указав её перед соответсвующей командой <B
+CLASS="COMMAND"
+>Server/Realm/Subnet</B
+>.
+При поиске, вы можете указать тэг задав CGI-параметр
+<CODE
+CLASS="PARAMETER"
+>t=xxx</CODE
+>, в HTML форме. Смотрите <TT
+CLASS="FILENAME"
+>indexer.conf-dist</TT
+> и
+<TT
+CLASS="FILENAME"
+>search.htm-dist</TT
+> в качестве примера.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TAG_CMD"
+>6.1.1. Команда <B
+CLASS="COMMAND"
+>Tag</B
+></A
+></H2
+><A
+NAME="AEN4129"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Tag &lt;string&gt;</PRE
+><P
+>Используйте эту команду по своему усмотрению чтобы сгруппировать несколько сайтов,
+помечая их указаным тэгом. При индексировании или поиске, вы можете ограничиваться сайтами только указаного тэга.
+Можно указывать несколько команд <B
+CLASS="COMMAND"
+>Tag</B
+>. Команда <B
+CLASS="COMMAND"
+>Tag</B
+> имеет значение до следующей
+команды <B
+CLASS="COMMAND"
+>Tag</B
+> или до конца файла конфигурации. 
+Значение по умолчанию: пустая строка.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TAGIF_CMD"
+>6.1.2. Команда <B
+CLASS="COMMAND"
+>TagIf</B
+></A
+></H2
+><A
+NAME="AEN4140"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>TagIf &lt;tag&gt; [Match|NoMatch] [NoCase|Case] [String|Regex] [loose] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Присвоить документу тэг &lt;tag&gt;, если значении секции <CODE
+CLASS="OPTION"
+>section</CODE
+> подпадает под указаный
+шаблон <CODE
+CLASS="OPTION"
+>arg</CODE
+>.
+Значение первых трёх необязательных параметров такое же как для команды 
+<B
+CLASS="COMMAND"
+>Allow</B
+> (см. <A
+HREF="dpsearch-indexcmd.ru.html#ALLOW_CMD"
+>&#1056;&#1072;&#1079;&#1076;. 3.10.14</A
+>&#62;). Необязательный параметр <CODE
+CLASS="OPTION"
+>loose</CODE
+> используется для задания
+более низкого приоритета такому присвоению тэга, т.е. если тэг уже был присвоен на основании параметров сервера, новое значение тэгу
+присвоено не будет.</P
+><P
+>Пример
+<PRE
+CLASS="PROGRAMLISTING"
+>TagIf Docs regex Title Manual</PRE
+></P
+><P
+>В тэге &lt;tag&gt; можно использовать мета-переменные шаблона страницы выдачи (например, $(title), $(Last-Modified)). В примере
+ниже для каждого документа в качестве тэга выставляется доменное имя из его URL:
+<PRE
+CLASS="PROGRAMLISTING"
+>TagIf $(url.host) match url.host *</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TAGS-SQL"
+>6.1.3. Тэги в SQL версии</A
+></H2
+><P
+>Начиная с версии 3.1.x. тип тэгов изменён с INT на CHAR.
+Тип CHAR даёт несколько полезных возможностей. Вы може использовать SQL-шаблоны '_' and '%' 
+при указании параметра тэга для поиска. Это позволяет тэгам, наравне с категориями,
+поддерживать возможность вложенности. Например, документы со значением тэга "AB"
+могут быть найдены, если при поиске указаны параметры тэга "A%" или "AB".</P
+><P
+>Тэги также дают возможность URL быть членом нескольких групп.
+Задавая SQL-шаблоны, вы можете легко создать две и более групп.</P
+><P
+>Например, тэг "ABCDE" - подпадает под выборку с такими тэгами в качестве параметра:
+		<PRE
+CLASS="PROGRAMLISTING"
+>_BCDE
+A_CDE
+AB_DE
+ABC_E
+ABCD_</PRE
+></P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Если у вас достаточно большая база, и ограничения по тэгу используются часто,
+весьма полезно создать для таблицы "server" индекс по полю "tag". Этот индекс не создаётся по умолчанию.
+<PRE
+CLASS="PROGRAMLISTING"
+>CREATE INDEX srv_tag ON "server" ("tag");</PRE
+></P
+><P
+>По умолчанию, длина поля "tag" в таблице "server" ограничена 16 символами.
+Если вам необходимы более длинные тэги, увеличьте это значение перед созданием базы.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Для способа хранения cache вам нужно указать секцию tag в вашем файле <TT
+CLASS="FILENAME"
+>sections.conf</TT
+> с ненулевой
+максимальной длиной:
+<PRE
+CLASS="PROGRAMLISTING"
+>Section tag 0 64</PRE
+></P
+></BLOCKQUOTE
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-oracle.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-categories.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Oracle notes
+<A
+NAME="AEN4033"
+></A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Категории
+<A
+NAME="AEN4170"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

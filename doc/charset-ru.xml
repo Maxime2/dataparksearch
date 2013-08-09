@@ -1,0 +1,336 @@
+<sect1 id="charset">
+	<title>Кодировки</title>
+<indexterm><primary>Кодировки</primary></indexterm>
+
+	<sect2 id="supcharsets">
+		<title>Поддерживаемые кодировки</title>
+		<para><application>DataparkSearch</application> поддерживает почти все популярные
+		в современном Internet однобайтные и многобайтные кодировки, 
+		включая корейский euc-kr, китайские Big5, gbk и gb2312, японские shift-jis, euc-jp
+		и iso-2022-jp, а так же Unicode UTF-8. Это позволяет индексировать документы 
+		на более чем 650-ти языках мира, предусмотренных 
+в <ulink url="http://www.unicode.org/">Unicode</ulink>.
+		</para>
+
+		<para>Внимание! Из-за большого объема перекодировочных таблиц, 
+		приводящего к увеличению размера исполняемых файлов, поддержка
+		многобайтных кодировок не компилируется
+		по-умолчанию. Смотрите параметры <filename>configure</filename>,
+		как активизировать поддержку этих кодировок при компиляции.</para>
+
+&groups;
+
+	</sect2>
+
+	<sect2 id="charsetsalias">
+		<title>Разные названия кодировок</title>
+		<para>Каждая кодировка имеет модет иметь несколько
+		различных вариантов названия. Например, iso-8859-2, iso8859-2, latin2 -
+		названия одной и той же кодировки. <application>DataparkSearch</application>
+		понимает следующие варианты названий кодировок:</para>
+
+&csalias;
+
+	</sect2>
+
+
+
+	<sect2 id="recoding">
+		<title>Перекодировка во время индексации</title>
+		<para><literal>indexer</literal> перекодирует все
+документы в кодировку, указанную в команде 
+<indexterm><primary>Команда</primary><secondary>LocalCharset</secondary></indexterm><command>LocalCharset</command>
+в файле <filename>indexer.conf</filename>. Внутри программы перекодировка
+реализована посредством промежуточного представления в виде Unicode. 
+Особенность <application>DataparkSearch</application> состоит в том, что перекодировка между 
+несовместимыми кодировками (например, между русской и греческой)
+не приводит к потере данных.  В случае, если перекодировка какого-либо
+символа невозможна, <application>DataparkSearch</application> представит этот символ в базе данных
+в HTML-формате в виде &amp;#NNN; где NNN - код символа, закрепленного
+за ним в Unicode. Таким образом, вне зависимости от выбора 
+<command>LocalCharset</command>, <application>DataparkSearch</application> сохранит полную информацию
+о документе без каких-либо потерь. Однако, выбор <command>LocalCharset</command>
+влияет на размер базы данных.
+</para>
+	</sect2>
+
+
+
+	<sect2 id="local-charset-howto">
+		<title>Выбор LocalCharset</title>
+		<para>Выбор <command>LocalCharset</command>
+		должен производиться с учетом языкового наполнения
+		индексируемого пространства. Правильный выбор позволит
+		уменьшить место, требуемое для хранения, а так же увеличить
+		скорость индексации и поиска.
+		</para>
+		
+		<para>
+Если командой <command>LocalCharset</command> указана
+кодировка <literal>UTF-8</literal>, то это позволит сохранять любые символы,
+поддерживаемым в <ulink url="http://www.unicode.org/">Unicode</ulink>
+без необходимости представлять их в HTML-формате. Однако, следует иметь в виду,
+что это заведомо приводит к использованию до двух-трех байт на каждую
+не-латинскую букву. Например, на каждую букву кириллицы требуется два
+байта для сохранения ее в UTF-8.</para>
+		
+		<para>Поскольку все кодировки включают в себя
+латинские буквы, то любая кодировка предоставляет поддержку по-крайней
+мере двух языков - английского и еще какого-то одного (или более) языка
+(единственное исключение - <literal>US-ASCII</literal>, поддерживающий
+только латинские буквы). Это означает, что при использовании
+<application>DataparkSearch</application> с <command>LocalCharset</command>,
+отличным от UTF-8, одновременная индексация документов с языками из одной
+группы не приводит к необходимости использовать HTML-формат, а значит
+не приводит к увеличению необходимого дискового пространства.
+		</para>
+		
+		<para>Например, если Ваша поисковая машина настроена
+использовать <command>LocalCharset</command> из 5-й группы (Кирилица), 
+то документы на болгарском, белорусском, македонском, русском, сербском,
+украинском, а так же на английском языках будут сохранены компактно,
+с использованием одного байта на одну букву. Индексирование документов
+в других кодировках не из 5-й группы (включая UTF-8) также возможно;
+однако <literal>indexer</literal> будет использовать HTML-формат для
+сохранения букв, отличных от кирилических и английских. Сохранение, 
+например, греческой буквы в кириллической кодировке требует применение
+семь байт на одну букву.
+		</para>
+	
+		<para>Таким образом, следует придерживаться следующего
+		алгоритма при выборе <command>LocalCharset</command>:
+		если Вы индексируете, например, в-основном кириллические
+		и анлгийские документы, то выгоднее изпользовать LocalCharset
+		из 5й группы. Если же Ваши документы сожержат информацию на
+		языках из многих языковыз групп одновременно, то в качестве
+		<command>LocalCharset</command> выгоднее использовать UTF8.
+		</para>
+		
+	</sect2>
+	
+	<sect2 id="charsetdetect">
+		<title>Определение кодировки документа</title>
+		<para><literal>indexer</literal> определяет кодировку в документа в следующем порядке:
+		</para>
+		<orderedlist>
+			<listitem>
+				<para>"Content-type: text/html; charset=xxx"</para>
+			</listitem>
+			<listitem>
+				<para>&lt;META NAME="Content-Type" CONTENT="text/html; charset=xxx"&gt;</para>
+<para><indexterm><primary>Команда</primary><secondary>GuesserUseMeta</secondary></indexterm>
+Выбор этого варианта можно выключить указав команду <command>GuesserUseMeta no</command> в файле
+конфигурации <filename>indexer.conf</filename>.</para>
+			</listitem>
+			<listitem>
+				<para>При выключенном автораспозновании: кодировка по-умолчанию, указанная командой "Charset"</para>
+				<para>При включенном автораспознавании: результат работы автоматического распознавания кодировки.</para>
+			</listitem>
+		</orderedlist>
+	</sect2>
+
+	<sect2 id="charset-guesser">
+		<title>Автоматическое распознавание кодировки</title>
+		<para><application>DataparkSearch</application> имеет механизм
+		автоматического распознавания кодировки и языка документа. 
+		В настоящее время распознается около 100 различных комбинаций
+		кодировки и языка. Распознавание реализовано с использованием так
+		называемой <ulink url="http://www.maxime.net.ru/doc/guess.ru.shtml">
+"N-Gram-Based Text Categorization"</ulink> технологии. В комплекте
+		программы поставляются файлы с так называемыми  "картами языков",
+		один файл на каждую пару кодировка-язык. По-умолчанию они устанавливаются
+		в  <filename>/usr/local/dpsearch/etc/langmap/</filename>. Чтобы
+		увидеть полный список распознаваемых в настоящий момент языков и кодировок,
+		взгляните в этот каталог. Распознавание работает хорошо на текстах в
+		500 байт и длиннее. Более короткие тексты могут распознаваться хуже.
+		Для активизации автоматического распознавания кодировки необходимо
+		загрузить языковые карты, используя команды 
+<indexterm><primary>Команда</primary><secondary>LangMap</secondary></indexterm><command>LangMap</command>.
+		</para>
+
+
+<sect3 id="langmapfile_cmd">
+<title>Команда <command>LangMapFile</command></title>
+<indexterm><primary>Команда</primary><secondary>LangMapFile</secondary></indexterm>
+<para>Загружает из указанного файла карту языка и кодировки для автоматического их определения.
+Вы можете задать как абсолютный, так и относительный путь.
+Относительный путь задаётся от директории <filename>etc</filename>. 
+Можно использовать несколько команд <command>LangMapFile</command>.
+<programlisting>
+LangMapFile langmap/en.ascii.lm
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="dpguesser">
+<title>Создание собственных карт языков</title>
+
+<para>Для создания собственных карт языков служит утилита
+<indexterm><primary>dpguesser</primary></indexterm><literal>dpguesser</literal>. Кроме этой утилиты вам
+также потребуется файл-образец текстов на данном языке в нужной кодировке. Для создания своей
+карты языка используйте следующий формат команды:
+<programlisting>
+        dpguesser -p -c charset -l language &lt; FILENAME &gt; language.charset.lm
+</programlisting>
+</para>
+<para>Утилиту <literal>dpguesser</literal> можно также использовать для определения языка и кодировки
+файла на основании уже созданных карт языков. Для этого используйте следующий формат команды:
+<programlisting>
+        dpguesser [-n maxhits] &lt; FILENAME
+</programlisting>
+</para>
+
+<para>Для некоторых языков существует несколько используемых кодировок. Для преобразования
+текстов из одной, поддерживаемой <application>DataparkSearch</application> кодировки, в другую
+предназначена утилита <indexterm><primary>dpconv</primary></indexterm><literal>dpconv</literal>.
+<programlisting>
+        dpconv [OPTIONS] -f charset_from -t charset_to [configfile] &lt; infile &gt; outfile
+</programlisting>
+</para>
+
+<para>
+По умолчанию, утилиты <literal>dpguesser</literal> и <literal>dpconv</literal> устанавливаются в
+директорию <filename>/usr/local/dpsearch/sbin/</filename>.
+</para>
+</sect3>
+
+<para><indexterm><primary>Команда</primary><secondary>LangMapUpdate</secondary></indexterm>
+Поддерживается автоматическое обновление карт языков и кодировок, если удалённый сервер
+возвращает чётко указаные язык и кодировку. Для включения этой возможности необходимо в файле
+<filename>indexer.conf</filename> указать команду
+<programlisting>
+LangMapUpdate yes
+</programlisting>
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>GuesserBytes</secondary></indexterm>
+По умолчанию, <application>DataparkSearch</application> использует только первые 512 байт каждого индексируемого файла для 
+определения языка и кодировки. Вы можете изменить это значение при помощи команды <command>GuesserBytes</command>. 
+Используйте значение 0 для учёта всего такста индексируемого документа.
+<programlisting>
+GuesserBytes 16384
+</programlisting>
+</para>
+
+	</sect2>
+	
+	<sect2 id="defcharset">
+		<title>Кодировка документов по-умолчанию</title>
+<indexterm><primary>Команда</primary><secondary>RemoteCharset</secondary></indexterm>
+		<para>Используйте команду <command>RemoteCharset</command>
+		в <filename>indexer.conf</filename> чтобы установить
+		кодировку документов по-умолчанию.
+		</para>
+		
+		<para>
+		Если индексируемый сервер не выдает кодировку документа
+		ни в заголовке Content-Type, ни в META-тэге, и при этом
+		автоматическое распознаывание либо отключено, либо не 
+		дало хорошего результата (т.е. язык и кодировка документа
+		"не похожи" на представленные в загруженных картах), то в
+		качестве кодировки документа будет использована кодировка,
+		указанная в команде <command>RemoteCharset</command>.
+		Если же кодировка по-умолчанию не указана, то будет
+		использована iso-8859-1 (latin1).
+		</para>
+	</sect2>
+	
+	<sect2 id="deflang">
+		<title>Язык документов по-умолчанию</title>
+		<para>Вы можете установить язык документов по-умолчанию
+		с помощью команды <varname>DefaultLang</varname> в
+		файле <filename>indexer.conf</filename>. 
+		Это может пригодиться, например, во время поиска для
+		ограничения поиска только по документам на указанном языке.</para>
+<programlisting>
+DefaultLang &lt;string&gt;
+</programlisting>
+<para>Задаёт язык документов по умолчанию.</para>
+<programlisting>
+DefaultLang en
+</programlisting>
+	</sect2>
+
+	<sect2 id="charset-searchdec">
+		<title>Перекодировка во время поиска</title>
+		<para>Чтобы указать кодировку, в которой будут оторбражаться
+		результаты поиска, используйте команду <command>BrowserCharset</command>
+		в <filename>search.htm</filename>. <command>BrowserCharset</command> может отличаться от 
+		<command>LocalCharset</command>. Поисковая программа произведет
+		перекодировку автоматически.</para>
+	</sect2>
+
+
+<sect2 id="localcharset_cmd">
+<title>Команда <command>LocalCharset</command></title>
+<indexterm><primary>Команда</primary><secondary>LocalCharset</secondary></indexterm>
+<para>Задаёт кодировку, которая будет использоваться для хранения информации в базе данных.
+Данные во всех других кодировках будут перекодированы в эту кодировку.
+См. <xref linkend="charset"/> для подробного описания как выбрать <command>LocalCharset</command>
+для языков, используемых на вашем сайте или сайтах, а также списка поддерживаемых кодировок.
+Эта команда должны быть задана один раз и имеет глобальный эффект для всего файла конфигрурации.
+Значение по умолчанию: <literal>iso-8859-1</literal> (<literal>latin1</literal>).
+<programlisting>
+LocalCharset koi8-r
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="remotecharset_cmd">
+<title>Команда <command>RemoteCharset</command></title>
+<indexterm><primary>Команда</primary><secondary>RemoteCharset</secondary></indexterm>
+<programlisting>
+RemoteCharset &lt;charset&gt;
+</programlisting>
+<para>
+<option>&lt;сharset&gt;</option> - кодовая страница по умолчанию для последующих команд <command>Server</command>,
+<command>Realm</command> или <command>Subnet</command>.
+Используется при индексировании &quot;плохих&quot; серверов, не предоставляющих информации о кодировке в заголовках ответа сервера или в
+&lt;META NAME="Content" Content="text/html; charset="some_charset"&gt; на страницах.
+Команда действует до конца файла, или до следующей команды <command>RemoteCharset</command>.
+Значение по умолчанию: iso-8859-1 (latin1).
+<programlisting>
+RemoteCharset iso-8859-5
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="urlcharset_cmd">
+<title>Команда <command>URLCharset</command></title>
+<indexterm><primary>Команда</primary><secondary>URLCharset</secondary></indexterm>
+<programlisting>
+URLCharset &lt;charset&gt;
+</programlisting>
+<para>
+<option>&lt;charset&gt;</option> - кодовая страница для аргументов последующих команд <command>Server</command>, 
+<command>Realm</command> или <command>URL</command>.
+Эта команда задаёт кодовубю страницу только для аргументов последующих команду и не влияет на определение кодировки
+индексируемых страниц.
+Имеет меньший приоритет, нежели команда <command>RemoteCharset</command>.
+Может задаваться перед каждой командой <command>Server</command>, <command>Realm</command> или <command>URL</command> и
+действует до конца файла конфигурации или до следующей команды <command>URLCharset</command>.
+Значение по умолчанию: ISO-8859-1 (latin1).
+<programlisting>
+URLCharset KOI8-R
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="charstoescape">
+<title>Команда <command>CharsToEscape</command></title>
+<indexterm><primary>Команда</primary><secondary>CharsToEscape</secondary></indexterm>
+<programlisting>
+CharsToEscape &quot;\&quot;&amp;&lt;&gt;![]&quot;
+</programlisting>
+<para>Используйте эту команду в вашем поисковом шаблоне для указания списка эскейп-символов для мета-переменных поискового шаблона 
+типа $&amp;(x).
+</para>
+</sect2>
+
+
+
+</sect1>

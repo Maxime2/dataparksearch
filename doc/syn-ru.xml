@@ -1,0 +1,61 @@
+<sect2 id="synonyms">
+	<title>Синонимы
+<indexterm><primary>Синонимы</primary></indexterm>
+</title>
+
+	<para>Файлы синонимов устанавливаются в поддиректорию
+<filename>etc/synonym</filename> относительно корневой директории установки <application>DataparkSearch</application>.
+Большие файлы синонимов для некоторых языков вы должны скачать отдельно с нашего сайта или с одного из наших зеркал,
+см. <xref linkend="get"/>.</para>
+
+	<para><indexterm><primary>Команда</primary><secondary>Synonym</secondary></indexterm>
+Для включения поддержки синонимов, добавьте в шаблон поиска
+<filename>search.htm</filename> команды вида
+<literal>Synonym &lt;filename&gt;</literal>, например:
+	<programlisting>
+Synonym synonym/english.syn
+Synonym synonym/russian.syn
+</programlisting>
+</para>
+
+	<para>Имена файлов могут быть абсолютными (если имена начинаются с /),
+либо относительными поддиректории <filename>etc</filename> установки <application>DataparkSearch</application>.</para>
+
+	<para>Если используется <literal>searchd</literal>, добавьте эти команды вместо шаблона поиска в 
+<filename>searchd.conf</filename>.</para>
+
+	<para>Вы можете создавать свои собственные списки синонимов.
+В качестве примера вы можете взять файл синонимов английского языка.
+В начале файла укажите следующие две команды:
+	<programlisting>
+Language: en
+Charset:  us-ascii
+</programlisting>
+</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				<varname>Language</varname> - стандартный 
+(ISO 639) двубуквенный код языка.</para>
+		</listitem>
+		<listitem>
+			<para>
+				<varname>Charset</varname> - любая
+кодировка, поддерживаемая <application>DataparkSearch</application> (see <xref linkend="charset"/>).
+Список синонимов должен быть закодирован с использованием этой кодировки.
+</para>
+		</listitem>
+	</itemizedlist>
+
+<para>Дополнительно вы можете указать в списке синонимов команду:
+	<programlisting>
+Thesaurus: yes
+</programlisting>
+</para>
+<para>Эта команда включает режим тезауруса для списка синонимов. В этом режиме только слова, расположенные на одной строке
+считаются синонимами.
+</para>
+
+</sect2>
+

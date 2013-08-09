@@ -1,0 +1,140 @@
+<!--variables
+ImportEnv DPS_TEST_DBADDR0
+DBAddr $(DPS_TEST_DBADDR0)?dbmode=single
+#DBAddr $(DPS_TEST_DBADDR0)?dbmode=single
+
+LogLevel 0
+
+# Uncomment this line to enable search result cache
+#Cache yes
+
+#  Uncomment this line if you do not want to detect and show clones
+#DetectClones	no
+
+# Use proper local and browser charsets
+# Default charset is iso-8859-1 (latin1)
+# which is suitable for the most Western European languages
+
+LocalCharset   utf-8
+BrowserCharset utf-8
+
+Acronym /home/maxime/make/DataparkSearch/test/test-boolean/acr.conf
+#Affix en latin1 /usr/local/dpsearch/etc/en/english.aff
+#Spell en latin1 /usr/local/dpsearch/etc/en/british.xlg
+
+# Load stopwords file.  File name is either absolute
+# or relative to /etc directory of DataparkSearch installation.
+#
+#StopwordFile stopwords/en.sl
+#StopwordFile stopwords/ru.sl
+#
+
+#
+# Minimum and maximum word lengths
+#
+#MinWordLen 1
+#MaxWordLen 32
+
+# Number of pages in navigator bar
+#
+#PagesPerScreen 10
+
+# Load synonyms file.  File name is either absolute
+# or relative to /etc directory of DataparkSearch installation.
+#
+#Synonym synonym/english.syn
+#Synonym synonym/russian.syn
+#
+
+#
+# How to hilight searched words.
+#
+HlBeg	<b>
+HlEnd	</b>
+
+# Uncomment this line to enable error loging to stderr
+#Log2stderr yes
+#
+
+# Uncomment this line to change default URL basis for storedoc.cgi
+#StoredocURL     /cgi-bin/storedoc
+#
+
+# Uncoment this line to change default maximal excerpt size. Default value is 256.
+#ExcerptSize 1024
+#
+
+# Uncomment this line to change Last-Modified format output
+# Use strftime function meta variables
+#DateFormat %d %b %Y %X %Z
+DateFormat %s
+
+DetectClones yes
+Locale en_US.ISO8859-1
+
+-->
+
+<!--top-->
+<!--/top-->
+
+
+<!--restop-->
+Total results found: $(total), Results: $(first)-$(last)
+.
+<!--/restop-->
+
+
+<!--res-->
+$(Order) -- $(URL)
+
+<!--/res-->
+
+
+<!--resbot-->
+<!--/resbot-->
+
+
+<!--clone-->
+<!--/clone-->
+
+
+<!--navleft-->
+<!--/navleft-->
+
+<!--navleft_nop-->
+<!--/navleft_nop-->
+
+<!--navbar1-->
+<!--/navbar1-->
+
+<!--navbar0-->
+<!--/navbar0-->
+
+<!--navright-->
+<!--/navright-->
+
+<!--navright_nop-->
+<!--/navright_nop-->
+
+
+
+<!--notfound-->
+No results found.
+<!--/notfound-->
+
+
+
+<!--noquery-->
+You haven't typed any word(s) to search for.
+<!--/noquery-->
+
+
+
+<!--error-->
+An error occured!
+<!--/error-->
+
+
+
+<!--bottom-->
+<!--/bottom-->

@@ -1,0 +1,152 @@
+<!--
+
+    This is an example of extended search form file for DataparkSearch 4
+    (C) 2008, Datapark corp.
+
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Extended Search Form</TITLE>
+</HEAD>
+
+<body BGCOLOR="#FFFFFF" LINK="#0000CC" VLINK="#0000CC" ALINK="#0000CC">
+
+<FORM METHOD="GET" ACTION="/cgi-bin/search.cgi">
+<table bgcolor="#EEEEEE" border="0">
+  <TR>
+    <TD>Search for:</TD>
+    <TD COLSPAN=5>
+      <INPUT TYPE="text"   NAME="q"    VALUE="" SIZE="50">
+      <INPUT TYPE="submit" NAME="cmd"  VALUE="Search!">
+      <INPUT TYPE="hidden" NAMe="form" VALUE="extended">
+      <small><a href="simple.htm">Simple mode</a></small>
+    </TD>
+  </TR>
+
+  <TR>
+    <TD>Match:</TD>
+    <TD>
+      <SELECT NAME="m">
+        <OPTION VALUE="all" SELECTED>All words
+        <OPTION VALUE="any">Any word
+        <OPTION VALUE="near">All words near
+        <OPTION VALUE="bool">Boolean query
+      </SELECT>
+    </TD>
+    <TD>Results per page:</TD>
+    <TD>
+      <SELECT NAME="ps">
+        <OPTION VALUE="10" SELECTED>10
+        <OPTION VALUE="20">20
+        <OPTION VALUE="50">50
+      </SELECT>
+    </TD>
+    <TD>Output format:</TD>
+    <TD>
+      <SELECT NAME="fmt">
+        <OPTION VALUE="long">Long
+        <OPTION VALUE="short" SELECTED>Short
+        <OPTION VALUE="url">URL
+      </SELECT>
+    </TD>
+  </TR>
+
+  <TR>
+    <TD>Search for:</TD>
+    <TD>
+      <SELECT NAME="wm">
+        <OPTION VALUE="wrd" SELECTED>Whole word
+        <OPTION VALUE="beg">Beginning
+        <OPTION VALUE="end">Ending
+        <OPTION VALUE="sub">Substring
+      </SELECT>
+    </TD>
+    <TD>Words forms:</TD>
+    <TD>
+       <SELECT NAME="sp">
+         <OPTION VALUE="1" SELECTED>All
+         <OPTION VALUE="0">Exact
+       </SELECT>
+    </TD>
+    <TD>Use synonyms:</TD>
+    <TD>
+      <SELECT NAME="sy">
+        <OPTION VALUE="1">Yes
+        <OPTION VALUE="0" SELECTED>No
+      </SELECT>
+    </TD>
+  </TR>
+
+
+  <TR>
+    <TD>In:</TD>
+    <TD>
+      <SELECT NAME="wf">
+        <OPTION VALUE="2221" SELECTED>Whole document
+        <OPTION VALUE="2000">Description
+        <OPTION VALUE="0200">Keywords
+        <OPTION VALUE="0020">Title
+        <OPTION VALUE="0001">Body
+      </SELECT>
+    </TD>
+    <TD>Document types:</TD>
+    <TD>
+      <SELECT NAME="type">
+        <OPTION VALUE="" SELECTED>all types
+        <OPTION VALUE="text/html">text/html
+        <OPTION VALUE="text/plain">text/plain
+      </SELECT>
+    </TD>
+    <TD>
+	<select name="GroupBySite">
+	<option value="yes" selected>group by site</option>
+	<option value="no">do not group</option>
+	</select>
+    </TD>
+  </TR>
+
+<!-- This type of search works only for sql-based dbmodes, i.e. it doesn't work for dbmode cache.
+     Uncomment this if you need it. -->
+<!--
+  <TR>
+    <TD>URL matches:</TD>
+    <TD><INPUT TYPE="text" NAME="ul" VALUE=""></TD>
+    <TD COLSPAN=4>
+      <small>e.g. http://www.dataparksearch.org , /manual/ , index.html</small>
+    </TD>
+  </TR>
+-->
+<!-- Uncomment this to limit database subsection by "tag" -->
+<!--
+  <TR>
+    <TD>Search through:</TD>
+    <TD>
+      <SELECT NAME="t">
+        <OPTION VALUE="" SELECTED>All sites
+        <OPTION VALUE="1">Sport
+        <OPTION VALUE="2">Technology
+        <OPTION VALUE="3">Shopping
+      </SELECT>
+    </TD>
+   </TR>
+-->
+
+</table>
+</form>
+
+
+<table bgcolor="#EEEEEE" width="100%">
+  <tr><td>&nbsp;</td></tr>
+</table>
+
+<table width="100%" bgcolor="#FFFFFF">
+<tr>
+  <td align="left">
+    <font size="1"><a href="http://www.dataparksearch.org/">Powered by DataparkSearch Engine</a></font>
+  </td>
+</tr>
+</table>
+<P>
+</BODY>
+</HTML>

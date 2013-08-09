@@ -1,0 +1,37 @@
+<sect1 id="content-enc">
+	<title>Поддержка Content-Encoding
+<indexterm><primary>Content-Encoding</primary></indexterm>
+</title>
+	<para>
+		Поисковый движок <application>DataparkSearch</application> поддерживает сжатие HTTP
+запросов и ответов (Content encoding). Сжатие запросов и ответов http-сервера позволяет значительно
+улучшить производительность обработки http-запросов за счет уменьшения объёма передаваемых данных.
+</para>
+
+	<para>Использование сжатия http-запросов позволяет уменьшить трафик в два и более раз.</para>
+
+	<para>В <ulink url="ftp://ftp.isi.edu/in-notes/rfc2616.txt">спецификации HTTP 1.1 (RFC 2616)</ulink>
+определены четыре метода кодирования содержимого ответов сервера:
+<literal>gzip, deflate, compress</literal>, и <literal>identity</literal>.
+</para>
+
+	<para>Если включена поддержка Content-encoding, <command>indexer</command>
+шлёт http-серверу заголовок
+<literal>Accept-Encoding: gzip,deflate,compress</literal>. </para>
+
+	<para>Если http-сервер поддерживает любой из методов кодирования gzip, deflate or compress
+он шлёт ответ, закодированый этим методом.</para>
+
+	<para>Для сборки <application>DataparkSearch</application> с поддержкой сжатия
+HTTP-запросов, необходимо наличие библиотеки <literal>zlib</literal>, установленной на вашем компьютере.</para>
+
+	<para>Чтобы включить поддержку Content encoding, сконфигурируйте
+<application>DataparkSearch</application> с указанием следующего ключа:
+</para>
+
+	<para>
+		<userinput>./configure --with-zlib</userinput>
+	</para>
+
+	<para>Используете этот ключ совместно с другими нужными вам ключами.</para>
+</sect1>

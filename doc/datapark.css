@@ -1,0 +1,12 @@
+BODY {margin-left: 6em; margin-right: 6em;}
+P {text-align: justify;}
+TABLE.CALSTABLE { margin-left: 4em; width: 86%; }
+.SECT1 { text-align: left; }
+.SECT2 { text-align: left; }
+.SECT3 { text-align: left; }
+.SECT4 { text-alogn: left; }
+.chapter, .CHAPTER{ text-align: left; } 
+.programlisting, .PROGRAMLISTING { text-align: left; color: #4444FF; font-size: small;}
+.synopsis, .SYNOPSIS { text-align: left; color: #4444FF; }
+.APPLICATION { font-style: italic;}
+.TOC {margin-left: 4em;}

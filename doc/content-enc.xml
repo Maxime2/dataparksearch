@@ -1,0 +1,37 @@
+<sect1 id="content-enc">
+	<title>Content-Encoding support</title>
+<indexterm><primary>Content-Encoding</primary></indexterm>
+
+	<para>
+		<application>DataparkSearch</application> engine
+supports HTTP compression (Content encoding). Compression can have a
+major impact on the performance of HTTP transactions. The only way to
+obtain higher performance is to reduce the number of bytes
+transmitted.
+</para>
+
+	<para>Using content encoding to receive a server's response you can reduce the traffic by twice or more.</para>
+	<para>The <ulink url="ftp://ftp.isi.edu/in-notes/rfc2616.txt">HTTP 1.1 (RFC 2616) specification</ulink>
+contains four content encoding methods: <literal>gzip, deflate, compress</literal>, and <literal>identity</literal>.</para>
+
+	<para>When Content-encoding is enabled,
+<application>DataparkSearch</application>'s indexer sends to a server
+<literal>Accept-Encoding: gzip,deflate,compress</literal> string in HTTP
+headers. </para>
+
+	<para>If the server supports any of gzip, deflate or compress
+encoding, it sends gziped, deflated or compressed response.</para>
+	<para>To compile <application>DataparkSearch</application> with
+HTTP Content encoding support, the <literal>zlib</literal> library is
+required.</para>
+
+	<para>To enable HTTP Content encoding support, configure
+<application>DataparkSearch</application> with the following
+option:</para>
+
+	<para>
+		<userinput>./configure --with-zlib</userinput>
+	</para>
+
+	<para>Use this option along with all the other necessary ones.</para>
+</sect1>

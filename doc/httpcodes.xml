@@ -1,0 +1,119 @@
+<sect1 id="http-codes">
+	<title>Supported HTTP response codes</title>
+	<para>It is described here the way <application>DataparkSearch</application> processes
+different HTTP codes. Pseudo-language is used
+here for explanation.</para>
+	<itemizedlist>
+		<listitem>
+			<para>200 OK</para>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>If -m command line argument ("force reindex") specified, GOTO 4.</para>
+				</listitem>
+				<listitem>
+					<para>Comparing new checksum with old one stored in database</para>
+				</listitem>
+				<listitem>
+					<para>If checksum are the same, next_index_time=Now()+Period, GOTO 7</para>
+				</listitem>
+				<listitem>
+					<para>Parsing the document, creating word list and adding in "url" table all of the found HREFs</para>
+				</listitem>
+				<listitem>
+					<para>Comparing created word list with old one stored in "dict" table</para>
+				</listitem>
+				<listitem>
+					<para>Doing UPDATEs, DELETEs or INSERTs in table "dict" if something is different in word lists.</para>
+				</listitem>
+				<listitem>
+					<para>Done</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<para>304 Not Modified</para>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						<literal>next_index_time=now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Done</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<literallayout>
+301 Moved Permanently
+302 Moved Temporarily
+303 See Other
+</literallayout>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>Deleting all words in table "dict" for current URL</para>
+				</listitem>
+				<listitem>
+					<para><literal>next_index_time=Now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Adding an URL given in <literal>Location: </literal> header</para>
+				</listitem>
+				<listitem>
+					<para>Done</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<literallayout>
+300 Multiple Choices
+305 Use Proxy (proxy redirect)
+400 Bad Request
+401 Unauthorized
+402 Payment Required
+403 Forbidden
+404 Not found
+405 Method Not Allowed
+406 Not Acceptable
+407 Proxy Authentication Required
+408 Request Timeout
+409 Conflict
+410 Gone
+411 Length Required
+412 Precondition Failed
+413 Request Entity Too Large
+414 Request-URI Too Long
+415 Unsupported Media Type
+500 Internal Server Error
+501 Not Implemented
+502 Bad Gateway
+505 Protocol Version Not Supported
+</literallayout>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>Deleting all words in table "dict" for current URL</para>
+				</listitem>
+				<listitem>
+					<para><literal>next_index_time=Now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Done</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<literallayout>
+503 Service Unavailable
+504 Gateway Timeout
+</literallayout>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						<literal>next_index_time=Now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Done</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+	</itemizedlist>
+</sect1>

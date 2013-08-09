@@ -1,0 +1,34 @@
+<sect1 id="track">
+	<title>Search queries tracking</title>
+<indexterm><primary>tracking of search queries</primary></indexterm>
+
+	<para><application>DataparkSearch</application> supports query tracking.</para>
+	<para>When doing a search,
+front-end uses table <literal>qtrack</literal> to store query words, client IP address, a number of found
+documents and current <application>UNIX</application> timestamp in seconds and table <literal>qinfo</literal> to store
+all search parameters.</para>
+
+	<para>To enable tracking, add the <literal>trackquery</literal> parameter to <command>DBAddr</command> command
+(see <xref linkend="dbaddr_cmd"/>) in your search template. For example:
+<programlisting>
+DBAddr pgsql://user:pass@localhost/search/?dbmode=cache&amp;trackquery
+</programlisting>
+</para>
+<note>
+ <para>
+ If you use <filename>searchd</filename>, you should add this parameter only in your <filename>searchd.conf</filename> file.
+ </para>
+ <para><indexterm><primary>Command</primary><secondary>TrackDBAddr</secondary></indexterm>
+ You may use <command>TrackDBAddr</command> command to specify different database to store query tracking data. This database should
+have the same <literal>qtrack</literal> and <literal>qinfo</literal> tables as in DataparkSearch's database.
+ </para>
+</note>
+
+	<para>Query tracking is useful to have a statistics of your
+search engine usage. To make a search queries summary, you may
+execute, for example, this SQL expression:
+	<programlisting>
+SELECT qwords,count(*),sum(found),avg(found) FROM qtrack GROUP BY qwords;
+</programlisting>
+	</para>
+</sect1>

@@ -1,0 +1,128 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(bootstrap)
+AC_CANONICAL_SYSTEM
+AM_INIT_AUTOMAKE(libdp, 4.54-`date "+%d%m%Y"`)
+dnl AM_INIT_AUTOMAKE(libdp, 4.54)
+AM_MAINTAINER_MODE
+AM_CONFIG_HEADER(include/dps_config.h)
+AC_PROG_MAKE_SET
+AC_CONFIG_MACRO_DIR([m4])
+
+# Set all version vars based on $VERSION. How do we do this more elegant ?
+# Remember that regexps needs to quote [ and ] since this is run through m4
+DPS_TRIM_VERSION=`echo $VERSION | sed -e "s|\.*pre[[0-9]]*$||"`
+DPS_BASE_VERSION=`echo $DPS_TRIM_VERSION | sed -e "s|\.[[^.]]*$||" | sed -e "s|^\(.\)\.\(.\)$|\\1\.0\\2|" | sed -e "s|\.||g"`
+dnl DPS_TAIL_VERSION=`echo $DPS_TRIM_VERSION | sed -e "s|^[[0-9]]\.[[0-9]]*\.||" | sed -e "s|^\(.\)$|0\\1|"`
+DPS_TAIL_VERSION=`echo $DPS_TRIM_VERSION | sed -e "s|^[[0-9]]\.[[0-9]]*\.||" | sed -e "s|^\(.\)$|0\\1|" | sed -e "s|-.*||" | sed -e "s|^.*\.||"`
+DPS_VERSION_ID=${DPS_BASE_VERSION}${DPS_TAIL_VERSION}
+
+AC_DEFINE_UNQUOTED(DPS_VERSION_ID,$DPS_VERSION_ID)
+AC_SUBST(DPS_BASE_VERSION)
+AC_SUBST(DPS_TAIL_VERSION)
+AC_SUBST(DPS_VERSION_ID)
+
+dnl Installation prefix by default
+AC_PREFIX_DEFAULT(/usr/local/dpsearch)
+
+dnl Check if build env is sane
+AM_SANITY_CHECK
+
+dnl Check for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+
+dnl Enable shared libs by default (to disable - place AM_DISABLE_SHARED)
+AM_PROG_LIBTOOL
+AC_SUBST(LIBTOOL_DEPS)
+
+dnl Checks for header files.
+AC_STDC_HEADERS
+AC_CHECK_HEADERS(fcntl.h unistd.h libutil.h \
+  sys/ioctl.h sys/time.h sys/times.h sys/param.h sys/wait.h sys/mman.h \
+  getopt.h syslog.h select.h sys/select.h sys/socket.h arpa/inet.h netdb.h\
+  netinet/in.h netinet/in_systm.h  netinet/ip.h  netinet/tcp.h netinet/in.h\
+	arpa/nameser.h resolv.h)
+
+dnl Check if we are little or big endian
+AC_C_BIGENDIAN
+
+dnl Hack to build statically linked binary distributions
+STATIC_LFLAGS=""
+static_lflags=no
+AC_MSG_CHECKING(for -all-static linker flags)
+AC_ARG_ENABLE(all-static,
+[  --enable-all-static     build statically linked binaries],static_lflags=$enableval)
+if test "$static_lflags" != no; then
+	AC_MSG_RESULT(enabled)
+	STATIC_LFLAGS="-all-static"
+	LINKING="static"
+else
+	AC_MSG_RESULT([disabled])
+	LINKING="dynamic"
+fi
+AC_SUBST(STATIC_LFLAGS)
+AC_SUBST(LINKING)
+
+#
+
+debug=no
+AC_MSG_CHECKING(for debug info)
+AC_ARG_WITH(debug,
+    [  --with-debug            Build with debugging info],
+    [debug=$withval],
+    [debug=no])
+if test "$debug" = "yes"
+then
+  CFLAGS="$CFLAGS -O0 -g"
+  AC_MSG_RESULT(yes)
+else
+  # Optimized version. No debug
+  CFLAGS="-O2 $CFLAGS"
+  AC_MSG_RESULT(no)
+fi
+
+#
+
+dnl Check sizeof_type
+AC_CHECK_SIZEOF(char*)
+AC_CHECK_SIZEOF(int)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(short)
+AC_CHECK_SIZEOF(void*)
+dnl AC_CHECK_SIZEOF(off_t)
+
+dnl Check for libc performance
+AC_MSG_CHECKING(for libc functions performance, please be patient)
+AC_RUN_IFELSE([AC_LANG_SOURCE([
+#include "confdefs.h"
+#define DPS_CONFIGURE
+#include "src/dp.c"
+])], AC_MSG_RESULT(done), AC_MSG_FAILURE(unable to complete tests), AC_MSG_RESULT(cross-compiling?)
+)
+
+
+
+#
+
+
+have_db=no
+DBTYPE=
+AC_DEFINE_UNQUOTED(DPS_DBTYPE,"$DBTYPE")
+
+CDIR=`pwd`
+AC_SUBST(CDIR)
+AC_OUTPUT(Makefile src/Makefile)
+
+echo
+echo "***********************************************"
+echo "*                                             *"
+echo "*     Now run make && make install            *"
+echo "*     If it fails, try to use GNU make,       *"
+echo "*     often installed as gmake.               *"
+echo "*                                             *"
+echo "*                                             *"
+echo "*     Thank you for using libdp!              *"
+echo "***********************************************"
+echo
+

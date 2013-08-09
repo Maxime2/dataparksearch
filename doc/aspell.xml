@@ -1,0 +1,20 @@
+<sect2 id="aspell">
+<indexterm><primary>Aspell</primary></indexterm>
+<title>Aspell</title>
+
+<para>With <application>Aspell</application> support compiled, it's possible automatically extend search query by spelling
+suggestions for query words. To enable this feature, you need to install <ulink url="http://aspell.net/">Aspell</ulink> at your system
+before <application>DataparkSearch</application> build. Then you need to place
+<indexterm><primary>Command</primary><secondary>AspellExtensions</secondary></indexterm>
+<userinput>
+AspellExtensions yes
+</userinput>
+command into your <filename>indexer.conf</filename> and <filename>search.htm</filename> (or into <filename>searchd.conf</filename>, if
+<command>searchd</command> is used) files to activate this feature.
+</para>
+
+<para>Automatically spelling suggestion for search query words is going only if <option>sp</option> search parameter is set, see
+<xref linkend="search_params"/>.
+</para>
+
+</sect2>

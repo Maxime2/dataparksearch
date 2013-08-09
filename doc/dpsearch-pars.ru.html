@@ -1,0 +1,1670 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Внешние парсеры&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Индексирование"
+HREF="dpsearch-indexing.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="ServerTable
+"
+HREF="dpsearch-srvtable.ru.html"><LINK
+REL="NEXT"
+TITLE="Остальные команды, используемые в indexer.conf"
+HREF="dpsearch-indexcmd.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-srvtable.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 3. Индексирование</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-indexcmd.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PARS"
+>3.9. Внешние парсеры
+<A
+NAME="AEN1485"
+></A
+></A
+></H1
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> <B
+CLASS="COMMAND"
+>indexer</B
+> может использовать внешние парсеры для
+различных типов файлов (MIME types).</P
+><P
+>Парсер - это программа, которая конвертирует один из типов файла (mime type) в <TT
+CLASS="LITERAL"
+>text/plain</TT
+> или
+<TT
+CLASS="LITERAL"
+>text/html</TT
+>. Например, если у вас есть PostScript файлы, Вы можете использовать парсер (фильтр)
+<B
+CLASS="COMMAND"
+>ps2ascii</B
+>, читающий из <TT
+CLASS="LITERAL"
+>stdin</TT
+> PostScript файл и выдающий текст в ascci на <TT
+CLASS="LITERAL"
+>stdout</TT
+>.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-SUP"
+>3.9.1. Поддерживаемые типы парсеров</A
+></H2
+><P
+><B
+CLASS="COMMAND"
+>Indexer</B
+> поддерживает четыре типа парсеров, такие что:</P
+><P
+></P
+><UL
+><LI
+><P
+>читают данные из <TT
+CLASS="LITERAL"
+>stdin</TT
+> и выдают результат в <TT
+CLASS="LITERAL"
+>stdout</TT
+>;</P
+></LI
+><LI
+><P
+>читают данные из файла и выдают результат в <TT
+CLASS="LITERAL"
+>stdout</TT
+>;</P
+></LI
+><LI
+><P
+>читают данные из файла и помещают результат в файл;</P
+></LI
+><LI
+><P
+>читают данные из <TT
+CLASS="LITERAL"
+>stdin</TT
+> и помещают результат в файл.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-SETUP"
+>3.9.2. Установка парсеров</A
+></H2
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Конфигурирование типов файлов (mime types)</P
+><P
+>Сконфигурируйте Ваш веб-сервер на выдачу соответствующего заголовка
+<TT
+CLASS="LITERAL"
+>Content-Type</TT
+>. Например, для <SPAN
+CLASS="APPLICATION"
+>apache</SPAN
+>, смотрите файл <TT
+CLASS="FILENAME"
+>mime.types</TT
+>,
+большинство типов файлов уже указаны в нём.</P
+><P
+><A
+NAME="AEN1523"
+></A
+>
+Если необходимо индексировать файлы на локальной файловой системе, или используя протокол <TT
+CLASS="LITERAL"
+>ftp</TT
+>
+используйте команду <B
+CLASS="COMMAND"
+>AddType</B
+> в
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> для привязки типа файла к расширению файлов. Например:
+				<PRE
+CLASS="PROGRAMLISTING"
+>AddType text/html *.html</PRE
+>
+				</P
+></LI
+><LI
+><P
+><A
+NAME="AEN1532"
+></A
+>
+Добавление парсеров</P
+><P
+>Добавление строк с определениями парсеров. Эти строки имеюют следующий формат с треми аргументами:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime &lt;from_mime&gt; &lt;to_mime&gt; [&lt;command line&gt;]</PRE
+>
+				</P
+><P
+>Например, следующая строка определяет парсер для <SPAN
+CLASS="APPLICATION"
+>man</SPAN
+>-страниц:
+				<PRE
+CLASS="PROGRAMLISTING"
+># Use deroff for parsing man pages ( *.man )
+Mime  application/x-troff-man   text/plain   deroff</PRE
+>
+				</P
+><P
+>Этот парсер будет получать данные из <TT
+CLASS="LITERAL"
+>stdin</TT
+> и повещать результат в
+<TT
+CLASS="LITERAL"
+>stdout</TT
+>.</P
+><P
+>Некоторые парсеры не могут работать с <TT
+CLASS="LITERAL"
+>stdin</TT
+>, а требуют указания имени
+файла для чтения данных. В этом случае <B
+CLASS="COMMAND"
+>indexer</B
+> создаёт временный файл в директории <TT
+CLASS="FILENAME"
+>/tmp</TT
+>,
+который будет удалён после завершения работы парсера. Используйте макро <CODE
+CLASS="OPTION"
+>$1</CODE
+> в командной строке парсера вместо
+требуемого имени файла. Например, команда <B
+CLASS="COMMAND"
+>Mime</B
+>для конверотора <B
+CLASS="COMMAND"
+>catdoc</B
+>, преобразующего файлы
+<SPAN
+CLASS="APPLICATION"
+>MS Word</SPAN
+> в ascii может выглядеть так:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/msword text/plain "/usr/bin/catdoc -a $1"</PRE
+>
+				</P
+><P
+>Если парсер записывает результат своей работы в файл, используйте макро <CODE
+CLASS="OPTION"
+>$2</CODE
+>.
+<B
+CLASS="COMMAND"
+>indexer</B
+> заменить <CODE
+CLASS="OPTION"
+>$2</CODE
+> на имя временного файла, запустит парсер, 
+прочитает результат из этого временного файла, а затем удалит его. Например:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/msword text/plain "/usr/bin/catdoc -a $1 &#62;$2"</PRE
+>
+				</P
+><P
+>Парсер выше будет читать данные из первого временного файла и записывать результат во
+второй временный файл. Оба временных файла будут удалены по окончании  работы парсера. Заметим, что результат использования
+этого парсера будет абсолютно таким же, как и предыдущего, они отличаютя только сопсобом выполнения: 
+файл-&gt;<TT
+CLASS="LITERAL"
+>stdout</TT
+> и файл-&gt;файл соответственно.</P
+><P
+>Если параметр &lt;command line&gt; опущен, это означает, что два MIME-типа являются синонимами. 
+Например, некоторые сайты отдают MP3 файлы с неправильным MIME-типом <KBD
+CLASS="USERINPUT"
+>application/mp3</KBD
+>. 
+Вы можете исправить его на корректный <KBD
+CLASS="USERINPUT"
+>audio/mpeg</KBD
+> и тем самым обработать его:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/mp3 audio/mpeg</PRE
+></P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARSERTIMEOUT"
+>3.9.3. Воизбежание зависания парсера при выполнении</A
+></H2
+><P
+><A
+NAME="AEN1566"
+></A
+>
+Воизбежание подвисания парсера при выполнении Вы можете указать в Вашем файле <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+число времени в секундах, отводимое на работу парсеру, при помощи команды <TT
+CLASS="LITERAL"
+>ParserTimeOut</TT
+>. Напрмиер:
+		<PRE
+CLASS="PROGRAMLISTING"
+>ParserTimeOut 600</PRE
+></P
+><P
+>Значение по умолчанию - 300 секунд, т.е. 5 минут.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-PIPES"
+>3.9.4. Конвееры в командных строках парсеров</A
+></H2
+><P
+>Вы можете использовать конвееры в командных строках парсеров. Например, следующие строки необходимы
+ при индексировании загнузипленых страниц <SPAN
+CLASS="APPLICATION"
+>man</SPAN
+> на локальном диске:
+		<PRE
+CLASS="PROGRAMLISTING"
+>AddType  application/x-gzipped-man  *.1.gz *.2.gz *.3.gz *.4.gz
+Mime     application/x-gzipped-man  text/plain  "zcat | deroff"</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-CHAR"
+>3.9.5. Кодировки и парсеры
+<A
+NAME="AEN1580"
+></A
+></A
+></H2
+><P
+>Некоторые парсеры могут выдавать результат в кодировке, отличной от указанной в
+команда <B
+CLASS="COMMAND"
+>LocalCharset</B
+>. Указание кодировки парсера даёт возможность <B
+CLASS="COMMAND"
+>indexer</B
+>
+перекодировать результат в нужную кодировку. Например, если <B
+CLASS="COMMAND"
+>catdoc</B
+> сконфигурирован на вывод
+результата в  windows-1251, а в <B
+CLASS="COMMAND"
+>LocalCharset</B
+> указана кодировка koi8-r,
+используйте следующую команду для парсера документов <SPAN
+CLASS="APPLICATION"
+>MS Word</SPAN
+>:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Mime  application/msword  "text/plain; charset=windows-1251" "catdoc -a $1"</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-UDMURL"
+>3.9.6. Переменная окружения DPS_URL
+<A
+NAME="AEN1592"
+></A
+></A
+></H2
+><P
+>При выполнении парсера, <B
+CLASS="COMMAND"
+>indexer</B
+> создаёт переменную окружения DPS_URL,
+содержащую URL обрабатываемого документа. Вы можете использовать эту переменную в Ваших скриптах парсеров.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-LINKS"
+>3.9.7. Некоторые внешние парсеры
+<A
+NAME="AEN1598"
+></A
+></A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>RPM парсер от Mario Lang <CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:lang@zid.tu-graz.ac.at"
+>lang@zid.tu-graz.ac.at</A
+>&#62;</CODE
+></P
+><P
+>        /usr/local/bin/rpminfo:
+
+<PRE
+CLASS="PROGRAMLISTING"
+>#!/bin/bash
+/usr/bin/rpm -q --queryformat="&lt;html&gt;&lt;head&gt;&lt;title&gt;RPM: %{NAME} %{VERSION}-%{RELEASE}
+(%{GROUP})&lt;/title&gt;&lt;meta name=\"description\" content=\"%{SUMMARY}\"&gt;&lt;/head&gt;&lt;body&gt;
+%{DESCRIPTION}\n&lt;/body&gt;&lt;/html&gt;" -p $1</PRE
+></P
+><P
+>indexer.conf:
+<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/x-rpm text/html "/usr/local/bin/rpminfo $1"</PRE
+></P
+><P
+>Он даёт такую информацию об RPM:
+
+<PRE
+CLASS="PROGRAMLISTING"
+>3. RPM: mysql 3.20.32a-3 (Applications/Databases) [4]
+       Mysql is a SQL (Structured Query Language) database server.
+       Mysql was written by Michael (monty) Widenius. See the CREDITS
+       file in the distribution for more credits for mysql and related
+       things....
+       (application/x-rpm) 2088855 bytes</PRE
+></P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>catdoc</B
+> конвертер <SPAN
+CLASS="APPLICATION"
+>MS Word</SPAN
+> в текст.
+					<A
+HREF="http://freshmeat.net/redir/catdoc/1055/url_homepage/"
+TARGET="_top"
+>Home page</A
+>,
+					также указан на <A
+HREF="http://freshmeat.net/"
+TARGET="_top"
+>Freshmeat</A
+>
+					<PRE
+CLASS="PROGRAMLISTING"
+>indexer.conf: Mime application/msword  text/plain  "catdoc $1"</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>xls2csv</B
+> конвертор <SPAN
+CLASS="APPLICATION"
+>MS Excel</SPAN
+> в текст.
+					Поставляется в пакете <B
+CLASS="COMMAND"
+>catdoc</B
+>.
+					<PRE
+CLASS="PROGRAMLISTING"
+>indexer.conf: Mime application/vnd.ms-excel text/plain "xls2csv $1"</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>pdftotext</B
+> конвертор <SPAN
+CLASS="APPLICATION"
+>Adobe PDF</SPAN
+> в текст.
+					Поставляется в пакете <B
+CLASS="COMMAND"
+>xpdf</B
+>.
+					<A
+HREF="http://freshmeat.net/redir/xpdf/12080/url_homepage/"
+TARGET="_top"
+>Homepage</A
+>,
+					также указан на <A
+HREF="http://freshmeat.net/"
+TARGET="_top"
+>Freshmeat</A
+>
+					<PRE
+CLASS="PROGRAMLISTING"
+>indexer.conf: Mime application/pdf text/plain "pdftotext $1 -"</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>unrtf</B
+> конвертор RTF в html.
+					<A
+HREF="ftp://ftp.gnu.org/pub/gnu/unrtf/"
+TARGET="_top"
+>Homepage</A
+>
+<PRE
+CLASS="PROGRAMLISTING"
+>indexer.conf:
+Mime text/rtf*        text/html "/usr/local/dpsearch/sbin/unrtf --html $1
+Mime application/rtf  text/html "/usr/local/dpsearch/sbin/unrtf --html $1</PRE
+>
+				</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>xlhtml</B
+> конверотор XLS в html</P
+><P
+>					<A
+HREF="http://chicago.sourceforge.net/xlhtml/"
+TARGET="_top"
+>Homepage</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime	application/vnd.ms-excel  text/html  "/usr/local/dpsearch/sbin/xlhtml $1"</PRE
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>ppthtml</B
+> Конвертор PowerPoint (PPT) в html. Часть проекта <SPAN
+CLASS="APPLICATION"
+>xlhtml 0.5</SPAN
+>.</P
+><P
+>					<A
+HREF="http://chicago.sourceforge.net/xlhtml/"
+TARGET="_top"
+>Homepage</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime	application/vnd.ms-powerpoint  text/html  "/usr/local/dpsearch/sbin/ppthtml $1"</PRE
+></P
+></LI
+><LI
+><P
+>Использование <A
+HREF="http://wvWare.sourceforge.net/"
+TARGET="_top"
+>vwHtml</A
+> Конвертор MS Word (DOC) в html.</P
+><P
+><TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/sbin/0vwHtml.pl</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>#!/usr/bin/perl -w
+
+$p = $ARGV[1];
+$f = $ARGV[1];
+
+$p =~ s/(.*)\/([^\/]*)/$1\//;
+$f =~ s/(.*)\/([^\/]*)/$2/;
+
+system("/usr/local/bin/wvHtml --targetdir=$p $ARGV[0] $f");</PRE
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime  application/msword       text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $1 $2"
+Mime  application/vnd.ms-word  text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $1 $2"</PRE
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>swf2html</B
+> из 
+<A
+HREF="http://www.macromedia.com/software/flash/download/search_engine/"
+TARGET="_top"
+>Flash Search Engine SDK</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime  application/x-shockwave-flash  text/html  "/usr/local/dpsearch/sbin/swf2html $1"</PRE
+></P
+></LI
+><LI
+><P
+>djvutxt из 
+<A
+HREF="http://djvu.sourceforge.net/"
+TARGET="_top"
+>djvuLibre</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime  image/djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/x.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/x-djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/vnd.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"</PRE
+></P
+></LI
+></UL
+><P
+>Пожалуйста, присылайте Ваши скрипты и конфигурации для новых парсеров на адрес 
+<CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:dataparksearch@datapark.ru"
+>dataparksearch@datapark.ru</A
+>&#62;</CODE
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LIBEXTRACTOR"
+>3.9.8. Библиотека libextractor</A
+></H2
+><A
+NAME="AEN1680"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> может быть собран с <A
+HREF="http://gnunet.org/libextractor/"
+TARGET="_top"
+>библиотекой libextractor</A
+>. 
+При помощи этой бибилиотеки <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> может индексировать ключевые слова из файлов следующих форматов: PDF, PS, OLE2 (DOC, XLS, PPT), OpenOffice (sxw), StarOffice (sdw), DVI, MAN, FLAC, MP3 (ID3v1 and ID3v2), NSF(E) (NES music), SID (C64 music), OGG, WAV, EXIV2, JPEG, GIF, PNG, TIFF, DEB, RPM, TAR(.GZ), ZIP, ELF, S3M (Scream Tracker 3), XM (eXtended Module), IT (Impulse Tracker), FLV, REAL, RIFF (AVI), MPEG, QT и ASF.</P
+><P
+>Чтобы собрать <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с библиотекой <SPAN
+CLASS="APPLICATION"
+>libextractor</SPAN
+>, установите библиотеку, а затем сконфигурируйте и соберите <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</P
+><P
+>Ниже приводится соответствие между типами keyword в <SPAN
+CLASS="APPLICATION"
+>libextractor</SPAN
+> версии до 0.6 и именами секций <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>:</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN1693"
+></A
+><P
+><B
+>&#1058;&#1072;&#1073;&#1083;&#1080;&#1094;&#1072; 3-1. Соответствие между типами keyword библиотеки libextractor и именами секций DataparkSearch</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+>Тип Keyword</TH
+><TH
+>Имя секции</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+>EXTRACTOR_FILENAME</TD
+><TD
+> 	Filename</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MIMETYPE</TD
+><TD
+> 	Mimetype</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TITLE</TD
+><TD
+> 	Title</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_AUTHOR</TD
+><TD
+> 	Author</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ARTIST 	</TD
+><TD
+>Artist</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DESCRIPTION 	</TD
+><TD
+>Description</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COMMENT 	</TD
+><TD
+>Comment</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DATE 	</TD
+><TD
+>Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PUBLISHER 	</TD
+><TD
+>Publisher</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LANGUAGE 	</TD
+><TD
+>Content-Language</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ALBUM 	</TD
+><TD
+>Album</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_GENRE 	</TD
+><TD
+>Genre</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LOCATION 	</TD
+><TD
+>Location</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_VERSIONNUMBER 	</TD
+><TD
+>VersionNumber</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ORGANIZATION 	</TD
+><TD
+>Organization</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COPYRIGHT 	</TD
+><TD
+>Copyright</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SUBJECT 	</TD
+><TD
+>Subject</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_KEYWORDS 	</TD
+><TD
+>Meta.Keywords</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONTRIBUTOR 	</TD
+><TD
+>Contributor</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RESOURCE_TYPE 	</TD
+><TD
+>Resource-Type</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FORMAT 	</TD
+><TD
+>Format</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RESOURCE_IDENTIFIER 	</TD
+><TD
+>Resource-Idendifier</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SOURCE 	</TD
+><TD
+>Source</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RELATION 	</TD
+><TD
+>Relation</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COVERAGE 	</TD
+><TD
+>Coverage</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SOFTWARE 	</TD
+><TD
+>Software</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DISCLAIMER 	</TD
+><TD
+>Disclaimer</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_WARNING 	</TD
+><TD
+>Warning</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TRANSLATED 	</TD
+><TD
+>Translated</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATION_DATE 	</TD
+><TD
+>Creation-Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MODIFICATION_DATE 	</TD
+><TD
+>Modification-Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATOR 	</TD
+><TD
+>Creator</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PRODUCER 	</TD
+><TD
+>Producer</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAGE_COUNT 	</TD
+><TD
+>Page-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAGE_ORIENTATION 	</TD
+><TD
+>Page-Orientation</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAPER_SIZE 	</TD
+><TD
+>Paper-Size</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_USED_FONTS 	</TD
+><TD
+>Used-Fonts</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAGE_ORDER 	</TD
+><TD
+>Page-Order</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATED_FOR 	</TD
+><TD
+>Created-For</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MAGNIFICATION 	</TD
+><TD
+>Magnification</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RELEASE 	</TD
+><TD
+>Release</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_GROUP 	</TD
+><TD
+>Group</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SIZE 	</TD
+><TD
+>Size</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SUMMARY 	</TD
+><TD
+>Summary</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PACKAGER 	</TD
+><TD
+>Packager</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_VENDOR 	</TD
+><TD
+>Vendor</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LICENSE 	</TD
+><TD
+>License</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DISTRIBUTION 	</TD
+><TD
+>Distribution</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_BUILDHOST 	</TD
+><TD
+>BuildHost</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_OS 	</TD
+><TD
+>OS</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DEPENDENCY 	</TD
+><TD
+>Dependency</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_MD4 	</TD
+><TD
+>Hash-MD4</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_MD5 	</TD
+><TD
+>Hash-MD5</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_SHA0 	</TD
+><TD
+>Hash-SHA0</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_SHA1 	</TD
+><TD
+>Hash-SHA1</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_RMD160 	</TD
+><TD
+>Hash-RMD160</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RESOLUTION 	</TD
+><TD
+>Resolution</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CATEGORY 	</TD
+><TD
+>Ext.Category</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_BOOKTITLE 	</TD
+><TD
+>BookTitle</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PRIORITY 	</TD
+><TD
+>Priority</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONFLICTS 	</TD
+><TD
+>Conflicts</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_REPLACES 	</TD
+><TD
+>Replaces</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PROVIDES 	</TD
+><TD
+>Provides</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONDUCTOR 	</TD
+><TD
+>Conductor</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_INTERPRET 	</TD
+><TD
+>Interpret</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_OWNER 	</TD
+><TD
+>Owner</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LYRICS 	</TD
+><TD
+>Lyrics</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MEDIA_TYPE 	</TD
+><TD
+>Media-Type</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONTACT 	</TD
+><TD
+>Contact</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_THUMBNAIL_DATA 	</TD
+><TD
+>Thumbnail-Data</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PUBLICATION_DATE 	</TD
+><TD
+>Publication-Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CAMERA_MAKE 	</TD
+><TD
+>Camera-Make</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CAMERA_MODEL 	</TD
+><TD
+>Camera-Model</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EXPOSURE 	</TD
+><TD
+>Exposure</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_APERTURE 	</TD
+><TD
+>Aperture</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EXPOSURE_BIAS 	</TD
+><TD
+>Exposure-Bias</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FLASH 	</TD
+><TD
+>Flash</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FLASH_BIAS 	</TD
+><TD
+>Flash-Bias</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FOCAL_LENGTH 	</TD
+><TD
+>Focal-Length</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FOCAL_LENGTH_35MM 	</TD
+><TD
+>Focal-Length-35MM</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ISO_SPEED 	</TD
+><TD
+>ISO-Speed</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EXPOSURE_MODE 	</TD
+><TD
+>Exposure-Mode</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_METERING_MODE 	</TD
+><TD
+>Metering-Mode</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MACRO_MODE 	</TD
+><TD
+>Macro-Mode</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_IMAGE_QUALITY 	</TD
+><TD
+>Image-Quality</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_WHITE_BALANCE 	</TD
+><TD
+>White-Balance</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ORIENTATION 	</TD
+><TD
+>Orientation</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TEMPLATE 	</TD
+><TD
+>Template</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SPLIT 	</TD
+><TD
+>Split</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PRODUCTVERSION 	</TD
+><TD
+>ProductVersion</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LAST_SAVED_BY 	</TD
+><TD
+>Last-Saved-By</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LAST_PRINTED 	</TD
+><TD
+>Last-Printed</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_WORD_COUNT 	</TD
+><TD
+>Word-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CHARACTER_COUNT 	</TD
+><TD
+>Character-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TOTAL_EDITING_TIME 	</TD
+><TD
+>Total-Editing-Time</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_THUMBNAILS 	</TD
+><TD
+>Thumbnails</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SECURITY 	</TD
+><TD
+>Security</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATED_BY_SOFTWARE 	</TD
+><TD
+>Created-By-Software</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MODIFIED_BY_SOFTWARE 	</TD
+><TD
+>Modified-By-Software</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_REVISION_HISTORY 	</TD
+><TD
+>Revision-History</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LOWERCASE 	</TD
+><TD
+>Lowercase</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COMPANY 	</TD
+><TD
+>Company</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_GENERATOR 	</TD
+><TD
+>Generator</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CHARACTER_SET 	</TD
+><TD
+>Meta-Charset</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LINE_COUNT 	</TD
+><TD
+>Line-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PARAGRAPH_COUNT 	</TD
+><TD
+>Paragraph-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EDITING_CYCLES 	</TD
+><TD
+>Editing-Cycles</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SCALE 	</TD
+><TD
+>Scale</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MANAGER 	</TD
+><TD
+>Manager</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MOVIE_DIRECTOR 	</TD
+><TD
+>Movie-Director</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DURATION 	</TD
+><TD
+>Duration</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_INFORMATION 	</TD
+><TD
+>Information</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FULL_NAME 	</TD
+><TD
+>Full-Name</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CHAPTER 	</TD
+><TD
+>Chapter</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_YEAR 	</TD
+><TD
+>Year</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LINK 	</TD
+><TD
+>Link</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MUSIC_CD_IDENTIFIER 	</TD
+><TD
+>Music-CD-Identifier</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PLAY_COUNTER 	</TD
+><TD
+>Play-Counter</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_POPULARITY_METER 	</TD
+><TD
+>Popularity-Meter</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONTENT_TYPE 	</TD
+><TD
+>Ext.Content-Type</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ENCODED_BY 	</TD
+><TD
+>Encoded-By</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TIME 	</TD
+><TD
+>Time</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MUSICIAN_CREDITS_LIST 	</TD
+><TD
+>Musician-Credits-List</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MOOD 	</TD
+><TD
+>Mood</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FORMAT_VERSION 	</TD
+><TD
+>Format-Version</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TELEVISION_SYSTEM 	</TD
+><TD
+>Television-System</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SONG_COUNT 	</TD
+><TD
+>Song-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_STARTING_SONG 	</TD
+><TD
+>Strting-Song</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HARDWARE_DEPENDENCY 	</TD
+><TD
+>Hardware-Dependency</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RIPPER 	</TD
+><TD
+>Ripper</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FILE_SIZE 	</TD
+><TD
+>File-Size</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TRACK_NUMBER 	</TD
+><TD
+>Track-Number</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ISRC 	</TD
+><TD
+>ISRC</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DISC_NUMBER 	</TD
+><TD
+>Disc-Number</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>Если секция из списка выше не указана в файле <TT
+CLASS="FILENAME"
+>sections.conf</TT
+>, значение ключевого слова соответствующего типа будет записано как секция <CODE
+CLASS="VARNAME"
+>body</CODE
+>.
+Тоже самое относится к ключевым словам неизвестно типа.</P
+><P
+>Для <SPAN
+CLASS="APPLICATION"
+>libextractor 0.6.x</SPAN
+> в качестве имен секций используются значения, возвращаемые функцией EXTRACTOR_metatype_to_string.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-srvtable.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-indexcmd.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>ServerTable
+<A
+NAME="AEN1440"
+></A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Остальные команды, используемые в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

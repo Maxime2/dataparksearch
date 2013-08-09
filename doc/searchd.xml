@@ -1,0 +1,224 @@
+<sect1 id="searchd">
+	<title>SearchD support</title>
+<indexterm><primary>searchd</primary></indexterm>
+
+	<!--para><command>searchd</command> allow speed-up search queries execution. </para-->
+
+	<sect2 id="searchd-why">
+		<title>Why using searchd</title>
+		<itemizedlist>
+			<listitem>
+				<para>Faster searching, especially when using
+ISpell, synonyms or segmenters for east asian languages. Related files are loaded into memory when searchd
+is started, while <filename>search.cgi</filename> loads data before
+every query.</para>
+<para>Also, <command>searchd</command> can preload url info data (20 bytes per URL indexed) and 
+cache mode limits (4 or 8 bytes per URL depend on limit type). This allow reduce average search time.
+</para>
+			</listitem>
+			<listitem>
+				<para>It is possible to distribute
+words index and web-server between different machines.</para>
+			</listitem>
+		</itemizedlist>
+	</sect2>
+
+	<sect2 id="searchd-start">
+		<title>Starting searchd</title>
+		<para>To start using searchd:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Copy <filename>$PREFIX/etc/searchd.conf-dist</filename> to <filename>searchd.conf</filename>.</para>
+			</listitem>
+			<listitem>
+				<para>Edit <filename>searchd.conf</filename>.</para>
+			</listitem>
+
+<listitem><para>
+<indexterm><primary>Command</primary><secondary>PreloadURLData</secondary></indexterm>
+If you need preload url data to speed-up searches (this cost about 20 bytes of memory per url),
+add the following command to <filename>searchd.conf</filename>:
+				<programlisting>
+PreloadURLData yes
+</programlisting>
+</para>
+</listitem>
+
+<listitem><para>
+<indexterm><primary>Command</primary><secondary>PreloadLimit</secondary></indexterm>
+You may also preload cache mode limits for most frequently used limit values using
+<command>PreloadLimit</command> command in <filename>searchd.conf</filename> file:
+				<programlisting>
+PreloadLimit &lt;limit type&gt; &lt;limit value&gt;
+</programlisting>
+</para>
+<para>For example:
+			<programlisting>
+PreloadLimit tag Unix
+</programlisting>
+</para>
+</listitem>
+
+
+
+			<listitem>
+				<para>Add the following command to <filename>search.htm</filename>:</para>
+				<para>
+<literal>DBAddr searchd://hostname/</literal> or <literal>DBAddr searchd://hostname:port/</literal>, e.g.
+				<programlisting>
+DBAddr searchd://localhost/
+</programlisting>
+</para>
+				<para>Default <literal>port</literal> value is 7003</para>
+			</listitem>
+
+<listitem>
+<para><indexterm><primary>Command</primary><secondary>MaxClients</secondary></indexterm>
+You may start several searchd's children answering search queries simultaneously. Use <command>MaxClients</command> comamnd to specify the number of
+searchd's children. Value by default is 1.
+</para>
+<programlisting>
+MaxClients 2
+</programlisting>
+</listitem>
+
+
+			<listitem>
+				<para>Start searchd:</para>
+				<para>
+					<userinput>/usr/local/dpsearch/sbin/searchd &amp;</userinput>
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>To suppress output to stderr, use
+<literal>-l</literal> option. The output will go through syslog only
+(in case syslog support was not disabled during installation with
+<literal>--disable-syslog</literal>). In case syslog is disabled, it
+is possible to direct stderr to a file: </para>
+		<para>
+			<userinput>/usr/local/dpsearch/sbin/searchd 2&gt;/var/log/searchd.log &amp;</userinput>
+		</para>
+		<para>
+			<literal>searchd</literal> just like
+<filename>indexer</filename> can be used with an option of a
+configuration file, e.g. relative path to <filename>/etc</filename>
+directory of <application>DataparkSearch</application> installation:
+		<programlisting>
+searchd searchd1.conf
+</programlisting>
+		</para>
+		<para>or with absolute path:</para>
+		<para>
+			<userinput>searchd /usr/local/dpsearch/etc/searchd1.conf</userinput>
+		</para>
+	</sect2>
+
+	<!-- sect2 id="searchd-merge">
+		<title>Merging several databases</title>
+		<para>It is possible to indicate several
+<command>DBAddr</command> commands in
+<filename>search.htm</filename>. In this case
+<filename>search.cgi</filename> will send queries via TCP/IP to
+several searchd's and compile results. In version 3.2.0 up to 256
+databases are supported. <varname>DBMode</varname> and type of
+databases may differ with various
+searchd's. </para>
+		<para>
+			<filename>search.cgi</filename> starts with
+sending queries to every searchd, thus activating parallel searches in
+every searchd. Then it waits for the results, compiles them and
+selects best matches. </para>
+		<para>Thus it is possible to create a distributed
+across several machines database. Please note that databases should
+not intersect, i.e. same documents should not be present in several
+merged databases. Otherwise the document will be duplicated in search
+results.</para>
+	</sect2>
+	<sect2 id="searchd-distribute">
+		<title>Distributed indexing</title>
+		<para>Indexing distribution can be done by means of hostname filtering.</para>
+		<para>Imagine it is necessary to create a search
+engine, e.g. for .de domain. Search administrator has 28 machines
+available, and their names for example are:
+		<programlisting>
+a.hostname.de
+b.hostname.de
+...
+...
+z.hostname.de
+</programlisting>
+</para>
+		<para>
+			<filename>indexer.conf</filename> is created for every machine. E.g. on a machine <literal>a.hostname.de</literal>:
+		<programlisting>
+# For hostnames starting with www:
+Realm http://www.a*.de/
+
+# For hostnames without www:
+Realm http://a*.de/
+</programlisting>
+		</para>
+		<para>Repeat this action for every machine.</para>
+		<para>Searchd understands the following commands in
+<filename>searchd.conf</filename> as well, they are similar to those
+in <filename>indexer.conf</filename>.
+		<programlisting>
+Allow x.x.x.x
+Disallow x.x.x.x
+</programlisting>
+		</para>
+		<para>With the above commands you may specify which
+hosts can/can not  connect to searchd. In case the commands are not
+specified, any host can connect. E.g. to allow connecting from
+<literal>localhost</literal> only:
+		<programlisting>
+Allow     127.0.0.1
+Disallow  *
+</programlisting>
+		</para>
+		<para>Or from the 192.168.x.x network only:
+		<programlisting>
+Allow 192.168.*.*
+Disallow *
+</programlisting>
+		</para>
+		<para>To make searchd reload the configuration file with the HUP signal, use the following command:
+		<programlisting>
+kill -HUP xxx
+</programlisting>
+		</para>
+		<para>Where <literal>xxx</literal> - id number of the process (pid).</para>
+		<para>Then <literal>indexer</literal> is run on every machine (or several indexers) that index their own area. </para>
+		<para>A <filename>search.cgi</filename> is installed
+on every machine and the following lines are added to every
+corresponding template:
+		<programlisting>
+DBAddr searchd://a.hostname.de
+DBAddr searchd://b.hostname.de
+....
+DBAddr searchd://z.hostname.de
+</programlisting>
+</para>
+		<para>Thus <filename>search.cgi</filename> will send
+parallel queries to every machine and return best results to
+user.</para>
+		<para>In the current version indexing of each area is
+done independently. If on the server
+<literal>http://a.domane.de/</literal> there is a link to
+<literal>http://b.doname.de/</literal> server, this link will not be
+transferred from the machine responsible for a to the machine
+responsible for b.</para>
+		<para>Since distribution by hostname is used, in case
+one of the machines is not operational, the information of all the web
+servers that were indexed on this machine will be unavailable. </para>
+		<para>It is planned to implement in the future
+versions communication between "neighboring" hosts (i.e. the hosts
+will be able to transfer links between each other, as well as other
+types of distribution - by hash-function from document's URL. That
+means that one site's pages will be evenly distributed by all the
+machines of the cluster. So in case one of the machines is
+unavailable, all the sites will still be available on other
+machines.</para>
+	</sect2 -->
+
+</sect1>

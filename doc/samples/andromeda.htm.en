@@ -1,0 +1,685 @@
+<!--variables
+DBAddr searchd://localhost/
+StoredocURL /cgi-bin/storedoc.cgi
+LocalCharset koi8-r
+BrowserCharset utf-8
+Locale en_US.UTF-8
+
+ReplaceVar 43N39E.lng "43&deg;N 39&deg;E"
+ReplaceVar all.lng "all words"
+ReplaceVar any.lng "any words"
+ReplaceVar AU.lng "Search on Australia"
+ReplaceVar Books.lng "Books at 43&deg;N 39&deg;E"
+ReplaceVar Compr.lng "Search on compression related sites"
+ReplaceVar Justine.lng "Search pages about Justine Henin-Hardenne"
+ReplaceVar Dpsearch.lng "DataparkSearch site"
+ReplaceVar near.lng "all words near"
+ReplaceVar NZ.lng "Search on New Zealand"
+ReplaceVar Oregon.lng "Search on Oregon University"
+ReplaceVar Search.lng "Search"
+ReplaceVar SearchFor.lng "Search for"
+ReplaceVar bool.lng "boolean query"
+ReplaceVar error.lng "Error!"
+ReplaceVar noquery.lng "No query word has been entered."
+ReplaceVar notfound.lng "Nothing found for this query."
+ReplaceVar try.lng "Try to check spelling or simplify the query."
+ReplaceVar langany.lng "any language"
+ReplaceVar langru.lng "Russian"
+ReplaceVar langen.lng "English"
+ReplaceVar langde.lng "German"
+ReplaceVar langfr.lng "French"
+ReplaceVar langzh.lng "Chinese"
+ReplaceVar langko.lng "Korean"
+ReplaceVar langth.lng "Thai"
+ReplaceVar langja.lng "Japanese"
+ReplaceVar gr.lng "group by site"
+ReplaceVar nogr.lng "do not group"
+ReplaceVar syn.lng "with synonyms"
+ReplaceVar nosyn.lng "without synonyms"
+ReplaceVar doc.lng "in whole document"
+ReplaceVar ref.lng "in summary"
+ReplaceVar tit.lng "in title"
+ReplaceVar body.lng "in body"
+ReplaceVar mp3.lng "in MP3 tags"
+ReplaceVar alldocs.lng "any time"
+ReplaceVar lastweek.lng "past week"
+ReplaceVar last2w.lng "past two weeks"
+ReplaceVar lastmonth.lng "past month"
+ReplaceVar last3m.lng "past 3 months"
+ReplaceVar last6m.lng "past 6 months"
+ReplaceVar lastyear.lng "past year"
+ReplaceVar exact.lng "exact words"
+ReplaceVar wforms.lng "word forms"
+ReplaceVar otherse.lng "at other search engines"
+ReplaceVar yandex.lng "Yandex"
+ReplaceVar rambler.lng "Rambler"
+ReplaceVar nigma.lng "Nigma"
+ReplaceVar datapark.lng "DataPark"
+ReplaceVar usingdp.lng "Using DataparkSearch"
+ReplaceVar showndocs.lng "Documents shown"
+ReplaceVar iz.lng "of"
+ReplaceVar found.lng "found"
+ReplaceVar stime.lng "Search time"
+ReplaceVar sec.lng "sec."
+ReplaceVar results.lng "Search results"
+ReplaceVar doyoumean.lng "Do you mean"
+ReplaceVar pages.lng "Pages"
+ReplaceVar rssres.lng "RSS-feed of latest results for query"
+ReplaceVar sortedby.lng "sorted by"
+ReplaceVar isort.lng "importance"
+ReplaceVar rsort.lng "relevance"
+ReplaceVar dsort.lng "date"
+ReplaceVar psort.lng "popularity"
+ReplaceVar notitle.lng "[no title]"
+ReplaceVar artist.lng "Artist"
+ReplaceVar album.lng "Album"
+ReplaceVar song.lng "Song"
+ReplaceVar year.lng "Year"
+ReplaceVar summary.lng "Summary"
+ReplaceVar stcopy.lng "Cached copy"
+ReplaceVar allresfrom.lng "All results from"
+ReplaceVar onmap.lng "on the map"
+ReplaceVar price.lng "Price"
+ReplaceVar rur.lng "RUR"
+ReplaceVar prev.lng "Previous"
+ReplaceVar next.lng "Next"
+ReplaceVar instplugin.lng "Install search plugin"
+ReplaceVar mkreport.lng "Send report"
+ReplaceVar bytes.lng "bytes"
+ReplaceVar score.lng "Score"
+ReplaceVar google.ad.channel "9845973379"
+
+MinWordLength 1
+MaxWordLength 64
+DetectClones no
+ExcerptSize 1024
+ExcerptPadding 152
+HlBeg <span class="rhl">
+HlEnd </span>
+GrBeg <!--div class="group"-->
+GrEnd <!--/div-->
+DateFormat %d %b %Y
+-->
+
+<!--top-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML lang="en">
+  <HEAD>
+<!-- google_ad_section_start -->
+    <TITLE>$(43N39E.lng): $&(q)</TITLE>
+<!-- google_ad_section_end -->
+    <link href="/css/therm2.css" rel="stylesheet" type="text/css">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <script type="text/javascript"><!--
+      function clk(id,pos){(new Image()).src="/cgi-bin/c.pl?id="+id+"&pos="+pos;return true;}
+      //--></script>
+	<style type="text/css">
+		BODY { margin-left: 1em; margin-right: 1em; }
+		SELECT { width: 15em; }
+	</style>
+    <script type="text/javascript">
+var BrowserDetect = {
+	init: function () {
+		this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+		this.version = this.searchVersion(navigator.userAgent)
+			|| this.searchVersion(navigator.appVersion)
+			|| "an unknown version";
+		this.OS = this.searchString(this.dataOS) || "an unknown OS";
+	},
+	searchString: function (data) {
+		for (var i=0;i<data.length;i++)	{
+			var dataString = data[i].string;
+			var dataProp = data[i].prop;
+			this.versionSearchString = data[i].versionSearch || data[i].identity;
+			if (dataString) {
+				if (dataString.indexOf(data[i].subString) != -1)
+					return data[i].identity;
+			}
+			else if (dataProp)
+				return data[i].identity;
+		}
+	},
+	searchVersion: function (dataString) {
+		var index = dataString.indexOf(this.versionSearchString);
+		if (index == -1) return;
+		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+	},
+	dataBrowser: [
+		{ 	string: navigator.userAgent,
+			subString: "OmniWeb",
+			versionSearch: "OmniWeb/",
+			identity: "OmniWeb"
+		},
+		{
+			string: navigator.vendor,
+			subString: "Apple",
+			identity: "Safari"
+		},
+		{
+			prop: window.opera,
+			identity: "Opera"
+		},
+		{
+			string: navigator.vendor,
+			subString: "iCab",
+			identity: "iCab"
+		},
+		{
+			string: navigator.vendor,
+			subString: "KDE",
+			identity: "Konqueror"
+		},
+		{
+			string: navigator.userAgent,
+			subString: "Firefox",
+			identity: "Firefox"
+		},
+		{
+			string: navigator.vendor,
+			subString: "Camino",
+			identity: "Camino"
+		},
+		{		// for newer Netscapes (6+)
+			string: navigator.userAgent,
+			subString: "Netscape",
+			identity: "Netscape"
+		},
+		{
+			string: navigator.userAgent,
+			subString: "MSIE",
+			identity: "Explorer",
+			versionSearch: "MSIE"
+		},
+		{
+			string: navigator.userAgent,
+			subString: "Gecko",
+			identity: "Mozilla",
+			versionSearch: "rv"
+		},
+		{ 		// for older Netscapes (4-)
+			string: navigator.userAgent,
+			subString: "Mozilla",
+			identity: "Netscape",
+			versionSearch: "Mozilla"
+		}
+	],
+	dataOS : [
+		{
+			string: navigator.platform,
+			subString: "Win",
+			identity: "Windows"
+		},
+		{
+			string: navigator.platform,
+			subString: "Mac",
+			identity: "Mac"
+		},
+		{
+			string: navigator.platform,
+			subString: "Linux",
+			identity: "Linux"
+		}
+	]
+
+};
+BrowserDetect.init();
+var PrevPos = 0;
+var PrevL = null;
+function sw(p,h) {
+var destId; var dest; var srcId; var src;
+	if (h) {
+		destId = 'Snap';
+		dest = document.getElementById ? document.getElementById(destId) : (document.all ? document.all[destId] : null);
+		if (dest) {
+			if (dest.innerHTML) dest.innerHTML = '<img style="border: solid 1px #000" src="http://images.websnapr.com/?url='+h+'" width="202" height="152" alt="Snapshot">';
+		}
+	}
+	destId = 'Toy';
+	dest = document.getElementById ? document.getElementById(destId) : (document.all ? document.all[destId] : null);
+/*	srcId = 'pos'+p;
+	src = document.getElementById ? document.getElementById(srcId) : (document.all ? document.all[srcId] : null);*/
+	eval('src = DivCell'+p);
+	mainId = 'main'+p;
+	L = document.getElementById ? document.getElementById(mainId) : (document.all ? document.all[mainId] : null);
+	if (dest && src) {
+		if (dest.innerHTML && src.innerHTML) {
+			dest.innerHTML = src.innerHTML;
+		
+			if (PrevL) {
+				if (BrowserDetect.browser == 'Explorer') {
+					PrevL.style.borderColor="#fff";
+					PrevL.style.borderStyle="solid";
+					PrevL.style.borderWidth="3px";
+				} else {
+					PrevL.setAttribute("style", "border: solid 3px #fff;");
+				}
+			}
+			if (L) {
+				if (BrowserDetect.browser == 'Explorer') {
+					L.style.borderColor="#f4f4f4";
+					L.style.borderStyle="solid";
+					L.style.borderWidth="3px";
+				} else {
+					L.setAttribute("style", "border: solid 3px #f4f4f4;");
+				}
+			}
+			PrevL = L;
+		}
+	}
+}
+</script>
+    <script type="text/javascript" src="/htmlhttprequest_commented.js"></script>
+    <script type="text/javascript">
+function myCopyContent(domDoc, uri) {
+ var destId = 'resultArea';
+ var dest = document.getElementById ? document.getElementById(destId) :
+  (document.all ? document.all[destId] : null);
+ if (!dest) return;
+ if (dest.innerHTML) dest.innerHTML = domDoc;
+}
+function showBooksAndVideo() {
+var CommerceLoader = new HTMLHttpRequest('CommerceLoader', myCopyContent);
+CommerceLoader.load('/cgi-bin/search.cgi?q=$%(q)&m=$&(m)&c=0B09&sp=1&sy=0&p=$&(p)&GroupBySite=no&s=RD&ps=3&tmplt=books8.htm.en');
+}
+    </script>
+</HEAD>
+<!-- BrowserCharset: $(BrowserCharset) -->
+<BODY>
+
+<div id="form">
+<center>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="background: url(/tdbg.png) repeat-x #f4f4f4;">
+
+<tr>
+<td class="headruler" align="left" valign="top">&nbsp;<b>
+<!IF NAME="c" CONTENT="0B09"><a href="http://books.43n39e.ru/">$(Books.lng)</a>
+<!ELIF NAME="c" CONTENT="09"><a href="http://www.43n39e.ru/gday-andromeda">$(AU.lng)</a>
+<!ELIF NAME="c" CONTENT="0F"><a href="http://www.43n39e.ru/nz">$(NZ.lng)</a>
+<!ELIF NAME="c" CONTENT="0D"><a href="http://www.43n39e.ru/oregon">$(Oregon.lng)</a>
+<!ELIF NAME="c" CONTENT="04"><a href="http://www.maxime.net.ru/">$(Compr.lng)</a>
+<!ELIF NAME="c" CONTENT="06"><a href="http://justine.43n39e.ru/">$(Justine.lng)</a>
+<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a> 
+<!ELSE><a href="http://www.43n39e.ru/andromeda">$(43N39E.lng)</a>
+<!ENDIF>
+</b></td>
+</tr>
+
+<tr>
+<td valign="middle" align="center">
+
+	    <form method="GET" action="$(self)" enctype="application/x-www-form-urlencoded">
+	      <input type="hidden" name="ps" value="5">
+	      <input type="hidden" name="np" value="0">
+	      <input type="hidden" name="dt" value="back">
+	      <input type="hidden" name="t" value="$&(t)">
+	      <input type="hidden" name="c" value="$&(c)">
+	      <input type="hidden" name="tmplt" value="andromeda.htm.en">
+	      <input type="hidden" name="s" value="$&(s)">
+<!IF NAME="site" CONTENT="-572280698">
+	<input type="hidden" name="site" value="-572280698">
+<!ENDIF>
+
+<table border="0" cellpadding="2" cellspacing="0">
+<tr>
+<td width="100%" colspan="2">
+ &nbsp;<b class="inputrev">$(SearchFor.lng):</b> <INPUT class="inputrev" TYPE="text" NAME="q" SIZE="50" VALUE="$&(q)">
+ <INPUT class="inputrev" TYPE="submit" VALUE="&gt;&gt;&gt;">
+ <!--/td><td-->&nbsp;
+ <select name="m" class="inputrev">
+ <option value="all" selected="$&(m)"> $(all.lng) 
+ <option value="near" selected="$&(m)"> $(near.lng) 
+ <option value="any" selected="$&(m)"> $(any.lng)
+ <option value="bool" selected="$&(m)"> $(bool.lng)
+ </select>
+ </td>
+</tr>
+
+<tr>
+<td width="100%" align="right">
+<select class="inputrev" name="g">
+<OPTION VALUE="" SELECTED="$&(g)">$(langany.lng)</option>
+<OPTION VALUE="ru" SELECTED="$&(g)">$(langru.lng)</option>
+<OPTION VALUE="en" SELECTED="$&(g)">$(langen.lng)</option>
+<OPTION VALUE="de" SELECTED="$&(g)">$(langde.lng)</option>
+<OPTION VALUE="fr" SELECTED="$&(g)">$(langfr.lng)</option>
+<OPTION VALUE="zh" SELECTED="$&(g)">$(langzh.lng)</option>
+<OPTION VALUE="ko" SELECTED="$&(g)">$(langko.lng)</option>
+<OPTION VALUE="th" SELECTED="$&(g)">$(langth.lng)</option>
+<OPTION VALUE="ja" SELECTED="$&(g)">$(langja.lng)</option>
+</select>
+<select class="inputrev" name="GroupBySite">
+<option value="yes" selected="$&(GroupBySite)">$(gr.lng)</option>
+<option value="no"  selected="$&(GroupBySite)">$(nogr.lng)</option>
+</select>
+<select class="inputrev" name="sy">
+<option value="0" selected="$&(sy)">$(nosyn.lng)</option>
+<option value="1" selected="$&(sy)">$(syn.lng)</option>
+</select><br>
+</td></tr>
+
+<tr>
+<td width="100%" align="right">
+<!IFNOT NAME="rm" CONTENT=""><select class="inputrev" name="rm">
+<option value="1" selected="$&(rm)">fast</option>
+<option value="2" selected="$&(rm)">full</option>
+<option value="3" selected="$&(rm)">ultra</option>
+</select><!ENDIF>
+<select class="inputrev" name="wf">
+<option value="33F37F73" selected="$&(wf)">$(doc.lng)</option>
+<option value="00000F00" selected="$&(wf)">$(ref.lng)</option>
+<option value="000000F0" selected="$&(wf)">$(tit.lng)</option>
+<option value="0000000F" selected="$&(wf)">$(body.lng)</option>
+<!--option value="33F37000" selected="$&(wf)">$(mp3.lng)</option-->
+</select>
+<SELECT class="inputrev" NAME="dp">
+<OPTION VALUE="0" SELECTED="$&(dp)">$(alldocs.lng)</option>
+<OPTION VALUE="7d" SELECTED="$&(dp)">$(lastweek.lng)</option>
+<OPTION VALUE="14d" SELECTED="$&(dp)">$(last2w.lng)</option>
+<OPTION VALUE="1m" SELECTED="$&(dp)">$(lastmonth.lng)</option>
+<OPTION VALUE="3m" SELECTED="$&(dp)">$(last3m.lng)</option>
+<OPTION VALUE="6m" SELECTED="$&(dp)">$(last6m.lng)</option>
+<OPTION VALUE="1y" SELECTED="$&(dp)">$(lastyear.lng)</option>
+</select>
+<select class="inputrev" name="sp">
+<option value="0" selected="$&(sp)">$(exact.lng)</option>
+<option value="1" selected="$&(sp)">$(wforms.lng)</option>
+</select>
+</td></tr></table>
+</FORM>
+</td>
+</tr>
+</table>
+</center>
+</div>
+<!--/top-->
+
+<!--bottom-->
+<div id="bottom">
+<br>
+<!IFNOT NAME="q" CONTENT="">
+<small>$(SearchFor.lng) &laquo;$&(q)&raquo; $(otherse.lng):
+<a href="http://li.ru/go?www.google.com/search?ie=UTF-8&amp;hl=en&amp;q=$%(q:utf-8)">Google</a> &#150;
+<a href="http://li.ru/go?www.yandex.ru/yandsearch?text=$%(q:cp1251)&amp;stype=www">$(yandex.lng)</a> &#150;
+<a href="http://li.ru/go?search.rambler.ru/cgi-bin/rambler_search?english=0&and=1&words=$%(q:cp1251)">$(rambler.lng)</a> &#150;
+<a href="http://li.ru/go?www.nigma.ru/index.php?0=1&1=1&2=1&3=1&4=1&5=1&6=1&7=1&q=$%(q:cp1251)">$(nigma.lng)</a> &#150;
+<a href="http://li.ru/go?search.yahoo.com/bin/query?p=$%(q:koi8-r)&amp;ei=KOI8-R">Yahoo!</a> &#150;
+<a href="http://li.ru/go?search.msn.com/results.aspx?q=$%(q:UTF-8)">MSN</a>
+</small>
+</!ENDIF>
+<table border="0" width="100%">
+<tr>
+<td align="center" valign="top">
+	&nbsp;
+</td>
+</tr>
+<tr><td align="center" valign="middle">
+<small>(C)2007, &laquo;<a href="http://www.datapark.ru/">$(datapark.lng)</a>&raquo;<br>
+<a href="http://www.dataparksearch.org/">$(usingdp.lng)</a></small><br>
+</td></tr>
+</table>
+</div>
+</body>
+</html>
+<!--/bottom-->
+
+<!--restop-->
+<div id="topmenu">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td colspan="2" align="left" class="serp">
+<small>&nbsp;$(showndocs.lng) <b>$(first)</b>-<b>$(last)</b> $(iz.lng) <b>$(total)</b> $(found.lng).</small>
+<td>
+<td width="50%" align="right">
+<small>$(stime.lng):&nbsp;<b>$(SearchTime)</b> $(sec.lng)&nbsp;</small>
+</td></tr>
+</table>
+</div>
+<div class="news">
+<small>&nbsp;<b>$(results.lng):</b>&nbsp;$(WS)</small>
+<!IFNOT NAME="Suggest_q" VALUE=""><br><small>&nbsp;<b>$(doyoumean.lng) &laquo;<a class="newcat" href="$(Suggest_url)">$(Suggest_q)</a>&raquo; ?</b></small>
+<!ENDIF>
+</div>
+<div class="bottom">
+<table width="100%" border="0" cellspacing="3" cellpadding="0"><tr><td valign="bottom">
+<table align="center" border="0" cellspacing="0" cellpadding="3"><tr><td>$(pages.lng):</td>$(NL)$(NB)$(NR)</tr></table></td>
+<td width="180" align="right" rowspan="2"><img src="http://sochi.org.ru/img/rss_icon.gif" width="14" height="14" border="0"><small>&nbsp;<a href="$(self)?q=$%(q)&amp;c=$&(c)&amp;site=$&(site)&amp;m=$&(m)&amp;sp=$&(sp)&amp;sy=$&(sy)&amp;&amp;s=DRP&amp;tmplt=rss8.htm.en">$(rssres.lng) &laquo;$&(q)&raquo;</a></small>
+</td></tr><tr><td align="left" valign="middle">$(sortedby.lng):&nbsp;
+<!IF NAME="s" CONTENT="DRP">
+<a href="$(FirstPage)&s=IRPD">$(isort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=RPD">$(rsort.lng)</a>&nbsp;|&nbsp;<span class="hl">$(dsort.lng)</span>&nbsp;|&nbsp;<a href="$(FirstPage)&s=PRD">$(psort.lng)</a><!ELIF NAME="s" CONTENT="IRPD">
+<span class="hl">$(isort.lng)</span>&nbsp;|&nbsp;<a href="$(FirstPage)&s=RPD">$(rsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">$(dsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=PRD">$(psort.lng)</a><!ELIF NAME="s" CONTENT="PRD">
+<a href="$(FirstPage)&s=IRPD">$(isort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=RPD">$(rsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">$(dsort.lng)</a>&nbsp;|&nbsp;<span class="hl">$(psort.lng)</span><!ELSE>
+<a href="$(FirstPage)&s=IRPD">$(isort.lng)</a>&nbsp;|&nbsp;<span class="hl">$(rsort.lng)</span>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">$(dsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=PRD">$(psort.lng)</a>
+<!ENDIF></td></tr></table>
+</div>
+<div id="dir">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td id="contentCell" rowspan="2" valign="top" align="left" style="width:20em; border-right: 1px solid #f4f4f4;">
+<!-- google_ad_section_start -->
+<!--/restop-->
+
+<!--res-->
+<div class="serp1" id="main$(pos)" style="border: solid 3px #fff;">
+<a class="restop" onMouseOver="sw($(pos),'http://$(url.host)/')" onMouseDown="sw($(pos),'http://$(url.host)/')" href="$(URL)"><!--
+ --><!IF NAME="Title" CONTENT="[no title]">
+         <!IF NAME="MP3.Artist" CONTENT="">$(notitle.lng)<!ELSE>$(artist.lng): $&(MP3.Artist)<!ENDIF>
+         <!ELIKE NAME="Title" CONTENT="/tmp/ind*">$(notitle.lng)
+    <!ELSE>$&(Title)<!ENDIF><!--
+--></a><br>
+<small class="result">$&(URL:40)<br>$(Last-Modified) - $(FancySize) $(bytes.lng) - $(Content-Language)<!-- - $(Charset)--></small>
+</div>
+<div id="pos$(pos)" style="visibility: hidden; height:1px"><!-- $(DP_ID), site_id: $(Site_ID), ST: $(ST) -->
+<strong>
+<!IF NAME="Content-Type" CONTENT="application/msword"><b class="mimetype">[DOC]</b>&nbsp;
+<!ELIKE NAME="Content-Type" CONTENT="audio/*"><b class="mimetype">[MP3]</b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/pdf"><b class="mimetype">[PDF]</b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/vnd.ms-excel"><b class="mimetype">[XLS]</b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/rtf"><b class="mimetype">[RTF]</b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="text/rtf"><b class="mimetype">[RTF]</b>&nbsp;
+<!ELIKE NAME="Content-Type" CONTENT="image/*"><b class="mimetype">[IMG]</b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/x-shockwave-flash"><b class="mimetype">[SWF]</b>&nbsp;
+<!ENDIF><!IF NAME="url.host" CONTENT="www.books.ru"><a onMouseDown="return clk($(DP_ID),$(Order))" class="restop" href="$(URL)?partner=datapark">
+<!ELIF NAME="url.host" CONTENT="www.bolero.ru"><a onMouseDown="return clk($(DP_ID),$(Order))" class="restop" href="http://www.bolero.ru//cgi-bin/superptr.cgi?partner=datapark&amp;new=1&amp;uri=$(URL.path)$(URL.file)">
+<!ELIF NAME="url.host" CONTENT="www.ozon.ru"><a onMouseDown="return clk($(DP_ID),$(Order))" class="restop" href="$(URL)?partner=datapark">
+<!ELSE><a id="link$(Order)" onMouseDown="return clk($(DP_ID),$(Order))" class="restop" href="$(URL)"><!ENDIF><!--
+ --><!IF NAME="Title" CONTENT="[no title]">
+	 <!IF NAME="MP3.Artist" CONTENT="">$(notitle.lng)<!ELSE>$(artist.lng): $&(MP3.Artist)<!ENDIF>
+	 <!ELIKE NAME="Title" CONTENT="/tmp/ind*">$(notitle.lng)
+    <!ELSE>$&(Title)<!ENDIF><!--
+--></a></strong>
+<!IFNOT NAME="sea" CONTENT=""><div class="serp3"><small class="restop">$(summary.lng):</small> <small>$&(sea:1024)</small></div><!ENDIF>
+<br>
+<div class="serp2">
+<!IF NAME="url.host" CONTENT="www.books.ru">
+<table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" valign="middle">
+<a onMouseDown="return clk($(DP_ID),$(Order))" href="$(URL)?partner=datapark"><img src="http://www.books.ru/img/$(url.file)s.jpg" border="0"></a>
+</td><td align="left" valign="top" style="padding-left: 0.5em;"><!ENDIF>
+<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span> 
+$&(MP3.Album)<br><!ENDIF>
+<!IF NAME="MP3.Song" CONTENT=""> <!ELSE><span class="result">$(song.lng): </span>
+$&(MP3.Song)<br><!ENDIF>
+<!IF NAME="MP3.Year" CONTENT=""> <!ELSE><span class="result">$(year.lng): </span>
+$&(MP3.Year)<br><!ENDIF>
+<!IF NAME="Body" CONTENT=""> <!ELSE>$&(Body)<br><!ENDIF></div>
+<div class="serp2"><small class="result">$&(URL:40)<br>$(Last-Modified) - $(FancySize) $(bytes.lng) - $(Content-Language)<!-- - $(Charset)--></small>
+<small class="result">- $(score.lng): $(Score) [$(Pop_Rank)]<br>
+	      <!IFNOT NAME="stored_href" CONTENT=""><a onMouseDown="return clk($(DP_ID),$(Order))" href="$(stored_href)">$(stcopy.lng)</a><!ENDIF>
+	      <!IFNOT NAME="sitelimit_href" CONTENT=""> &nbsp;&nbsp;<a href="$(self)$(sitelimit_href)">$(allresfrom.lng) $(url.host)
+				<!IFNOT NAME="PerSite" CONTENT="0">($(PerSite))<!ENDIF><!--
+--></a>
+	      <!ENDIF>
+<!IFNOT NAME="geo.lat" CONTENT=""> &nbsp;&nbsp;<a href="/cgi-bin/gmap.cgi.ru?q=$%(q)&amp;c=$&(c)&amp;m=$&(m)&amp;sp=$&(sp)&amp;sy=$&(sy)&amp;s=$&(s)&amp;tmplt=gmap43.htm.en&amp;s_tmplt=$&(tmplt)&amp;title=$%(title)&amp;geo.lat=$&(geo.lat)&amp;geo.lon=$&(geo.lon)">$(onmap.lng)</a><!ENDIF>
+<!IFNOT NAME="Price" CONTENT=""><span class="result"><br>$(price.lng): </span>$(Price) $(rur.lng)<!ENDIF>
+</small>
+<!IF NAME="url.host" CONTENT="www.books.ru">
+</td></tr></table><!ENDIF>
+</div>
+$(CL)
+</div>
+<script type="text/javascript">
+<!IF NAME="pos" CONTENT="1">function start_sw() {sw(1,'http://$(url.host)/');}
+mn = document.getElementById('contentCell');<!ENDIF>
+PicCell$(pos) = null;
+DivCell$(pos) = document.getElementById('pos$(pos)');
+mn.removeChild(DivCell$(pos));
+</script>
+<!--/res-->
+
+<!--clone-->
+<div><li><A HREF="$(URL)">$(URL:50)</A>,&nbsp; $(Last-Modified)</div>
+<!--/clone-->
+
+<!--navleft-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(prev.lng)</A></TD>
+<!--/navleft-->
+
+<!--navbar0-->
+<TD><b class="hl">$(NP)</b></TD>
+<!--/navbar0-->
+
+<!--navbar1-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(NP)</A></TD>
+<!--/navbar1-->
+
+<!--navright-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(next.lng)</A></TD>
+<!--/navright-->
+
+<!--navigator-->
+<TABLE BORDER="0"><TR><TD>$(pages.lng):</TD>$(NL) $(NB) $(NR)</TR></TABLE>
+<!--/navigator-->
+
+<!--resbot-->
+<!-- google_ad_section_end -->
+</td>
+<td valign="top" align="left" rowspan="2" style="border: solid 5px #f4f4f4"><div class="serp1"><div id="Snap" style="float:left; margin: 0px 1em 1em 0px;">&nbsp;
+<!--img style="border: 1px #000" src="http://images.websnapr.com/?url=http://$(url.host)/" width="202" height="152" alt="Snapshot"-->
+</div>
+<div id="Toy">&nbsp;</div>
+</div></td>
+<td width="120" valign="top" align="right" style="border-left: 1px solid #f4f4f4">
+<!--div id="resultArea">&nbsp;</div>
+<br--><br>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2379770140407936";
+google_ad_channel ="$&(google.ad.channel)";
+google_ad_width = 120;
+google_ad_height = 240;
+google_ad_format = "120x240_as";
+google_ad_type = "text_image";
+google_color_border = "FFFFFF";
+google_color_text = "333333";
+google_color_bg = "FFFFFF";
+google_color_link = "0050A0";
+google_color_url = "006000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+</tr>
+<tr><td width="120" align="center" valign="bottom">
+<script type="text/javascript" src="/install.js"></script>
+<script type="text/javascript">start_sw();</script>
+<a class="bottom" href="javascript:add_dpSearch()"><small>$(instplugin.lng)</small></a>
+<br>
+<a class="bottom" href="http://sochi.org.ru/makereport.html">$(mkreport.lng)</a>
+<br><br>
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write('<a href="http://www.liveinternet.ru/click" '+
+'target=_blank><img src="http://counter.yadro.ru/hit?t26.5;r'+
+escape(document.referrer)+((typeof(screen)=='undefined')?'':
+';s'+screen.width+'*'+screen.height+'*'+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+';u'+escape(document.URL)+
+';'+Math.random()+
+'" alt="" title="LiveInternet: " '+
+'border=0 width=88 height=15><\/a>')//--></script><!--/LiveInternet-->
+</td></tr></table>
+</div>
+<div class="bottom">
+<br>
+$(sortedby.lng):&nbsp;
+<!IF NAME="s" CONTENT="DRP">
+<a href="$(FirstPage)&s=IRPD">$(isort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=RPD">$(rsort.lng)</a>&nbsp;|&nbsp;<span class="hl">$(dsort.lng)</span>&nbsp;|&nbsp;<a href="$(FirstPage)&s=PRD">$(psort.lng)</a><!ELIF NAME="s" CONTENT="IRPD">
+<span class="hl">$(isort.lng)</span>&nbsp;|&nbsp;<a href="$(FirstPage)&s=RPD">$(rsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">$(dsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=PRD">$(psort.lng)</a><!ELIF NAME="s" CONTENT="PRD">
+<a href="$(FirstPage)&s=IRPD">$(isort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=RPD">$(rsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">$(dsort.lng)</a>&nbsp;|&nbsp;<span class="hl">$(psort.lng)</span><!ELSE>
+<a href="$(FirstPage)&s=IRPD">$(isort.lng)</a>&nbsp;|&nbsp;<span class="hl">$(rsort.lng)</span>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">$(dsort.lng)</a>&nbsp;|&nbsp;<a href="$(FirstPage)&s=PRD">$(psort.lng)</a>
+<!ENDIF><br><br>
+<CENTER><TABLE BORDER="0" cellspacing="0" cellpadding="3"><TR><td>$(pages.lng):</td>$(NL) $(NB) $(NR)</TR></TABLE></CENTER>
+</div>
+<div class="form">
+<br>
+<center>
+<table width="100%" border="0" cellpadding="2" cellspacing="0" align="center" style="background-image: url(/tdbg.png);">
+<tr>
+<td valign="middle" align="center">
+
+	<form method="GET" action="$(self)" enctype="application/x-www-form-urlencoded">
+	<input type="hidden" name="ps" value="5">
+	<input type="hidden" name="np" value="0">
+	<input type="hidden" name="dt" value="back">
+	<input type="hidden" name="t" value="$&(t)">
+	<input type="hidden" name="c" value="$&(c)">
+	<input type="hidden" name="s" value="$&(s)">
+	<input type="hidden" name="tmplt" value="andromeda.htm.en">
+	<input type="hidden" name="g" value="$&(g)">
+	<input type="hidden" name="GroupBySite" value="$&(GroupBySite)">
+	<input type="hidden" name="sy" value="$&(sy)">
+	<input type="hidden" name="sp" value="$&(sp)">
+	<input type="hidden" name="wf" value="$&(wf)">
+	<input type="hidden" name="dp" value="$&(dp)">
+
+<table border="0" cellpadding="2" cellspacing="0">
+<tr>
+<td width="100%">
+ &nbsp;<b class="inputrev">$(searchfor.lng):</b> <input class="inputrev" type="text" name="q" size="50" value="$&(q)">
+ <INPUT class="inputrev" TYPE="submit" VALUE="&gt;&gt;&gt;">
+ &nbsp;
+ <select name="m" class="inputrev">
+ <option value="all" selected="$&(m)">$(all.lng)</option> 
+ <option value="near" selected="$&(m)">$(near.lng)</option> 
+ <option value="any" selected="$&(m)">$(any.lng)</option>
+ <option value="bool" selected="$&(m)">$(bool.lng)</option>
+ </select>
+ </td>
+</tr>
+</table>
+</FORM>
+</td>
+</tr>
+</table>
+</center>
+</div>
+<!--/resbot-->
+
+
+<!--notfound-->
+<div id="topmenu">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td align="right">
+<small>$(stime.lng):&nbsp;$(SearchTime) $(sec.lng)&nbsp;</small>
+</td></tr>
+</table>
+</div>
+<div class="news">
+<small>&nbsp;$(results.lng):&nbsp;$(W)</small>
+<!IFNOT NAME="Suggest_q" VALUE=""><br><small>&nbsp;<b>$(doyoumean.lng) &laquo;<a class="newcat" href="$(Suggest_url)">$(Suggest_q)</a>&raquo; ?</b></small>
+<!ENDIF>
+<br>
+<br>
+<b>$(notfound.lng)</b>
+$(try.lng)
+</div>
+<!--/notfound-->
+
+<!--noquery-->
+<center>
+$(noquery.lng)
+</center>
+<!--/noquery-->
+
+<!--error-->
+<center>
+<font color="#FF0000">$(error.lng)</font>
+<p>
+<b>$(E)</b>
+</center>
+<!--/error-->

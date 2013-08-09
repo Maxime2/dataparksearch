@@ -1,0 +1,81 @@
+<!--variables
+DBAddr  searchd://localhost/
+LocalCharset   koi8-r
+BrowserCharset utf-8
+
+DetectClones	no
+MinWordLength 1
+MaxWordLength 64
+HlBeg	<b>
+HlEnd	</b>
+Locale en_US.UTF-8
+ExcerptSize 732
+ExcerptPadding 126
+#DateFormat %d %b %Y %X %Z
+DateFormat %a, %d %b %Y %H:%M:%S %z
+ResultContentType text/xml
+
+-->
+
+<!--top-->
+<?xml version="1.0" encoding="$(BrowserCharset)"?>
+<!-- generator="DataparkSearch 4" -->
+<rss version="2.0" 
+        xmlns:content="http://purl.org/rss/1.0/modules/content/"
+        xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+>
+<channel>
+        <title>$(q)</title>
+        <link>http://$(ENV.SERVER_NAME)$(self)</link>
+        <description>Search results for query: $&(q)</description>
+	<!-- lastBuildDate></lastBuildDate -->
+        <generator>DataparkSearch 4</generator>
+	<ttl>1440</ttl>
+<!IFNOT NAME="g" CONTENT=""><language>$&(g)</language><!ENDIF>
+
+<!--/top-->
+
+<!--restop-->
+
+<!--/restop-->
+
+<!--res-->
+<item>
+     <title><![CDATA[$(Title)]]></title>
+     <link><![CDATA[$(URL)]]></link>
+     <pubDate>$(Last-Modified)</pubDate>
+     <guid><![CDATA[$(URL)]]></guid>
+     <description><![CDATA[$&(Body)<br/><b>Summary:</b>$&(SEA)]]></description>
+</item>
+<!--/res-->
+
+<!--resbot-->
+
+<!--/resbot-->
+
+<!--clone-->
+<!--/clone-->
+
+<!--notfound-->
+        <item>
+	<description>Sorry, your search for <b>$&(q)</b> did not found any results.</description>
+        </item>
+<!--/notfound-->
+
+<!--noquery-->
+        <item>
+	<description>You haven't typed any word(s) to search for.</description>
+        </item>
+<!--/noquery-->
+
+<!--error-->
+        <item>
+	<description>An error occured!</description>
+        </item>
+<!--/error-->
+
+<!--bottom-->
+</channel>
+</rss>
+<!--/bottom-->

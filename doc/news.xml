@@ -1,0 +1,34 @@
+<sect2 id="news">
+	<title>News extensions
+<indexterm><primary>News extensions</primary></indexterm>
+</title>
+
+<para>To enable News extensions do these steps:
+
+<itemizedlist>
+
+<listitem><para>Build <application>DataparkSearch</application> with <literal>news://</literal> scheme support,
+i.e. do not disbale it when run configure (News extensions are enabled by default)</para>
+</listitem>
+
+<listitem><para>
+<indexterm><primary>Command</primary><secondary>NewsExtensions</secondary></indexterm>
+Add the command <command>NewsExtensions yes</command> into your <filename>indexer.conf</filename> configuration file.
+Also add these <command>Section</command> commands into <filename>sections.conf</filename> file:
+<programlisting>
+Section Header.References 18 0
+Section Header.Message-ID 19 0
+Section Header.Parent-ID  20 0
+</programlisting>
+You can also use <literal>Header.Subject</literal> or <literal>Header.From</literal>.
+Please remember, you need to specify non-zero maximal length for any of these sections if you need to store it into <literal>urlinfo</literal> table and/or use it in your search template.
+</para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para>With News extensions enable, the <command>indexer</command> try to detect Parent-ID for each article indexed and 
+also put the pairs (<literal>Parent-ID</literal>, <literal>ID</literal>) into <literal>links</literal> table.
+</para>
+</sect2>

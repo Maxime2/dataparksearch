@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Stopwords</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Content-Encoding support"
+HREF="dpsearch-content-enc.en.html"><LINK
+REL="NEXT"
+TITLE="Clones"
+HREF="dpsearch-clones.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-content-enc.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-clones.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="STOPWORDS"
+>3.4. Stopwords</A
+></H1
+><A
+NAME="AEN781"
+></A
+><P
+><TT
+CLASS="LITERAL"
+>Stopwords</TT
+> - are the most frequently used words, i.e. words which appear in almost every document searched. 
+Stopwords are filtered out prior to index construction, what is allow to reduce the total size of the index without any 
+significant loss in quality of search.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STOPWORDFILE_CMD"
+>3.4.1. <B
+CLASS="COMMAND"
+>StopwordFile</B
+> command</A
+></H2
+><A
+NAME="AEN788"
+></A
+><P
+>Load stop words from the given text file. You may specify either absolute 
+file name or a name relative to <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> <TT
+CLASS="FILENAME"
+>/etc</TT
+> directory. You may use
+several <B
+CLASS="COMMAND"
+>StopwordFile</B
+> commands.
+<PRE
+CLASS="PROGRAMLISTING"
+>StopwordFile stopwords/en.sl</PRE
+></P
+><P
+>You must use the same set of <B
+CLASS="COMMAND"
+>StopwordFile</B
+> commands in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (<TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> if <B
+CLASS="COMMAND"
+>searchd</B
+> is used).</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STOPWORDFILE_FORMAT"
+>3.4.2. Format of stopword file</A
+></H2
+><A
+NAME="AEN804"
+></A
+><P
+>You may create your own stopword lists. As an example you may take the English stopword file <TT
+CLASS="FILENAME"
+>etc/stopwords/en.sl</TT
+>. 
+In the beginning of the list please specify the
+following two commands:
+	<PRE
+CLASS="PROGRAMLISTING"
+>Language: en
+Charset:  us-ascii</PRE
+></P
+><P
+></P
+><UL
+><LI
+><P
+>				<CODE
+CLASS="VARNAME"
+>Language</CODE
+> - standard
+(ISO 639) two-letter language abbreviation.</P
+></LI
+><LI
+><P
+>				<CODE
+CLASS="VARNAME"
+>Charset</CODE
+> - any
+charset supported by <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> (see <A
+HREF="dpsearch-international.en.html#CHARSET"
+>Section 7.1</A
+>&#62;).</P
+></LI
+></UL
+><P
+>Then the list of stopwords is follow, one word per line. Each word is written in character set specified above by <B
+CLASS="COMMAND"
+>Charset:</B
+> command.</P
+><P
+>You may use optional <B
+CLASS="COMMAND"
+>Match:</B
+> command to specify a pattern to treat any word match it as a stopword. E.g.:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>Match: regex ^\$##</PRE
+><P
+>According to this command, any word begins with <TT
+CLASS="LITERAL"
+>$##</TT
+> will be considered as a stopword.</P
+><P
+>Options of <B
+CLASS="COMMAND"
+>Match:</B
+> command are the same as for <B
+CLASS="COMMAND"
+>Allow</B
+> (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;). Arguments are in character set specified by <B
+CLASS="COMMAND"
+>Charset:</B
+> command. Regular expressions are limited at the moment (e.g. intervals aren't supported).</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILLDICT"
+>3.4.3. <B
+CLASS="COMMAND"
+>FillDictionary</B
+> command.</A
+></H2
+><A
+NAME="AEN834"
+></A
+><P
+>With the command <KBD
+CLASS="USERINPUT"
+>"FillDictionary yes"</KBD
+> in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> 
+you can enable storage of all indexed words into <TT
+CLASS="FILENAME"
+>"dict"</TT
+> table for dbmode cache. 
+This is usefull to track down which words are stopwords for your installation.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STOPWORDSLOOSE"
+>3.4.4. <B
+CLASS="COMMAND"
+>StopwordsLoose</B
+> command.</A
+></H2
+><A
+NAME="AEN844"
+></A
+><P
+>With the command <KBD
+CLASS="USERINPUT"
+>"StopwordsLoose yes"</KBD
+> in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>search.htm</TT
+> 
+only the stopwords of the same language as the language of a document indexing or the language of a search request are taken into accont as stopwords, i.e. the stopwords of different language are processed as regular words for this document indexing or search request executed.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-content-enc.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-clones.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Content-Encoding support</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Clones</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

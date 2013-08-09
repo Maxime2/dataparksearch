@@ -1,0 +1,74 @@
+<sect1 id="mod_dpsearch">
+	<title><literal>mod_dpsearch</literal> module for Apache httpd</title>
+<indexterm><primary>mod_dpsearch</primary></indexterm>
+<indexterm><primary>Command</primary><secondary>DataparkSearchdConf</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>DataparkSearchTemplate</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>DataparkStoredocTemplate</secondary></indexterm>
+
+	<para>Since version 4.19 <application>DataparkSearch</application> also provide the <literal>mod_dpsearch.so</literal>
+module for <application>Apache</application> web server.</para>
+
+	<sect2 id="mod_dpsearch-why">
+		<title>Why using <literal>mod_dpsearch</literal></title>
+		<itemizedlist>
+			<listitem>
+<para>As for <command>searchd</command> (see <xref linkend="searchd-why"/>), <command>mod_dpsearch</command> can hold preloaded in memory 
+some data to speed-up searches.
+</para>
+</listitem>
+
+<listitem>
+<para>In additional, <command>mod_dpsearch</command> hold in memory last used search template. 
+This save time on template loading and parsing for every request since second.
+</para>
+</listitem>
+
+<listitem>
+<para>As a plus, the <command>mod_dpsearch</command> itself already loaded into memory when search request come from user, while
+search.cgi usualy loads from disk for every search request.
+</para>
+</listitem>
+
+		</itemizedlist>
+	</sect2>
+
+	<sect2 id="mod_dpsearch-cfg">
+		<title>Configuring <literal>mod_dpsearch</literal></title>
+
+<para>To enable this extension, add <option>--enable-apache-module</option> switch to <command>configure</command>.
+In addition, the <literal>mod_dpsearch.so</literal> shared library will be created and installed into 
+<application>Apache</application> tree. Then you need activate this module by adding following line into
+<application>Apache</application> configuration file:
+
+<programlisting>
+LoadModule dpsearch_module       libexec/mod_dpsearch.so
+AddModule mod_dpsearch.c
+
+&lt;Ifmodule mod_dpsearch.c&gt;
+DataparkSearchdConf /usr/local/dpsearch/etc/modsearchd.conf
+    &lt;Location /search&gt;
+        SetHandler dpsearch
+        DataparkSearchTemplate /usr/local/dpsearch/etc/modsearch.htm
+    &lt;/Location&gt;
+    &lt;Location /storedoc&gt;
+        SetHandler dpstoredoc
+        DataparkStoredocTemplate /usr/local/dpsearch/etc/modstoredoc.htm
+    &lt;/Location&gt;
+&lt;/IfModule&gt;
+</programlisting>
+</para>
+
+<para>There are three configuration directives supported by this module: <option>DataparkSearchdConf</option>,
+<option>DataparkSearchTemplate</option> and <option>DataparkStoredocTemplate</option> . 
+The <option>DataparkSearchdConf</option> optional directive specify a <command>searchd</command>
+related configuration file. It may be only one per server. 
+The <option>DataparkSearchdTemplate</option> directive specify a search template file. 
+The <option>DataparkStoredocTemplate</option> directive specify a storedoc template file. 
+There can be several templates specified per servers, by one per location. 
+If <option>DataparkSearchdConf</option> directive specified, there no need specify <option>DBAddr</option> command in templates.
+</para>
+
+	</sect2>
+
+</sect1>
+

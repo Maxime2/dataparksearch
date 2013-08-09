@@ -1,0 +1,114 @@
+<sect1 id="stopwords">
+<title>Стопслова</title>
+<indexterm><primary>Стопслова</primary></indexterm>
+
+<para><literal>Стопслова</literal> -- наиболее часто используемые слова, т.е слова, встречающиеся почти в каждом документе коллекции. 
+Стопслова удаляются перед созданием индекса, что посзволяет сократить размер индекса без сколько-нибудь значимой потери в качестве поиска.
+</para>
+
+
+<sect2 id="stopwordfile_cmd">
+<title>Команда <command>StopwordFile</command></title>
+<indexterm><primary>Команда</primary><secondary>StopwordFile</secondary></indexterm>
+<para>Загружает стоп-слова из указаного файла. Вы можете задать как абсолютный, так и относительный путь.
+Относительный путь задаётся от директории <filename>etc</filename>. 
+Можно использовать несколько команд <command>StopwordFile</command>.
+<programlisting>
+StopwordFile stopwords/en.sl
+</programlisting>
+</para>
+<para>Вы должны использовать один и тот же надор команд <command>StopwordFile</command> в <filename>indexer.conf</filename> и <filename>search.htm</filename> (<filename>searchd.conf</filename> если используется <command>searchd</command>).
+</para>
+</sect2>
+
+<sect2 id="stopwordfile_format">
+<title>Формат файла стопслов</title>
+<indexterm><primary>Стопслова</primary><secondary>формат файла</secondary></indexterm>
+
+	<para>Вы можете создавать свои файлы стоп-слов. В качестве примера, вы можете использовать файл английских стоп-слов <filename>etc/stopwords/en.sl</filename>. 
+В начале листа поместите следующие две команды:
+	<programlisting>
+Language: en
+Charset:  us-ascii
+</programlisting>
+</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				<varname>Language</varname> - стандартный (ISO 639) двух-буквенный код языка.</para>
+		</listitem>
+		<listitem>
+			<para>
+				<varname>Charset</varname> - любая кодировка, поддерживаемая <application>DataparkSearch</application> (см. <xref linkend="charset"/>).</para>
+		</listitem>
+	</itemizedlist>
+<para>
+Затем следует список слов, по одному на строку. Каждое слово записывается в кодировке, указанной выше командой <command>Charset:</command>.
+</para>
+
+<para>Вы можете использовать дополнительную команду <command>Match:</command> для задания шаблона, любое слово подпадающее под который будет считаться стоп-словом. Например:
+</para>
+	<programlisting>
+Match: regex ^\$##
+</programlisting>
+<para>
+По этой команде любое слово, начинающееся с <literal>$##</literal> будет рассматриваться как стоп-слово.
+</para>
+<para>
+Опции команды <command>Match:</command> аналогичны опциям команды <command>Allow</command> (см. <xref linkend="allow_cmd"/>). Аргументы записываются в кодировке, указанной командой <command>Charset:</command>. Регулярные выражения в данный момент ограничены (например, не поддерживаются интервалы).
+</para>
+
+</sect2>
+
+<sect2 id="filldict">
+<title>Команда <command>FillDictionary</command>.</title>
+<indexterm><primary>Команда</primary><secondary>FillDictionary</secondary></indexterm>
+
+<para>При помощи команды <userinput>"FillDictionary yes"</userinput> в <filename>indexer.conf</filename> 
+вы можете включить сохранение всех индексируемых слов в таблице <filename>"dict"</filename> для способа хранения cache. 
+Это может пригодиться для отслеживания, какие слова могут быть стопсловами для вашей инсталляции.
+</para>
+</sect2>
+
+<sect2 id="stopwordsloose">
+<title>Команда <command>StopwordsLoose</command>.</title>
+<indexterm><primary>Команда</primary><secondary>StopwordsLoose</secondary></indexterm>
+
+<para>Если в <filename>indexer.conf</filename> и в <filename>search.htm</filename> указана команада <userinput>"StopwordsLoose yes"</userinput>,
+только стопслова того же языка, что и индексируемый документ или языка поискового запроса считаются таковыми, т.е. стопслова для других языков обрабатываются как обычные слова для текущего индексируемого документа или исполняемого поискового запроса.
+</para>
+
+</sect1>
+
+
+<sect1 id="clones">
+<title>Клоны документов</title>
+<indexterm><primary>Клоны документов</primary></indexterm>
+
+<para><literal>Клоны</literal> -- документы, имеющие одинаковые значения Hash32 вычисляемой по всем секциям документа.
+Копии одного и того же документа имеют одинаковые значения Hash32. Это позволяет не индексировать дубликады документов в коллекции.
+Однако: всли в файле <filename>sections.conf</filename> определена только секция <literal>title</literal>, тогда все документы с разными
+телами, но одинаковыми title будут считаться клонами.
+</para>
+
+
+<sect2 id="detectclones_cmd">
+<title>Команда <command>DetectClones</command></title>
+<indexterm><primary>Команда</primary><secondary>DetectClones</secondary></indexterm>
+<programlisting>
+DetectClones yes/no
+</programlisting>
+<para>
+Включает или выключает механихм определения и игнорирования "клонов" документов.
+При включении, <command>indexer</command> будет определять копии документов, расположенных, например, на зеркалах, и 
+не индексировать их повторно.
+Значение по умолчанию: yes.
+<programlisting>
+DetectClones no
+</programlisting>
+</para>
+</sect2>
+
+
+</sect1>

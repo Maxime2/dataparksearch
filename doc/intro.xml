@@ -1,0 +1,222 @@
+<chapter id="intro">
+	<title>Introduction</title>
+        <indexterm><primary>Introduction</primary></indexterm>
+
+	<para>
+		<application>DataparkSearch</application> is a
+full-featured web search engine. <application>DataparkSearch</application> consists of two
+parts. The first part is an indexing mechanism (the <command>indexer</command>). The indexer walks
+over hypertext references and stores found words and new references into the database. 
+The second part is a CGI front-end to
+provide the search service using the data collected by the indexer.
+</para>
+
+<para>
+<application>DataparkSearch</application> was cloned from the 3.2.16 CVS version of <application>mnoGoSearch</application>
+on 27 November 2003 as <application>DataparkSearch 4.16</application>.
+The <application>mnoGoSearch's</application> first release
+took place in November 1998. The search engine had the name of
+UDMSearch until October 2000 when the project was acquired by
+Lavtech.Com Corp. and changed its name to
+<application>mnoGoSearch</application>.</para>
+
+	<para id="changelog-latest"><indexterm><primary>Changelog latest</primary></indexterm>
+The latest change log of DataparkSearch can be found <ulink url="http://www.dataparksearch.org/ChangeLog">on our website</ulink>.</para>
+
+	<para><indexterm><primary>Twitter</primary></indexterm>
+Follow <ulink url="http://twitter.com/dataparksearch">@dataparksearch</ulink> to see latest updates to the DataparkSearch.</para>
+
+
+	<sect1 id="features">
+		<title>DataparkSearch Features</title>
+                <indexterm><primary>Features</primary></indexterm>
+                
+		<para>Main <application>DataparkSearch</application> features are as follows:</para>
+		<itemizedlist>
+			<listitem>
+				<para>MySQL (<literal>libz</literal>
+library required), PostgreSQL, <!--mySQL,--> <!--Solid,--> iODBC, unixODBC, EasySoft
+ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (see <xref linkend="oracle"/>), 
+<!--SyBase,--> MS SQL<!--, SAPDB SQL--><!--, DB2 (see <xref linkend="db2"/>)--> back-ends support.</para>
+
+			</listitem>
+			<listitem>
+				<para>HTTP support.</para>
+			</listitem>
+			<listitem>
+				<para>HTTP proxy support.</para>
+			</listitem>
+			<listitem>
+				<para>HTTPS support.</para>
+			</listitem>
+			<listitem>
+				<para>FTP support.</para>
+			</listitem>
+			<listitem>
+				<para>NNTP support (both news:// and nntp:// URL schemes).</para>
+			</listitem>
+			<listitem>
+				<para><link linkend="htdb">HTDB virtual URL scheme</link>
+support. One may build index and search through the big text
+fields/blobs of SQL database.</para>
+
+			</listitem>
+			<listitem>
+				<para><link linkend="mirror">Mirroring features</link>.</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>text/html</literal>, <literal>text/xml</literal>, <literal>text/plain</literal>,
+<literal>audio/mpeg</literal> (MP3) and <literal>image/gif</literal> built-in support.</para>
+			</listitem>
+			<listitem>
+				<para><link linkend="pars">External parsers</link> support for other document types.</para>
+			</listitem>
+<listitem>
+<para>Ability to index multilingual sites using content negotiation.</para>
+</listitem>
+			<listitem>
+				<para>Searching all of the word forms using ispell affixes and dictionaries</para>
+			</listitem>
+			<listitem>
+				<para>Basic authorization support. One may index password protected  intranet HTTP servers.</para>
+			</listitem>
+			<listitem>
+				<para>Proxy authorization support.</para>
+			</listitem>
+			<listitem>
+				<para>Reentry capability. One may use
+several indexing and searching processes at the same time even on the
+same database. Multi-threaded indexing support.</para>
+
+			</listitem>
+			<listitem>
+				<para>Stop-list support.</para>
+			</listitem>
+			<listitem>
+				<para>&lt;META NAME="robots" content="..."&gt; and <filename>robots.txt</filename> support.</para>
+			</listitem>
+			<listitem>
+				<para>C language CGI <!--, PHP3, Perl--> web front-end.</para>
+			</listitem>
+			<listitem>
+				<para>Boolean query language support.</para>
+			</listitem>
+			<listitem>
+				<para>Results sorting by relevance, popularity rank, last modified date and by importance 
+(a multiplication of relevance and popularity rank).</para>
+			</listitem>
+			<listitem>
+				<para>Fuzzy search: different word forms, spelling corrections, 
+<link linkend="synonyms">synonyms</link>, 
+<link linkend="acronym">acronyms and abbreviations</link>.</para>
+			</listitem>
+			<listitem>
+				<para><link linkend="charset">Various character sets support</link>.</para>
+			</listitem>
+			<listitem>
+				<para>HTML templates to easily customize search results.</para>
+			</listitem>
+			<listitem>
+				<para>Advanced search options like time limits, category and tags limits etc.</para>
+			</listitem>
+		<listitem>
+			<para><link linkend="cjk">Phrases segmenting for Chinese, Japanese, Korean and Thai languages</link>.</para>
+		</listitem>
+<listitem>
+	<para><link linkend="accent">Accent insensitive search</link>.</para>
+</listitem>
+<listitem>
+	<para><link linkend="mod_dpsearch"><command>mod_dpsearch</command></link> - search module for <ulink url="http://httpd.apache.org/">Apache</ulink> web server.</para>
+</listitem>
+<listitem>
+        <para>Internationalized Domain Names support.</para>
+</listitem>
+<listitem>
+        <para><link linkend="sea">The Summary Extraction Algorithm</link> (SEA).</para>
+</listitem>
+		</itemizedlist>
+	</sect1>
+
+	<sect1 id="get">
+		<title>Where to get <application>DataparkSearch</application>.</title>
+                 <indexterm><primary>Where to get <application>DataparkSearch</application></primary></indexterm>
+                
+		<para>Check for the latest version of <application>DataparkSearch</application> at:
+<ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>, as well at Google Code:
+<ulink url="http://code.google.com/p/dataparksearch/">http://code.google.com/p/dataparksearch/</ulink>.</para>
+
+<!-- para>A mirror in Germany: <ulink url="http://dataparksearch.h0t.de/">http://dataparksearch.h0t.de/</ulink>.</para-->
+<!-- para>A mirror in Moscow, Russia: <ulink url="http://dataparksearch.newsa.ru/">http://dataparksearch.newsa.ru/</ulink>.</para-->
+
+<para><application>DataparkSearch</application> is also available in FreeBSD ports collection, 
+see <ulink url="http://www.freshports.org/www/dpsearch">www.freshports.org/www/dpsearch</ulink> and 
+in the <ulink url="http://www.t2-project.org/packages/dpsearch.html">T2 Linux SDE</ulink>.
+</para>
+
+<para>DataparkSearch's source is available via SVN at Google Code:
+<programlisting>
+svn checkout http://dataparksearch.googlecode.com/svn/trunk/ dataparksearch-read-only
+</programlisting>
+</para>
+
+	</sect1>
+
+	<sect1 id="disclaimer">
+		<title>Disclaimer</title>
+                <indexterm><primary>Disclaimer of DataparkSearch</primary></indexterm>
+                
+		<para>This program is free software; you can
+redistribute it and/or modify it under the terms of the GNU General
+Public License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.  See
+<filename>COPYING</filename> file for details.</para>
+
+		<para>This program is distributed in the hope that it
+will be useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+the GNU General Public License for more details. </para>
+
+		<para>You should have received a copy of the GNU
+General Public License along with this program; if not, write to the
+Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+02111-1307 USA </para>
+
+	</sect1>
+	<sect1 id="authors">
+		<title>Authors</title>
+        <indexterm><primary>Authors</primary></indexterm>
+<para>
+	<author><firstname>Maxim</firstname><surname>Zakharov</surname></author>
+				<email>maxime@maxime.net.ru</email>, <ulink url="http://www.maxime.net.ru/">homepage</ulink>
+</para>
+
+		<sect2 id="contriblist">
+			<title>Contributors</title>
+<indexterm><primary>Contributors</primary></indexterm>
+
+<para>
+        <author><firstname>Michael</firstname><surname>Kynast</surname></author> <email>kynast@newslookup.com</email>:
+First <application>DataparkSearch</application> user. Testing on <application>Linux Red Hat</application>.
+</para>
+
+<para>
+	<author><firstname>Jean-Gerard</firstname><surname>Pailloncy</surname></author>:
+Testing on <application>OpenBSD</application>.
+</para>
+<para>
+	<author><firstname>Amit</firstname><surname>Joshi</surname></author>:
+Testing on <application>CentOS</application>, packaging for <application>Debian</application>, 
+some ideas to improve the scalability for several PC and using several DBAddr.
+</para>
+
+<para>
+        <author><firstname><application>mnoGoSearch</application></firstname> <surname>developers and contributors</surname></author>
+<email>devel@mnogosearch.org</email>:
+Development and contributions for <application>mnoGoSearch</application> versions up to 3.2.15.
+</para>
+
+		</sect2>
+	</sect1>
+
+</chapter>

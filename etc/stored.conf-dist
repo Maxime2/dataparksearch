@@ -1,0 +1,32 @@
+#
+# You need specify DBAddr command(s) to using stored db checkup
+#DBAddr mysql://localhost/search/?dbmode=cache
+#
+# Listen: Allows to bind searchd to specific IP address and/or port.
+# It is binded to all host addresses by default.
+#
+#Listen 7004
+#Listen 127.0.0.1:7004
+
+
+# Set non-standard /var directory
+# for cache mode and built-n database.
+#
+#VarDir /mnt/d/dpsearch/var/
+
+
+# set number of file-stores in var/store for documents archiving 
+# Note: this is *not* number of documents to store. 
+#
+#StoredFiles 4096
+
+# try optimize one base every OptimizeIntervel seconds.
+# default value: 600 seconds
+#
+#OptimizeInterval 600
+
+# do optimize if defragmentation is great than OptimizeRatio percent
+# ATN: this is integer value
+# default value: 5
+#OptimizeRatio 5
+

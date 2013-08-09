@@ -1,0 +1,22 @@
+<sect1 id="vary">
+	<title>Multilingual servers support</title>
+<indexterm><primary>Command</primary><secondary>VaryLang</secondary></indexterm>
+
+<para>Some web-servers can handle language negotiation for documents language.
+In this case, for one URL exist several copies in different languages.
+</para>
+
+<para>For indexing all pages of such servers, <command>VaryLang</command> command is used.
+It specify list of languages separated by spaces. 
+These languages will used for indexing URL with multi-language versions.
+</para>
+
+<para>Usage example:
+<programlisting>
+VaryLang "ru en fr"
+</programlisting></para>
+<para>
+<command>index</command> will fetch all document copies in Russian, English and French languages.
+</para>
+
+</sect1>

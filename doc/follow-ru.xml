@@ -1,0 +1,560 @@
+<sect1 id="follow">
+	<title id="follow.title">Указание веб-пространства для индексирования</title>
+
+	<para>Каждый раз когда <command>indexer</command> добавляет новую ссылку или выбирает очередную ссылку для
+индексирования, он сначала проверяет, задана ли в <filename>indexer.conf</filename> для этой ссылки команда
+<command>Server</command>, <command>Realm</command> или <command>Subnet</command>. Ссылки, не имеющие ни одной такой соответсвующей
+им команде не добавляются в базу, а если же такие ссылки уже 
+находятся в базе данных (например, после удаления одной из команд <command>Server</command>, <command>Realm</command> или
+<command>Subnet</command> из файла <filename>indexer.conf</filename>), то они удаляются при очередной попытке их индексации.
+	</para>
+
+<para>Эти команды имеют один обязательный параметр <option>pattern</option> и шесть необязательных:
+<option>method</option>, <option>subsection</option>, <option>CaseType</option>, <option>MatchType</option>,
+<option>CmpType</option> и <option>Alias</option>. Формат этих команд:
+<programlisting>&lt;команда&gt; [method] [subsection] [CaseType] [MatchType] [CmpType] pattern [alias]</programlisting>
+</para>
+
+<para>Обязательный параметр <option>pattern</option> задаёт либо URL, либо его фргамент, или шаблон для сравнения.
+</para>
+
+<!--	<sect4 id="follow-check">
+		<title>Неробязательный параметр <option>subsection</option> команд <command>Server</command>,
+<command>Realm</command> и <command>Subnet</command></title>
+-->
+		<para>
+		Значение параметра <option>subsection</option> должно быть одним из <literal>page</literal>,
+		<literal>path</literal>, <literal>site</literal>, <literal>world</literal> и по умолчанию используется значение
+		<literal>path</literal>. 
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					<command>Server path</command>
+				</para>
+				<para>
+					Описывает документы, расположенные на том же сервере и в том же подкаталоге,
+					что и аргумент <command>URL</command> команды <command>Server</command>.
+					Например, если задана команда <literal>Server path http://localhost/path/to/index.html</literal>,
+					все URL, начинающиеся с <literal>http://localhost/path/to/</literal>, соответствуют этой команде
+					<command>Server</command>.
+				</para>
+
+				<para>Следующие команды имеют одинаковый эффект на задание пространства индексации, и лишь 
+					отличаются адресами документов, добавляемых в базу при старте:
+<programlisting>
+Server path http://localhost/path/to/index.html
+Server path http://localhost/path/to/index
+Server path http://localhost/path/to/index.cgi?q=bla
+Server path http://localhost/path/to/index?q=bla
+</programlisting>
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>
+					<command>Server site</command>
+				</para>
+				<para>
+					Описывает все документы с того же самого сервера, что и аргумент  команды <command>Server</command>.
+					Например, <literal>Server site http://localhost/path/to/a.html</literal> описывает любой 
+					документ с сервера <literal>http://localhost/</literal>.
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>
+					<command>Server world</command>
+				</para>
+				<para>
+					Если в качестве значения параметра <option>subsection</option> каманды
+					<command>Server</command> задано <literal>word</literal>, то это описывает
+					абсолютно любой документ. См. объяснение ниже.
+				</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<command>Server page</command>
+				</para>
+				<para>
+					При этом значении параметра <option>subsection</option> только URL,
+					указанный в качестве параметра команды <command>Server</command>,
+					соответствует этой команде.
+				</para>
+			</listitem>
+<listitem>
+<para><command>Server nofollow</command></para>
+<para>Не идти по ссылкам для любого URL, подпадающего под указаный шаблон.</para>
+</listitem>
+
+			<listitem>
+				<para>
+					<option>subsection</option> для схемы <literal>news://</literal>
+				</para>
+				<para>
+					Для схемы <literal>news://</literal> значение <option>subsection</option>
+					всегда равно <literal>site</literal>. Это обусловлено отсутствием в этой схемы директорий, как в схемах
+					<literal>ftp://</literal> или <literal>http://</literal>.  Используйте
+					<literal>Server news://news.server.com/</literal> для индексирования всего ньюс-сервера. Для индексации одной
+					ньюсгруппы, например, udm - команду <literal>Server news://news.server.com/udm</literal>
+				</para>
+			</listitem>
+
+		</orderedlist>
+		</para>
+<!--	</sect4> -->
+
+<para>
+Необязательный параметр <literal>CaseType</literal> задаёт чувствительность к регистру при сравнении строк, может 
+принимать значения <literal>case</literal> - нувствительное к регистру сравнение, и <literal>nocase</literal> - чувствительное
+сравнение.
+</para>
+
+
+		<para>
+			Необязательный параметр <literal>CmpType</literal> узазывает тип сравнения
+			и может принимать значения <literal>Regex</literal> и <literal>String</literal>.
+			Типа сравнения <literal>String</literal> означает сравнение строкового шаблона и
+			используется по умолчанию. В параметре <option>pattern</option> Вы можете использовать символы ? и *,
+			они обозначают "один символ" и "любое число символов" соответственно. Используйте символ \ в качестве префикса перед этими специальными символами в ваших шаблонах, если вы их хотите использовать как обычнве символы. Например, если Вы хотите описать
+			все HTTP сайты в домене <literal>.ru</literal>, используйте эту команду:
+			<programlisting>Realm http://*.ru/*</programlisting>
+		</para>
+		
+		<para>
+			Сравнение как регулярных выражений производится если указан параметр <option>Regex</option>.
+			Например, Вы можете описать все HTTP сервера домена <literal>.ru</literal>, используя регулярное выражение:
+			<programlisting>Realm Regex ^http://.*\.ru/</programlisting>
+		</para>
+		
+		<para>
+			Необязательный параметр <literal>MatchType</literal> определяет тип совпадения.
+			Для этого параметра могут указываться два значения: <literal>Match</literal> и <literal>NoMatch</literal>,
+			по умолчанию используется значение <literal>Match</literal>. Команда <literal>Realm NoMatch</literal> имеет обратный эффект.
+			Это обозначает, что URL, не попадающий под указанный <literal>pattern</literal>, будет соответствовать этой команде
+			<command>Realm</command>. Например, используйте эту команду для индексирования любых документов,
+			за исключением <literal>.com</literal> доменов:
+			<programlisting>Realm NoMatch http://*.com/*</programlisting>
+		</para>
+		
+		<para>
+			Необязательный параметр <option>alias</option> позволяет организовать сложный механизм замены URL,
+			нежели предоставляет механизм алиасов. Смотрете <xref linkend="aliases"/> для объяснения использования параметра
+			<option>alias</option>. <option>Alias</option> работает только с типом сравнения Regex, и не даёт никакого
+			эффекта при типе сравнении String.
+		</para>
+
+		<para>
+			Необязательный параметр <option>method</option> в командах <command>Server</command>, <command>Realm</command>
+и <command>Subnet</command>
+			описывает действие, которое будет произведено с документами, соответствующими его команде
+			и может принимать значения 
+			<literal>Allow</literal>, <literal>Disallow</literal>, <literal>HrefOnly</literal>, 
+			<literal>CheckOnly</literal>, <literal>Skip</literal>, 	<literal>CheckMP3</literal>,
+			<literal>CheckMP3Only</literal>. Значением по-умолчанию является <literal>Allow</literal>.
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					<command>Allow</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>Allow</secondary></indexterm>
+				</para>
+				<para>
+					Параметр <literal>Allow</literal> означает, что документы, соответствующие его
+					команде, будут индексироваться, а также сканироваться на наличие новых ссылок.
+					В зависимости от полученного <literal>Content-Type</literal>, будет зупущен
+					соответствующий внутренний или внешний парсер, а полученные в результате слова
+					будут помещены в индекс для поиска.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<command>Disallow</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>Disallow</secondary></indexterm>
+				</para>
+				<para>
+					Параметр <literal>Disallow</literal> означает, что ссылки, соответствующие его
+					команде, и появляющиеся по мере индексации, будут игнорироваться, т.е. не будут
+					добавляться в базу данных. Те же документы, которые уже были в базе данных,
+					и соответствующие команде, будут удаляться в момент из очередной индексации.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<command>HrefOnly</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>HrefOnly</secondary></indexterm>
+				</para>
+				<para>
+					Параметр <literal>HrefOnly</literal> означает, что документы, соответствующие его
+					команде, не будут индексироваться, а будут только просканированы на наличие новых ссылок.
+					Это, например, полезно при просмотре RSS-фидов для обнаружения новых документов сайта. 
+Используйте этот параметр для
+					описания страниц, содержащих не сами сообщения,
+					а списки сообщений со ссылками на них. Например:
+<programlisting>
+Server HrefOnly Page http://www.site.ext/feed.xml
+Server Allow    Path http://www.site.ext/
+</programlisting>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<command>CheckOnly</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>CheckOnly</secondary></indexterm>
+				</para>
+				<para>
+					Параметр <literal>CheckOnly</literal> означает, что документы, соответствующие его
+					команде, будут запрашиваться методом HTTP HEAD, а не HTTP GET, т.е. будет запрошено
+					не содержимое документа, а только краткая
+					информация о нем: размер, дата модификации, <literal>Content-Type</literal>.
+					Это позволяет, например, организовать проверку своего сайта на правильность ссылок:
+<programlisting>
+Server HrefOnly  http://www.dataparksearch.org/
+Realm  CheckOnly *
+</programlisting>
+</para>
+<para>
+					Эта комбинация команд заставляет <command>indexer</command> сканировать все документы
+					сайта <literal>www.dataparksearch.org</literal> и собирать ссылки, находящиеся на них.
+					Те же документы, которые находятся вне сайта <literal>www.dataparksearch.org</literal>
+					будут проверены методом HEAD. Команда <command>indexer -S</command> затем поможет
+					увидеть все ли внутренние и внешние ссылки верны.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<command>Skip</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>Skip</secondary></indexterm>
+				</para>
+				<para>
+					Параметр <literal>Skip</literal> означает, что документы, соответствующие его
+					команде, будут пропущены при очередной индексации, и <command>indexer</command> вернётся
+					к ним снова по прошествии периода устаревания документов. Иначе говоря, эти документы 
+					будут просто помечены как неустаревшие, и при этом не будут загружаться из сети,
+					а текущяя информация о них, уже находящаяся в базе данных, будет оставлена без изменения.
+					Эту команду можно использовать, например, для временной отмены индексации временно
+					недоступного по каким-то причинам сайта.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<command>CheckMP3</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>CheckMP3</secondary></indexterm>
+				</para>
+				<para>
+					Параметр <literal>CheckMP3</literal> означает, что документы, соответствующие его
+					команде, будут проверяться на наличие тэгов MP3 несмотря на наличие <literal>Content-Type</literal>,
+					отличного от <literal>audio/mpeg</literal>. Это полезно, в частности, когда удаленный
+					сервер выдает <literal>application/octet-stream</literal> в качестве <literal>Content-Type</literal>
+					для файлов в формате MP3. При наличии MP3 тэгов будет произведена их индексация, а в случае
+					их отсутствия <command>indexer</command> продолжит работу, предусмотренную для полученного
+					<literal>Content-Type</literal>: запуск внутреннего или внешного парсера.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<command>CheckMP3Only</command>
+<indexterm><primary>Параметр <option>method</option></primary><secondary>CheckMP3Only</secondary></indexterm>
+				</para>
+
+				<para>
+					Этот параметр работает аналогично <literal>CheckMP3</literal>, однако при
+					отсутствии тэгов MP3 <literal>indexer</literal> не будет запускать внутренний или внешний 
+					парсер, предусмотренный для полученного <literal>Content-Type</literal>.
+				</para>
+			</listitem>
+		</orderedlist>
+		</para>
+		
+
+
+
+
+
+
+	<sect2 id="follow-server">
+		<title>Команда <command>Server</command>
+			<indexterm><primary>Команда</primary><secondary>Server</secondary></indexterm>
+		</title>
+
+		<para>
+			Это основная команда в файле <filename>indexer.conf</filename>.
+			Она используется для описания веб-пространства для индексирования в виде серверов
+			и их частей, а также добавляет заданый URL, указанный в качестве обязательного параметра
+<option>pattern</option> в базу при старте <command>indexer</command>
+			для использования его в качестве стартовой точки.
+		</para>
+<!--
+		<para>
+			Команда <command>Server</command> имеет обязательный параметр <option>URL</option> и три
+			необязательных - <option>method</option>, <option>subsection</option> и <option>alias</option>.
+			Формат этой команды: <programlisting>Server [method] [subsection] &lt;URL&gt; [alias]</programlisting>
+		</para>
+-->		
+		<para>
+			Например, команда <literal>Server http://localhost/</literal> 
+			разрешает индексировать документы сервера <literal>http://localhost/</literal>.
+			Также, <command>indexer</command> вставляет документ с адресом
+			<literal>http://localhost/</literal> в базу данных.
+		</para>
+		
+		<para>
+			Вы также можете задать некоторый подкаталог для индексирования только части сервера:
+			<literal>Server http://localhost/subsection/</literal>. И эта команда также добавляет аргумент
+			в базу данных для использования его в качестве стартовой точки индексирования.
+		<note>
+			<para>Вы можете заставить <command>indexer</command> не добавлять в базу URL, указанные
+				в командах <command>Server</command>, задав в командной строке ключ <option>-q</option>. 
+				Это полезно, когда у вас несколько сотен или тысяч команд <command>Server</command>, а соответсвующие
+				им URL уже добавлены в базу, в частности, это ускоряет запуск <command>indexer</command>.
+			</para>
+		</note>
+		</para>
+		
+		
+	</sect2>
+
+	
+
+
+	<sect2 id="follow-realm">
+		<title>Команда <command>Realm</command>
+			<indexterm><primary>Команда</primary><secondary>Realm</secondary></indexterm>
+		</title>
+		<para>
+			Команда <command>Realm</command> обладает более гибкими возможностями указания веб-пространства для индексирования.
+<!--
+			и имеет следующий формат:
+			<programlisting>Realm [Method] [CmpType] [MatchType] &lt;URLMask&gt; [alias]</programlisting>
+		</para>
+		
+		<para>
+-->
+			Эта команда работает почти также как и команда <command>Server</command>,
+			однако отличается от нее тем, что:
+		<itemizedlist>
+			<listitem>
+				<para>
+					получает в качестве аргумента не адрес сервера или его подкаталога, а шаблон адресов. 
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					не добавляет аргумент в качестве стартовой точки для индексирования, поскольку
+					аргумент не является правильным адресом, а шаблоном.
+				</para>
+			</listitem>
+		</itemizedlist>
+		</para>
+
+<!--		
+		<para>
+			Необязятельный параметр <literal>Method</literal> аналогичен такому же параметру
+			команды <command>Server</command>.
+		</para>
+-->		
+	</sect2>
+
+	<sect2 id="follow-subnet">
+		<title>Команда <command>Subnet</command>
+			<indexterm><primary>Команда</primary><secondary>Subnet</secondary></indexterm>
+		</title>
+		<para>
+			Команда <command>Subnet</command> предоставляет другой способ задания веб-пространства для индексирования.
+<!--			Формат этой команда: <programlisting>Subnet [Method] [MatchType] &lt;IP mask&gt;</programlisting>
+		</para>
+
+		<para>
+-->
+			Она работает аналогично команде <command>Server</command>, с тем отличием, что указанный текстовый шаблон
+			сравнивается не с URL, а с IP-адресом, соответствующим проверяемому URL.  Параметр <option>pattern</option>
+для этой команды может содержать символы * и ?, обозначающие "один символ" и "любое число сиволов" соответственно, или же задаваться в виде
+сети в CIDR формате (a.b.c.d/m, a.b.c, a.b, a).
+			Например, если нужно описать все HTTP сайты локальной подсети, используйте следующую команду:
+			<programlisting>Subnet 192.168.*.*</programlisting>
+			<programlisting>Subnet 192.168.10.0/24</programlisting>
+		</para>
+
+		<para>
+			Вы можете использовать необязательный параметр <option>MatchType</option>, работающий так же,
+			как и аналогичный у команды <command>Realm</command>.
+			Например, если Вы хотите индексировать все, за исключением подсети <literal>195.x.x.x</literal>, используйте:
+			<programlisting>Subnet NoMatch 195.*.*.*</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="follow-difparam">
+		<title>Использование различным параметров для сервера и его подсекций</title>
+
+		<para>
+			<command>Indexer</command> перебирает команды <command>Server</command> и
+			<command>Realm</command> в том порядке, в каком они указаны в файле конфигурации.
+			Таким образом, если Вы хотите задать различные параметры, например, для всего сервера и некоторых его
+			подсекций, Вы должны добавить строки для секций до строк, относящихся к серверу целиком.
+			Представим, что на Вашем сервере есть директория, содержащая страницы с новостями.
+			Очевидно, эти страницы необходимо переиндексировать чаще, нежели остальные части содержимого сервера.
+			Следующая последовательность команд может быть полезна в этом случае:
+			<programlisting>
+# Add subsection
+Period 200000
+Server http://servername/news/
+
+# Add server
+Period 600000
+Server http://servername/
+</programlisting>
+			</para>
+
+		<para>Эти команды задают другой период переиндексирования для поддиректории
+<filename>/news/</filename> в отличие от периода индексирования остального сервера.
+<command>indexer</command> выбирет первую команду <command>Server</command> для
+<filename>http://servername/news/page1.html</filename> т.к. это первая соответсвующая URL команда
+<command>Server</command>.
+</para>
+	</sect2>
+
+
+	<sect2 id="follow-f">
+		<title>Использование <userinput>indexer -f &lt;filename&gt;</userinput></title>
+		<para>The third scheme is very useful for
+<literal>indexer -i -f url.txt</literal> running. You may maintain
+required servers in the <filename>url.txt</filename>. When new URL is
+added into <filename>url.txt</filename> indexer will index the server
+of this URL during next startup. </para>
+
+	</sect2>
+
+
+<sect2 id="URL_cmd">
+<title>Команда <command>URL</command></title>
+<indexterm><primary>Команда</primary><secondary>URL</secondary></indexterm>
+<programlisting>
+URL http://localhost/path/to/page.html
+</programlisting>
+<para>
+Эта команда добавляет указаный URL в базу. Это полезно когда нужно добавить несколько
+стартовых точек для одного сервера. Не имеет эффекта, если указываемый URL уже находится в базе.
+</para>
+</sect2>
+
+
+<sect2 id="DB_cmd">
+<title>Команды <command>ServerDB, RealmDB, SubnetDB и URLDB</command></title>
+<indexterm><primary>Команда</primary><secondary>URLDB</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>ServerDB</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>RealmDB</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>SubnetDB</secondary></indexterm>
+<programlisting>
+URLDB pgsql://foo:bar@localhost/portal/links?field=url
+</programlisting>
+<para>
+Эти команды аналогичны командам <command>Server</command>, <command>Realm</command>, <command>Subnet</command> 
+и <command>URL</command>соответственно, но аргументы для вставки в базу выбираются из указанного поля SQL-таблицы. 
+В примере выше ссылки выбираются из базы <option>portal</option>, SQL-таблицы <option>links</option>
+и поля <option>url</option>.
+</para>
+</sect2>
+
+
+<sect2 id="FILE_cmd">
+<title>Команды <command>ServerFile, RealmFile, SubnetFile и URLFile</command></title>
+<indexterm><primary>Команда</primary><secondary>URLFile</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>ServerFile</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>RealmFile</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>SubnetFile</secondary></indexterm>
+<programlisting>
+URLFile url.lst
+</programlisting>
+<para>
+Эти команды аналогичны командам <command>Server</command>, <command>Realm</command>, <command>Subnet</command> 
+и <command>URL</command>соответственно, но аргументы для вставки в базу выбираются из указанного текстового файла, в котором
+каждый аргумент указывается на отдельной строке. 
+В примере выше ссылки выбираются из текстового файла <option>url.lst</option>, расположенного в директории
+<filename>/usr/local/dpsearch/etc</filename>. Однако можно указывать и полный путь до файла с аргументами.
+</para>
+</sect2>
+
+
+<sect2 id="robots_txt">
+<title>Стандарт исключений для роботов</title>
+<indexterm><primary>Стандарт исключений для роботов</primary></indexterm>
+<indexterm><primary>robots.txt</primary></indexterm>
+<para><application>DataparkSearch</application> соблюдает <ulink url="http://www.robotstxt.org/">стандарт robots.txt</ulink>. 
+<ulink url="http://www.robotstxt.org/robotstxt.html"><filename>robots.txt</filename></ulink> - файл, помещаемый в корневую директорию вашего веб сервера, указывающий поисковым машинам, какие страницы
+вы не хотите индексировать.</para>
+
+<para>
+<indexterm><primary>Robots exclustion standard</primary><secondary>meta tags</secondary></indexterm>
+<application>DataparkSearch</application> также соблюдает <ulink url="http://www.robotstxt.org/meta.html">мета тэги</ulink>: <option>nofollow</option>, <option>noarchive</option> и <option>noindex</option>.</para>
+
+<para>
+<indexterm><primary>robots.txt</primary><secondary>Crawl-Delay</secondary></indexterm>
+<indexterm><primary>robots.txt</primary><secondary>Host</secondary></indexterm>
+<application>DataparkSearch</application> также поддерживает директивы <ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink> и <ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink> в <filename>robots.txt</filename>.</para>
+
+<para>Ниже указаны команды в файле <filename>indexer.conf</filename>, относящиеся к стандарту исключений для роботов.</para>
+
+<sect3 id="robots_cmd">
+<title>Команда <command>Robots</command></title>
+<indexterm><primary>Команда</primary><secondary>Robots</secondary></indexterm>
+<programlisting>
+Robots yes/no
+</programlisting>
+<para>
+Разрешает или запрещает использование <filename>robots.txt</filename> и &lt;META NAME="robots" ...&gt;
+для исключения страниц. Используйте <option>no</option>, например, для проверки ссылок на вашем сайте или сайтах.
+Имейте в виду, что игнорирование чужих <filename>robots.txt</filename> не приветсвуется сетевым этикетом.
+Команда действует до конца файла, или до следующей команды <command>Robots</command>.
+Значение по умолчанию: yes.
+<programlisting>
+Robots yes
+</programlisting>
+</para>
+</sect3>
+
+<sect3 id="robotsperiod_cmd">
+<title>Команда <command>RobotsPeriod</command></title>
+<para><indexterm><primary>Команда</primary><secondary>RobotsPeriod</secondary></indexterm>
+По умолчанию, данные из robots.txt хранятся в SQL-базе одну неделю. Вы можете изменить этот период используя команду
+<command>RobotsPeriod</command>:
+<programlisting>
+RobotsPeriod &lt;time&gt;
+</programlisting>
+См. формат &lt;time&gt; в описании команды <command>Period</command> из <xref linkend="period_cmd"/>.
+<programlisting>
+RobotsPeriod 30d
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="crawldelay_cmd">
+<title>Команда <command>CrawlDelay</command></title>
+<para><indexterm><primary>Команда</primary><secondary>CrawlDelay</secondary></indexterm>
+Используйте эту команду для задания периода в секундах между последовательными запросами к одному и тому же серверу. 
+Аналогична команде crawl-delay в файле <filename>robots.txt</filename>, но может быть задана в <filename>indexer.conf</filename> 
+файле для каждого сервера в отдельности. Если не задано значение crawl-delay value в <filename>robots.txt</filename>, 
+используется значение, указаное в <command>CrawlDelay</command>. 
+Если значение crawl-delay указано в <filename>robots.txt</filename>, тогда используется максимальное значение из
+<command>CrawlDelay</command> и crawl-delay.
+</para>
+</sect3>
+
+<sect3 id="maxcrawldelay_cmd">
+<title>Команда <command>MaxCrawlDelay</command></title>
+<para><indexterm><primary>Команда</primary><secondary>MaxCrawlDelay</secondary></indexterm>
+Когда <application>indexer</application> готов индексировать очередной URL с сервера, для которого интервал Crawl-deley с предыдущего обращения к сайту еще не истек,
+он ожидает, пока этот период не истечет, если период ожидания в секундах меньше значения, указанного командой <command>MaxCrawlDelay</command>. 
+Если период ожидания больше или равен этому значению, выбранный URL откладывается в индексировании на период ожидания.
+</para>
+<programlisting>
+MaxCrawlDelay 60
+</programlisting>
+<para>Значение по-умолчанию: 300 секунд.</para>
+</sect3>
+
+
+
+</sect2>
+
+	
+</sect1>

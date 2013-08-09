@@ -1,0 +1,18 @@
+DROP TABLE url;
+DROP TABLE urlinfo;
+DROP TABLE dict;
+DROP TABLE server;
+DROP TABLE srvinfo;
+DROP TABLE links;
+DROP TABLE qtrack;
+DROP TABLE categories;
+DROP TABLE storedchk;
+DROP TABLE cachedchk;
+DROP TABLE cachedchk2;
+DROP TABLE robots;
+
+-- DROP TABLE qinfo;
+-- DROP TABLE ndict;
+-- DROP TABLE crossdict;
+-- DROP TABLE ncrossdict;
+-- DROP TABLE categories;

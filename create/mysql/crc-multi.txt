@@ -1,0 +1,105 @@
+CREATE TABLE ndict2 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id2 (url_id),
+  KEY word_id2 (word_id)
+);
+
+CREATE TABLE ndict3 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id3 (url_id),
+  KEY word_id3 (word_id)
+);
+
+CREATE TABLE ndict4 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id4 (url_id),
+  KEY word_id4 (word_id)
+);
+
+CREATE TABLE ndict5 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id5 (url_id),
+  KEY word_id5 (word_id)
+);
+
+CREATE TABLE ndict6 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id6 (url_id),
+  KEY word_id6 (word_id)
+);
+
+CREATE TABLE ndict7 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id7 (url_id),
+  KEY word_id7 (word_id)
+);
+
+CREATE TABLE ndict8 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id8 (url_id),
+  KEY word_id8 (word_id)
+);
+
+CREATE TABLE ndict9 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id9 (url_id),
+  KEY word_id9 (word_id)
+);
+
+CREATE TABLE ndict10 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id10 (url_id),
+  KEY word_id10 (word_id)
+);
+
+CREATE TABLE ndict11 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id11 (url_id),
+  KEY word_id11 (word_id)
+);
+
+CREATE TABLE ndict12 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id12 (url_id),
+  KEY word_id12 (word_id)
+);
+
+CREATE TABLE ndict16 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id16 (url_id),
+  KEY word_id16 (word_id)
+);
+
+CREATE TABLE ndict32 (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word_id int(11) DEFAULT '0' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id32 (url_id),
+  KEY word_id32 (word_id)
+);
+
+

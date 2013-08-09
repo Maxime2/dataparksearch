@@ -1,0 +1,19 @@
+<sect1 id="db2">
+	<title>IBM DB2 notes
+<indexterm><primary>DB2</primary><secondary>notes</secondary></indexterm>
+</title>
+	<para>To successfully use
+<application>DataparkSearch</application> with IBM DB2 database, please
+add the following lines to Apache's
+<filename>httpd.conf</filename>:
+	<programlisting>
+SetEnv DB2DIR /usr/IBMdb2/V7.1
+SetEnv DB2INSTANCE db2
+PassEnv DB2DIR DB2INSTANCE
+</programlisting>
+	</para>
+	<para>Where <command>DB2DIR</command> is the path to DB2
+installation. <command>DB2INSTANCE</command> is the DB2 instance that
+<filename>search.cgi</filename> should use.</para>
+
+</sect1>

@@ -1,0 +1,26 @@
+## Process this file with automake to produce Makefile.in 
+AUTOMAKE_OPTIONS = foreign no-installinfo
+SUBDIRS = src 
+
+# copy dirs w/out Makefile.am into dist
+dist-hook:
+#	mkdir $(distdir)/include
+	cp -r $(srcdir)/include/ $(distdir)/include/
+	rm -f $(distdir)/include/dps_config.h $(distdir)/include/stamp.h 
+
+install-data-local:
+	$(mkinstalldirs) $(localstatedir)
+
+uninstall-local:
+	-rmdir $(localstatedir)
+	-rmdir $(DESTDIR)$(bindir)
+	-rmdir $(DESTDIR)$(sbindir)
+	-rmdir $(DESTDIR)$(libdir)
+	-rmdir $(DESTDIR)$(includedir)
+	-rmdir $(DESTDIR)$(prefix)
+
+EXTRA_DIST = src/uconv-8bit.h src/sgml.entities src/uconv-8bit.inc src/sgml.inc bootstrap src/unidata.ch
+
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status --recheck
+

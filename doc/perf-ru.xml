@@ -1,0 +1,123 @@
+<sect1 id="perf">
+<indexterm><primary>К вопросу производительности</primary></indexterm>
+	<title>К вопросу производительности <application>DataparkSearch</application></title>
+
+<para>Способ хранения cache - самый быстрый в <application>DataparkSearch</application>.
+Используйте его, если хотите получить максимальную скорость поиска.
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>ColdVar</secondary></indexterm>
+Если после окончания индексирования содержимое вашей директории <filename>/var</filename> не изменяется, вы можете
+выключить блокировку файлов при открытиии используя команду <command>"ColdVar yes"</command> в файле <filename>search.htm</filename>
+(или в файле <filename>searchd.conf</filename>, если используется <command>searchd</command>). Это позволит вам сэкономить некоторое время,
+затрачиваемое на блокировку файлов.
+</para>
+
+
+<sect2 id="searchd-rec">
+<title>Рекомендация использовать <command>searchd</command></title>
+<para>Если вы планируете использовать синонимы, стоп-слова или данные ispell,
+рекомендуется воспользоваться демоном <command>searchd</command> (См. <xref linkend="searchd"/>).
+Демон <command>searchd</command> при запуске загружает эти данные и держит их в памяти.
+Это позволяет сократить среднее время выполнения запросов на поиск.
+</para>
+<para>Таже <command>searchd</command> может загружать предварительно в память некоторые данные об URL 
+(по 20 байт на каждую проиндекированую страницу) и лимиты cache mode (4 или 8 байт на каждый URL в зависимости от
+типа лимита). Это позволяет сократить среднее время обработки запроса.
+</para>
+</sect2>
+
+
+<sect2 id="search-cache">
+<title>Кэширование результатов поиска</title>
+<indexterm><primary>Команда</primary><secondary>Cache</secondary></indexterm>
+<para><para>Используйте команду "<command>Cache yes</command>" в вашем поисковом шаблоне <filename>search.htm</filename> (или в файле конфигурации <filename>searchd.conf</filename>, если используется <application>searchd</application>) для включения кэша результатов поиска.
+Это позволит значительно сократить время поиска при повторных запросах.</para>
+<para>
+Если вы используете кэширование результатов поиска, пожалуйста, не забудьте очищать директорию <filename>var/cache</filename> после каждого сеанса индексирования/переиндексирования.
+</para>
+</sect2>
+
+<sect2 id="mfs-rec">
+<title>Рекомендация использовать файловую систему в памяти (mfs)</title>
+<para>Если вы планируете использовать cache mode и имеете достаточно оперативной памяти на вашем компьютере, 
+вы можете разместить директорию <filename>/usr/local/dpsearch/var</filename>
+на файловой системе в памяти компьютера (mfs). Это ускорит как индексирование, так и поиск.
+</para>
+<para>Если памяти недостаточно, что поместить в ней <filename>/usr/local/dpsearch/var</filename> целиком, 
+вы можете разместить на mfs любую из директорий <filename>/usr/local/dpsearch/var/tree</filename>,
+<filename>/usr/local/dpsearch/var/url</filename> или <filename>/usr/local/dpsearch/var/store</filename>.
+</para>
+</sect2>
+
+<sect2 id="urlinfo-cmd">
+<title>Команда <command>URLInfoSQL</command></title>
+<indexterm><primary>Команда</primary><secondary>URLInfoSQL</secondary></indexterm>
+<para>Для способа хранения cache вы можете использовать команду <command>URLInfoSQL no</command> для выключения сохранения
+информации об URL в SQL-базе. Однако использовав эту команду, вы потеряете возможность использовать лимиты по языку и типу документов.
+</para>
+</sect2>
+
+<sect2 id="srvinfo-cmd">
+<title>Команда <command>SRVInfoSQL</command></title>
+<indexterm><primary>Команда</primary><secondary>SRVInfoSQL</secondary></indexterm>
+<para>При помощи команды <command>SRVInfoSQL no</command> вы можете выключить запись вспомогательной информации в SQL-таблицу "srvinfo".
+В этом случае содержимое таблицы не может быть использовано для загрузки конфигурации командой <command>LoadServerTable</command> (См. <xref linkend="srvtable-load"/>).
+</para>
+</sect2>
+
+<sect2 id="markforindex-cmd">
+<title>Команда <command>MarkForIndex</command></title>
+<indexterm><primary>Команда</primary><secondary>MarkForIndex</secondary></indexterm>
+<para>По умолчанию, <application>DataparkSearch</application> помечает все URL, отбираемые к индексированию, как ожидающие индексирования
+через 4 часа. 
+Это позволяет избежать возможного одновременного индексирования одно и того же URL двумя параллельно запущеными копиями indexer.
+Однако для больших поисковых баз эта операция пометки может занять некоторое время. Вы можете выключить такую пометку используя команду
+<command>"MarkForIndex no"</command> в вашем файле конфигурации <filename>indexer.conf</filename>.
+</para>
+</sect2>
+
+
+<sect2 id="checkinsertsql-cmd">
+<title>Команда <command>CheckInsertSQL</command></title>
+<indexterm><primary>Команда</primary><secondary>CheckInsertSQL</secondary></indexterm>
+<para>По умолчанию, <application>DataparkSearch</application> пытается добавлять данные в SQL-базу вне зависимости, 
+есть она уже там или нет. На некоторых системах, это может вызывать дополнительную обработку сообщений об ошибках.
+Чтобы избежать появления таких ошибок, вы можете добавить команду <command>CheckInsertSQL yes</command> в ваш файл конфигурации
+<filename>indexer.conf</filename>.
+</para>
+</sect2>
+
+
+	<sect2 id="perf-mysql">
+		<title>Производительность <application>MySQL</application></title>
+
+		<para>Пользователи <application>MySQL</application> могут задать
+опцию <option>DELAY_KEY_WRITE=1</option> для таблиц <application>DataparkSearch</application>.
+Это позволит быстрее обновлять индексы, т.к.они не будут записываться на диск пока файл не будет закрыт.
+<option>DELAY_KEY_WRITE</option> целиком исключает обновление индексов на диске. </para>
+
+		<para>С этой опцией индексы хранятся только в памяти и записываются на диск
+в последнюю очередь, по команду  <command>FLUSH TABLES</command> или по завершению <command>mysqld</command>.
+Запись обновлённых индексов на диск может занимать минуты и нетерпеливые пользователи могут прибить сервер
+командой <literal>kill -9</literal> и этим разрушить индексные файлы.
+Другим неудобством является необходимость запуска <literal>myisamchk</literal> для этих таблиц перед стартом
+<command>mysqld</command> для проверки, на случай, если <literal>mysqld</literal> был убит до этого.
+</para>
+
+		<para>По этим причинам мы не включили эту опцию в структуру наших таблиц по умолчанию.
+Т.к. вся информация в индексах может быть восстановлена из данных, находящихся в таблицах, вы не потеряете данные,
+используя опцию <option>DELAY_KEY_WRITE</option>. Но используйте её на свой страх и риск.
+</para>
+
+	</sect2>
+
+<sect2 id="ares">
+<title>Библиотека асинхронного резолвера</title>
+<para>Использование <ulink url="http://c-ares.haxx.se/">c-ares</ulink>, 
+библиотеки асинхронного резолвера (dns/c-ares в коллекции портов FreeBSD), позволяет для каждой индексирующей нити выполнять 
+запросы к DNS без блокировки. Пожалуйста учтите, это также повышает число одновременных запросов к вашему DNS серверу.
+</para>
+</sect2>
+
+</sect1>

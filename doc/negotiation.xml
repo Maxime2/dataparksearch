@@ -1,0 +1,216 @@
+<sect1 id="multilang">
+	<title>Making multi-language search pages</title>
+<indexterm><primary>Multi-language</primary></indexterm>
+
+	<para>Original idea instructions by Craig Small
+<email>csmall@eye-net.com.au</email>.  Some minor changes by Alex
+Barkov <email>bar@mnogosearch.org</email>.</para>
+
+	<para>It is often required to allow for different languages
+which means different search.htm files depending on what language
+users have set in their browser. </para>
+
+	<para>Further installation should be done in three steps.</para>
+	<orderedlist numeration="arabic">
+		<listitem>
+			<para>Installing several templates.</para>
+			<para>The general idea is to have one
+<filename>search.php</filename> or <filename>search.cgi</filename>
+file and then many <filename>search.[language].htm</filename> files.
+You also have a <filename>search.htm</filename> file (usually a
+symlink to <filename>search.en.htm</filename>) for the default.</para>
+			<para>If the name of the script is
+<filename>search.en.php</filename> (or
+<filename>search.en.cgi</filename>) then both CGI and PHP front-ends
+will be looking for <filename>/somewhere/etc/search.en.htm</filename>
+assuming that <filename>/somewhere/etc/</filename> is
+<filename>/etc/</filename> directory of <application>DataparkSearch</application>
+installation.</para>
+			<para>You would then populate
+<filename>/somewhere/etc/</filename> with all the
+<filename>search.htm</filename> files so
+<filename>/somewhere/etc</filename> has:</para>
+			<informaltable>
+				<tgroup cols="2">
+					<tbody>
+						<row>
+							<entry>
+								<filename>search.en.htm</filename>
+							</entry>
+							<entry>English template</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.pl.htm</filename>
+							</entry>
+							<entry>Polish template</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.ru.htm</filename>
+							</entry>
+							<entry>Russian template</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.htm</filename>
+							</entry>
+							<entry>Symlink to English template</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</listitem>
+		<listitem>
+			<para>Installing front-ends</para>
+			<para>Create a directory and put
+<filename>search.cgi</filename> or <filename>search.php</filename>
+there (along with the include files if you want, but I fiddle with the
+php include_path and put them elsewhere).</para>
+			<para>Then setup the symlinks:</para>
+			<informaltable>
+				<tgroup cols="2">
+					<tbody>
+						<row>
+							<entry>
+								<filename>search.cgi</filename>
+							</entry>
+							<entry>Original file</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.en.cgi</filename>
+							</entry>
+							<entry>symlink</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.pl.cgi</filename>
+							</entry>
+							<entry>symlink</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.ru.cgi</filename>
+							</entry>
+							<entry>symlink</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+			<para>Or in the case of PHP front-end:</para>
+			<informaltable>
+				<tgroup cols="2">
+					<tbody>
+						<row>
+							<entry>
+								<filename>search.php</filename>
+							</entry>
+							<entry>Original file</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.en.php</filename>
+							</entry>
+							<entry>symlink</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.pl.php</filename>
+							</entry>
+							<entry>symlink</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.ru.php</filename>
+							</entry>
+							<entry>symlink</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</listitem>
+		<listitem>
+			<para>Configuring Apache</para>
+			<para>Then you need to make apache understand
+what weirdness you are doing here. So you need to get negotiation
+happening and some magic with the indexes. I used
+<filename>.htaccess</filename> file but you could stick it in the
+apache config proper.
+			<programlisting>
+AddLanguage en .en
+AddLanguage pl .pl
+AddLanguage ru .ru
+
+DirectoryIndex search search.cgi  (or search.php)
+Options FollowSymlinks MultiViews
+</programlisting>
+			</para>
+		</listitem>
+	</orderedlist>
+	<sect2 id="multilang-how">
+		<title>How does it work?</title>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>You type url <literal>http://myhost/mydir/search</literal>
+					<emphasis>no slash at end !!</emphasis>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Your browser says <literal>"I like english (well language negotiation en) "</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Apache finds
+<filename>search.en.cgi</filename> (DirectoryIndex gives
+<literal>search</literal>, MultiViews gives the
+<literal>en.cgi</literal>)</para>
+			</listitem>
+			<listitem>
+				<para>The
+<command>SCRIPT_FILENAME</command> which is used in both
+<filename>search.cgi</filename> and <filename>search.php</filename> is
+<filename>somepath/search.en.cgi</filename>
+				</para>
+				<note>
+					<para>Most other variables
+will give the wrong result, either <literal>search</literal> or
+<literal>search.cgi</literal>)</para>
+				</note>
+			</listitem>
+			<listitem>
+				<para>Your hack in
+<filename>config.inc</filename> means you will use
+<filename>search.en.htm</filename>.</para>
+			</listitem>
+		</orderedlist>
+		<para>So what happens if the user wants, say, German?
+Well there is no <filename>search.de.cgi</filename>
+(<filename>search.de.php</filename>) so the first bit of
+DirectoryIndex fails, so it tries the second one,
+<filename>search.php</filename>  OK, they get the page in English, but
+it's better than a 404.</para>
+		<para>This does work, you may need some more apache
+fiddling to get negotiation to work because I am testing this on a
+server that already has it setup, so I may have missed
+something.</para>
+	</sect2>
+	<sect2 id="multilang-problem">
+		<title>Possible troubles</title>
+		<para>You may get some language negotiation problems caused by:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Dumb caches that don't follow standards</para>
+			</listitem>
+			<listitem>
+				<para>Dumb versions of browsers that don't follow standards</para>
+			</listitem>
+			<listitem>
+				<para>Dumb users fiddling with language settings and putting weird stuff in.</para>
+			</listitem>
+		</itemizedlist>
+		<para>The apache team is working on some workarounds
+for most of these, if possible.  For a reasonably heavily used web site
+you can expect an email about it once a week or so.</para>
+	</sect2>
+</sect1>

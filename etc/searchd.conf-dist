@@ -1,0 +1,88 @@
+# Listen: Allows to bind searchd to specific IP address and/or port.
+# It is binded to all host addresses by default.
+#
+#Listen 7003
+#Listen 127.0.0.1:7003
+
+#
+# Unix-socket to answer requests on it
+#
+#Socket searchd.sock
+
+#
+# Database parameters
+#
+DBAddr mysql://foo:bar@localhost/search/?dbmode=cache
+
+
+# Set non-standard /var directory
+# for cache mode and built-n database.
+#
+#VarDir /mnt/d/search/var/
+
+
+# Use proper charset. It must be the same with indexer.conf
+# Default is iso-8859-1
+#
+# Examples:
+#LocalCharset iso-8859-2
+#LocalCharset UTF-8
+#LocalCharset koi8-r
+
+
+# Load synonyms. File names are either absolute or 
+# relative to /etc directory of DataparkSearch installation.
+#
+#Synonym synonym/english.syn
+#Synonym synonym/russian.syn
+#Synonym synonym/francais.syn
+
+
+# Ispell files. File names are either absolute or 
+# relative to /etc directory of DataparkSearch installation.
+#
+#Spell en us-ascii ispell/british.xlg
+#Affix en us-ascii ispell/english.aff
+#
+#Spell ru koi8-r ispell/russian.dict
+#Affix ru koi8-r ispell/russian.aff
+
+# Load stopwords
+# 
+#Include stopwords.conf
+
+
+
+#######################################################################
+# Document sections.
+Include sections.conf
+
+# Number of sections
+# Usually it is the highest number of a section in sections.conf
+NumSections 47
+
+# Uncomment this line to enable url data preloading. This speed-up searches,
+# but worth about 20 bytes of memory per url.
+#PreloadURLData yes
+
+
+##### Cache mode related parameters. #####
+##### Use same values as in cached.conf #####
+
+# Specify how many file-stores will be used for word index 
+#
+#WrdFiles 4096
+
+#
+# Specify how many file-stores will be used for url data info
+#
+#URLDataFiles 256
+
+
+#  Comment this line if you want to show clones by default
+DetectClones	no
+
+# Uncomment this line to enable aspell based suggestions for mistyped words
+#AspellExtensions yes
+#
+

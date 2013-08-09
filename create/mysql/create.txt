@@ -1,0 +1,180 @@
+# This is script for MySQL to 
+# create database structure for UdmSearch 3.2.x
+# use: "mysql database <create.txt"
+#
+
+
+CREATE TABLE url (
+  rec_id	  int(11) NOT NULL auto_increment,
+  status	  smallint(6) DEFAULT '0' NOT NULL,
+  docsize	  int(11) DEFAULT '0' NOT NULL,
+  next_index_time INT DEFAULT '0' NOT NULL,
+  last_mod_time	  INT DEFAULT '0' NOT NULL,
+  since 	  INT DEFAULT '0' NOT NULL,
+  referrer	  int(11) DEFAULT '0' NOT NULL,
+  hops		  smallint(6) DEFAULT '0' NOT NULL,
+  crc32		  int(11)	DEFAULT '-1' NOT NULL,
+  seed		  smallint(6) DEFAULT '0' NOT NULL,
+  bad_since_time  INT NOT NULL,
+  site_id	  int(11),
+  server_id	  int(11),
+  charset_id      smallint(6),
+  shows           int(11) DEFAULT '0' NOT NULL,
+  pop_rank	  float DEFAULT 1 NOT NULL,
+  url		  BLOB DEFAULT '' NOT NULL,
+  PRIMARY KEY (rec_id),
+  UNIQUE url (url(255)),
+  KEY key_crc (crc32),
+  KEY key_seed (seed),
+  KEY key_referrer (referrer),
+  KEY key_bad_since_time (bad_since_time),
+  KEY key_next_index_time (next_index_time),
+  KEY key_site_id (site_id),
+  KEY key_server_id (server_id),
+  KEY key_status (status),
+  KEY key_hops (hops),
+  KEY key_poprank (pop_rank)
+);
+CREATE INDEX url_rb ON url (referrer, bad_since_time);
+
+
+CREATE TABLE urlinfo (
+  url_id INT NOT NULL,
+  sname  VARCHAR(32)  NOT NULL,
+  sval   TEXT         NOT NULL,
+  KEY    urlinfo_id   (url_id),
+  KEY    uinfo_sname  (sname)
+);
+
+
+CREATE TABLE dict (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  word varchar(32) DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE categories (
+  rec_id int(11) NOT NULL auto_increment,
+  path char(10) DEFAULT '' NOT NULL,
+  link char(10) DEFAULT '' NOT NULL,
+  name char(64) DEFAULT '' NOT NULL,
+  PRIMARY KEY (rec_id)
+);
+CREATE INDEX cat_path ON categories (path);
+CREATE INDEX cat_link ON categories (link);
+INSERT INTO categories (path,link,name) VALUES ('', '', 'Root');
+
+
+CREATE TABLE qtrack (
+  rec_id  int(11) NOT NULL auto_increment,
+  ip      varchar(16) NOT NULL,
+  qwords  TEXT DEFAULT '' NOT NULL,
+  qtime   int(11) DEFAULT '0' NOT NULL,
+  wtime   int(11) DEFAULT '0' NOT NULL,
+  found   int(11) DEFAULT '0' NOT NULL,
+  PRIMARY KEY (rec_id)
+);
+CREATE INDEX qtrack_ipt ON qtrack(ip,qtime);
+
+CREATE TABLE qinfo (
+       q_id  int(11),
+       name  varchar(64),
+       value varchar(255)
+);
+CREATE INDEX qinfo_id ON qinfo (q_id);
+CREATE INDEX qinfo_nv ON qinfo (name, value);
+
+
+CREATE TABLE crossdict (
+  url_id int(11) DEFAULT '0' NOT NULL,
+  ref_id int(11) DEFAULT '0' NOT NULL,
+  word  varchar (255) DEFAULT '0' NOT NULL,
+  intag  int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY ref_id (ref_id),
+  KEY word (word)
+);
+
+
+create table server (
+	rec_id		int null primary key,
+	enabled		int		not null	default 0,
+	url		BLOB		not null	default '',
+	tag		TEXT		not null	default '',
+	category	int		not null	default 0,
+	command		char(1)		not null	default 'S',
+	ordre		int		not null	default 0,
+	parent		int		not null	default 0,
+	weight		float		not null	default 1,
+	pop_weight	float		not null	default 0,
+	KEY srv_ordre (ordre),
+	KEY srv_parent (parent),
+	KEY srv_command (command),
+	KEY srv_tag (tag(255)),
+	KEY srv_category (category),
+	UNIQUE srv_url(url(255))
+);
+
+CREATE TABLE srvinfo (
+       srv_id int  NOT NULL,
+       sname  text NOT NULL,
+       sval   text NOT NULL
+);
+
+CREATE INDEX srvinfo_id ON srvinfo (srv_id);
+
+
+create table links (
+       ot	   int(11) not null,
+       k	   int(11) not null,
+       weight	   float   not null	default 0.05,
+       valid       char(1) not null default 't',
+       KEY links_ot (ot),
+       KEY links_k (k)
+);
+
+CREATE UNIQUE INDEX links_links ON links (ot, k);
+
+CREATE TABLE robots (
+       cmd 	    int,
+       added_time   int,
+       ordre	    int,
+       hostinfo	    varchar(255),
+       path	    text
+);
+CREATE UNIQUE INDEX robots_idx ON robots (hostinfo, ordre);
+CREATE INDEX robots_time ON robots (added_time);
+
+
+CREATE TABLE cookies (
+       expires    int,
+       secure     char(1) CHARACTER SET latin1,
+       domain     text CHARACTER SET latin1,
+       path       text CHARACTER SET latin1,
+       name       text,
+       value      text
+);
+CREATE UNIQUE INDEX cookies_idx ON cookies (domain(128), path(255), name(100), secure);
+CREATE INDEX cookies_time ON cookies (expires);
+
+
+CREATE TABLE storedchk (
+       rec_id integer, 
+       url_id integer
+);
+CREATE INDEX storedchk_i ON storedchk (url_id);
+
+CREATE TABLE cachedchk (
+       rec_id integer
+);
+CREATE UNIQUE INDEX cachedchk_i ON cachedchk (rec_id);
+
+CREATE TABLE cachedchk2 (
+       url_id integer
+);
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
+
+

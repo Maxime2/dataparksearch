@@ -1,0 +1,138 @@
+CREATE GENERATOR rec_id_GEN;
+
+CREATE TABLE url (
+  rec_id          INT                  NOT NULL PRIMARY KEY,
+  status          INT       DEFAULT  0 NOT NULL,
+  docsize         INT       DEFAULT  0 NOT NULL,
+  next_index_time INT       DEFAULT  0 NOT NULL,
+  last_mod_time   INT       DEFAULT  0 NOT NULL,
+  since           INT       DEFAULT  0 NOT NULL,
+  referrer        INT       DEFAULT  0 NOT NULL,
+  hops            INT       DEFAULT  0 NOT NULL,
+  crc32           INT       DEFAULT -1 NOT NULL,
+  seed            INT       DEFAULT  0 NOT NULL,
+  bad_since_time  INT       DEFAULT  0 NOT NULL,
+  site_id	  INT,
+  server_id	  INT,
+  charset_id      INT,
+  shows           INT       DEFAULT  0 NOT NULL,
+  pop_rank	  FLOAT     DEFAULT  0 NOT NULL
+  url             VARCHAR(1024) DEFAULT '' NOT NULL,
+);
+
+CREATE INDEX         url_crc             ON url (crc32);
+CREATE INDEX         url_seed            ON url (seed);
+CREATE UNIQUE  INDEX url_url             ON url (url);
+CREATE INDEX         url_referrer        ON url (referrer);
+CREATE INDEX         url_bad_since_time  ON url (bad_since_time);
+CREATE INDEX         url_next_index_time ON url (next_index_time);
+
+
+
+CREATE TABLE urlinfo (
+  url_id  INT            NOT NULL,
+  sname   VARCHAR(64)    NOT NULL,
+  sval    VARCHAR(32000) NOT NULL
+);
+
+CREATE INDEX urlinfo_id ON urlinfo (url_id);
+CREATE INDEX uinfo_sname ON urlinfo (sname);
+
+
+
+CREATE TABLE dict (
+  word     VARCHAR(256) NOT NULL,
+  url_id   INT      NOT NULL,
+  intag    INT      NOT NULL
+);
+
+CREATE   INDEX dict_url_id  ON dict (url_id);
+CREATE   INDEX dict_word    ON dict (word);
+
+CREATE TABLE categories (
+  rec_id int    NOT NULL PRIMARY KEY,
+  path char(10) DEFAULT '' NOT NULL,
+  link char(10) DEFAULT '' NOT NULL,
+  name char(64) DEFAULT '' NOT NULL
+);
+CREATE INDEX cat_path ON categories (path);
+CREATE INDEX cat_link ON categories (link);
+
+CREATE TABLE qtrack (
+        rec_id INT            NOT NULL  PRIMARY KEY,
+        ip     VARCHAR(16)    NOT NULL,
+        qwords VARCHAR(32000) NOT NULL,
+        qtime  INT            NOT NULL,
+        wtime  INT            NOT NULL,
+        found  INT            NOT NULL
+);
+CREATE INDEX qtrack_ipt ON qtrack(ip,qtime);
+
+-- FIXME: VALUE is a keyword
+--CREATE TABLE qinfo (
+--     q_id    INT NOT NULL,
+--     name    VARCHAR(64),
+--     "value" VARCHAR(32000)
+--);
+--CREATE INDEX qinfo_id ON qinfo (q_id);
+
+
+create table server (
+	rec_id		int not null primary key,
+	enabled		int		default 0	not null,
+	url		VARCHAR(127)	default ''	not null,
+	tag		VARCHAR(63)	default ''	not null,
+	category	int		default 0	not null,
+	command		char(1)		default 'S'	not null,
+	ordre		int		default 0	not null,
+	parent		int		default 0	not null,
+	weight		float		default 1	not null,
+	pop_weight	float		default 0	not null
+);
+
+CREATE UNIQUE INDEX srv_url ON server (url);
+CREATE INDEX srv_ordre ON server (ordre);
+CREATE INDEX srv_parent ON server (parent);
+CREATE INDEX srv_command ON server (command);
+
+CREATE TABLE srvinfo (
+       srv_id INT  NOT NULL,
+       sname  VARCHAR(127) NOT NULL,
+       sval   VARCHAR(32000) NOT NULL
+);
+
+CREATE INDEX srvinfo_id ON srvinfo (srv_id);
+
+create table links (
+       ot	   int,
+       k	   int,
+       weight	   float     	default 0,
+       valid       char(1)      default 't'
+);
+
+CREATE UNIQUE INDEX links_links ON links (ot, k);
+CREATE        INDEX links_ot    ON links (ot);
+CREATE        INDEX links_k     ON links (k);
+
+
+CREATE TABLE storedchk (
+       rec_id integer, 
+       url_id integer
+);
+CREATE INDEX storedchk_i ON storedchk (url_id);
+
+CREATE TABLE cachedchk (
+       rec_id integer
+);
+CREATE UNIQUE INDEX cachedchk_i ON cachedchk (rec_id);
+
+CREATE TABLE cachedchk2 (
+       url_id integer
+);
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
+
+CREATE TABLE cachedchk2 (
+       url_id integer
+);
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk (url_id);
+

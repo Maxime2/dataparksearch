@@ -1,0 +1,506 @@
+<sect1 id="search">
+	<title>Using search front-ends</title>
+	<sect2 id="search-perform">
+		<title>Performing search</title>
+		<para>Open your preferred front-end in Web browser:
+		<programlisting>
+http://your.web.server/path/to/search.cgi
+<!-- or
+http://your.web.server/path/to/search.php3 -->
+<!-- or
+http://your.web.server/path/to/search.pl -->
+</programlisting>
+</para>
+		<para>To find something just type words you want to
+find and press SUBMIT button. For example: <userinput>mysql
+odbc</userinput>. <application>DataparkSearch</application> will find all documents that
+contain word <option>mysql</option> and/or word <option>odbc</option>. Best documents having bigger
+weights will be displayed first.</para>
+
+<para>To find a phrase, simple enclose it in quotas. For example: 
+<userinput>&quot;uncontrollable sphere&quot;</userinput>.
+</para>
+
+	</sect2>
+	<sect2 id="search_params">
+		<title>Search parameters</title>
+<indexterm><primary>Search parameters</primary></indexterm>
+
+		<para><application>DataparkSearch</application> front-ends support the following
+parameters given in CGI query string. You may use them in HTML form on
+search page.</para>
+
+		<table id="search-params">
+			<title>Available search parameters</title>
+			<tgroup cols="2">
+				<tbody>
+					<row>
+						<entry>q</entry>
+						<entry>text parameter with search query</entry>
+					</row>
+					<row>
+						<entry>vq</entry>
+						<entry>text parameter with search query in the <application>Verity Query Language</application> (prefix variant), see <xref linkend="vql"/>. To use this parameter, you need to leave empty the q parameter.</entry>
+					</row>
+					<row>
+						<entry>s</entry>
+						<entry>characters sequence, specify results sorting order. 
+Small caps specify ascendant sorting, upper caps - descendant.
+Following characters can be used: <literal>R</literal> or <literal>r</literal> - for sorting by relevance, 
+<literal>P</literal> or <literal>p</literal> - for sorting by PopularityRank,
+<literal>I</literal> or <literal>i</literal> - for sorting by Importance (multiplication of relevance and PopularityRank),
+<literal>A</literal> or <literal>a</literal> - for sorting by sum of relevance and PopularityRank,
+<literal>D</literal> or <literal>d</literal> - for sorting by last modified date.
+Default value: <literal>RP</literal>.
+                                                </entry>
+					</row>
+					<row>
+						<entry>ps</entry>
+						<entry>page size,
+number of search results displayed on one page, 20 by default. Maximum
+page size is 100. This value does not allow passing very big page
+sizes to avoid server overload and might be changed with MAX_PS
+definition in <filename>search.c</filename>.
+
+</entry>
+					</row>
+					<row>
+						<entry>np</entry>
+						<entry>page number, starting by 0, 0 by default (first page)</entry>
+					</row>
+					<row>
+						<entry>p</entry>
+						<entry>page number starting by 1. Suitable for use with OpenSearch</entry>
+					</row>
+					<row>
+						<entry>m</entry>
+						<entry>search mode. Currently "all","any", "near" and "bool" values are supported.</entry>
+					</row>
+					<row>
+						<entry>wm</entry>
+						<entry>word match. You
+may use this parameter to choose word match type.	There are
+"wrd", "beg", "end" and "sub" values that respectively mean whole
+word, word beginning, word ending and word substring match.</entry>
+
+					</row>
+					<row>
+						<entry>t</entry>
+						<entry>Tag
+limit. Limits search through only documents with given tag. This
+parameter has the same effect with -t indexer option</entry>
+
+					</row>
+					<row>
+						<entry>c</entry>
+						<entry>Category
+limit. Take a look into <xref linkend="categories"/> for details.</entry>
+					</row>
+					<row>
+						<entry>ul</entry>
+						<entry>URL limit, URL
+substring to limit search through subsection	of database. It
+supports SQL % and _  LIKE wildcards. This parameter has the same
+effect with -u indexer option. If relative URL is specified
+<filename>search.cgi</filename> inserts % signs before and after "ul"
+value when compiled with SQL support. It allows to write URL substring
+in HTML from to limit search, for example	&lt;OPTION
+VALUE="/manual/"&gt; instead of VALUE="%/manual/%". When full URL with
+schema is specified <filename>search.cgi</filename> adds % sign only
+after this value. For example for &lt;OPTION
+VALUE="http://localhost/"&gt; <filename>search.cgi</filename> will
+pass <literal>http://localhost/%</literal> in SQL LIKE
+comparison.
+<note>Not supported for cache storage mode.</note>
+</entry>
+
+					</row>
+					<row>
+						<entry>wf</entry>
+						<entry>Weight
+factors. It allows changing different document sections weights at a
+search time. Should be passed in the form of hex number.	Check
+the explanation below.</entry>
+
+					</row>
+					<row>
+						<entry>g</entry>
+						<entry>Language
+limit. Language abbreviation to limit search results by url.lang
+field.</entry>
+
+					</row>
+					<row>
+						<entry>tmplt</entry>
+						<entry>Template filename (without path).
+To specify template file other standard <filename>search.htm</filename>.
+</entry>
+
+					</row>
+					<row>
+						<entry>type</entry>
+						<entry>Content-Type limit.
+Content-type to limit search results by url.content_type field.
+For cache mode storage this should be exact match. For SQL-modes it may be sql-like pattern.
+</entry>
+
+					</row>
+					<row>
+						<entry>sp</entry>
+						<entry>Words forms limit.
+=1, if you need search all forms (include spelling suggestions, if aspell support is enabled) for entered words.
+=0, if you need search only entered words. Default value is 1. You may switch it to 0 for faster search.
+</entry>
+
+					</row>
+					<row>
+						<entry>sy</entry>
+						<entry>Synonyms limit.
+=1, if you need add synonyms for entered words.
+=0, do not use synonyms. Default value is 1. You may switch it to 0 for faster search.
+</entry>
+
+					</row>
+<row>
+<entry>empty</entry>
+<entry>Use limits to show results if no query words is entered (only for cache mode).
+=yes, to show results from limits, if no query words is entered (default).
+=no, do not show results from limits, if no query words is entered.
+</entry>
+</row>
+				        <row>
+					<entry>dt</entry>
+                                        <entry>Limit by time. Three types is supported.
+				<para>If <literal>dt</literal> is set to <literal>back</literal>, 
+that means you want to limit result to recent pages, and you should specify this recentness in variable <literal>dp</literal>.</para>
+				<para>If <literal>dt</literal> is set to <literal>er</literal>, 
+that means the search will be limited to pages newer or older than date given.
+Variable <option>dx</option> is newer/older flag (1 means newer or after, -1 means older or before).
+Date is specified in variables <option>dm, dy, dd</option>.</para>
+				<para>If <literal>dt</literal> is set to <literal>range</literal>, 
+that means search within given range of dates. Variables <option>db</option> and <option>de</option> 
+are used here and stands for beginning and end date.</para>
+
+<note>All times in cache mode measured in a hour precision.</note>
+
+</entry>
+                                </row>
+<row>
+<entry>dp</entry><entry>Limit by recentness, if <literal>dt</literal> value is <literal>back</literal>.
+It should be specified in <literal>xxxA[yyyB[zzzC]]</literal> format. Spaces are allowed between xxx and A and yyy and so on).
+ xxx, yyy, zzz are numbers (can be negative!), A, B, C can be one of the following (the letters are the same as in 
+strptime/strftime functions): s - second, M - minute, h - hour, d - day, m - month, y - year. Examples:
+				<programlisting>
+  4h30M 	  - 2 hours and 30 minutes
+  1Y6m-15d        - 1 year and six month minus 15 days
+  1h-60M+1s       - 1 hour minus 60 minutes plus 1 second
+</programlisting>
+</entry>
+</row>
+
+<row> <entry>dx</entry>
+<entry>is newer/older flag (1 means newer or after, -1 means older or before), 
+if <literal>dt</literal> value is <literal>er</literal>.</entry>
+</row>
+
+<row> <entry>dm</entry>
+<entry>Month, if <literal>dt</literal> value is <literal>er</literal>. 0 - January, 1 - February, ... 
+11 - December.</entry>
+</row>
+
+<row> <entry>dy</entry>
+<entry>Year, if <literal>dt</literal> value is <literal>er</literal>. Four digits. For example, 1999 or 2001.</entry>
+</row>
+
+<row> <entry>dd</entry>
+<entry>Day, if <literal>dt</literal> value is <literal>er</literal>. 1...31.</entry>
+</row>
+
+<row> <entry>db</entry>
+<entry>Beginning date, if <literal>dt</literal> value is <literal>range</literal>. 
+Each date is string in the form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits year.</entry>
+</row>
+
+<row> <entry>de</entry>
+<entry>End date, if <literal>dt</literal> value is <literal>range</literal>. 
+Each date is string in the form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits year.</entry>
+</row>
+
+				</tbody>
+			</tgroup>
+		</table>
+	</sect2>
+	<sect2 id="search-changeweight">
+		<title>Changing different document parts weights at search time</title>
+		<para>It is possible to pass <option>wf</option> HTML form variable
+to <filename>search.cgi</filename>. <option>wf</option> variable represents weight
+factors for specific document parts. Currently
+body, title, keywords, description, url parts, crosswords as well as user
+defined META and HTTP headers are supported. Take a look into
+"Section" part of <filename>indexer.conf-dist</filename>.</para>
+
+		<para>To be able use this feature it is recommended to
+set different sections IDs for different document parts in "Section"
+<filename>indexer.conf</filename> command. Currently up to 256
+different sections are supported.</para>
+
+		<para>Imagine that we have these default sections in <filename>indexer.conf</filename>:
+		<programlisting>
+  Section body        1  256
+  Section title       2  128
+  Section keywords    3  128
+  Section description 4  128
+</programlisting>
+		</para>
+		<para><option>wf</option> value is a string of hex digits ABCD. Each
+digit is a factor for corresponding section weight. The most right
+digit corresponds to section 1. For the given above sections
+configuration:</para>
+
+		<literallayout>
+      D is a factor for section 1 (body)
+      C is a factor for section 2 (title)
+      B is a factor for section 3 (keywords)
+      A is a factor for section 4 (description)
+</literallayout>
+		<para>Examples:</para>
+		<literallayout>
+   wf=0001 will search through body only.
+
+   wf=1110 will search through title,keywords,description but not 
+	through the body.
+
+   wf=F421 will search through:
+          Description with factor 15  (F hex)
+          Keywords with factor 4
+          Title with factor  2
+          Body with factor 1
+</literallayout>
+		<para>By default, if <option>wf</option> variable is omitted in the
+query, all section factors are 1, it means all sections have the same
+weight. If the number of sections in <option>wf</option> is less than the number of sections defined, then the rest sections are initialized by the value of highest section weight defined in <option>wf</option>. E.g.:</para>
+		<literallayout>
+   wf=01 will also search through body only.
+</literallayout>
+
+<para>If <application>DataparkSearch</application> has been built with fast relevance calculation (with <option>--enable-rel=fast</option>
+option for <command>configure</command>), in this case, only zero and non-zero values for <option>wf</option> variable take an effect (this allows only include/exclude
+specified sections in search results).
+To use full support for dynamic section weights, you need specify <option>--enable-rel=full</option>
+option for <command>configure</command> when configuring <application>DataparkSearch</application>.
+</para>
+
+	</sect2>
+
+
+
+	<sect2 id="search-scriptname">
+		<title>Using front-end with an shtml page</title>
+		<para>When using a dynamic shtml page containing SSI
+that calls <filename>search.cgi</filename>,
+i.e. <filename>search.cgi</filename> is not called directly as a CGI
+program, it is necessary to override Apache's SCRIPT_NAME environment
+attribute so that all the links on search pages lead to the dynamic
+page and not to <filename>search.cgi</filename>.</para>
+
+		<para>For example, when a shtml page contains a line
+<literal>&lt;--#include virtual="search.cgi"&gt;</literal>,
+SCRIPT_NAME variable will still point to
+<filename>search.cgi</filename>, but not to the shtml page.</para>
+
+		<para>To override SCRIPT_NAME variable we implemented
+a DPSEARCH_SELF variable that you may add to Apache's
+<filename>httpd.conf</filename> file. Thus
+<filename>search.cgi</filename> will check DPSEARCH_SELF variable
+first and then SCRIPT_NAME. Here is an example of using DPSEARCH_SELF
+environment variable with <command>SetEnv/PassEnv</command> Apache's
+<filename>httpd.conf</filename> command:</para>
+
+		<para>
+			<programlisting>
+SetEnv DPSEARCH_SELF /path/to/search.cgi
+PassEnv DPSEARCH_SELF
+</programlisting>
+		</para>
+	</sect2>
+	<sect2 id="search-templates">
+		<title>Using several templates</title>
+		<para>It is often required to use several templates
+with the same <filename>search.cgi</filename>. There are actually
+several ways to do it. They are given here in the order how
+<filename>search.cgi</filename> detects template name.</para>
+
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+<filename>search.cgi</filename> checks environment variable DPSEARCH_TEMPLATE. So you can put a path to desired search template into this variable. </para>
+
+			</listitem>
+<listitem>
+<para><filename>search.cgi</filename> checks path info part of URL available in the PATH_INFO environment variable.
+E.g. <filename>http://localhost/cgi-bin/search.cgi/search1.html</filename> uses <filename>search1.htm</filename> as its template,
+and  <filename>http://localhost/cgi-bin/search.cgi/search2.html</filename> uses <filename>search2.htm</filename>, and so on.
+</para>
+</listitem>
+			<listitem>
+				<para>
+					<filename>search.cgi</filename> also supports Apache internal redirect. It checks REDIRECT_STATUS and REDIRECT_URL environment variables. To activate this way of template usage you may add these lines in Apache <filename>srm.conf</filename>: 
+
+				<programlisting>
+AddType text/html .zhtml
+AddHandler zhtml .zhtml
+Action zhtml /cgi-bin/search.cgi
+</programlisting>
+				</para>
+				<para>Put
+<filename>search.cgi</filename> into your
+<filename>/cgi-bin/</filename> directory. Then put HTML template into
+your site directory structure under any name with .zthml extension,
+for example template.zhtml. Now you may open search page:
+<literal>http://www.site.com/path/to/template.zhtml</literal> You may
+use any unused extension instead of .zthml of course. </para>
+
+			</listitem>
+			<listitem>
+				<para>If the above two ways fail,
+search.cgi opens a template which has the same name with the script
+being executed using SCRIPT_NAME environment
+variable. <filename>search.cgi</filename> will open a template
+<filename>ETC/search.htm</filename>, <filename>search1.cgi</filename>
+will open <filename>ETC/search1.htm</filename> and so on, where ETC is
+<application>DataparkSearch</application> <filename>/etc</filename> directory (usually
+<filename>/usr/local/dpsearch/etc</filename>). So, you can use the
+same <filename>search.cgi</filename> with different templates without
+having to recompile it. Just create one or several hard or symbolic
+links for <filename>search.cgi</filename> or copy it and put
+corresponding search templates into /etc directory of <application>DataparkSearch</application>
+installation.</para>
+
+				<para>Take a look also into Making multi-language search pages section</para>
+			</listitem>
+		</orderedlist>
+	</sect2>
+
+<sect2 id="search-operators">
+<title>Search operators</title>
+<para>The operator <command>allin&lt;section&gt;:</command>, 
+where &lt;section&gt; is the name of a section, defined in <filename>sections.conf</filename> file 
+(or in any dpsearch's configuration file by <command>Section</command> command) with non-zero section number 
+(see <xref linkend="section_cmd"/>), 
+that operator allows to limit the search domain for a query word by the section specified.</para>
+
+
+<para>This operator differ from limiting search domain using &amp;wf= CGI-variable in a way, 
+that such limit is imposing only on query words specified after this operator.</para>
+
+<para>For example, if you have the following commands in <filename>sections.conf</filename> file
+<programlisting>
+Section body 1 256
+Section title 2 128
+Section url 3 0 strict
+</programlisting>
+then you can use the following operators in search query: <command>allinbody:</command>, <command>allintitle:</command> and 
+<command>allinurl:</command>.</para>
+
+<para>For the query <userinput>computer allintitle: science</userinput> it will be found the documents that contain the word 
+"science" in the title and the word "computer" in any document section.</para>
+</sect2>
+
+	<sect2 id="search-bool">
+		<title>Advanced boolean search</title>
+<indexterm><primary>Boolean search</primary><secondary>advanced</secondary></indexterm>
+		<para>If you want more advanced results you may use
+query language. You should select "bool" search mode in the search
+from.</para>
+
+		<para><application>DataparkSearch</application> understands the following boolean operators:</para>
+		<para><userinput>AND</userinput> or <userinput>&amp;</userinput> - logical AND. For example, 
+"<userinput>mysql &amp; odbc</userinput>" or "<userinput>mysql AND odbc</userinput>" - 
+<application>DataparkSearch</application> will find any URLs that contain both "mysql" and
+"odbc".</para>
+
+		<para><userinput>NEAR</userinput> - NEAR operator, identical to AND operator, but come true if both 
+words are within 16 words of each other. 
+For example, "<userinput>mysql NEAR odbc</userinput>"  - 
+<application>DataparkSearch</application> will find any URLs that contain both "mysql" and
+"odbc" within 16 words of each other.</para>
+
+		<para><userinput>ANYWORD</userinput> or <userinput>*</userinput> - ANYWORD operator, 
+identical to AND operator, but come true if both words have any one word between and left operand have lesser position than right operand. 
+For example, "<userinput>mysql * odbc</userinput>"  - 
+<application>DataparkSearch</application> will find any URLs that contain both "mysql" and
+"odbc" within any word between, for example, any document with "mysql via odbc" phrase.</para>
+
+		<para><userinput>OR</userinput> or <userinput>|</userinput> - logical OR. For example,
+"<userinput>mysql | odbc</userinput>" or "<userinput>mysql OR odbc</userinput>" - 
+<application>DataparkSearch</application> will find any URLs  that contain word
+"mysql" or word "odbc".</para>
+
+		<para><userinput>NOT</userinput> or <userinput>~</userinput> - logical NOT. For example,
+"<userinput>mysql &amp; ~ odbc</userinput>"  or "<userinput>mysql AND NOT odbc</userinput>" - 
+<application>DataparkSearch</application> will find URLs that contain word "mysql" and do
+not contain word "odbc" at the same time. Note that ~ just excludes
+given word from results. Query "~ odbc" will find nothing!</para>
+
+		<para><userinput>()</userinput> - group command to compose more complex
+queries. For example "(mysql | msql) &amp; ~ postgres". Query language
+is simple and powerful at the same time. Just consider query as usual
+boolean expression.</para>
+
+	</sect2>
+
+<sect2 id="vql">
+<title>The Verity Query Language, VQL</title>
+<para>Only the prefix variant of the <application>Verity Query Language</application> is supported by <application>DataparkSearch</application>.</para>
+<para>Also, only the following subset of VQL operators is supported by <application>DataparkSearch</application>:</para>
+
+<table id="vql-operators">
+<title>VQL operators supported by DataparkSearch</title>
+<tgroup cols="2">
+<tbody>
+
+<row>
+    <entry>&lt;ACCRUE&gt;</entry>
+    <entry>equal to <userinput>OR</userinput> operator in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;AND&gt;</entry>
+    <entry>equal to <userinput>AND</userinput> operator in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;ANY&gt;</entry>
+    <entry>equal to <userinput>OR</userinput> operator in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;NEAR&gt;</entry>
+    <entry>equal to <userinput>NEAR</userinput> operator in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;NOT&gt;</entry>
+    <entry>equal to <userinput>NOT</userinput> operator in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;OR&gt;</entry>
+    <entry>equal to <userinput>OR</userinput> operator in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;PHRASE&gt;</entry>
+    <entry>equal to a phrase in boolean mode.</entry>
+</row>
+<row>
+    <entry>&lt;WORD&gt;</entry>
+    <entry>is considered as an empty operator.</entry>
+</row>
+
+
+</tbody>
+</tgroup>
+</table>
+
+</sect2>
+
+	<sect2 id="search-exp">
+		<title>How search handles expired documents</title>
+		<para>Expired documents are still searchable with their old content.</para>
+	</sect2>
+</sect1>

@@ -1,0 +1,656 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Создание многоязычных страниц поиска&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Поддержка языков"
+HREF="dpsearch-international.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Поддержка языков"
+HREF="dpsearch-international.ru.html"><LINK
+REL="NEXT"
+TITLE="Сегментеры фраз японского, тайского, корейского и китайского языков"
+HREF="dpsearch-cjk.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-international.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 7. Поддержка языков</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-cjk.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="MULTILANG"
+>7.2. Создание многоязычных страниц поиска
+<A
+NAME="AEN4781"
+></A
+></A
+></H1
+><P
+>Основная идея Craig Small <CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:csmall@eye-net.com.au"
+>csmall@eye-net.com.au</A
+>&#62;</CODE
+>.
+  Небольшие изменения Alex Barkov <CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:bar@mnogosearch.org"
+>bar@mnogosearch.org</A
+>&#62;</CODE
+>.</P
+><P
+>Зачастую требуется поддержка различных языков, что означает использование
+различных файлов <TT
+CLASS="FILENAME"
+>search.htm</TT
+> в зависимости от языка, выбранного в настройках броузера пользователя. </P
+><P
+>Пожалуйста, устите, что замечания по конфигурированию, даваемы ниже, абсолютно
+одинаковы для обоих поисковых фронт-ендов <TT
+CLASS="FILENAME"
+>search.php</TT
+> и <TT
+CLASS="FILENAME"
+>search.cgi</TT
+>.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>специфика <TT
+CLASS="LITERAL"
+>PHP</TT
+>:</I
+></SPAN
+> единственное отличие для <TT
+CLASS="FILENAME"
+>search.php</TT
+>
+заключается в модификации <TT
+CLASS="FILENAME"
+>config.inc</TT
+> для изменения файла шаблона:
+		<PRE
+CLASS="PROGRAMLISTING"
+>$template_file= ereg_replace(".php", ".htm", basename(getenv("SCRIPT_FILENAME")));
+$template_file = "/etc/somewhere" . $template_file;</PRE
+></P
+></BLOCKQUOTE
+></DIV
+><P
+>Дальнейшая установка проводится в три этапа.</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Установка нескольких шаблонов.</P
+><P
+>Основная идея состоит в том, чтобы иметь один файл <TT
+CLASS="FILENAME"
+>search.php</TT
+>
+или <TT
+CLASS="FILENAME"
+>search.cgi</TT
+> и несколько файлов <TT
+CLASS="FILENAME"
+>search.[language].htm</TT
+>. Также, для ипользования по
+умолчанию необходимо иметь файл <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (обычно в качестве символьной ссылки на
+<TT
+CLASS="FILENAME"
+>search.en.htm</TT
+>).</P
+><P
+>Если имя скрипта <TT
+CLASS="FILENAME"
+>search.en.php</TT
+> (или
+<TT
+CLASS="FILENAME"
+>search.en.cgi</TT
+>), оба CGI и PHP фронт-енды будут искать <TT
+CLASS="FILENAME"
+>/somewhere/etc/search.en.htm</TT
+>,
+мы подразумеваем, чтоassuming <TT
+CLASS="FILENAME"
+>/somewhere/etc/</TT
+> - поддиректория <TT
+CLASS="FILENAME"
+>/etc/</TT
+>
+корневой директории установки <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</P
+><P
+>Вы должны поместить в <TT
+CLASS="FILENAME"
+>/somewhere/etc/</TT
+> все такие шаблоны <TT
+CLASS="FILENAME"
+>search.htm</TT
+>,
+т.е. <TT
+CLASS="FILENAME"
+>/somewhere/etc</TT
+> будет иметь, например:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN4819"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.en.htm</TT
+>
+							</TD
+><TD
+>Шаблон для английского языка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.pl.htm</TT
+>
+							</TD
+><TD
+>Шаблон для польского языка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.ru.htm</TT
+>
+							</TD
+><TD
+>Шаблон для русского языка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+							</TD
+><TD
+>Символьная ссылка на шаблон английского языка</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></LI
+><LI
+><P
+>Установка фронт-ендов</P
+><P
+>Создайте поддиректорию и поместите в неё <TT
+CLASS="FILENAME"
+>search.cgi</TT
+> или <TT
+CLASS="FILENAME"
+>search.php</TT
+>
+(отдельно от включаемых файлов, если желаете, указав для PHP include_path и разместив их в другом месте).</P
+><P
+>Затем создайте символьные ссылки:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN4844"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.cgi</TT
+>
+							</TD
+><TD
+>Оригинальный файл</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.en.cgi</TT
+>
+							</TD
+><TD
+>символьная ссылка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.pl.cgi</TT
+>
+							</TD
+><TD
+>символьная ссылка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.ru.cgi</TT
+>
+							</TD
+><TD
+>символьная ссылка</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+><P
+>Или для <TT
+CLASS="LITERAL"
+>PHP</TT
+> фронт-енда:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN4865"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.php</TT
+>
+							</TD
+><TD
+>Оригинальный файл</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.en.php</TT
+>
+							</TD
+><TD
+>символьная ссылка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.pl.php</TT
+>
+							</TD
+><TD
+>символьная ссылка</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.ru.php</TT
+>
+							</TD
+><TD
+>символьная ссылка</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></LI
+><LI
+><P
+>Конфигурирование <SPAN
+CLASS="APPLICATION"
+>Apache</SPAN
+></P
+><P
+>Теперь нужно научить <TT
+CLASS="LITERAL"
+>apache</TT
+> понимать, что надо здесь делать.
+Вам нужно включить процесс определения содержимого (negotiation) и изменить индексы. Я использовал файл 
+<TT
+CLASS="FILENAME"
+>.htaccess</TT
+>, но вы можете задать это и в файле конфигурации <TT
+CLASS="LITERAL"
+>apache</TT
+>.
+			<PRE
+CLASS="PROGRAMLISTING"
+>AddLanguage en .en
+AddLanguage pl .pl
+AddLanguage ru .ru
+
+DirectoryIndex search search.cgi  (or search.php)
+Options FollowSymlinks MultiViews</PRE
+>
+			</P
+></LI
+></OL
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MULTILANG-HOW"
+>7.2.1. Как это работает ?</A
+></H2
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Вы набираете url <TT
+CLASS="LITERAL"
+>http://myhost/mydir/search</TT
+>
+					<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>без слэша на конце !!</I
+></SPAN
+>
+				</P
+></LI
+><LI
+><P
+>Ваш броузер говорит <TT
+CLASS="LITERAL"
+>"Я предпочитаю английский язык (т.е. определён язык en) "</TT
+>
+				</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>Apache</TT
+> находит <TT
+CLASS="FILENAME"
+>search.en.cgi</TT
+> (DirectoryIndex даёт
+<TT
+CLASS="LITERAL"
+>search</TT
+>, MultiViews даёт <TT
+CLASS="LITERAL"
+>en.cgi</TT
+>)</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>SCRIPT_FILENAME</B
+>, используемый обоими
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> и <TT
+CLASS="FILENAME"
+>search.php</TT
+> равен
+<TT
+CLASS="FILENAME"
+>somepath/search.en.cgi</TT
+>
+				</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Большинство других переменных будут иметь неправильные значения,
+либо <TT
+CLASS="LITERAL"
+>search</TT
+>, либо <TT
+CLASS="LITERAL"
+>search.cgi</TT
+>)</P
+></BLOCKQUOTE
+></DIV
+></LI
+><LI
+><P
+>Вы измезменяете <TT
+CLASS="FILENAME"
+>config.inc</TT
+> как указано выше, для использования
+<TT
+CLASS="FILENAME"
+>search.en.htm</TT
+>.</P
+></LI
+></OL
+><P
+>Что случится, если пользователь, к примеру, захочет немецкий ?
+У нас нет <TT
+CLASS="FILENAME"
+>search.de.cgi</TT
+> (<TT
+CLASS="FILENAME"
+>search.de.php</TT
+>), т.е. первый элемент в списке 
+DirectoryIndex не отработает, тогда сервер попробует второй,
+<TT
+CLASS="FILENAME"
+>search.php</TT
+>  Да, он получит страницу на английском, но это лучше, чем 404.</P
+><P
+>Это работает, возможно вам понадобиться еще что-то подкрутить в конфигурации <TT
+CLASS="LITERAL"
+>apache</TT
+>, -
+я пробовал на сервере, для которого уже всё было настроено и возможно что-то упустил в описании конфигурирования веб-сервера.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MULTILANG-PROBLEM"
+>7.2.2. Возможные сложности</A
+></H2
+><P
+>У вас могут возникнуть некоторые проблемы с определением языка, вызванные:</P
+><P
+></P
+><UL
+><LI
+><P
+>Некотрыми кэшами, неследующими стандартам</P
+></LI
+><LI
+><P
+>Некоторыми броузерами, неследующими стандартам</P
+></LI
+><LI
+><P
+>Некоторыми пользователями, неуказывающими или неправильно указывающими предпочитаемый язык в
+настройках.</P
+></LI
+></UL
+><P
+>Команда разработчиков <TT
+CLASS="LITERAL"
+>apache</TT
+> работает над возможностями обхода некоторых из этих трудностей,
+если это возможно. Для плотно используемого веб-сервера, вы можете ожидать примерно один е-мейл в неделю с описанием подобной
+проблемы.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-international.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-cjk.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Поддержка языков</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-international.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Сегментеры фраз японского, тайского, корейского и китайского языков</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

@@ -1,0 +1,46 @@
+<sect1 id="srcache">
+	<title>Кэш результатов поиска
+<indexterm><primary>Кэш результатов поиска</primary></indexterm>
+ </title>
+
+	<para>Кэш результатов поиска обеспечивает быстрый ответ 
+<filename>search.cgi</filename> на недавно повторенные запросы, а также
+при навигации от страницы к странице результатов того же поиска.</para>
+
+	<para>Кэш результатов поиска выключен поумолчанию.
+Вам необходимо использовать команду "Cache yes" в <filename>search.htm</filename> для
+вкючения кэширования результатов поиска. Если используется <literal>searchd</literal>, 
+команду "Cache yes" необходимо добавить в <filename>searchd.conf</filename>.</para>
+
+	<para>
+Кэш результатов поиска располагается в поддиректории
+<literal>$PREFIX/var/cache/</literal>, где
+<literal>$PREFIX</literal> - корневая директория установки <application>DataparkSearch</application>.
+Результат каждого поиска хранится в виде отдельного файла.</para>
+
+	<note><indexterm><primary>Команда</primary><secondary>HoldCache</secondary></indexterm>
+		<para>По умолчанию, кэш результатов поиска не очищается автоматически.
+Вам необходимо удалять его каждый раз после запуска <command>indexer</command>
+для избежания отображения необновленных данных. 
+Или вы можете указать период обшовления кэша результатов поиска при помощи команды
+<command>HoldCache</command>:
+<programlisting>
+HoldCache &lt;time&gt;
+</programlisting>
+См. формат &lt;time&gt; в описании команды <command>Period</command> из <xref linkend="period_cmd"/>.
+<programlisting>
+HoldCache 3h
+</programlisting>
+
+<!--
+Очень полезно добавить очистку кэша поиска в
+системный <filename>crontab</filename>, например, ежедневно.
+Чтобы очистить кэш результатов поиска, просто удалите все файлы в директории
+<literal>$PREFIX/var/cache/</literal>. Например:
+		<programlisting>
+/bin/rm -f /usr/local/dpsearch/var/cache/*
+</programlisting>
+-->
+		</para>
+	</note>
+</sect1>

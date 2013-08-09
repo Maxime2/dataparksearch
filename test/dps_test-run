@@ -1,0 +1,15 @@
+#!/bin/sh
+
+export DPS_TEST_ROOT=`pwd`
+export DPS_TEST="$DPS_TEST_ROOT/dps_test"
+export DPS_TEST_LOG="$DPS_TEST_ROOT/dps_test.log"
+export INDEXER="$DPS_TEST_ROOT/../src/indexer"
+export SEARCH="$DPS_TEST_ROOT/../src/search.cgi"
+export STOREDOC="$DPS_TEST_ROOT/../src/storedoc.cgi"
+export CACHED="$DPS_TEST_ROOT/../src/cached"
+export SPLITTER="$DPS_TEST_ROOT/../src/splitter"
+export SEARCHD="$DPS_TEST_ROOT/../src/searchd"
+export DPS_SHARE_DIR="$DPS_TEST_ROOT/../create/"
+
+$DPS_TEST $@
+

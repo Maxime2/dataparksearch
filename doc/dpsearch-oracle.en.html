@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Oracle notes</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Storing data"
+HREF="dpsearch-howstore.en.html"><LINK
+REL="PREVIOUS"
+TITLE="SearchD support"
+HREF="dpsearch-searchd.en.html"><LINK
+REL="NEXT"
+TITLE="Subsections"
+HREF="dpsearch-subsections.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-searchd.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Storing data</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-subsections.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="ORACLE"
+>5.5. Oracle notes</A
+></H1
+><A
+NAME="AEN3820"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ORACLE-INTRO"
+>5.5.1. Introduction</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ORACLE-WHY"
+>5.5.1.1. Why Oracle?</A
+></H3
+><P
+>Oracle is a powerful, tunable, scalable
+and reliable industrial RDBMS. It provides some functionalities which
+are absent in simple freeware RDBMS like MySQL and PostgresSQL, such
+as: transactions support, concurrency and consistency, data integrity,
+partitioning, replication, cost-based and rule-based optimizers,
+parallel execution, redo logs, RAW devices and many other
+features. Although Oracle is a very functional database, the
+additional qualities like reliability impose some overhead. In fact,
+providing many advantages Oracle has some disadvantages. For example
+great tenability requires more experienced DBA, redo logs support
+provide great reliability against instance and media failures but
+requires more efficient disk system. I think you should select Oracle
+as a database for <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> if you want to search through hundreds
+of megabytes or several gigabytes of information, reliability is one
+of the primary concerns, need high availability of the database, and
+you are ready to pay higher sums for hardware and Oracle DBA to
+achieve better quality of service. </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ORACLE-REQ"
+>5.5.1.2. <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>+Oracle8 Installation Requirements</A
+></H3
+><P
+>In order to install <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with Oracle RDBMS support 
+you must ensure the following requirements:</P
+><P
+></P
+><UL
+><LI
+><P
+>Oracle8 Server must be
+properly installed on any computer accessible from the site where
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> are to be installed. See the documentation provided with
+your Oracle server. </P
+></LI
+><LI
+><P
+>Oracle client software
+and libraries must be installed on the site where you plan to install
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>. I strongly recommend to install utilities also, it help
+you to test the client and server accessibility. </P
+></LI
+><LI
+><P
+>glibc 2.0 or glibc 2.1. Oracle 8.0.5.X libraries are built for glibc 2.0.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ORACLE-PLATFORMS"
+>5.5.1.3. Currently supported/tested platforms</A
+></H3
+><P
+>Oracle versions:</P
+><P
+></P
+><UL
+><LI
+><P
+>Oracle 8.0.5.X </P
+></LI
+></UL
+><P
+>Operation systems:</P
+><P
+></P
+><UL
+><LI
+><P
+>Linux RedHat 6.1 (2.2.X + glibc 2.0) </P
+></LI
+></UL
+><P
+>Oracle Server may be ran on any platform
+supporting tcp/ip connections. I see no difficulties to port
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> Oracle driver to any commercial and freeware unix systems,
+any contribution is appreciated. </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ORACLE-INSTALL"
+>5.5.2. Compilation, Installation and Configuration</A
+></H2
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ORACLE-COMPIL"
+>5.5.2.1. Compilation</A
+></H3
+><P
+>Oracle 8.0.5.X and Linux RedHat 6.1</P
+><P
+>				<PRE
+CLASS="PROGRAMLISTING"
+>./Configure --with-oracle8=oracle_home_dir
+make
+make install</PRE
+>
+			</P
+><P
+>If you have any troubles, try to put
+<TT
+CLASS="LITERAL"
+>CC = i386-glibc20-linux-gcc</TT
+> in the
+<TT
+CLASS="FILENAME"
+>src/Makefile</TT
+>, this is old version of gcc compiler
+for glibc 2.0. </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ORACLE-INSTALL-CONFIG"
+>5.5.2.2. Installation and Configuration</A
+></H3
+><P
+>				<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Check whether Oracle Server and Oracle Client work properly.</I
+></SPAN
+>
+			</P
+><P
+>First, try DataparkSearch service is accessible
+			<PRE
+CLASS="PROGRAMLISTING"
+>&#13; [oracle@ant oracle]$ tnsping DataparkSearch 3
+
+TNS Ping Utility for Linux: Version 8.0.5.0.0 - Production on 29-FEB-00 09:46:12
+(c) Copyright 1997 Oracle Corporation.  All rights reserved.
+
+Attempting to contact (ADDRESS=(PROTOCOL=TCP)(Host=ant.gpovz.ru)(Port=1521))
+OK (10 msec)
+OK (0 msec)
+OK (10 msec)&#13;</PRE
+>
+			</P
+><P
+>Second, try to connect to Oracle Server with svrmgrl and check whether 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> tables were created
+			<PRE
+CLASS="PROGRAMLISTING"
+>[oracle@ant oracle]$ svrmgrl command='connect scott/tiger@DataparkSearch'
+
+Oracle Server Manager Release 3.0.5.0.0 - Production
+
+(c) Copyright 1997, Oracle Corporation.  All Rights Reserved.
+
+Oracle8 Release 8.0.5.1.0 - Production
+PL/SQL Release 8.0.5.1.0 - Production
+
+Connected.
+SVRMGR&gt; SELECT table_name FROM user_tables;
+TABLE_NAME
+------------------------------
+DICT
+DICT10
+DICT11
+DICT12
+DICT16
+DICT2
+DICT3
+DICT32
+DICT4
+DICT5
+DICT6
+DICT7
+DICT8
+DICT9
+PERFTEST
+ROBOTS
+STOPWORD
+TAB1
+URL
+19 rows selected.</PRE
+>
+			</P
+><P
+>				<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Check the library paths in /etc/ld.so.conf</I
+></SPAN
+>
+			</P
+><P
+>				<PRE
+CLASS="PROGRAMLISTING"
+>[oracle@ant oracle]$ cat /etc/ld.so.conf
+/usr/X11R6/lib
+/usr/lib
+/usr/i486-linux-libc5/lib
+/usr/lib/qt-2.0.1/lib
+/usr/lib/qt-1.44/lib
+/oracle8/app/oracle/product/8.0.5/lib</PRE
+>
+			</P
+><P
+>This file should contain line
+<TT
+CLASS="LITERAL"
+>oracle_home_path/lib</TT
+> to ensure <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> will be
+able to open libclntsh.so, the shared Oracle Client library</P
+><P
+>				<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Make symbolic link:</I
+></SPAN
+>
+			</P
+><P
+>				<KBD
+CLASS="USERINPUT"
+>ln -s /oracle8/app/oracle/product/8.0.5/network/admin/tnsnames.ora /etc</KBD
+>
+			</P
+><P
+>				<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Correct the indexer.conf file</I
+></SPAN
+>
+			</P
+><P
+>You should specify
+<CODE
+CLASS="OPTION"
+>DBName</CODE
+>, <CODE
+CLASS="OPTION"
+>DBUser</CODE
+>,
+<CODE
+CLASS="OPTION"
+>DBPass</CODE
+> in order that <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> can connect to
+Oracle Server. DBName is the service name, it should have the same
+name that was written to <TT
+CLASS="FILENAME"
+>tnsnames.ora</TT
+> file,
+DBUSer and DBPass are Oracle user and his password
+correspondingly. You can run indexer now. </P
+><P
+>				<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Setting up search.cgi</I
+></SPAN
+>
+			</P
+><P
+>Copy the file
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/bin/search.cgi</TT
+> to
+<TT
+CLASS="FILENAME"
+>apache_root/cgi-bin/search.cgi</TT
+>. Then add two
+lines to apache's <TT
+CLASS="FILENAME"
+>http.conf</TT
+> file:</P
+><P
+CLASS="LITERALLAYOUT"
+>SetEnv&nbsp;ORACLE_HOME&nbsp;/oracle8/app/oracle/product/8.0.5<br>
+PassEnv&nbsp;ORACLE_HOME</P
+><P
+>Correct the
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> to provide DBName, DBUser, DBPass
+information. <TT
+CLASS="FILENAME"
+>search.cgi</TT
+> should work now. </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-searchd.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-subsections.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>SearchD support</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-howstore.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Subsections</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

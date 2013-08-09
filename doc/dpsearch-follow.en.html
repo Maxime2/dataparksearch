@@ -1,0 +1,1259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Specifying WEB space to be indexed</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Clones"
+HREF="dpsearch-clones.en.html"><LINK
+REL="NEXT"
+TITLE="Aliases"
+HREF="dpsearch-aliases.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-clones.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-aliases.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FOLLOW"
+>3.6. Specifying WEB space to be indexed</A
+></H1
+><P
+>When indexer tries to insert a new URL into database or
+is trying to index an existing one, it first of all checks whether
+this URL has corresponding <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+> or <B
+CLASS="COMMAND"
+>Subnet</B
+> command given in
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>. URLs without corresponding <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+>
+or <B
+CLASS="COMMAND"
+>Subnet</B
+> command are not indexed. By default those URLs which are
+already in database and have no Server/Realm/Subnet commands will be deleted
+from database. It may happen for example after removing some
+Server/Realm/Subnet commands from <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.</P
+><P
+>These commands have following format:
+<PRE
+CLASS="SYNOPSIS"
+>&lt;command&gt; [method] [subsection] [CaseType] [MatchType] [CmpType] pattern [alias]</PRE
+></P
+><P
+>Mandatory parameter <CODE
+CLASS="OPTION"
+>pattern</CODE
+> specify an URL, or it part, or pattern to compare.</P
+><P
+>			Optional parameter <CODE
+CLASS="OPTION"
+>method</CODE
+> specify an document action for this command.
+May take values:
+			<TT
+CLASS="LITERAL"
+>Allow</TT
+>, <TT
+CLASS="LITERAL"
+>Disallow</TT
+>, <TT
+CLASS="LITERAL"
+>HrefOnly</TT
+>, 
+			<TT
+CLASS="LITERAL"
+>CheckOnly</TT
+>, <TT
+CLASS="LITERAL"
+>Skip</TT
+>, 	<TT
+CLASS="LITERAL"
+>CheckMP3</TT
+>,
+			<TT
+CLASS="LITERAL"
+>CheckMP3Only</TT
+>. By default, the value <TT
+CLASS="LITERAL"
+>Allow</TT
+> is used.
+		<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Allow</B
+>
+<A
+NAME="AEN897"
+></A
+>
+				</P
+><P
+>					Value <TT
+CLASS="LITERAL"
+>Allow</TT
+> specify that all corresponding documents will be indexed
+ and scanned for new links. Depends on <TT
+CLASS="LITERAL"
+>Content-Type</TT
+> appropriate external parser is executed if need.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Disallow</B
+>
+<A
+NAME="AEN907"
+></A
+>
+				</P
+><P
+>					Value <TT
+CLASS="LITERAL"
+>Disallow</TT
+> specify that all corresponding documents will be ignored and
+deleted from database, if its was placed into before.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>HrefOnly</B
+>
+<A
+NAME="AEN916"
+></A
+>
+				</P
+><P
+>					Value <TT
+CLASS="LITERAL"
+>HrefOnly</TT
+> specify that all corresponding documents will be only
+scanned for new links (not indexed). This is useful, for example, for getting new documents from a feed, when the feed page is only scanned to
+detect new messages for indexing. 
+<PRE
+CLASS="PROGRAMLISTING"
+>Server HrefOnly Page http://www.site.ext/feed.xml
+Server Allow    Path http://www.site.ext/</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>CheckOnly</B
+>
+<A
+NAME="AEN926"
+></A
+>
+				</P
+><P
+>					Value <TT
+CLASS="LITERAL"
+>CheckOnly</TT
+> specify that all corresponding documents will be
+requested by HTTP HEAD request, not HTTP GET, i.e. inly brief info about documents (size, last modified, content type) will be
+ fetched. This allow, for example, check links on your site:
+<PRE
+CLASS="PROGRAMLISTING"
+>Server HrefOnly  http://www.dataparksearch.org/
+Realm  CheckOnly *</PRE
+></P
+><P
+>These commands instruct <B
+CLASS="COMMAND"
+>indexer</B
+> to scan all documents on <TT
+CLASS="LITERAL"
+>www.dataparksearch.org</TT
+> site and
+collect all links. Brief info about every document found will be requested by HEAD method.
+After indexing done, <B
+CLASS="COMMAND"
+>indexer -S</B
+> command will show status for all documents from this site.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Skip</B
+>
+<A
+NAME="AEN940"
+></A
+>
+				</P
+><P
+>					Value <TT
+CLASS="LITERAL"
+>Skip</TT
+> specify that all corresponding documents will be skipped
+while indexing. This is useful when need temporally disable reindexing several sites, but able search on.
+These documents will marked as expired.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>CheckMP3</B
+>
+<A
+NAME="AEN949"
+></A
+>
+				</P
+><P
+>					Value <TT
+CLASS="LITERAL"
+>CheckMP3</TT
+> specify that corresponding documents will be checked
+for MP3 tags along if its <TT
+CLASS="LITERAL"
+>Content-Type</TT
+> is equal to <TT
+CLASS="LITERAL"
+>audio/mpeg</TT
+>.
+This is useful, for example, if remote server supply <TT
+CLASS="LITERAL"
+>application/octet-stream</TT
+> as 
+<TT
+CLASS="LITERAL"
+>Content-Type</TT
+> for MP3 files. If this tag is present, these files will indexed as MP3 file, otherwise its
+will be processed according to <TT
+CLASS="LITERAL"
+>Content-Type</TT
+>.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>CheckMP3Only</B
+>
+<A
+NAME="AEN963"
+></A
+>
+				</P
+><P
+>					This value is equal to <TT
+CLASS="LITERAL"
+>CheckMP3</TT
+>, but if MP3 tag is not present,
+processing on <TT
+CLASS="LITERAL"
+>Content-Type</TT
+> will not be taken.
+				</P
+></LI
+></OL
+>
+		</P
+><P
+>  Use optional <CODE
+CLASS="OPTION"
+>subsection</CODE
+>
+parameter to specify server's checking behavior.  Subsection value must be
+one of the following: <TT
+CLASS="LITERAL"
+>nofollow</TT
+>, <TT
+CLASS="LITERAL"
+>page</TT
+>, <TT
+CLASS="LITERAL"
+>path</TT
+>, 
+<TT
+CLASS="LITERAL"
+>site</TT
+>, <TT
+CLASS="LITERAL"
+>world</TT
+> and has "path" value by
+default. 
+		<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>path</TT
+> subsection</P
+><P
+>When indexer seeks for a
+"Server" command corresponding to an URL it checks that the discovered
+URL starts with URL given in Server command argument but without
+trailing file name. For example, if <TT
+CLASS="LITERAL"
+>Server path
+http://localhost/path/to/index.html</TT
+> is given, all URLs which
+have <TT
+CLASS="LITERAL"
+>http://localhost/path/to/</TT
+> at the beginning
+correspond to this Server command.</P
+><P
+>The following commands have the same effect except that they insert different URLs into database:</P
+><P
+>					<PRE
+CLASS="PROGRAMLISTING"
+>Server path http://localhost/path/to/index.html
+Server path http://localhost/path/to/index
+Server path http://localhost/path/to/index.cgi?q=bla
+Server path http://localhost/path/to/index?q=bla</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>site</TT
+> subsection</P
+><P
+>indexer checks that the
+discovered URL have the same hostname with URL given in Server
+command. For example, <TT
+CLASS="LITERAL"
+>Server site
+http://localhost/path/to/a.html</TT
+> will allow to index whole
+<TT
+CLASS="LITERAL"
+>http://localhost/</TT
+> server. </P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>world</TT
+> subsection</P
+><P
+>If world subsection is specified
+in Server command, it has the same effect that URL is considered to
+match this Server command. See explanation below.</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>page</TT
+> subsection</P
+><P
+>This subsection describes the only one URL given in Server argument.</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>nofollow</TT
+> subsection</P
+><P
+>Skip links following for URL that match the pattern.</P
+></LI
+><LI
+><P
+>subsection in <TT
+CLASS="LITERAL"
+>news://</TT
+> schema</P
+><P
+>Subsection is always considered
+as "site" for news:// URL schema. This is because news:// schema has
+no nested paths like ftp:// or http://  Use  <TT
+CLASS="LITERAL"
+>Server
+news://news.server.com/</TT
+> to index whole news server or for
+example <TT
+CLASS="LITERAL"
+>Server news://news.server.com/udm</TT
+> to index
+all messages from "udm" hierarchy.</P
+></LI
+></OL
+></P
+><P
+>Optional parameter <TT
+CLASS="LITERAL"
+>CaseType</TT
+> is specify the case sensivity for string comparison, it can take one of follow value: 
+<TT
+CLASS="LITERAL"
+>case</TT
+> - case insensitive comparison, or <TT
+CLASS="LITERAL"
+>nocase</TT
+> - case sensitive comparison.</P
+><P
+>Optional parameter <TT
+CLASS="LITERAL"
+>CmpType</TT
+> is specify the type of comparison and can take two value:
+<TT
+CLASS="LITERAL"
+>Regex</TT
+> and <TT
+CLASS="LITERAL"
+>String</TT
+>.
+<TT
+CLASS="LITERAL"
+>String</TT
+> wildcards is default
+match type. You can use ? and * signs in URLMask parameters, they means "one character" and "any number of characters" respectively. 
+Use \ character to escape these characters in you patterns.
+For example, if you want to index all HTTP sites in .ru domain, use this
+command:<PRE
+CLASS="PROGRAMLISTING"
+>Realm http://*.ru/*</PRE
+>
+		</P
+><P
+>Regex comparison type takes a regular expression
+as it's argument. Activate regex comparison type using <CODE
+CLASS="OPTION"
+>Regex</CODE
+>
+keyword. For example, you can describe everything in .ru domain using
+regex comparison type: <PRE
+CLASS="PROGRAMLISTING"
+>Realm Regex ^http://.*\.ru/</PRE
+>
+		</P
+><P
+>Optional parameter <TT
+CLASS="LITERAL"
+>MatchType</TT
+> means match type. There
+are <TT
+CLASS="LITERAL"
+>Match</TT
+> and <TT
+CLASS="LITERAL"
+>NoMatch</TT
+> possible values with <TT
+CLASS="LITERAL"
+>Match</TT
+> as
+default. <TT
+CLASS="LITERAL"
+>Realm NoMatch</TT
+> has reverse effect. It means
+that URL that does not match given <CODE
+CLASS="OPTION"
+>pattern</CODE
+> will correspond to this
+<B
+CLASS="COMMAND"
+>Realm</B
+> command. For example, use this command to index everything
+without .com domain:<PRE
+CLASS="PROGRAMLISTING"
+>Realm NoMatch http://*.com/*</PRE
+>
+		</P
+><P
+>Optional <CODE
+CLASS="OPTION"
+>alias</CODE
+> argument allows providing very
+complicated URL rewrite more powerful than other aliasing
+mechanism. Take a look <A
+HREF="dpsearch-aliases.en.html"
+>Section 3.7</A
+>&#62; for <CODE
+CLASS="OPTION"
+>alias</CODE
+> argument usage
+explanation. <CODE
+CLASS="OPTION"
+>Alias</CODE
+> works only with <CODE
+CLASS="OPTION"
+>Regex</CODE
+> comparison type and has no
+effect with <CODE
+CLASS="OPTION"
+>String</CODE
+> type.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-SERVER"
+>3.6.1. <B
+CLASS="COMMAND"
+>Server</B
+> command</A
+></H2
+><A
+NAME="AEN1043"
+></A
+><P
+>This is the main command of the
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file. It is used to add servers or
+their parts to be indexed. 
+This command also says indexer to insert given URL into database at startup.</P
+><P
+>E.g. command <TT
+CLASS="LITERAL"
+>Server
+http://localhost/</TT
+>  allows  to index whole
+<TT
+CLASS="LITERAL"
+>http://localhost/</TT
+> server. It also makes indexer
+insert given URL into database at startup.  You can also specify some
+path to index server subsection: <TT
+CLASS="LITERAL"
+>Server
+http://localhost/subsection/</TT
+>. It also says indexer to insert
+given URL at startup.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>You can suppress indexer behavior to add
+URL given in Server command by using -q indexer command line
+argument. It is useful when you have hundreds or thousands Server
+commands and their URLs are already in database. This allows having
+more quick indexer startup.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-REALM"
+>3.6.2. <B
+CLASS="COMMAND"
+>Realm</B
+> command</A
+></H2
+><A
+NAME="AEN1057"
+></A
+><P
+>Realm command is a more powerful means of describing web area to be indexed.
+It works almost like <B
+CLASS="COMMAND"
+>Server</B
+> command but takes
+a regular expression or string wildcards as it's <CODE
+CLASS="OPTION"
+>pattern</CODE
+> parameter and
+do not insert any URL into database for indexing.
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-SUBNET"
+>3.6.3. <B
+CLASS="COMMAND"
+>Subnet</B
+> command</A
+></H2
+><A
+NAME="AEN1066"
+></A
+><P
+>Subnet command is another way to describe web area to be indexed.
+It works almost like <B
+CLASS="COMMAND"
+>Server</B
+> command but takes
+a string wildcards or network specified in CIDR presentation format as it's <CODE
+CLASS="OPTION"
+>pattern</CODE
+> argument which is compared against IP
+address instead of URL. In case of string wilcards formant, argument may have * and ? signs, they means
+"one character" and "any number of characters" respectively. For
+example, if you want to index all HTTP sites in your local subnet,
+use this command:<PRE
+CLASS="PROGRAMLISTING"
+>Subnet 192.168.*.*</PRE
+>
+In case of network specified in CIDR presentation format, you may specify subnet in forms:  a.b.c.d/m, a.b.c, a.b, a
+<PRE
+CLASS="PROGRAMLISTING"
+>Subnet 1291.168.10.0/24</PRE
+>
+		</P
+><P
+>You may use "NoMatch" optional argument. For
+example, if you want to index everything without
+<TT
+CLASS="LITERAL"
+>195.x.x.x</TT
+> subnet, use:<PRE
+CLASS="PROGRAMLISTING"
+>Subnet NoMatch 195.*.*.*</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-DIFPARAM"
+>3.6.4. Using different parameter for server and it's subsections</A
+></H2
+><P
+>Indexer seeks for "Server" and "Realm" commands
+in order of their appearance. Thus if you want to give different
+parameters to e.g. whole server and its subsection you should add
+subsection line before whole server's. Imagine that you have server
+subdirectory which contains news articles. Surely those articles are
+to be reindexed more often than the rest of the server. The following
+combination may be useful in such cases:</P
+><P
+>			<PRE
+CLASS="PROGRAMLISTING"
+># Add subsection
+Period 200000
+Server http://servername/news/
+
+# Add server
+Period 600000
+Server http://servername/</PRE
+>
+		</P
+><P
+>These commands give different reindexing period
+for <TT
+CLASS="FILENAME"
+>/news/</TT
+> subdirectory comparing with the period
+of server as a whole. indexer will choose the first "Server" record
+for the <TT
+CLASS="FILENAME"
+>http://servername/news/page1.html</TT
+> as far
+as it matches and was given first.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-DEFAULT"
+>3.6.5. Default <B
+CLASS="COMMAND"
+>indexer</B
+> behavior</A
+></H2
+><P
+>The default behavior of indexer is to follow
+through links having correspondent Server/Realm command in the
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file. It also jumps between servers
+if both of them are present in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+either directly in Server command or indirectly in Realm command. For
+example, there are two Server commands:</P
+><P
+>			<PRE
+CLASS="PROGRAMLISTING"
+>Server http://www/
+Server http://web/</PRE
+>
+		</P
+><P
+>When indexing
+<TT
+CLASS="FILENAME"
+>http://www/page1.html</TT
+> indexer WILL follow the
+link <TT
+CLASS="FILENAME"
+>http://web/page2.html</TT
+> if the last one has
+been found. Note that these pages are on different servers, but BOTH
+of them have correspondent Server record.</P
+><P
+>If one of the Server command is deleted, indexer
+will remove all expired URLs from this server during next
+reindexing.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-F"
+>3.6.6. Using <KBD
+CLASS="USERINPUT"
+>indexer -f &lt;filename&gt;</KBD
+></A
+></H2
+><P
+>The third scheme is very useful for
+<TT
+CLASS="LITERAL"
+>indexer -i -f url.txt</TT
+> running. You may maintain
+required servers in the <TT
+CLASS="FILENAME"
+>url.txt</TT
+>. When new URL is
+added into <TT
+CLASS="FILENAME"
+>url.txt</TT
+> indexer will index the server
+of this URL during next startup. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URL_CMD"
+>3.6.7. <B
+CLASS="COMMAND"
+>URL</B
+> command</A
+></H2
+><A
+NAME="AEN1107"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URL http://localhost/path/to/page.html</PRE
+><P
+>This command inserts given <CODE
+CLASS="OPTION"
+>URL</CODE
+> into database. This is usefull to add
+several entry points to one server. Has no effect if an URL is already
+in the database. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DB_CMD"
+>3.6.8. <B
+CLASS="COMMAND"
+>ServerDB, RealmDB, SubnetDB and URLDB</B
+> commands</A
+></H2
+><A
+NAME="AEN1116"
+></A
+><A
+NAME="AEN1119"
+></A
+><A
+NAME="AEN1122"
+></A
+><A
+NAME="AEN1125"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URLDB pgsql://foo:bar@localhost/portal/links?field=url</PRE
+><P
+>These commands are equal to <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+>, <B
+CLASS="COMMAND"
+>Subnet</B
+> and 
+<B
+CLASS="COMMAND"
+>URL</B
+> commands respectively, but takes arguments from field of SQL-table specified. 
+In example above, URLs are takes from database <CODE
+CLASS="OPTION"
+>portal</CODE
+>, SQL-table <CODE
+CLASS="OPTION"
+>links</CODE
+>
+and filed <CODE
+CLASS="OPTION"
+>url</CODE
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILE_CMD"
+>3.6.9. <B
+CLASS="COMMAND"
+>ServerFile, RealmFile, SubnetFile and URLFile</B
+> commands</A
+></H2
+><A
+NAME="AEN1140"
+></A
+><A
+NAME="AEN1143"
+></A
+><A
+NAME="AEN1146"
+></A
+><A
+NAME="AEN1149"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URLFile url.lst</PRE
+><P
+>These commands are equal to <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+>, <B
+CLASS="COMMAND"
+>Subnet</B
+> and 
+<B
+CLASS="COMMAND"
+>URL</B
+> commands respectively, but takes arguments from a text file specified. 
+In example above, URLs are takes from the text file <CODE
+CLASS="OPTION"
+>url.lst</CODE
+> located in 
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc</TT
+> directory, but the full path to a file can be specified as well.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ROBOTS_TXT"
+>3.6.10. Robots exclusion standard</A
+></H2
+><A
+NAME="AEN1162"
+></A
+><A
+NAME="AEN1164"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> obeys <A
+HREF="http://www.robotstxt.org/"
+TARGET="_top"
+>the robots.txt standard</A
+>. 
+<A
+HREF="http://www.robotstxt.org/robotstxt.html"
+TARGET="_top"
+><TT
+CLASS="FILENAME"
+>robots.txt</TT
+></A
+> is a file that you place in your web server's root directory that tells search engines what pages you do not want to be indexed.</P
+><P
+><A
+NAME="AEN1172"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> also obeys the <CODE
+CLASS="OPTION"
+>nofollow</CODE
+>, <CODE
+CLASS="OPTION"
+>noarchive</CODE
+> and <CODE
+CLASS="OPTION"
+>noindex</CODE
+> <A
+HREF="http://www.robotstxt.org/meta.html"
+TARGET="_top"
+>meta tags</A
+>.</P
+><P
+><A
+NAME="AEN1181"
+></A
+>
+<A
+NAME="AEN1184"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> also supports the <A
+HREF="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"
+TARGET="_top"
+><CODE
+CLASS="OPTION"
+>Crawl-delay</CODE
+></A
+> and <A
+HREF="http://help.yandex.ru/webmaster/?id=996567#996574"
+TARGET="_top"
+><CODE
+CLASS="OPTION"
+>Host</CODE
+></A
+> directives in <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>.</P
+><P
+>Below are commands in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file related to the Robots exclusion standard.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ROBOTS_CMD"
+>3.6.10.1. <B
+CLASS="COMMAND"
+>Robots</B
+> command</A
+></H3
+><A
+NAME="AEN1198"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Robots yes/no</PRE
+><P
+>Allows/disallows using <TT
+CLASS="FILENAME"
+>robots.txt</TT
+> and &lt;META NAME="robots" ...&gt;
+exclusions. Use <CODE
+CLASS="OPTION"
+>no</CODE
+>, for example for link validation of your server(s).
+Command may be used several times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>Robots</B
+> command.
+Default value is "yes".
+<PRE
+CLASS="PROGRAMLISTING"
+>Robots yes</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ROBOTSPERIOD_CMD"
+>3.6.10.2. <B
+CLASS="COMMAND"
+>RobotsPeriod</B
+> command</A
+></H3
+><P
+><A
+NAME="AEN1212"
+></A
+>
+By defaults, robots.txt data holds in SQL-database for one week. You may change this period using
+<B
+CLASS="COMMAND"
+>RobotsPeriod</B
+> command:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>RobotsPeriod &lt;time&gt;</PRE
+><P
+>For &lt;time&gt; format see description of <B
+CLASS="COMMAND"
+>Period</B
+> command in <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.</P
+><PRE
+CLASS="PROGRAMLISTING"
+>RobotsPeriod 30d</PRE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="CRAWLDELAY_CMD"
+>3.6.10.3. <B
+CLASS="COMMAND"
+>CrawlDelay</B
+> command</A
+></H3
+><P
+><A
+NAME="AEN1225"
+></A
+>
+Use this command to specify default pause in seconds between consecutive fetches from same server. 
+This is similar to crawl-delay command in <TT
+CLASS="FILENAME"
+>robots.txt</TT
+> file, but can specified in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> 
+file on per server basis. If no crawl-delay value is specified in <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>, 
+the value of <B
+CLASS="COMMAND"
+>CrawlDelay</B
+> is used. 
+If crawl-delay is specified in robots.txt, then the maximum of <B
+CLASS="COMMAND"
+>CrawlDelay</B
+> and crawl-delay is used as 
+interval between consecutive fetches.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="MAXCRAWLDELAY_CMD"
+>3.6.10.4. <B
+CLASS="COMMAND"
+>MaxCrawlDelay</B
+> command</A
+></H3
+><P
+><A
+NAME="AEN1237"
+></A
+>
+When <SPAN
+CLASS="APPLICATION"
+>indexer</SPAN
+> is ready to index an URL from a server for which the Crawl-deley interval isn't expired yet since previous access, it waits until this period will be expired, 
+if waiting peiod is less than amount of time specified by <B
+CLASS="COMMAND"
+>MaxCrawlDelay</B
+> command. If the waiting period is greater or equal to this value, selected URL is posponed in indexing for the time remained.</P
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxCrawlDelay 60</PRE
+><P
+>Default value is 300 seconds.</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-clones.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-aliases.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Clones</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Aliases</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

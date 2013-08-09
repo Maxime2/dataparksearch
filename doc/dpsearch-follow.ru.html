@@ -1,0 +1,1419 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Указание веб-пространства для индексирования</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Индексирование"
+HREF="dpsearch-indexing.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Клоны документов"
+HREF="dpsearch-clones.ru.html"><LINK
+REL="NEXT"
+TITLE="Алиасы"
+HREF="dpsearch-aliases.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-clones.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 3. Индексирование</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-aliases.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FOLLOW"
+>3.6. Указание веб-пространства для индексирования</A
+></H1
+><P
+>Каждый раз когда <B
+CLASS="COMMAND"
+>indexer</B
+> добавляет новую ссылку или выбирает очередную ссылку для
+индексирования, он сначала проверяет, задана ли в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> для этой ссылки команда
+<B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+> или <B
+CLASS="COMMAND"
+>Subnet</B
+>. Ссылки, не имеющие ни одной такой соответсвующей
+им команде не добавляются в базу, а если же такие ссылки уже 
+находятся в базе данных (например, после удаления одной из команд <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+> или
+<B
+CLASS="COMMAND"
+>Subnet</B
+> из файла <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>), то они удаляются при очередной попытке их индексации.
+	</P
+><P
+>Эти команды имеют один обязательный параметр <CODE
+CLASS="OPTION"
+>pattern</CODE
+> и шесть необязательных:
+<CODE
+CLASS="OPTION"
+>method</CODE
+>, <CODE
+CLASS="OPTION"
+>subsection</CODE
+>, <CODE
+CLASS="OPTION"
+>CaseType</CODE
+>, <CODE
+CLASS="OPTION"
+>MatchType</CODE
+>,
+<CODE
+CLASS="OPTION"
+>CmpType</CODE
+> и <CODE
+CLASS="OPTION"
+>Alias</CODE
+>. Формат этих команд:
+<PRE
+CLASS="PROGRAMLISTING"
+>&lt;команда&gt; [method] [subsection] [CaseType] [MatchType] [CmpType] pattern [alias]</PRE
+></P
+><P
+>Обязательный параметр <CODE
+CLASS="OPTION"
+>pattern</CODE
+> задаёт либо URL, либо его фргамент, или шаблон для сравнения.</P
+><P
+>		Значение параметра <CODE
+CLASS="OPTION"
+>subsection</CODE
+> должно быть одним из <TT
+CLASS="LITERAL"
+>page</TT
+>,
+		<TT
+CLASS="LITERAL"
+>path</TT
+>, <TT
+CLASS="LITERAL"
+>site</TT
+>, <TT
+CLASS="LITERAL"
+>world</TT
+> и по умолчанию используется значение
+		<TT
+CLASS="LITERAL"
+>path</TT
+>. 
+		<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Server path</B
+>
+				</P
+><P
+>					Описывает документы, расположенные на том же сервере и в том же подкаталоге,
+					что и аргумент <B
+CLASS="COMMAND"
+>URL</B
+> команды <B
+CLASS="COMMAND"
+>Server</B
+>.
+					Например, если задана команда <TT
+CLASS="LITERAL"
+>Server path http://localhost/path/to/index.html</TT
+>,
+					все URL, начинающиеся с <TT
+CLASS="LITERAL"
+>http://localhost/path/to/</TT
+>, соответствуют этой команде
+					<B
+CLASS="COMMAND"
+>Server</B
+>.
+				</P
+><P
+>Следующие команды имеют одинаковый эффект на задание пространства индексации, и лишь 
+					отличаются адресами документов, добавляемых в базу при старте:
+<PRE
+CLASS="PROGRAMLISTING"
+>Server path http://localhost/path/to/index.html
+Server path http://localhost/path/to/index
+Server path http://localhost/path/to/index.cgi?q=bla
+Server path http://localhost/path/to/index?q=bla</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Server site</B
+>
+				</P
+><P
+>					Описывает все документы с того же самого сервера, что и аргумент  команды <B
+CLASS="COMMAND"
+>Server</B
+>.
+					Например, <TT
+CLASS="LITERAL"
+>Server site http://localhost/path/to/a.html</TT
+> описывает любой 
+					документ с сервера <TT
+CLASS="LITERAL"
+>http://localhost/</TT
+>.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Server world</B
+>
+				</P
+><P
+>					Если в качестве значения параметра <CODE
+CLASS="OPTION"
+>subsection</CODE
+> каманды
+					<B
+CLASS="COMMAND"
+>Server</B
+> задано <TT
+CLASS="LITERAL"
+>word</TT
+>, то это описывает
+					абсолютно любой документ. См. объяснение ниже.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Server page</B
+>
+				</P
+><P
+>					При этом значении параметра <CODE
+CLASS="OPTION"
+>subsection</CODE
+> только URL,
+					указанный в качестве параметра команды <B
+CLASS="COMMAND"
+>Server</B
+>,
+					соответствует этой команде.
+				</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+>Server nofollow</B
+></P
+><P
+>Не идти по ссылкам для любого URL, подпадающего под указаный шаблон.</P
+></LI
+><LI
+><P
+>					<CODE
+CLASS="OPTION"
+>subsection</CODE
+> для схемы <TT
+CLASS="LITERAL"
+>news://</TT
+>
+				</P
+><P
+>					Для схемы <TT
+CLASS="LITERAL"
+>news://</TT
+> значение <CODE
+CLASS="OPTION"
+>subsection</CODE
+>
+					всегда равно <TT
+CLASS="LITERAL"
+>site</TT
+>. Это обусловлено отсутствием в этой схемы директорий, как в схемах
+					<TT
+CLASS="LITERAL"
+>ftp://</TT
+> или <TT
+CLASS="LITERAL"
+>http://</TT
+>.  Используйте
+					<TT
+CLASS="LITERAL"
+>Server news://news.server.com/</TT
+> для индексирования всего ньюс-сервера. Для индексации одной
+					ньюсгруппы, например, udm - команду <TT
+CLASS="LITERAL"
+>Server news://news.server.com/udm</TT
+>
+				</P
+></LI
+></OL
+>
+		</P
+><P
+>Необязательный параметр <TT
+CLASS="LITERAL"
+>CaseType</TT
+> задаёт чувствительность к регистру при сравнении строк, может 
+принимать значения <TT
+CLASS="LITERAL"
+>case</TT
+> - нувствительное к регистру сравнение, и <TT
+CLASS="LITERAL"
+>nocase</TT
+> - чувствительное
+сравнение.</P
+><P
+>			Необязательный параметр <TT
+CLASS="LITERAL"
+>CmpType</TT
+> узазывает тип сравнения
+			и может принимать значения <TT
+CLASS="LITERAL"
+>Regex</TT
+> и <TT
+CLASS="LITERAL"
+>String</TT
+>.
+			Типа сравнения <TT
+CLASS="LITERAL"
+>String</TT
+> означает сравнение строкового шаблона и
+			используется по умолчанию. В параметре <CODE
+CLASS="OPTION"
+>pattern</CODE
+> Вы можете использовать символы ? и *,
+			они обозначают "один символ" и "любое число символов" соответственно. Используйте символ \ в качестве префикса перед этими специальными символами в ваших шаблонах, если вы их хотите использовать как обычнве символы. Например, если Вы хотите описать
+			все HTTP сайты в домене <TT
+CLASS="LITERAL"
+>.ru</TT
+>, используйте эту команду:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Realm http://*.ru/*</PRE
+>
+		</P
+><P
+>			Сравнение как регулярных выражений производится если указан параметр <CODE
+CLASS="OPTION"
+>Regex</CODE
+>.
+			Например, Вы можете описать все HTTP сервера домена <TT
+CLASS="LITERAL"
+>.ru</TT
+>, используя регулярное выражение:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Realm Regex ^http://.*\.ru/</PRE
+>
+		</P
+><P
+>			Необязательный параметр <TT
+CLASS="LITERAL"
+>MatchType</TT
+> определяет тип совпадения.
+			Для этого параметра могут указываться два значения: <TT
+CLASS="LITERAL"
+>Match</TT
+> и <TT
+CLASS="LITERAL"
+>NoMatch</TT
+>,
+			по умолчанию используется значение <TT
+CLASS="LITERAL"
+>Match</TT
+>. Команда <TT
+CLASS="LITERAL"
+>Realm NoMatch</TT
+> имеет обратный эффект.
+			Это обозначает, что URL, не попадающий под указанный <TT
+CLASS="LITERAL"
+>pattern</TT
+>, будет соответствовать этой команде
+			<B
+CLASS="COMMAND"
+>Realm</B
+>. Например, используйте эту команду для индексирования любых документов,
+			за исключением <TT
+CLASS="LITERAL"
+>.com</TT
+> доменов:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Realm NoMatch http://*.com/*</PRE
+>
+		</P
+><P
+>			Необязательный параметр <CODE
+CLASS="OPTION"
+>alias</CODE
+> позволяет организовать сложный механизм замены URL,
+			нежели предоставляет механизм алиасов. Смотрете <A
+HREF="dpsearch-aliases.ru.html"
+>&#1056;&#1072;&#1079;&#1076;. 3.7</A
+>&#62; для объяснения использования параметра
+			<CODE
+CLASS="OPTION"
+>alias</CODE
+>. <CODE
+CLASS="OPTION"
+>Alias</CODE
+> работает только с типом сравнения Regex, и не даёт никакого
+			эффекта при типе сравнении String.
+		</P
+><P
+>			Необязательный параметр <CODE
+CLASS="OPTION"
+>method</CODE
+> в командах <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+>
+и <B
+CLASS="COMMAND"
+>Subnet</B
+>
+			описывает действие, которое будет произведено с документами, соответствующими его команде
+			и может принимать значения 
+			<TT
+CLASS="LITERAL"
+>Allow</TT
+>, <TT
+CLASS="LITERAL"
+>Disallow</TT
+>, <TT
+CLASS="LITERAL"
+>HrefOnly</TT
+>, 
+			<TT
+CLASS="LITERAL"
+>CheckOnly</TT
+>, <TT
+CLASS="LITERAL"
+>Skip</TT
+>, 	<TT
+CLASS="LITERAL"
+>CheckMP3</TT
+>,
+			<TT
+CLASS="LITERAL"
+>CheckMP3Only</TT
+>. Значением по-умолчанию является <TT
+CLASS="LITERAL"
+>Allow</TT
+>.
+		<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Allow</B
+>
+<A
+NAME="AEN1023"
+></A
+>
+				</P
+><P
+>					Параметр <TT
+CLASS="LITERAL"
+>Allow</TT
+> означает, что документы, соответствующие его
+					команде, будут индексироваться, а также сканироваться на наличие новых ссылок.
+					В зависимости от полученного <TT
+CLASS="LITERAL"
+>Content-Type</TT
+>, будет зупущен
+					соответствующий внутренний или внешний парсер, а полученные в результате слова
+					будут помещены в индекс для поиска.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Disallow</B
+>
+<A
+NAME="AEN1033"
+></A
+>
+				</P
+><P
+>					Параметр <TT
+CLASS="LITERAL"
+>Disallow</TT
+> означает, что ссылки, соответствующие его
+					команде, и появляющиеся по мере индексации, будут игнорироваться, т.е. не будут
+					добавляться в базу данных. Те же документы, которые уже были в базе данных,
+					и соответствующие команде, будут удаляться в момент из очередной индексации.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>HrefOnly</B
+>
+<A
+NAME="AEN1042"
+></A
+>
+				</P
+><P
+>					Параметр <TT
+CLASS="LITERAL"
+>HrefOnly</TT
+> означает, что документы, соответствующие его
+					команде, не будут индексироваться, а будут только просканированы на наличие новых ссылок.
+					Это, например, полезно при просмотре RSS-фидов для обнаружения новых документов сайта. 
+Используйте этот параметр для
+					описания страниц, содержащих не сами сообщения,
+					а списки сообщений со ссылками на них. Например:
+<PRE
+CLASS="PROGRAMLISTING"
+>Server HrefOnly Page http://www.site.ext/feed.xml
+Server Allow    Path http://www.site.ext/</PRE
+>
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>CheckOnly</B
+>
+<A
+NAME="AEN1052"
+></A
+>
+				</P
+><P
+>					Параметр <TT
+CLASS="LITERAL"
+>CheckOnly</TT
+> означает, что документы, соответствующие его
+					команде, будут запрашиваться методом HTTP HEAD, а не HTTP GET, т.е. будет запрошено
+					не содержимое документа, а только краткая
+					информация о нем: размер, дата модификации, <TT
+CLASS="LITERAL"
+>Content-Type</TT
+>.
+					Это позволяет, например, организовать проверку своего сайта на правильность ссылок:
+<PRE
+CLASS="PROGRAMLISTING"
+>Server HrefOnly  http://www.dataparksearch.org/
+Realm  CheckOnly *</PRE
+></P
+><P
+>					Эта комбинация команд заставляет <B
+CLASS="COMMAND"
+>indexer</B
+> сканировать все документы
+					сайта <TT
+CLASS="LITERAL"
+>www.dataparksearch.org</TT
+> и собирать ссылки, находящиеся на них.
+					Те же документы, которые находятся вне сайта <TT
+CLASS="LITERAL"
+>www.dataparksearch.org</TT
+>
+					будут проверены методом HEAD. Команда <B
+CLASS="COMMAND"
+>indexer -S</B
+> затем поможет
+					увидеть все ли внутренние и внешние ссылки верны.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>Skip</B
+>
+<A
+NAME="AEN1068"
+></A
+>
+				</P
+><P
+>					Параметр <TT
+CLASS="LITERAL"
+>Skip</TT
+> означает, что документы, соответствующие его
+					команде, будут пропущены при очередной индексации, и <B
+CLASS="COMMAND"
+>indexer</B
+> вернётся
+					к ним снова по прошествии периода устаревания документов. Иначе говоря, эти документы 
+					будут просто помечены как неустаревшие, и при этом не будут загружаться из сети,
+					а текущяя информация о них, уже находящаяся в базе данных, будет оставлена без изменения.
+					Эту команду можно использовать, например, для временной отмены индексации временно
+					недоступного по каким-то причинам сайта.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>CheckMP3</B
+>
+<A
+NAME="AEN1078"
+></A
+>
+				</P
+><P
+>					Параметр <TT
+CLASS="LITERAL"
+>CheckMP3</TT
+> означает, что документы, соответствующие его
+					команде, будут проверяться на наличие тэгов MP3 несмотря на наличие <TT
+CLASS="LITERAL"
+>Content-Type</TT
+>,
+					отличного от <TT
+CLASS="LITERAL"
+>audio/mpeg</TT
+>. Это полезно, в частности, когда удаленный
+					сервер выдает <TT
+CLASS="LITERAL"
+>application/octet-stream</TT
+> в качестве <TT
+CLASS="LITERAL"
+>Content-Type</TT
+>
+					для файлов в формате MP3. При наличии MP3 тэгов будет произведена их индексация, а в случае
+					их отсутствия <B
+CLASS="COMMAND"
+>indexer</B
+> продолжит работу, предусмотренную для полученного
+					<TT
+CLASS="LITERAL"
+>Content-Type</TT
+>: запуск внутреннего или внешного парсера.
+				</P
+></LI
+><LI
+><P
+>					<B
+CLASS="COMMAND"
+>CheckMP3Only</B
+>
+<A
+NAME="AEN1093"
+></A
+>
+				</P
+><P
+>					Этот параметр работает аналогично <TT
+CLASS="LITERAL"
+>CheckMP3</TT
+>, однако при
+					отсутствии тэгов MP3 <TT
+CLASS="LITERAL"
+>indexer</TT
+> не будет запускать внутренний или внешний 
+					парсер, предусмотренный для полученного <TT
+CLASS="LITERAL"
+>Content-Type</TT
+>.
+				</P
+></LI
+></OL
+>
+		</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-SERVER"
+>3.6.1. Команда <B
+CLASS="COMMAND"
+>Server</B
+>
+			<A
+NAME="AEN1104"
+></A
+></A
+></H2
+><P
+>			Это основная команда в файле <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.
+			Она используется для описания веб-пространства для индексирования в виде серверов
+			и их частей, а также добавляет заданый URL, указанный в качестве обязательного параметра
+<CODE
+CLASS="OPTION"
+>pattern</CODE
+> в базу при старте <B
+CLASS="COMMAND"
+>indexer</B
+>
+			для использования его в качестве стартовой точки.
+		</P
+><P
+>			Например, команда <TT
+CLASS="LITERAL"
+>Server http://localhost/</TT
+> 
+			разрешает индексировать документы сервера <TT
+CLASS="LITERAL"
+>http://localhost/</TT
+>.
+			Также, <B
+CLASS="COMMAND"
+>indexer</B
+> вставляет документ с адресом
+			<TT
+CLASS="LITERAL"
+>http://localhost/</TT
+> в базу данных.
+		</P
+><P
+>			Вы также можете задать некоторый подкаталог для индексирования только части сервера:
+			<TT
+CLASS="LITERAL"
+>Server http://localhost/subsection/</TT
+>. И эта команда также добавляет аргумент
+			в базу данных для использования его в качестве стартовой точки индексирования.
+		<DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Вы можете заставить <B
+CLASS="COMMAND"
+>indexer</B
+> не добавлять в базу URL, указанные
+				в командах <B
+CLASS="COMMAND"
+>Server</B
+>, задав в командной строке ключ <CODE
+CLASS="OPTION"
+>-q</CODE
+>. 
+				Это полезно, когда у вас несколько сотен или тысяч команд <B
+CLASS="COMMAND"
+>Server</B
+>, а соответсвующие
+				им URL уже добавлены в базу, в частности, это ускоряет запуск <B
+CLASS="COMMAND"
+>indexer</B
+>.
+			</P
+></BLOCKQUOTE
+></DIV
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-REALM"
+>3.6.2. Команда <B
+CLASS="COMMAND"
+>Realm</B
+>
+			<A
+NAME="AEN1128"
+></A
+></A
+></H2
+><P
+>			Команда <B
+CLASS="COMMAND"
+>Realm</B
+> обладает более гибкими возможностями указания веб-пространства для индексирования.
+			Эта команда работает почти также как и команда <B
+CLASS="COMMAND"
+>Server</B
+>,
+			однако отличается от нее тем, что:
+		<P
+></P
+><UL
+><LI
+><P
+>					получает в качестве аргумента не адрес сервера или его подкаталога, а шаблон адресов. 
+				</P
+></LI
+><LI
+><P
+>					не добавляет аргумент в качестве стартовой точки для индексирования, поскольку
+					аргумент не является правильным адресом, а шаблоном.
+				</P
+></LI
+></UL
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-SUBNET"
+>3.6.3. Команда <B
+CLASS="COMMAND"
+>Subnet</B
+>
+			<A
+NAME="AEN1142"
+></A
+></A
+></H2
+><P
+>			Команда <B
+CLASS="COMMAND"
+>Subnet</B
+> предоставляет другой способ задания веб-пространства для индексирования.
+			Она работает аналогично команде <B
+CLASS="COMMAND"
+>Server</B
+>, с тем отличием, что указанный текстовый шаблон
+			сравнивается не с URL, а с IP-адресом, соответствующим проверяемому URL.  Параметр <CODE
+CLASS="OPTION"
+>pattern</CODE
+>
+для этой команды может содержать символы * и ?, обозначающие "один символ" и "любое число сиволов" соответственно, или же задаваться в виде
+сети в CIDR формате (a.b.c.d/m, a.b.c, a.b, a).
+			Например, если нужно описать все HTTP сайты локальной подсети, используйте следующую команду:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Subnet 192.168.*.*</PRE
+>
+			<PRE
+CLASS="PROGRAMLISTING"
+>Subnet 192.168.10.0/24</PRE
+>
+		</P
+><P
+>			Вы можете использовать необязательный параметр <CODE
+CLASS="OPTION"
+>MatchType</CODE
+>, работающий так же,
+			как и аналогичный у команды <B
+CLASS="COMMAND"
+>Realm</B
+>.
+			Например, если Вы хотите индексировать все, за исключением подсети <TT
+CLASS="LITERAL"
+>195.x.x.x</TT
+>, используйте:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Subnet NoMatch 195.*.*.*</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-DIFPARAM"
+>3.6.4. Использование различным параметров для сервера и его подсекций</A
+></H2
+><P
+>			<B
+CLASS="COMMAND"
+>Indexer</B
+> перебирает команды <B
+CLASS="COMMAND"
+>Server</B
+> и
+			<B
+CLASS="COMMAND"
+>Realm</B
+> в том порядке, в каком они указаны в файле конфигурации.
+			Таким образом, если Вы хотите задать различные параметры, например, для всего сервера и некоторых его
+			подсекций, Вы должны добавить строки для секций до строк, относящихся к серверу целиком.
+			Представим, что на Вашем сервере есть директория, содержащая страницы с новостями.
+			Очевидно, эти страницы необходимо переиндексировать чаще, нежели остальные части содержимого сервера.
+			Следующая последовательность команд может быть полезна в этом случае:
+			<PRE
+CLASS="PROGRAMLISTING"
+># Add subsection
+Period 200000
+Server http://servername/news/
+
+# Add server
+Period 600000
+Server http://servername/</PRE
+>
+			</P
+><P
+>Эти команды задают другой период переиндексирования для поддиректории
+<TT
+CLASS="FILENAME"
+>/news/</TT
+> в отличие от периода индексирования остального сервера.
+<B
+CLASS="COMMAND"
+>indexer</B
+> выбирет первую команду <B
+CLASS="COMMAND"
+>Server</B
+> для
+<TT
+CLASS="FILENAME"
+>http://servername/news/page1.html</TT
+> т.к. это первая соответсвующая URL команда
+<B
+CLASS="COMMAND"
+>Server</B
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FOLLOW-F"
+>3.6.5. Использование <KBD
+CLASS="USERINPUT"
+>indexer -f &lt;filename&gt;</KBD
+></A
+></H2
+><P
+>The third scheme is very useful for
+<TT
+CLASS="LITERAL"
+>indexer -i -f url.txt</TT
+> running. You may maintain
+required servers in the <TT
+CLASS="FILENAME"
+>url.txt</TT
+>. When new URL is
+added into <TT
+CLASS="FILENAME"
+>url.txt</TT
+> indexer will index the server
+of this URL during next startup. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URL_CMD"
+>3.6.6. Команда <B
+CLASS="COMMAND"
+>URL</B
+></A
+></H2
+><A
+NAME="AEN1179"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URL http://localhost/path/to/page.html</PRE
+><P
+>Эта команда добавляет указаный URL в базу. Это полезно когда нужно добавить несколько
+стартовых точек для одного сервера. Не имеет эффекта, если указываемый URL уже находится в базе.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DB_CMD"
+>3.6.7. Команды <B
+CLASS="COMMAND"
+>ServerDB, RealmDB, SubnetDB и URLDB</B
+></A
+></H2
+><A
+NAME="AEN1187"
+></A
+><A
+NAME="AEN1190"
+></A
+><A
+NAME="AEN1193"
+></A
+><A
+NAME="AEN1196"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URLDB pgsql://foo:bar@localhost/portal/links?field=url</PRE
+><P
+>Эти команды аналогичны командам <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+>, <B
+CLASS="COMMAND"
+>Subnet</B
+> 
+и <B
+CLASS="COMMAND"
+>URL</B
+>соответственно, но аргументы для вставки в базу выбираются из указанного поля SQL-таблицы. 
+В примере выше ссылки выбираются из базы <CODE
+CLASS="OPTION"
+>portal</CODE
+>, SQL-таблицы <CODE
+CLASS="OPTION"
+>links</CODE
+>
+и поля <CODE
+CLASS="OPTION"
+>url</CODE
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILE_CMD"
+>3.6.8. Команды <B
+CLASS="COMMAND"
+>ServerFile, RealmFile, SubnetFile и URLFile</B
+></A
+></H2
+><A
+NAME="AEN1211"
+></A
+><A
+NAME="AEN1214"
+></A
+><A
+NAME="AEN1217"
+></A
+><A
+NAME="AEN1220"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URLFile url.lst</PRE
+><P
+>Эти команды аналогичны командам <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+>, <B
+CLASS="COMMAND"
+>Subnet</B
+> 
+и <B
+CLASS="COMMAND"
+>URL</B
+>соответственно, но аргументы для вставки в базу выбираются из указанного текстового файла, в котором
+каждый аргумент указывается на отдельной строке. 
+В примере выше ссылки выбираются из текстового файла <CODE
+CLASS="OPTION"
+>url.lst</CODE
+>, расположенного в директории
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc</TT
+>. Однако можно указывать и полный путь до файла с аргументами.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ROBOTS_TXT"
+>3.6.9. Стандарт исключений для роботов</A
+></H2
+><A
+NAME="AEN1233"
+></A
+><A
+NAME="AEN1235"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> соблюдает <A
+HREF="http://www.robotstxt.org/"
+TARGET="_top"
+>стандарт robots.txt</A
+>. 
+<A
+HREF="http://www.robotstxt.org/robotstxt.html"
+TARGET="_top"
+><TT
+CLASS="FILENAME"
+>robots.txt</TT
+></A
+> - файл, помещаемый в корневую директорию вашего веб сервера, указывающий поисковым машинам, какие страницы
+вы не хотите индексировать.</P
+><P
+><A
+NAME="AEN1243"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> также соблюдает <A
+HREF="http://www.robotstxt.org/meta.html"
+TARGET="_top"
+>мета тэги</A
+>: <CODE
+CLASS="OPTION"
+>nofollow</CODE
+>, <CODE
+CLASS="OPTION"
+>noarchive</CODE
+> и <CODE
+CLASS="OPTION"
+>noindex</CODE
+>.</P
+><P
+><A
+NAME="AEN1252"
+></A
+>
+<A
+NAME="AEN1255"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> также поддерживает директивы <A
+HREF="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"
+TARGET="_top"
+><CODE
+CLASS="OPTION"
+>Crawl-delay</CODE
+></A
+> и <A
+HREF="http://help.yandex.ru/webmaster/?id=996567#996574"
+TARGET="_top"
+><CODE
+CLASS="OPTION"
+>Host</CODE
+></A
+> в <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>.</P
+><P
+>Ниже указаны команды в файле <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>, относящиеся к стандарту исключений для роботов.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ROBOTS_CMD"
+>3.6.9.1. Команда <B
+CLASS="COMMAND"
+>Robots</B
+></A
+></H3
+><A
+NAME="AEN1269"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Robots yes/no</PRE
+><P
+>Разрешает или запрещает использование <TT
+CLASS="FILENAME"
+>robots.txt</TT
+> и &lt;META NAME="robots" ...&gt;
+для исключения страниц. Используйте <CODE
+CLASS="OPTION"
+>no</CODE
+>, например, для проверки ссылок на вашем сайте или сайтах.
+Имейте в виду, что игнорирование чужих <TT
+CLASS="FILENAME"
+>robots.txt</TT
+> не приветсвуется сетевым этикетом.
+Команда действует до конца файла, или до следующей команды <B
+CLASS="COMMAND"
+>Robots</B
+>.
+Значение по умолчанию: yes.
+<PRE
+CLASS="PROGRAMLISTING"
+>Robots yes</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ROBOTSPERIOD_CMD"
+>3.6.9.2. Команда <B
+CLASS="COMMAND"
+>RobotsPeriod</B
+></A
+></H3
+><P
+><A
+NAME="AEN1283"
+></A
+>
+По умолчанию, данные из robots.txt хранятся в SQL-базе одну неделю. Вы можете изменить этот период используя команду
+<B
+CLASS="COMMAND"
+>RobotsPeriod</B
+>:
+<PRE
+CLASS="PROGRAMLISTING"
+>RobotsPeriod &lt;time&gt;</PRE
+>
+См. формат &lt;time&gt; в описании команды <B
+CLASS="COMMAND"
+>Period</B
+> из <A
+HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
+>&#1056;&#1072;&#1079;&#1076;. 3.10.26</A
+>&#62;.
+<PRE
+CLASS="PROGRAMLISTING"
+>RobotsPeriod 30d</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="CRAWLDELAY_CMD"
+>3.6.9.3. Команда <B
+CLASS="COMMAND"
+>CrawlDelay</B
+></A
+></H3
+><P
+><A
+NAME="AEN1295"
+></A
+>
+Используйте эту команду для задания периода в секундах между последовательными запросами к одному и тому же серверу. 
+Аналогична команде crawl-delay в файле <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>, но может быть задана в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> 
+файле для каждого сервера в отдельности. Если не задано значение crawl-delay value в <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>, 
+используется значение, указаное в <B
+CLASS="COMMAND"
+>CrawlDelay</B
+>. 
+Если значение crawl-delay указано в <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>, тогда используется максимальное значение из
+<B
+CLASS="COMMAND"
+>CrawlDelay</B
+> и crawl-delay.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="MAXCRAWLDELAY_CMD"
+>3.6.9.4. Команда <B
+CLASS="COMMAND"
+>MaxCrawlDelay</B
+></A
+></H3
+><P
+><A
+NAME="AEN1308"
+></A
+>
+Когда <SPAN
+CLASS="APPLICATION"
+>indexer</SPAN
+> готов индексировать очередной URL с сервера, для которого интервал Crawl-deley с предыдущего обращения к сайту еще не истек,
+он ожидает, пока этот период не истечет, если период ожидания в секундах меньше значения, указанного командой <B
+CLASS="COMMAND"
+>MaxCrawlDelay</B
+>. 
+Если период ожидания больше или равен этому значению, выбранный URL откладывается в индексировании на период ожидания.</P
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxCrawlDelay 60</PRE
+><P
+>Значение по-умолчанию: 300 секунд.</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-clones.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-aliases.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Клоны документов</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Алиасы</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

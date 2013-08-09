@@ -1,0 +1,145 @@
+CREATE TABLE dict2 (
+  url_id int4       NOT NULL,
+  word char(2)      NOT NULL,
+  intag int         NOT NULL
+);
+
+CREATE TABLE dict3 (
+  url_id int4       NOT NULL,
+  word char(3)      NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict4 (
+  url_id int4       NOT NULL,
+  word char(4)      NOT NULL,
+  intag int         NOT NULL
+);
+
+CREATE TABLE dict5 (
+  url_id int4       NOT NULL,
+  word char(5)      NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict6 (
+  url_id int4       NOT NULL,
+  word char(6)      NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict7 (
+  url_id int4       NOT NULL,
+  word char(7)      NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict8 (
+  url_id int4       NOT NULL,
+  word char(8)      NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict9 (
+  url_id int4       NOT NULL,
+  word char(9)      NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict10 (
+  url_id int4       NOT NULL,
+  word char(10)     NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict11 (
+  url_id int4       NOT NULL,
+  word char(11)     NOT NULL,
+  intag int         NOT NULL
+);
+
+
+
+CREATE TABLE dict12 (
+  url_id int4       NOT NULL,
+  word char(12)     NOT NULL,
+  intag int         NOT NULL
+);
+
+
+
+CREATE TABLE dict16 (
+  url_id int4       NOT NULL,
+  word char(16)     NOT NULL,
+  intag int         NOT NULL
+);
+
+
+CREATE TABLE dict32 (
+  url_id int4       NOT NULL,
+  word text         NOT NULL,
+  intag int         NOT NULL
+);
+
+
+
+CREATE  INDEX url_id2 ON dict2 (url_id);
+CREATE  INDEX word2   ON dict2 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id3 ON dict3 (url_id);
+CREATE  INDEX word3   ON dict3 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id4 ON dict4 (url_id);
+CREATE  INDEX word4   ON dict4 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id5 ON dict5 (url_id);
+CREATE  INDEX word5   ON dict5 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id6 ON dict6 (url_id);
+CREATE  INDEX word6   ON dict6 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id7 ON dict7 (url_id);
+CREATE  INDEX word7   ON dict7 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id8 ON dict8 (url_id);
+CREATE  INDEX word8   ON dict8 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id9 ON dict9 (url_id);
+CREATE  INDEX word9   ON dict9 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id10 ON dict10 (url_id);
+CREATE  INDEX word10   ON dict10 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id11 ON dict11 (url_id);
+CREATE  INDEX word11   ON dict11 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id12 ON dict12 (url_id);
+CREATE  INDEX word12   ON dict12 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id16 ON dict16 (url_id);
+CREATE  INDEX word16   ON dict16 (word bpchar_pattern_ops);
+
+CREATE  INDEX url_id32 ON dict32 (url_id);
+CREATE  INDEX word32   ON dict32 (word text_pattern_ops);
+
+CREATE INDEX dict2_word_url_id ON dict2 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict3_word_url_id ON dict3 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict4_word_url_id ON dict4 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict5_word_url_id ON dict5 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict6_word_url_id ON dict6 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict7_word_url_id ON dict7 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict8_word_url_id ON dict8 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict9_word_url_id ON dict9 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict10_word_url_id ON dict10 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict11_word_url_id ON dict11 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict12_word_url_id ON dict12 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict16_word_url_id ON dict16 (word bpchar_pattern_ops, url_id);
+CREATE INDEX dict32_word_url_id ON dict32 (word text_pattern_ops, url_id);
+

@@ -1,0 +1,933 @@
+<sect1 id="templates">
+	<title>How to write search result templates</title>
+<indexterm><primary>Templates</primary></indexterm>
+
+	<para><application>DataparkSearch</application> users have an ability to customize search
+results (output of <filename>search.cgi</filename> <!--or
+<filename>search.php</filename-->). You may do it by providing template
+file <filename>search.htm</filename>, which should be located in /etc/
+directory of <application>DataparkSearch</application> installation.</para>
+
+	<para>Template file is usual HTML file, which is divided into
+sections. Keep in mind that you can just open template file in your
+favorite browser and get the idea of how the search results will look
+like.</para>
+
+<note>
+<para>Each templates line should not exceed 1024 bytes.</para>
+</note>
+
+	<para>Each section begins with &lt;!--sectionname--&gt; and
+ends with &lt;!--/sectionname--&gt; delimiters, which should reside on
+a separate line.</para>
+
+	<para>Each section consists of HTML formatted text with
+special meta symbols. Every meta symbol is replaced by it's
+corresponding string. You can think of meta symbols as of variables,
+which will have their appropriate values while displaying search
+results.</para>
+
+	<para>Format of variables is the following:
+	<programlisting>
+$(x) - plain value
+$&amp;(x) - HTML-escaped value and search words highlighted.
+$*(x) - HTML-escaped value.
+$%(x) - value escaped to be used in URLs
+$^(x) - search words highlighted.
+$(x:128) - value truncated to the first 128 bytes, if longer.
+$(x:UTF-8) - value written in UTF-8 charset. You may specify any charset supported.
+$(x:128:right) - value truncated to the last 128 bytes, if longer.
+$(x:cite:160) - make value citation on search keywords, no longer than 160 characters (approx.).
+$(url.host:idnd) - convert hostname from punycode into the BrowserCharset encoding.
+$(x:json) - JSON encoding for characters.
+</programlisting>
+</para>
+	<sect2 id="templates-sect">
+		<title>Template sections</title>
+<indexterm><primary>Templates</primary><secondary>sections</secondary></indexterm>
+
+		<para>The following section names are defined:</para>
+
+
+<sect3 id="top-section">
+<title><emphasis>TOP</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>TOP</secondary></indexterm>
+		<para>
+This section is
+included first on every page. You should begin this section with
+&lt;HTML&gt;&lt;HEAD&gt; and so on. Also, this is a definitive place
+to provide a search form. There are two special meta symbols you may
+use in this section:
+
+		<programlisting>
+$(self)  - argument for FORM ACTION tag
+$(q)     - a search query
+$(cat)    - current category value
+$(tag)      - current tag value
+$(rN) - random number (here N is a number)
+</programlisting>
+</para>
+		<para>If you want to include some random banners on
+your pages, please use $(rN). You should also place string like "RN
+xxxx" in 'variables' section (see below), which will give you a range
+0..xxxx for $(rN). You can use as many up random numbers as you
+want.</para>
+
+		<para>Example: <literal>$(r0), $(r1), $(r45)</literal> etc.</para>
+		<para>Simple <emphasis>top</emphasis> section should be like this:
+			<programlisting>
+&lt;!--top--&gt;
+&lt;HTML&gt;
+&lt;HEAD&gt;
+ &lt;TITLE&gt;Search Query: $(q)&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+
+&lt;FORM METHOD=GET ACTION="$(self)"&gt;
+ &lt;INPUT TYPE="hidden" NAME="ul" VALUE=""&gt;
+ &lt;INPUT TYPE="hidden" NAME="ps" VALUE="20"&gt;
+ Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30 
+ VALUE="$&amp;(q)"&gt;
+ &lt;INPUT TYPE="submit" VALUE="Search!"&gt;&lt;BR&gt;
+&lt;/FORM&gt;
+&lt;!--/top--&gt;
+</programlisting>
+</para>
+		<para>There are some variables defined in FORM.</para>
+		<para>
+			<literal>lang</literal> limit results by language. Value is a two-letter language code.
+			<programlisting>
+&lt;SELECT NAME="lang"&gt;
+&lt;OPTION VALUE="en" SELECTED="$(lang)"&gt;English
+.....
+&lt;/SELECT&gt;
+    </programlisting>
+</para>
+		<para>
+			<literal>ul</literal> is the filter for
+URL. It allows you to limit results to particular site or section
+etc. For example, you can put the following in the form</para>
+
+		<para>Search through:
+			<programlisting>
+&lt;SELECT NAME="ul"&gt;
+&lt;OPTION VALUE=""            SELECTED="$(ul)"&gt;Entire site
+&lt;OPTION VALUE="/manual/"    SELECTED="$(ul)"&gt;Manual
+&lt;OPTION VALUE="/products/"  SELECTED="$(ul)"&gt;Products
+&lt;OPTION VALUE="/support/"   SELECTED="$(ul)"&gt;Support
+&lt;/SELECT&gt;
+</programlisting>
+</para>
+		<para>to limit your search to particular section.</para>
+		<para>The expression
+<literal>SELECTED="$(ul)"</literal> in example above (and all the
+examples below) allows the selected option to be reproduced on next
+pages. If search front-end finds that expression it prints the string
+SELECTED only in the case OPTION VALUE given is equal to that
+variable.</para>
+
+		<para>
+			<literal>ps</literal> is default page size (e.g. how many documents to display per page).</para>
+		<para>
+			<literal>q</literal> is the query itself.</para>
+		<para>
+			<literal>pn</literal> is ps*np. This variable
+is not used by <application>DataparkSearch</application>, but may be useful for example in
+&lt;!INCLUDE CONTENT="..."&gt; directive if you want to include result
+produced by another search engine.</para>
+
+		<para>Following variables are concerning advanced search capabilities:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<literal>m</literal> can be
+used to choose default search type if your query consists of more than
+one word. In case m=any, the search will try to find at least	one
+word, in case m=all, the search is more restrictive - all words should
+be in the document. If m=bool query string is considered as a boolean
+expression.</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>dt</literal> is time limiting type. There are three types supported.</para>
+				<para>If 'dt' is 'back', that means
+you want to limit result to recent pages, and you should specify this
+"recentness" in variable 'dp' in the form
+<literal>xxxA[yyyB[zzzC]]</literal>. Spaces are allowed between xxx
+and A and yyy and so on). xxx, yyy, zzz are numbers (can be negative!)
+A, B, C can be one of the following (the letters are the same as in
+strptime/strftime	functions):
+
+				<programlisting>
+ s - second
+ M - minute
+ h - hour
+ d - day
+ m - month
+ y - year
+</programlisting>
+</para>
+				<para>Examples:
+				<programlisting>
+  4h30m 	  - 2 hours and 30 minutes
+  1Y6M-15d  - 1 year and six month minus 15 days
+  1h-60m+1s - 1 hour minus 60 minutes plus 1 second
+</programlisting>
+</para>
+				<para>If 'dt' is 'er' (which is short
+for newer/older), that means the search	will be limited to pages newer
+or older than date given. Variable dx is newer/older flag (1 means
+"newer" or "after", -1 means "older" or "before"). Date is separated
+into fields as follows:
+
+				<programlisting>
+  'dm' - month (0 - January, 1 - February, .., 11 - December)
+  'dy' - year (four digits, for example 1999 or 2000)
+  'dd' - day (1...31)
+</programlisting>
+</para>
+				<para>If 'dt' is 'range', that means
+search within given range of dates. Variables 'db' and 'de' are used
+here and stands for beginning and end date. Each date is string in the
+form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits
+year.</para>
+
+				<para>This is the example of FORM part where you can choose between different time limiting options.
+					<programlisting>
+&lt;!-- 'search with time limits' options --&gt;
+&lt;TR&gt;&lt;TD&gt;
+&lt;TABLE CELLPADDING=2 CELLSPACING=0 BORDER=0&gt;
+&lt;CAPTION&gt; 
+Limit results to pages published within
+a specified period of time.&lt;BR&gt;
+&lt;FONT SIZE=-1&gt;&lt;I&gt;(Please select only one option)
+&lt;/I&gt;&lt;/FONT&gt;
+&lt;/CAPTION&gt;
+&lt;TR&gt;
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" 
+VALUE="back" CHECKED&gt;&lt;/TD&gt;
+&lt;TD&gt;&lt;SELECT NAME="dp"&gt;
+&lt;OPTION VALUE="0" SELECTED="$(dp)"&gt;anytime
+&lt;OPTION VALUE="10M" SELECTED="$(dp)"&gt;in the last ten minutes
+&lt;OPTION VALUE="1h" SELECTED="$(dp)"&gt;in the last hour
+&lt;OPTION VALUE="7d" SELECTED="$(dp)"&gt;in the last week
+&lt;OPTION VALUE="14d" SELECTED="$(dp)"&gt;in the last 2 weeks
+&lt;OPTION VALUE="1m" SELECTED="$(dp)"&gt;in the last month
+&lt;OPTION VALUE="3m" SELECTED="$(dp)"&gt;in the last 3 months
+&lt;OPTION VALUE="6m" SELECTED="$(dp)"&gt;in the last 6 months
+&lt;OPTION VALUE="1y" SELECTED="$(dp)"&gt;in the last year
+&lt;OPTION VALUE="2y" SELECTED="$(dp)"&gt;in the last 2 years
+&lt;/SELECT&gt;
+&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;TR&gt;
+&lt;TD VALIGN=center&gt;&lt;INPUT type=radio NAME="dt" VALUE="er"&gt;
+&lt;/TD&gt;
+&lt;TD&gt;&lt;SELECT NAME="dx"&gt;
+&lt;OPTION VALUE="1" SELECTED="$(dx)"&gt;After
+&lt;OPTION VALUE="-1" SELECTED="$(dx)"&gt;Before
+&lt;/SELECT&gt;
+</programlisting>
+</para>
+				<para>or on
+					<programlisting>
+&lt;SELECT NAME="dm"&gt;
+&lt;OPTION VALUE="0" SELECTED="$(dm)"&gt;January
+&lt;OPTION VALUE="1" SELECTED="$(dm)"&gt;February
+&lt;OPTION VALUE="2" SELECTED="$(dm)"&gt;March
+&lt;OPTION VALUE="3" SELECTED="$(dm)"&gt;April
+&lt;OPTION VALUE="4" SELECTED="$(dm)"&gt;May
+&lt;OPTION VALUE="5" SELECTED="$(dm)"&gt;June
+&lt;OPTION VALUE="6" SELECTED="$(dm)"&gt;July
+&lt;OPTION VALUE="7" SELECTED="$(dm)"&gt;August
+&lt;OPTION VALUE="8" SELECTED="$(dm)"&gt;September
+&lt;OPTION VALUE="9" SELECTED="$(dm)"&gt;October
+&lt;OPTION VALUE="10" SELECTED="$(dm)"&gt;November
+&lt;OPTION VALUE="11" SELECTED="$(dm)"&gt;December
+&lt;/SELECT&gt;
+&lt;INPUT TYPE=text NAME="dd" VALUE="$(dd)" SIZE=2 maxlength=2&gt;
+,
+&lt;SELECT NAME="dy" &gt;
+&lt;OPTION VALUE="1990" SELECTED="$(dy)"&gt;1990
+&lt;OPTION VALUE="1991" SELECTED="$(dy)"&gt;1991
+&lt;OPTION VALUE="1992" SELECTED="$(dy)"&gt;1992
+&lt;OPTION VALUE="1993" SELECTED="$(dy)"&gt;1993
+&lt;OPTION VALUE="1994" SELECTED="$(dy)"&gt;1994
+&lt;OPTION VALUE="1995" SELECTED="$(dy)"&gt;1995
+&lt;OPTION VALUE="1996" SELECTED="$(dy)"&gt;1996
+&lt;OPTION VALUE="1997" SELECTED="$(dy)"&gt;1997
+&lt;OPTION VALUE="1998" SELECTED="$(dy)"&gt;1998
+&lt;OPTION VALUE="1999" SELECTED="$(dy)"&gt;1999
+&lt;OPTION VALUE="2000" SELECTED="$(dy)"&gt;2000
+&lt;OPTION VALUE="2001" SELECTED="$(dy)"&gt;2001
+&lt;/SELECT&gt;
+&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;/TR&gt;
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" VALUE="range"&gt;
+&lt;/TD&gt;
+&lt;TD&gt;
+Between
+&lt;INPUT TYPE=text NAME="db" VALUE="$(db)" SIZE=11 MAXLENGTH=11&gt;
+and
+&lt;INPUT TYPE=text NAME="de" VALUE="$(de)" SIZE=11 MAXLENGTH=11&gt;
+&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;/TD&gt;&lt;/TR&gt;
+&lt;!-- end of stl options --&gt;
+</programlisting>
+</para>
+			</listitem>
+		</itemizedlist>
+</sect3>
+
+
+<sect3 id="bottom-section">
+<title><emphasis>BOTTOM</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>BOTTON</secondary></indexterm>
+		<para>
+This section is always included last in every page. So you should provide all closing
+tags which have their counterparts in top section. Although it is not
+obligatory to place this section at the end of template file, but
+doing so will help you to view your template as an ordinary html file
+in a browser to get the idea how it's look like.</para>
+
+		<para>Below is an example of bottom section:
+			<programlisting>
+&lt;!--bottom--&gt;
+&lt;P&gt;
+&lt;HR&gt;
+&lt;DIV ALIGN=right&gt;
+&lt;A HREF="http://www.maxime.net.ru/"&gt;
+&lt;IMG SRC="dpsearch.gif" BORDER=0 
+ALT="[Powered by DataparkSearch search engine software]"&gt;
+&lt;/A&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+&lt;!--/bottom--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="restop-section">
+<title><emphasis>RESTOP</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>RESTOP</secondary></indexterm>
+		<para>
+This section is included just before the search results. It's a good idea to provide
+some common search results. You can do so by using the next meta
+symbols:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(first)</secondary></indexterm>
+					<literal>$(first)</literal> - number of First document displayed on this page</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(last)</secondary></indexterm>
+					<literal>$(last)</literal>  - number of Last document displayed on this page</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(total)</secondary></indexterm>
+					<literal>$(total)</literal> - total number of documents found</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(grand_total)</secondary></indexterm>
+					<literal>$(grand_total)</literal> - total number of documents found before grouping by site</para>
+			</listitem>
+			<!--listitem>
+				<para>
+					<literal>$(W)</literal> - information about the number of word forms found, e.g. if your query was <literal>html template</literal> $(W) can be something 	like  <literal>html: 10  template: 20</literal> and about words that was excluded from search (e.g. <literal>if: stop word</literal>)</para>
+			</listitem-->
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(WE)</secondary></indexterm>
+					<literal>$(WE)</literal> - search results with full statistics of every word form search</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(W)</secondary></indexterm>
+					<literal>$(W)</literal> -
+search results with information about the number of the word form
+found and the number of all word forms found delimited with "/" sign
+for every search word, e.g. if the search result is <literal>test:
+25/73</literal>, it means that the number of word form "test" found is
+25, and the number of all its forms ("test", "tests", "testing", etc.)
+found is 73.
+
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Template variable</primary><secondary>$(WS)</secondary></indexterm>
+				<literal>$(WS)</literal> - search results in short form with the number of all word forms found.</para>
+			</listitem>
+<listitem>
+<para>
+<indexterm><primary>Template variable</primary><secondary>$(SearchTime)</secondary></indexterm>
+<literal>$(SearchTime)</literal> - search query execution time.
+</para>
+</listitem>
+<listitem>
+<para>
+<indexterm><primary>Template variable</primary><secondary>$(ndocs)</secondary></indexterm>
+<literal>$(ndocs)</literal> - number of documents in database.
+</para>
+</listitem>
+		</itemizedlist>
+		<para>Below is an example of 'restop' section:
+			<programlisting>
+&lt;!--restop--&gt;
+&lt;TABLE BORDER=0 WIDTH=100%&gt;
+&lt;TR&gt;
+&lt;TD&gt;Search&lt;BR&gt;results:&lt;/TD&gt;
+&lt;TD&gt;&lt;small&gt;$(WE)&lt;/small&gt;&lt;/TD&gt;
+&lt;TD&gt;&lt;small&gt;$(W)&lt;/small&gt;&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;HR&gt;
+&lt;CENTER&gt;
+Displaying documents $(first)-$(last) of total &lt;B&gt;$(total)&lt;/B&gt; found.
+&lt;/CENTER&gt;
+&lt;!--/restop--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="res-section">
+<title><emphasis>RES</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>RES</secondary></indexterm>
+		<para>
+This section is used for displaying various information about every found
+document. The following meta symbols are used:</para>
+
+		<itemizedlist>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(URL)</secondary></indexterm>
+				$(URL)  Document URL</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Title)</secondary></indexterm>
+				$(Title)  Document Title</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Score)</secondary></indexterm>
+				$(Score)  Document Rating (as calculated by DataparkSearch</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Body)</secondary></indexterm>
+				$(Body)  Document text, the document
+excerpt, if stored is used, or the first couple of lines, otherwise, to give an idea of what the document is about).</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Content-Type)</secondary></indexterm>
+				$(Content-Type)  Document Content-type (for example, text/html)</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Last-Modified)</secondary></indexterm>
+				$(Last-Modified)  Document Last-Modified date</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Content-Length)</secondary></indexterm>
+				$(Content-Length)  Document Size in bytes</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(FancySize)</secondary></indexterm>
+				$(FancySize)  Document Size in bytes, kilobytes or megabytes, what best match.</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Order)</secondary></indexterm>
+				$(Order) Overall Document Number (in order of appearance), i.e. from 1 to $(total).</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(Pos)</secondary></indexterm>
+				$(Pos) Document Number on the page (in order of appearance), i.e. from 1 to $(ps).</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(meta.description)</secondary></indexterm>
+				$(meta.description)  Document Description (from META DESCRIPTION tag)</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(meta.keywords)</secondary></indexterm>
+				$(meta.keywords)  Document Keywords (from META KEYWORDS tag)</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(DY)</secondary></indexterm>
+				$(DY)  Document category with links, i.e. <filename>/home/computers/software/www/</filename>
+				</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(CL)</secondary></indexterm>
+				$(CL)  Clone List (see <xref linkend="clone-section"/> for details)</para>
+			</listitem>
+<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(BrowserCharset)</secondary></indexterm>
+$(BrowserCharset)  Charset used to display search results</para>
+</listitem>
+<listitem><para>
+<indexterm><primary>Template variable</primary><secondary>$(PerSite)</secondary></indexterm>
+$(PerSite)  Total number of document from this site, if grouping by site is enabled, =0 otherwise.</para>
+</listitem>
+		</itemizedlist>
+		<note>
+			<para>
+    It is possible to specify maximum number of characters returned by
+any of the above variables. E.g. <varname>$(URL)</varname> may return a
+long URL that may break page table structure. To specify maximum
+number of characters in the displayed URL's, use
+<literal>$(URL:xx)</literal>, where <literal>xx</literal> - maximum
+number of characters:</para>
+
+			<para>
+				<userinput>$(URL:40)</userinput>
+			</para>
+			<para>will return a URL, and if it is longer
+than 40 character, only 40 characters will be displayed including the
+ending points:</para>
+
+			<para>
+				<userinput>http://very.long.url/path/veery/long/...</userinput>
+			</para>
+		</note>
+		<para>Here is an example of res section:
+			<programlisting>
+&lt;!--res--&gt;
+&lt;DL&gt;&lt;DT&gt;
+&lt;b&gt;$(Order).&lt;/b&gt;&lt;a href="$(URL)" TARGET="_blank"&gt;
+&lt;b&gt;$(Title)&lt;/b&gt;&lt;/a&gt; [&lt;b&gt;$(Score)&lt;/b&gt;]&lt;DD&gt;
+$(Body)...&lt;BR&gt;
+&lt;b&gt;URL: &lt;/b&gt;
+&lt;A HREF="$(URL)" TARGET="_blank"&gt;$(URL)&lt;/A&gt;($(Content-Type))&lt;BR&gt;
+$(Last-Modified), $(Content-Length) bytes&lt;BR&gt;
+&lt;b&gt;Description: &lt;/b&gt;$(meta.description)&lt;br&gt;
+&lt;b&gt;Keywords: &lt;/b&gt;$(meta.keywords)&lt;br&gt;
+&lt;/DL&gt;
+&lt;UL&gt;
+$(CL)
+&lt;/UL&gt;
+&lt;!--/res--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="clone-section">
+<title><emphasis>CLONE</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>CLONE</secondary></indexterm>
+		<para>
+The contents of this section is included in result just instead of $(CL) meta symbol for
+every document clone found. This is used to provide all URLs with the
+same contents (like mirrors etc.). You can use the same $(D*) meta
+symbols here as in 'res' section. Of course, some information about
+clone, like $(DS), $(DR), $(DX) will be  the same so it is of little
+use to place it here.</para>
+
+		<para>Below is an example of 'clone' section.
+			<programlisting>
+&lt;!--clone--&gt;
+&lt;li&gt;&lt;A HREF="$(DU)" TARGET="_blank"&gt;$(DU)&lt;/A&gt; ($(DC)) $(DM)
+&lt;!--/clone--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="resbot-section">
+<title><emphasis>RESBOT</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>RESBOT</secondary></indexterm>
+<para>
+This is included just after last 'res' section. You usually give a navigation bar here
+to allow user go to next/previous results page.</para>
+
+		<para>This is an example of 'resbot' section:
+			<programlisting>
+&lt;!--resbot--&gt;
+&lt;HR&gt;
+&lt;CENTER&gt;
+Result pages: $(NL)$(NB)$(NR)
+&lt;/CENTER&gt;
+&lt;!--/resbot--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+
+		<para>Navigator is a complex thing and therefore is
+constructed from the following template sections:</para> 
+
+<sect3 id="navleft-section">
+<title><emphasis>navleft, navleft_nop</emphasis> section</title>
+<para>These are used for printing the link to the
+previous page. If that page exists, &lt;!--navleft--&gt; is used, and
+on the first page there is no previous page, so
+&lt;!--navleft_nop--&gt; is used.
+			<programlisting>
+&lt;!--navleft--&gt;
+&lt;TD&gt;&lt;A HREF="$(NH)"&gt;&lt;IMG...&gt;&lt;/A&gt;&lt;BR&gt;
+&lt;A HREF="$(NH)"&gt;Prev&lt;/A&gt;&lt;/TD&gt;
+&lt;!--/navleft--&gt;
+
+&lt;!--navleft_nop--&gt;
+&lt;TD&gt;&lt;IMG...&gt;&lt;BR&gt;
+&lt;FONT COLOR=gray&gt;Prev&lt;/FONT&gt;&lt;/TD&gt;
+&lt;!--/navleft_nop--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="navbar0-section">
+<title><emphasis>navbar0</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>navbar0</secondary></indexterm>
+		<para>
+This is used for printing the current page in the page list.
+			<programlisting>
+&lt;!--navbar0--&gt;
+&lt;TD&gt;&lt;IMG...&gt;&lt;BR&gt;$(NP)&lt;/TD&gt;
+&lt;!--navbar0--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="navright-section">
+<title><emphasis>navright, navright_nop</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>navright, navright_nop</secondary></indexterm>
+		<para>
+These are used for printing the link to the next page. If that page
+exists, &lt;!--navright--&gt; is used, and on the last page
+&lt;!--navright_nop--&gt; is used instead.
+			<programlisting>
+&lt;!--navright--&gt;
+&lt;TD&gt;
+&lt;A HREF="$(NH)"&gt;&lt;IMG...&gt;&lt;/A&gt;
+&lt;BR&gt;
+&lt;A HREF="$(NH)"&gt;Next&lt;/A&gt;&lt;/TD&gt;
+&lt;!--/navright--&gt;
+
+&lt;!--navright_nop--&gt;
+&lt;TD&gt;
+&lt;IMG...&gt;
+&lt;BR&gt;
+&lt;FONT COLOR=gray&gt;Next&lt;/FONT&gt;&lt;/TD&gt;
+&lt;!--/navright_nop--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="navbar1-section">
+<title><emphasis>navbar1</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>navbar1</secondary></indexterm>
+		<para>
+This is used for printing the links to the other pages in the page list.
+			<programlisting>
+&lt;!--navbar1--&gt;
+&lt;TD&gt;
+&lt;A HREF="$(HR)"&gt;
+&lt;IMG...&gt;&lt;/A&gt;&lt;BR&gt;
+&lt;A HREF="$(NH)"&gt;$(NP)&lt;/A&gt;
+&lt;/TD&gt;
+&lt;!--/navbar1--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="notfound-section">
+<title><emphasis>notfound</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>notfound</secondary></indexterm>
+		<para>
+As its name
+implies, this section is displayed in case when no documents are
+found. You usually give a little message saying that and maybe some
+hints how to make search less restrictive.</para>
+
+		<para>Below is an example of notfound section:
+			<programlisting>
+&lt;!--notfound--&gt;
+&lt;CENTER&gt;
+Sorry, but search hasn't returned results.&lt;P&gt;
+&lt;I&gt;Try to compose less restrictive search query or check spelling.&lt;/I&gt;
+&lt;/CENTER&gt;
+&lt;HR&gt;
+&lt;!--/notfound--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="noquery-section">
+<title><emphasis>noquery</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>noquery</secondary></indexterm>
+		<para>
+This section is displayed in case when user gives an empty query. Below is an example
+of noquery section:
+			<programlisting>
+&lt;!--noquery--&gt;
+&lt;CENTER&gt;
+You haven't typed any word(s) to search for.
+&lt;/CENTER&gt;
+&lt;HR&gt;
+&lt;!--/noquery--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="error-section">
+<title><emphasis>error</emphasis> section</title>
+<indexterm><primary>Template section</primary><secondary>error</secondary></indexterm>
+		<para>
+This section is displayed in case some internal error occurred while searching. For
+example, database server is not running or so. You may provide the
+following meta symbol:<indexterm><primary>Template variable</primary><secondary>$(E)</secondary></indexterm>
+<literal>$(E)</literal> - error text.
+</para>
+
+		<para>Example of error section:
+			<programlisting>
+&lt;!--error--&gt;
+&lt;CENTER&gt;
+&lt;FONT COLOR="#FF0000"&gt;An error occured!&lt;/FONT&gt;
+&lt;P&gt;
+&lt;B&gt;$(E)&lt;/B&gt;
+&lt;/CENTER&gt;
+&lt;!--/error--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+	</sect2>
+
+
+
+
+	<sect2 id="templates-var">
+<indexterm><primary>Templates</primary><secondary>Variables section</secondary></indexterm>
+		<title>Variables section</title>
+
+		<para>There is also a special variables section, in which you can set up some values for search. </para>
+		<para>Special variables section usually looks like this:</para>
+		<informalexample role="source-example">
+			<programlisting>
+&lt;!--variables
+DBAddr		  mysql://foo:bar@localhost/search/?dbmode=single
+VarDir            /usr/local/dpsearch/var/
+LocalCharset	  iso-8859-1
+BrowserCharset    iso-8859-1
+TrackQuery	  no
+Cache		  no
+DetectClones	  yes
+HlBeg		  &lt;font color="blue"&gt;&lt;b&gt;&lt;i&gt;
+HlEnd		  &lt;/i&gt;&lt;/b&gt;
+R1		  100
+R2		  256
+Synonym		  synonym/english.syn
+ResultContentType text/xml
+Locale            fr_FR.ISO_8859-1
+TZ                Australia/Sydney
+--&gt;
+</programlisting>
+		</informalexample>
+		<note>
+<indexterm><primary>Command</primary><secondary>DBAddr</secondary></indexterm>
+			<para>Database option
+<command>DBAddr</command> like in
+<filename>indexer.conf</filename>, host part in DBAddr argument takes
+affect for natively supported databases only and does not matter for
+ODBC databases. In case of ODBC use database name part of DBAddr to
+specify ODBC DSN.</para>
+
+		</note>
+		<para>
+<indexterm><primary>Command</primary><secondary>VarDir</secondary></indexterm>
+			<command>VarDir</command> command specifies a
+custom path to directory that indexer stores data to when  use with
+cache mode. By default
+<filename>/var</filename> directory of <application>DataparkSearch</application> installation is
+used.</para>
+
+		<para>
+<indexterm><primary>Command</primary><secondary>LocalCharset</secondary></indexterm>
+			<command>LocalCharset</command> specifies a
+charset of database. It must be the same with
+<filename>indexer.conf</filename> LocalCharset. </para>
+
+		<para>
+<indexterm><primary>Command</primary><secondary>BrowserCharset</secondary></indexterm>
+			<command>BrowserCharset</command> specifies
+which charset will be used to display results. It may differ from
+LocalCharset. All template variables which correspond data from search
+result (such as document title, description, text) will be converted
+from LocalCharset to BrowserCharset. Contents of template itself is
+not converted, it must be in BrowserCharset.</para>
+
+<indexterm><primary>Command</primary><secondary>Cache</secondary></indexterm>
+		<para>Use "<command>Cache</command> yes/no" to enable/disable search results cache.</para>
+
+<indexterm><primary>Command</primary><secondary>DetectClones</secondary></indexterm>
+		<para>Use "<command>DetectClones</command> yes/no" to enable/disable clones detection. This is disable by default for search.</para>
+
+		<para id="GroupBySite"><indexterm><primary>Command</primary><secondary>GroupBySite</secondary></indexterm>
+Use "<command>GroupBySite</command> yes/no/full" to enable/disable grouping results by url.site_id.
+When <option>yes</option> option is used, the pages from the same site coming in a row are grouped.
+If <option>full</option> option is used, all pages from the same site are grouped.
+</para>
+
+<note>
+<para>If <filename>searchd</filename> is used you should place <command>GroupBySite</command> in your 
+<filename>searchd.conf</filename> file, or pass it as CGI parameter.
+</para>
+<para>If cache storage mode is used, you need also create SITE limit (see <xref linkend="limits"/>).
+</para>
+<para><indexterm><primary>Command</primary><secondary>PagesInGroup</secondary></indexterm>
+Use <command>PagesInGroup</command> command to specify the number of additional results from the same site when google-like groupping is
+enabled.</para>
+
+<para id="maxsitelevel-cmd"><indexterm><primary>Command</primary><secondary>MaxSiteLevel</secondary></indexterm>
+You may use <command>MaxSiteLevel</command> command to specify maximal domain name level using for site_id calculation. 
+Default value: 2. One exception: three or less letter domains at level 2 count as domain names at level 1. For example:
+domain.ext - level 2, www.domain.ext - level 3, domain.com.ext - level 2. A negative value for <command>MaxSiteLevel</command> mean 
+grouping performs on per directory basis, i.e. for level -1 www.site.ext/dir1/ and www.site.ext/dir2 group as different sites.
+</para>
+</note>
+		<para>
+<indexterm><primary>Command</primary><secondary>HlBeg</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>HlEnd</secondary></indexterm>
+			<command>HlBeg</command> and
+<command>HlEnd</command> commands are used to configure search results
+highlighting. Found words will be surrounded in those tags.</para>
+
+<indexterm><primary>Command</primary><secondary>Alias</secondary></indexterm>
+		<para>There is an <command>Alias</command> command in <filename>search.htm</filename>, that is similar to the one in
+<filename>indexer.conf</filename>, but it affects only search results
+while having no effect on indexing. See <xref linkend="aliases"/> for details.</para>
+
+		<para>
+<indexterm><primary>Command</primary><secondary>R*</secondary></indexterm>
+			<command>R1</command> and <command>R2</command> specify ranges for random variables $(R1) and $(R2).</para>
+
+<indexterm><primary>Command</primary><secondary>Synonym</secondary></indexterm>
+		<para><command>Synonym</command> command is used to load specified
+synonyms list. Synonyms file name is either absolute or relative to
+<filename>/etc</filename> directory of <application>DataparkSearch</application> installation.</para>
+
+		<para><indexterm><primary>Command</primary><secondary>DateFormat</secondary></indexterm>
+<command>DateFormat</command> command is used to change Last-Modified date format output.
+Use <literal>strftime</literal> function meta-variables for your own format string.
+</para>
+<note>
+<para>If <filename>searchd</filename> is used, you may specify <command>DateFormat</command> in your <filename>searchd.conf</filename>
+file, but there you should enclose this string in quotas (<literal>&quot;</literal>), or pass it as CGI parameter.
+</para>
+</note>
+		<para><indexterm><primary>Command</primary><secondary>Log2stderr</secondary></indexterm>
+&quot;<command>Log2stderr</command> yes/no&quot; command is used to enable error logging to <literal>stderr</literal>.
+</para>
+
+<para>
+<indexterm><primary>Command</primary><secondary>ResultsLimit</secondary></indexterm>
+<command>ResultsLimit</command> command is uses to limit maximum number of results shown. If <application>searchd</application>
+is used, this command may be specified in <filename>searchd.conf</filename>.
+</para>
+
+<para>
+<indexterm><primary>Command</primary><secondary>ResultContentType</secondary></indexterm>
+<command>ResultContentType</command> command is uses to specify Content-Type header for results page. 
+Default value: <literal>text/html</literal>.
+</para>
+
+<para>
+<indexterm><primary>Command</primary><secondary>Locale</secondary></indexterm>
+<command>Locale</command> command is used to specify LC_ALL locale settings for search results output. 
+Default value: <literal>unspecified</literal> (uses the value specified before in system settings).
+</para>
+
+<para>
+<indexterm><primary>Command</primary><secondary>TZ</secondary></indexterm>
+<command>TZ</command> command is used to specify time zone for timestamps shown on search results pages.
+Default value: <literal>system default</literal>.
+</para>
+
+<para><indexterm><primary>Command</primary><secondary>MakePrefixes</secondary></indexterm>
+With <command>MakePrexixes yes</command> command you can instruct to extend a search query automatically by producing all prefixes of query words.
+This is suitable, for example, for making search suggestions.(See also <xref linkend="mkprefix-cmd"/>)
+</para>
+
+	</sect2>
+
+	<sect2 id="templates-incl">
+		<title>Includes in templates</title>
+		<para>You may use &lt;!INCLUDE Content="http://hostname/path"&gt; to include external URLs into search results.</para>
+		<para>
+			<emphasis>WARNING: You can use &lt;!INCLUDE&gt; ONLY in the following template sections:</emphasis>
+		</para>
+		<literallayout>
+&lt;!--top--&gt;
+&lt;!--bottom--&gt;
+&lt;!--restop--&gt;
+&lt;!--resbot--&gt;
+&lt;!--notfound--&gt;
+&lt;!--error--&gt;
+</literallayout>
+		<para>This is an example of includes usage:</para>
+		<informalexample role="source-example">
+			<programlisting>
+&lt;!--top--&gt;
+....
+&lt;!INCLUDE CONTENT="http://hostname/banner?query=$&amp;(q)"&gt;
+...
+&lt;!--/top--&gt;
+</programlisting>
+		</informalexample>
+	</sect2>
+
+
+
+<sect2 id="templates-if">
+<title>Conditional template operators</title>
+<para><application>DataparkSearch</application> supports conditional operators in search templates: &lt;!IF, &lt;!ELSE, &lt;!ENDIF, &lt;!ELIF, &lt;!ELSEIF, &lt;!SET, &lt;!COPY, &lt;!IFLIKE, &lt;!IFREGEX, &lt;!ELIKE, &lt;!EREGEX, &lt;!ELSELIKE, &lt;!ELSEREGEX.
+<programlisting>
+&lt;!IF   NAME="Content-Type" Content="application/pdf"&gt;
+&lt;img src="pdf.png"&gt;
+&lt;!ELIF NAME="Content-Type" Content="text/plain"&gt;
+&lt;img src="text.png"&gt;
+&lt;!ENDIF&gt;
+</programlisting>
+</para>
+
+<para>It's possible to use nested conditional operators. This gives more power for search template construction.
+See samples in <filename>etc/search.htm-dist</filename> file.
+</para>
+</sect2>
+
+
+
+
+	<sect2 id="templates-sec">
+		<title>Security issues</title>
+		<para>
+			<emphasis>WARNING</emphasis>: Since the
+template file contains such info as password, it is highly recommended
+to give the file proper permissions to protect it from reading by
+anyone but you and search program. Otherwise your passwords may
+leak. </para>
+
+	</sect2>
+</sect1>

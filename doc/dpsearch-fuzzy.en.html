@@ -1,0 +1,781 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Fuzzy search</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Searching documents"
+HREF="dpsearch-doingsearch.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Search results cache"
+HREF="dpsearch-srcache.en.html"><LINK
+REL="NEXT"
+TITLE="Miscellaneous"
+HREF="dpsearch-misc.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-srcache.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 8. Searching documents</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-misc.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FUZZY"
+>8.8. Fuzzy search</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ISPELL"
+>8.8.1. Ispell</A
+></H2
+><A
+NAME="AEN6161"
+></A
+><P
+>When <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> is used with ispell support enabled, it automatically
+extend search query by all grammatical forms of the query words. E.g. search front-end will try to
+find the word "test" if "testing" or "tests" is given in search
+query.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="TYPESISPELLFILES"
+>8.8.1.1. Two types of ispell files</A
+></H3
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> understands two types of ispell
+files: affixes and dictionaries. Ispell affixes file contains rules
+for words and has approximately the following format:
+<PRE
+CLASS="PROGRAMLISTING"
+>Flag V:
+       E   &gt; -E, IVE      # As in create&gt; creative
+      [^E] &gt; IVE          # As in prevent &gt; preventive
+Flag *N:
+       E   &gt; -E, ION      # As in create &gt; creation
+       Y   &gt; -Y, ICATION  # As in multiply &gt; multiplication
+     [^EY] &gt; EN           # As in fall &gt; fallen</PRE
+></P
+><P
+>Ispell dictionary file contains words themselves and has the following format:
+<PRE
+CLASS="PROGRAMLISTING"
+>wop/S
+word/DGJMS
+wordage/S
+wordbook
+wordily
+wordless/P</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="USING-ISPELL"
+>8.8.1.2. Using Ispell</A
+></H3
+><A
+NAME="AEN6174"
+></A
+><A
+NAME="AEN6177"
+></A
+><P
+>To make <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> support ispell you must
+specify <B
+CLASS="COMMAND"
+>Affix</B
+> and <B
+CLASS="COMMAND"
+>Spell</B
+> commands in <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+file. The format of commands:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Affix [lang] [charset] [ispell affix file name]
+Spell [lang] [charset] [ispell dictionary filename]</PRE
+></P
+><P
+>The first parameter of both commands is two
+letters language abbreviation. The second is ispell files charset.
+The third one is filename. File names are relative to <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+<TT
+CLASS="LITERAL"
+>/etc</TT
+> directory. Absolute paths can be also
+specified.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>Simultaneous loading of several languages is supported, e.g.:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Affix en iso-8859-1 en.aff
+Spell en iso-8859-1 en.dict
+Affix de iso-8859-1 de.aff
+Spell de iso-8859-1 de.dict</PRE
+></P
+><P
+>Will load support for both English and German languages.</P
+></BLOCKQUOTE
+></DIV
+><P
+>If you use <TT
+CLASS="LITERAL"
+>searchd</TT
+>, add the same commands to <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>.</P
+><P
+>When <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> is used with ispell support it
+is recommended to use <TT
+CLASS="LITERAL"
+>searchd</TT
+>, especially for
+several languages support. Otherwise the starting time of
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> increases.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="ADDWORDS-DICT"
+>8.8.1.3. Customizing dictionary</A
+></H3
+><P
+>It is possible that several rare words are found
+in your site which are not in ispell dictionaries. In such case, an entry with longest match suffix is taking
+	  to produce word forms.</P
+><P
+>But you can also create the
+list of such words in plain text file with the following format (one
+word per line):
+		<PRE
+CLASS="PROGRAMLISTING"
+>rare.dict:
+----------
+webmaster
+intranet
+.......
+www
+http
+---------
+			</PRE
+></P
+><P
+>You may also use ispell flags in this file (for
+ispell flags refer to ISpell documentation). This will allow not
+writing the same word with different endings to the rare words file,
+for example "webmaster" and "webmasters". You may choose the word
+which has the same changing rules from existing ispell dictionary and
+just to copy flags from it. For example, English dictionary has this
+line:</P
+><P
+>			<TT
+CLASS="LITERAL"
+>postmaster/MS</TT
+>
+		</P
+><P
+>So, webmaster with MS flags will be probably OK:</P
+><P
+>			<TT
+CLASS="LITERAL"
+>webmaster/MS</TT
+>
+		</P
+><P
+>Then copy this file to <TT
+CLASS="FILENAME"
+>/etc</TT
+> directory of
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> and add this file by <B
+CLASS="COMMAND"
+>Spell</B
+> command in 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> configuration:</P
+><P
+>During next reindexing using of all documents
+new words will be considered as words with correct spelling. The only
+really incorrect words will remain.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="WHERE-TO-GET-ISPELL"
+>8.8.1.4. Where to get Ispell files</A
+></H3
+><P
+>You may find ispell files for many of languages at
+<A
+HREF="http://fmg-www.cs.ucla.edu/geoff/ispell-dictionaries.html"
+TARGET="_top"
+>this page</A
+>.</P
+><P
+>For Japanese language there exist quasi-ispell files suitable for use with <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> only.
+You may get this data from <A
+HREF="http://www.dataparksearch.org/"
+TARGET="_top"
+>our web site</A
+> or from one of our mirrors.
+See <A
+HREF="dpsearch-get.en.html"
+>Section 1.2</A
+>&#62;.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="QUFFIX"
+>8.8.1.5. Query words modification</A
+></H3
+><A
+NAME="AEN6227"
+></A
+><P
+><PRE
+CLASS="PROGRAMLISTING"
+>Quffix [lang] [charset] [ispell-like suffix file name]</PRE
+>
+The <B
+CLASS="COMMAND"
+>Quffix</B
+> command is similar to <B
+CLASS="COMMAND"
+>Affix</B
+> command described above, except that these rules apply to the query words, bot not to the normal word forms
+as it is done for <B
+CLASS="COMMAND"
+>Affix</B
+> command. The file loaded with this command must contain only suffix rules (in terms of ispell affix files).</P
+><P
+>This command is suitable, for example, to specify the rules to switch from one part of speech to an another for the Russian language when it is appropriate.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ASPELL"
+>8.8.2. Aspell</A
+></H2
+><A
+NAME="AEN6237"
+></A
+><P
+>With <SPAN
+CLASS="APPLICATION"
+>Aspell</SPAN
+> support compiled, it's possible automatically extend search query by spelling
+suggestions for query words. To enable this feature, you need to install <A
+HREF="http://aspell.net/"
+TARGET="_top"
+>Aspell</A
+> at your system
+before <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> build. Then you need to place
+<A
+NAME="AEN6244"
+></A
+>
+<KBD
+CLASS="USERINPUT"
+>AspellExtensions yes</KBD
+>
+command into your <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (or into <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, if
+<B
+CLASS="COMMAND"
+>searchd</B
+> is used) files to activate this feature.</P
+><P
+>Automatically spelling suggestion for search query words is going only if <CODE
+CLASS="OPTION"
+>sp</CODE
+> search parameter is set, see
+<A
+HREF="dpsearch-doingsearch.en.html#SEARCH_PARAMS"
+>Section 8.1.2</A
+>&#62;.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SYNONYMS"
+>8.8.3. Synonyms</A
+></H2
+><A
+NAME="AEN6257"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> also support a synonyms-based
+fuzzy search.</P
+><P
+>Synonyms files are installed into
+<TT
+CLASS="FILENAME"
+>etc/synonym</TT
+> subdirectory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation. Large synonyms files you need to download separately from our web site, or from one of our mirrors,
+see <A
+HREF="dpsearch-get.en.html"
+>Section 1.2</A
+>&#62;.</P
+><P
+><A
+NAME="AEN6266"
+></A
+>
+To enable synonyms, add to
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> search template commands like
+<TT
+CLASS="LITERAL"
+>Synonym &lt;filename&gt;</TT
+>, e.g.:
+	<PRE
+CLASS="PROGRAMLISTING"
+>Synonym synonym/english.syn
+Synonym synonym/russian.syn</PRE
+></P
+><P
+>Filenames are relative to <TT
+CLASS="FILENAME"
+>etc</TT
+>
+directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation or absolute if begin with
+/</P
+><P
+>If you use <TT
+CLASS="LITERAL"
+>searchd</TT
+>, add the same
+commands to <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>.</P
+><P
+>You may create your own synonyms lists. As an example you may take the
+English synonyms file. In the beginning of the list please specify the
+following two commands:
+	<PRE
+CLASS="PROGRAMLISTING"
+>Language: en
+Charset:  us-ascii</PRE
+></P
+><P
+></P
+><UL
+><LI
+><P
+>				<CODE
+CLASS="VARNAME"
+>Language</CODE
+> - standard
+(ISO 639) two-letter language abbreviation.</P
+></LI
+><LI
+><P
+>				<CODE
+CLASS="VARNAME"
+>Charset</CODE
+> - any
+charset supported by <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> (see <A
+HREF="dpsearch-international.en.html#CHARSET"
+>Section 7.1</A
+>&#62;).</P
+></LI
+></UL
+><P
+>You can use '\' character to escape '#' character in your acronyms or its extensions which usually it's considered as beginning of a comment.</P
+><P
+>Optionaly you may specify following command in the list:
+	<PRE
+CLASS="PROGRAMLISTING"
+>Thesaurus: yes</PRE
+></P
+><P
+>This command enable thesaurus mode for synonyms list. For this mode, only words at one line treats as synonyms.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ACCENT"
+>8.8.4. Accent insensitive search</A
+></H2
+><A
+NAME="AEN6295"
+></A
+><A
+NAME="AEN6297"
+></A
+><P
+>Since version 4.17 <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> also support an
+accent insensitive search.</P
+><P
+>To enable this extension, use <B
+CLASS="COMMAND"
+>AccentExtensions</B
+> command in your 
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> (or in <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, if <B
+CLASS="COMMAND"
+>searchd</B
+>
+is used) to make automatically accent-free copies for query words, and in your <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+config file to produce accent-free word's copies to store in database.
+<PRE
+CLASS="PROGRAMLISTING"
+>AccentExtensions yes</PRE
+></P
+><P
+>If <B
+CLASS="COMMAND"
+>AccentExtensions</B
+> command is placed before <B
+CLASS="COMMAND"
+>Spell</B
+> and <B
+CLASS="COMMAND"
+>Affix</B
+> commands,
+accent-free copies for those data also will be loaded automaticaly.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ACRONYM"
+>8.8.5. Acronyms and abbreviations</A
+></H2
+><A
+NAME="AEN6315"
+></A
+><P
+>Since version 4.30 <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> also support search fuzzying based on 
+acronyms and abbreviation.</P
+><P
+>Acronyms files are installed into
+<TT
+CLASS="FILENAME"
+>etc/acronym</TT
+> subdirectory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation.</P
+><P
+><A
+NAME="AEN6323"
+></A
+>
+To enable acronyms, add to
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> search template commands like
+<TT
+CLASS="LITERAL"
+>Acronym &lt;filename&gt;</TT
+>, e.g.:
+	<PRE
+CLASS="PROGRAMLISTING"
+>Acronym acronym/en.fido.acr
+Acronym acronym/en.acr</PRE
+></P
+><P
+>Filenames are relative to <TT
+CLASS="FILENAME"
+>etc</TT
+>
+directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation or absolute if begin with
+/</P
+><P
+>If you use <TT
+CLASS="LITERAL"
+>searchd</TT
+>, add the same
+commands to <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>.</P
+><P
+>You may create your own acronyms lists. As an example you may take the English acronyms file. 
+In the beginning of the list please specify the
+following two commands:
+	<PRE
+CLASS="PROGRAMLISTING"
+>Language: en
+Charset:  us-ascii</PRE
+></P
+><P
+></P
+><UL
+><LI
+><P
+>				<CODE
+CLASS="VARNAME"
+>Language</CODE
+> - standard
+(ISO 639) two-letter language abbreviation.</P
+></LI
+><LI
+><P
+>				<CODE
+CLASS="VARNAME"
+>Charset</CODE
+> - any
+charset supported by <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> (see <A
+HREF="dpsearch-international.en.html#CHARSET"
+>Section 7.1</A
+>&#62;).</P
+></LI
+></UL
+><P
+>You can use '\' character to escape '#' character in your acronyms or its extensions which usually it's considered as beginning of a comment.</P
+><P
+>Also, you can extend queries by special comments specifying regular expression modifications. E.g.:
+	<PRE
+CLASS="PROGRAMLISTING"
+>#* regex last "([0-9]{2})[- \.]?([0-9]{2})[- \.]?([0-9]{2})" "+78622$1$2$3"</PRE
+></P
+><P
+>This specify a transformation from widely used format of local phone numbers, 99-99-99, into canonical format, +78622XXXXXX. 
+So the phone numbers become searchable regardless the format they were written.
+The <KBD
+CLASS="USERINPUT"
+>last</KBD
+> option here means that the process of regex application stops after applying this rule.</P
+><P
+>Please send your own acronym files to <CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:maxime@maxime.net.ru"
+>maxime@maxime.net.ru</A
+>&#62;</CODE
+>, if you want share its with other users.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-srcache.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-misc.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Search results cache</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Miscellaneous</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

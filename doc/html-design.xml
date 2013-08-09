@@ -1,0 +1,283 @@
+<sect1 id="html">
+	<title>Designing search.html</title>
+	<para>This section is assuming that you are using the CGI front end.</para>
+	<sect2 id="html-respage">
+		<title>How the results page is created</title>
+		<para>The file <filename>etc/search.htm</filename>
+consists of a number of blocks delimited by HTML comments that start
+with &lt;!--comment--&gt; and end with &lt;!--/comment--&gt;.</para>
+
+		<para>The &lt;!--variables--&gt; block is only used by
+<filename>search.cgi</filename>. The other blocks form part of the
+results output depending on the situation. </para>
+
+		<para>The blocks &lt;--top--&gt; and
+&lt;!--bottom--&gt; are always returned to the user as the top and
+bottom part of the output respectively. </para>
+
+		<para>There are three series of &lt;!--restop--&gt;,
+&lt;!--res--&gt; and &lt;!--resbot--&gt; blocks. The first series is
+returned to users that have requested long results (default), the
+second one to those that have requested short results and the third
+one to those that have requested results as URL only. All three blocks
+must be present in <filename>search.htm</filename>. Furthermore there
+is a series of navigation blocks and the blocks &lt;!--notfound--&gt;,
+&lt;!--noquery--&gt; and &lt;!--error--&gt;. The latter are returned
+occasionally instead of results.</para>
+
+		<para>Any HTML that is outside the pre-defined blocks in search.htm is completely ignored. </para>
+		<para>Thus, the output of <filename>search.cgi</filename> will always be something like this:
+		<programlisting>
+				
+  top                 
+  restop                top                 top              top
+  res            or     notfound      or    error     or     noquery
+  resbot                bottom              bottom           bottom
+  (navigation)
+  bottom
+			
+			</programlisting>
+</para>
+		<para>The navigation part is built in the same way,
+with the elements that pertain to each results page. For example,
+&lt;!--navleft--&gt; and &lt;!--navright--&gt; are used to link to the
+previous and next results pages, while &lt;!--navXXX_nop--&gt; is used
+when there are no more pages in one or either direction. </para>
+
+	</sect2>
+	<sect2 id="html-yourhtml">
+		<title>Your HTML</title>
+		<para>The simplest HTML is provided ready for use in
+<filename>etc/search.htm-dist</filename>. It is advisable that you use this
+until your back-end works fine. </para>
+
+		<para>Once you decide to add bells and whistles to
+your search, you have two options. One is to keep the simple design of
+<filename>search.htm</filename>, but make it part of a frame set. This
+way you can add elements such as menus etc in a frame and keep the
+output of <filename>search.htm</filename> in another.</para>
+
+		<para>The other option is to incorporate your entire
+design in <filename>search.htm</filename>. If you fully understand the
+"blocks" system described above, this should not be too difficult. The
+one most important factor is to keep track of elements that need to be
+opened in one block and closed in another. </para>
+
+		<para>For example, you might want a page in tables that looks like this:
+		<programlisting>
+                   ----------------------------------
+                  |       top  table                 |
+                  |..................................|
+                  |        .                         |
+                  |left    .                         |
+                  |        .                         |
+                  |        .         main table      |
+                  |table   .                         |
+                  |        .                         |
+                  |        .                         |
+                   ----------------------------------
+</programlisting>
+</para>
+		<para>If you are planning to put your results in the
+main table, you can put all the HTML code in the &lt;!--top--&gt;
+block of <filename>search.htm</filename>, up to and including the
+opening of the main table (&lt;table&gt;&lt;tr&gt;&lt;td&gt;). If you
+then put the closing of the main table and the closing tags of the
+page in the &lt;!--bottom--&gt; block
+(&lt;/table&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/body&gt;&lt;/html&gt;) and
+leave all other blocks unformatted, you will have the design of your
+choice and all your results in the right place. </para>
+
+		<para>In a more complicated design, where you want to
+format results individually, you can apply the same method as long as
+you keep track of the opening and closing of HTML elements. You must
+either open and close them in the same block, or make sure that any
+possible combination of blocks will result in properly opened and
+closed HTML tags. </para>
+
+		<para>What you cannot do without editing the source
+code, is change the order in which the blocks are parsed. Taking the
+above example, let's assume that you want your page to look like this:
+		<programlisting>
+                   ----------------------------------
+                  |  logo       banner ads           |
+                  |..................................|
+                  |            .                     |
+                  |choices     .                     |
+                  |            .                     |
+                  |            .    results          |
+                  |search      .                     |
+                  |button      .                     |
+                  |            .                     |
+                   ----------------------------------
+</programlisting>
+</para>
+		<para>To get this, you need to have everything except
+the results and navigation in the &lt;!--top--&gt; block, since that
+is the only block that can draw the page even if there are no results
+at all. In this case your search.htm would look like this:</para>
+		<informalexample role="example-source">
+			<programlisting>
+ &lt;!--variables--&gt;
+  [your configuration]
+ &lt;!--/variables--&gt;
+
+ &lt;!--top--&gt;
+  &lt;html&gt;
+  &lt;body&gt;
+  &lt;table&gt;
+    &lt;tr colspan="2"&gt;
+    &lt;td&gt;[logo, banner ads]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+    &lt;td&gt;[search form]&lt;/td&gt;
+    &lt;td&gt;
+  &lt;!--/top--&gt;
+
+  [all other blocks in search.htm except "bottom"]
+
+  &lt;!--bottom--&gt;
+    [closing elements like the DataparkSearch link 
+     and a link to the webmaster]
+    &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+  &lt;!--/bottom--&gt;
+		</programlisting>
+		</informalexample>
+		<para>The individual blocks can be formatted
+individually as long as that formatting is closed within each
+block. Thus, nothing stops you from doing things like </para>
+		<informalexample>
+			<programlisting>
+  &lt;!--error--&gt;
+    &lt;table&gt;
+    &lt;tr&gt;&lt;td bgcolor"red"&gt;
+      &lt;font color="#ffffff"&gt;  
+      [error variables]
+      &lt;/font&gt;
+    &lt;/tr&gt;&lt;td&gt;
+    &lt;/table&gt;
+  &lt;!--error--&gt;
+		</programlisting>
+		</informalexample>
+		<para>as long as such formatting is opened and closed properly within the same block. </para>
+	</sect2>
+	<sect2 id="html-forms">
+		<title>Forms considerations</title>
+		<para>Most modern browsers can handle forms that
+stretch over different tables, but writing such forms is against all
+standards and is bad HTML. Unless you really can't avoid it, don't do
+it. </para>
+		<para>For example, </para>
+		<informalexample>
+			<programlisting>
+  &lt;table&gt;
+  &lt;tr&gt;&lt;td&gt;
+     &lt;form&gt;
+     &lt;input type="text" name="something"&gt;
+     &lt;input type="radio" name"button1"&gt;
+     &lt;input type="radio" name"button2"&gt;
+     &lt;/form&gt;
+  &lt;/tr&gt;&lt;/td&gt;
+  &lt;/table&gt;
+			</programlisting>
+		</informalexample>
+		<para>is fine, but </para>
+		<informalexample>
+			<programlisting>
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;
+       &lt;form&gt;
+       &lt;input type="text" name="something"&gt;
+    &lt;/tr&gt;&lt;/td&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;
+       &lt;input type="radio" name"button1"&gt;
+       &lt;input type="radio" name"button2"&gt;
+       &lt;/form&gt;
+    &lt;/tr&gt;&lt;/td&gt;
+    &lt;/table&gt;
+			</programlisting>
+		</informalexample>
+		<para>is <emphasis>not</emphasis>.</para>
+		<para>Note that the input forms in search.htm can be
+changed at will. The default is drop-down menus, but nothing stops you
+from using radio buttons or hidden input or even text boxes. For
+instance, where <filename>search.htm</filename> says </para>
+		<informalexample>
+			<programlisting>
+  Results per page:
+  &lt;SELECT NAME="ps"&gt;
+  &lt;OPTION VALUE="10" SELECTED="$(ps)"&gt;10
+  &lt;OPTION VALUE="20" SELECTED="$(ps)"&gt;20
+  &lt;OPTION VALUE="50" SELECTED="$(ps)"&gt;50
+  &lt;/SELECT&gt;
+			</programlisting>
+		</informalexample>
+		<para>you can very well substitute </para>
+		<informalexample>
+			<programlisting>
+  &lt;input type="radio" name="ps" value="10" checked="$(ps)"&gt;
+  &lt;input type="radio" name="ps" value="20" checked="$(ps)"&gt;
+  &lt;input type="radio" name="ps" value="50" checked="$(ps)"&gt;
+			</programlisting>
+		</informalexample>
+		<para>which will result in three radio buttons instead
+of a drop-down menu, with "20" as the default and the exact same
+functionality. What you obviously cannot do is provide multiple-choice
+menus like &lt;type="checkbox"&gt; or &lt;select multiple&gt;. </para>
+		<para>Note that you can also use the </para>
+		<informalexample>
+			<programlisting>
+  &lt;input type="hidden" name="XX" value="YY"&gt;
+  			</programlisting>
+		</informalexample>
+		<para>format if you want to set other defaults than the pre-defined and not allow the user to change them. </para>
+	</sect2>
+	<sect2 id="html-rellinks">
+		<title>Relative links in search.htm</title>
+		<para>It might be worth mentioning that
+<filename>search.htm</filename> is parsed from your cgi-bin
+directory. The position of this directory in relation to your document
+root is determined by the web server, independently of its actual
+position in the file system. Almost invariably is
+http://your_document_root/cgi-bin/ . Since
+<filename>search.cgi</filename> lives in cgi-bin, any links to images
+etc in search.htm will assume cgi-bin as the base
+directory. Therefore, if you have a file system structure like </para>
+
+		<informalexample>
+			<programlisting>
+   home/
+   home/your_document_root/
+   home/your_document_root/img/
+   home/cgi-bin/
+			</programlisting>
+		</informalexample>
+		<para>the correct relative link from <filename>search.cgi</filename> to images in img/ would still be </para>
+		<para>&lt;img src="../img/image.gif"&gt;</para>
+		<para>despite the fact that it doesn't match the file system structure.</para>
+	</sect2>
+	<sect2 id="html-searchform">
+		<title>Adding Search form to other pages</title>
+		<para>To place a search form to any of your pages,
+please place the following code where you would like the form to be
+displayed:</para>
+
+		<informalexample>
+			<programlisting>
+&lt;FORM 
+	METHOD=GET 
+	ACTION="http://path-to-search.cgi"&gt;
+      &lt;INPUT TYPE="text" NAME="q" VALUE=""&gt;
+      &lt;INPUT TYPE="submit" VALUE="Search!"&gt;
+
+&lt;/FORM&gt;
+</programlisting>
+		</informalexample>
+	</sect2>
+</sect1>

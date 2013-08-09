@@ -1,0 +1,183 @@
+-- CREATE FUNCTION plpgsql_call_handler () RETURNS LANGUAGE_HANDLER AS '$libdir/plpgsql' LANGUAGE C;
+-- CREATE TRUSTED LANGUAGE plpgsql HANDLER plpgsql_call_handler;
+
+CREATE TABLE "url" (
+	"rec_id"          serial primary key,
+	"status"          int4 NOT NULL DEFAULT 0,
+	"docsize"         int4 NOT NULL DEFAULT 0,
+	"next_index_time" int4 NOT NULL DEFAULT 0,
+	"last_mod_time"   int4 NOT NULL DEFAULT 0,
+	"since"           int4 NOT NULL DEFAULT 0,
+	"referrer"        int4 NOT NULL DEFAULT 0,
+	"hops"            int4 NOT NULL DEFAULT 0,
+	"crc32"           int4 NOT NULL DEFAULT -1,
+	"seed"            int NOT NULL DEFAULT 32768*random(),
+	"bad_since_time"  int4,
+	"site_id"	  int4,
+	"server_id"	  int4,
+	"charset_id"      int2,
+	"shows"           int4 NOT NULL DEFAULT 0,
+	"pop_rank"	  float NOT NULL DEFAULT 1,
+	"url"             text NOT NULL
+) WITHOUT OIDS;
+
+CREATE UNIQUE INDEX "url_url" ON "url" ( "url" );
+-- CREATE UNIQUE INDEX "url_urlike" ON "url" ( "url" text_pattern_ops );
+CREATE INDEX "url_crc" ON "url" ( "crc32" ) WHERE "crc32"!=0;
+CREATE INDEX "url_seed" ON "url" ( "seed" );
+CREATE INDEX "url_referrer" ON "url" ( "referrer" );
+CREATE INDEX "url_next_index_time" ON "url" ( "next_index_time" );
+CREATE INDEX "url_status" ON "url" ( "status" );
+-- CREATE INDEX "url_bad_since_time" ON "url" ( "bad_since_time" );
+CREATE INDEX "url_hops" ON "url" ( "hops" );
+CREATE INDEX "url_siteid" ON "url" ( "site_id" );
+CREATE INDEX "url_serverid" ON "url" ( "server_id" );
+CREATE INDEX "url_rb" ON "url" ("referrer", "bad_since_time") WHERE "status" > 300 AND "status" < 2000 AND "status" <>304;
+CREATE INDEX "url_poprank" ON "url" ( "pop_rank" );
+
+CREATE TABLE "urlinfo" (
+       url_id int4 NOT NULL,
+       sname  text NOT NULL,
+       sval   text NOT NULL
+);
+
+CREATE INDEX urlinfo_id ON urlinfo (url_id);
+CREATE INDEX uinfo_sname ON urlinfo (sname);
+CREATE INDEX uinfo_sval ON urlinfo (sval);
+CREATE INDEX uinfo_snamelike ON urlinfo (sname text_pattern_ops);
+CREATE INDEX uinfo_svallike ON urlinfo (sval text_pattern_ops);
+
+
+CREATE TABLE "dict" (
+	"url_id" int4 NOT NULL,
+	"word"   text NOT NULL,
+	"intag"  int4 NOT NULL
+);
+
+CREATE INDEX "dict_word" ON "dict" ( "word" );
+CREATE INDEX "dict_wordlike" ON "dict" ( "word" text_pattern_ops );
+CREATE INDEX "dict_url"  ON "dict" ( "url_id" );
+CREATE INDEX "dict_word_url_id" ON "dict" ( "word", "url_id" );
+
+
+CREATE TABLE "server" (
+        "rec_id"		int4		not null,
+        "enabled"               int             not null        default 0,
+        "url"                   text            not null        default '',
+        "tag"                   text            not null        default '',
+        "category"              int4            not null        default 0,
+	"command"		char(1)		not null	default 'S',
+	"ordre"			int		not null	default 0,
+	"parent"		int4		not null	default 0,
+	"weight"		float		not null	default 1,
+	"pop_weight"		float		not null	default 0
+) WITHOUT OIDS;
+
+ALTER TABLE ONLY server ADD CONSTRAINT server_pkey PRIMARY KEY (rec_id); 
+CREATE UNIQUE INDEX srv_url ON server (command, url);
+CREATE UNIQUE INDEX srv_urlike ON server (command, url text_pattern_ops);
+CREATE INDEX srv_tag ON server (tag text_pattern_ops);
+CREATE INDEX srv_ordre ON server (ordre);
+CREATE INDEX srv_parent ON server (parent);
+CREATE INDEX srv_command ON server ("command");
+CREATE INDEX srv_category ON server ("category");
+
+
+CREATE TABLE "srvinfo" (
+       srv_id int4 NOT NULL,
+       sname  text NOT NULL,
+       sval   text NOT NULL
+);
+
+CREATE INDEX srvinfo_id ON srvinfo (srv_id);
+
+
+-- CREATE FUNCTION clean_srvinfo() RETURNS trigger 
+-- AS 'begin DELETE FROM srvinfo WHERE srv_id=old.rec_id; UPDATE url SET next_index_time=0 WHERE server_id=old.rec_id OR site_id=old.rec_id return NULL; end;'
+-- LANGUAGE plpgsql;
+
+
+-- CREATE TRIGGER srvdel AFTER DELETE ON server FOR EACH ROW EXECUTE PROCEDURE clean_srvinfo();
+
+
+CREATE TABLE "links" (
+	"ot"	 int4 not null,
+	"k"	 int4 not null,
+	"weight" float not null default 0.05,
+	"valid"  char(1) default 't'
+) WITHOUT OIDS;
+ALTER TABLE ONLY "links" ADD CONSTRAINT links_pkey PRIMARY KEY (ot,k); 
+CREATE INDEX links_ot ON links (ot);
+CREATE INDEX links_k ON links (k);
+CREATE INDEX links_otvalid ON links USING HASH (ot) WHERE ot!=k AND valid='f';
+
+
+CREATE TABLE "categories" (
+	"rec_id" serial primary key,
+	"path" varchar(10) DEFAULT '' NOT NULL,
+	"link" varchar(10) DEFAULT '' NOT NULL,
+	"name" text DEFAULT '' NOT NULL
+) WITHOUT OIDS;
+CREATE INDEX cat_path ON categories (path);
+CREATE INDEX cat_pathlike ON categories (path varchar_pattern_ops);
+CREATE INDEX cat_link ON categories (link);
+INSERT INTO categories (path,link,name) VALUES ('', '', 'Root');
+
+
+CREATE TABLE "qtrack" (
+        "rec_id" serial4 primary key,
+	"ip"     text NOT NULL,
+	"qwords" text NOT NULL,
+	"qtime"  int4 NOT NULL,
+	"wtime"  int4 NOT NULL,
+	"found"  int4 NOT NULL
+) WITHOUT OIDS;
+CREATE INDEX qtrack_ipt ON qtrack(ip,qtime);
+
+CREATE TABLE "qinfo" (
+       "q_id"  int4,
+       "name"  text,
+       "value" text
+);
+CREATE INDEX qinfo_id ON qinfo (q_id);
+CREATE INDEX qinfo_nv ON qinfo (name, value);
+
+
+CREATE TABLE "robots" (
+       "cmd"	    int4,
+       "added_time" int4,
+       "ordre"	    int4,
+       "hostinfo"   text,
+       "path"	    text
+);
+CREATE UNIQUE INDEX robots_idx ON robots ("hostinfo", ordre);
+CREATE INDEX robots_time ON robots ("added_time");
+
+CREATE TABLE "cookies" (
+       "expires"    int4,
+       "secure"     char(1),
+       "domain"     text,
+       "path"       text,
+       "name"       text,
+       "value"      text
+);
+CREATE UNIQUE INDEX cookies_idx ON cookies ("domain", "path", "name", "secure");
+CREATE INDEX cookies_time ON cookies ("expires");
+
+
+CREATE TABLE "storedchk" (
+       rec_id integer, 
+       url_id integer
+);
+CREATE INDEX storedchk_i ON storedchk (url_id);
+
+CREATE TABLE "cachedchk" (
+       rec_id integer
+);
+CREATE UNIQUE INDEX cachedchk_i ON cachedchk (rec_id);
+
+CREATE TABLE "cachedchk2" (
+       url_id integer
+);
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
+

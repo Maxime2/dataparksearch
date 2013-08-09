@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+  
+DEB_CONFIGURE_USER_FLAGS=-with-openssl --with-mysql --with-pgsql --enable-apache-module --with-readline --enable-idn 
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/autotools.mk
+
+# Add here any variable or target overrides you need.

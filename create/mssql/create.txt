@@ -1,0 +1,184 @@
+set quoted_identifier on;
+
+--
+-- In MS SQL  we can't use TEXT type like in PgSQL or MySQL:
+--
+-- The text, ntext, and image data types cannot be compared or sorted, 
+-- except when using IS NULL or LIKE operator.
+--
+-- We use VARCHAR() instead.
+--
+
+CREATE TABLE "url" (
+        "rec_id"          int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        "status"          int NOT NULL DEFAULT 0,
+        "docsize"         int NOT NULL DEFAULT 0,
+        "next_index_time" int NOT NULL,
+        "last_mod_time"   int NOT NULL DEFAULT 0,
+        "since"           int NOT NULL DEFAULT 0,
+        "referrer"        int NOT NULL DEFAULT 0,
+        "hops"            int NOT NULL DEFAULT 0,
+        "crc32"           int NOT NULL DEFAULT -1,
+        "seed"            int NOT NULL DEFAULT 0,
+        "bad_since_time"  int     NULL,
+        "site_id"         int     NULL,
+        "server_id"       int     NULL,
+	"charset_id"      numeric (6,0) NULL,
+        "shows"           int   NOT NULL DEFAULT 0,
+        "pop_rank"        float NOT NULL DEFAULT 1,
+        "url"             varchar(4096)  NOT NULL,
+        CONSTRAINT "UQ_url_url" UNIQUE ("url")
+);
+CREATE UNIQUE INDEX "url_url" ON "url" ( "url" );
+CREATE INDEX "url_crc" ON "url" ( "crc32" );
+CREATE INDEX "url_seed" ON "url" ( "seed" );
+CREATE INDEX "url_referrer" ON "url" ( "referrer" );
+CREATE INDEX "url_next_index_time" ON "url" ( "next_index_time" );
+CREATE INDEX "url_status" ON "url" ( "status" );
+CREATE INDEX "url_bad_since_time" ON "url" ( "bad_since_time" );
+CREATE INDEX "url_hops" ON "url" ( "hops" );
+CREATE INDEX "url_siteid" ON "url" ( "site_id" ); 
+CREATE INDEX "url_server" ON "url" ( "server_id" ); 
+CREATE INDEX "url_poprank" ON "url" ( "pop_rank" ); 
+
+
+CREATE TABLE "urlinfo" (
+       "url_id" int  NOT NULL,
+       "sname"  varchar(4096) NOT NULL,
+       "sval"   varchar(4096) NOT NULL
+);
+CREATE INDEX "urlinfo_id"  ON "urlinfo" ( "url_id" );
+CREATE INDEX "uinfo_sname" ON "urlinfo" ( "sname" );
+CREATE INDEX "uinfo_sval"  ON "urlinfo" ( "sval" );
+
+
+CREATE TABLE "dict" (
+	"url_id" int  NOT NULL ,
+	"word"   varchar(4096) NOT NULL ,
+	"intag"  int  NOT NULL 
+);
+CREATE INDEX "dict_word" ON "dict" ( "word" );
+CREATE INDEX "dict_url_id" ON "dict" ("url_id");
+CREATE INDEX "dict_word_url_id" ON "dict" ("word", "url_id");
+
+
+CREATE TABLE "server" (
+        "rec_id"     int           not null primary key,
+        "enabled"    int           not null default 0,
+        "url"        varchar(4096)          not null default '',
+        "tag"        varchar(4096)          not null default '',
+        "category"   int           not null default 0,
+        "command"    char(1)       not null default 'S',
+        "ordre"      int           not null default 0,
+        "parent"     int           not null default 0,
+        "weight"     float         not null default 1,
+        "pop_weight" float         not null default 0
+);
+CREATE UNIQUE INDEX "srv_url" ON "server" ("command", "url");
+CREATE INDEX "srv_tag"        ON "server" ("tag");
+CREATE INDEX "srv_ordre"      ON "server" ("ordre");
+CREATE INDEX "srv_parent"     ON "server" ("parent");
+CREATE INDEX "srv_command"    ON "server" ("command");
+CREATE INDEX "srv_category"   ON "server" ("category");
+
+
+CREATE TABLE "srvinfo" (
+       srv_id int   NOT NULL,
+       sname  varchar(4096)  NOT NULL,
+       sval   varchar(4096)  NOT NULL
+);
+CREATE INDEX srvinfo_id ON srvinfo (srv_id);
+
+
+CREATE TABLE "links" (
+        "ot"     int   not null,
+        "k"      int   not null,
+        "weight" float not null default 0.05,
+	"valid"  char(1) not null default 't'
+);
+CREATE UNIQUE INDEX links_links ON links (ot, k);
+CREATE INDEX links_ot ON links (ot);
+CREATE INDEX links_k ON links (k);
+
+
+CREATE TABLE "categories" (
+        "rec_id" int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        "path" varchar(10) DEFAULT '' NOT NULL,
+        "link" varchar(10) DEFAULT '' NOT NULL,
+        "name" varchar(4096)        DEFAULT '' NOT NULL
+);
+CREATE INDEX cat_path ON categories (path);
+CREATE INDEX cat_link ON categories (link);
+
+
+CREATE TABLE "qtrack" (
+        "rec_id" int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        "ip"     varchar(16)         NOT NULL,
+        "qwords" varchar(4096)                NOT NULL,
+        "qtime"  int                 NOT NULL,
+        "wtime"  int                 NOT NULL,
+        "found"  int                 NOT NULL
+);
+CREATE INDEX qtrack_ipt ON qtrack(ip,qtime);
+
+
+CREATE TABLE "qinfo" (
+       "q_id"  int,
+       "name"  varchar(4096),
+       "value" varchar(4096)
+);
+CREATE INDEX qinfo_id ON qinfo (q_id);
+CREATE INDEX qinfo_nv ON qinfo (name, value);
+
+
+CREATE TABLE crossdict (
+  url_id int  DEFAULT '0' NOT NULL,
+  ref_id int  DEFAULT '0' NOT NULL,
+  intag  int  DEFAULT '0' NOT NULL,
+  word   varchar(4096) DEFAULT '0' NOT NULL
+);
+
+CREATE INDEX crossdict_url_id ON crossdict (url_id);
+CREATE INDEX crossdict_ref_id ON crossdict (ref_id);
+CREATE INDEX crossdict_word ON crossdict (word);
+CREATE INDEX crossdict_word_url_id ON crossdict (word, url_id);
+
+
+CREATE TABLE "robots" (
+       "cmd"	    int,
+       "added_time" int,
+       "ordre"	    int,
+       "hostinfo"   varchar(4096),
+       "path"	    varchar(4096)
+);
+CREATE UNIQUE INDEX robots_idx ON robots ("hostinfo", ordre);
+CREATE INDEX robots_time ON robots ("added_time");
+
+CREATE TABLE "cookies" (
+       "expires"    int,
+       "secure"     char(1),
+       "domain"     varchar(4096),
+       "path"       varchar(4096),
+       "name"       varchar(4096),
+       "value"      varchar(4096)
+);
+CREATE UNIQUE INDEX cookies_idx ON cookies ("domain", "path", "name", "secure");
+CREATE INDEX cookies_time ON cookies ("expires");
+
+
+CREATE TABLE "storedchk" (
+       rec_id integer, 
+       url_id integer
+);
+CREATE INDEX storedchk_i ON storedchk (url_id);
+
+CREATE TABLE cachedchk (
+       rec_id integer
+);
+CREATE UNIQUE INDEX cachedchk_i ON cachedchk (rec_id);
+
+CREATE TABLE cachedchk2 (
+       url_id integer
+);
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
+

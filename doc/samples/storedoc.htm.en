@@ -1,0 +1,53 @@
+<!--variables
+
+# Store server address
+DBAddr		searchd://localhost/?stored=localhost
+
+
+LocalCharset	koi8-r
+BrowserCharset  iso-8859-1
+
+#
+# How to hilight searched words.
+#
+HlBeg	<span class="mark">
+HlEnd	</span>
+
+#       from_mime                to_mime[charset]             [command line [$1]]
+#
+#Mime	application/pdf*		text/plain	"/usr/X11R6/bin/pdftotext $1 -"
+Mime text/rtf*        text/html 		"/httpd/servers/sochi.org.ru/dpsearch/unrtf --html $1"
+Mime application/rtf        text/html 		"/httpd/servers/sochi.org.ru/dpsearch/unrtf --html $1"
+Mime	application/vnd.ms-excel	text/plain	"/usr/local/bin/xls2csv $1"
+Mime	application/msword		text/html	"/usr/local/dpsearch/sbin/0wvHtml $1 $2"
+Mime	application/x-shockwave-flash 	text/html	"/usr/local/dpsearch/sbin/dumpswf2html $1"
+Mime	application/pdf*		text/html	"/httpd/servers/sochi.org.ru/dpsearch/sbin/pdftohtml -i -stdout -noframes $1"
+
+-->
+
+<!--top-->
+<head>
+	<base href="$(DU)">
+	<style type="text/css">
+	span.mark { color: #2222cc; background-color: #f2f296; }
+	</style>
+</head>
+<table border="1" cellpadding="5" cellspacing="0" color="black" bgcolor="white"><tr>
+<td><b>Document ID:</b> $(rec_id) </td>
+<td><b>Last modified:</b>$(DM)</td>
+<td><b>Language:</b>$(L)</td>
+<td><b>Charset:</b> $(CS) </td>
+<td><b>Size:</b> $(DS)</td>
+</tr></table>
+<hr>
+<!--/top-->
+
+
+<!--result-->
+$^(document)
+<!--/result-->
+
+
+<!--bottom-->
+<!--/bottom-->
+

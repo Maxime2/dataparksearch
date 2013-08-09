@@ -1,0 +1,125 @@
+<!--variables
+DBAddr		searchd://v.sochi.org.ru/
+StoredocURL     /cgi-bin/storedoc.cgi
+LocalCharset 	koi8-r
+BrowserCharset  UTF-8
+
+MinWordLength 1
+MaxWordLength 64
+DetectClones no
+DateFormat %d %b %Y
+ExcerptSize 128
+ExcerptPadding 32
+HlBeg <span class="rhl">
+HlEnd </span>
+GrBeg <!-- -->
+GrEnd <!-- -->
+Locale en_US.ISO8859-1
+-->
+
+<!--top-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<HTML lang="en">
+  <HEAD>
+    <TITLE>Sochi.Org.ru: $&(q)</TITLE>
+</HEAD>
+<!-- BrowserCharset: $(BrowserCharset) -->
+<BODY>
+<!--/top-->
+
+<!--bottom-->
+</body>
+</html>
+<!--/bottom-->
+
+<!--restop-->
+<div id="topmenu">The resorting</div>
+<div id="dir">
+<table border="0" cellspacing="0" cellpadding="0"><tr><td align="left">
+<!--/restop-->
+
+
+<!--res-->
+<div class="serp1"><!-- $(ID), site_id: $(Site_ID) --><!IF NAME="Content-Type" CONTENT="application/msword">&nbsp;<b class="mimetype"><small>[DOC]</small></b>
+<!ELIKE NAME="Content-Type" CONTENT="audio/*"><b class="mimetype"><small>[MP3]</small></b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/pdf"><b class="mimetype"><small>[PDF]</small></b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/vnd.ms-excel"><b class="mimetype"><small>[XLS]</small></b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/rtf"><b class="mimetype"><small>[RTF]</small></b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="text/rtf"><b class="mimetype"><small>[RTF]</small></b>&nbsp;
+<!ELIKE NAME="Content-Type" CONTENT="image/*"><b class="mimetype"><small>[IMG]</small></b>&nbsp;
+<!ELIF NAME="Content-Type" CONTENT="application/x-shockwave-flash"><b class="mimetype"><small>[SWF]</small></b>&nbsp;
+<!ENDIF><!IF NAME="url.host" CONTENT="www.books.ru"><a class="restop" href="$(URL)?partner=datapark">
+<!ELIF NAME="url.host" CONTENT="www.bolero.ru"><a class="restop" href="http://www.bolero.ru//cgi-bin/superptr.cgi?partner=datapark&amp;new=1&amp;uri=$(URL.path)$(URL.filename)">
+<!ELIF NAME="url.host" CONTENT="www.ozon.ru"><a class="restop" href="$(URL)?partner=datapark">
+<!ELSE><a class="restop" href="$(URL)"><!ENDIF><small><!IF NAME="Title" CONTENT="[no title]">
+<!IF NAME="MP3.Artist" CONTENT="">[no title]<!ELSE>Artist: $&(MP3.Artist)<!ENDIF>
+<!ELIKE NAME="Title" CONTENT="/tmp/ind*">[no title]
+<!ELSE>$&(Title:96)<!ENDIF></small><!--
+--></a>
+<br>
+<!IF NAME="url.host" CONTENT="www.books.ru">
+<table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" valign="middle">
+<a href="$(URL)?partner=datapark"><img src="http://www.books.ru/img/$(url.file)s.jpg" border="0"></a>
+</td><td align="left" valign="top" style="padding-left: 0.5em;"><!ENDIF><small>
+<!IFNOT NAME="MP3.Album" CONTENT=""><span class="result">Album: </span> 
+$&(MP3.Album)<br><!ENDIF>
+<!IFNOT NAME="MP3.Song" CONTENT=""><span class="result">Song: </span>
+$&(MP3.Song)<br><!ENDIF>
+<!IFNOT NAME="MP3.Year" CONTENT=""><span class="result">Year: </span>
+$&(MP3.Year)<br><!ENDIF>
+</small>
+<!IFNOT NAME="sea" CONTENT=""><small>$&(sea:132)</small><br><!ENDIF>
+<!IFNOT NAME="Price" CONTENT=""><small class="result">Price: $(Price) RUR</small><!ENDIF>
+<!IF NAME="url.host" CONTENT="www.books.ru">
+</td></tr></table><!ENDIF><small class="result">$&(URL.host:25)</small>
+</div>
+<!--/res-->
+
+<!--clone-->
+<li><A HREF="$(URL)">$(URL:50)</A>,&nbsp; $(Last-Modified)
+<!--/clone-->
+
+<!--navleft-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&laquo;&laquo;Prev.&laquo;</small></A></TD>
+<!--/navleft-->
+
+<!--navbar0-->
+<TD><b class="hl">$(NP)</b></TD>
+<!--/navbar0-->
+
+<!--navbar1-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(NP)</A></TD>
+<!--/navbar1-->
+
+<!--navright-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&raquo;Next&raquo;&raquo;</small></A></TD>
+<!--/navright-->
+
+<!--navigator-->
+<table border="0" cellspacing="0" cellpadding="3"><tr><td><small>Pages:</small></td>$(NL) $(NB) $(NR)</tr></table>
+<!--/navigator-->
+
+<!--resbot-->
+</td></tr></table>
+</div>
+<!--/resbot-->
+
+
+<!--notfound-->
+&nbsp;
+<!--/notfound-->
+
+<!--noquery-->
+&nbsp;
+<!--/noquery-->
+
+<!--error-->
+<CENTER>
+<FONT COLOR="#FF0000">Error!</FONT>
+<P>
+<B>$(E)</B>
+</CENTER>
+<!--/error-->
+
+

@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>META-тэги&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="HTML-парсер в DataparkSearch"
+HREF="dpsearch-htmlparser.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Специальные символы"
+HREF="dpsearch-htmlparser-spec.ru.html"><LINK
+REL="NEXT"
+TITLE="Ссылки"
+HREF="dpsearch-htmlparser-links.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-htmlparser-spec.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 4. HTML-парсер в <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-htmlparser-links.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="HTMLPARSER-META"
+>4.3. META-тэги
+<A
+NAME="AEN3387"
+></A
+></A
+></H1
+><P
+>В настоящий момент HTML-парсер обрабатывает
+		специальным образом следующие META-тэги.
+		<DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+>Замечание:  <TT
+CLASS="LITERAL"
+>&lt;META "NAME"&gt;</TT
+>обрабатывается так же, как и
+		<TT
+CLASS="LITERAL"
+>&lt;META "HTTP-EQUIV"&gt;</TT
+></BLOCKQUOTE
+></DIV
+>
+		</P
+><P
+></P
+><UL
+><LI
+><P
+><A
+NAME="AEN3396"
+></A
+>
+					<TT
+CLASS="LITERAL"
+>&lt;META
+NAME="Content-Type" Content="text/html; charset=xxxx"&gt;</TT
+>
+Этот тэг используется для определения кодировки документа, если она
+не была указана в заголовке <TT
+CLASS="LITERAL"
+>Content-type</TT
+> HTTP-ответа.</P
+></LI
+><LI
+><P
+><A
+NAME="AEN3403"
+></A
+>
+					<TT
+CLASS="LITERAL"
+>&lt;META
+NAME="REFRESH" Content="5; URL=http://www.somewhere.com"&gt;</TT
+>
+URL, указанный в параметре, будет поставлен в очередь на индексацию.</P
+></LI
+><LI
+><P
+><A
+NAME="AEN3409"
+></A
+>
+					<TT
+CLASS="LITERAL"
+>&lt;META NAME="Keywords" Content="xxx"&gt;</TT
+>
+				</P
+></LI
+><LI
+><P
+><A
+NAME="AEN3415"
+></A
+>
+					<TT
+CLASS="LITERAL"
+>&lt;META NAME="Description" Content="xxx"&gt;</TT
+>
+				</P
+></LI
+><LI
+><P
+><A
+NAME="AEN3421"
+></A
+>
+					<TT
+CLASS="LITERAL"
+>&lt;META
+NAME="Robots" Content="xxx"&gt;</TT
+>, где Content содержит
+список из следующий ключевых слов, разделенных запятой:
+<TT
+CLASS="LITERAL"
+>ALL, NONE, INDEX, NOINDEX, FOLLOW, NOFOLLOW, NOARCHIVE</TT
+>.</P
+></LI
+><LI
+><P
+><A
+NAME="AEN3428"
+></A
+>
+<TT
+CLASS="LITERAL"
+>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</TT
+> где значение Content - вещественное число. 
+Этот тэг используется для задания начального значения <A
+HREF="dpsearch-rel.ru.html#POPRANK"
+>PopularityRank</A
+> для страницы.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-htmlparser-spec.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-htmlparser-links.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Специальные символы</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-htmlparser.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Ссылки</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

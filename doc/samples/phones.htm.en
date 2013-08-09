@@ -1,0 +1,105 @@
+<!--variables
+DBAddr		searchd://localhost/?label=phones
+StoredocURL     /cgi-bin/storedoc.cgi
+LocalCharset 	koi8-r
+BrowserCharset  UTF-8
+DoExcerpt no
+
+MinWordLength 1
+MaxWordLength 64
+DetectClones no
+DateFormat %d %b %Y
+ExcerptSize 128
+ExcerptPadding 32
+HlBeg <span class="rhl">
+HlEnd </span>
+GrBeg <!-- -->
+GrEnd <!-- -->
+Locale en_US.UTF-8
+-->
+
+<!--top-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <HEAD>
+    <TITLE>$&(q)</TITLE>
+</HEAD>
+<!-- BrowserCharset: $(BrowserCharset) -->
+<body>
+<!--/top-->
+
+<!--bottom-->
+</body>
+</html>
+<!--/bottom-->
+
+<!--restop-->
+<div id="topmenu"><b>Phones info:</b></div>
+<div class="news"><small>International prefix: +7 8622</small></div>
+<table border="0" cellspacing="0" cellpadding="0"><tr><td align="left">
+<!--/restop-->
+
+
+<!--res-->
+<div class="serp1"><!-- $(ID), site_id: $(Site_ID) -->
+<small class="restop"><!IFLIKE NAME="href" CONTENT="http://*"><a class="restop" href="$(href)"><!ENDIF>
+$&(name:128)<!IFLIKE NAME="href" CONTENT="http://*"></a><!ENDIF></small><br>
+<!IFNOT NAME="desc" CONTENT=""><small class="serp2">$&(desc:132)</small><br>
+<!ELSE><!IFNOT NAME="urldesc" CONTENT=""><small class="serp2">$&(urldesc:132)</small><br><!ENDIF>
+<!ENDIF>
+<small class="result">$&(tel)</small>
+</div>
+<!--/res-->
+
+<!--clone-->
+<li><A HREF="$(URL)">$(URL:50)</A>, $(Last-Modified)
+<!--/clone-->
+
+<!--navleft-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&laquo;&laquo;Prev.&laquo;</small></A></TD>
+<!--/navleft-->
+
+<!--navbar0-->
+<TD><b class="hl">$(NP)</b></TD>
+<!--/navbar0-->
+
+<!--navbar1-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(NP)</A></TD>
+<!--/navbar1-->
+
+<!--navright-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&raquo;Next&raquo;&raquo;</small></A></TD>
+<!--/navright-->
+
+<!--navigator-->
+<table border="0" cellspacing="0" cellpadding="3"><tr><td><small>Pages:</small></td>$(NL) $(NB) $(NR)</tr></table>
+<!--/navigator-->
+
+<!--resbot-->
+</td></tr></table>
+<br>
+<div class="bottom" align="center">
+<a href="/cgi-bin/search.cgi?q=$%(q:koi8-r)&m=$&(m)&g=$&(g)&sp=$&(sp)&sy=$&(sy)&GroupBySite=no&s=RD&tmplt=ph.htm.ru&label=phones"><small>more phones</small></a>
+</div>
+<br>
+<!--/resbot-->
+
+
+<!--notfound-->
+
+<!--/notfound-->
+
+<!--noquery-->
+
+<!--/noquery-->
+
+<!--error-->
+<CENTER>
+<FONT COLOR="#FF0000">Error!</FONT>
+<P>
+<B>$(E)</B>
+</CENTER>
+<!--/error-->
+
+

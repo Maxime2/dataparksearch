@@ -1,0 +1,100 @@
+<sect1 id="syslog">
+	<title>Использование syslog</title>
+<indexterm><primary>Syslog</primary></indexterm>
+<indexterm><primary>Команда</primary><secondary>LogLevel</secondary></indexterm>
+
+	<para>Все приложения <application>DataparkSearch</application> по-умолчанию используют syslog
+	для протоколирования своих действий, ошибок и прочих сообщений.
+	indexer поддерживает несколько уровней подробности выдачи сообщений,
+	которые могут быть заданы поцией -v или командой <command>LogLevel</command> в файле конфигурации:</para>
+	
+	<table>
+		<title>уровни подробности сообщений indexer'а</title>
+		<tgroup cols="3">
+			<tbody>
+				<row>
+					<entry>0</entry>
+					<entry>SILENT</entry>
+					<entry>Подавить весь вывод</entry>
+				</row>
+				<row>
+					<entry>1</entry>
+					<entry>ERROR</entry>
+					<entry>только критические ошибки</entry>
+				</row>
+				<row>
+					<entry>2</entry>
+					<entry>WARNING</entry>
+					<entry>предупреждения</entry>
+				</row>
+				<row>
+					<entry>3</entry>
+					<entry>INFO</entry>
+					<entry>Сообщения информационного характера. Используется по-умолчанию.</entry>
+				</row>
+				<row>
+					<entry>4</entry>
+					<entry>EXTRA</entry>
+					<entry>Дополнительный информационный вывод</entry>
+				</row>
+				<row>
+					<entry>5</entry>
+					<entry>DEBUG</entry>
+					<entry>Отладочный вывод</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+
+	<para>Параллельно с записью в syslog, indexer так же производит
+вывод на stdout/stderr. Чтобы подавить этот вывод, например, при запуске
+из cron, используйте опцию -l. Если Вы не хотите использовать syslog,
+то при запуске configure можно указать флаг <literal>--disable-syslog</literal>.
+Собраный таким образом, indexer будет использовать только stdout/stderr для
+вывода своих сообщений.
+	</para>
+
+	<para>Syslog использует различные "facilities", чтобы направлять
+вывод от разных програм в разные логи. По-умолчанию indexer исполтьзует
+facility LOCAL7, который можно поменять во время сборки, указав configure опцию
+<literal>--enable-syslog=LOG_FACILITY</literal>. LOG_FACILITY
+должен быть правильным именем facility, которые обычно перечислены в
+заголовочном файле <filename>/usr/include/sys/syslog.h</filename>
+	</para>
+	
+	<para>Вы можете отредактировать файл <filename>/etc/syslog.conf</filename>,
+	чтобы перенаправить сообщения <application>DataparkSearch</application> в желаемые файлы. Например,
+	<programlisting>
+# Log all messages from DataparkSearch to separate file
+local7.*        -/var/log/DataparkSearch.log
+</programlisting>
+	</para>
+	
+	<para>Еще пример:
+	<programlisting>
+# Send all DataparkSearch messages to host named central
+# Syslog on central should be configured to allow this
+local7.*        @central
+</programlisting>
+	</para>
+
+	<para>По-умолчанию, все сообщения пишутся так же в лог-файл
+<literal>/var/log/messages</literal>. Чтобы избежать этого, добавьте
+local7.none or local7.!* (игнорировать любые сообщения с facility local7) в
+Ваши 'catch-all' лог-файлы.</para>
+	<para>For example:
+	<programlisting>
+#
+# Some `catch-all' logfiles.
+#
+*.=info;*.=notice;*.=warn;\
+        auth,authpriv.none;\
+        cron,daemon.none;\
+        mail,news.none;\
+        local7.!*               -/var/log/messages
+</programlisting>
+	</para>
+	<para>Для получения более подробной справки о syslog и его
+	конфигурации, посмотрите страницы man syslogd(8) и syslog.conf(5).
+	</para>
+</sect1>

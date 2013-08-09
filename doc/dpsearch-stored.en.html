@@ -1,0 +1,709 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Storing compressed document copies</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Using syslog"
+HREF="dpsearch-syslog.en.html"><LINK
+REL="NEXT"
+TITLE="DataparkSearch HTML parser"
+HREF="dpsearch-htmlparser.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-syslog.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-htmlparser.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="STORED"
+>3.13. Storing compressed document copies</A
+></H1
+><A
+NAME="AEN2964"
+></A
+><P
+>In <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> it is possible to store compressed copies of indexed
+documents. Copies are stored and retrieved by the new daemon -
+<B
+CLASS="COMMAND"
+>stored</B
+>, that is installed into
+<TT
+CLASS="FILENAME"
+>sbin</TT
+> directory of
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation (default:
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/sbin</TT
+>).</P
+><P
+><A
+NAME="AEN2973"
+></A
+>
+To enable documents copies archiving without <B
+CLASS="COMMAND"
+>stored</B
+> usage,
+place <B
+CLASS="COMMAND"
+>DoStore yes</B
+> command in your
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file instead of <B
+CLASS="COMMAND"
+>stored</B
+> daemon configuration.</P
+><P
+>Stored document copies are retrieved by means of
+<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> CGI script. It requests a saved copy
+of a documents from <B
+CLASS="COMMAND"
+>stored</B
+>, then a copy is
+displayed with user's web browser with search keywords highlighted.</P
+><P
+> To enable <B
+CLASS="COMMAND"
+>stored</B
+> support, compile
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with <TT
+CLASS="LITERAL"
+>zlib</TT
+>
+support:
+	<PRE
+CLASS="PROGRAMLISTING"
+>./configure --with-zlib &lt;other arguments&gt;</PRE
+>
+	</P
+><P
+><A
+NAME="AEN2989"
+></A
+>
+<A
+NAME="AEN2992"
+></A
+>
+You may use the <B
+CLASS="COMMAND"
+>Store</B
+> and <B
+CLASS="COMMAND"
+>NoStore</B
+> commands to allow or disallow storing several files by pattern.
+For arguments of those commands are exactly the same 
+as for the <B
+CLASS="COMMAND"
+>Allow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;). All documents are stores by defaults, 
+if support for stored is enabled.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STORED-START"
+>3.13.1. Configure stored</A
+></H2
+><P
+>To start using <B
+CLASS="COMMAND"
+>stored</B
+>, please do the following:</P
+><P
+></P
+><UL
+><LI
+><P
+>Copy <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/stored.conf-dist</TT
+> to
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/stored.conf</TT
+>.</P
+><P
+>Edit <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/stored.conf</TT
+>
+				</P
+><P
+>There are several commands available
+for using with <B
+CLASS="COMMAND"
+>stored</B
+>: </P
+><P
+></P
+><UL
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3016"
+></A
+>Listen</B
+>
+tells <B
+CLASS="COMMAND"
+>stored</B
+> which address and/or port to bind
+to. By default <B
+CLASS="COMMAND"
+>stored</B
+> listens to port 7004 and any
+address. It is possible to specify port only:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>Listen 7004 </KBD
+>
+						</P
+><P
+>Or address only:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>Listen 127.0.0.2</KBD
+>
+						</P
+><P
+>Or both address and port:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>Listen 127.0.0.2:7004</KBD
+>
+						</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3032"
+></A
+>VarDir</B
+>
+command specifies an alternate <TT
+CLASS="FILENAME"
+>var/</TT
+> working
+directory, e.g.</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>VarDir /mnt/d/dpsearch/var/ </KBD
+>
+						</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3041"
+></A
+>StoredFiles</B
+>
+command specifies number of stored data files created in <TT
+CLASS="FILENAME"
+>var/stored/</TT
+> directory,
+e.g.</P
+><P
+><KBD
+CLASS="USERINPUT"
+>StoredFiles 256</KBD
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3050"
+></A
+>OptimizeInterval</B
+>
+command specifies interval in seconds between attempts to optimize a stored datafile, e.g.</P
+><P
+><KBD
+CLASS="USERINPUT"
+>OptimizeInterval 300</KBD
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3058"
+></A
+>OptimizeRatio</B
+>
+command  specifies defragmentation threshold for a stored datafile optimization.  </P
+><P
+><KBD
+CLASS="USERINPUT"
+>OptimizeRatio 3</KBD
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Run <B
+CLASS="COMMAND"
+>stored</B
+>:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>/usr/local/dpsearch/sbin/stored &amp; </KBD
+>
+				</P
+></LI
+><LI
+><P
+>Configure <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+(or <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, if <B
+CLASS="COMMAND"
+>searchd</B
+> is used). Specify address and port that <TT
+CLASS="LITERAL"
+>indexer</TT
+> will use to connect to <B
+CLASS="COMMAND"
+>stored</B
+>. 
+Use <TT
+CLASS="LITERAL"
+>stored</TT
+> parameter for <B
+CLASS="COMMAND"
+>DBAddr</B
+> command, e.g.:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>DBAddr mysql://localhost/search/?dbmode=cache&amp;stored=localhost:7004</KBD
+>
+				</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STORED-HOW"
+>3.13.2. How stored works</A
+></H2
+><P
+>After you have successfully configured
+<B
+CLASS="COMMAND"
+>stored</B
+>, the <TT
+CLASS="FILENAME"
+>indexer</TT
+> pass
+downloaded documents to <B
+CLASS="COMMAND"
+>stored</B
+> daemon. After that,
+<B
+CLASS="COMMAND"
+>stored</B
+> compress the received documents and
+save them.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STORED-SEARCH"
+>3.13.3. Using stored during search</A
+></H2
+><P
+>To enable displaying stored documents during search, do the following: </P
+><P
+></P
+><UL
+><LI
+><P
+>Configure
+<TT
+CLASS="FILENAME"
+>storedoc.htm</TT
+> (<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>
+template)  if necessary.</P
+></LI
+><LI
+><P
+>Add a <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> link to <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+					<TT
+CLASS="LITERAL"
+>&lt;!--res--&gt;</TT
+> section: e.g. <TT
+CLASS="LITERAL"
+>&lt;A HREF="$(stored_href)"&gt;Cached copy&lt;/A&gt; </TT
+>
+				</P
+></LI
+><LI
+><P
+>Specify
+<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> CGI script URL in
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> (by default
+<TT
+CLASS="LITERAL"
+>$(stored_href)</TT
+> will return
+<TT
+CLASS="FILENAME"
+>/cgi-bin/storedoc.cgi</TT
+>). In case you have to
+specify other URL, add to <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+					<TT
+CLASS="LITERAL"
+>variables</TT
+> section the following line:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>StoredocURL /path/to/storedoc.cgi</KBD
+>
+				</P
+><P
+>Or an absolute path:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>StoredocURL http://servername/path/to/storedoc.cgi</KBD
+>
+				</P
+></LI
+></UL
+><P
+>This is how <B
+CLASS="COMMAND"
+>stored</B
+> works during search, if everything configured correctly:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>					<TT
+CLASS="FILENAME"
+>search.htm</TT
+> displays a link to <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>;</P
+></LI
+><LI
+><P
+>When user clicks the link,
+<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> sends a query to
+<B
+CLASS="COMMAND"
+>stored</B
+> daemon to the address, specified in
+<TT
+CLASS="FILENAME"
+>storedoc.htm</TT
+> with the
+<TT
+CLASS="LITERAL"
+>Stored</TT
+> parameter of <B
+CLASS="COMMAND"
+>DBAddr</B
+> command;</P
+></LI
+><LI
+><P
+>After the query, <B
+CLASS="COMMAND"
+>stored</B
+> will decompress the requested saved copy and send it to <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>;</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> parses the received document and apply highlighting of search keywords. Highlighting method is specified with <TT
+CLASS="FILENAME"
+>storedoc.htm</TT
+>
+					<B
+CLASS="COMMAND"
+><A
+NAME="AEN3137"
+></A
+>HlBeg</B
+> and <B
+CLASS="COMMAND"
+><A
+NAME="AEN3141"
+></A
+>HlEnd</B
+> commands;</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="EXCERPTS"
+>3.13.4. Document excerpts</A
+></H2
+><A
+NAME="AEN3146"
+></A
+><P
+><B
+CLASS="COMMAND"
+>stored</B
+> is also used to make documents excerpts for search results.</P
+><P
+><A
+NAME="AEN3152"
+></A
+>
+You can use <B
+CLASS="COMMAND"
+>ExcerptSize</B
+> command in <TT
+CLASS="FILENAME"
+>search.htm</TT
+> template to specify average excerpt size in characters;
+value by default: 256.</P
+><P
+><A
+NAME="AEN3158"
+></A
+>
+With <B
+CLASS="COMMAND"
+>ExcerptPadding</B
+> command you can specify average number of characters is taken before and after a search word in excerpts; value by default: 40.</P
+><P
+><A
+NAME="AEN3163"
+></A
+>
+With <B
+CLASS="COMMAND"
+>ExcerptMark</B
+> command you can alter the marking character sequence which delimits excerpt chunks; value by default: " ... " (a space, a dots, a space).</P
+><P
+><A
+NAME="AEN3168"
+></A
+>
+You may switch off document excerpts (but retain ability to show stored copies) 
+with <B
+CLASS="COMMAND"
+>DoExcerpt no</B
+> command in your search template.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-syslog.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-htmlparser.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Using syslog</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> HTML parser</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

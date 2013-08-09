@@ -1,0 +1,25 @@
+
+
+In order to produce documentation from XML source,
+these packages need to be installed:
+
+openjade
+dsssl-docbook-modular
+docbook-4.1
+docbook-tdg
+docbook-xml-4.1.2
+
+Optionaly it may happen you need to add this line:
+CATALOG "dsssl/modular/catalog"
+into file /usr/local/share/sgml/docbook/catalog.
+
+
+---------------
+#!/bin/sh
+openjade -v -t sgml -wno-valid \
+         -d ./mnogo.dsl \
+         /usr/local/share/sgml/docbook/dsssl/modular/dtds/decls/xml.dcl \
+         book.xml
+
+
+

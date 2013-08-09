@@ -1,0 +1,58 @@
+<sect1 id="lib">
+	<title>Использование библиотеки <literal>libdpsearch</literal>
+<indexterm><primary>libdpsearch</primary></indexterm>
+</title>
+	<para>При компиляции <application>DataparkSearch</application> собирается
+	и устанавливается <literal>libdpsearch</literal> - библиотека, с помощью которой легко 
+	расширить Ваше приложение возможностью поиска.  Программа на СИ,
+	использующая <literal>libdpsearch</literal>, должна включить заголовочный файл
+	<filename>dpsearch.h</filename>.
+	</para>
+
+	<sect2 id="lib-dpsconf">
+		<title>Скрипт <filename>dps-config</filename></title>
+		<para>В зависимости от параметров, выбраных при компиляции
+<application>DataparkSearch</application>, <literal>libdpsearch</literal> может требовать дополнительные библиотеки. Например,
+при использовании <application>MySQL</application> в качестве хранилища <application>DataparkSearch</application>, библиотека 
+<literal>libmysqlclient</literal> также понадобится при линковки приложения с <literal>libdpsearch</literal>.
+В каталоге <filename>/bin</filename> относительно коренвой директории установки <application>DataparkSearch</application>
+вы можете найти скрипт <filename>dps-config</filename>
+Этот скрипт позволяет упростить процедуру учета всех необходимых зависимостей.
+<filename>dps-config</filename> понимает несколько опций командной строки. По-умолчанию
+<filename>dps-config</filename> выдает все доступные опции запуска:</para>
+
+		<para>
+			<programlisting>
+Usage: ./dps-config [OPTIONS]
+Options:
+        [--version]
+        [--libs]
+        [--cflags]
+</programlisting>
+		</para>
+		<para>Запущенный с <option>--libs</option>,
+<filename>dps-config</filename> выдает все флаги компановщика, необходимые для
+подключения  <literal>libdpsearch</literal>, например:
+		<programlisting>
+# ./dps-config --libs
+-lm -L/usr/local/mysql/lib/mysql -lmysqlclient -L/usr/local/dpsearch/lib -ldpsearch
+</programlisting>
+		</para>
+		<para>Вы можете включить вывод команды <filename>dps-config</filename> <option>--libs</option>
+		в строку запуска компилятора СИ:
+		<programlisting>
+cc myprog.c -o myprog `dps-config --libs`
+</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="api">
+		<title><application>DataparkSearch</application> API</title>
+		<para>Описания API <application>DataparkSearch</application> пока нет.
+		Это связано с тем, что API находится под постоянным
+		изменением от версии к версии, и пока не стабилизирован.
+		В качестве примера приложения, использущего библиотеку
+		<literal>libdpsearch</literal>, можно изучить программу <filename>search.c</filename>.
+		</para>
+	</sect2>
+</sect1>

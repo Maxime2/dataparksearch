@@ -1,0 +1,84 @@
+<sect2 id="exec">
+	<title>Индексирование вывода программ (виртуальные схемы URL <literal>exec:</literal> и <literal>cgi:</literal>)
+<indexterm><primary>Индексирование вывода программ</primary></indexterm>
+</title>
+	<para><application>DataparkSearch</application> поддерживает виртуальные URL схемы <literal>exec:</literal> и
+<literal>cgi:</literal>, позволяющие запускать внешнюю программу.
+Эта программа должна выдавать результат своей работы в <literal>stdout</literal>. Результат должен быть оформлен по
+стандарту HTTP, т.е. заголовок ответа HTTP, а за ним содержимое документа.
+</para>
+
+	<para>Например, при индексировании обоих
+<literal>cgi:/usr/local/bin/myprog</literal> и
+<literal>exec:/usr/local/bin/myprog</literal>, <command>indexer</command> будет выполнять программу
+<filename>/usr/local/bin/myprog</filename>.</para>
+
+	<sect3 id="exec-cgi">
+		<title>Передача параметров для виртуальный схемы <literal>cgi:</literal></title>
+		<para>При выполнении программы по виртуальной схеме <literal>cgi:</literal>,
+<command>indexer</command> эмулирует выполнение из-под HTTP сервера. Он создаёт переменную
+окружения REQUEST_METHOD со значением "GET" и переменную QUERY_STRING в соответствии со стандартами HTTP.
+Например, при индексировании
+<literal>cgi:/usr/local/apache/cgi-bin/test-cgi?a=b&amp;d=e</literal>
+<command>indexer</command> создаёт QUERY_STRING со значением
+<literal>a=b&amp;d=e</literal>. Виртуальная URL схема <literal>cgi:</literal> позволяет индексировать
+ваш сайт без веб-сервера, даже если необходимо индексировать CGI скрипты.
+Например, если для вашего веб-сервера статические документы находятся в <filename>/usr/local/apache/htdocs/</filename>,
+а CGI скрипты в <filename>/usr/local/apache/cgi-bin/</filename>, используёте следующую конфигурацию:
+		<programlisting>
+Server http://localhost/
+Alias  http://localhost/cgi-bin/	cgi:/usr/local/apache/cgi-bin/
+Alias  http://localhost/		file:/usr/local/apache/htdocs/
+</programlisting>
+		</para>
+	</sect3>
+
+	<sect3 id="exec-exec">
+		<title>Передача параметров для виртуальной схемы <literal>exec:</literal></title>
+		<para><command>indexer</command> не создаёт переменной окружения QUERY_STRING как для схемы
+<literal>cgi:</literal>. Он создаёт командную строку с аргументами, указанными в
+URL после занка ?. Например, при индексировании
+<literal>exec:/usr/local/bin/myprog?a=b&amp;d=e</literal>, будет выполнена слудующая команда с параметрами:
+		<programlisting>
+/usr/local/bin/myprog "a=b&amp;d=e" 
+</programlisting>
+		</para>
+	</sect3>
+
+	<sect3 id="exec-ext">
+		<title>Использование виртуальной URL схемы <literal>exec:</literal> в качестве внешней системы получения</title>
+		<para>Виртуальную URL схему <literal>exec:</literal> можно использовать в качестве внешней
+системы получения документов. Это позволяет использовать для получения документов протоколы, не поддерживаемые
+<application>DataparkSearch</application>. Например, можно испрользовать программу <command>curl</command>,
+доступную с <ulink url="http://curl.haxx.se/">http://curl.haxx.se/</ulink> для индексирования HTTPS сайтов.</para>
+
+		<para>Поместите этот короткий скрипт в
+<literal>/usr/local/dpsearch/bin/</literal> под именем <filename>curl.sh</filename>.
+		<programlisting>
+#!/bin/sh
+/usr/local/bin/curl -i $1 2>/dev/null
+</programlisting>
+</para>
+		<para>Этот скрипт берёт URL, указанный в качестве параметра командной строки и выполняет программу
+<command>curl</command> для получения этого документа. Ключ <option>-i</option> говорит <command>curl</command>
+выводить результат вместе с HTTP заголовками.</para>
+		<para>Теперь вы можете использовать такие команды в вашем <filename>indexer.conf</filename>:
+		<programlisting>
+Server https://some.https.site/
+Alias  https://  exec:/usr/local/dpsearch/etc/curl.sh?https://
+</programlisting>
+		</para>
+		<para>При индексировании <filename>https://some.https.site/path/to/page.html</filename>,
+<command>indexer</command> преобразует этот URL в 
+		<programlisting>
+exec:/usr/local/dpsearch/etc/curl.sh?https://some.https.site/path/to/page.html
+</programlisting>
+		</para>
+		<para>выполнит скрипт <filename>curl.sh</filename>:
+		<programlisting>
+/usr/local/dpsearch/etc/curl.sh "https://some.https.site/path/to/page.html"
+</programlisting>
+		</para>
+		<para>и получит его вывод для дальнейшей своей работы.</para>
+	</sect3>
+</sect2>

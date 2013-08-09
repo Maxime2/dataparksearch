@@ -1,0 +1,243 @@
+<sect1 id="aliases">
+	<title>Алиасы</title>
+	<para>Встроенная в <application>DataparkSearch</application> поддержка алиасов дает возможность
+индексировать сайты, беря информацию для индексации из альтернативного источника
+данных. Например, при индексации локального веб-сервера можно выбирать 
+страницы напрямую с жесткого диска без использования веб-сервера и сетевых
+протоколов. Либо, например, можно для индексации какого-либо сайта использовать
+не его основной адрес, а его более быстрое зеркало.</para>
+
+	<sect2 id="alias-conf">
+		<title>Команда Alias (из indexer.conf)
+<indexterm><primary>Команда</primary><secondary>Alias</secondary></indexterm>
+</title>
+		<para>Формат команды "Alias" <filename>indexer.conf</filename>:
+		<programlisting>
+Alias &lt;главныйURL&gt; &lt;вторичныйURL&gt;
+</programlisting>
+</para>
+		
+		<para>Например, для индексации
+<literal>http://www.site.ru/</literal> с использованием ближайшего зеркала
+<literal>http://www.other.com/mirrors/site.ru/</literal> нужно добавить
+следующие строки в indexer.conf:
+
+		<programlisting>
+Server http://www.site.ru/
+Alias  http://www.site.ru/  http://www.other.com/mirrors/site.ru/
+</programlisting>
+		</para>
+		<para>
+			<filename>search.cgi</filename> будет указывать
+ссылки с главного сайта <literal>http://www.site.ru/</literal>, но
+индексатор будет брать данные с зеркала
+<literal>http://www.other.com/mirrors/site.ru/</literal>.</para>
+
+		<para>Другой пример. Допустим, вы хотите индексировать весь домен
+udm.net. И один из серверов этого домена,
+<literal>http://home.udm.net/</literal>, расположен на локальном диске в каталоге
+<literal>/home/httpd/htdocs/</literal>. Чтобы это настроить нужно добавить
+следующее:
+		<programlisting>
+Realm http://*.udm.net/
+Alias http://home.udm.net/ file:/home/httpd/htdocs/
+</programlisting>
+		</para>
+		<para>Индексатор скачает <literal>home.udm.net</literal> с локального диска,а другие сайты скачает по HTTP.</para>
+	</sect2>
+	<sect2 id="aliases-diff">
+		<title>Алиасы для различных частей сервера</title>
+		<para>Алиасы просматриваются в порядке их появления в
+<filename>indexer.conf</filename>. Таким образом можно создавать алиасы 
+для сервера и для отдельных его частей:
+
+		<programlisting>
+# Первое - создадим алиас для каталога /stat/ , который физически находится 
+# не на ожидаемом месте по умолчанию:
+Alias http://home.udm.net/stat/  file:/usr/local/stat/htdocs/
+
+# Затем создадим алиас для всего остального сервера:
+Alias http://home.udm.net/ file:/usr/local/apache/htdocs/
+</programlisting>
+		</para>
+		<note>
+			<para>Обратите внимание на то, что при изменении порядка следования 
+команд, алиас для каталога<filename>/stat/</filename> никогда не будет обработан.</para>
+
+		</note>
+	</sect2>
+	<sect2 id="alias-server">
+		<title>использование алиасов в команде Server</title>
+		<para>Возможно указание расположения данных для 
+		выборки индексером используя дополнительный аргумент команды Server:
+		<programlisting>
+Server  http://home.udm.net/  file:/home/httpd/htdocs/
+</programlisting>
+		</para>
+	</sect2>
+	<sect2 id="alias-realm">
+		<title>Использование алиасов в команде Realm</title>
+		<para>Алиасы в команде Realm command являются очень мощным
+инструментом при использовании регулярных выражений. Результат работы такой команды
+подобен работе функции PHP
+<function>preg_replace()</function>. Алиасы в команде Realm
+работают только при использовании "regex" типов сравнений и не работают для
+"string" типов сравнений.</para>
+
+		<para>Синтаксис Realm алиасов:
+		<programlisting>
+Realm regex &lt;URL_выражение&gt; &lt;алиас_выражение&gt;
+</programlisting>
+		</para>
+		<para>Индексатор пропускает URL на совпадение с  URL_выражение
+строит алиас используя алиас_выражение. алиас_выражение может содержать
+ссылки вида $n. n - это число в диапазоне
+0-9. Каждая такая ссылка заменяется текстом, взятым из 
+n-ого по счету regex-выражения в круглых скобках. При этом
+$0 ссылается на текст которому соответствует все выражение целиком.
+Выражения в круглых скобках нумеруются слева направо (начиная с
+1).</para>
+
+		<para>Пример: пусть ваша фирма хостит несколько тысяч
+пользователей и их доменов вида
+<literal>www.username.yourname.com</literal>. Сайт каждого пользователя
+расположен на диске в подкаталоге "htdocs" относительно домашнего каталога пользователя:
+<literal>/home/username/htdocs/</literal>.</para>
+
+		<para>Для правильной настройки нужно следующее
+(напоминаем, что символ '.' имеет специальное значение в регулярных выражениях
+и должен быть экранирован использованием символа '\' в тех случаях, когда символ точки
+необходимо испольховать в своем обычном значении):
+		<programlisting>
+Realm regex (http://www\.)(.*)(\.yourname\.com/)(.*)  file:/home/$2/htdocs/$4
+</programlisting>
+		</para>
+		<para>Представим процесс индексации страницы
+<filename>http://www.john.yourname.com/news/index.html</filename>
+. Он построит пять ссылок - от $0 до $4:</para>
+
+		<literallayout>
+   $0 = 'http://www.john.yourname.com/news/index.htm' (сожержит все выражение удовлетворяющее regex целиком)
+   $1 = 'http://www.'      соответствует подвыражению '(http://www\.)'
+   $2 = 'john'             соответствует подвыражению '(.*)'
+   $3 = '.yourname.com/'   соответствует подвыражению '(\.yourname\.com/)'
+   $4 = '/news/index.html' соответствует подвыражению '(.*)'
+</literallayout>
+		<para>Затем индексатор построит алиас используя $2 and $4 ссылки:
+		<programlisting>
+file:/home/john/htdocs/news/index.html
+</programlisting>
+		</para>
+		<para>и использует этот результат для получения документа.</para>
+	</sect2>
+	<sect2 id="alias-prog">
+		<title>Команда AliasProg
+<indexterm><primary>Команда</primary><secondary>AliasProg</secondary></indexterm>
+</title>
+		<para>
+			<command>AliasProg</command> - еще одна команда для построения алиасов.
+			Иногда альтернативное расположение документов на локальном диске может быть слишком сложным,
+			чтобы описать его с помощью команд <command>Alias</command> или <command>Realm</command>.
+			<command>AliasProg</command> - это внешняя исполняемая программа, которая принимает 
+			в качестве аргумента URL, и возвращает его алиас на STDOUT. Используйте $1 чтобы
+			передать значение URL.
+		</para>
+
+		<para>
+			Например, эта команда использует программу <literal>replace</literal> из дистрибутива MySQL
+			для замены подстроки <literal>http://www.apache.org/</literal> на подстроку
+			<literal>file:/usr/local/apache/htdocs/</literal>:
+
+			<programlisting>AliasProg  "echo $1 | /usr/local/mysql/bin/mysql/replace http://www.apache.org/ file:/usr/local/apache/htdocs/"</programlisting>
+		</para>
+	</sect2>
+	
+	<sect2 id="alias-reverse">
+		<title>Команда ReverseAlias
+<indexterm><primary>Команда</primary><secondary>ReverseAlias</secondary></indexterm>
+</title>
+		<para>
+			Команда <command>ReverseAlias</command> позволяет видоизменить URL документа
+			сразу же после того, как найдена ссылка на него.
+		<programlisting>
+ReverseAlias http://name2/   http://name2.yourname.com/
+Server       http://name2.yourname.com/
+</programlisting>
+		</para>
+
+		<para>
+			В это примере все ссылки с коротким именем сервера будут преобразованы
+			в ссылки с полным именем сервера. Это произойдет сразу же после обнаружения
+			"короткой" ссылки, а в базу данных попадет документ с уже длинным именем сервера
+			в адресе.
+		</para>
+
+		<para>
+			Еще одно возможное применение команды <command>ReverseAlias</command> - это вырезание
+			различных ненужных кусков адреса, например <literal>PHPSESSION=XXXX</literal>.
+		</para>
+
+		<para>
+			Например, для вырезания параметра PHPSESSION из URL типа <literal>http://www/a.php?PHPSESSION=XXX</literal>,
+			если PHPSESSION - единственный параметр, будет выглядеть так (знак ? будет вырезан тоже):
+			<programlisting>ReverseAlias regex  (http://[^?]*)[?]PHPSESSION=[^&amp;]*$   $1</programlisting>
+		</para>
+
+		<para>
+			Чтобы вырезать PHPSESSION, когда он является первым параметром, при условии, что
+			после него следуют другие параметры, т.е. <literal>http://www/a.php?PHPSESSION=xxx&amp;..</literal>, 
+			используйте эту команду:
+			<programlisting>ReverseAlias regex  (http://[^?]*[?])PHPSESSION=[^&amp;]*&amp;(.*)  $1$2</programlisting>
+			Знак '&amp;' после аргумента PHPSESSION будет вырезан, а знак вопроса не будет.
+		</para>
+		<para>
+			Для вырезания из URL типа
+			<literal>http://www/a.php?a=b&amp;PHPSESSION=xxx</literal> или
+			<literal>http://www/a.php?a=b&amp;PHPSESSION=xxx&amp;c=d</literal>,
+			где PHPSESSION не является первым параметром, используйте
+			<programlisting>ReverseAlias regex  (http://.*)&amp;PHPSESSION=[^&amp;]*(.*)   $1$2</programlisting>
+			Знак '&amp;' перед PHPSESSION будет тоже вырезан.
+
+		</para>
+	</sect2>
+
+	<sect2 id="reversealias-prog">
+		<title>Команда ReverseAliasProg
+<indexterm><primary>Команда</primary><secondary>ReverseAliasProg</secondary></indexterm>
+</title>
+		<para>
+			<command>ReverseAliasProg</command> - команда, аналогичная обеим командам <command>AliasProg</command> и <command>ReverseAlias</command>. 
+Она получает параметры аналогично команде <command>AliasProg</command>, но преобразовывет URL перед вставкой в базу, аналогично команде <command>ReverseAlias</command>.
+</para>
+</sect2>
+
+	<sect2 id="alias-search">
+		<title>Алиасы в search.htm 
+<indexterm><primary>Команда</primary><secondary>Alias</secondary></indexterm>
+</title>
+		<para>
+			Вы также можете использовать алиасы и в <filename>search.htm</filename>.
+			Команда <command>Alias</command> в <filename>search.htm</filename> аналогична
+			такой же команде в <filename>indexer.conf</filename>, но работате во время
+			поиска, а не во время индексации.
+		</para>
+
+		<para>
+			Синтаксис команды также аналогичен команде в <filename>indexer.conf</filename>:
+			<programlisting>Alias &lt;find-prefix&gt; &lt;replace-prefix&gt;</programlisting>
+		</para>
+
+		<para>
+			Например, пусть в <filename>search.htm</filename> есть такая команда:
+			<programlisting>Alias http://localhost/ http://www.site.ru/</programlisting>
+		</para>
+
+		<para>
+			Пусть поиск вернул страницу с адресом <literal>http://localhost/news/article10.html</literal>
+			В результате, появится переменная $(Alias), которую значение которой будет равным
+			<literal>http://www.site.ru/news/article10.html</literal>
+		</para>
+	</sect2>
+</sect1>
+
+

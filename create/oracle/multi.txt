@@ -1,0 +1,296 @@
+
+CREATE TABLE dict10 (
+       word                 VARCHAR2(10) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX dict10_url_ind ON dict10
+(
+       url_id
+)
+/
+
+CREATE INDEX dict10_word_ind ON dict10
+(
+    word
+)
+/
+
+
+CREATE TABLE dict11 (
+       word                 VARCHAR2(11) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict11_url_ind ON dict11
+(
+       url_id
+)
+/
+
+CREATE INDEX dict11_word_ind ON dict11
+(
+       word
+)
+/
+
+
+CREATE TABLE dict12 (
+       word                 VARCHAR2(12) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict12_url_ind ON dict12
+(
+       url_id
+)
+/
+
+CREATE INDEX dict12_word_ind ON dict12
+(
+       word
+)
+/
+
+
+CREATE TABLE dict16 (
+       word                 VARCHAR2(16) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict16_url_ind ON dict16
+(
+       url_id
+)
+/
+
+CREATE INDEX dict16_word_ind ON dict16
+(
+       word
+)
+/
+
+
+CREATE TABLE dict2 (
+       word                 VARCHAR2(2) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict2_url_ind ON dict2
+(
+       url_id
+)
+/
+
+CREATE INDEX dict2_word_ind ON dict2
+(
+       word
+)
+/
+
+
+CREATE TABLE dict3 (
+       word                 VARCHAR2(3) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict3_url_ind ON dict3
+(
+       url_id
+)
+/
+
+CREATE INDEX dict3_word_ind ON dict3
+(
+       word
+)
+/
+
+
+CREATE TABLE dict32 (
+       word                 VARCHAR2(4096) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict32_url_ind ON dict32
+(
+       url_id
+)
+/
+
+CREATE INDEX dict32_word_ind ON dict32
+(
+       word
+)
+/
+
+
+CREATE TABLE dict4 (
+       word                 VARCHAR2(4) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict4_url_ind ON dict4
+(
+       url_id
+)
+/
+
+CREATE INDEX dict4_word_ind ON dict4
+(
+       word
+)
+/
+
+CREATE TABLE dict5 (
+       word                 VARCHAR2(5) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict5_url_ind ON dict5
+(
+       url_id
+)
+/
+
+CREATE INDEX dict5_word_ind ON dict5
+(
+       word
+)
+/
+
+
+CREATE TABLE dict6 (
+       word                 VARCHAR2(6) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict6_url_ind ON dict6
+(
+       url_id
+)
+/
+
+CREATE INDEX dict6_word_ind ON dict6
+(
+       word
+)
+/
+
+
+CREATE TABLE dict7 (
+       word                 VARCHAR2(7) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict7_url_ind ON dict7
+(
+       url_id
+)
+/
+
+CREATE INDEX dict7_word_ind ON dict7
+(
+       word
+)
+/
+
+
+CREATE TABLE dict8 (
+       word                 VARCHAR2(8) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict8_url_ind ON dict8
+(
+       url_id
+)
+/
+
+CREATE INDEX dict8_word_ind ON dict8
+(
+       word
+)
+/
+
+
+CREATE TABLE dict9 (
+       word                 VARCHAR2(9) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+
+CREATE INDEX dict9_url_ind ON dict9
+(
+       url_id
+)
+/
+
+CREATE INDEX dict9_word_ind ON dict9
+(
+       word
+)
+/

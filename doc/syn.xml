@@ -1,0 +1,64 @@
+<sect2 id="synonyms">
+	<title>Synonyms</title>
+<indexterm><primary>Synonyms</primary></indexterm>
+
+	<para><application>DataparkSearch</application> also support a synonyms-based
+fuzzy search.</para>
+
+	<para>Synonyms files are installed into
+<filename>etc/synonym</filename> subdirectory of <application>DataparkSearch</application>
+installation. Large synonyms files you need to download separately from our web site, or from one of our mirrors,
+see <xref linkend="get"/>.</para>
+
+	<para id="synonym-cmd"><indexterm><primary>Command</primary><secondary>Synonym</secondary></indexterm>
+To enable synonyms, add to
+<filename>search.htm</filename> search template commands like
+<literal>Synonym &lt;filename&gt;</literal>, e.g.:
+	<programlisting>
+Synonym synonym/english.syn
+Synonym synonym/russian.syn
+</programlisting>
+</para>
+
+	<para>Filenames are relative to <filename>etc</filename>
+directory of <application>DataparkSearch</application> installation or absolute if begin with
+/</para>
+
+	<para>If you use <literal>searchd</literal>, add the same
+commands to <filename>searchd.conf</filename>.</para>
+
+	<para>You may create your own synonyms lists. As an example you may take the
+English synonyms file. In the beginning of the list please specify the
+following two commands:
+	<programlisting>
+Language: en
+Charset:  us-ascii
+</programlisting>
+</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				<varname>Language</varname> - standard
+(ISO 639) two-letter language abbreviation.</para>
+		</listitem>
+		<listitem>
+			<para>
+				<varname>Charset</varname> - any
+charset supported by <application>DataparkSearch</application> (see <xref linkend="charset"/>).</para>
+		</listitem>
+	</itemizedlist>
+
+<para>You can use '\' character to escape '#' character in your acronyms or its extensions which usually it's considered as beginning of a comment.
+</para>
+
+<para>Optionaly you may specify following command in the list:
+	<programlisting>
+Thesaurus: yes
+</programlisting>
+</para>
+<para>This command enable thesaurus mode for synonyms list. For this mode, only words at one line treats as synonyms.
+</para>
+
+</sect2>
+

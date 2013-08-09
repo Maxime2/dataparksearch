@@ -1,0 +1,2180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Other commands are used in indexer.conf</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="External parsers"
+HREF="dpsearch-pars.en.html"><LINK
+REL="NEXT"
+TITLE="Extended indexing features"
+HREF="dpsearch-extended-indexing.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-pars.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-extended-indexing.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="INDEXCMD"
+>3.10. Other commands are used in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+></A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="INCLUDE_CMD"
+>3.10.1. <B
+CLASS="COMMAND"
+>Include</B
+> command</A
+></H2
+><A
+NAME="AEN2013"
+></A
+><P
+>You may include another configuration file in any place of the <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+using <KBD
+CLASS="USERINPUT"
+>Include &lt;filename&gt;</KBD
+> command.
+Absolute path if &lt;<TT
+CLASS="FILENAME"
+>filename</TT
+>&gt; starts with "/":
+<PRE
+CLASS="PROGRAMLISTING"
+>Include /usr/local/dpsearch/etc/inc1.conf</PRE
+></P
+><P
+>Relative path else:
+
+<PRE
+CLASS="PROGRAMLISTING"
+>Include inc1.conf</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DBADDR_CMD"
+>3.10.2. <B
+CLASS="COMMAND"
+>DBAddr</B
+> command</A
+></H2
+><A
+NAME="AEN2026"
+></A
+><P
+><B
+CLASS="COMMAND"
+>DBAddr</B
+> command is URL-style database description.
+It specify options (type, host, database name, port, user and password)
+to connect to <SPAN
+CLASS="APPLICATION"
+>SQL</SPAN
+> database.
+Should be used before any other commands. You may specify several <B
+CLASS="COMMAND"
+>DBAddr</B
+> commands.
+In this case <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> will merge result from every database specified.
+Command have global effect for whole config file.
+Format:
+<PRE
+CLASS="PROGRAMLISTING"
+>DBAddr &lt;Type&gt;:[//[User[:Pass]@]Host[:Port]]/DBName/[?[dbmode=mode]{&amp;&lt;parameter name&gt;=&lt;parameter value&gt;}]</PRE
+></P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+><SPAN
+CLASS="APPLICATION"
+>ODBC</SPAN
+> related.
+       Use DBName to specify ODBC data source name (DSN)
+       <CODE
+CLASS="OPTION"
+>Host</CODE
+> does not matter, use "localhost".</P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+><SPAN
+CLASS="APPLICATION"
+>Solid</SPAN
+> related.
+       Use <CODE
+CLASS="OPTION"
+>Host</CODE
+> to specify Solid server
+       DBName does not matter for <SPAN
+CLASS="APPLICATION"
+>Solid</SPAN
+>.</P
+></BLOCKQUOTE
+></DIV
+><P
+>You may use CGI-like encoding for <CODE
+CLASS="OPTION"
+>User</CODE
+> and <CODE
+CLASS="OPTION"
+>Pass</CODE
+> if you need use special characters 
+in user name or password. For example, if you have <KBD
+CLASS="USERINPUT"
+>ABC@DEF</KBD
+> as password, you should write it as
+<KBD
+CLASS="USERINPUT"
+>ABC%40DEF</KBD
+>.</P
+><P
+> Currently supported <CODE
+CLASS="OPTION"
+>Type</CODE
+> values are
+<TT
+CLASS="LITERAL"
+>mysql</TT
+>, <TT
+CLASS="LITERAL"
+>pgsql</TT
+>, <TT
+CLASS="LITERAL"
+>msql</TT
+>, <TT
+CLASS="LITERAL"
+>solid</TT
+>, <TT
+CLASS="LITERAL"
+>mssql</TT
+>, 
+<TT
+CLASS="LITERAL"
+>oracle</TT
+>, <TT
+CLASS="LITERAL"
+>ibase</TT
+>, <TT
+CLASS="LITERAL"
+>sqlite</TT
+>.
+Actually, it does not matter for native libraries support.
+But ODBC users should specify one of supported values.
+If your database type is not supported, you may use "unknown" instead.</P
+><P
+><SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+> and <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+>users can specify path to Unix socket 
+when connecting to localhost:
+<KBD
+CLASS="USERINPUT"
+>mysql://foo:bar@localhost/dpsearch/?socket=/tmp/mysql.sock</KBD
+></P
+><P
+>If you are using <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+> and do not specify hostname,
+       e.g. <KBD
+CLASS="USERINPUT"
+>pgsql://user:password@/dbname/</KBD
+>
+then <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+> will not work via TCP, but will use default Unix socket.</P
+><P
+><TT
+CLASS="LITERAL"
+>dbmode parameter</TT
+>. You may also select database mode of words storage.
+When "<CODE
+CLASS="OPTION"
+>single</CODE
+>" is specified, all words are stored in the same table (file).
+If "<CODE
+CLASS="OPTION"
+>multi</CODE
+>" is selected, words will be located in different tables (files)
+depending of their lengths. "<CODE
+CLASS="OPTION"
+>multi</CODE
+>" mode is usually faster but requires more
+tables (files).
+If "<CODE
+CLASS="OPTION"
+>crc</CODE
+>" mode is selected, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> will store 32 bit integer
+word IDs calculated by HASH32 algorithm instead of words. This mode requires
+less disk space and it is faster comparing with "single" and "multi" modes,
+however it doesn't support substring searches.
+"<CODE
+CLASS="OPTION"
+>crc-multi</CODE
+>" uses the same storage structure with the "crc" mode, but also
+stores words in different tables (files) depending on words lengths like
+"multi" mode. Default mode is "single".</P
+><P
+><TT
+CLASS="LITERAL"
+>stored parameter</TT
+>. Format:<KBD
+CLASS="USERINPUT"
+>stored=StoredHost[:StoredPort]</KBD
+>.
+This parameter is used to specify host and port, if specified, where <B
+CLASS="COMMAND"
+>stored</B
+> daemon is running, if you plan
+to use document excerpts and cached copies.</P
+><P
+><TT
+CLASS="LITERAL"
+>cached parameter</TT
+>. Format:<KBD
+CLASS="USERINPUT"
+>cached=CachedHost[:CachedPort]</KBD
+>.
+Use <B
+CLASS="COMMAND"
+>cached</B
+> at given host and port if specified.
+It is required for <TT
+CLASS="LITERAL"
+>cache</TT
+> storage mode only (see <A
+HREF="dpsearch-cachemode.en.html"
+>Section 5.2</A
+>&#62;).
+Each <B
+CLASS="COMMAND"
+>indexer</B
+> will connect to <TT
+CLASS="FILENAME"
+>cached</TT
+> on given address at startup.</P
+><P
+><TT
+CLASS="LITERAL"
+>charset parameter</TT
+>. Format:<KBD
+CLASS="USERINPUT"
+>charset=DBCharacterSet</KBD
+>.
+This parameter can be used to specity database connection charset. The charset specified by DBCharacterSet should be equal to
+charset specified by <B
+CLASS="COMMAND"
+>LocalCharset</B
+> command.</P
+><P
+><TT
+CLASS="LITERAL"
+>label parameter</TT
+>. Format: <KBD
+CLASS="USERINPUT"
+>label=DBAlabel</KBD
+>.
+This parameter may be used to assign a label to <B
+CLASS="COMMAND"
+>DBAddr</B
+> command. So, if you pass <CODE
+CLASS="OPTION"
+>label</CODE
+> CGI-variable to 
+the <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>, then only <B
+CLASS="COMMAND"
+>DBAddr</B
+> marked by label value will be used to performing search.
+Thus, you can use one <B
+CLASS="COMMAND"
+>searchd</B
+> daemon to answer queries for several search databases selectible by 
+<CODE
+CLASS="OPTION"
+>label</CODE
+> variable.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>If no <CODE
+CLASS="OPTION"
+>label</CODE
+> is passed as CGI-parameter, then only DBAddr without a <CODE
+CLASS="OPTION"
+>label</CODE
+> will be used
+to perform search query.</P
+></BLOCKQUOTE
+></DIV
+><P
+>Example:
+<PRE
+CLASS="PROGRAMLISTING"
+>DBAddr          mysql://foo:bar@localhost/dpsearch/?dbmode=single</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="VARDIR_CMD"
+>3.10.3. <B
+CLASS="COMMAND"
+>VarDir</B
+> command</A
+></H2
+><A
+NAME="AEN2109"
+></A
+><P
+>You may choose alternative working directory for cache mode:
+<PRE
+CLASS="PROGRAMLISTING"
+>VarDir /usr/local/dpsearch/var</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="NEWSEXTENSIONS_CMD"
+>3.10.4. <B
+CLASS="COMMAND"
+>NewsExtensions</B
+> command</A
+></H2
+><A
+NAME="AEN2117"
+></A
+><P
+>Whether to enable news extensions. Default value is no.
+<PRE
+CLASS="PROGRAMLISTING"
+>NewsExtensions yes</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SYSLOGFACILITY_CMD"
+>3.10.5. <B
+CLASS="COMMAND"
+>SyslogFacility</B
+> command</A
+></H2
+><A
+NAME="AEN2125"
+></A
+><P
+> This is used if <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> was compiled with syslog support and if you
+don't like the default value. Argument is the same as used in <TT
+CLASS="FILENAME"
+>syslog.conf</TT
+>
+file. For list of possible facilities see syslog.conf(5)
+<PRE
+CLASS="PROGRAMLISTING"
+>SyslogFacility local7</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="WORDLENGTHS_CMD"
+>3.10.6. Word length commands</A
+></H2
+><A
+NAME="AEN2134"
+></A
+><A
+NAME="AEN2137"
+></A
+><P
+>Word lengths. You may change default length range of words
+stored in database. By default, words with the length in the
+range from 1 to 32 are stored.
+<PRE
+CLASS="PROGRAMLISTING"
+>MinWordLength 1
+MaxWordLength 32</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXDOCSIZE_CMD"
+>3.10.7. <B
+CLASS="COMMAND"
+>MaxDocSize</B
+> command</A
+></H2
+><A
+NAME="AEN2145"
+></A
+><P
+>This command is used for specify maximal document size.
+Default value 1048576 (1 Megabyte). Takes global effect for whole config file.
+<PRE
+CLASS="PROGRAMLISTING"
+>MaxDocSize 1048576</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MINDOCSIZE_CMD"
+>3.10.8. <B
+CLASS="COMMAND"
+>MinDocSize</B
+> command</A
+></H2
+><A
+NAME="AEN2153"
+></A
+><P
+>This command is used to checkonly urls with content size less than value specified.
+Default value 0. Takes global effect for whole config file.
+<PRE
+CLASS="PROGRAMLISTING"
+>MinDocSize 1024</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="INDEXDOCSIZELIMIT_CMD"
+>3.10.9. <B
+CLASS="COMMAND"
+>IndexDocSizeLimit</B
+> command</A
+></H2
+><A
+NAME="AEN2161"
+></A
+><P
+>Use this command to specify the maximal amount of data stored in index per document.
+Default value 0. This means no limit. Takes effect till next <B
+CLASS="COMMAND"
+>IndexDocSizeLimit</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>IndexDocSizeLimit 65536</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URLSELECTCACHESIZE_CMD"
+>3.10.10. <B
+CLASS="COMMAND"
+>URLSelectCacheSize</B
+> command</A
+></H2
+><A
+NAME="AEN2170"
+></A
+><P
+>Select number of targets to index at once. Default value is 1024.
+<PRE
+CLASS="PROGRAMLISTING"
+>URLSelectCacheSize 10240</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URLDUMPCACHESIZE_CMD"
+>3.10.11. <B
+CLASS="COMMAND"
+>URLDumpCacheSize</B
+> command</A
+></H2
+><A
+NAME="AEN2178"
+></A
+><P
+>Select at once this number of urls to write cache mode indexes, to preload url data or to calculate the Popularity Rank. 
+Default value is 100000.
+<PRE
+CLASS="PROGRAMLISTING"
+>URLDumpCacheSize 10240</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="USECRC32URLID_CMD"
+>3.10.12. <B
+CLASS="COMMAND"
+>UseCRC32URLId</B
+> command</A
+></H2
+><A
+NAME="AEN2186"
+></A
+><P
+>Switch on or off the ID generation for URL using HASH32. 
+Default value is "no".
+<PRE
+CLASS="PROGRAMLISTING"
+>UseCRC32URLId yes</PRE
+></P
+><P
+>Switching it on allow speed up indexing a bit, but some small number of collisions is possible.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HTTPHEADER_CMD"
+>3.10.13. <B
+CLASS="COMMAND"
+>HTTPHeader</B
+> command</A
+></H2
+><A
+NAME="AEN2195"
+></A
+><P
+>You may add desired headers to indexer's HTTP request.
+You should not use "If-Modified-Since", "Accept-Charset" headers,
+these headers are composed by indexer itself.
+"User-Agent: DataparkSearch/version" header is sent too, but you may override it.
+Command has global effect for all configuration file.
+<PRE
+CLASS="PROGRAMLISTING"
+>HTTPHeader "User-Agent: My_Own_Agent"
+HTTPHeader "Accept-Language: ru, en"
+HTTPHeader "From: webmaster@mysite.com"</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALLOW_CMD"
+>3.10.14. <B
+CLASS="COMMAND"
+>Allow</B
+> command</A
+></H2
+><A
+NAME="AEN2203"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Allow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Use this command to allow URLs that match (doesn't match) given argument.
+First three optional parameters describe the type of comparison.
+Default values are Match, NoCase, String.
+Use <CODE
+CLASS="OPTION"
+>NoCase</CODE
+> or <CODE
+CLASS="OPTION"
+>Case</CODE
+> values to choose case sensitive or case insensitive
+comparison.
+Use <CODE
+CLASS="OPTION"
+>Regex</CODE
+> to choose regular expression comparison. 
+Use <CODE
+CLASS="OPTION"
+>String</CODE
+> to choose string with wildcards comparison.
+Wildcards are '*' for any number of characters and '?' for one character.
+Note that '?' and '*' have special meaning in <CODE
+CLASS="OPTION"
+>String</CODE
+> match type. Please use
+<CODE
+CLASS="OPTION"
+>Regex</CODE
+> to describe documents with '?' and '*' signs in URL.
+<CODE
+CLASS="OPTION"
+>String</CODE
+> match is much faster than <CODE
+CLASS="OPTION"
+>Regex</CODE
+>. Use <CODE
+CLASS="OPTION"
+>String</CODE
+> where it 
+is possible.
+You may use several arguments for one <B
+CLASS="COMMAND"
+>Allow</B
+> command.
+You may use this command any times.
+Takes global effect for config file.
+Note that <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> automatically adds one "Allow regex .*"
+command after reading config file. It means that allowed everything
+that is not disallowed.</P
+><P
+>Examples
+<PRE
+CLASS="PROGRAMLISTING"
+>#  Allow everything:
+Allow *
+#  Allow everything but .php .cgi .pl extensions case insensitively using regex:
+Allow NoMatch Regex \.php$|\.cgi$|\.pl$
+#  Allow .HTM extension case sensitively:
+Allow NoCase *.HTM</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DISALLOW_CMD"
+>3.10.15. <B
+CLASS="COMMAND"
+>Disallow</B
+> command</A
+></H2
+><A
+NAME="AEN2224"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Disallow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Use this command to disallow URLs that match (doesn't match) given argument.
+The meaning of first three optional parameters is exactly the same 
+with <B
+CLASS="COMMAND"
+>Allow</B
+> command.
+You can use several arguments for one <B
+CLASS="COMMAND"
+>Disallow</B
+> command.
+Takes global effect for config file.
+Examples:
+<PRE
+CLASS="PROGRAMLISTING"
+># Disallow URLs that are not in udm.net domains using "string" match:
+Disallow NoMatch *.udm.net/*
+# Disallow any except known extensions and directory index using "regex" match:
+Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
+# Exclude cgi-bin and non-parsed-headers using "string" match:
+Disallow */cgi-bin/* *.cgi */nph-*
+# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# special meaning in "string" match, so we have to use "regex" match here:
+Disallow Regex  \?</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHECKONLY_CMD"
+>3.10.16. <B
+CLASS="COMMAND"
+>CheckOnly</B
+> command</A
+></H2
+><A
+NAME="AEN2235"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>CheckOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>The meaning of first three optional parameters is exactly the same 
+with <B
+CLASS="COMMAND"
+>Allow</B
+> command.
+Indexer will use HEAD instead of GET HTTP method for URLs that
+match/do not match given regular expressions. It means that the file 
+will be checked only for being existing and will not be downloaded. 
+Useful for zip,exe,arj and other binary files.
+Note that you can disallow those files with commands given below.
+You may use several arguments for one <B
+CLASS="COMMAND"
+>CheckOnly</B
+> commands.
+Useful for example for searching through the URL names rather than
+the contents (a la FTP-search).
+Takes global effect for config file.
+Examples:
+<PRE
+CLASS="PROGRAMLISTING"
+># Check some known non-text extensions using "string" match:
+CheckOnly *.b	  *.sh   *.md5
+# or check ANY except known text extensions using "regex" match:
+CheckOnly NoMatch Regex \/$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HREFONLY_CMD"
+>3.10.17. <B
+CLASS="COMMAND"
+>HrefOnly</B
+> command</A
+></H2
+><A
+NAME="AEN2246"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>HrefOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>The meaning of first three optional parameters is exactly the same 
+with <B
+CLASS="COMMAND"
+>Allow</B
+> command.
+
+Use this to scan a HTML page for "href" attribute of tags but not to index the contents
+of the page with an URLs that match (doesn't match) given argument.
+Commands have global effect for all configuration file.
+
+When indexing large mail list archives for example, the index and thread
+index pages (like mail.10.html, thread.21.html, etc.) should be scanned 
+for links but shouldn't be indexed:
+<PRE
+CLASS="PROGRAMLISTING"
+>HrefOnly */mail*.html */thread*.html</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHECKMP3_CMD"
+>3.10.18. <B
+CLASS="COMMAND"
+>CheckMp3</B
+> command</A
+></H2
+><A
+NAME="AEN2256"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>CheckMp3 [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]</PRE
+><P
+>The meaning of first three optional parameters is exactly the same 
+with <B
+CLASS="COMMAND"
+>Allow</B
+> command.
+If an URL matches given rules, indexer will download only a little part
+of the document and try to find MP3 tags in it. On success, indexer
+will parse MP3 tags, else it will download whole document then parse
+it as usual.
+Notes:
+This works only with those servers which support HTTP/1.1 protocol.
+It is used "Range: bytes" header to download mp3 tag.
+<PRE
+CLASS="PROGRAMLISTING"
+>CheckMp3 *.bin *.mp3</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHECKMP3ONLY_CMD"
+>3.10.19. <B
+CLASS="COMMAND"
+>CheckMp3Only</B
+> command</A
+></H2
+><A
+NAME="AEN2266"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>CheckMP3Only [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]</PRE
+><P
+>The meaning of first three optional parameters is exactly the same 
+with <B
+CLASS="COMMAND"
+>Allow</B
+> command.
+If an URL matches given rules, indexer, like in the case <B
+CLASS="COMMAND"
+>CheckMP3</B
+> command,
+will download only a little part of the document and try to find MP3 tags.
+On success, indexer will parse MP3 tags, else it will NOT download whole 
+document.
+<PRE
+CLASS="PROGRAMLISTING"
+>CheckMP3Only *.bin *.mp3</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="INDEXIF_CMD"
+>3.10.20. <B
+CLASS="COMMAND"
+>IndexIf</B
+> command</A
+></H2
+><A
+NAME="AEN2277"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>IndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Use this command to allow indexing, if the value of <CODE
+CLASS="OPTION"
+>section</CODE
+> match the <CODE
+CLASS="OPTION"
+>arg</CODE
+> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <B
+CLASS="COMMAND"
+>Allow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;).</P
+><P
+>Example
+<PRE
+CLASS="PROGRAMLISTING"
+>IndexIf regex Title Manual
+IndexIf body "*important detail*"</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="NOINDEXIF_CMD"
+>3.10.21. <B
+CLASS="COMMAND"
+>NoIndexIf</B
+> command</A
+></H2
+><A
+NAME="AEN2291"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>NoIndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Use this command to disallow indexing, if the value of <CODE
+CLASS="OPTION"
+>section</CODE
+> match the <CODE
+CLASS="OPTION"
+>arg</CODE
+> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <B
+CLASS="COMMAND"
+>Allow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;).</P
+><P
+>Example
+<PRE
+CLASS="PROGRAMLISTING"
+>NoIndexIf regex Title Sex
+IndexIf body *xxx*</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOLDBADHREFS_CMD"
+>3.10.22. <B
+CLASS="COMMAND"
+>HoldBadHrefs</B
+> command</A
+></H2
+><A
+NAME="AEN2305"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>HoldBadHrefs &lt;time&gt;</PRE
+><P
+>How much time to hold URLs with erroneous status before deleting them
+from the database. For example, if host is down, indexer will not delete
+pages from this site immediately and search will use previous content
+of these pages. However if site doesn't respond for a month, probably 
+it's time to remove these pages from the database.
+For &lt;time&gt; format see description of <B
+CLASS="COMMAND"
+>Period</B
+> command in <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.
+<PRE
+CLASS="PROGRAMLISTING"
+>HoldBadHrefs 30d</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DELETEOLDER_CMD"
+>3.10.23. <B
+CLASS="COMMAND"
+>DeleteOlder</B
+> command</A
+></H2
+><A
+NAME="AEN2316"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>DeleteOlder &lt;time&gt;</PRE
+><P
+>How much time to hold URLs before deleting them from the database. For example, 
+for news sites indexing, you may delete automatically old news articles after specified period.
+For &lt;time&gt; format see description of <B
+CLASS="COMMAND"
+>Period</B
+> command in <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.
+Default value is 0. "0" value mean "do not check". You may specify several <B
+CLASS="COMMAND"
+>DeleteOlder</B
+> commands,
+for example, by one for every <B
+CLASS="COMMAND"
+>Server</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>DeleteOlder 7d</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="USEREMOTECONTENTTYPE_CMD"
+>3.10.24. <B
+CLASS="COMMAND"
+>UseRemoteContentType</B
+> command</A
+></H2
+><A
+NAME="AEN2329"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>UseRemoteContentType yes/no</PRE
+><P
+>This command specifies if the indexer should get content type
+from http server headers (yes) or from it's AddType settings (no).
+If set to 'no' and the indexer could not determine content-type
+by using its AddType settings, then it will use http header.
+Default: yes
+<PRE
+CLASS="PROGRAMLISTING"
+>UseRemoteContentType yes</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ADDTYPE_CMD"
+>3.10.25. <B
+CLASS="COMMAND"
+>AddType</B
+> command</A
+></H2
+><A
+NAME="AEN2338"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>AddType [String|Regex] [Case|NoCase] &lt;mime type&gt; &lt;arg&gt; [&lt;arg&gt;...]</PRE
+><P
+>This command associates filename extensions (for services
+that don't automatically include them) with their mime types.
+Currently "file:" protocol uses these commands.
+Use optional first two parameter to choose comparison type.
+Default type is "String" "Case" (case insensitive string match with
+'?' and '*' wildcards for one and several characters correspondently).
+<PRE
+CLASS="PROGRAMLISTING"
+>AddType image/x-xpixmap	*.xpm</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PERIOD_CMD"
+>3.10.26. <B
+CLASS="COMMAND"
+>Period</B
+> command</A
+></H2
+><A
+NAME="AEN2347"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Period &lt;time&gt;</PRE
+><P
+>Set reindex period.
+&lt;time&gt; is in the form 'xxxA[yyyB[zzzC]]'                                   
+ (Spaces are allowed between xxx and A and yyy and so on)                     
+   there xxx, yyy, zzz are numbers (can be negative!)                         
+         A, B, C can be one of the following:                                 
+		s - second                                                      
+		M - minute                                                      
+		h - hour                                                        
+		d - day                                                         
+		m - month                                                       
+		y - year
+      (these letters are the same as in strptime/strftime functions).
+
+Examples:
+<PRE
+CLASS="PROGRAMLISTING"
+> 15s - 15 seconds
+ 4h30M - 4 hours and 30 minutes
+ 1y6m-15d - 1 year and six month minus 15 days
+ 1h-10M+1s - 1 hour minus 10 minutes plus 1 second</PRE
+></P
+><P
+> If you specify only number without any character, it is assumed
+ that time is given in seconds.
+
+ Can be set many times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+ takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>Period</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>Period 7d</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PERIODBYHOPS_CMD"
+>3.10.27. <B
+CLASS="COMMAND"
+>PeriodByHops</B
+> command</A
+></H2
+><A
+NAME="AEN2360"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>PeriodByHops &lt;hops&gt; [ &lt;time&gt; ]</PRE
+><P
+>Set reindex period per &lt;hops&gt; basis. The format for &lt;time&gt; is the same as for <B
+CLASS="COMMAND"
+>Period</B
+>.</P
+><P
+>Can be set many times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>PeriodByHops</B
+> command with same &lt;hops&gt; value.
+If  &lt;time&gt; parameter is omitted, this undefine the previous defined value.</P
+><P
+>If for given &lt;hops&gt; value the appropriate <B
+CLASS="COMMAND"
+>PeriodByHops</B
+> command is not specified, in this case the value
+defined in <B
+CLASS="COMMAND"
+>Period</B
+> command is used.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="EXPIREAT_CMD"
+>3.10.28. <B
+CLASS="COMMAND"
+>ExpireAt</B
+> command</A
+></H2
+><A
+NAME="AEN2375"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>ExpireAt [ A [ B [ C [ D [ E ]]]]]</PRE
+><P
+>This command allow specify the exactly expiration time for documents. 
+May be specified per Server/Realm basis and takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>ExpireAt</B
+> command.
+<B
+CLASS="COMMAND"
+>ExpireAt</B
+> specified without any arguments disable previously specified value.
+A - stand for minute, may be * or 0-59; B - stand for hour, may be * or 0-23; C - stand for day of month, may be * or 1-31;
+D - stand for month, may be * or 1-12; E - stand for day of week, may be * or 0-6, 0 - is Sunday.
+<B
+CLASS="COMMAND"
+>ExpireAt</B
+> command have higher prioroty over <B
+CLASS="COMMAND"
+>Period</B
+> or <B
+CLASS="COMMAND"
+>PeriodByHops</B
+> command.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="USEDATEHEADER_CMD"
+>3.10.29. <B
+CLASS="COMMAND"
+>UseDateHeader</B
+> command</A
+></H2
+><A
+NAME="AEN2388"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>UseDateHeader yes|no|force</PRE
+><P
+>Use Date header if no Last-Modified header is sent by remote web-server. The value "force" instructs to use Date header even if Last-Modified header has been sent by remote server.
+Default value: no.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXHOPS_CMD"
+>3.10.30. <B
+CLASS="COMMAND"
+>MaxHops</B
+> command</A
+></H2
+><A
+NAME="AEN2396"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxHops &lt;number&gt;</PRE
+><P
+>It limits the length of a way from a seeding URL to the indexing one in "mouse clicks".
+Default value is 256.
+Can be set multiple times before "Server" command and it takes effect till the end of config file or till next MaxHops command.
+<PRE
+CLASS="PROGRAMLISTING"
+>MaxHops 256</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TARCKHOPS_CMD"
+>3.10.31. <B
+CLASS="COMMAND"
+>TrackHops</B
+> command</A
+></H2
+><A
+NAME="AEN2405"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>TrackHops yes|no</PRE
+><P
+>This command enable or disable hops tracking in reindexing.
+Default value is no.
+If enabled, the value of hops for url is recalculated when reindexing.
+Otherwise the value of hops is calculated only once at insertion of url into database.
+<PRE
+CLASS="PROGRAMLISTING"
+>TrackHops yes</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXDEPTH_CMD"
+>3.10.32. <B
+CLASS="COMMAND"
+>MaxDepth</B
+> command</A
+></H2
+><A
+NAME="AEN2414"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxDepth &lt;number&gt;</PRE
+><P
+>It limits the directory depth of an URL indexed.
+Default value is 16.
+Can be set multiple times before "Server" command and
+takes effect till the end of config file or till next MaxDepth command.
+<PRE
+CLASS="PROGRAMLISTING"
+>MaxDepth 2</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXDOCSPERSERVER_CMD"
+>3.10.33. <B
+CLASS="COMMAND"
+>MaxDocsPerServer</B
+> command</A
+></H2
+><A
+NAME="AEN2423"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxDocsPerServer &lt;number&gt;</PRE
+><P
+>Limits the number of hrefs accepted from a Server.
+Default value is -1, that means no limits.
+If set to positive value, no more than given number of pages will be
+indexed from one server during this run of index.
+Can be set multiple times before <B
+CLASS="COMMAND"
+>Server</B
+> command and takes effect
+till the end of config file or till next <B
+CLASS="COMMAND"
+>MaxDocsPerServer</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>MaxDocsPerServer 100</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXHREFSPERSERVER_CMD"
+>3.10.34. <B
+CLASS="COMMAND"
+>MaxHrefsPerServer</B
+> command</A
+></H2
+><A
+NAME="AEN2434"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxHrefsPerServer &lt;number&gt;</PRE
+><P
+>Limits the number of documents retrieved from a Server.
+Default value is -1, that means no limits.
+If set to positive value, no more than given number of hrefs will be picked up from one server during this run of index.
+Can be set multiple times before <B
+CLASS="COMMAND"
+>Server</B
+> command and takes effect
+till the end of config file or till next <B
+CLASS="COMMAND"
+>MaxHrefsPerServer</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>MaxHrefsPerServer 100</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXNETERRORS_CMD"
+>3.10.35. <B
+CLASS="COMMAND"
+>MaxNetErrors</B
+> command</A
+></H2
+><A
+NAME="AEN2445"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxNetErrors &lt;number&gt;</PRE
+><P
+>Maximum network errors for each server.
+Default value is 16. Use 0 for unlimited errors number.
+If there too many network errors on some server 
+(server is down, host unreachable, etc) <B
+CLASS="COMMAND"
+>indexer</B
+> will try to do 
+not more then <CODE
+CLASS="OPTION"
+>'number'</CODE
+> attempts to connect to this server.
+Takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>MaxNetErrors</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>MaxNetErrors 16</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="READTIMEOUT_CMD"
+>3.10.36. <B
+CLASS="COMMAND"
+>ReadTimeOut</B
+> command</A
+></H2
+><A
+NAME="AEN2457"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>ReadTimeOut &lt;time&gt;</PRE
+><P
+>Connect timeout and stalled connections timeout.
+For <CODE
+CLASS="OPTION"
+>&lt;time&gt;</CODE
+> format see <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.
+Default value is 30 seconds.
+Can be set any times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>ReadTimeOut</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>ReadTimeOut 30s</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DOCTIMEOUT_CMD"
+>3.10.37. <B
+CLASS="COMMAND"
+>DocTimeOut</B
+> command</A
+></H2
+><A
+NAME="AEN2470"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>DocTimeOut &lt;time&gt;</PRE
+><P
+>Maximum amount of time indexer spends for one document downloading.
+For <CODE
+CLASS="OPTION"
+>&lt;time&gt;</CODE
+> format see <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.
+Default value is 90 seconds.
+Can be set any times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>DocTimeOut</B
+> command.
+<PRE
+CLASS="PROGRAMLISTING"
+>DocTimeOut 1m30s</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="NETERRORDELAYTIME_CMD"
+>3.10.38. <B
+CLASS="COMMAND"
+>NetErrorDelayTime</B
+> command</A
+></H2
+><A
+NAME="AEN2483"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>NetErrorDelayTime &lt;time&gt;</PRE
+><P
+>Specify document processing delay time if network error has occurred.
+For <CODE
+CLASS="OPTION"
+>&lt;time&gt;</CODE
+> format see <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.
+Default value is one day
+<PRE
+CLASS="PROGRAMLISTING"
+>NetErrorDelayTime 1d</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="COOKIES_CMD"
+>3.10.39. <B
+CLASS="COMMAND"
+>Cookies</B
+> command</A
+></H2
+><A
+NAME="AEN2494"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Cookies yes/no</PRE
+><P
+>Enables/Disables the support for HTTP cookies.
+Command may be used several times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>Cookies</B
+> command.
+Default value is "no".
+<PRE
+CLASS="PROGRAMLISTING"
+>Cookies yes</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SECTION_CMD"
+>3.10.40. <B
+CLASS="COMMAND"
+>Section</B
+> command</A
+></H2
+><A
+NAME="AEN2505"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Section &lt;string&gt; &lt;number&gt; &lt;maxlen&gt; [strict] [ &lt;pattern&gt; &lt;replacement&gt; ]</PRE
+><P
+>where <CODE
+CLASS="OPTION"
+>&lt;string&gt;</CODE
+> is a section name and <CODE
+CLASS="OPTION"
+>&lt;number&gt;</CODE
+> is section ID
+between 0 and 255. Use 0 if you don't want to index some of 
+these sections. It is better to use different IDs
+for different sections. In this case during search 
+time you'll be able to give different weight to each section
+or even disallow some sections at a search time.
+<CODE
+CLASS="OPTION"
+>&lt;maxlen&gt;</CODE
+> argument contains a maximum length of section
+which will be stored in database. Use 0 for <CODE
+CLASS="OPTION"
+>&lt;maxlen&gt;</CODE
+>, if you don't want to store this section.
+<CODE
+CLASS="OPTION"
+>&lt;pattern&gt;</CODE
+> and <CODE
+CLASS="OPTION"
+>&lt;replacement&gt;</CODE
+> are a regex-like
+pattern and replacement to extract section value from document content.</P
+><P
+>You can specify <CODE
+CLASS="OPTION"
+>strict</CODE
+> option to set strict string tokenization for a section, which mean word break 
+at any non-character symbol despite the context. It's useful, for example, in indexing of URL, where hyphen, the character, 
+uses as delimiter between words.</P
+><P
+>You can specify <CODE
+CLASS="OPTION"
+>single</CODE
+> option for a single value section, for which any second value will be skipped in processing. This is useful, for example, to clean up
+titles of pages with frames or to remove doubled titles when <SPAN
+CLASS="APPLICATION"
+>libextractor</SPAN
+> is used.</P
+><PRE
+CLASS="PROGRAMLISTING"
+># Standard HTML sections: body, title
+Section	body			1	256
+Section title			2	128
+# strict tokenization for URL
+Section url                     3       0 strict
+# regex-pattern for a section
+Section GoodName                4       128 "&lt;h1&gt;([^&lt;]*)&lt;/h1&gt;" "&lt;b&gt;GoodName:&lt;/b&gt; $1"</PRE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HREFSECTION_CMD"
+>3.10.41. <B
+CLASS="COMMAND"
+>HrefSection</B
+> command</A
+></H2
+><A
+NAME="AEN2525"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>HrefSection &lt;string&gt; [ &lt;pattern&gt; &lt;replacement&gt; ]</PRE
+><P
+>where <CODE
+CLASS="OPTION"
+>&lt;string&gt;</CODE
+> is a section name,
+<CODE
+CLASS="OPTION"
+>&lt;pattern&gt;</CODE
+> and <CODE
+CLASS="OPTION"
+>&lt;replacement&gt;</CODE
+> are a regex-like
+pattern and replacement to extract section value from document content.
+Use this command to extract links from document content.
+<PRE
+CLASS="PROGRAMLISTING"
+># Standard HTML sections: body, title
+HrefSection	link
+HrefSection     NewLink "&lt;newlink&gt;([^&lt;]*)&lt;/newlink&gt;" "$1"</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FASTHREFCHECK"
+>3.10.42. <B
+CLASS="COMMAND"
+>FastHrefCheck</B
+> command</A
+></H2
+><A
+NAME="AEN2537"
+></A
+><P
+>The "<B
+CLASS="COMMAND"
+>FastHrefCheck yes</B
+>" command is useful to speed-up the indexing when you have a huge list of <B
+CLASS="COMMAND"
+>Server/Realm/Subnet</B
+> commands as 
+it disables the href checking against server list during parsing.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="INDEX_CMD"
+>3.10.43. <B
+CLASS="COMMAND"
+>Index</B
+> command</A
+></H2
+><A
+NAME="AEN2546"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Index yes/no</PRE
+><P
+>Prevent indexer from storing words into database.
+Useful for example for link validation.
+Can be set multiple times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>Index</B
+> command.
+Default value is "yes".
+<PRE
+CLASS="PROGRAMLISTING"
+>Index no</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PROXYAUTHBASIC_CMD"
+>3.10.44. <B
+CLASS="COMMAND"
+>ProxyAuthBasic</B
+> command</A
+></H2
+><A
+NAME="AEN2557"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>ProxyAuthBasic login:passwd</PRE
+><P
+>Use http proxy basic authorization.
+Can be used before every <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect only for next one <B
+CLASS="COMMAND"
+>Server</B
+> command!
+It should be also before <B
+CLASS="COMMAND"
+>Proxy</B
+> command.
+Examples:
+<PRE
+CLASS="PROGRAMLISTING"
+>ProxyAuthBasic somebody:something  </PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PROXY_CMD"
+>3.10.45. <B
+CLASS="COMMAND"
+>Proxy</B
+> command</A
+></H2
+><A
+NAME="AEN2569"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Proxy your.proxy.host[:port]</PRE
+><P
+>Use proxy rather then connect directly.
+One can index ftp servers when using proxy
+Default port value if not specified is 3128 (Squid)
+If proxy host is not specified direct connect will be used.
+Can be set before every <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>Proxy</B
+> command.
+If no one <B
+CLASS="COMMAND"
+>Proxy</B
+> command specified indexer will use direct connect.
+Examples:
+<PRE
+CLASS="PROGRAMLISTING"
+>#           Proxy on atoll.anywhere.com, port 3128:
+Proxy atoll.anywhere.com
+#           Proxy on lota.anywhere.com, port 8090:
+Proxy lota.anywhere.com:8090
+#           Disable proxy (direct connect):
+Proxy</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AUTHBASIC_CMD"
+>3.10.46. <B
+CLASS="COMMAND"
+>AuthBasic</B
+> command</A
+></H2
+><A
+NAME="AEN2581"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>AuthBasic login:passwd</PRE
+><P
+>Use basic http authorization.
+Can be set before every <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect only for next one <B
+CLASS="COMMAND"
+>Server</B
+> command!
+Examples:
+<PRE
+CLASS="PROGRAMLISTING"
+>AuthBasic somebody:something  
+
+# If you have password protected directory(-ies), but whole server is open,use:
+AuthBasic login1:passwd1
+Server http://my.server.com/my/secure/directory1/
+AuthBasic login2:passwd2
+Server http://my.server.com/my/secure/directory2/
+Server http://my.server.com/</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SERVERWEIGHT_CMD"
+>3.10.47. <B
+CLASS="COMMAND"
+>ServerWeight</B
+> command</A
+></H2
+><A
+NAME="AEN2592"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>ServerWeight &lt;number&gt;</PRE
+><P
+>Server weight for Popularity Rank calculation (see <A
+HREF="dpsearch-rel.en.html#POPRANK"
+>Section 8.5.3</A
+>&#62;). Default value is 1.
+<PRE
+CLASS="PROGRAMLISTING"
+>ServerWeight 1</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="OPTIMIZEATUPDATE_CMD"
+>3.10.48. <B
+CLASS="COMMAND"
+>OptimizeAtUpdate</B
+> command</A
+></H2
+><A
+NAME="AEN2602"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>OptimizeAtUpdate yes</PRE
+><P
+>Specify word index optimize strategy. Default value: no
+If enabled, this save disk space, but slow down indexing.
+May be placed in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>cached.conf</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SKIPUNREFERRED_CMD"
+>3.10.49. <B
+CLASS="COMMAND"
+>SkipUnreferred</B
+> command</A
+></H2
+><A
+NAME="AEN2612"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>SkipUnreferred yes|no|del</PRE
+><P
+>Default value: no. Use this command to skip reindexing or delete unreferred documents.
+An unreferred document is a document with no links to it.
+This command require the links collection to be enabled (see <A
+HREF="dpsearch-rel.en.html#POPRANK"
+>Section 8.5.3</A
+>&#62;).</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BIND_CMD"
+>3.10.50. <B
+CLASS="COMMAND"
+>Bind</B
+> command</A
+></H2
+><A
+NAME="AEN2621"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Bind 127.0.0.1</PRE
+><P
+>You may use this command to specify local ip address, if your system have several network interfaces.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PROVIDEREF_CMD"
+>3.10.51. <B
+CLASS="COMMAND"
+>ProvideReferer</B
+> command</A
+></H2
+><A
+NAME="AEN2629"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>ProvideReferer yes</PRE
+><P
+>Use this command to provide <TT
+CLASS="LITERAL"
+>Referer:</TT
+> request header for HTTP and HTTPS connections.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LONGESTTEXTITEMS_CMD"
+>3.10.52. <B
+CLASS="COMMAND"
+>LongestTextItems</B
+> command</A
+></H2
+><A
+NAME="AEN2638"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>LongestTextItems 4</PRE
+><P
+>Use this command to specify the number of longest text items to index.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MKPREFIX-CMD"
+>3.10.53. <B
+CLASS="COMMAND"
+>MakePrefixes</B
+> command</A
+></H2
+><A
+NAME="AEN2644"
+></A
+><P
+>With <B
+CLASS="COMMAND"
+>MakePrefixes yes</B
+> command you can instruct <B
+CLASS="COMMAND"
+>indexer</B
+> to produce automatically all prefixes for words indexed.
+This is suitable, for example, for making search suggestions.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-pars.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-extended-indexing.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>External parsers</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Extended indexing features</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

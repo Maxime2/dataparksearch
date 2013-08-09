@@ -1,0 +1,228 @@
+<sect1 id="general">
+	<title>Indexing in general</title>
+	<sect2 id="general-conf">
+		<title>Configuration</title>
+		<para>First, you should configure <application>DataparkSearch</application>. Indexer
+configuration is covered mostly by
+<filename>indexer.conf-dist</filename> file. You can find it in
+<literal>etc</literal> directory of <application>DataparkSearch</application> distribution. You may
+take a look at other *.conf samples in <literal>doc/samples</literal>
+directory. </para>
+
+		<para>To set up <filename>indexer.conf</filename>
+file, change directory to <application>DataparkSearch</application> installation <literal>/etc</literal>
+directory, copy <filename>indexer.conf-dist</filename> to
+<filename>indexer.conf</filename> and edit it.</para>
+
+		<para>To configure search front-ends
+(<filename>search.cgi</filename> and/or
+<filename>search.php3</filename>, or other), you should copy <filename>search.htm-dist</filename> file in /etc directory 
+of <application>DataparkSearch</application> 
+installation to <filename>search.htm</filename> and edit it. See <xref linkend="templates"/> for detailed description.</para>
+
+	</sect2>
+	<sect2 id="general-run">
+		<title>Running <command>indexer</command></title>
+		<para>Just run indexer once a week (a day, an hour
+...) to find the latest modifications in your web sites. You may also
+insert indexer into your <literal>crontab</literal> job.</para>
+
+<indexterm><primary>Command</primary><secondary>Period</secondary></indexterm>
+		<para>By default, indexer being called without any
+command line arguments reindex only expired documents. You can change
+expiration period with <command>Period</command>
+
+			<filename>indexer.conf</filename> command. If
+you want to reindex all documents irrelevant if those are expired or
+not, use <option>-a</option> option. indexer will mark all documents
+as expired at startup. </para>
+
+		<para>Retrieving documents, indexer sends
+<literal>If-Modified-Since</literal> HTTP header for documents that
+are already stored in database. When indexer gets  next document it
+calculates document's checksum. If checksum is the same with old
+checksum stored in database, it will not parse document again. indexer
+<option>-m</option> command line option prevents indexer from sending
+<literal>If-Modified-Since</literal> headers and make it parse
+document even if checksum is the same. It is useful for example when
+you have changed your <command>Allow/Disallow</command> rules in
+<filename>indexer.conf </filename> and it is required to add new pages
+that was disallowed earlier.</para>
+
+		<para>If <application>DataparkSearch</application> retrieves URL with redirect HTTP
+301,302,303 status it will index URL given in
+<literal>Location:</literal> field of HTTP-header instead.</para>
+
+	</sect2>
+
+	<sect2 id="general-create-tables">
+		<title>How to create SQL table structure</title>
+<indexterm><primary>Creating SQL table structure</primary></indexterm>
+
+		<para>To create SQL tables required for 
+<application>DataparkSearch</application> functionality, 
+use <literal>indexer -Ecreate</literal>. Executed with this argument, 
+indexer looks up a file containing SQL statements necessary for creating
+all SQL tables for the database type and storage mode given
+in <command>DBAddr</command> <filename>indexer.conf</filename> command. 
+Files are looking up at <filename>/share</filename> directory of 
+<application>DataparkSearch</application> installation, which is usually 
+<filename>/usr/local/dpsearch/share/</filename>. </para>
+	</sect2>
+
+	<sect2 id="general-drop-tables">
+		<title>How to drop SQL table structure</title>
+<indexterm><primary>Dropping SQL table structure</primary></indexterm>
+
+		<para>To drop all SQL tables created by 
+<application>DataparkSearch</application>,  use <literal>indexer -Edrop</literal>. 
+A file with SQL statements required to drop tables are looking up at 
+<filename>/share</filename> directory of <application>DataparkSearch</application>
+installation.</para>
+	</sect2>
+
+	<sect2 id="general-subsect">
+		<title>Subsection control</title>
+		<para>indexer has -t, -u, -s options to limit action
+to only a part of the database. -t corresponds 'Tag' limitation, -u is
+a URL substring limitation (SQL LIKE wildcards). -s limits URLs with
+given HTTP status. All limit options in the same group are ORed and in
+the different groups are ANDed.</para>
+
+	</sect2>
+	<sect2 id="general-cleardb">
+		<title>How to clear database</title>
+<indexterm><primary>Clear database</primary></indexterm>
+
+		<para>To clear the whole database, use 'indexer
+-C'. You may also delete only the part of database by using -t,-u,-s
+subsection control options.</para>
+
+	</sect2>
+	<sect2 id="general-dbstat">
+		<title>Database Statistics</title>
+<indexterm><primary>Database statistics</primary></indexterm>
+
+		<para>If you run <literal>indexer -S</literal>, it
+will show database statistics, including count of total and expired
+documents of each status. -t, -u, -s filters are usable in this mode
+too.</para>
+
+		<para>The meaning of status is:</para>
+		<itemizedlist>
+			<listitem>
+				<para>0 - new (not indexed yet) URL</para>
+			</listitem>
+		</itemizedlist>
+		<para>If status is not 0, then it is HTTP response code, some of the HTTP codes are:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<literal>200</literal> - "OK" (url is successfully indexed)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>206</literal> - "Partial OK" (a part of url is successfully indexed)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>301</literal> - "Moved Permanently" (redirect to another URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>302</literal> - "Moved Temporarily" (redirect to another URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>303</literal> - "See Other" (redirect to another URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>304</literal> - "Not modified" (url has not been modified since last indexing)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>401</literal> - "Authorization required" (use login/password for given URL)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>403</literal> - "Forbidden" (you have no access to this URL(s))</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>404</literal> - "Not found" (there were references to URLs that do not exist)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>500</literal> - "Internal Server Error" (error in cgi, etc)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>503</literal> - "Service Unavailable" (host is down, connection timed out)</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>504</literal> - "Gateway Timeout" (read timeout when retrieving document)</para>
+			</listitem>
+		</itemizedlist>
+		<para id="authbasic">
+<indexterm><primary>Command</primary><secondary>AuthBasic</secondary></indexterm>
+			<literal>HTTP 401</literal> means that this
+URL is password protected. You can use <command>AuthBasic</command>
+command in <filename>indexer.conf</filename> to set
+<literal>login:password</literal> for this URL(s).</para>
+
+		<para>
+			<literal>HTTP 404</literal> means that you
+have incorrect reference in one of your document (reference to
+resource that does not exist).</para>
+
+		<para>Take a look on <ulink
+					    url="http://www.w3.org/Protocols/">HTTP specific documentation</ulink> for further explanation of different HTTP status codes.</para>
+
+<para>Status codes <literal>2xxx</literal> are not in HTTP specification and they correspond to the documents marked as clones, 
+where <literal>xxx</literal> - one of status codes described above.
+</para>
+
+	</sect2>
+	<sect2 id="general-linkval">
+		<title>Link validation</title>
+<indexterm><primary>Link validation</primary></indexterm>
+
+		<para>Being started with -I command line argument,
+indexer displays URL and it's referrer pairs. It is very useful to
+find bad links on your site. Don't use <command>HoldBadHrefs 0</command>
+command in <filename>indexer.conf</filename> for this
+mode. You may use subsection  control options -t,-u,-s in this
+mode. For example, <literal>indexer -I -s 404</literal> will display
+all 'Not found' URLs with referrers where links to those bad documents
+are found. Setting relevant <filename>indexer.conf</filename> commands
+and command line options you may use <application>DataparkSearch</application> special for site
+validation purposes.</para>
+
+	</sect2>
+	<sect2 id="general-parallel">
+		<title>Parallel indexing</title>
+<indexterm><primary>Parallel indexing</primary></indexterm>
+
+		<para>It is possible to run several
+indexers simultaneously with the same <filename>indexer.conf</filename> file. We have
+successfully tested 30 simultaneous indexers with <application>MySQL</application>
+database. By default, <command>indexer</command> marks documents selected for indexing as expired in 4 hours in the future to avoid
+double indexing of the same URL by different indexer. However this is not gives 100% garantee of avoiding such duplication.
+You may use multi-threaded version of indexer
+with any SQL  back-end though which does support several simultaneous
+connections. Multi-threaded indexer version uses own locking
+mechanism.</para>
+
+		<para>It is not recommended to use the same database
+with different <filename>indexer.conf</filename> files! First process
+could add something but second could delete it, and it may never
+stop.</para>
+
+		<para>On the other hand, you may run several indexer
+processes with different databases with ANY supported SQL
+back-end.</para>
+
+	</sect2>
+</sect1>

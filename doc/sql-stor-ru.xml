@@ -1,0 +1,89 @@
+<sect1 id="sql-stor">
+	<title>SQL режимы хранения</title>
+	<sect2 id="sql-stor-general">
+		<title>Общая инфоромация о хранении</title>
+		<para><application>DataparkSearch</application> сохраняет в базе каждое найденное на страницах слово
+вместе с номером секции документа, в которой найдено это слово, а также с номером позиции слова в документе. 
+Число появлений каждого слова в документе не влияет на релевантность. Однако номер секции документа, в которой встречается слово,
+может влиять на релевантность.
+</para>
+
+	</sect2>
+	<sect2 id="sql-stor-modes">
+		<title>Разнообразные способы хранения слов</title>
+		<para>На данный момент <application>DataparkSearch</application> поддерживает следующие способы хранения слов
+для SQL серверов:
+"single", "multi", "crc", "crc-multi", "cache". Режимом по умолчанию является "cache". Способ задаётся параметром
+ <option>dbmode</option> команды <command>DBAddr</command>, указываемой в файлах конфигурации
+<filename>indexer.conf</filename> и <filename>search.htm</filename>.</para>
+
+		<programlisting>
+Примеры:
+DBAddr mysql://localhost/search/?dbmode=single
+DBAddr mysql://localhost/search/?dbmode=multi
+DBAddr mysql://localhost/search/?dbmode=crc
+DBAddr mysql://localhost/search/?dbmode=crc-multi
+</programlisting>
+
+	</sect2>
+
+	<sect2 id="sql-stor-single">
+		<title>Способ хранения single
+                 <indexterm><primary>Способы хранения</primary><secondary>single</secondary></indexterm>
+                </title>
+		<para>Если указан режим хранения "single", все слова сохраняются в одной таблице (или текстовом файле, для
+втсроенной базы данных) со структурой (url_id,word,weight), где url_id - идентификатор документа, равный значению поля rec_id
+таблицы "url". Word имеет SQL тип <literal>variable char(32)</literal>.</para>
+	</sect2>
+
+	<sect2 id="sql-stor-multi">
+		<title>Способ хранения multi
+                 <indexterm><primary>Способы хранения</primary><secondary>multi</secondary></indexterm>
+                </title>
+		<para>Если выбран способ хранения "multi", слова будут сохранены в 13 различных таблицах, в зависимости от их длины.
+Структура этих таблиц идентична структуре таблицы для способа хранения "single", только для Word используется тип char фиксированной длины,
+что даёт выигрыш в скорости для большинства баз данных. Это делает режим "multi" более быстрым, по сравнению с "single".
+Этот режим не реализован для встроенной базы данных.</para>
+	</sect2>
+
+	<sect2 id="sql-stor-crc">
+		<title>Способ хранения crc
+                 <indexterm><primary>Способы хранения</primary><secondary>crc</secondary></indexterm>
+                </title>
+		<para>Если выбран способ хранения "crc", <application>DataparkSearch</application>
+вместо слов будет сохранять их индентификатора, вычесленные как CRC32 сумма от этих слов.
+Этот режим хранения использует меньше дискового пространства и работает быстрее способов хранения "single" и "multi".
+Наши тесты показали, что только 250 пар слов из списка в 1.600.000 уникальных слов имеют одинаковую CRC32 сумму.
+Большая часть этих пар (&gt;90%) содержит по меньшей мере одно слово с ошибкой. Инфоромация о каждом слове хранится в следующей
+структуре (url_id,word_id,weight), где word_id - 32-битовый идентификатор слова, посчитаный как его CRC32 сумма.
+Этот режим хранения рекомендуется для больших поисковиков.</para>
+	</sect2>
+
+	<sect2 id="sql-stor-crcmulti">
+		<title>Способ хранения crc-multi
+                 <indexterm><primary>Способы хранения</primary><secondary>crc-multi</secondary></indexterm>
+                </title>
+		<para>Если выбран способ хранения "crc-multi", <application>DataparkSearch</application>
+хранит CRC32 идентификаторы  в нескольких таблицах (или двоичных файлах для встроенной базы данных) с такой же структурой, как и для
+способа хранения "crc", и в зависимости от лины слова, как при режиме 
+хранения "multi". Обычно это самый быстрый способ и рекомендован для больших поисковиков.</para>
+	</sect2>
+
+	<sect2 id="sql-stor-structure">
+		<title>Замечание о стуктуре таблиц для SQL серверов</title>
+		<para>Учтите, что мы разрабатываем <application>DataparkSearch</application> с использованием
+<application>PostgreSQL</application> в качестве SQL сервера и зачастую не имеем возможности тестировать каждую новую версию
+со всеми поддерживаемыми базами данных. Т.е., если для вашей базы данных нет соответсвующей структуры таблиц в
+директории <filename>create/you_database</filename>, возьмите в качестве образца структуру для <application>PostgreSQL</application>
+и создайте по аналогии структуру для вашей базы данных. Структура для <application>PostgreSQL</application>
+всегда поддерживается в обновлённом состоянии.</para>
+	</sect2>
+
+	<sect2 id="sql-stor-noncrc">
+		<title>Дополнительные возможности не-CRC режимов хранения</title>
+		<para>Режимы хранения <literal>single</literal> и <literal>multi</literal> поддерживают поиск подстрок. 
+Т.к. при использовании режимов хранения <literal>crc</literal> и <literal>crc-multi</literal>
+хранятся не слова сами по себе, а только их CRC-идентификаторы, то осуществить поиск подстрок не представляется возможным.</para>
+	</sect2>
+
+</sect1>

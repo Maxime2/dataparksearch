@@ -1,0 +1,109 @@
+<sect1 id="cjk">
+	<title>Segmenters for Chinese, Japanese, Korean and Thai languages</title>
+
+<para>Chinese, Japanese, Korean and Thai writings have no spaces between words in phrase as in western languages.
+Thus, while indexing documents in these languages, it's need additionally to segment phrases into words.
+</para>
+
+<para id="resegment"><indexterm><primary>Command</primary><secondary>ResegmentChinese</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>ResegmentJapanese</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>ResegmentKorean</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>ResegmentThai</secondary></indexterm>
+Sometimes, a text in Chinese, Japanese, Korean or Thai can be typed with a space between every hieroglyph for better view. 
+In this case, you may use <command>"ResegmentChinese yes"</command>, <command>"ResegmentJapanese yes"</command>,
+<command>"ResegmentKorean yes"</command> or <command>"ResegmentThai yes"</command> commands to index a text typed in such way.
+With resegmenting enabled, all spaces between characters are removing and then all the text is segmenting again using 
+DataparkSearch's segmenters (see below).
+</para>
+
+<sect2 id="ja-segment">
+<title>Japanese language phrase segmenter</title>
+<indexterm><primary>Phrase segmenter</primary><secondary>Japanese language</secondary></indexterm>
+
+<para>For Japanese language phrase segmenting the one of 
+<application><ulink url="http://chasen.aist-nara.ac.jp/">ChaSen</ulink></application>,
+a morphological system for Japanese language, or
+<application><ulink url="http://cl.aist-nara.ac.jp/~taku-ku/software/mecab">
+MeCab</ulink></application>, a Japanese morphological analyser,
+ is used. Thus, you need one of these systems to be installed before
+<application>DataparkSearch</application>'s configuring and building.
+</para>
+
+<para>To enable Japanese language phrase segmenting use <option>--enable-chasen</option> or <option>--enable-mecab</option>
+ switch for <command>configure</command>.
+</para>
+
+</sect2>
+
+<sect2 id="zh-segment">
+<title>Chinese language phrase segmenter</title>
+<indexterm><primary>Phrase segmenter</primary><secondary>Chinese language</secondary></indexterm>
+
+<para>For Chinese language phrase segmenting the frequency dictionary of Chinese words is used.
+And segmenting itself is done by dynamic programming method to maximize the cumulative frequency of produced words.
+</para>
+<para>
+To enable Chinese language phrase segmenting it's need to enable the support for Chinese charsets while 
+<application>DataparkSearch</application> configuring,
+ and specify the frequency dictionary of Chinese words by
+<indexterm><primary>Command</primary><secondary>LoadChineseList</secondary></indexterm>
+<command>LoadChineseList</command> command in <filename>indexer.conf</filename> file.
+<programlisting>
+LoadChineseList [charset dictionaryfilename]
+</programlisting>
+</para>
+<para>
+By default, the <literal>GB2312</literal> charset and <filename>mandarin.freq</filename> dictionary is used.
+</para>
+<note><para>You need to download frequency dictionaries from our web site, or from one of our mirrors,
+see <xref linkend="get"/>.</para></note>
+
+</sect2>
+
+<sect2 id="th-segment">
+<title>Thai language phrase segmenter</title>
+<indexterm><primary>Phrase segmenter</primary><secondary>Thai language</secondary></indexterm>
+
+<para>For Thai language phrase segmenting the frequency dictionary of Thai words is used.
+And segmenting itself is done as for Chinese language.
+</para>
+<para>
+To enable Thai language phrase segmenting it's need to specify the frequency dictionary of Thai words by
+<indexterm><primary>Command</primary><secondary>LoadThaiList</secondary></indexterm>
+<command>LoadThaiList</command> command in <filename>indexer.conf</filename> file.
+<programlisting>
+LoadThaiList [charset dictionaryfilename]
+</programlisting>
+</para>
+<para>
+By default, the <literal>tis-620</literal> charset and <filename>thai.freq</filename> dictionary is used.
+</para>
+<note><para>
+You need to download frequency dictionaries from our web site, or from one of our mirrors,
+see <xref linkend="get"/>.
+</para></note>
+
+</sect2>
+
+
+<sect2 id="ko-segment">
+<title>Korean language phrase segmenter</title>
+<indexterm><primary>Phrase segmenter</primary><secondary>Korean language</secondary></indexterm>
+
+<para>For Korean language phrase segmenting the frequency dictionary of Korean words is used.
+And segmenting itself is done as for Chinese language.
+</para>
+<para>
+To enable Korean language phrase segmenting it's need to specify the frequency dictionary of Korean words by
+<indexterm><primary>Command</primary><secondary>LoadKoreanList</secondary></indexterm>
+<command>LoadKoreanList</command> command in <filename>indexer.conf</filename> file.
+<programlisting>
+LoadKoreanList [charset dictionaryfilename]
+</programlisting>
+</para>
+<para>By default, the <literal>euc-kr</literal> charset and <filename>korean.freq</filename> dictionary is used.</para>
+<note><para>You need to download frequency dictionaries from our web site, or from one of our mirrors,
+see <xref linkend="get"/>.</para></note>
+
+</sect2>
+</sect1>

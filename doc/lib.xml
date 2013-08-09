@@ -1,0 +1,56 @@
+<sect1 id="lib">
+	<title>Using <literal>libdpsearch</literal> library</title>
+<indexterm><primary>libdpsearch</primary></indexterm>
+
+	<para>The <literal>libdpsearch</literal> is available
+for using it in third party applications. You can easily add search
+into your own application using library and include files installed in
+<filename>/lib</filename> and <filename>/include</filename> 
+<application>DataparkSearch</application> directories. Each application which uses
+<literal>libdpsearch</literal> must have <filename>dpsearch.h</filename> header file
+included.</para>
+
+	<sect2 id="lib-dpsconf">
+		<title><filename>dps-config</filename> script</title>
+		<para>When compiled with one of supported SQL
+back-end, <literal>libdpsearch</literal> requires some dependent libraries, for example
+<literal>libmysqlclient</literal>. You can find <filename>dps-config</filename> script in
+<filename>/bin</filename> directory of <application>DataparkSearch</application> installation. This script helps to take
+in account required dependencies. <filename>dps-config</filename> script can take several
+options in it's command line. By default <filename>dps-config</filename> outputs all
+available options:</para>
+
+		<para>
+			<programlisting>
+Usage: ./dps-config [OPTIONS]
+Options:
+        [--version]
+        [--libs]
+        [--cflags]
+</programlisting>
+		</para>
+		<para>When executed with <option>--libs</option>
+command line option <filename>dps-config</filename> outputs all required to <literal>libdpsearch</literal>
+linker flags, for example:
+		<programlisting>
+# ./dps-config --libs
+-lm -L/usr/local/mysql/lib/mysql -lmysqlclient \
+-L/usr/local/dpsearch/lib -ldpsearch
+</programlisting>
+		</para>
+		<para>So you may insert <filename>dps-config</filename> <option>--libs</option> into CC compiler command line:
+		<programlisting>
+cc myprog.c -o myprog `dps-config --libs`
+</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="api">
+		<title><application>DataparkSearch</application> API</title>
+		<para>There is no detailed description of <application>DataparkSearch</application>
+API yet. This is because API is currently under rapid development and
+may  have major changes from version to version. You may use
+<filename>search.c</filename> as an example of application which uses
+<literal>libdpsearch</literal> library.</para>
+	</sect2>
+</sect1>

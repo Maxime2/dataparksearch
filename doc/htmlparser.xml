@@ -1,0 +1,206 @@
+<chapter id="htmlparser">
+	<title><application>DataparkSearch</application> HTML parser
+</title>
+	<sect1 id="htmlparser-tag">
+		<title>Tag parser</title>
+<indexterm><primary>Tag parser</primary></indexterm>
+
+		<para>Tag parser understands the following tag notation:</para>
+		<itemizedlist>
+			<listitem>
+				<para>&lt; ... parameter=value ...   &gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt; ... parameter="value" ...   &gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt; ... parameter='value' ...   &gt;</para>
+			</listitem>
+		</itemizedlist>
+	</sect1>
+	<sect1 id="htmlparser-spec">
+		<title>Special characters</title>
+		<para>indexer understands the following special HTML characters:</para>
+		<itemizedlist>
+			<listitem>
+				<para>&amp;lt; &amp;gt; &amp;amp; &amp;nbsp; &amp;quot;</para>
+			</listitem>
+			<listitem>
+				<para>All HTML-4 character entities:  &amp;auml; &amp;uuml; and other.</para>
+			</listitem>
+			<listitem>
+				<para>Characters in their Unicode code notation: &amp;#234;</para>
+			</listitem>
+		</itemizedlist>
+	</sect1>
+	<sect1 id="htmlparser-meta">
+		<title>META tags</title>
+<indexterm><primary>META tags</primary></indexterm>
+
+		<para>Indexer's HTML parser currently understands the
+following META tags. Note that <literal>"HTTP-EQUIV"</literal> may be
+used instead of <literal>"NAME"</literal> in all entries.</para>
+
+		<itemizedlist>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Content-Type</secondary></indexterm>
+					<literal>&lt;META
+NAME="Content-Type" Content="text/html; charset=xxxx"&gt;</literal>
+This is used to detect document character set if it is not specified
+in <literal>Content-type</literal> HTTP header.</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Refresh</secondary></indexterm>
+					<literal>&lt;META
+NAME="REFRESH" Content="5; URL=http://www.somewhere.com"&gt;</literal>
+URL value will be inserted in database.</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Keywords</secondary></indexterm>
+					<literal>&lt;META NAME="Keywords" Content="xxx"&gt;</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Description</secondary></indexterm>
+					<literal>&lt;META NAME="Description" Content="xxx"&gt;</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Robots</secondary></indexterm>
+					<literal>
+&lt;META NAME="Robots" Content="xxx"&gt;</literal> with content value
+<literal>ALL, NONE, INDEX, NOINDEX, FOLLOW, NOFOLLOW, NOARCHIVE</literal>.
+</para>
+			</listitem>
+<listitem>
+<para id="dppoprank-cmd"><indexterm><primary>META</primary><secondary>DP.PopRank</secondary></indexterm>
+<literal>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</literal> with Content value as a real number. This is used to assign the initial 
+value of <link linkend="poprank">PopularityRank</link> for the page.
+</para>
+</listitem>
+
+		</itemizedlist>
+	</sect1>
+	<sect1 id="htmlparser-links">
+		<title>Links</title>
+		<para>HTML parser understand the following links:</para>
+		<itemizedlist>
+			<listitem>
+				<para>&lt;A HREF="xxx"&gt;</para>
+				<para>&lt;A HREF="xxx" DATA-EXPANDED-URL="yyy" DATA-ULTIMATE-URL="zzz"&gt;</para>
+				<para>Attributes priority in link selection: data-ultimate-url, data-expanded-url, href.</para>
+			</listitem>
+			<listitem>
+				<para>&lt;IMG SRC="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;LINK HREF="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;FRAME SRC="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;AREA HREF="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;BASE HREF="xxx"&gt; 
+<note>
+						<para>If BASE HREF
+value has incorrectly formed URL, current one will be used instead to
+compose relative links.</para>
+					</note>
+				</para>
+			</listitem>
+		</itemizedlist>
+<para><indexterm><primary>Command</primary><secondary>SkipHrefIn</secondary></indexterm>
+However, you can specify the list of HTML which would be omitted in new href lookup with <command>SkipHrefIn</command> command.
+<programlisting>
+SkipHrefIn "img, link, script"
+</programlisting>
+</para>
+
+<para><indexterm><primary>Command</primary><secondary>DisableRelNoFollow</secondary></indexterm>
+By default, <application>DataparkSearch</application> does not follow links with rel=nofollow attribute specified. 
+But you can alter this behaviour with <command>"DisableRelNoFollow yes"</command> command. You need to put this command in your <filename>indexer.conf</filename> file.
+</para>
+
+
+
+	</sect1>
+	<sect1 id="htmlparser-comments">
+		<title>Comments</title>
+		<itemizedlist>
+			<listitem>
+				<para>Text inside the &lt;!-- .... --&gt; tag is recognized as HTML comment.</para>
+			</listitem>
+			<listitem>
+				<para>You may use special
+&lt;!--UdmComment--&gt; .... &lt;!--/UdmComment--&gt; comment tags to
+exclude the text between from indexing. This may be useful to hide
+such things like menus and others from indexing.</para>
+			</listitem>
+			<listitem>
+				<para>You may also use &lt;NOINDEX&gt;
+... &lt;/NOINDEX&gt; as a synonyms to &lt;!--UdmComment--&gt; and
+&lt;!--/UdmComment--&gt;</para>
+			</listitem>
+			<listitem>
+				<para>For compatibility with <application>ASPSeek</application>,  &lt;!--noindex--&gt;
+... &lt;!--/noindex--&gt; are also equivalent to &lt;!--UdmComment--&gt; and
+&lt;!--/UdmComment--&gt;</para>
+			</listitem>
+<listitem>
+<para>Google's special comments &lt;!-- google_ad_section_start --&gt;, &lt;!-- google_ad_section_start(weight=ignore) --&gt; and
+ &lt;!-- google_ad_section_end --&gt; consider as tags to include/exclude content for indexing.</para>
+</listitem>
+		</itemizedlist>
+	</sect1>
+
+<sect1 id="htmlparser-bodypatterns">
+<title>Body patterns</title>
+<indexterm><primary>Command</primary><secondary>BodyPattern</secondary></indexterm>
+<para>If you need index not whole page, for example, to exclude navigation, ads, etc., you may use <command>BodyPattern</command>
+command to specify a pattern to extract content of a page for indexing. For example:
+<programlisting>
+BodyPattern "&lt;!--content--&gt;(.*)&lt;!--/content--&gt;" "$1"
+</programlisting>
+this pattern will extract content between special comments and only that content will be indexed for this page.
+</para>
+<para>You may specify several <command>BodyPattern</command> commands, but only the first match will be applied to a page.
+These patterns are trying to apply to all pages indexed. Beware, huge number of such body patterns may hurt indexing speed.
+</para>
+
+<para>
+<indexterm><primary>Command</primary><secondary>BodyBrackets</secondary></indexterm>
+The <command>BodyBrackets</command> command is similar to <command>BodyPattern</command> command, but it defines two markers: beginning
+of the body and ending of the body, e.g.
+<programlisting>
+BodyBrackets "&lt;!--B--&gt;" "&lt;!--E--&gt;"
+</programlisting>
+Then fragment of the document enclosed between &lt;!--B--&gt; and &lt;!--E--&gt; is treated as document body.
+</para>
+
+</sect1>
+
+<sect1 id="subdocs">
+<title>Sub-documents</title>
+<indexterm><primary>Command</primary><secondary>SubDocLevel</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>SubDocCnt</secondary></indexterm>
+<para>The sub-documents are: frames, iframes and embedded objects
+(flash tubes in general); temporary redirects (often used to place
+cookies or redirect to a page, depending on the language preferences
+of the user); versions of the same page in different languages
+obtained with Content negotiation.</para>
+
+<para>The indexing of sub-documents is controlled by two commands: the
+<command>SubDocLevel</command> command sets the maximum nesting level of a sub-document
+to be indexed. The default value is 0, which prohibits the
+sub-document indexing. The <command>SubDocCnt</command> command sets the maximum number
+of sub-documents to be indexed at all nesting levels (this command is
+mainly to prevent endless cycles of pages nested into each
+others). The default value is 5.</para>
+</sect1>
+
+
+
+</chapter>

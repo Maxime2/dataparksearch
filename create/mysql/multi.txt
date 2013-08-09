@@ -1,0 +1,118 @@
+
+
+CREATE TABLE dict2 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(2)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict3 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(3)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict4 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(4)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+CREATE TABLE dict5 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(5)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict6 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(6)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict7 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(7)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict8 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(8)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict9 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(9)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict10 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(10)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+CREATE TABLE dict11 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(11)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+
+CREATE TABLE dict12 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(12)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+
+CREATE TABLE dict16 (
+  url_id int(11) unsigned  DEFAULT '0' NOT NULL,
+  word char(16)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+
+
+CREATE TABLE dict32 (
+  url_id int(11)  DEFAULT '0' NOT NULL,
+  word varchar(4096)     DEFAULT '' NOT NULL,
+  intag int(11) DEFAULT '0' NOT NULL,
+  KEY url_id (url_id),
+  KEY word_url (word)
+);
+

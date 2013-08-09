@@ -1,0 +1,92 @@
+<sect1 id="syslog">
+	<title>Using syslog</title>
+<indexterm><primary>Syslog</primary></indexterm>
+<indexterm><primary>Command</primary><secondary>LogLevel</secondary></indexterm>
+
+	<para><application>DataparkSearch</application> indexer uses syslog to log its messages. 
+Different verbose levels could be specified with -v option or by <command>LogLevel</command> command in config files:</para>
+	<table>
+		<title>Verbose levels</title>
+		<tgroup cols="3">
+			<tbody>
+				<row>
+					<entry>0</entry>
+					<entry>SILENT</entry>
+					<entry>suppress all log. Bad idea, better use -l option.</entry>
+				</row>
+				<row>
+					<entry>1</entry>
+					<entry>ERROR</entry>
+					<entry>log only critical errors</entry>
+				</row>
+				<row>
+					<entry>2</entry>
+					<entry>WARNING</entry>
+					<entry>log warnings as well</entry>
+				</row>
+				<row>
+					<entry>3</entry>
+					<entry>INFO</entry>
+					<entry>add info messages to log. Default.</entry>
+				</row>
+				<row>
+					<entry>4</entry>
+					<entry>EXTRA</entry>
+					<entry>extra logging</entry>
+				</row>
+				<row>
+					<entry>5</entry>
+					<entry>DEBUG</entry>
+					<entry>for debug purposes</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+	<para>You may use -l option to suppress log to stdout/stderr
+when running indexer via crontab. Without -l option log is sent both
+to stdout/stderr and to log files. If you do not like such behavior,
+run configure with <literal>--disable-syslog</literal> flag and
+recompile indexer. Compiled without syslog support, indexer uses only
+stdout/stderr.</para>
+	<para>Syslog uses different facilities to separate log
+messages. The indexer's default facility is LOCAL7. Facility could be
+changed during configure with
+<literal>--enable-syslog=LOG_FACILITY</literal> option. LOG_FACILITY
+should be one of the standard facilities, usually listed in
+<filename>/usr/include/sys/syslog.h</filename> header file.</para>
+	<para>Facility helps to separate <application>DataparkSearch</application> messages from
+others. You can modify <filename>/etc/syslog.conf</filename> to tell
+syslog how to treat <application>DataparkSearch</application> messages. For example:
+	<programlisting>
+# Log all messages from DataparkSearch to separate file
+local7.*        -/var/log/DataparkSearch.log
+</programlisting>
+	</para>
+	<para>Other example:
+	<programlisting>
+# Send all DataparkSearch messages to host named central
+# Syslog on central should be configured to allow this
+local7.*        @central
+</programlisting>
+	</para>
+	<para>By default all messages are logged to
+<literal>/var/log/messages</literal> as well. <application>DataparkSearch</application> could
+populate this file with a number of messages. To avoid this, add
+local7.none or local7.!* (ignore any messages from local7 facility) to
+your 'catch-all' log files.</para>
+	<para>For example:
+	<programlisting>
+#
+# Some `catch-all' logfiles.
+#
+*.=info;*.=notice;*.=warn;\
+        auth,authpriv.none;\
+        cron,daemon.none;\
+        mail,news.none;\
+        local7.!*               -/var/log/messages
+</programlisting>
+	</para>
+	<para>Please take a look at syslogd(8) and syslog.conf(5) man
+pages for more detailed information about syslog and its configuration
+notes.</para>
+</sect1>

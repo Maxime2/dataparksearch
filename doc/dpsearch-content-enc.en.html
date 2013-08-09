@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Content-Encoding support</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Supported HTTP response codes"
+HREF="dpsearch-http-codes.en.html"><LINK
+REL="NEXT"
+TITLE="Stopwords"
+HREF="dpsearch-stopwords.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-http-codes.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-stopwords.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CONTENT-ENC"
+>3.3. Content-Encoding support</A
+></H1
+><A
+NAME="AEN758"
+></A
+><P
+>		<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> engine
+supports HTTP compression (Content encoding). Compression can have a
+major impact on the performance of HTTP transactions. The only way to
+obtain higher performance is to reduce the number of bytes
+transmitted.</P
+><P
+>Using content encoding to receive a server's response you can reduce the traffic by twice or more.</P
+><P
+>The <A
+HREF="ftp://ftp.isi.edu/in-notes/rfc2616.txt"
+TARGET="_top"
+>HTTP 1.1 (RFC 2616) specification</A
+>
+contains four content encoding methods: <TT
+CLASS="LITERAL"
+>gzip, deflate, compress</TT
+>, and <TT
+CLASS="LITERAL"
+>identity</TT
+>.</P
+><P
+>When Content-encoding is enabled,
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>'s indexer sends to a server
+<TT
+CLASS="LITERAL"
+>Accept-Encoding: gzip,deflate,compress</TT
+> string in HTTP
+headers. </P
+><P
+>If the server supports any of gzip, deflate or compress
+encoding, it sends gziped, deflated or compressed response.</P
+><P
+>To compile <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with
+HTTP Content encoding support, the <TT
+CLASS="LITERAL"
+>zlib</TT
+> library is
+required.</P
+><P
+>To enable HTTP Content encoding support, configure
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with the following
+option:</P
+><P
+>		<KBD
+CLASS="USERINPUT"
+>./configure --with-zlib</KBD
+>
+	</P
+><P
+>Use this option along with all the other necessary ones.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-http-codes.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-stopwords.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Supported HTTP response codes</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Stopwords</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

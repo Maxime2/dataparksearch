@@ -1,0 +1,29 @@
+
+This directory contains a test suite for DataparkSearch Engine. 
+To run it, please 
+
+1. Compile DataparkSearch with any SQL database support.
+
+2. Set DPS_TEST_DBADDR environment variable specifying the database
+   you want to run tests with, in format the same with DBAddr
+   indexer.conf command. 
+
+   For example,
+
+      export DPS_TEST_DBADDR=mysql://root@localhost/test/
+
+
+   or
+
+      export DPS_TEST_DBADDR=sqlite://localhost/home/bar/sqlite.db/
+   
+   
+   You don't need to create tables, test program will do it itself.
+   
+   NOTE: all existing data will be lost in this database
+   after running the tests. 
+
+
+3. Run "make check"
+
+

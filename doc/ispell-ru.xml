@@ -1,0 +1,144 @@
+<sect2 id="ispell">
+	<title>Ispell
+<indexterm><primary>Ispell</primary></indexterm>
+</title>
+	<para>Когда <application>DataparkSearch</application> используется с поддержкой <literal>ispell</literal>,
+для расширения поискового запроса нахождятся все грамматические формы введенных слов.
+При индексировании все найденные слова сохраняются в базе, а при поиске
+для каждого введенного слова находятся все его грамматические формы и уже с учетом всех этих форм
+производится поиск документов. Т.е., поисковик будет искать слово "test", если в качестве запроса введены слова
+"testing" или "tests". </para>
+
+	<sect3 id="typesispellfiles">
+		<title>Два типа файлов ispell</title>
+		<para><application>DataparkSearch</application> понимает два типа файлов ispell:
+файлы аффиксов и файлы словарей. Файл аффиксов <literal>Ispell</literal> состоит из правил для слов и имеет примерно такой
+формат:
+<programlisting>
+Flag V:
+       E   &gt; -E, IVE      # As in create&gt; creative
+      [&circ;E] &gt; IVE          # As in prevent &gt; preventive
+Flag *N:
+       E   &gt; -E, ION      # As in create &gt; creation
+       Y   &gt; -Y, ICATION  # As in multiply &gt; multiplication
+     [&circ;EY] &gt; EN           # As in fall &gt; fallen
+</programlisting>
+</para>
+
+
+		<para>Файл словаря <literal>Ispell</literal> содержит сами слова и имеет следующий формат:
+<programlisting>
+wop/S
+word/DGJMS
+wordage/S
+wordbook
+wordily
+wordless/P
+</programlisting>
+</para>
+	</sect3>
+
+	<sect3 id="using-ispell">
+		<title>Использование Ispell</title>
+<indexterm><primary>Команда</primary><secondary>Affix</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>Spell</secondary></indexterm>
+		<para>Для использования <literal>ispell</literal> в <application>DataparkSearch</application>
+необходимо задать команды <command>Affix</command> и <command>Spell</command> в <filename>search.htm</filename>.
+Формат этих команд:
+		<programlisting>
+Affix [язык] [кодировка] [имя файла аффиксов ispell]
+Spell [язык] [кодировка] [имя файла словаря ispell]
+</programlisting>
+</para>
+		<para>Первый параметр обоих команд - стандартный двуюуквенный код языка.
+Воторой - имя кодировки, при помощи которой закодированы файлы <literal>ispell</literal>.
+Третий параметр указывает имя файла, абсолютное, или отностительно поддиректории
+<filename>etc/</filename> корневой директории <application>DataparkSearch</application></para>
+
+		<note>
+			<para>Поддерживает загрузка данных для нескольких языков, например:
+			<programlisting>
+Affix en iso-8859-1 en.aff
+Spell en iso-8859-1 en.dict
+Affix de iso-8859-1 de.aff
+Spell de iso-8859-1 de.dict
+</programlisting>
+</para>
+			<para>Будет загружена поддержка для английского и немецкого языков.</para>
+		</note>
+		<para>Если используется <command>searchd</command>, эти команды следует указывать в
+<filename>searchd.conf</filename>.</para>
+		<para>Если <application>DataparkSearch</application> используется с поддержкой <literal>ispell</literal>,
+рекомендуется исопльзовать <command>searchd</command>, особенно для поддержки нескольких языков. Иначе время запуска
+<filename>search.cgi</filename> увеличивается.</para>
+
+	</sect3>
+
+	<sect3 id="addwords-dict">
+		<title>Настройка словарей</title>
+		<para>Возможно, на ваших страницах встретяться несколько редких слов, не включённых в словари
+<literal>ispell</literal>. В этом случае для построения всех
+	    форма слова выбирается запись с максимально совпадающим суффиксом.
+</para>
+
+<para>Вы также можете создать список таких слов по одному на каждую строку:
+		<programlisting>
+rare.dict:
+----------
+webmaster
+intranet
+.......
+www
+http
+---------
+			</programlisting>
+</para>
+		<para>Вы также можете указать флаги <literal>ispel</literal> для этих слов
+(описание флагов <literal>ispel</literal> смотрите в документации <literal>ISpell</literal>)
+для поиска всех словоформ, например, "webmaster" и "webmasters". 
+Попробуйте найти в словарях <literal>ispel</literal> слово с таким же способом образования
+различных форм и скопировать его флаги для нового слова. Например, словарь английского языка
+содержит такую строчку:</para>
+
+		<para>
+			<literal>postmaster/MS</literal>
+		</para>
+		<para>Таким образом, webmaster с флагом MS, возможно будет правильным:</para>
+		<para>
+			<literal>webmaster/MS</literal>
+		</para>
+		<para>Скопируйте составленный вами словарь в поддиректорию <filename>/etc</filename>
+корневой директории установки <application>DataparkSearch</application> и добавьте соответсвующие
+команды в файл конфигурации.</para>
+
+
+	</sect3>
+
+<sect3 id="where-to-get-ispell">
+<title>Где взять файлы Ispell</title>
+
+<para>Вы можете найти файлы Ispell для многих языков
+<ulink url="http://fmg-www.cs.ucla.edu/geoff/ispell-dictionaries.html">на этой странице</ulink>.
+</para>
+
+<para>Для японского языка созданы квази-Ispell файлы, предназначенные для использования только с <application>DataparkSearch</application>.
+Вы можете скачать эти файлы <ulink url="http://www.dataparksearch.org/">с нашего веб-сервера</ulink> или с одного из наших зеркал.
+См. <xref linkend="get"/>.
+</para>
+
+</sect3>
+
+<sect3 id="quffix">
+<title>Модификация слов поисковых запросов</title>
+<indexterm><primary>Команда</primary><secondary>Quffix</secondary></indexterm>
+	<para><programlisting>
+Quffix [lang] [charset] [ispell-like suffix file name]
+</programlisting>
+Команда <command>Quffix</command> похожа на команду <command>Affix</command>, описанную выше, за исключением того, что эти правила применяются к словам, указанным в запросе, а не к их
+нормальным формам, как это происходит для команды <command>Affix</command>. Загружаемый файл должен содержать только суффиксные правила (в терминах афиксных файлов ispell).
+</para>
+<para>Эта команда предназначена, например, для указания правил перехода от одной части речи к другой в русском языке, когда это необходимо.
+</para>
+</sect3>
+
+</sect2>

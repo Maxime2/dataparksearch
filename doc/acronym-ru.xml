@@ -1,0 +1,65 @@
+<sect2 id="synonyms">
+	<title>Акронимы и аббревиатуры
+<indexterm><primary>Акронимы и аббревиатуры</primary></indexterm>
+</title>
+	<para>Начиная с версии 4.30 поддерживается нечёткий поиск на основе акронимов и аббревиатур.</para>
+
+	<para>Файлы акронимов и аббревиатур устанавливаются в поддиректорию
+<filename>etc/acronym</filename> относительно корневой директории установки <application>DataparkSearch</application>.
+</para>
+
+	<para><indexterm><primary>Команда</primary><secondary>Acronym</secondary></indexterm>
+Для включения поддержки акронимов и аббревиатур, добавьте в шаблон поиска
+<filename>search.htm</filename> команды вида
+<literal>Acronym &lt;filename&gt;</literal>, например:
+	<programlisting>
+Acronym acronym/en.fido.acr
+Acronym acronym/en.acr
+</programlisting>
+</para>
+
+	<para>Имена файлов могут быть абсолютными (если имена начинаются с /),
+либо относительными поддиректории <filename>etc</filename> установки <application>DataparkSearch</application>.</para>
+
+	<para>Если используется <literal>searchd</literal>, добавьте эти команды вместо шаблона поиска в 
+<filename>searchd.conf</filename>.</para>
+
+	<para>Вы можете создавать свои собственные списки синонимов.
+В качестве примера вы можете взять файл синонимов английского языка.
+В начале файла укажите следующие две команды:
+	<programlisting>
+Language: en
+Charset:  us-ascii
+</programlisting>
+</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				<varname>Language</varname> - стандартный 
+(ISO 639) двубуквенный код языка.</para>
+		</listitem>
+		<listitem>
+			<para>
+				<varname>Charset</varname> - любая
+кодировка, поддерживаемая <application>DataparkSearch</application> (see <xref linkend="charset"/>).
+Список синонимов должен быть закодирован с использованием этой кодировки.
+</para>
+		</listitem>
+	</itemizedlist>
+
+<para>Также вы можете расширять поисковые запросы при помощи регулярных выражений, задаваемых специальными коментариями в файлах акронимов. Например:
+	<programlisting>
+#* regex last "([0-9]{2})[- \.]?([0-9]{2})[- \.]?([0-9]{2})" "+78622$1$2$3"
+</programlisting></para>
+<para>Этот комментарий задает преобразование из широко используемого формата записи локалных телефонных номеров, 99-99-99, в канонический формат, +78622XXXXXX. 
+Таким образом телефонные номера становится возможным искать независимо от формата, в котором они были записаны.
+Опция <userinput>last</userinput> здесь означает, что процесс применения регулярных выражений останавливается после применения этого правила.
+</para>
+
+<para>
+Пожалуйста, присылайте ваши списки синонимаов на адрес <email>maxime@maxime.net.ru</email>.
+</para>
+
+</sect2>
+

@@ -1,0 +1,160 @@
+<!--
+
+    This is RSS2.0 template file for DataparkSearch 4
+    (C) 2005, Datapark corp.
+
+    Please rename to rss.htm and edit as desired.
+    See doc/msearch-templates.html for detailed information.
+    You may want to keep the original file for future reference.
+
+    WARNING: Use proper chmod to protect your passwords!
+-->
+<!--variables
+# Database parameters are to be used with SQL backend
+# and do not matter for built-in text files support
+# Format: <DBType>:[//[DBUser[:DBPass]@]DBHost[:DBPort]]/DBName/[?dbmode=mode]
+DBAddr	mysql://foo:bar@localhost/search/?dbmode=cache
+
+# Uncomment this line to enable search result cache
+#Cache yes
+
+#  Comment this line if you want to show clones
+DetectClones	no
+
+# Use proper local and browser charsets
+# Default charset is iso-8859-1 (latin1)
+# which is suitable for the most Western European languages
+
+LocalCharset   iso-8859-1
+BrowserCharset iso-8859-1
+
+# Load stopwords file.  File name is either absolute
+# or relative to /etc directory of DataparkSearch installation.
+#
+#StopwordFile stopwords/en.sl
+#StopwordFile stopwords/ru.sl
+#
+
+#
+# Minimum and maximum word lengths
+#
+#MinWordLen 1
+#MaxWordLen 32
+
+# Number of pages in navigator bar
+#
+#PagesPerScreen 10
+
+# Load synonyms file.  File name is either absolute
+# or relative to /etc directory of DataparkSearch installation.
+#
+#Synonym synonym/english.syn
+#Synonym synonym/russian.syn
+#
+
+#
+# How to hilight searched words.
+#
+HlBeg	<b>
+HlEnd	</b>
+
+#
+# How to hilight consecutive following results from same site.
+# Uncomment these lines if you compiled with a-la Google results grouping
+#GrBeg	<blockquote>
+#GrEnd	</blockquote>
+
+# Uncomment this line to enable error loging to stderr
+#Log2stderr yes
+#
+
+# Uncomment this line to change default URL basis for storedoc.cgi
+#StoredocURL     /cgi-bin/storedoc
+#
+
+# Uncoment this line to change default maximal excerpt size. Default value is 256.
+#ExcerptSize 1024
+#
+
+# Uncomment this line to change number of characters before and after search words
+# in excerpts. Default value is 40.
+#ExcerptPadding 64
+#
+
+# Uncomment this line to specify maximum IdexDocSizeLimit value specified in indexer.conf
+#IndexDocSizeLimit 65536
+#
+
+# Uncomment this line to change Last-Modified format output
+# Use strftime function meta variables
+DateFormat %a, %d %b %Y %H:%M:%S %z
+
+ResultContentType text/xml
+
+# Uncomment this line to specify LC_ALL locale for search results output.
+#Locale fr_FR.ISO_8859-1
+
+-->
+
+<!--top-->
+<?xml version="1.0" encoding="$(BrowserCharset)"?>
+<!-- generator="DataparkSearch 4" -->
+<rss version="2.0" 
+        xmlns:content="http://purl.org/rss/1.0/modules/content/"
+        xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+>
+<channel>
+        <title>$*(q)</title>
+        <link>$(self)</link>
+        <description>Search results for query: $*(q)</description>
+	<!-- lastBuildDate></lastBuildDate -->
+        <generator>DataparkSearch 4</generator>
+<!IFNOT NAME="g" CONTENT=""><language>$*(g)</language><!ENDIF>
+
+<!--/top-->
+
+<!--restop-->
+<!--/restop-->
+
+<!--res-->
+        <item>
+                <title>$&(Title)</title>
+                <link>$*(URL)</link>
+                <comments></comments>
+                <pubDate>$(Last-Modified)</pubDate>
+                <!-- dc:creator></dc:creator -->
+		<!-- category></category -->
+                <guid>$*(URL)</guid>
+		<description><![CDATA[$&(Body)]]></description>
+        </item>
+<!--/res-->
+
+<!--resbot-->
+<!--/resbot-->
+
+<!--clone-->
+<!--/clone-->
+
+<!--notfound-->
+        <item>
+	<description>Sorry, your search for <b>$*(q)</b> did not found any results.</description>
+        </item>
+<!--/notfound-->
+
+<!--noquery-->
+        <item>
+	<description>You haven't typed any word(s) to search for.</description>
+        </item>
+<!--/noquery-->
+
+<!--error-->
+        <item>
+	<description>An error occured!</description>
+        </item>
+<!--/error-->
+
+<!--bottom-->
+</channel>
+</rss>
+<!--/bottom-->

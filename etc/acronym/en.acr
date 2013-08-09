@@ -1,0 +1,1225 @@
+#
+# English acronyms
+# Compiled by Maxim Zakharov <maxime@maxime.net.ru>
+#
+Language: en
+Charset: latin1
+#
++	plus
+$	dollar
+#
+1	one
+1st	first
+2	two
+2nd	second
+3	three
+3rd	third
+4	four
+4th	fourth
+5	five
+5th	fifth
+6	six
+6th	sixth
+7	seven
+7th	seventh
+8	eight
+8th	eighth
+9	nine
+9th	nineth
+10	ten
+10th	tenth
+100	hundred
+1000	thousand
+#
+AA 	Alcoholics Anonymous
+AA	anti aircraft
+AA 	Automobile Association
+AB 	Bachelor of Arts
+ABC	American Broadcasting Company
+abn	airborn
+ABS	American Broadcasting System
+abt	about
+ac	account
+AC	aircraft carrier
+AC	alternating current
+AC	ante Christum
+acct	account
+ack	acknowledge
+AD	anno domini
+adds	address
+adt	advertisement
+advt	advertisement
+Afr	Africa
+Afr	African
+AGM	annual general meeting
+AK	Alaska
+AL	Alaska
+AL	American Legion
+AL	Alabama
+Ala	Alabama
+Alta	Alberta
+AM	air mail
+AM	amplitude modulation
+AM	ante meridiem
+amt	amount
+anon 	anonymous
+ans	answer
+AP	airplane
+AP 	American patent
+AP	Associated Press
+app	appendix
+appl	applied
+appro	approval
+approx	approximately
+apps	appendixes
+appt	appointed
+Apr	April
+aptd	appointed
+aquaria	aquarium
+aquarium	aquaria
+AR	annual return
+AR	Arkansas
+ARE	Arab Republic of Egypt
+Ariz	Arizona
+Ark	Arkansas
+arr	arrival
+art	article
+art	artificial
+art	artillery
+arty	artillery
+asf	and so forth
+asgd	assigned
+asgmt	assignment
+asp	as soon as possible
+atm	atmosphere
+attn	attention
+atty	attorney
+Au	Australia
+Aug	August
+Austral	Australian
+auth	authentic
+auth	author
+auth	authorized
+AV	ad valorem
+AV	audiovisual
+AV	average
+ave	avenue
+avg	average
+AW	actual weight
+Ayr	Ayrshire
+AZ	Arizona
+#
+b	black
+BA	Bachelor of Arts
+BA	British Academy
+bacteria	bacterium
+bacterium	bacteria
+b&b	bed and breakfast
+BBC	British Broadcasting Corporation
+BC	before Christ
+BC	birth certificate
+BC	British Columbia
+BC	British Council
+BCN	British Commonwealth of Nations
+bd	bond
+bd	bundle
+bdg	building
+BE	Bank of England
+BE	bill of exchange
+Beds	Bedfordshire
+Berks	Berkshire
+Berw	Berwickshire
+betn	between
+bf	bona fide
+BG	British Covernment
+bk	back
+bk	book
+Bkg	banking
+bkt	bracket
+BL	Bachelor of Low
+bl	bale
+bl	barrel
+bl	bilateral
+bldg	building
+Blvd	boulevard
+BM	bowel movement
+BM	British Nuseum
+BMT	British Mean Time
+BMus	Bachelor of Music
+bo	back order
+BO	Branch Office
+bo	body odour
+bo	box office
+BP	barometic pressure
+BP	bills payable
+bp	bishop
+BP	British Patent
+bpl	birth place
+BR	bills receivable
+BR	bedroom
+Br	British
+Breck	Brecknockshire
+Brecon	Brecknockshire
+Brig	Brigade
+Brit	Britain
+Brit	British
+Bros	brothers
+BS	Bachelor of Science
+BS	balance sheet
+BSc	Bachelor of Science
+BST	British Summer Time
+BT	birth terms
+btto	brutto
+bu	bushel
+Bucks	Buckinghamshire
+BUP	Britich United Press
+BWT	British Winter Time
+#
+Ca	Cavan
+CA	certified accountant
+CA	current account
+CAD	cash against documents
+Caith	Caithness
+Cal	California
+Calif	California
+Cambs	Cambridgeshire
+Can	Canada
+Canad	Canadian
+Capt	Captain
+Car	Carlow
+Cards	Cardiganshire
+Cath	Catholic
+CBC	Canadian Broadcasting Corporation
+cbm	cubic metre
+CBS	Columbia Broadcasting System
+CC	common carrier
+cc	cubic centimetre
+cca	circa
+CD	Civil Defence
+CD	Corps Diplomatique
+Cdr	commander
+CE	Cevil Engineer
+CEC	Central Executive Committee
+cen	central
+cert	certificate
+CET	Central European Time
+cf	confer
+CG	Consul General
+ch	central heating
+CH	Clearing House
+CH	Custom House
+ch	chapter
+chap	chapter
+ChB	Bachelor of Surgery
+chm	chairman
+chmn	chairman
+CIA	Central Intelligence Agency
+CID	Central Investigation Department
+ckw	clockwise
+cm	centimetre
+CM	court martial
+Co	company
+Col	colonel
+Col	Colorado
+Coll	college
+colloquia	colloquium
+colloquium	colloquia
+Colo	Colorado
+Conn	Connecticut
+Corp	corporation
+Coy	company
+cp	compare
+Cpl	Corporal
+cps	cycles per second
+Cr	creditor
+CS	Civil Service
+CSE	Certificate of Secondary Education
+CST	Central Standard Time
+CWT	Central Winter Time
+cy	currency
+CZ	Canal Zone
+#
+DA	District Attorney
+das	decastere
+DB	day book
+db	decibel
+dbl	double
+DC	direct current
+DC	District of Columbia
+dct	document
+DD	doctor of divinity
+dec	deceased
+decd	deceased
+Dec	december
+Del	Delaware
+Dem	democrat
+demo	demonstration
+dep	departure
+dep	deposit
+Dept	department
+dft	defendant
+dft	draft
+DG	director general
+DIA	Defense Intelligence Agency
+dia	diameter
+diam	diameter
+dkl	dekalitre
+DLit	Doctor of Literature
+DM	Doctor of Medicine
+DOB	date of birth
+dol	dollar
+dom	dominion
+doz	dozen
+DPh	Doctor of Philosophy
+DPhil	Doctor of Philosophy
+Dr	debtor
+Dr	Doctor
+dr	drachm
+DSc	Doctor of Science
+DT	delirium tremens
+dupl	duplicate
+dwt	pennyweight
+dz	dozen
+#
+EA	East Africa
+EAN	European Article Number
+EB	Encyclopaedia Britannica
+EC	Executive Committee
+ecol	ecology
+econ	economic
+EdM	Master of Education
+EDT	Eastern daylight
+educ	education
+EE	Early English
+EE	Envoy Extraordinary
+EET	East European Time
+EFTA	European Free Trade Asscociation
+eighth	8th
+EL	east longitude
+elec	electric
+elect	electric
+elem	elementary
+EM	electromagnetic
+EM	Engineer of Mines
+EMT	European Mean Time
+EPT	Excess Profits Tax
+eq	equivalent
+esp	especially
+Esq	Esquire
+Esqr	Esquire
+ETA	estimated time of arrival
+ETD	estimated time of departure
+exps	expenses
+exx	examples
+#
+fac	fast as can
+FAI	Fédération Aéronautique Internationale
+FAO	Food and Agricultural Organization
+FBA	Fellow of the British Academy
+FBI	Federal Bureau of Investigation
+FBI	Federation if British Industries
+Feb	February
+Fed	federal
+fem	feminin
+ff	following
+FIDE	Fédération Internationale des Échecs
+FIFA	Fédération Internationale de football Associations
+fifth	5th
+first	1st
+Fla	Florida
+fm	fathom
+FM	frequency modulation
+fn	foot note
+FO	Foreign Office
+fol	following
+foll	following
+for	foreign
+forth	4th
+FPC 	Federal Poer Commission
+Fr	father
+fr	franc
+Fr	french
+fr	from
+Fri	Friday
+FRS	Federal Reserve System
+ft	foot
+FTC	Federal Trade Commission
+FYI	for tour information
+#
+ga	gauge
+GA	General Assembly
+GA	Georgia
+gal	gallon
+GB	Great Britain
+GCD	greatest common divisor
+GCE	General Certificate of Education
+Gdn	garden
+GDR	German Democratic Republic
+gds	goods
+Gen	general
+genl	general
+Ger	german
+Gk	Greek
+GM	General Manager
+gm	gramme
+GMT	Greenwich mean time
+GNP	Gross National Product
+go	went
+Gop	Grand Old Party
+Gov	governor
+Gov	government
+govt	government
+GP	general practiotioner
+gph	gallons per hour
+gpm	gallons per minute
+GPO	General Post Office
+gr	grade
+gr	grain
+gr	gramme
+gr	gross
+grad	graduate
+gt	great
+gtd	guaranteed
+#
+habr	habrahabr
+habrahabr	habr
+handbk	handbook
+Haw	Hawaii
+HC	House of Commons
+HD	heavy duty
+hdbk	handbook
+HE	high explosive
+hf	half
+HF	Hight Frequency
+HG	High German
+hgt	height
+hhd	hogshead
+HHFA	Housing and Home Finance Agency
+HI	Hawaian Islands
+hist	history
+hl	hectolitre
+HL	House of Lords
+HMS	Her Magesty's Ship
+HMS	His Magesty's Ship
+HofC	House of Commons
+HofL	House of Lords
+Hon	Honorary
+Hon	honourable
+hosp	hospital
+hp	horsepower
+HQ 	headquarters
+hr	hour
+HR	House of Representatives
+HS	High School
+HT	High tension
+HV	High Voltage
+hwt	hundredweight
+Hz	hertz
+#
+Ia	Iowa
+IBM	International Business Machines
+ICAO	International Civil Aviation Organization
+ICJ	International Court of Justice
+Id	Idaho
+ID	identification
+ID	inside dimensions
+ID 	Intelligence Department
+IELTS	International English Language Testing System
+IIII	IV
+Ill	Illinois
+ill	illustration
+illus	illustration
+IMF	International Monetary Fund
+in	inch
+Inc	incorporated
+incl	including
+incr	increase
+ind	independent
+ind	index
+Ind	Indiana
+ind	industrial
+ins	inches
+inst	instant
+Inst	Institute
+int	international
+Intl	international
+intro	introduction
+introd	introduction
+inv	invoice
+IOC	International Olympic Committee
+IOJ	International Organization of Journalists
+IQ	intelligence quotient
+IR	infra red
+IRA 	Irish Republican Army
+IRC	International Red Cross
+ISO	International Organization for Standardization
+It	Italian
+Ital	Italian
+it	italics
+ital	italics
+ITO	International Trade Organization
+ITT	International Telephone and Telegraph Corporation
+#
+Jan	January
+Jap	Japan
+jct	junction
+jctn	junction
+JD	Jurum Doctor
+jnt	joint
+JP	jet propulsion
+JP	Justice of the Peace
+Jr	junior
+jt	joint
+Ju	june
+Jul	July
+jun	junior
+Jun 	June
+junc	junction
+juv	juvenile
+#
+Kan	Kansas
+Kans	Kansas
+Kas	Kansas
+Kiev	Kyiv
+KC	King's Council
+kcal	kilocalorie
+Ken	Kentucky
+kg	kilogramme
+kg	kilogram
+kHz	kilohertz
+KIA	kiled in action
+KKK	Ku Klux Klan
+kl	kilolitre
+km	kilometre
+knife	knives
+knives	knife
+KO	knock out
+kph	kilometres per hour
+KV	kilovolt
+kw	kilowatt
+kwh	kilowatt hour
+Ky	Kentucky
+Kyiv	Kiev
+#
+LA	Legislative Assembly
+LA	Los Angeles
+La	Louisiana
+Lab	Labour Party
+Lab	Labrador
+Lat	Latin
+lat	latitude
+lb	libra
+LC	Law Court
+LC	letter of credit
+LC	Library of Congress
+LD	lethal dose
+ldg	lodging
+Ldn	London
+LF	low frequency
+LG	Low German
+lgth	length
+lh	left hand
+LHD	Doctor of the Humanities
+ll	lines
+LLB	Bachelor of Laws
+LLD	Doctor of Laws
+LMT	local mean time
+Lon	London
+Lond	London
+LP	Labour Party
+LP	long playing
+LP	low pressure
+LPA	Labour Press Association
+LR	Lloyd's Register
+LR	living room
+LS	left side
+LSD	lysergic acid diethylamide
+LSS	live saving service
+LST	local standard time
+Lt	lieutenant
+LT	low tension
+Ltd	limited
+LW	low water
+lx	lux
+LZ	landing zone
+#
+MA	Master of Arts
+MA	mental age
+MA	Minnesota
+mag	magazine
+mag	magnetic
+Maj	Major
+Man	Manitoba
+man	manual
+Mar	march
+Mass	Massachusetts
+MAT	Master of Arts in Teaching
+math	mathematics
+maths	mathematics
+max	maximum
+mb	millibar
+MBA	Master of Business Administration
+MBS	Mutual Broadcasting System
+MC	Master of Ceremonies
+MC	Member of Congress
+MD	Doctor of Medicine
+MD	Maryland
+MD	mediacl department
+mdnt	midnight
+MDS	Mster of Sental Surgery
+mdse	merchandise
+ME	Meine
+ME	Mechanical Engineer
+ME	Middle East
+ME	Middle English
+MEd	Master of Education
+med	medicine
+Medit	mediterranean
+mem	member
+memo	memorandum
+Messrs	messieurs
+met	meteorological
+met	metropolitan
+Mex	Mexico
+MF	Medium Frequency
+MFA	Master of Fine Arts
+MFN	Most favoured nation
+mfr	manufacturer
+mg	milligramme
+mg	milligram
+Mgr	manager
+mgt	management
+mi	mile
+MI	military Intelligency
+MIA	missing in action
+Mich	Michigan
+mil	military
+millennia	millennium
+millennium	millennia
+min	minimum
+min	minister
+min	minute
+minn	minnesota
+misc	miscellaneous
+Miss	Mississippi
+mk	mark
+ml	millilitre
+mm	millimetre
+MN	magnetic north
+MN	merchant navy
+MO	mail order
+MO	medical officer
+Mo	missouri
+MO	money order
+mo	month
+mod	moderate
+mod	modern
+mon	monday
+Mont	Montana
+mos	months
+MP	Member of Parliament
+MP	Metropolitan Police
+MP	Military Police
+mpg	miles per gallon
+mph	miles per hour
+mps	metres per second
+Mr	Mister
+Mrs	Mistress
+MS	manuscript
+MS	Master of Science
+MS	Microsoft
+msl	mean sea level
+mt	mountain
+mun	municipal
+mv	market value
+MV	motor vessel
+MVA	Missouri Valley Authority
+myth	mythology
+mythol	mythology
+#
+NA	North America
+NAC	North Atlantic Council
+NAM	National Association of Manufacturers
+NAS	National Academy of Science
+NASA	National Aeronautics and Space Administration
+nat	national
+nat	native
+NATO	North Atlantic Treaty Organization
+naut	nautical
+nav	naval
+NB	northbound
+NB	nota bene
+NBA	National Basketball Association
+NBC	National Broadcasting Company
+NBS	National Butreau of Standards
+NC	North Carolina
+NC	Nurse Corps
+ND	North Dakota
+NDak	North Dakota
+NE	New England
+NE	north east
+Neb	Nebraska
+Nebr	Nebraska
+neg	negative
+Neth	Netherlands
+Nev	Nevada
+NF	Newfoundland
+NG	National Guard
+NGS	National Geographic Society
+NH	New Hampshire
+NHL	National Hockey League
+NI	Northern Ireland
+nineth	9th
+NJ	New Jersey
+NL	night letter
+NL 	north latitude
+NLT	night letter
+NM	National Museum
+nm	nautical mile
+NM	night message
+NM	New Maxico
+NNE	North north east
+NNW	north north west
+No	North
+no	number
+Norw	Norwegian
+nos	numbers
+Nov	November
+nr	near
+NRC	National Research Council
+NS	Nova Scotia
+NS	nuclear ship
+NS	nuclear submarine
+NSC	National Security Council
+NSF	National Science Foundation
+NSW	New South Wales
+NT	New Testament
+NT	Northern Territory
+NU	name unknown
+NV	nonvoting
+NW	north west
+NWS	north western states
+NWT	Northwest territories
+NY	New York
+NYC	New York City
+NYSE	New York Stock Exchange
+NZ	New Zealand
+#
+o	old
+OAP	old age pensioner
+OAS	Organization of American States
+OAU	Organization for African Unity
+obj	objective
+obl	oblong
+obs	observation
+obs	observatory
+obs	obsolete
+oc	ocean
+occas	occasionally
+Oct	October
+OET	Occupational English Test
+OK	okay
+Okla	Oklahoma
+ON	octane number
+Ont	Ontario
+OP	observation post
+op	operation
+op	opus
+op	out of print
+OPEC	Oil Producing and Exporting Countries
+opp	opposite
+opt	optician
+opt	optional
+OR	owner's risk
+ord	order
+ord	ordnance
+Ore	Oregon
+Oreg	Oregon
+org	organization
+org	organisation
+orig	original
+OT	Old Testament
+OU	Oxford University
+Oxon	Oxoniensis
+oz	ounce
+#
+Pa	Pennsylvania
+pa	per annum
+pa	power of attorney
+PA	Press Agency
+PA	private account
+Pac	pacific
+pam	pamphlet
+Pan	Panama
+Parl	Parliament
+part	particular
+pat	patent
+PAU	Pan American Union
+payt	payment
+pc	per cent
+PC	Police Constable
+pc	post card
+PC	Privy Councillor
+pct	per cent
+pd	paid
+PD	per diem
+PD	Police Department
+PD	postal district
+PE	physical education
+PE	probable error
+PEI	Prince Edward Island
+pen	peninsula
+Penn	Pennsylvania
+Penna	Pennsylvania
+per	period
+per	person
+pers	person
+pert	pertaining
+pet	petroleum
+PF	power factor
+PG	paying guest
+PG	post graduate
+Phar	pharmaceutical
+Pharm	pharmaceutical
+PhB	Bachelor of Philosophy
+PhD	Doctor of Philosophy
+Phila	Philadelphia
+PHS	Public Health Service
+pk	park
+pkg	package
+pkge	package
+pkt	packet
+planetaria	planetarium
+planetarium	planetaria
+plat	platoon
+plf	plaintiff
+PLO	Palestine Liberation Organization
+PM	paymaster
+PM	Police Magistrate
+PM	postmaster
+pm	post meridiem
+pm	post mortem
+PM	Prime Minister
+PO	postal order
+PO	Post Office
+POB	Post Office Box
+pol	political
+polit	political
+pop	popular
+porno	pornography
+Port	Portugal
+pos	positive
+poss	possible
+pot	potential
+POW	prisoner of war
+pp	pages
+PP	parcel post
+pp	postpaid
+ppd	prepaid
+pr	pair
+pr	price
+PR	Public Relations
+PR	Purrto Rico
+prec	preceding
+pref	preface
+pref	preference
+prep	preparatory
+Pres	President
+pro	professional
+PRO	Public Records Office
+PRO	Public Relations Officer
+proc	proceedings
+Prof	Professor
+prox	proximo
+PS	post scriptum
+PS	Public School
+PST	Pacific Standard Time
+pt	part
+pt	payment
+PT	physical training
+pt	pint
+pt	point
+pty	proprietary
+pub	public
+pub	publication
+pub	published
+publ	published
+pw	per week
+PW	prisoner of war
+PWA	Public Works Administration
+pwt	pennyweight
+PX	post exchange
+#
+QC	Queen's Counsel
+QED	quod erat demonstrandum
+QLD	Queensland
+QM	Quartermaster
+qq	questions
+qr	quarter
+qt	quantity
+qty	quantity
+Qu	Queen
+qu	question
+Que	Quebec
+#
+RA	Royal Academy
+RAA	Royal Academy of Arts
+rad	radical
+rad	radio
+rad	radius
+RAF	Royal Air Force
+RAM	Royal Academy of Music
+RAS	Royal Academy of Science
+RC	Red Cross
+rd	road
+RD	Rural Delivery
+rec	receipt
+rec	record
+rec	recording
+recd	received
+rect	receipt
+ref	referee
+ref	reference
+reg	region
+reg	registered
+reg	regular
+regd	registered
+rel	released
+rep	repair
+Rep	Repertory
+Rep	Representative
+Rep	Republican
+rept	report
+res	reserved
+res	residence
+res	resigned
+resp	respectively
+ret	retired
+ret	returned
+retd	retired
+retd	returned
+RF	radio frequency
+rh	right hand
+RI	Rhode Island
+riv	river
+RJ	road junction
+rly	railway
+rm	room
+RM	Royal Marines
+RN	Registered Nurse
+RN	Royal Navy
+RP	reply paid
+RP	reprint
+rpm	revolutions per minute
+rps	revolutions per second
+RS	Recording Secretary
+RS	right side
+RSVP	repondez s'il vous plait
+RT	radio telephony
+rt	right
+rte	route
+RU	Rugby Union
+Rum	Rumania
+Rwy	railway
+Ry	railway
+#
+s1	someone
+SA	South Africa
+SA	South America
+SA	South Australia
+SAm	South America
+sanatoria	sanatorium
+sanatorium	sanatoria
+SAR	Syrian Arab Republic
+Sat	Saturday
+SAus	South Australia
+SAustr	Aouth Australia
+SB	Bachelor of Science
+SB	southbound
+sb	somebody
+SBA	small business administration
+sc	scale
+Sc	Scots
+sc	scruple
+SC	Security Council
+SC	South Carolina
+SC	Supreme Court
+ScD	Doctor of Science
+sch	school
+sci	science
+Scot	Scotland
+Scrpt	Scripture
+SD	sigth draft
+SD	South Dakota
+SD	special delivery
+SDak	South Dakota
+SE	south east
+SE	Stock Exchange
+sec	second
+sec	secretary
+second	2nd
+secy	secretary
+sel	selection
+Sen	Sebate
+Sen	Senior
+SEO	Search Engine Optimization
+Sep	September
+Sept	September
+seq	sequentes
+ser	serial
+serv	service
+seventh	7th
+SF	Science Fiction
+SFC	Space Flight Center
+SG	senior grade
+sgd	signed
+sh	shilling
+Shak	Shakespeare
+shf	superhigh frequency
+shpt	shipment
+sixth	6th
+SJD	Doctor of Juridical Science
+Skt	Sanskrit
+SL	sea level
+SL	south latitude
+SM	Master of Science
+Sn	senior
+Snr	senior
+Soc	society
+Sol	solicitor
+sol	solution
+soln	solution
+soph	sophomore
+SP	self propelled
+SP	shore patrol
+Sp	Spain
+sp	special
+sp	species
+sp	spelling
+spec	special
+spec	specific
+sq	sequence
+Sq	square
+Sr	senior
+Sr	sister
+ss	scilicet
+SS	steamship
+St	saint
+ST	Standard Time
+st	state
+St	street
+Sta	station
+stadia	stadium
+stadium	stadia
+sth	something
+stk	stok
+str	steamer
+Str	strait
+Str	street
+SU	Soviet Union
+sub	subscription
+sub	substitude
+subs	subscription
+subs	substitude
+Sun	Sunday
+sup	superior
+sup	supplement
+svc	service
+SW	short waves
+SW	South Wales
+SW	South west
+Sw	Sweden
+Switz	Switzerland
+Sx	Sussex
+SYd	Scotland Yard
+sym	symetric
+sym	symetrical
+syst	system
+#
+TA	Techical Assistance
+TAC	Techical Assistance Committee
+Tas	Tasmania
+TB	tuberculosis
+TC	teachers college
+tc	tierce
+TC	Trusteeship Council
+TD	telemetry data
+TD	touchdown
+TDY 	temporary duty
+Tech	techical
+tech	technology
+technol	technology
+tel	telegram
+tel	telegraph
+tel	telephone
+temp	temperature
+temp	temporary
+Tenn	Tennessee
+tenth	10th
+Ter	terrace
+Ter	territory
+Terr	terrace
+Terr	territory
+Tex	Texas
+ThD	Doctor of Theology
+third	3rd
+ths	thousand
+Thu	Thursday
+Thur	Thursday
+Thurs	Thursday
+TI	techical information
+tit	title
+tk	truck
+TKO	techical knock out
+tkt	ticket
+TL	total loss
+TM	techical manual
+TM	trade mark
+TMO	telegraph money order
+tn	tonna
+TN	rtermonuclear
+TN	true north
+tng	training
+TNT	trinitrotoluene
+TO	telegraph office
+tp	title page
+tp	township
+trans	transaction
+trans	transportation
+transp	transportation
+treas	treasurer
+trivia	trivium
+trivium	trivia
+trop	tropical
+ts	this
+TS	top secret
+tsp	tea spoon
+TU	Trade Union
+Tu	Thursday
+Tues	Thursday
+Turk	Turkey
+TV	television
+twp	township
+TX	Texas
+#
+uc	upper case
+UFO	unidentified flying object
+UHF	ultrahigh frequency
+UK	United Kingdom
+UMT	Universal Military Training
+UNA	United Nations Association
+UNESCO	United Nations Educational Scientific and Cultural Organization
+UNGA	United Nations General Assembly
+UNICEF	United Nations International Children's Emergency Fund
+Univ	University
+UNO	United Nations Organization
+UNSC	United Nations Security Council
+UPI	United Press International
+UPU	Universal Postal Union
+US	United States
+USA	United States Army
+USA	United States of America
+USS	Unites States Ship
+USSR	Union of Soviet Socialist Republics
+usu	usual
+Ut	Utah
+UV	ultra violet
+#
+Va	Virginia
+val	value
+var	various
+VC	Vice Chairman
+VC	Vice Chancellor
+VC	Vice Consul
+VD	veneral disease
+Ven	Venerable
+vet	veteran
+vet	veterinary
+VHF	very high frequency
+VIP	very inportant person
+VLF	very low frequency
+VOA	Voice of America
+vol	volume
+vou	voucher
+VP	Vice President
+VPres	Vice President
+vs	versus
+vs	sue
+VT	vacuum tube
+Vt	Vermont
+vv	vice versa
+#
+w	with
+WA	West Africa
+WA	Western Australia
+Wash	Washington
+WAus	Western Australia
+WAustr	Western Australia
+WB	way bill
+WB	Weather bureau
+wc	water closet
+wc	without charge
+WCC	World Council of Churches
+wd	word
+Wed	Wednesday
+went	go
+WF	weather forecast
+wf	white female
+wh	watt hour
+WH	White House
+WHO	World Health Organization
+whs	warehouse
+whse	warehouse
+whsle	wholesale
+WI	Wisconsin
+wifi	wi fi
+wifi	wi-fi
+wi-fi	wifi
+wi-fi	wi fi
+Wis	Wisconsin
+Wisc	Wisconsin
+wk	week
+wk	work
+wm	white male
+WMO	World Meteorological Organization
+wpb	waste paper basket
+WPC	World Peace Council
+wpm	words per minute
+WR	weather report
+wrnt	warrant
+WS	water supply
+WS`	wireless station
+wt	weight
+WT	wireless telegraphy
+WTO	World Trade Organization
+WVa	West Virginia
+WWI	World War I
+WWII	World War II
+www	World Wide Web
+Wy	Wyoming
+Wyo	Wyoming
+#
+xc	without coupon
+xcp	without coupon
+xd	without dividend
+xdiv	without dividend
+Xmas	Christmas
+Xnty	Christianity
+xpr	without privileges
+xr	without rights
+xw	without warrants
+#
+y	years
+YB	year book
+yd	yard
+yo	years old
+yr	year
+yr	younger
+yr	your
+yrbk	year book
+YS	young soldier
+YT	Yukon Territory
+#
+ZST	Zone Standard Time
+#
+

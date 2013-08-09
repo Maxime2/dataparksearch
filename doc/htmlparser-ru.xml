@@ -1,0 +1,225 @@
+<chapter id="htmlparser">
+	<title>HTML-парсер в <application>DataparkSearch</application>
+</title>
+	<sect1 id="htmlparser-tag">
+		<title>Tag-парсер
+<indexterm><primary>Tag-парсер</primary></indexterm>
+</title>
+		<para>Tag-парсер понимает тэги в следующей нотации:</para>
+		<itemizedlist>
+			<listitem>
+				<para>&lt; ... parameter=value ...   &gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt; ... parameter="value" ...   &gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt; ... parameter='value' ...   &gt;</para>
+			</listitem>
+		</itemizedlist>
+	</sect1>
+	<sect1 id="htmlparser-spec">
+		<title>Специальные символы</title>
+		<para>indexer понимает следующие специальные символы HTML:</para>
+		<itemizedlist>
+			<listitem>
+				<para>&amp;lt; &amp;gt; &amp;amp; &amp;nbsp; &amp;quot;</para>
+			</listitem>
+			<listitem>
+				<para>Все ссылки на символы, принятые в HTML-4:  &amp;auml; &amp;uuml; и др.</para>
+			</listitem>
+			<listitem>
+				<para>Символы с использованием Unicode: &amp;#234;</para>
+			</listitem>
+		</itemizedlist>
+	</sect1>
+	<sect1 id="htmlparser-meta">
+		<title>META-тэги
+<indexterm><primary>META-тэги</primary></indexterm>
+</title>
+		<para>В настоящий момент HTML-парсер обрабатывает
+		специальным образом следующие META-тэги.
+		<note>
+		Замечание:  <literal>&lt;META "NAME"&gt;</literal>
+		обрабатывается так же, как и
+		<literal>&lt;META "HTTP-EQUIV"&gt;</literal>
+		</note>
+		</para>
+
+		<itemizedlist>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Content-Type</secondary></indexterm>
+					<literal>&lt;META
+NAME="Content-Type" Content="text/html; charset=xxxx"&gt;</literal>
+Этот тэг используется для определения кодировки документа, если она
+не была указана в заголовке <literal>Content-type</literal> HTTP-ответа.</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Refresh</secondary></indexterm>
+					<literal>&lt;META
+NAME="REFRESH" Content="5; URL=http://www.somewhere.com"&gt;</literal>
+URL, указанный в параметре, будет поставлен в очередь на индексацию.</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Keywords</secondary></indexterm>
+					<literal>&lt;META NAME="Keywords" Content="xxx"&gt;</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Description</secondary></indexterm>
+					<literal>&lt;META NAME="Description" Content="xxx"&gt;</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para><indexterm><primary>META</primary><secondary>Robots</secondary></indexterm>
+					<literal>&lt;META
+NAME="Robots" Content="xxx"&gt;</literal>, где Content содержит
+список из следующий ключевых слов, разделенных запятой:
+<literal>ALL, NONE, INDEX, NOINDEX, FOLLOW, NOFOLLOW, NOARCHIVE</literal>.
+</para>
+			</listitem>
+<listitem>
+<para><indexterm><primary>META</primary><secondary>DP.PopRank</secondary></indexterm>
+<literal>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</literal> где значение Content - вещественное число. 
+Этот тэг используется для задания начального значения <link linkend="poprank">PopularityRank</link> для страницы.
+</para>
+</listitem>
+
+		</itemizedlist>
+	</sect1>
+	<sect1 id="htmlparser-links">
+		<title>Ссылки</title>
+		<para>HTML-парсер распознает гипертекстовые ссылки следующих типов:</para>
+		<itemizedlist>
+			<listitem>
+				<para>&lt;A HREF="xxx"&gt;</para>
+				<para>&lt;A HREF="xxx" DATA-EXPANDED-URL="yyy" DATA-ULTIMATE-URL="zzz"&gt;</para>
+				<para>Приоритет атрибутов при выборе ссылки: data-ultimate-url, data-expanded-url, href.</para>
+			</listitem>
+			<listitem>
+				<para>&lt;IMG SRC="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;LINK HREF="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;FRAME SRC="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;AREA HREF="xxx"&gt;</para>
+			</listitem>
+			<listitem>
+				<para>&lt;BASE HREF="xxx"&gt; 
+<note>
+						<para>Если &lt;BASE HREF&gt;
+содержит некорректно сформированный URL, то для формирования относительных
+ссылок будет использовано текущее расположение документа.</para>
+					</note>
+				</para>
+			</listitem>
+		</itemizedlist>
+<para><indexterm><primary>Команда</primary><secondary>SkipHrefIn</secondary></indexterm>
+Однако вы можете указать список HTML тэгов, которые будут пропущены при поиске новых ссылок, при помощи команды <command>SkipHrefIn</command>.
+<programlisting>
+SkipHrefIn "img, link, script"
+</programlisting>
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>DisableRelNoFollow</secondary></indexterm>
+По умолчанию, <application>DataparkSearch</application> не учитывает ссылки с атрибутом rel=nofollow. 
+Но вы можете изменить это поведение при помощи команды <command>"DisableRelNoFollow yes"</command>, которую необходимо указать в файле конфигурации <filename>indexer.conf</filename>.
+</para>
+	</sect1>
+
+	<sect1 id="htmlparser-comments">
+		<title>Комментарии</title>
+		<para>Если Вы индексируете свои собственные ресурсы и 
+		имеете возможность отредактировать их, то, возможно,
+		для более оптимальной работы индексации и поиска,
+		имеет смысл специальным образом подготовить документы,
+		"спрятав" от робота отдельные их части, такие как меню
+		навигации, и др.
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>Текст между &lt;!-- .... --&gt; считается
+				HTML-комментарием.</para>
+			</listitem>
+			<listitem>
+				<para>
+				Текст между тэгами
+&lt;!--UdmComment--&gt; .... &lt;!--/UdmComment--&gt; становится невидимым
+для индексации. 
+				</para>
+			</listitem>
+			<listitem>
+				<para>Также, предусмотрено использование &lt;NOINDEX&gt;
+... &lt;/NOINDEX&gt; в качестве синонимов для &lt;!--UdmComment--&gt; и
+&lt;!--/UdmComment--&gt;</para>
+			</listitem>
+			<listitem>
+				<para>Для совместимости с <application>ASPSeek</application>, &lt;!--noindex--&gt;
+... &lt;!--/noindex--&gt; также являются синонимами для &lt;!--UdmComment--&gt; и
+&lt;!--/UdmComment--&gt;</para>
+			</listitem>
+<listitem>
+<para>Специальные комментарии Google &lt;!-- google_ad_section_start --&gt;, &lt;!-- google_ad_section_start(weight=ignore) --&gt; и
+ &lt;!-- google_ad_section_end --&gt; рассматриваются как тэги для включения/исключения контента из индексирования.</para>
+</listitem>
+		</itemizedlist>
+	</sect1>
+
+<sect1 id="htmlparser-bodypatterns">
+<indexterm><primary>Команда</primary><secondary>BodyPattern</secondary></indexterm>
+<title>Шаблоны для индексирования</title>
+<para>Если вам нужно индексировать не всю страницу целиком, например, чтобы исключить навигацию, рекламу и т.п., 
+вы можете использовать команду <command>BodyPattern</command> чтобы указать шаблон для извлечения контента для индексирования.
+Например:
+<programlisting>
+BodyPattern "&lt;!--content--&gt;(.*)&lt;!--/content--&gt;" "$1"
+</programlisting>
+этот шаблон будут извлекать контент между двумя специальными комментариями, и только этот контен будет проиндексирован
+для этой страницы.
+</para>
+<para>Вы можете задать несколько команд <command>BodyPattern</command>, но только первая по порядку подходящая будет применена к
+странице.
+Эти команды пытаются примениться к каждой индексируемой странице. 
+Осторожно, большое число таких команд может замедлить скорость индексирования.
+</para>
+
+<para>
+<indexterm><primary>Команда</primary><secondary>BodyBrackets</secondary></indexterm>
+Команда <command>BodyBrackets</command> аналогична команде <command>BodyPattern</command>, но задает два маркера:
+начала контента и конца контента, например:
+<programlisting>
+BodyBrackets "&lt;!--B--&gt;" "&lt;!--E--&gt;"
+</programlisting>
+При этом фрагмент документа заключенный между &lt;!--B--&gt; и &lt;!--E--&gt; будет считаться телом документа.
+</para>
+
+</sect1>
+
+<sect1 id="subdocs">
+<title>Sub-documents</title>
+<indexterm><primary>Команда</primary><secondary>SubDocLevel</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>SubDocCnt</secondary></indexterm>
+<para>Поддокументами являются: содержимое фреймов и внедряемых
+объектов (как правило, flash-роликов), временные редиректы (зачастую
+используются для установки кук или перенаправления на страницу в
+зависимости от языка предпочтений пользователя), версии одного и того
+же документа на разных языках, отдаваемые с использованием Content
+nehotiation.</para>
+
+<para>Управление индексированием поддокументов осуществляется двумя
+командами: команда <command>SubDocLevel</command> задает максимальный уровень вложенности
+индексируемых поддокументов. Значение по умолчанию равно 0, что
+запрещает индексирование поддокументов. Команда <command>SubDocCnt</command> задает
+максимальное число индексируемых поддокументов всех уровней
+вложенности (эта команда предназначена в основном для предотвращения
+бесконечных циклов вложенности страниц друг в дуга). Значение по
+умолчанию равно 5.</para>
+
+</sect1>
+
+
+</chapter>

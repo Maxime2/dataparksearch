@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Using syslog</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Extended indexing features"
+HREF="dpsearch-extended-indexing.en.html"><LINK
+REL="NEXT"
+TITLE="Storing compressed document copies"
+HREF="dpsearch-stored.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-extended-indexing.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-stored.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SYSLOG"
+>3.12. Using syslog</A
+></H1
+><A
+NAME="AEN2908"
+></A
+><A
+NAME="AEN2910"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> indexer uses syslog to log its messages. 
+Different verbose levels could be specified with -v option or by <B
+CLASS="COMMAND"
+>LogLevel</B
+> command in config files:</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN2916"
+></A
+><P
+><B
+>Table 3-2. Verbose levels</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><COL><TBODY
+><TR
+><TD
+>0</TD
+><TD
+>SILENT</TD
+><TD
+>suppress all log. Bad idea, better use -l option.</TD
+></TR
+><TR
+><TD
+>1</TD
+><TD
+>ERROR</TD
+><TD
+>log only critical errors</TD
+></TR
+><TR
+><TD
+>2</TD
+><TD
+>WARNING</TD
+><TD
+>log warnings as well</TD
+></TR
+><TR
+><TD
+>3</TD
+><TD
+>INFO</TD
+><TD
+>add info messages to log. Default.</TD
+></TR
+><TR
+><TD
+>4</TD
+><TD
+>EXTRA</TD
+><TD
+>extra logging</TD
+></TR
+><TR
+><TD
+>5</TD
+><TD
+>DEBUG</TD
+><TD
+>for debug purposes</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>You may use -l option to suppress log to stdout/stderr
+when running indexer via crontab. Without -l option log is sent both
+to stdout/stderr and to log files. If you do not like such behavior,
+run configure with <TT
+CLASS="LITERAL"
+>--disable-syslog</TT
+> flag and
+recompile indexer. Compiled without syslog support, indexer uses only
+stdout/stderr.</P
+><P
+>Syslog uses different facilities to separate log
+messages. The indexer's default facility is LOCAL7. Facility could be
+changed during configure with
+<TT
+CLASS="LITERAL"
+>--enable-syslog=LOG_FACILITY</TT
+> option. LOG_FACILITY
+should be one of the standard facilities, usually listed in
+<TT
+CLASS="FILENAME"
+>/usr/include/sys/syslog.h</TT
+> header file.</P
+><P
+>Facility helps to separate <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> messages from
+others. You can modify <TT
+CLASS="FILENAME"
+>/etc/syslog.conf</TT
+> to tell
+syslog how to treat <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> messages. For example:
+	<PRE
+CLASS="PROGRAMLISTING"
+># Log all messages from DataparkSearch to separate file
+local7.*        -/var/log/DataparkSearch.log</PRE
+>
+	</P
+><P
+>Other example:
+	<PRE
+CLASS="PROGRAMLISTING"
+># Send all DataparkSearch messages to host named central
+# Syslog on central should be configured to allow this
+local7.*        @central</PRE
+>
+	</P
+><P
+>By default all messages are logged to
+<TT
+CLASS="LITERAL"
+>/var/log/messages</TT
+> as well. <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> could
+populate this file with a number of messages. To avoid this, add
+local7.none or local7.!* (ignore any messages from local7 facility) to
+your 'catch-all' log files.</P
+><P
+>For example:
+	<PRE
+CLASS="PROGRAMLISTING"
+>#
+# Some `catch-all' logfiles.
+#
+*.=info;*.=notice;*.=warn;\
+        auth,authpriv.none;\
+        cron,daemon.none;\
+        mail,news.none;\
+        local7.!*               -/var/log/messages</PRE
+>
+	</P
+><P
+>Please take a look at syslogd(8) and syslog.conf(5) man
+pages for more detailed information about syslog and its configuration
+notes.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-extended-indexing.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-stored.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Extended indexing features</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Storing compressed document copies</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

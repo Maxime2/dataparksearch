@@ -1,0 +1,2419 @@
+{ "nGg", 	0x022D9, 	0x00338 }, 	/* not triple greater than : 9573-2003-isoamsn*/
+{ "epsiv", 	0x003F5, 	0x0 }, 	/* /straightepsilon, small epsilon, Greek : 9573-2003-isogrk3*/
+{ "varepsilon", 	0x003F5, 	0x0 }, 	/* alias ISOGRK3 epsiv : mmlalias*/
+{ "straightepsilon", 	0x003F5, 	0x0 }, 	/* alias ISOGRK3 epsiv : mmlalias*/
+{ "epsi", 	0x003F5, 	0x0 }, 	/* /straightepsilon, small epsilon, Greek : 9573-1991-isogrk3*/
+{ "epsis", 	0x003F5, 	0x0 }, 	/* /straightepsilon : 8879-isogrk3*/
+{ "YAcy", 	0x0042F, 	0x0 }, 	/* =capital YA, Cyrillic : 9573-2003-isocyr1*/
+{ "Rang", 	0x027EB, 	0x0 }, 	/* right angle bracket, double : 9573-2003-isotech*/
+{ "nLl", 	0x022D8, 	0x00338 }, 	/* not triple less than : 9573-2003-isoamsn*/
+{ "triangleq", 	0x0225C, 	0x0 }, 	/* alias ISOAMSR trie : mmlalias*/
+{ "trie", 	0x0225C, 	0x0 }, 	/* /triangleq R: triangle, equals : 9573-2003-isoamsr*/
+{ "blacktriangle", 	0x025B4, 	0x0 }, 	/* alias ISOPUB utrif : mmlalias*/
+{ "utrif", 	0x025B4, 	0x0 }, 	/* /blacktriangle =up tri, filled : 9573-2003-isopub*/
+{ "nLt", 	0x0226A, 	0x020D2 }, 	/* not, vert, much less than : 9573-2003-isoamsn*/
+{ "oxuarr", 	0x029BD, 	0x0 }, 	/*  : STIX*/
+{ "rcedil", 	0x00157, 	0x0 }, 	/* =small r, cedilla : 9573-2003-isolat2*/
+{ "boxDr", 	0x02553, 	0x0 }, 	/* lower right quadrant : 9573-2003-isobox*/
+{ "bigotimes", 	0x02A02, 	0x0 }, 	/* alias ISOAMSB xotime : mmlalias*/
+{ "xotime", 	0x02A02, 	0x0 }, 	/* /bigotimes L: circle times operator : 9573-2003-isoamsb*/
+{ "KHcy", 	0x00425, 	0x0 }, 	/* =capital HA, Cyrillic : 9573-2003-isocyr1*/
+{ "frac25", 	0x02156, 	0x0 }, 	/* =fraction two-fifths : 9573-2003-isopub*/
+{ "reg", 	0x000AE, 	0x0 }, 	/* /circledR =registered sign : 9573-2003-isonum*/
+{ "circledR", 	0x000AE, 	0x0 }, 	/* alias ISONUM reg : mmlalias*/
+{ "REG", 	0x000AE, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "ntrianglerighteq", 	0x022ED, 	0x0 }, 	/* alias ISOAMSN nrtrie : mmlalias*/
+{ "nrtrie", 	0x022ED, 	0x0 }, 	/* /ntrianglerighteq N: not r tri, eq : 9573-2003-isoamsn*/
+{ "NotRightTriangleEqual", 	0x022ED, 	0x0 }, 	/* alias ISOAMSN nrtrie : mmlalias*/
+{ "ccaps", 	0x02A4D, 	0x0 }, 	/* closed intersection, serifs : 9573-2003-isoamsb*/
+{ "supE", 	0x02AC6, 	0x0 }, 	/*  : STIX*/
+{ "supseteqq", 	0x02AC6, 	0x0 }, 	/* alias ISOAMSR supE : mmlalias*/
+{ "bfr", 	0x1D51F, 	0x0 }, 	/* /frak b, lower case b : 9573-2003-isomfrk*/
+{ "Diamond", 	0x022C4, 	0x0 }, 	/* alias ISOAMSB diam : mmlalias*/
+{ "diam", 	0x022C4, 	0x0 }, 	/* /diamond B: open diamond : 9573-2003-isoamsb*/
+{ "diamond", 	0x022C4, 	0x0 }, 	/* alias ISOAMSB diam : mmlalias*/
+{ "luharb", 	0x02952, 	0x0 }, 	/*  : STIX*/
+{ "LeftVectorBar", 	0x02952, 	0x0 }, 	/* left-up harpoon to bar : mmlextra*/
+{ "weierp", 	0x02118, 	0x0 }, 	/* /wp - Weierstrass p : 9573-2003-isoamso*/
+{ "wp", 	0x02118, 	0x0 }, 	/* alias ISOAMSO weierp : mmlalias*/
+{ "female", 	0x02640, 	0x0 }, 	/* =female symbol : 9573-2003-isopub*/
+{ "cirE", 	0x029C3, 	0x0 }, 	/* circle, two horizontal stroked to the right : 9573-2003-isoamso*/
+{ "lEg", 	0x02A8B, 	0x0 }, 	/*  : STIX*/
+{ "lesseqqgtr", 	0x02A8B, 	0x0 }, 	/* alias ISOAMSR lEg : mmlalias*/
+{ "Wscr", 	0x1D4B2, 	0x0 }, 	/* /scr W, script letter W : 9573-2003-isomscr*/
+{ "eDot", 	0x02251, 	0x0 }, 	/* /doteqdot /Doteq R: eq, even dots : 9573-2003-isoamsr*/
+{ "doteqdot", 	0x02251, 	0x0 }, 	/* alias ISOAMSR eDot : mmlalias*/
+{ "smte", 	0x02AAC, 	0x0 }, 	/* smaller than or equal : 9573-2003-isoamsr*/
+{ "tosa", 	0x02929, 	0x0 }, 	/* alias ISOAMSA seswar : mmlalias*/
+{ "seswar", 	0x02929, 	0x0 }, 	/* /tosa A: SE & SW arrows : 9573-2003-isoamsa*/
+{ "ltrPar", 	0x02996, 	0x0 }, 	/* dbl right parenthesis, less : 9573-2003-isoamsc*/
+{ "nsqsupe", 	0x022E3, 	0x0 }, 	/* not, square superset, equals : 9573-2003-isoamsn*/
+{ "NotSquareSupersetEqual", 	0x022E3, 	0x0 }, 	/* alias ISOAMSN nsqsupe : mmlalias*/
+{ "leftarrowtail", 	0x021A2, 	0x0 }, 	/* alias ISOAMSA larrtl : mmlalias*/
+{ "larrtl", 	0x021A2, 	0x0 }, 	/* /leftarrowtail A: left arrow-tailed : 9573-2003-isoamsa*/
+{ "ominus", 	0x02296, 	0x0 }, 	/* /ominus B: minus sign in circle : 9573-2003-isoamsb*/
+{ "CircleMinus", 	0x02296, 	0x0 }, 	/* alias ISOAMSB ominus : mmlalias*/
+{ "nwonearr", 	0x02932, 	0x0 }, 	/*  : STIX*/
+{ "idiagr", 	0x00390, 	0x0 }, 	/* =small iota, dieresis, accent, Greek : 9573-2003-isogrk2*/
+{ "eDDot", 	0x02A77, 	0x0 }, 	/* /ddotseq R: equal with four dots : 9573-2003-isoamsr*/
+{ "ddotseq", 	0x02A77, 	0x0 }, 	/* alias ISOAMSR eDDot : mmlalias*/
+{ "xcup", 	0x022C3, 	0x0 }, 	/* /bigcup L: union operator : 9573-2003-isoamsb*/
+{ "bigcup", 	0x022C3, 	0x0 }, 	/* alias ISOAMSB xcup : mmlalias*/
+{ "Union", 	0x022C3, 	0x0 }, 	/* alias ISOAMSB xcup : mmlalias*/
+{ "Iota", 	0x00399, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "Igr", 	0x00399, 	0x0 }, 	/* =capital Iota, Greek : 9573-2003-isogrk1*/
+{ "leftrightsquigarrow", 	0x021AD, 	0x0 }, 	/* alias ISOAMSA harrw : mmlalias*/
+{ "harrw", 	0x021AD, 	0x0 }, 	/* /leftrightsquigarrow A: l&r arr-wavy : 9573-2003-isoamsa*/
+{ "udrpar", 	0x023DD, 	0x0 }, 	/*  : STIX*/
+{ "UnderParenthesis", 	0x023DD, 	0x0 }, 	/* under parenthesis : mmlextra*/
+{ "rhard", 	0x021C1, 	0x0 }, 	/* /rightharpoondown A: rt harpoon-down : 9573-2003-isoamsa*/
+{ "rightharpoondown", 	0x021C1, 	0x0 }, 	/* alias ISOAMSA rhard : mmlalias*/
+{ "DownRightVector", 	0x021C1, 	0x0 }, 	/* alias ISOAMSA rhard : mmlalias*/
+{ "hscr", 	0x1D4BD, 	0x0 }, 	/* /scr h, script letter h : 9573-2003-isomscr*/
+{ "Gcedil", 	0x00122, 	0x0 }, 	/* =capital G, cedilla : 9573-2003-isolat2*/
+{ "angrtvbd", 	0x0299D, 	0x0 }, 	/* right angle-measured, dot : 9573-2003-isoamso*/
+{ "GJcy", 	0x00403, 	0x0 }, 	/* =capital GJE Macedonian : 9573-2003-isocyr2*/
+{ "cemptyv", 	0x029B2, 	0x0 }, 	/* circle, slash, small circle above : 9573-2003-isoamso*/
+{ "RightTriangleBar", 	0x029D0, 	0x0 }, 	/* vertical bar, right triangle : mmlextra*/
+{ "vbrtri", 	0x029D0, 	0x0 }, 	/*  : STIX*/
+{ "fpartint", 	0x02A0D, 	0x0 }, 	/* finite part integral : 9573-2003-isotech*/
+{ "boxdr", 	0x0250C, 	0x0 }, 	/* lower right quadrant : 9573-2003-isobox*/
+{ "qfr", 	0x1D52E, 	0x0 }, 	/* /frak q, lower case q : 9573-2003-isomfrk*/
+{ "angmsdad", 	0x029AB, 	0x0 }, 	/* angle-measured, arrow, down, left : 9573-2003-isoamso*/
+{ "xandand", 	0x02A07, 	0x0 }, 	/*  : STIX*/
+{ "b.phiv", 	0x1D6DF, 	0x0 }, 	/* variant phi : 8879-isogrk4*/
+{ "supdsub", 	0x02AD8, 	0x0 }, 	/* superset, subset, dash joining them : 9573-2003-isoamsr*/
+{ "boxuL", 	0x0255B, 	0x0 }, 	/* upper left quadrant : 9573-2003-isobox*/
+{ "rfisht", 	0x0297D, 	0x0 }, 	/* right fish tail : 9573-2003-isoamsa*/
+{ "NestedLessLess", 	0x0226A, 	0x0 }, 	/* alias ISOAMSR Lt : mmlalias*/
+{ "ll", 	0x0226A, 	0x0 }, 	/* alias ISOAMSR Lt : mmlalias*/
+{ "Lt", 	0x0226A, 	0x0 }, 	/* /ll R: double less-than sign : 9573-2003-isoamsr*/
+{ "Product", 	0x0220F, 	0x0 }, 	/* alias for &prod; : mmlextra*/
+{ "prod", 	0x0220F, 	0x0 }, 	/* /prod L: product operator : 9573-2003-isoamsb*/
+{ "orarr", 	0x02941, 	0x0 }, 	/* 21BB : STIX*/
+{ "boxh", 	0x02500, 	0x0 }, 	/* horizontal line  : 9573-2003-isobox*/
+{ "HorizontalLine", 	0x02500, 	0x0 }, 	/* short horizontal line  : mmlextra*/
+{ "zfr", 	0x1D537, 	0x0 }, 	/* /frak z, lower case z : 9573-2003-isomfrk*/
+{ "arrlrsl", 	0x02942, 	0x0 }, 	/*  : STIX*/
+{ "otilde", 	0x000F5, 	0x0 }, 	/* =small o, tilde : 9573-2003-isolat1*/
+{ "curarrm", 	0x0293C, 	0x0 }, 	/* curved right arrow with minus : 9573-2003-isoamsa*/
+{ "lrm", 	0x0200E, 	0x0 }, 	/*  : xhtml1-special*/
+{ "b.alpha", 	0x1D6C2, 	0x0 }, 	/* small alpha, Greek : 8879-isogrk4*/
+{ "Gopf", 	0x1D53E, 	0x0 }, 	/* /Bbb G, open face G : 9573-2003-isomopf*/
+{ "ohgr", 	0x003C9, 	0x0 }, 	/* =small omega, Greek : 9573-2003-isogrk1*/
+{ "omega", 	0x003C9, 	0x0 }, 	/* /omega small omega, Greek : 9573-2003-isogrk3*/
+{ "bnot", 	0x02310, 	0x0 }, 	/* reverse not : 9573-2003-isotech*/
+{ "thetas", 	0x003B8, 	0x0 }, 	/* straight theta : 8879-isogrk3*/
+{ "thgr", 	0x003B8, 	0x0 }, 	/* =small theta, Greek : 9573-2003-isogrk1*/
+{ "theta", 	0x003B8, 	0x0 }, 	/* greek small letter theta : xhtml1-symbol*/
+{ "iogon", 	0x0012F, 	0x0 }, 	/* =small i, ogonek : 9573-2003-isolat2*/
+{ "lesdotor", 	0x02A83, 	0x0 }, 	/* less-than-or-equal, slanted, dot above right : 9573-2003-isoamsr*/
+{ "LeftArrowBar", 	0x021E4, 	0x0 }, 	/* alias for larrb : mmlalias*/
+{ "larrb", 	0x021E4, 	0x0 }, 	/* leftwards arrow to bar : mmlextra*/
+{ "bopf", 	0x1D553, 	0x0 }, 	/*  : mmlextra*/
+{ "bumpE", 	0x02AAE, 	0x0 }, 	/* bump, equals : 9573-2003-isoamsr*/
+{ "rarrap", 	0x02975, 	0x0 }, 	/* approximate, right arrow above : 9573-2003-isoamsa*/
+{ "uacgr", 	0x003CD, 	0x0 }, 	/* =small upsilon, accent, Greek : 9573-2003-isogrk2*/
+{ "abreve", 	0x00103, 	0x0 }, 	/* =small a, breve : 9573-2003-isolat2*/
+{ "rightleftharpoons", 	0x021CC, 	0x0 }, 	/* alias ISOAMSA rlhar : mmlalias*/
+{ "Equilibrium", 	0x021CC, 	0x0 }, 	/* alias ISOAMSA rlhar : mmlalias*/
+{ "rlhar", 	0x021CC, 	0x0 }, 	/* /rightleftharpoons A: r harp over l : 9573-2003-isoamsa*/
+{ "rlhar2", 	0x021CC, 	0x0 }, 	/* /rightleftharpoons A: r harp over l  : 8879-isoamsa*/
+{ "Kopf", 	0x1D542, 	0x0 }, 	/* /Bbb K, open face K  : 9573-2003-isomopf*/
+{ "Idot", 	0x00130, 	0x0 }, 	/* =capital I, dot above : 9573-2003-isolat2*/
+{ "Amacr", 	0x00100, 	0x0 }, 	/* =capital A, macron : 9573-2003-isolat2*/
+{ "DotDot", 	0x020DC, 	0x0 }, 	/* four dots above : 9573-2003-isotech*/
+{ "Dcaron", 	0x0010E, 	0x0 }, 	/* =capital D, caron : 9573-2003-isolat2*/
+{ "hstrok", 	0x00127, 	0x0 }, 	/* =small h, stroke : 9573-2003-isolat2*/
+{ "lcedil", 	0x0013C, 	0x0 }, 	/* =small l, cedilla : 9573-2003-isolat2*/
+{ "wedbar", 	0x02A5F, 	0x0 }, 	/* wedge, bar below : 9573-2003-isoamsb*/
+{ "alefsym", 	0x02135, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "aleph", 	0x02135, 	0x0 }, 	/* /aleph aleph, Hebrew : 9573-2003-isotech*/
+{ "ogon", 	0x002DB, 	0x0 }, 	/* =ogonek : 9573-2003-isodia*/
+{ "Agrave", 	0x000C0, 	0x0 }, 	/* =capital A, grave accent : 9573-2003-isolat1*/
+{ "bne", 	0x0003D, 	0x020E5 }, 	/* reverse not equal : 9573-2003-isotech*/
+{ "icirc", 	0x000EE, 	0x0 }, 	/* =small i, circumflex accent : 9573-2003-isolat1*/
+{ "cuesc", 	0x022DF, 	0x0 }, 	/* /curlyeqsucc R: curly eq, succeeds : 9573-2003-isoamsr*/
+{ "curlyeqsucc", 	0x022DF, 	0x0 }, 	/* alias ISOAMSR cuesc : mmlalias*/
+{ "gjcy", 	0x00453, 	0x0 }, 	/* =small gje, Macedonian : 9573-2003-isocyr2*/
+{ "rpar", 	0x00029, 	0x0 }, 	/* C: =right parenthesis : 9573-2003-isonum*/
+{ "NoBreak", 	0x02060, 	0x0 }, 	/*  : mmlextra*/
+{ "Mu", 	0x0039C, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "Mgr", 	0x0039C, 	0x0 }, 	/* =capital Mu, Greek : 9573-2003-isogrk1*/
+{ "lscr", 	0x1D4C1, 	0x0 }, 	/* /scr l, script letter l : 9573-2003-isomscr*/
+{ "ang", 	0x02220, 	0x0 }, 	/* /angle - angle : 9573-2003-isoamso*/
+{ "angle", 	0x02220, 	0x0 }, 	/* alias ISOAMSO ang : mmlalias*/
+{ "eqslantgtr", 	0x02A96, 	0x0 }, 	/* alias ISOAMSR egs : mmlalias*/
+{ "egs", 	0x02A96, 	0x0 }, 	/*  : STIX*/
+{ "boxvH", 	0x0256A, 	0x0 }, 	/* all four quadrants : 9573-2003-isobox*/
+{ "capbrcup", 	0x02A49, 	0x0 }, 	/* intersection, bar, union : 9573-2003-isoamsb*/
+{ "Tfr", 	0x1D517, 	0x0 }, 	/* /frak T, upper case t : 9573-2003-isomfrk*/
+{ "isindot", 	0x022F5, 	0x0 }, 	/* set membership, dot above : 9573-2003-isotech*/
+{ "CHcy", 	0x00427, 	0x0 }, 	/* =capital CHE, Cyrillic : 9573-2003-isocyr1*/
+{ "Colon", 	0x02237, 	0x0 }, 	/* /Colon, two colons : 9573-2003-isoamsr*/
+{ "Proportion", 	0x02237, 	0x0 }, 	/* alias ISOAMSR Colon : mmlalias*/
+{ "boxdl", 	0x02510, 	0x0 }, 	/* lower left quadrant : 9573-2003-isobox*/
+{ "topbot", 	0x02336, 	0x0 }, 	/* top and bottom : 9573-2003-isotech*/
+{ "ouml", 	0x000F6, 	0x0 }, 	/* =small o, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "notnivb", 	0x022FE, 	0x0 }, 	/* contains, variant : 9573-2003-isotech*/
+{ "mstpos", 	0x0223E, 	0x0 }, 	/* most positive : 9573-2003-isoamsr*/
+{ "ac", 	0x0223E, 	0x0 }, 	/* most positive : 9573-2003-isoamsb*/
+{ "forall", 	0x02200, 	0x0 }, 	/* /forall for all : 9573-2003-isotech*/
+{ "ForAll", 	0x02200, 	0x0 }, 	/* alias ISOTECH forall : mmlalias*/
+{ "b.epsiv", 	0x1D6DC, 	0x0 }, 	/* variant epsilon : 8879-isogrk4*/
+{ "quest", 	0x0003F, 	0x0 }, 	/* =question mark : 9573-2003-isonum*/
+{ "nwArr", 	0x021D6, 	0x0 }, 	/* NW pointing dbl arrow : 9573-2003-isoamsa*/
+{ "wfr", 	0x1D534, 	0x0 }, 	/* /frak w, lower case w : 9573-2003-isomfrk*/
+{ "Fouriertrf", 	0x02131, 	0x0 }, 	/* Fourier transform : mmlalias*/
+{ "Fscr", 	0x02131, 	0x0 }, 	/* /scr F, script letter F : 9573-2003-isomscr*/
+{ "rarr3", 	0x021F6, 	0x0 }, 	/*  : STIX*/
+{ "DownLeftTeeVector", 	0x0295E, 	0x0 }, 	/* left-down harpoon from bar : mmlextra*/
+{ "bldhar", 	0x0295E, 	0x0 }, 	/*  : STIX*/
+{ "Jscr", 	0x1D4A5, 	0x0 }, 	/* /scr J, script letter J : 9573-2003-isomscr*/
+{ "rsh", 	0x021B1, 	0x0 }, 	/* /Rsh A: : 9573-2003-isoamsa*/
+{ "Rsh", 	0x021B1, 	0x0 }, 	/* alias ISOAMSA rsh : mmlalias*/
+{ "zcy", 	0x00437, 	0x0 }, 	/* =small ze, Cyrillic : 9573-2003-isocyr1*/
+{ "bbrktbrk", 	0x023B6, 	0x0 }, 	/* bottom above top square bracket : 9573-2003-isoamso*/
+{ "ubreve", 	0x0016D, 	0x0 }, 	/* =small u, breve : 9573-2003-isolat2*/
+{ "nvrArr", 	0x02903, 	0x0 }, 	/* not, vert, right double arrow : 9573-2003-isoamsa*/
+{ "cupdot", 	0x0228D, 	0x0 }, 	/* union, with dot : 9573-2003-isoamsb*/
+{ "rdldhar", 	0x02969, 	0x0 }, 	/* right harpoon-down over left harpoon-down : 9573-2003-isoamsa*/
+{ "napos", 	0x00149, 	0x0 }, 	/* =small n, apostrophe : 9573-2003-isolat2*/
+{ "Gcy", 	0x00413, 	0x0 }, 	/* =capital GHE, Cyrillic : 9573-2003-isocyr1*/
+{ "Fopf", 	0x1D53D, 	0x0 }, 	/* /Bbb F, open face F : 9573-2003-isomopf*/
+{ "ovbar", 	0x0233D, 	0x0 }, 	/* circle with vertical bar : 9573-2003-isoamsb*/
+{ "loarr", 	0x021FD, 	0x0 }, 	/* left open arrow : 9573-2003-isoamsa*/
+{ "tribar", 	0x029CB, 	0x0 }, 	/*  : STIX*/
+{ "mopf", 	0x1D55E, 	0x0 }, 	/*  : mmlextra*/
+{ "lbrke", 	0x0298B, 	0x0 }, 	/* left bracket, equal : 9573-2003-isoamsc*/
+{ "NegativeThinSpace", 	0x0200B, 	0x0 }, 	/* space of width -3/18 em : mmlalias*/
+{ "NegativeMediumSpace", 	0x0200B, 	0x0 }, 	/* space of width -4/18 em : mmlalias*/
+{ "ZeroWidthSpace", 	0x0200B, 	0x0 }, 	/* zero width space : mmlextra*/
+{ "NegativeVeryThinSpace", 	0x0200B, 	0x0 }, 	/* space of width -1/18 em : mmlalias*/
+{ "NegativeThickSpace", 	0x0200B, 	0x0 }, 	/* space of width -5/18 em : mmlalias*/
+{ "lsquor", 	0x0201A, 	0x0 }, 	/* =rising single quote, left (low) : 9573-2003-isopub*/
+{ "sbquo", 	0x0201A, 	0x0 }, 	/* single low-9 quotation mark : xhtml1-special*/
+{ "apE", 	0x02A70, 	0x0 }, 	/* approximately equal or equal to : 9573-2003-isoamsr*/
+{ "EmptySmallSquare", 	0x025FB, 	0x0 }, 	/* empty small square : mmlextra*/
+{ "xsqu", 	0x025FB, 	0x0 }, 	/*  : STIX*/
+{ "nrarrw", 	0x0219D, 	0x00338 }, 	/* not right arrow-wavy : 9573-2003-isoamsa*/
+{ "dzigrarr", 	0x027FF, 	0x0 }, 	/* right long zig-zag arrow : 9573-2003-isoamsa*/
+{ "NotCongruent", 	0x02262, 	0x0 }, 	/* alias ISOAMSN nequiv : mmlalias*/
+{ "nequiv", 	0x02262, 	0x0 }, 	/* /nequiv N: not identical with : 9573-2003-isoamsn*/
+{ "nrightarrow", 	0x0219B, 	0x0 }, 	/* alias ISOAMSA nrarr : mmlalias*/
+{ "nrarr", 	0x0219B, 	0x0 }, 	/* /nrightarrow A: not right arrow : 9573-2003-isoamsa*/
+{ "fnof", 	0x00192, 	0x0 }, 	/* function of (italic small f) : 9573-2003-isotech*/
+{ "nparsl", 	0x02AFD, 	0x020E5 }, 	/* not parallel, slanted : 9573-2003-isotech*/
+{ "TildeFullEqual", 	0x02245, 	0x0 }, 	/* alias ISOTECH cong : mmlalias*/
+{ "cong", 	0x02245, 	0x0 }, 	/* /cong R: congruent with : 9573-2003-isotech*/
+{ "loplus", 	0x02A2D, 	0x0 }, 	/* plus sign in left half circle : 9573-2003-isoamsb*/
+{ "Lcy", 	0x0041B, 	0x0 }, 	/* =capital EL, Cyrillic : 9573-2003-isocyr1*/
+{ "andd", 	0x02A5C, 	0x0 }, 	/* and, horizontal dash : 9573-2003-isotech*/
+{ "Uacgr", 	0x0038E, 	0x0 }, 	/* =capital Upsilon, accent, Greek : 9573-2003-isogrk2*/
+{ "iff", 	0x021D4, 	0x0 }, 	/* /iff =if and only if  : 8879-isotech*/
+{ "DoubleLeftRightArrow", 	0x021D4, 	0x0 }, 	/* alias ISOAMSA hArr : mmlalias*/
+{ "Leftrightarrow", 	0x021D4, 	0x0 }, 	/* alias ISOAMSA hArr : mmlalias*/
+{ "hArr", 	0x021D4, 	0x0 }, 	/* /Leftrightarrow A: l&r dbl arrow : 9573-2003-isoamsa*/
+{ "lesg", 	0x022DA, 	0x0FE00 }, 	/* less, equal, slanted, greater : 9573-2003-isoamsr*/
+{ "Zfr", 	0x02128, 	0x0 }, 	/* /frak Z, upper case z  : 9573-2003-isomfrk*/
+{ "zeetrf", 	0x02128, 	0x0 }, 	/* zee transform : mmlalias*/
+{ "iprod", 	0x02A3C, 	0x0 }, 	/* /intprod : 9573-2003-isoamsb*/
+{ "intprod", 	0x02A3C, 	0x0 }, 	/* alias ISOAMSB iprod : mmlalias*/
+{ "wscr", 	0x1D4CC, 	0x0 }, 	/* /scr w, script letter w : 9573-2003-isomscr*/
+{ "glj", 	0x02AA4, 	0x0 }, 	/* greater, less, overlapping : 9573-2003-isoamsr*/
+{ "ycirc", 	0x00177, 	0x0 }, 	/* =small y, circumflex accent : 9573-2003-isolat2*/
+{ "actuary", 	0x020E7, 	0x0 }, 	/*  : STIX*/
+{ "vartriangleleft", 	0x022B2, 	0x0 }, 	/* alias ISOAMSR vltri : mmlalias*/
+{ "vltri", 	0x022B2, 	0x0 }, 	/* /vartriangleleft R: l tri, open, var : 9573-2003-isoamsr*/
+{ "LeftTriangle", 	0x022B2, 	0x0 }, 	/* alias ISOAMSR vltri : mmlalias*/
+{ "Esim", 	0x02A73, 	0x0 }, 	/* equal, similar : 9573-2003-isoamsr*/
+{ "Ntilde", 	0x000D1, 	0x0 }, 	/* =capital N, tilde : 9573-2003-isolat1*/
+{ "ccirc", 	0x00109, 	0x0 }, 	/* =small c, circumflex accent : 9573-2003-isolat2*/
+{ "nearhk", 	0x02924, 	0x0 }, 	/* NE arrow-hooked : 9573-2003-isoamsa*/
+{ "loz", 	0x025CA, 	0x0 }, 	/* /lozenge - lozenge or total mark : 9573-2003-isopub*/
+{ "lozenge", 	0x025CA, 	0x0 }, 	/* alias ISOPUB loz : mmlalias*/
+{ "Uuml", 	0x000DC, 	0x0 }, 	/* =capital U, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "jsercy", 	0x00458, 	0x0 }, 	/* =small je, Serbian : 9573-2003-isocyr2*/
+{ "Udigr", 	0x003AB, 	0x0 }, 	/* =capital Upsilon, dieresis, Greek : 9573-2003-isogrk2*/
+{ "uHar", 	0x02963, 	0x0 }, 	/* up harpoon-left, up harpoon-right : 9573-2003-isoamsa*/
+{ "aelig", 	0x000E6, 	0x0 }, 	/* =small ae diphthong (ligature) : 9573-2003-isolat1*/
+{ "NonBreakingSpace", 	0x000A0, 	0x0 }, 	/* alias ISONUM nbsp : mmlalias*/
+{ "nbsp", 	0x000A0, 	0x0 }, 	/* =no break (required) space : 9573-2003-isonum*/
+{ "NotSucceedsTilde", 	0x0227F, 	0x00338 }, 	/* not succeeds or similar : mmlextra*/
+{ "nscsim", 	0x0227F, 	0x00338 }, 	/*  : STIX*/
+{ "amalg", 	0x02A3F, 	0x0 }, 	/* /amalg B: amalgamation or coproduct : 9573-2003-isoamsb*/
+{ "RightArrow", 	0x02192, 	0x0 }, 	/* alias ISONUM rarr : mmlalias*/
+{ "rarr", 	0x02192, 	0x0 }, 	/* /rightarrow /to A: =rightward arrow : 9573-2003-isonum*/
+{ "rightarrow", 	0x02192, 	0x0 }, 	/* alias ISONUM rarr : mmlalias*/
+{ "srarr", 	0x02192, 	0x0 }, 	/* short right arrow : 9573-2003-isoamsa*/
+{ "ShortRightArrow", 	0x02192, 	0x0 }, 	/* alias ISOAMSA srarr : mmlalias*/
+{ "ngsim", 	0x02275, 	0x0 }, 	/* not greater, similar : 9573-2003-isoamsn*/
+{ "NotGreaterTilde", 	0x02275, 	0x0 }, 	/* alias ISOAMSN ngsim : mmlalias*/
+{ "colon", 	0x0003A, 	0x0 }, 	/* /colon P: : 9573-2003-isonum*/
+{ "Lcaron", 	0x0013D, 	0x0 }, 	/* =capital L, caron : 9573-2003-isolat2*/
+{ "nlE", 	0x02266, 	0x00338 }, 	/* /nleqq N: not less, dbl equals : 9573-2003-isoamsn*/
+{ "nleqq", 	0x02266, 	0x00338 }, 	/* alias ISOAMSN nlE : mmlalias*/
+{ "rAtail", 	0x0291C, 	0x0 }, 	/* right double arrow-tail : 9573-2003-isoamsa*/
+{ "gescc", 	0x02AA9, 	0x0 }, 	/* greater than, closed by curve, equal, slanted : 9573-2003-isoamsr*/
+{ "hybull", 	0x02043, 	0x0 }, 	/* rectangle, filled (hyphen bullet) : 9573-2003-isopub*/
+{ "b.thetas", 	0x1D6C9, 	0x0 }, 	/* straight theta, Greek : 8879-isogrk4*/
+{ "Rrightarrow", 	0x021DB, 	0x0 }, 	/* alias ISOAMSA rAarr : mmlalias*/
+{ "rAarr", 	0x021DB, 	0x0 }, 	/* /Rrightarrow A: right triple arrow : 9573-2003-isoamsa*/
+{ "rdiofdi", 	0x0292B, 	0x0 }, 	/*  : STIX*/
+{ "rotimes", 	0x02A35, 	0x0 }, 	/*  : STIX*/
+{ "angupl", 	0x029A3, 	0x0 }, 	/*  : STIX*/
+{ "diamerr", 	0x029F0, 	0x0 }, 	/*  : STIX*/
+{ "LowerLeftArrow", 	0x02199, 	0x0 }, 	/* alias ISOAMSA swarr : mmlalias*/
+{ "dlarr", 	0x02199, 	0x0 }, 	/* /swarrow A: downward l arrow  : 8879-isoamsa*/
+{ "swarrow", 	0x02199, 	0x0 }, 	/* alias ISOAMSA swarr : mmlalias*/
+{ "swarr", 	0x02199, 	0x0 }, 	/* /swarrow A: SW pointing arrow : 9573-2003-isoamsa*/
+{ "Gfr", 	0x1D50A, 	0x0 }, 	/* /frak G, upper case g : 9573-2003-isomfrk*/
+{ "timesd", 	0x02A30, 	0x0 }, 	/* times, dot : 9573-2003-isoamsb*/
+{ "ordf", 	0x000AA, 	0x0 }, 	/* =ordinal indicator, feminine : 9573-2003-isonum*/
+{ "plusdu", 	0x02A25, 	0x0 }, 	/* plus sign, dot below : 9573-2003-isoamsb*/
+{ "jfr", 	0x1D527, 	0x0 }, 	/* /frak j, lower case j : 9573-2003-isomfrk*/
+{ "subset", 	0x02282, 	0x0 }, 	/* alias ISOTECH sub : mmlalias*/
+{ "sub", 	0x02282, 	0x0 }, 	/* /subset R: subset or is implied by : 9573-2003-isotech*/
+{ "fllig", 	0x0FB02, 	0x0 }, 	/* small fl ligature : 9573-2003-isopub*/
+{ "forkv", 	0x02AD9, 	0x0 }, 	/* fork, variant : 9573-2003-isoamsr*/
+{ "NotHumpEqual", 	0x0224F, 	0x00338 }, 	/* alias for &nbumpe; : mmlextra*/
+{ "nbumpe", 	0x0224F, 	0x00338 }, 	/* not bumpy single equals : mmlextra*/
+{ "cylcty", 	0x0232D, 	0x0 }, 	/* cylindricity : 9573-2003-isotech*/
+{ "Ncy", 	0x0041D, 	0x0 }, 	/* =capital EN, Cyrillic : 9573-2003-isocyr1*/
+{ "uarrln", 	0x02909, 	0x0 }, 	/* 234F : STIX*/
+{ "deg", 	0x000B0, 	0x0 }, 	/* =degree sign : 9573-2003-isonum*/
+{ "TSHcy", 	0x0040B, 	0x0 }, 	/* =capital TSHE, Serbian : 9573-2003-isocyr2*/
+{ "b.chi", 	0x1D6D8, 	0x0 }, 	/* small chi, Greek : 8879-isogrk4*/
+{ "circlearrowright", 	0x021BB, 	0x0 }, 	/* alias ISOAMSA orarr : mmlalias*/
+{ "orarr", 	0x021BB, 	0x0 }, 	/* /circlearrowright A: r arr in circle : 9573-2003-isoamsa*/
+{ "mscr", 	0x1D4C2, 	0x0 }, 	/* /scr m, script letter m : 9573-2003-isomscr*/
+{ "mcomma", 	0x02A29, 	0x0 }, 	/* minus, comma above : 9573-2003-isoamsr*/
+{ "InvisibleComma", 	0x02063, 	0x0 }, 	/* used as a separator, e.g., in indices : mmlalias*/
+{ "ic", 	0x02063, 	0x0 }, 	/* short form of &InvisibleComma; : mmlextra*/
+{ "bcong", 	0x0224C, 	0x0 }, 	/* /backcong R: reverse congruent : 9573-2003-isoamsr*/
+{ "backcong", 	0x0224C, 	0x0 }, 	/* alias ISOAMSR bcong : mmlalias*/
+{ "xdtri", 	0x025BD, 	0x0 }, 	/* /bigtriangledown B: big dn tri, open : 9573-2003-isoamsb*/
+{ "bigtriangledown", 	0x025BD, 	0x0 }, 	/* alias ISOAMSB xdtri : mmlalias*/
+{ "pgr", 	0x003C0, 	0x0 }, 	/* =small pi, Greek : 9573-2003-isogrk1*/
+{ "pi", 	0x003C0, 	0x0 }, 	/* /pi small pi, Greek : 9573-2003-isogrk3*/
+{ "dumap", 	0x029DF, 	0x0 }, 	/*  : STIX*/
+{ "angrtvb", 	0x022BE, 	0x0 }, 	/* right angle-measured : 9573-2003-isoamso*/
+{ "emsp14", 	0x02005, 	0x0 }, 	/* =1/4-em space : 9573-2003-isopub*/
+{ "RightAngleBracket", 	0x027E9, 	0x0 }, 	/* alias ISOTECH rang : mmlalias*/
+{ "rangle", 	0x027E9, 	0x0 }, 	/* alias ISOTECH rang : mmlalias*/
+{ "rang", 	0x027E9, 	0x0 }, 	/* /rangle C: right angle bracket : 9573-2003-isotech*/
+{ "efr", 	0x1D522, 	0x0 }, 	/* /frak e, lower case e : 9573-2003-isomfrk*/
+{ "bemptyv", 	0x029B0, 	0x0 }, 	/* reversed circle, slash : 9573-2003-isoamso*/
+{ "UpTee", 	0x022A5, 	0x0 }, 	/* alias ISOTECH perp : mmlalias*/
+{ "perp", 	0x022A5, 	0x0 }, 	/* /perp R: perpendicular : 9573-2003-isotech*/
+{ "bot", 	0x022A5, 	0x0 }, 	/* alias ISOTECH bottom : mmlalias*/
+{ "bottom", 	0x022A5, 	0x0 }, 	/* /bot bottom : 9573-2003-isotech*/
+{ "varsubsetneq", 	0x0228A, 	0x0FE00 }, 	/* alias ISOAMSN vsubne : mmlalias*/
+{ "vsubne", 	0x0228A, 	0x0FE00 }, 	/* /varsubsetneq N: subset, not eq, var : 9573-2003-isoamsn*/
+{ "gtcir", 	0x02A7A, 	0x0 }, 	/* greater than, circle inside : 9573-2003-isoamsr*/
+{ "dalembrt", 	0x029E0, 	0x0 }, 	/*  : STIX*/
+{ "rightthreetimes", 	0x022CC, 	0x0 }, 	/* alias ISOAMSB rthree : mmlalias*/
+{ "rthree", 	0x022CC, 	0x0 }, 	/* /rightthreetimes B: : 9573-2003-isoamsb*/
+{ "trpezium", 	0x023E2, 	0x0 }, 	/* trapezium : 9573-2003-isoamso*/
+{ "QUOT", 	0x00022, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "quot", 	0x00022, 	0x0 }, 	/* =quotation mark : 9573-2003-isonum*/
+{ "Epsilon", 	0x00395, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "Egr", 	0x00395, 	0x0 }, 	/* =capital Epsilon, Greek : 9573-2003-isogrk1*/
+{ "udarr", 	0x021C5, 	0x0 }, 	/* up arrow, down arrow : 9573-2003-isoamsa*/
+{ "UpArrowDownArrow", 	0x021C5, 	0x0 }, 	/* alias ISOAMSA udarr : mmlalias*/
+{ "langd", 	0x02991, 	0x0 }, 	/* left angle, dot : 9573-2003-isoamsc*/
+{ "succnsim", 	0x022E9, 	0x0 }, 	/* alias ISOAMSN scnsim : mmlalias*/
+{ "scnsim", 	0x022E9, 	0x0 }, 	/* /succnsim N: succeeds, not similar : 9573-2003-isoamsn*/
+{ "ncup", 	0x02A42, 	0x0 }, 	/* bar, union : 9573-2003-isoamsb*/
+{ "nvDash", 	0x022AD, 	0x0 }, 	/* /nvDash N: not vertical, dbl dash : 9573-2003-isoamsn*/
+{ "lnsim", 	0x022E6, 	0x0 }, 	/* /lnsim N: less, not similar : 9573-2003-isoamsn*/
+{ "bscr", 	0x1D4B7, 	0x0 }, 	/* /scr b, script letter b : 9573-2003-isomscr*/
+{ "lBarr", 	0x0290E, 	0x0 }, 	/* left doubly broken arrow : 9573-2003-isoamsa*/
+{ "ohbar", 	0x029B5, 	0x0 }, 	/* circle with horizontal bar : 9573-2003-isoamsb*/
+{ "yacy", 	0x0044F, 	0x0 }, 	/* =small ya, Cyrillic : 9573-2003-isocyr1*/
+{ "phone", 	0x0260E, 	0x0 }, 	/* =telephone symbol  : 9573-2003-isopub*/
+{ "frac38", 	0x0215C, 	0x0 }, 	/* =fraction three-eighths : 9573-2003-isonum*/
+{ "Integral", 	0x0222B, 	0x0 }, 	/* alias ISOTECH int : mmlalias*/
+{ "int", 	0x0222B, 	0x0 }, 	/* /int L: integral operator : 9573-2003-isotech*/
+{ "bigsqcup", 	0x02A06, 	0x0 }, 	/* alias ISOAMSB xsqcup : mmlalias*/
+{ "xsqcup", 	0x02A06, 	0x0 }, 	/*  : STIX*/
+{ "rmoust", 	0x023B1, 	0x0 }, 	/* /rmoustache : 9573-2003-isoamsc*/
+{ "rmoustache", 	0x023B1, 	0x0 }, 	/* alias ISOAMSC rmoust : mmlalias*/
+{ "eogon", 	0x00119, 	0x0 }, 	/* =small e, ogonek : 9573-2003-isolat2*/
+{ "barV", 	0x02AEA, 	0x0 }, 	/*  : STIX*/
+{ "diamondsuit", 	0x02666, 	0x0 }, 	/* ISOPUB    diams  : mmlalias*/
+{ "diams", 	0x02666, 	0x0 }, 	/* black diamond suit : xhtml1-symbol*/
+{ "Tgr", 	0x003A4, 	0x0 }, 	/* =capital Tau, Greek : 9573-2003-isogrk1*/
+{ "Tau", 	0x003A4, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "rsolbar", 	0x029F7, 	0x0 }, 	/*  : STIX*/
+{ "Zdot", 	0x0017B, 	0x0 }, 	/* =capital Z, dot above : 9573-2003-isolat2*/
+{ "circledS", 	0x024C8, 	0x0 }, 	/* alias ISOAMSO oS : mmlalias*/
+{ "oS", 	0x024C8, 	0x0 }, 	/* /circledS - capital S in circle : 9573-2003-isoamso*/
+{ "blacktriangleright", 	0x025B8, 	0x0 }, 	/* alias ISOPUB rtrif : mmlalias*/
+{ "rtrif", 	0x025B8, 	0x0 }, 	/* /blacktriangleright R: =r tri, filled : 9573-2003-isopub*/
+{ "SucceedsSlantEqual", 	0x0227D, 	0x0 }, 	/* alias ISOAMSR sccue : mmlalias*/
+{ "succcurlyeq", 	0x0227D, 	0x0 }, 	/* alias ISOAMSR sccue : mmlalias*/
+{ "sccue", 	0x0227D, 	0x0 }, 	/* /succcurlyeq R: succeeds, curly eq : 9573-2003-isoamsr*/
+{ "wr", 	0x02240, 	0x0 }, 	/* alias ISOAMSB wreath : mmlalias*/
+{ "VerticalTilde", 	0x02240, 	0x0 }, 	/* alias ISOAMSB wreath : mmlalias*/
+{ "wreath", 	0x02240, 	0x0 }, 	/* /wr B: wreath product : 9573-2003-isoamsb*/
+{ "incare", 	0x02105, 	0x0 }, 	/* =in-care-of symbol : 9573-2003-isopub*/
+{ "boxVr", 	0x0255F, 	0x0 }, 	/* upper and lower right quadrants : 9573-2003-isobox*/
+{ "b.lambda", 	0x1D6CC, 	0x0 }, 	/* small lambda, Greek : 8879-isogrk4*/
+{ "ang90", 	0x0221F, 	0x0 }, 	/* =right (90 degree) angle : 8879-isotech*/
+{ "angrt", 	0x0221F, 	0x0 }, 	/* right (90 degree) angle : 9573-2003-isotech*/
+{ "Itilde", 	0x00128, 	0x0 }, 	/* =capital I, tilde : 9573-2003-isolat2*/
+{ "Rcy", 	0x00420, 	0x0 }, 	/* =capital ER, Cyrillic : 9573-2003-isocyr1*/
+{ "SmallCircle", 	0x02218, 	0x0 }, 	/* alias ISOTECH compfn : mmlalias*/
+{ "compfn", 	0x02218, 	0x0 }, 	/* /circ B: composite function (small circle) : 9573-2003-isotech*/
+{ "supmult", 	0x02AC2, 	0x0 }, 	/* superset, multiply : 9573-2003-isoamsr*/
+{ "dtdot", 	0x022F1, 	0x0 }, 	/* /ddots, three dots, descending : 9573-2003-isotech*/
+{ "bigwedge", 	0x022C0, 	0x0 }, 	/* alias ISOAMSB xwedge : mmlalias*/
+{ "Wedge", 	0x022C0, 	0x0 }, 	/* alias ISOAMSB xwedge : mmlalias*/
+{ "xwedge", 	0x022C0, 	0x0 }, 	/* /bigwedge L: logical and operator : 9573-2003-isoamsb*/
+{ "Ucirc", 	0x000DB, 	0x0 }, 	/* =capital U, circumflex accent : 9573-2003-isolat1*/
+{ "escr", 	0x0212F, 	0x0 }, 	/* /scr e, script letter e : 9573-2003-isomscr*/
+{ "realine", 	0x0211B, 	0x0 }, 	/* the geometric real line : mmlalias*/
+{ "Rscr", 	0x0211B, 	0x0 }, 	/* /scr R, script letter R : 9573-2003-isomscr*/
+{ "nwarhk", 	0x02923, 	0x0 }, 	/* NW arrow-hooked : 9573-2003-isoamsa*/
+{ "yucy", 	0x0044E, 	0x0 }, 	/* =small yu, Cyrillic : 9573-2003-isocyr1*/
+{ "backprime", 	0x02035, 	0x0 }, 	/* alias ISOAMSO bprime : mmlalias*/
+{ "bprime", 	0x02035, 	0x0 }, 	/* /backprime - reverse prime : 9573-2003-isoamso*/
+{ "ltimes", 	0x022C9, 	0x0 }, 	/* /ltimes B: times sign, left closed : 9573-2003-isoamsb*/
+{ "Sum", 	0x02211, 	0x0 }, 	/* alias ISOAMSB sum : mmlalias*/
+{ "sum", 	0x02211, 	0x0 }, 	/* /sum L: summation operator : 9573-2003-isoamsb*/
+{ "eqcirc", 	0x02256, 	0x0 }, 	/* alias ISOAMSR ecir : mmlalias*/
+{ "ecir", 	0x02256, 	0x0 }, 	/* /eqcirc R: circle on equals sign : 9573-2003-isoamsr*/
+{ "DiacriticalAcute", 	0x000B4, 	0x0 }, 	/* alias ISODIA acute : mmlalias*/
+{ "acute", 	0x000B4, 	0x0 }, 	/* =acute accent : 9573-2003-isodia*/
+{ "Xfr", 	0x1D51B, 	0x0 }, 	/* /frak X, upper case x : 9573-2003-isomfrk*/
+{ "Ycy", 	0x0042B, 	0x0 }, 	/* =capital YERU, Cyrillic : 9573-2003-isocyr1*/
+{ "Darr", 	0x021A1, 	0x0 }, 	/* down two-headed arrow : 9573-2003-isoamsa*/
+{ "shy", 	0x000AD, 	0x0 }, 	/* =soft hyphen : 9573-2003-isonum*/
+{ "bigcirc", 	0x025EF, 	0x0 }, 	/* alias ISOAMSB xcirc : mmlalias*/
+{ "xcirc", 	0x025EF, 	0x0 }, 	/* /bigcirc B: large circle : 9573-2003-isoamsb*/
+{ "ldca", 	0x02936, 	0x0 }, 	/* left down curved arrow : 9573-2003-isoamsa*/
+{ "nshortmid", 	0x02224, 	0x0 }, 	/* alias ISOAMSN nsmid : mmlalias*/
+{ "nsmid", 	0x02224, 	0x0 }, 	/* /nshortmid : 9573-2003-isoamsn*/
+{ "NotVerticalBar", 	0x02224, 	0x0 }, 	/* alias ISOAMSN nmid : mmlalias*/
+{ "nmid", 	0x02224, 	0x0 }, 	/* /nmid : 9573-2003-isoamsn*/
+{ "cirdarr", 	0x029EC, 	0x0 }, 	/*  : STIX*/
+{ "lat", 	0x02AAB, 	0x0 }, 	/* larger than : 9573-2003-isoamsr*/
+{ "odash", 	0x0229D, 	0x0 }, 	/* /circleddash B: hyphen in circle : 9573-2003-isoamsb*/
+{ "circleddash", 	0x0229D, 	0x0 }, 	/* alias ISOAMSB odash : mmlalias*/
+{ "boxDL", 	0x02557, 	0x0 }, 	/* lower left quadrant : 9573-2003-isobox*/
+{ "Mapfrom", 	0x02906, 	0x0 }, 	/* E834 : STIX*/
+{ "larrpl", 	0x02946, 	0x0 }, 	/*  : STIX*/
+{ "Pfr", 	0x1D513, 	0x0 }, 	/* /frak P, upper case p : 9573-2003-isomfrk*/
+{ "sqcups", 	0x02294, 	0x0FE00 }, 	/* square union, serifs : 9573-2003-isoamsb*/
+{ "Supset", 	0x022D1, 	0x0 }, 	/* alias ISOAMSR Sup : mmlalias*/
+{ "Sup", 	0x022D1, 	0x0 }, 	/* /Supset R: dbl superset : 9573-2003-isoamsr*/
+{ "cupor", 	0x02A45, 	0x0 }, 	/* union, or : 9573-2003-isoamsb*/
+{ "isin", 	0x02208, 	0x0 }, 	/* element of : xhtml1-symbol*/
+{ "isinv", 	0x02208, 	0x0 }, 	/* set membership, variant : 9573-2003-isotech*/
+{ "in", 	0x02208, 	0x0 }, 	/* ISOTECH   isin  : mmlalias*/
+{ "Element", 	0x02208, 	0x0 }, 	/* alias ISOTECH isinv : mmlalias*/
+{ "nisd", 	0x022FA, 	0x0 }, 	/* contains, long horizontal stroke : 9573-2003-isotech*/
+{ "mDDot", 	0x0223A, 	0x0 }, 	/* minus with four dots, geometric properties : 9573-2003-isoamsr*/
+{ "CounterClockwiseContourIntegral", 	0x02233, 	0x0 }, 	/* alias ISOTECH awconint : mmlalias*/
+{ "awconint", 	0x02233, 	0x0 }, 	/* contour integral, anti-clockwise : 9573-2003-isotech*/
+{ "nexist", 	0x02204, 	0x0 }, 	/* /nexists - negated exists : 9573-2003-isoamso*/
+{ "NotExists", 	0x02204, 	0x0 }, 	/* alias ISOAMSO nexist : mmlalias*/
+{ "nexists", 	0x02204, 	0x0 }, 	/* alias ISOAMSO nexist : mmlalias*/
+{ "semi", 	0x0003B, 	0x0 }, 	/* =semicolon P: : 9573-2003-isonum*/
+{ "lftimes", 	0x029D4, 	0x0 }, 	/*  : STIX*/
+{ "notniva", 	0x0220C, 	0x0 }, 	/* negated contains, variant : 9573-2003-isotech*/
+{ "notni", 	0x0220C, 	0x0 }, 	/* negated contains : 9573-2003-isotech*/
+{ "NotReverseElement", 	0x0220C, 	0x0 }, 	/* alias ISOTECH notniva : mmlalias*/
+{ "isinvb", 	0x022F8, 	0x0 }, 	/*  : STIX*/
+{ "exponentiale", 	0x02147, 	0x0 }, 	/* base of the Napierian logarithms : mmlalias*/
+{ "ExponentialE", 	0x02147, 	0x0 }, 	/* e use for the exponential base of the natural logarithms : mmlalias*/
+{ "ee", 	0x02147, 	0x0 }, 	/* e use for the exponential base of the natural logarithms : mmlextra*/
+{ "ucy", 	0x00443, 	0x0 }, 	/* =small u, Cyrillic : 9573-2003-isocyr1*/
+{ "eopf", 	0x1D556, 	0x0 }, 	/*  : mmlextra*/
+{ "blank", 	0x02423, 	0x0 }, 	/* =significant blank symbol : 9573-2003-isopub*/
+{ "b.Pi", 	0x1D6B7, 	0x0 }, 	/* capital Pi, Greek : 8879-isogrk4*/
+{ "nless", 	0x0226E, 	0x0 }, 	/* alias ISOAMSN nlt : mmlalias*/
+{ "nlt", 	0x0226E, 	0x0 }, 	/* /nless N: not less-than : 9573-2003-isoamsn*/
+{ "NotLess", 	0x0226E, 	0x0 }, 	/* alias ISOAMSN nlt : mmlalias*/
+{ "egr", 	0x003B5, 	0x0 }, 	/* =small epsilon, Greek : 9573-2003-isogrk1*/
+{ "epsilon", 	0x003B5, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "epsi", 	0x003B5, 	0x0 }, 	/* /epsilon : 9573-2003-isogrk3*/
+{ "tverbar", 	0x02980, 	0x0 }, 	/*  : STIX*/
+{ "quaternions", 	0x0210D, 	0x0 }, 	/* the ring (skew field) of quaternions : mmlalias*/
+{ "Hopf", 	0x0210D, 	0x0 }, 	/* /Bbb H, open face H : 9573-2003-isomopf*/
+{ "erarr", 	0x02971, 	0x0 }, 	/* equal, right arrow below : 9573-2003-isoamsa*/
+{ "subrarr", 	0x02979, 	0x0 }, 	/* subset, right arrow : 9573-2003-isoamsr*/
+{ "timeint", 	0x02A18, 	0x0 }, 	/*  : STIX*/
+{ "ulcrop", 	0x0230F, 	0x0 }, 	/* upward left crop mark  : 9573-2003-isopub*/
+{ "Ll", 	0x022D8, 	0x0 }, 	/* /Ll /lll /llless R: triple less-than : 9573-2003-isoamsr*/
+{ "EEacgr", 	0x00389, 	0x0 }, 	/* =capital Eta, accent, Greek : 9573-2003-isogrk2*/
+{ "b.gammad", 	0x1D7CB, 	0x0 }, 	/* digamma : 8879-isogrk4*/
+{ "Scedil", 	0x0015E, 	0x0 }, 	/* =capital S, cedilla : 9573-2003-isolat2*/
+{ "LJcy", 	0x00409, 	0x0 }, 	/* =capital LJE, Serbian : 9573-2003-isocyr2*/
+{ "commat", 	0x00040, 	0x0 }, 	/* =commercial at : 9573-2003-isonum*/
+{ "eth", 	0x000F0, 	0x0 }, 	/* =small eth, Icelandic : 9573-2003-isolat1*/
+{ "NotGreaterGreater", 	0x0226B, 	0x00338 }, 	/* alias ISOAMSN nGtv : mmlalias*/
+{ "nGtv", 	0x0226B, 	0x00338 }, 	/* not much greater than, variant : 9573-2003-isoamsn*/
+{ "caps", 	0x02229, 	0x0FE00 }, 	/* intersection, serifs : 9573-2003-isoamsb*/
+{ "tprime", 	0x02034, 	0x0 }, 	/* triple prime : 9573-2003-isotech*/
+{ "Dagger", 	0x02021, 	0x0 }, 	/* /ddagger B: double dagger relation : 9573-2003-isoamsb*/
+{ "ddagger", 	0x02021, 	0x0 }, 	/* alias ISOPUB Dagger : mmlalias*/
+{ "cups", 	0x0222A, 	0x0FE00 }, 	/* union, serifs : 9573-2003-isoamsb*/
+{ "Aogon", 	0x00104, 	0x0 }, 	/* =capital A, ogonek : 9573-2003-isolat2*/
+{ "egrave", 	0x000E8, 	0x0 }, 	/* =small e, grave accent : 9573-2003-isolat1*/
+{ "Sc", 	0x02ABC, 	0x0 }, 	/* dbl succeeds : 9573-2003-isoamsr*/
+{ "ldharb", 	0x02956, 	0x0 }, 	/*  : STIX*/
+{ "DownLeftVectorBar", 	0x02956, 	0x0 }, 	/* left-down harpoon to bar : mmlextra*/
+{ "Oopf", 	0x1D546, 	0x0 }, 	/* /Bbb O, open face O : 9573-2003-isomopf*/
+{ "npart", 	0x02202, 	0x00338 }, 	/* not partial differential : 9573-2003-isotech*/
+{ "Kfr", 	0x1D50E, 	0x0 }, 	/* /frak K, upper case k : 9573-2003-isomfrk*/
+{ "bsol", 	0x0005C, 	0x0 }, 	/* /backslash =reverse solidus : 9573-2003-isonum*/
+{ "gneq", 	0x02A88, 	0x0 }, 	/* alias ISOAMSN gne : mmlalias*/
+{ "gne", 	0x02A88, 	0x0 }, 	/*  : STIX*/
+{ "Longleftarrow", 	0x027F8, 	0x0 }, 	/* alias ISOAMSA xlArr : mmlalias*/
+{ "xlArr", 	0x027F8, 	0x0 }, 	/* /Longleftarrow A: long l dbl arrow : 9573-2003-isoamsa*/
+{ "DoubleLongLeftArrow", 	0x027F8, 	0x0 }, 	/* alias ISOAMSA xlArr : mmlalias*/
+{ "ecirc", 	0x000EA, 	0x0 }, 	/* =small e, circumflex accent : 9573-2003-isolat1*/
+{ "napE", 	0x02A70, 	0x00338 }, 	/* not approximately equal or equal to : 9573-2003-isoamsn*/
+{ "Ccedil", 	0x000C7, 	0x0 }, 	/* =capital C, cedilla : 9573-2003-isolat1*/
+{ "nvgt", 	0x0003E, 	0x020D2 }, 	/* not, vert, greater-than : 9573-2003-isoamsn*/
+{ "lrhard", 	0x0296D, 	0x0 }, 	/* right harpoon-down below long dash : 9573-2003-isoamsa*/
+{ "ropar", 	0x02986, 	0x0 }, 	/* right open parenthesis : 9573-2003-isotech*/
+{ "rbrke", 	0x0298C, 	0x0 }, 	/* right bracket, equal : 9573-2003-isoamsc*/
+{ "Zcaron", 	0x0017D, 	0x0 }, 	/* =capital Z, caron : 9573-2003-isolat2*/
+{ "sfrown", 	0x02322, 	0x0 }, 	/* /smallfrown R: small down curve : 9573-2003-isoamsr*/
+{ "frown", 	0x02322, 	0x0 }, 	/* /frown R: down curve : 9573-2003-isoamsr*/
+{ "apacir", 	0x02A6F, 	0x0 }, 	/* approximate, circumflex accent : 9573-2003-isotech*/
+{ "DoubleUpArrow", 	0x021D1, 	0x0 }, 	/* alias ISOAMSA uArr : mmlalias*/
+{ "uArr", 	0x021D1, 	0x0 }, 	/* /Uparrow A: up dbl arrow : 9573-2003-isoamsa*/
+{ "Uparrow", 	0x021D1, 	0x0 }, 	/* alias ISOAMSA uArr : mmlalias*/
+{ "LessFullEqual", 	0x02266, 	0x0 }, 	/* alias ISOAMSR lE : mmlalias*/
+{ "lE", 	0x02266, 	0x0 }, 	/* /leqq R: less, double equals : 9573-2003-isoamsr*/
+{ "leqq", 	0x02266, 	0x0 }, 	/* alias ISOAMSR lE : mmlalias*/
+{ "Zcy", 	0x00417, 	0x0 }, 	/* =capital ZE, Cyrillic : 9573-2003-isocyr1*/
+{ "ffr", 	0x1D523, 	0x0 }, 	/* /frak f, lower case f : 9573-2003-isomfrk*/
+{ "upint", 	0x02A1B, 	0x0 }, 	/*  : STIX*/
+{ "b.Delta", 	0x1D6AB, 	0x0 }, 	/* capital Delta, Greek : 8879-isogrk4*/
+{ "rtriltri", 	0x029CE, 	0x0 }, 	/* right triangle above left triangle : 9573-2003-isoamsr*/
+{ "sfr", 	0x1D530, 	0x0 }, 	/* /frak s, lower case s : 9573-2003-isomfrk*/
+{ "Dfr", 	0x1D507, 	0x0 }, 	/* /frak D, upper case d : 9573-2003-isomfrk*/
+{ "mfr", 	0x1D52A, 	0x0 }, 	/* /frak m, lower case m : 9573-2003-isomfrk*/
+{ "ndash", 	0x02013, 	0x0 }, 	/* =en dash : 9573-2003-isopub*/
+{ "squarf", 	0x025AA, 	0x0 }, 	/* /blacksquare, square, filled  : 9573-2003-isotech*/
+{ "FilledVerySmallSquare", 	0x025AA, 	0x0 }, 	/* filled very small square : mmlextra*/
+{ "blacksquare", 	0x025AA, 	0x0 }, 	/* ISOTECH  squarf  : mmlalias*/
+{ "squf", 	0x025AA, 	0x0 }, 	/* /blacksquare =sq bullet, filled : 9573-2003-isopub*/
+{ "acy", 	0x00430, 	0x0 }, 	/* =small a, Cyrillic : 9573-2003-isocyr1*/
+{ "utilde", 	0x00169, 	0x0 }, 	/* =small u, tilde : 9573-2003-isolat2*/
+{ "Odblac", 	0x00150, 	0x0 }, 	/* =capital O, double acute accent : 9573-2003-isolat2*/
+{ "Nscr", 	0x1D4A9, 	0x0 }, 	/* /scr N, script letter N : 9573-2003-isomscr*/
+{ "wopf", 	0x1D568, 	0x0 }, 	/*  : mmlextra*/
+{ "operp", 	0x029B9, 	0x0 }, 	/* perpendicular in circle : 9573-2003-isoamsb*/
+{ "Jfr", 	0x1D50D, 	0x0 }, 	/* /frak J, upper case j : 9573-2003-isomfrk*/
+{ "boxV", 	0x02551, 	0x0 }, 	/* vertical line : 9573-2003-isobox*/
+{ "lstrok", 	0x00142, 	0x0 }, 	/* =small l, stroke : 9573-2003-isolat2*/
+{ "ocy", 	0x0043E, 	0x0 }, 	/* =small o, Cyrillic : 9573-2003-isocyr1*/
+{ "icy", 	0x00438, 	0x0 }, 	/* =small i, Cyrillic : 9573-2003-isocyr1*/
+{ "Dscr", 	0x1D49F, 	0x0 }, 	/* /scr D, script letter D : 9573-2003-isomscr*/
+{ "omacr", 	0x0014D, 	0x0 }, 	/* =small o, macron : 9573-2003-isolat2*/
+{ "mcy", 	0x0043C, 	0x0 }, 	/* =small em, Cyrillic : 9573-2003-isocyr1*/
+{ "Scirc", 	0x0015C, 	0x0 }, 	/* =capital S, circumflex accent : 9573-2003-isolat2*/
+{ "pluscir", 	0x02A22, 	0x0 }, 	/* plus, small circle above : 9573-2003-isoamsb*/
+{ "bsolhsub", 	0x027C8, 	0x0 }, 	/* reverse solidus, subset : 9573-2003-isoamsr*/
+{ "Hacek", 	0x002C7, 	0x0 }, 	/* alias ISODIA caron : mmlalias*/
+{ "caron", 	0x002C7, 	0x0 }, 	/* =caron : 9573-2003-isodia*/
+{ "nprsim", 	0x0227E, 	0x00338 }, 	/*  : STIX*/
+{ "qscr", 	0x1D4C6, 	0x0 }, 	/* /scr q, script letter q : 9573-2003-isomscr*/
+{ "upharpoonright", 	0x021BE, 	0x0 }, 	/* alias ISOAMSA uharr : mmlalias*/
+{ "uharr", 	0x021BE, 	0x0 }, 	/* /upharpoonright /restriction A: up harp-r : 9573-2003-isoamsa*/
+{ "RightUpVector", 	0x021BE, 	0x0 }, 	/* alias ISOAMSA uharr : mmlalias*/
+{ "sect", 	0x000A7, 	0x0 }, 	/* =section sign : 9573-2003-isonum*/
+{ "lgE", 	0x02A91, 	0x0 }, 	/* less, greater, equal : 9573-2003-isoamsr*/
+{ "koppa", 	0x003DE, 	0x0 }, 	/* 03DE : STIX*/
+{ "Iscr", 	0x02110, 	0x0 }, 	/* /scr I, script letter I : 9573-2003-isomscr*/
+{ "imagline", 	0x02110, 	0x0 }, 	/* the geometric imaginary line : mmlalias*/
+{ "raquo", 	0x000BB, 	0x0 }, 	/* =angle quotation mark, right : 9573-2003-isonum*/
+{ "lotimes", 	0x02A34, 	0x0 }, 	/* multiply sign in left half circle  : 9573-2003-isoamsb*/
+{ "DiacriticalDot", 	0x002D9, 	0x0 }, 	/* alias ISODIA dot : mmlalias*/
+{ "dot", 	0x002D9, 	0x0 }, 	/* =dot above : 9573-2003-isodia*/
+{ "npolint", 	0x02A14, 	0x0 }, 	/* line integration, not including the pole : 9573-2003-isotech*/
+{ "Vfr", 	0x1D519, 	0x0 }, 	/* /frak V, upper case v : 9573-2003-isomfrk*/
+{ "veebar", 	0x02A61, 	0x0 }, 	/* 22BB : STIX*/
+{ "jukcy", 	0x00454, 	0x0 }, 	/* =small je, Ukrainian : 9573-2003-isocyr2*/
+{ "angzarr", 	0x0237C, 	0x0 }, 	/* angle with down zig-zag arrow : 9573-2003-isoamsa*/
+{ "sdotb", 	0x022A1, 	0x0 }, 	/* /dotsquare /boxdot B: small dot in box : 9573-2003-isoamsb*/
+{ "dotsquare", 	0x022A1, 	0x0 }, 	/* alias ISOAMSB sdotb : mmlalias*/
+{ "ges", 	0x02A7E, 	0x0 }, 	/* /geqslant R: gt-or-equal, slanted : 9573-2003-isoamsr*/
+{ "GreaterSlantEqual", 	0x02A7E, 	0x0 }, 	/* alias ISOAMSR ges : mmlalias*/
+{ "geqslant", 	0x02A7E, 	0x0 }, 	/* alias ISOAMSR ges : mmlalias*/
+{ "ThinSpace", 	0x02009, 	0x0 }, 	/* space of width 3/18 em alias ISOPUB thinsp : mmlalias*/
+{ "thinsp", 	0x02009, 	0x0 }, 	/* =thin space (1/6-em) : 9573-2003-isopub*/
+{ "kappa", 	0x003BA, 	0x0 }, 	/* /kappa small kappa, Greek : 9573-2003-isogrk3*/
+{ "kgr", 	0x003BA, 	0x0 }, 	/* =small kappa, Greek : 9573-2003-isogrk1*/
+{ "llcorner", 	0x0231E, 	0x0 }, 	/* alias ISOAMSC dlcorn : mmlalias*/
+{ "dlcorn", 	0x0231E, 	0x0 }, 	/* /llcorner O: lower left corner : 9573-2003-isoamsc*/
+{ "tcedil", 	0x00163, 	0x0 }, 	/* =small t, cedilla : 9573-2003-isolat2*/
+{ "b.sigma", 	0x1D6D4, 	0x0 }, 	/* small sigma, Greek : 8879-isogrk4*/
+{ "GreaterTilde", 	0x02273, 	0x0 }, 	/* alias ISOAMSR gsim : mmlalias*/
+{ "gsim", 	0x02273, 	0x0 }, 	/* /gtrsim R: greater, similar : 9573-2003-isoamsr*/
+{ "gtrsim", 	0x02273, 	0x0 }, 	/* alias ISOAMSR gsim : mmlalias*/
+{ "orslope", 	0x02A57, 	0x0 }, 	/* sloping large or : 9573-2003-isotech*/
+{ "rarrbfs", 	0x02920, 	0x0 }, 	/* right arrow-bar, filled square : 9573-2003-isoamsa*/
+{ "cularr", 	0x021B6, 	0x0 }, 	/* /curvearrowleft A: left curved arrow : 9573-2003-isoamsa*/
+{ "curvearrowleft", 	0x021B6, 	0x0 }, 	/* alias ISOAMSA cularr : mmlalias*/
+{ "AMP", 	0x00026, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "amp", 	0x00026, 	0x0 }, 	/* =ampersand : 9573-2003-isonum*/
+{ "uogon", 	0x00173, 	0x0 }, 	/* =small u, ogonek : 9573-2003-isolat2*/
+{ "Kcedil", 	0x00136, 	0x0 }, 	/* =capital K, cedilla : 9573-2003-isolat2*/
+{ "Lacute", 	0x00139, 	0x0 }, 	/* =capital L, acute accent : 9573-2003-isolat2*/
+{ "origof", 	0x022B6, 	0x0 }, 	/* original of : 9573-2003-isoamsa*/
+{ "ubrcy", 	0x0045E, 	0x0 }, 	/* =small u, Byelorussian : 9573-2003-isocyr2*/
+{ "angmsdag", 	0x029AE, 	0x0 }, 	/* angle-measured, arrow, right, down : 9573-2003-isoamso*/
+{ "iiota", 	0x02129, 	0x0 }, 	/* inverted iota : 9573-2003-isoamso*/
+{ "leftrightharpoons", 	0x021CB, 	0x0 }, 	/* alias ISOAMSA lrhar : mmlalias*/
+{ "lrhar", 	0x021CB, 	0x0 }, 	/* /leftrightharpoons A: l harp over r : 9573-2003-isoamsa*/
+{ "ReverseEquilibrium", 	0x021CB, 	0x0 }, 	/* alias ISOAMSA lrhar : mmlalias*/
+{ "lrhar2", 	0x021CB, 	0x0 }, 	/* /leftrightharpoons A: l harp over r  : 8879-isoamsa*/
+{ "Otilde", 	0x000D5, 	0x0 }, 	/* =capital O, tilde : 9573-2003-isolat1*/
+{ "Precedes", 	0x0227A, 	0x0 }, 	/* alias ISOAMSR pr : mmlalias*/
+{ "prec", 	0x0227A, 	0x0 }, 	/* alias ISOAMSR pr : mmlalias*/
+{ "pr", 	0x0227A, 	0x0 }, 	/* /prec R: precedes : 9573-2003-isoamsr*/
+{ "iopf", 	0x1D55A, 	0x0 }, 	/*  : mmlextra*/
+{ "b.delta", 	0x1D6C5, 	0x0 }, 	/* small delta, Greek : 8879-isogrk4*/
+{ "nsup", 	0x02285, 	0x0 }, 	/* not superset : 9573-2003-isoamsn*/
+{ "PSgr", 	0x003A8, 	0x0 }, 	/* =capital Psi, Greek : 9573-2003-isogrk1*/
+{ "Psi", 	0x003A8, 	0x0 }, 	/* /Psi capital Psi, Greek : 9573-2003-isogrk3*/
+{ "DoubleLongLeftRightArrow", 	0x027FA, 	0x0 }, 	/* alias ISOAMSA xhArr : mmlalias*/
+{ "Longleftrightarrow", 	0x027FA, 	0x0 }, 	/* alias ISOAMSA xhArr : mmlalias*/
+{ "xhArr", 	0x027FA, 	0x0 }, 	/* /Longleftrightarrow A: long l&r dbl arr : 9573-2003-isoamsa*/
+{ "Iacute", 	0x000CD, 	0x0 }, 	/* =capital I, acute accent : 9573-2003-isolat1*/
+{ "gamma", 	0x003B3, 	0x0 }, 	/* /gamma small gamma, Greek : 9573-2003-isogrk3*/
+{ "ggr", 	0x003B3, 	0x0 }, 	/* =small gamma, Greek : 9573-2003-isogrk1*/
+{ "dstrok", 	0x00111, 	0x0 }, 	/* =small d, stroke : 9573-2003-isolat2*/
+{ "Aacgr", 	0x00386, 	0x0 }, 	/* =capital Alpha, accent, Greek : 9573-2003-isogrk2*/
+{ "popf", 	0x1D561, 	0x0 }, 	/*  : mmlextra*/
+{ "rarrsim", 	0x02974, 	0x0 }, 	/* right arrow, similar : 9573-2003-isoamsa*/
+{ "hcirc", 	0x00125, 	0x0 }, 	/* =small h, circumflex accent : 9573-2003-isolat2*/
+{ "ljcy", 	0x00459, 	0x0 }, 	/* =small lje, Serbian : 9573-2003-isocyr2*/
+{ "angdnl", 	0x029A2, 	0x0 }, 	/*  : STIX*/
+{ "telrec", 	0x02315, 	0x0 }, 	/* =telephone recorder symbol : 9573-2003-isopub*/
+{ "nsimeq", 	0x02244, 	0x0 }, 	/* alias ISOAMSN nsime : mmlalias*/
+{ "nsime", 	0x02244, 	0x0 }, 	/* /nsimeq N: not similar, equals : 9573-2003-isoamsn*/
+{ "NotTildeEqual", 	0x02244, 	0x0 }, 	/* alias ISOAMSN nsime : mmlalias*/
+{ "gg", 	0x0226B, 	0x0 }, 	/* alias ISOAMSR Gt : mmlalias*/
+{ "NestedGreaterGreater", 	0x0226B, 	0x0 }, 	/* alias ISOAMSR Gt : mmlalias*/
+{ "Gt", 	0x0226B, 	0x0 }, 	/* /gg R: dbl greater-than sign : 9573-2003-isoamsr*/
+{ "rhov", 	0x003F1, 	0x0 }, 	/* /varrho : 9573-2003-isogrk3*/
+{ "varrho", 	0x003F1, 	0x0 }, 	/* alias ISOGRK3 rhov : mmlalias*/
+{ "DoubleDownArrow", 	0x021D3, 	0x0 }, 	/* alias ISOAMSA dArr : mmlalias*/
+{ "dArr", 	0x021D3, 	0x0 }, 	/* /Downarrow A: down dbl arrow : 9573-2003-isoamsa*/
+{ "Downarrow", 	0x021D3, 	0x0 }, 	/* alias ISOAMSA dArr : mmlalias*/
+{ "b.tau", 	0x1D6D5, 	0x0 }, 	/* small tau, Greek : 8879-isogrk4*/
+{ "arrllsr", 	0x02943, 	0x0 }, 	/*  : STIX*/
+{ "Rcaron", 	0x00158, 	0x0 }, 	/* =capital R, caron : 9573-2003-isolat2*/
+{ "cirfnint", 	0x02A10, 	0x0 }, 	/* circulation function : 9573-2003-isotech*/
+{ "neosearr", 	0x0292E, 	0x0 }, 	/*  : STIX*/
+{ "lAarr", 	0x021DA, 	0x0 }, 	/* /Lleftarrow A: left triple arrow : 9573-2003-isoamsa*/
+{ "Lleftarrow", 	0x021DA, 	0x0 }, 	/* alias ISOAMSA lAarr : mmlalias*/
+{ "boxVL", 	0x02563, 	0x0 }, 	/* upper and lower left quadrants : 9573-2003-isobox*/
+{ "preceq", 	0x02AAF, 	0x0 }, 	/* alias ISOAMSR pre : mmlalias*/
+{ "PrecedesEqual", 	0x02AAF, 	0x0 }, 	/* alias ISOAMSR pre : mmlalias*/
+{ "pre", 	0x02AAF, 	0x0 }, 	/* /preceq R: precedes, equals : 9573-2003-isoamsr*/
+{ "Kappa", 	0x0039A, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "Kgr", 	0x0039A, 	0x0 }, 	/* =capital Kappa, Greek : 9573-2003-isogrk1*/
+{ "NotSquareSuperset", 	0x02290, 	0x00338 }, 	/* negated set-like partial order operator : mmlextra*/
+{ "nsqsup", 	0x02290, 	0x00338 }, 	/*  : STIX*/
+{ "KJcy", 	0x0040C, 	0x0 }, 	/* =capital KJE, Macedonian : 9573-2003-isocyr2*/
+{ "idigr", 	0x003CA, 	0x0 }, 	/* =small iota, dieresis, Greek : 9573-2003-isogrk2*/
+{ "thermod", 	0x029E7, 	0x0 }, 	/* 01C2 : STIX*/
+{ "eeacgr", 	0x003AE, 	0x0 }, 	/* =small eta, accent, Greek : 9573-2003-isogrk2*/
+{ "iacgr", 	0x003AF, 	0x0 }, 	/* =small iota, accent, Greek : 9573-2003-isogrk2*/
+{ "TripleDot", 	0x020DB, 	0x0 }, 	/* alias ISOTECH tdot : mmlalias*/
+{ "tdot", 	0x020DB, 	0x0 }, 	/* three dots above : 9573-2003-isotech*/
+{ "apid", 	0x0224B, 	0x0 }, 	/* approximately identical to : 9573-2003-isoamsr*/
+{ "shchcy", 	0x00449, 	0x0 }, 	/* =small shcha, Cyrillic : 9573-2003-isocyr1*/
+{ "iacute", 	0x000ED, 	0x0 }, 	/* =small i, acute accent : 9573-2003-isolat1*/
+{ "curvearrowright", 	0x021B7, 	0x0 }, 	/* alias ISOAMSA curarr : mmlalias*/
+{ "curarr", 	0x021B7, 	0x0 }, 	/* /curvearrowright A: rt curved arrow : 9573-2003-isoamsa*/
+{ "rsaquo", 	0x0203A, 	0x0 }, 	/*  : xhtml1-special*/
+{ "smtes", 	0x02AAC, 	0x0FE00 }, 	/* smaller than or equal, slanted : 9573-2003-isoamsr*/
+{ "Ocirc", 	0x000D4, 	0x0 }, 	/* =capital O, circumflex accent : 9573-2003-isolat1*/
+{ "supnE", 	0x02ACC, 	0x0 }, 	/*  : STIX*/
+{ "supsetneqq", 	0x02ACC, 	0x0 }, 	/* alias ISOAMSN supnE : mmlalias*/
+{ "capint", 	0x02A19, 	0x0 }, 	/*  : STIX*/
+{ "notnivc", 	0x022FD, 	0x0 }, 	/* contains, variant : 9573-2003-isotech*/
+{ "lambda", 	0x003BB, 	0x0 }, 	/* /lambda small lambda, Greek : 9573-2003-isogrk3*/
+{ "lgr", 	0x003BB, 	0x0 }, 	/* =small lambda, Greek : 9573-2003-isogrk1*/
+{ "circlearrowleft", 	0x021BA, 	0x0 }, 	/* alias ISOAMSA olarr : mmlalias*/
+{ "olarr", 	0x021BA, 	0x0 }, 	/* /circlearrowleft A: l arr in circle : 9573-2003-isoamsa*/
+{ "nang", 	0x02220, 	0x020D2 }, 	/* not, vert, angle : 9573-2003-isoamso*/
+{ "rgr", 	0x003C1, 	0x0 }, 	/* =small rho, Greek : 9573-2003-isogrk1*/
+{ "rho", 	0x003C1, 	0x0 }, 	/* /rho small rho, Greek : 9573-2003-isogrk3*/
+{ "Tcaron", 	0x00164, 	0x0 }, 	/* =capital T, caron : 9573-2003-isolat2*/
+{ "LeftUpDownVector", 	0x02951, 	0x0 }, 	/* up-left-down-left harpoon : mmlextra*/
+{ "uldlshar", 	0x02951, 	0x0 }, 	/*  : STIX*/
+{ "epar", 	0x022D5, 	0x0 }, 	/* parallel, equal; equal or parallel : 9573-2003-isotech*/
+{ "leq", 	0x02264, 	0x0 }, 	/* alias ISOTECH le : mmlalias*/
+{ "le", 	0x02264, 	0x0 }, 	/* /leq /le R: less-than-or-equal : 9573-2003-isotech*/
+{ "Cap", 	0x022D2, 	0x0 }, 	/* /Cap /doublecap B: dbl intersection : 9573-2003-isoamsb*/
+{ "lowint", 	0x02A1C, 	0x0 }, 	/*  : STIX*/
+{ "Sacute", 	0x0015A, 	0x0 }, 	/* =capital S, acute accent : 9573-2003-isolat2*/
+{ "les", 	0x02A7D, 	0x0 }, 	/* /leqslant R: less-than-or-eq, slant : 9573-2003-isoamsr*/
+{ "leqslant", 	0x02A7D, 	0x0 }, 	/* alias ISOAMSR les : mmlalias*/
+{ "LessSlantEqual", 	0x02A7D, 	0x0 }, 	/* alias ISOAMSR les : mmlalias*/
+{ "div", 	0x000F7, 	0x0 }, 	/* alias ISONUM divide : mmlalias*/
+{ "divide", 	0x000F7, 	0x0 }, 	/* /div B: =divide sign : 9573-2003-isonum*/
+{ "euro", 	0x020AC, 	0x0 }, 	/*  : xhtml1-special*/
+{ "drbkarow", 	0x02910, 	0x0 }, 	/* alias ISOAMSA RBarr : mmlalias*/
+{ "RBarr", 	0x02910, 	0x0 }, 	/* /drbkarow A: twoheaded right broken arrow : 9573-2003-isoamsa*/
+{ "gsiml", 	0x02A90, 	0x0 }, 	/* greater, similar, less : 9573-2003-isoamsr*/
+{ "b.mu", 	0x1D6CD, 	0x0 }, 	/* small mu, Greek : 8879-isogrk4*/
+{ "comp", 	0x02201, 	0x0 }, 	/* /complement - complement sign : 9573-2003-isoamso*/
+{ "complement", 	0x02201, 	0x0 }, 	/* alias ISOAMSO comp : mmlalias*/
+{ "pscr", 	0x1D4C5, 	0x0 }, 	/* /scr p, script letter p : 9573-2003-isomscr*/
+{ "boxvr", 	0x0251C, 	0x0 }, 	/* upper and lower right quadrants : 9573-2003-isobox*/
+{ "supplus", 	0x02AC0, 	0x0 }, 	/* superset, plus : 9573-2003-isoamsr*/
+{ "midcir", 	0x02AF0, 	0x0 }, 	/*  : STIX*/
+{ "copysr", 	0x02117, 	0x0 }, 	/* =sound recording copyright sign : 9573-2003-isopub*/
+{ "NotNestedGreaterGreater", 	0x02AA2, 	0x00338 }, 	/* not double greater-than sign : mmlextra*/
+{ "nsGt", 	0x02AA2, 	0x00338 }, 	/*  : STIX*/
+{ "b.pi", 	0x1D6D1, 	0x0 }, 	/* small pi, Greek : 8879-isogrk4*/
+{ "Tcy", 	0x00422, 	0x0 }, 	/* =capital TE, Cyrillic : 9573-2003-isocyr1*/
+{ "gacute", 	0x001F5, 	0x0 }, 	/* =small g, acute accent : 9573-2003-isolat2*/
+{ "Thetav", 	0x003F4, 	0x0 }, 	/* 04E8 : STIX*/
+{ "ycy", 	0x0044B, 	0x0 }, 	/* =small yeru, Cyrillic : 9573-2003-isocyr1*/
+{ "angmsdac", 	0x029AA, 	0x0 }, 	/* angle-measured, arrow, down, right : 9573-2003-isoamso*/
+{ "plusdo", 	0x02214, 	0x0 }, 	/* /dotplus B: plus sign, dot above : 9573-2003-isoamsb*/
+{ "dotplus", 	0x02214, 	0x0 }, 	/* alias ISOAMSB plusdo : mmlalias*/
+{ "complexes", 	0x02102, 	0x0 }, 	/* the field of complex numbers : mmlalias*/
+{ "Copf", 	0x02102, 	0x0 }, 	/* /Bbb C, open face C : 9573-2003-isomopf*/
+{ "toea", 	0x02928, 	0x0 }, 	/* alias ISOAMSA nesear : mmlalias*/
+{ "nesear", 	0x02928, 	0x0 }, 	/* /toea A: NE & SE arrows : 9573-2003-isoamsa*/
+{ "circeq", 	0x02257, 	0x0 }, 	/* alias ISOAMSR cire : mmlalias*/
+{ "cire", 	0x02257, 	0x0 }, 	/* /circeq R: circle, equals : 9573-2003-isoamsr*/
+{ "boxVh", 	0x0256B, 	0x0 }, 	/* all four quadrants : 9573-2003-isobox*/
+{ "fallingdotseq", 	0x02252, 	0x0 }, 	/* alias ISOAMSR efDot : mmlalias*/
+{ "efDot", 	0x02252, 	0x0 }, 	/* /fallingdotseq R: eq, falling dots : 9573-2003-isoamsr*/
+{ "topfork", 	0x02ADA, 	0x0 }, 	/* fork with top : 9573-2003-isoamsr*/
+{ "ocir", 	0x0229A, 	0x0 }, 	/* /circledcirc B: small circle in circle : 9573-2003-isoamsb*/
+{ "circledcirc", 	0x0229A, 	0x0 }, 	/* alias ISOAMSB ocir : mmlalias*/
+{ "subseteqq", 	0x02AC5, 	0x0 }, 	/* alias ISOAMSR subE : mmlalias*/
+{ "subE", 	0x02AC5, 	0x0 }, 	/*  : STIX*/
+{ "permil", 	0x02030, 	0x0 }, 	/* per thousand : 9573-2003-isotech*/
+{ "ccups", 	0x02A4C, 	0x0 }, 	/* closed union, serifs : 9573-2003-isoamsb*/
+{ "afr", 	0x1D51E, 	0x0 }, 	/* /frak a, lower case a : 9573-2003-isomfrk*/
+{ "flat", 	0x0266D, 	0x0 }, 	/* /flat =musical flat : 9573-2003-isopub*/
+{ "NotSquareSubsetEqual", 	0x022E2, 	0x0 }, 	/* alias ISOAMSN nsqsube : mmlalias*/
+{ "nsqsube", 	0x022E2, 	0x0 }, 	/* not, square subset, equals : 9573-2003-isoamsn*/
+{ "THgr", 	0x00398, 	0x0 }, 	/* =capital Theta, Greek : 9573-2003-isogrk1*/
+{ "Theta", 	0x00398, 	0x0 }, 	/* /Theta capital Theta, Greek : 9573-2003-isogrk3*/
+{ "xoror", 	0x02A08, 	0x0 }, 	/*  : STIX*/
+{ "lnapprox", 	0x02A89, 	0x0 }, 	/* alias ISOAMSN lnap : mmlalias*/
+{ "lnap", 	0x02A89, 	0x0 }, 	/* /lnapprox N: less, not approximate : 9573-2003-isoamsn*/
+{ "Gcirc", 	0x0011C, 	0x0 }, 	/* =capital G, circumflex accent : 9573-2003-isolat2*/
+{ "frac56", 	0x0215A, 	0x0 }, 	/* =fraction five-sixths : 9573-2003-isopub*/
+{ "frac35", 	0x02157, 	0x0 }, 	/* =fraction three-fifths : 9573-2003-isopub*/
+{ "UpTeeArrow", 	0x021A5, 	0x0 }, 	/* Alias mapstoup : mmlalias*/
+{ "mapstoup", 	0x021A5, 	0x0 }, 	/* upwards arrow from bar : mmlextra*/
+{ "osol", 	0x02298, 	0x0 }, 	/* /oslash B: solidus in circle : 9573-2003-isoamsb*/
+{ "infin", 	0x0221E, 	0x0 }, 	/* /infty infinity : 9573-2003-isotech*/
+{ "backsimeq", 	0x022CD, 	0x0 }, 	/* alias ISOAMSR bsime : mmlalias*/
+{ "bsime", 	0x022CD, 	0x0 }, 	/* /backsimeq R: reverse similar, eq : 9573-2003-isoamsr*/
+{ "RightDownTeeVector", 	0x0295D, 	0x0 }, 	/* down-right harpoon from bar : mmlextra*/
+{ "bdrhar", 	0x0295D, 	0x0 }, 	/*  : STIX*/
+{ "opfpi", 	0x0213F, 	0x0 }, 	/*  : STIX*/
+{ "boxUR", 	0x0255A, 	0x0 }, 	/* upper right quadrant : 9573-2003-isobox*/
+{ "DJcy", 	0x00402, 	0x0 }, 	/* =capital DJE, Serbian : 9573-2003-isocyr2*/
+{ "varsupsetneqq", 	0x02ACC, 	0x0FE00 }, 	/* alias ISOAMSN vsupnE : mmlalias*/
+{ "vsupnE", 	0x02ACC, 	0x0FE00 }, 	/* /varsupsetneqq N: super not dbl eq, var : 9573-2003-isoamsn*/
+{ "bbrk", 	0x023B5, 	0x0 }, 	/* bottom square bracket : 9573-2003-isoamso*/
+{ "UnderBracket", 	0x023B5, 	0x0 }, 	/* under bracket : mmlextra*/
+{ "udrbrk", 	0x023B5, 	0x0 }, 	/*  : STIX*/
+{ "RightArrowBar", 	0x021E5, 	0x0 }, 	/* alias for rarrb : mmlalias*/
+{ "rarrb", 	0x021E5, 	0x0 }, 	/* leftwards arrow to bar : mmlextra*/
+{ "utri", 	0x025B5, 	0x0 }, 	/* /triangle =up triangle, open : 9573-2003-isopub*/
+{ "triangle", 	0x025B5, 	0x0 }, 	/* alias ISOPUB utri : mmlalias*/
+{ "Agr", 	0x00391, 	0x0 }, 	/* =capital Alpha, Greek : 9573-2003-isogrk1*/
+{ "Alpha", 	0x00391, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "DoubleDot", 	0x000A8, 	0x0 }, 	/* alias ISODIA die : mmlalias*/
+{ "Dot", 	0x000A8, 	0x0 }, 	/* dieresis or umlaut mark : 9573-2003-isotech*/
+{ "die", 	0x000A8, 	0x0 }, 	/* =dieresis : 9573-2003-isodia*/
+{ "uml", 	0x000A8, 	0x0 }, 	/* =umlaut mark : 9573-2003-isodia*/
+{ "neonwarr", 	0x02931, 	0x0 }, 	/*  : STIX*/
+{ "Jopf", 	0x1D541, 	0x0 }, 	/* /Bbb J, open face J : 9573-2003-isomopf*/
+{ "NotSucceeds", 	0x02281, 	0x0 }, 	/* alias ISOAMSN nsc : mmlalias*/
+{ "nsucc", 	0x02281, 	0x0 }, 	/* alias ISOAMSN nsc : mmlalias*/
+{ "nsc", 	0x02281, 	0x0 }, 	/* /nsucc N: not succeeds : 9573-2003-isoamsn*/
+{ "iexcl", 	0x000A1, 	0x0 }, 	/* =inverted exclamation mark : 9573-2003-isonum*/
+{ "Lcedil", 	0x0013B, 	0x0 }, 	/* =capital L, cedilla : 9573-2003-isolat2*/
+{ "oacgr", 	0x003CC, 	0x0 }, 	/* =small omicron, accent, Greek : 9573-2003-isogrk2*/
+{ "boxUL", 	0x0255D, 	0x0 }, 	/* upper left quadrant : 9573-2003-isobox*/
+{ "mho", 	0x02127, 	0x0 }, 	/* /mho - conductance : 9573-2003-isoamso*/
+{ "Ugrave", 	0x000D9, 	0x0 }, 	/* =capital U, grave accent : 9573-2003-isolat1*/
+{ "amacr", 	0x00101, 	0x0 }, 	/* =small a, macron : 9573-2003-isolat2*/
+{ "Uopf", 	0x1D54C, 	0x0 }, 	/* /Bbb U, open face U : 9573-2003-isomopf*/
+{ "gopf", 	0x1D558, 	0x0 }, 	/*  : mmlextra*/
+{ "zopf", 	0x1D56B, 	0x0 }, 	/*  : mmlextra*/
+{ "Omacr", 	0x0014C, 	0x0 }, 	/* =capital O, macron : 9573-2003-isolat2*/
+{ "dwangle", 	0x029A6, 	0x0 }, 	/* large downward pointing angle : 9573-2003-isotech*/
+{ "Hstrok", 	0x00126, 	0x0 }, 	/* =capital H, stroke : 9573-2003-isolat2*/
+{ "plusacir", 	0x02A23, 	0x0 }, 	/* plus, circumflex accent above : 9573-2003-isoamsb*/
+{ "CircleTimes", 	0x02297, 	0x0 }, 	/* alias ISOAMSB otimes : mmlalias*/
+{ "otimes", 	0x02297, 	0x0 }, 	/* /otimes B: multiply sign in circle : 9573-2003-isoamsb*/
+{ "isins", 	0x022F4, 	0x0 }, 	/* set membership, vertical bar on horizontal stroke : 9573-2003-isotech*/
+{ "twoheadleftarrow", 	0x0219E, 	0x0 }, 	/* alias ISOAMSA Larr : mmlalias*/
+{ "Larr", 	0x0219E, 	0x0 }, 	/* /twoheadleftarrow A: : 9573-2003-isoamsa*/
+{ "ShortUpArrow", 	0x02191, 	0x0 }, 	/* short up arrow  : mmlalias*/
+{ "uparrow", 	0x02191, 	0x0 }, 	/* alias ISONUM uarr : mmlalias*/
+{ "uarr", 	0x02191, 	0x0 }, 	/* /uparrow A: =upward arrow : 9573-2003-isonum*/
+{ "UpArrow", 	0x02191, 	0x0 }, 	/* alias ISONUM uarr : mmlalias*/
+{ "otimesas", 	0x02A36, 	0x0 }, 	/* multiply sign in circle, circumflex accent : 9573-2003-isoamsb*/
+{ "diamerrf", 	0x029F1, 	0x0 }, 	/*  : STIX*/
+{ "ccedil", 	0x000E7, 	0x0 }, 	/* =small c, cedilla : 9573-2003-isolat1*/
+{ "Rgr", 	0x003A1, 	0x0 }, 	/* =capital Rho, Greek : 9573-2003-isogrk1*/
+{ "Rho", 	0x003A1, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "minusdu", 	0x02A2A, 	0x0 }, 	/* minus sign, dot below : 9573-2003-isoamsb*/
+{ "pointint", 	0x02A15, 	0x0 }, 	/* integral around a point operator : 9573-2003-isotech*/
+{ "roarr", 	0x021FE, 	0x0 }, 	/* right open arrow : 9573-2003-isoamsa*/
+{ "UnderBar", 	0x0005F, 	0x0 }, 	/* combining low line : mmlextra*/
+{ "lowbar", 	0x0005F, 	0x0 }, 	/* =low line : 9573-2003-isonum*/
+{ "njcy", 	0x0045A, 	0x0 }, 	/* =small nje, Serbian : 9573-2003-isocyr2*/
+{ "upsilon", 	0x003C5, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "ugr", 	0x003C5, 	0x0 }, 	/* =small upsilon, Greek : 9573-2003-isogrk1*/
+{ "upsi", 	0x003C5, 	0x0 }, 	/* /upsilon small upsilon, Greek : 9573-2003-isogrk3*/
+{ "cdot", 	0x0010B, 	0x0 }, 	/* =small c, dot above : 9573-2003-isolat2*/
+{ "lang", 	0x027E8, 	0x0 }, 	/* /langle O: left angle bracket : 9573-2003-isotech*/
+{ "langle", 	0x027E8, 	0x0 }, 	/* alias ISOTECH lang : mmlalias*/
+{ "LeftAngleBracket", 	0x027E8, 	0x0 }, 	/* alias ISOTECH lang : mmlalias*/
+{ "solb", 	0x029C4, 	0x0 }, 	/* solidus in square : 9573-2003-isoamsb*/
+{ "af", 	0x02061, 	0x0 }, 	/* character showing function application in presentation tagging : mmlextra*/
+{ "ApplyFunction", 	0x02061, 	0x0 }, 	/* character showing function application in presentation tagging : mmlalias*/
+{ "mid", 	0x02223, 	0x0 }, 	/* /mid R: : 9573-2003-isoamsr*/
+{ "smid", 	0x02223, 	0x0 }, 	/* /shortmid R: : 9573-2003-isoamsr*/
+{ "VerticalBar", 	0x02223, 	0x0 }, 	/* alias ISOAMSR mid : mmlalias*/
+{ "shortmid", 	0x02223, 	0x0 }, 	/* alias ISOAMSR smid : mmlalias*/
+{ "plussim", 	0x02A26, 	0x0 }, 	/* plus, similar below : 9573-2003-isoamsb*/
+{ "kscr", 	0x1D4C0, 	0x0 }, 	/* /scr k, script letter k : 9573-2003-isomscr*/
+{ "acd", 	0x0223F, 	0x0 }, 	/* ac current : 9573-2003-isotech*/
+{ "napid", 	0x0224B, 	0x00338 }, 	/* not approximately identical to : 9573-2003-isoamsn*/
+{ "Prime", 	0x02033, 	0x0 }, 	/* double prime or second : 9573-2003-isotech*/
+{ "Vert", 	0x02016, 	0x0 }, 	/* alias ISOTECH Verbar : mmlalias*/
+{ "Verbar", 	0x02016, 	0x0 }, 	/* /Vert dbl vertical bar : 9573-2003-isotech*/
+{ "laquo", 	0x000AB, 	0x0 }, 	/* =angle quotation mark, left : 9573-2003-isonum*/
+{ "ffilig", 	0x0FB03, 	0x0 }, 	/* small ffi ligature : 9573-2003-isopub*/
+{ "nsupseteq", 	0x02289, 	0x0 }, 	/* alias ISOAMSN nsupe : mmlalias*/
+{ "nsupe", 	0x02289, 	0x0 }, 	/* /nsupseteq N: not superset, equals : 9573-2003-isoamsn*/
+{ "NotSupersetEqual", 	0x02289, 	0x0 }, 	/* alias ISOAMSN nsupe : mmlalias*/
+{ "Ycirc", 	0x00176, 	0x0 }, 	/* =capital Y, circumflex accent : 9573-2003-isolat2*/
+{ "NotTildeTilde", 	0x02249, 	0x0 }, 	/* alias ISOAMSN nap : mmlalias*/
+{ "napprox", 	0x02249, 	0x0 }, 	/* alias ISOAMSN nap : mmlalias*/
+{ "nap", 	0x02249, 	0x0 }, 	/* /napprox N: not approximate : 9573-2003-isoamsn*/
+{ "scsim", 	0x0227F, 	0x0 }, 	/* /succsim R: succeeds, similar : 9573-2003-isoamsr*/
+{ "SucceedsTilde", 	0x0227F, 	0x0 }, 	/* alias ISOAMSR scsim : mmlalias*/
+{ "succsim", 	0x0227F, 	0x0 }, 	/* alias ISOAMSR scsim : mmlalias*/
+{ "rcy", 	0x00440, 	0x0 }, 	/* =small er, Cyrillic : 9573-2003-isocyr1*/
+{ "NewLine", 	0x0000A, 	0x0 }, 	/*  : mmlextra*/
+{ "b.beta", 	0x1D6C3, 	0x0 }, 	/* small beta, Greek : 8879-isogrk4*/
+{ "Lang", 	0x027EA, 	0x0 }, 	/* left angle bracket, double : 9573-2003-isotech*/
+{ "lrtri", 	0x022BF, 	0x0 }, 	/* lower right triangle : 9573-2003-isoamso*/
+{ "ijlig", 	0x00133, 	0x0 }, 	/* =small ij ligature : 9573-2003-isolat2*/
+{ "els", 	0x02A95, 	0x0 }, 	/*  : STIX*/
+{ "eqslantless", 	0x02A95, 	0x0 }, 	/* alias ISOAMSR els : mmlalias*/
+{ "zacute", 	0x0017A, 	0x0 }, 	/* =small z, acute accent : 9573-2003-isolat2*/
+{ "csub", 	0x02ACF, 	0x0 }, 	/* subset, closed : 9573-2003-isoamsr*/
+{ "ratio", 	0x02236, 	0x0 }, 	/* /ratio : 9573-2003-isoamsr*/
+{ "Lgr", 	0x0039B, 	0x0 }, 	/* =capital Lambda, Greek : 9573-2003-isogrk1*/
+{ "Lambda", 	0x0039B, 	0x0 }, 	/* /Lambda capital Lambda, Greek : 9573-2003-isogrk3*/
+{ "urtrif", 	0x025E5, 	0x0 }, 	/*  : STIX*/
+{ "nle", 	0x02270, 	0x0 }, 	/* /nleq N: not less-than-or-equal : 9573-2003-isoamsn*/
+{ "NotLessEqual", 	0x02270, 	0x0 }, 	/* alias ISOAMSN nle : mmlalias*/
+{ "nleq", 	0x02270, 	0x0 }, 	/* alias ISOAMSN nle : mmlalias*/
+{ "ldsh", 	0x021B2, 	0x0 }, 	/* left down angled arrow : 9573-2003-isoamsa*/
+{ "marker", 	0x025AE, 	0x0 }, 	/* =histogram marker : 9573-2003-isopub*/
+{ "Racute", 	0x00154, 	0x0 }, 	/* =capital R, acute accent : 9573-2003-isolat2*/
+{ "Afr", 	0x1D504, 	0x0 }, 	/* /frak A, upper case a : 9573-2003-isomfrk*/
+{ "Uring", 	0x0016E, 	0x0 }, 	/* =capital U, ring : 9573-2003-isolat2*/
+{ "Vcy", 	0x00412, 	0x0 }, 	/* =capital VE, Cyrillic : 9573-2003-isocyr1*/
+{ "gcy", 	0x00433, 	0x0 }, 	/* =small ghe, Cyrillic : 9573-2003-isocyr1*/
+{ "shuffle", 	0x029E2, 	0x0 }, 	/*  : STIX*/
+{ "nRightarrow", 	0x021CF, 	0x0 }, 	/* alias ISOAMSA nrArr : mmlalias*/
+{ "nrArr", 	0x021CF, 	0x0 }, 	/* /nRightarrow A: not implies : 9573-2003-isoamsa*/
+{ "parsl", 	0x02AFD, 	0x0 }, 	/* parallel, slanted : 9573-2003-isotech*/
+{ "Updownarrow", 	0x021D5, 	0x0 }, 	/* alias ISOAMSA vArr : mmlalias*/
+{ "DoubleUpDownArrow", 	0x021D5, 	0x0 }, 	/* alias ISOAMSA vArr : mmlalias*/
+{ "vArr", 	0x021D5, 	0x0 }, 	/* /Updownarrow A: up&down dbl arrow : 9573-2003-isoamsa*/
+{ "orderof", 	0x02134, 	0x0 }, 	/* alias ISOTECH order : mmlalias*/
+{ "oscr", 	0x02134, 	0x0 }, 	/* /scr o, script letter o : 9573-2003-isomscr*/
+{ "order", 	0x02134, 	0x0 }, 	/* order of (script small o)  : 9573-2003-isotech*/
+{ "rfr", 	0x1D52F, 	0x0 }, 	/* /frak r, lower case r : 9573-2003-isomfrk*/
+{ "Atilde", 	0x000C3, 	0x0 }, 	/* =capital A, tilde : 9573-2003-isolat1*/
+{ "sopf", 	0x1D564, 	0x0 }, 	/*  : mmlextra*/
+{ "supsetneq", 	0x0228B, 	0x0 }, 	/* alias ISOAMSN supne : mmlalias*/
+{ "supne", 	0x0228B, 	0x0 }, 	/* /supsetneq N: superset, not equals : 9573-2003-isoamsn*/
+{ "para", 	0x000B6, 	0x0 }, 	/* =pilcrow (paragraph sign) : 9573-2003-isonum*/
+{ "kfr", 	0x1D528, 	0x0 }, 	/* /frak k, lower case k : 9573-2003-isomfrk*/
+{ "ncaron", 	0x00148, 	0x0 }, 	/* =small n, caron : 9573-2003-isolat2*/
+{ "b.Theta", 	0x1D6AF, 	0x0 }, 	/* capital Theta, Greek : 8879-isogrk4*/
+{ "pcy", 	0x0043F, 	0x0 }, 	/* =small pe, Cyrillic : 9573-2003-isocyr1*/
+{ "dcy", 	0x00434, 	0x0 }, 	/* =small de, Cyrillic : 9573-2003-isocyr1*/
+{ "late", 	0x02AAD, 	0x0 }, 	/* larger than or equal : 9573-2003-isoamsr*/
+{ "parsim", 	0x02AF3, 	0x0 }, 	/* parallel, similar : 9573-2003-isoamsn*/
+{ "scedil", 	0x0015F, 	0x0 }, 	/* =small s, cedilla : 9573-2003-isolat2*/
+{ "boxDl", 	0x02556, 	0x0 }, 	/* lower left quadrant : 9573-2003-isobox*/
+{ "szlig", 	0x000DF, 	0x0 }, 	/* =small sharp s, German (sz ligature) : 9573-2003-isolat1*/
+{ "cwint", 	0x02231, 	0x0 }, 	/* clockwise integral : 9573-2003-isotech*/
+{ "vfr", 	0x1D533, 	0x0 }, 	/* /frak v, lower case v : 9573-2003-isomfrk*/
+{ "Lstrok", 	0x00141, 	0x0 }, 	/* =capital L, stroke : 9573-2003-isolat2*/
+{ "boxHu", 	0x02567, 	0x0 }, 	/* upper left and right quadrants : 9573-2003-isobox*/
+{ "Icirc", 	0x000CE, 	0x0 }, 	/* =capital I, circumflex accent : 9573-2003-isolat1*/
+{ "nvlArr", 	0x02902, 	0x0 }, 	/* not, vert, left double arrow : 9573-2003-isoamsa*/
+{ "Cscr", 	0x1D49E, 	0x0 }, 	/* /scr C, script letter C : 9573-2003-isomscr*/
+{ "rocub", 	0x02984, 	0x0 }, 	/*  : STIX*/
+{ "lessgtr", 	0x02276, 	0x0 }, 	/* alias ISOAMSR lg : mmlalias*/
+{ "LessGreater", 	0x02276, 	0x0 }, 	/* alias ISOAMSR lg : mmlalias*/
+{ "lg", 	0x02276, 	0x0 }, 	/* /lessgtr R: less, greater : 9573-2003-isoamsr*/
+{ "rHar", 	0x02964, 	0x0 }, 	/* right harpoon-up over right harpoon-down : 9573-2003-isoamsa*/
+{ "Gbreve", 	0x0011E, 	0x0 }, 	/* =capital G, breve : 9573-2003-isolat2*/
+{ "gesdotol", 	0x02A84, 	0x0 }, 	/* greater-than-or-equal, slanted, dot above left : 9573-2003-isoamsr*/
+{ "LongLeftArrow", 	0x027F5, 	0x0 }, 	/* alias ISOAMSA xlarr : mmlalias*/
+{ "longleftarrow", 	0x027F5, 	0x0 }, 	/* alias ISOAMSA xlarr : mmlalias*/
+{ "xlarr", 	0x027F5, 	0x0 }, 	/* /longleftarrow A: long left arrow : 9573-2003-isoamsa*/
+{ "lharul", 	0x0296A, 	0x0 }, 	/* left harpoon-up over long dash : 9573-2003-isoamsa*/
+{ "rlarr2", 	0x021C4, 	0x0 }, 	/* /rightleftarrows A: r arr over l arr  : 8879-isoamsa*/
+{ "rlarr", 	0x021C4, 	0x0 }, 	/* /rightleftarrows A: r arr over l arr : 9573-2003-isoamsa*/
+{ "rightleftarrows", 	0x021C4, 	0x0 }, 	/* alias ISOAMSA rlarr : mmlalias*/
+{ "RightArrowLeftArrow", 	0x021C4, 	0x0 }, 	/* alias ISOAMSA rlarr : mmlalias*/
+{ "ord", 	0x02A5D, 	0x0 }, 	/* or, horizontal dash : 9573-2003-isotech*/
+{ "RightCeiling", 	0x02309, 	0x0 }, 	/* alias ISOAMSC rceil : mmlalias*/
+{ "rceil", 	0x02309, 	0x0 }, 	/* /rceil C: right ceiling : 9573-2003-isoamsc*/
+{ "cir", 	0x025CB, 	0x0 }, 	/* /circ B: =circle, open : 9573-2003-isopub*/
+{ "rightarrowtail", 	0x021A3, 	0x0 }, 	/* alias ISOAMSA rarrtl : mmlalias*/
+{ "rarrtl", 	0x021A3, 	0x0 }, 	/* /rightarrowtail A: rt arrow-tailed : 9573-2003-isoamsa*/
+{ "Ltbar", 	0x02AA3, 	0x0 }, 	/*  : STIX*/
+{ "vdash", 	0x022A2, 	0x0 }, 	/* /vdash R: vertical, dash : 9573-2003-isoamsr*/
+{ "RightTee", 	0x022A2, 	0x0 }, 	/* alias ISOAMSR vdash : mmlalias*/
+{ "gtreqqless", 	0x02A8C, 	0x0 }, 	/* alias ISOAMSR gEl : mmlalias*/
+{ "gEl", 	0x02A8C, 	0x0 }, 	/*  : STIX*/
+{ "Ofr", 	0x1D512, 	0x0 }, 	/* /frak O, upper case o : 9573-2003-isomfrk*/
+{ "edot", 	0x00117, 	0x0 }, 	/* =small e, dot above : 9573-2003-isolat2*/
+{ "jopf", 	0x1D55B, 	0x0 }, 	/*  : mmlextra*/
+{ "vartriangleright", 	0x022B3, 	0x0 }, 	/* alias ISOAMSR vrtri : mmlalias*/
+{ "RightTriangle", 	0x022B3, 	0x0 }, 	/* alias ISOAMSR vrtri : mmlalias*/
+{ "vrtri", 	0x022B3, 	0x0 }, 	/* /vartriangleright R: r tri, open, var : 9573-2003-isoamsr*/
+{ "HumpEqual", 	0x0224F, 	0x0 }, 	/* alias ISOAMSR bumpe : mmlalias*/
+{ "bumpe", 	0x0224F, 	0x0 }, 	/* /bumpeq R: bumpy equals, equals : 9573-2003-isoamsr*/
+{ "bumpeq", 	0x0224F, 	0x0 }, 	/* alias ISOAMSR bumpe : mmlalias*/
+{ "fhrglass", 	0x029D7, 	0x0 }, 	/*  : STIX*/
+{ "sqsupe", 	0x02292, 	0x0 }, 	/* /sqsupseteq R: square superset, eq : 9573-2003-isoamsr*/
+{ "SquareSupersetEqual", 	0x02292, 	0x0 }, 	/* alias ISOAMSR sqsupe : mmlalias*/
+{ "sqsupseteq", 	0x02292, 	0x0 }, 	/* alias ISOAMSR sqsupe : mmlalias*/
+{ "nvrtrie", 	0x022B5, 	0x020D2 }, 	/* not, vert, right triangle, equals : 9573-2003-isoamsn*/
+{ "tscr", 	0x1D4C9, 	0x0 }, 	/* /scr t, script letter t : 9573-2003-isomscr*/
+{ "vscr", 	0x1D4CB, 	0x0 }, 	/* /scr v, script letter v : 9573-2003-isomscr*/
+{ "Wfr", 	0x1D51A, 	0x0 }, 	/* /frak W, upper case w : 9573-2003-isomfrk*/
+{ "drharb", 	0x02955, 	0x0 }, 	/*  : STIX*/
+{ "RightDownVectorBar", 	0x02955, 	0x0 }, 	/* down-right harpoon to bar : mmlextra*/
+{ "lhblk", 	0x02584, 	0x0 }, 	/* =lower half block : 9573-2003-isopub*/
+{ "submult", 	0x02AC1, 	0x0 }, 	/* subset, multiply : 9573-2003-isoamsr*/
+{ "boxVH", 	0x0256C, 	0x0 }, 	/* all four quadrants : 9573-2003-isobox*/
+{ "gesles", 	0x02A94, 	0x0 }, 	/* greater, equal, slanted, less, equal, slanted : 9573-2003-isoamsr*/
+{ "ograve", 	0x000F2, 	0x0 }, 	/* =small o, grave accent : 9573-2003-isolat1*/
+{ "emptyv", 	0x02205, 	0x0 }, 	/* /varnothing - circle, slash : 9573-2003-isoamso*/
+{ "emptyset", 	0x02205, 	0x0 }, 	/* alias ISOAMSO empty : mmlalias*/
+{ "varnothing", 	0x02205, 	0x0 }, 	/* alias ISOAMSO emptyv : mmlalias*/
+{ "empty", 	0x02205, 	0x0 }, 	/* empty set = null set = diameter : xhtml1-symbol*/
+{ "Ncaron", 	0x00147, 	0x0 }, 	/* =capital N, caron : 9573-2003-isolat2*/
+{ "SHcy", 	0x00428, 	0x0 }, 	/* =capital SHA, Cyrillic : 9573-2003-isocyr1*/
+{ "PartialD", 	0x02202, 	0x0 }, 	/* alias ISOTECH part : mmlalias*/
+{ "part", 	0x02202, 	0x0 }, 	/* /partial partial differential : 9573-2003-isotech*/
+{ "triangleright", 	0x025B9, 	0x0 }, 	/* alias ISOPUB rtri : mmlalias*/
+{ "rtri", 	0x025B9, 	0x0 }, 	/* /triangleright B: r triangle, open : 9573-2003-isopub*/
+{ "boxvh", 	0x0253C, 	0x0 }, 	/* all four quadrants : 9573-2003-isobox*/
+{ "Zopf", 	0x02124, 	0x0 }, 	/* /Bbb Z, open face Z : 9573-2003-isomopf*/
+{ "integers", 	0x02124, 	0x0 }, 	/* the ring of integers : mmlalias*/
+{ "frac58", 	0x0215D, 	0x0 }, 	/* =fraction five-eighths : 9573-2003-isonum*/
+{ "ggg", 	0x022D9, 	0x0 }, 	/* alias ISOAMSR Gg : mmlalias*/
+{ "Gg", 	0x022D9, 	0x0 }, 	/* /ggg /Gg /gggtr R: triple gtr-than : 9573-2003-isoamsr*/
+{ "subdot", 	0x02ABD, 	0x0 }, 	/* subset, with dot : 9573-2003-isoamsb*/
+{ "swnwar", 	0x0292A, 	0x0 }, 	/* SW & NW arrows : 9573-2003-isoamsa*/
+{ "Oslash", 	0x000D8, 	0x0 }, 	/* =capital O, slash : 9573-2003-isolat1*/
+{ "b.epsi", 	0x1D6C6, 	0x0 }, 	/* small epsilon, Greek : 8879-isogrk4*/
+{ "Emacr", 	0x00112, 	0x0 }, 	/* =capital E, macron : 9573-2003-isolat2*/
+{ "closur", 	0x02050, 	0x0 }, 	/*  : STIX*/
+{ "blank", 	0x02422, 	0x0 }, 	/*  : STIX*/
+{ "ngtr", 	0x0226F, 	0x0 }, 	/* alias ISOAMSN ngt : mmlalias*/
+{ "NotGreater", 	0x0226F, 	0x0 }, 	/* alias ISOAMSN ngt : mmlalias*/
+{ "ngt", 	0x0226F, 	0x0 }, 	/* /ngtr N: not greater-than : 9573-2003-isoamsn*/
+{ "RoundImplies", 	0x02970, 	0x0 }, 	/* round implies : mmlextra*/
+{ "rimply", 	0x02970, 	0x0 }, 	/*  : STIX*/
+{ "Yopf", 	0x1D550, 	0x0 }, 	/* /Bbb Y, open face Y : 9573-2003-isomopf*/
+{ "Poincareplane", 	0x0210C, 	0x0 }, 	/* the Poincare upper half-plane : mmlalias*/
+{ "Hfr", 	0x0210C, 	0x0 }, 	/* /frak H, upper case h : 9573-2003-isomfrk*/
+{ "ntilde", 	0x000F1, 	0x0 }, 	/* =small n, tilde : 9573-2003-isolat1*/
+{ "udiagr", 	0x003B0, 	0x0 }, 	/* =small upsilon, dieresis, accent, Greek : 9573-2003-isogrk2*/
+{ "bullet", 	0x02022, 	0x0 }, 	/* alias ISOPUB bull : mmlalias*/
+{ "bull", 	0x02022, 	0x0 }, 	/* /bullet B: =round bullet, filled : 9573-2003-isopub*/
+{ "olt", 	0x029C0, 	0x0 }, 	/* less-than in circle : 9573-2003-isoamsb*/
+{ "Bscr", 	0x0212C, 	0x0 }, 	/* /scr B, script letter B : 9573-2003-isomscr*/
+{ "Bernoullis", 	0x0212C, 	0x0 }, 	/* alias ISOTECH bernou : mmlalias*/
+{ "bernou", 	0x0212C, 	0x0 }, 	/* Bernoulli function (script capital B)  : 8879-isotech*/
+{ "dzcy", 	0x0045F, 	0x0 }, 	/* =small dze, Serbian : 9573-2003-isocyr2*/
+{ "Cacute", 	0x00106, 	0x0 }, 	/* =capital C, acute accent : 9573-2003-isolat2*/
+{ "cirb", 	0x029C7, 	0x0 }, 	/*  : STIX*/
+{ "jcirc", 	0x00135, 	0x0 }, 	/* =small j, circumflex accent : 9573-2003-isolat2*/
+{ "nvinfin", 	0x029DE, 	0x0 }, 	/* not, vert, infinity : 9573-2003-isotech*/
+{ "tbrk", 	0x023B4, 	0x0 }, 	/* top square bracket : 9573-2003-isoamso*/
+{ "OverBracket", 	0x023B4, 	0x0 }, 	/* over bracket : mmlextra*/
+{ "ovrbrk", 	0x023B4, 	0x0 }, 	/*  : STIX*/
+{ "yacute", 	0x000FD, 	0x0 }, 	/* =small y, acute accent : 9573-2003-isolat1*/
+{ "rarrx", 	0x02947, 	0x0 }, 	/*  : STIX*/
+{ "qprime", 	0x02057, 	0x0 }, 	/* quadruple prime : 9573-2003-isotech*/
+{ "cirmid", 	0x02AEF, 	0x0 }, 	/* circle, mid below : 9573-2003-isoamsa*/
+{ "nVdash", 	0x022AE, 	0x0 }, 	/* /nVdash N: not dbl vertical, dash : 9573-2003-isoamsn*/
+{ "xcupdot", 	0x02A03, 	0x0 }, 	/*  : STIX*/
+{ "ldquor", 	0x0201E, 	0x0 }, 	/* =rising dbl quote, left (low) : 9573-2003-isopub*/
+{ "bdquo", 	0x0201E, 	0x0 }, 	/* double low-9 quotation mark : xhtml1-special*/
+{ "b.Gamma", 	0x1D6AA, 	0x0 }, 	/* capital gamma, Greek : 8879-isogrk4*/
+{ "tridoto", 	0x029CA, 	0x0 }, 	/*  : STIX*/
+{ "divonx", 	0x022C7, 	0x0 }, 	/* /divideontimes B: division on times : 9573-2003-isoamsb*/
+{ "divideontimes", 	0x022C7, 	0x0 }, 	/* alias ISOAMSB divonx : mmlalias*/
+{ "rbarr", 	0x0290D, 	0x0 }, 	/* /bkarow A: right broken arrow : 9573-2003-isoamsa*/
+{ "bkarow", 	0x0290D, 	0x0 }, 	/* alias ISOAMSA rbarr : mmlalias*/
+{ "num", 	0x00023, 	0x0 }, 	/* =number sign : 9573-2003-isonum*/
+{ "lap", 	0x02A85, 	0x0 }, 	/* /lessapprox R: less, approximate : 9573-2003-isoamsr*/
+{ "lessapprox", 	0x02A85, 	0x0 }, 	/* alias ISOAMSR lap : mmlalias*/
+{ "NotSucceedsSlantEqual", 	0x022E1, 	0x0 }, 	/* alias ISOAMSN nsccue : mmlalias*/
+{ "nsccue", 	0x022E1, 	0x0 }, 	/* not succeeds, curly eq : 9573-2003-isoamsn*/
+{ "Upsi", 	0x003D2, 	0x0 }, 	/* /Upsilon capital Upsilon, Greek : 9573-2003-isogrk3*/
+{ "upsih", 	0x003D2, 	0x0 }, 	/* greek upsilon with hook symbol : xhtml1-symbol*/
+{ "Sqrt", 	0x0221A, 	0x0 }, 	/* alias ISOTECH radic : mmlalias*/
+{ "radic", 	0x0221A, 	0x0 }, 	/* /surd radical : 9573-2003-isotech*/
+{ "sime", 	0x02243, 	0x0 }, 	/* /simeq R: similar, equals : 9573-2003-isotech*/
+{ "simeq", 	0x02243, 	0x0 }, 	/* alias ISOTECH sime : mmlalias*/
+{ "TildeEqual", 	0x02243, 	0x0 }, 	/* alias ISOTECH sime : mmlalias*/
+{ "frac78", 	0x0215E, 	0x0 }, 	/* =fraction seven-eighths : 9573-2003-isonum*/
+{ "GreaterFullEqual", 	0x02267, 	0x0 }, 	/* alias ISOAMSR gE : mmlalias*/
+{ "gE", 	0x02267, 	0x0 }, 	/* /geqq R: greater, double equals : 9573-2003-isoamsr*/
+{ "geqq", 	0x02267, 	0x0 }, 	/* alias ISOAMSR gE : mmlalias*/
+{ "ntrianglelefteq", 	0x022EC, 	0x0 }, 	/* alias ISOAMSN nltrie : mmlalias*/
+{ "nltrie", 	0x022EC, 	0x0 }, 	/* /ntrianglelefteq N: not l tri, eq : 9573-2003-isoamsn*/
+{ "NotLeftTriangleEqual", 	0x022EC, 	0x0 }, 	/* alias ISOAMSN nltrie : mmlalias*/
+{ "larrhk", 	0x021A9, 	0x0 }, 	/* /hookleftarrow A: left arrow-hooked : 9573-2003-isoamsa*/
+{ "hookleftarrow", 	0x021A9, 	0x0 }, 	/* alias ISOAMSA larrhk : mmlalias*/
+{ "Sgr", 	0x003A3, 	0x0 }, 	/* =capital Sigma, Greek : 9573-2003-isogrk1*/
+{ "Sigma", 	0x003A3, 	0x0 }, 	/* /Sigma capital Sigma, Greek : 9573-2003-isogrk3*/
+{ "Tab", 	0x00009, 	0x0 }, 	/*  : mmlextra*/
+{ "gtrarr", 	0x02978, 	0x0 }, 	/* greater than, right arrow : 9573-2003-isoamsr*/
+{ "LeftCeiling", 	0x02308, 	0x0 }, 	/* alias ISOAMSC lceil : mmlalias*/
+{ "lceil", 	0x02308, 	0x0 }, 	/* /lceil O: left ceiling : 9573-2003-isoamsc*/
+{ "boxhd", 	0x0252C, 	0x0 }, 	/* lower left and right quadrants : 9573-2003-isobox*/
+{ "Barint", 	0x02A0E, 	0x0 }, 	/*  : STIX*/
+{ "midast", 	0x0002A, 	0x0 }, 	/* /ast B: asterisk : 9573-2003-isoamsb*/
+{ "ast", 	0x0002A, 	0x0 }, 	/* /ast B: =asterisk : 9573-2003-isonum*/
+{ "darrb", 	0x02913, 	0x0 }, 	/*  : STIX*/
+{ "DownArrowBar", 	0x02913, 	0x0 }, 	/* down arrow to bar : mmlextra*/
+{ "emsp13", 	0x02004, 	0x0 }, 	/* =1/3-em space : 9573-2003-isopub*/
+{ "rangd", 	0x02992, 	0x0 }, 	/* right angle, dot : 9573-2003-isoamsc*/
+{ "angles", 	0x0299E, 	0x0 }, 	/*  : STIX*/
+{ "frac34", 	0x000BE, 	0x0 }, 	/* =fraction three-quarters : 9573-2003-isonum*/
+{ "cup", 	0x0222A, 	0x0 }, 	/* /cup B: union or logical sum : 9573-2003-isotech*/
+{ "csupe", 	0x02AD2, 	0x0 }, 	/* superset, closed, equals : 9573-2003-isoamsr*/
+{ "rdsh", 	0x021B3, 	0x0 }, 	/* right down angled arrow : 9573-2003-isoamsa*/
+{ "samalg", 	0x02210, 	0x0 }, 	/* /smallamalg R: small amalg : 8879-isoamsr*/
+{ "Coproduct", 	0x02210, 	0x0 }, 	/* alias ISOAMSB coprod : mmlalias*/
+{ "coprod", 	0x02210, 	0x0 }, 	/* /coprod L: coproduct operator : 9573-2003-isoamsb*/
+{ "Scy", 	0x00421, 	0x0 }, 	/* =capital ES, Cyrillic : 9573-2003-isocyr1*/
+{ "IOcy", 	0x00401, 	0x0 }, 	/* =capital IO, Russian : 9573-2003-isocyr1*/
+{ "oelig", 	0x00153, 	0x0 }, 	/* =small oe ligature : 9573-2003-isolat2*/
+{ "boxH", 	0x02550, 	0x0 }, 	/* horizontal line : 9573-2003-isobox*/
+{ "rationals", 	0x0211A, 	0x0 }, 	/* the field of rational numbers : mmlalias*/
+{ "Qopf", 	0x0211A, 	0x0 }, 	/* /Bbb Q, open face Q : 9573-2003-isomopf*/
+{ "dscy", 	0x00455, 	0x0 }, 	/* =small dse, Macedonian : 9573-2003-isocyr2*/
+{ "ell", 	0x02113, 	0x0 }, 	/* /ell - cursive small l : 9573-2003-isoamso*/
+{ "boxvR", 	0x0255E, 	0x0 }, 	/* upper and lower right quadrants : 9573-2003-isobox*/
+{ "subsetneqq", 	0x02ACB, 	0x0 }, 	/* alias ISOAMSN subnE : mmlalias*/
+{ "subnE", 	0x02ACB, 	0x0 }, 	/*  : STIX*/
+{ "bowtie", 	0x022C8, 	0x0 }, 	/* /bowtie R: : 9573-2003-isoamsr*/
+{ "sup3", 	0x000B3, 	0x0 }, 	/* =superscript three : 9573-2003-isonum*/
+{ "tscy", 	0x00446, 	0x0 }, 	/* =small tse, Cyrillic : 9573-2003-isocyr1*/
+{ "risingdotseq", 	0x02253, 	0x0 }, 	/* alias ISOAMSR erDot : mmlalias*/
+{ "erDot", 	0x02253, 	0x0 }, 	/* /risingdotseq R: eq, rising dots : 9573-2003-isoamsr*/
+{ "SOFTcy", 	0x0042C, 	0x0 }, 	/* =capital SOFT sign, Cyrillic : 9573-2003-isocyr1*/
+{ "b.Psi", 	0x1D6BF, 	0x0 }, 	/* capital Psi, Greek : 8879-isogrk4*/
+{ "Uacute", 	0x000DA, 	0x0 }, 	/* =capital U, acute accent : 9573-2003-isolat1*/
+{ "neswsarr", 	0x02922, 	0x0 }, 	/*  : STIX*/
+{ "approxeq", 	0x0224A, 	0x0 }, 	/* alias ISOAMSR ape : mmlalias*/
+{ "ape", 	0x0224A, 	0x0 }, 	/* /approxeq R: approximate, equals : 9573-2003-isoamsr*/
+{ "boxplus", 	0x0229E, 	0x0 }, 	/* alias ISOAMSB plusb : mmlalias*/
+{ "plusb", 	0x0229E, 	0x0 }, 	/* /boxplus B: plus sign in box : 9573-2003-isoamsb*/
+{ "Scaron", 	0x00160, 	0x0 }, 	/* =capital S, caron : 9573-2003-isolat2*/
+{ "utdot", 	0x022F0, 	0x0 }, 	/* three dots, ascending : 9573-2003-isotech*/
+{ "nldr", 	0x02025, 	0x0 }, 	/* =double baseline dot (en leader) : 9573-2003-isopub*/
+{ "prnE", 	0x02AB5, 	0x0 }, 	/* /precneqq N: precedes, not dbl eq : 9573-2003-isoamsn*/
+{ "precneqq", 	0x02AB5, 	0x0 }, 	/* alias ISOAMSN prnE : mmlalias*/
+{ "lt", 	0x0003C, 	0x0 }, 	/* =less-than sign R: : 9573-2003-isonum*/
+{ "LT", 	0x0003C, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "sc", 	0x0227B, 	0x0 }, 	/* /succ R: succeeds : 9573-2003-isoamsr*/
+{ "Succeeds", 	0x0227B, 	0x0 }, 	/* alias ISOAMSR sc : mmlalias*/
+{ "succ", 	0x0227B, 	0x0 }, 	/* alias ISOAMSR sc : mmlalias*/
+{ "ngr", 	0x003BD, 	0x0 }, 	/* =small nu, Greek : 9573-2003-isogrk1*/
+{ "nu", 	0x003BD, 	0x0 }, 	/* /nu small nu, Greek : 9573-2003-isogrk3*/
+{ "Ncedil", 	0x00145, 	0x0 }, 	/* =capital N, cedilla : 9573-2003-isolat2*/
+{ "ordm", 	0x000BA, 	0x0 }, 	/* =ordinal indicator, masculine : 9573-2003-isonum*/
+{ "simlE", 	0x02A9F, 	0x0 }, 	/* similar, less, equal : 9573-2003-isoamsr*/
+{ "wedge", 	0x02227, 	0x0 }, 	/* alias ISOTECH and : mmlalias*/
+{ "and", 	0x02227, 	0x0 }, 	/* /wedge /land B: logical and : 9573-2003-isotech*/
+{ "egsdot", 	0x02A98, 	0x0 }, 	/* equal-or-greater, slanted, dot inside : 9573-2003-isoamsr*/
+{ "tilde", 	0x002DC, 	0x0 }, 	/* =tilde : 9573-2003-isodia*/
+{ "DiacriticalTilde", 	0x002DC, 	0x0 }, 	/* alias ISODIA tilde : mmlalias*/
+{ "Tstrok", 	0x00166, 	0x0 }, 	/* =capital T, stroke : 9573-2003-isolat2*/
+{ "timesbar", 	0x02A31, 	0x0 }, 	/* multiply sign, bar below : 9573-2003-isoamsb*/
+{ "vBar", 	0x02AE8, 	0x0 }, 	/* vert, dbl bar (under) : 9573-2003-isoamsr*/
+{ "barwed", 	0x02305, 	0x0 }, 	/* /barwedge B: logical and, bar above : 9573-2003-isoamsb*/
+{ "barwedge", 	0x02305, 	0x0 }, 	/* alias ISOAMSB barwed : mmlalias*/
+{ "fjlig", 	0x00066, 	0x0006A }, 	/* small fj ligature : 9573-2003-isopub*/
+{ "rlm", 	0x0200F, 	0x0 }, 	/*  : xhtml1-special*/
+{ "grave", 	0x00060, 	0x0 }, 	/* =grave accent : 9573-2003-isodia*/
+{ "DiacriticalGrave", 	0x00060, 	0x0 }, 	/* alias ISODIA grave : mmlalias*/
+{ "sampi", 	0x003E0, 	0x0 }, 	/* 03E0 : STIX*/
+{ "iota", 	0x003B9, 	0x0 }, 	/* /iota small iota, Greek : 9573-2003-isogrk3*/
+{ "igr", 	0x003B9, 	0x0 }, 	/* =small iota, Greek : 9573-2003-isogrk1*/
+{ "psgr", 	0x003C8, 	0x0 }, 	/* =small psi, Greek : 9573-2003-isogrk1*/
+{ "psi", 	0x003C8, 	0x0 }, 	/* /psi small psi, Greek : 9573-2003-isogrk3*/
+{ "el", 	0x02A99, 	0x0 }, 	/* equal-or-less : 9573-2003-isoamsr*/
+{ "cupbrcap", 	0x02A48, 	0x0 }, 	/* union, bar, intersection : 9573-2003-isoamsb*/
+{ "tridot", 	0x025EC, 	0x0 }, 	/* dot in triangle : 9573-2003-isoamsb*/
+{ "vsupne", 	0x0228B, 	0x0FE00 }, 	/* /varsupsetneq N: superset, not eq, var : 9573-2003-isoamsn*/
+{ "varsupsetneq", 	0x0228B, 	0x0FE00 }, 	/* alias ISOAMSN vsupne : mmlalias*/
+{ "intercal", 	0x022BA, 	0x0 }, 	/* alias ISOAMSB intcal : mmlalias*/
+{ "intcal", 	0x022BA, 	0x0 }, 	/* /intercal B: intercal : 9573-2003-isoamsb*/
+{ "centerdot", 	0x000B7, 	0x0 }, 	/* alias ISONUM middot : mmlalias*/
+{ "middot", 	0x000B7, 	0x0 }, 	/* /centerdot B: =middle dot : 9573-2003-isonum*/
+{ "CenterDot", 	0x000B7, 	0x0 }, 	/* alias ISONUM middot : mmlalias*/
+{ "Lsh", 	0x021B0, 	0x0 }, 	/* alias ISOAMSA lsh : mmlalias*/
+{ "lsh", 	0x021B0, 	0x0 }, 	/* /Lsh A: : 9573-2003-isoamsa*/
+{ "fcy", 	0x00444, 	0x0 }, 	/* =small ef, Cyrillic : 9573-2003-isocyr1*/
+{ "Qscr", 	0x1D4AC, 	0x0 }, 	/* /scr Q, script letter Q : 9573-2003-isomscr*/
+{ "simgE", 	0x02AA0, 	0x0 }, 	/* similar, greater, equal : 9573-2003-isoamsr*/
+{ "rdquo", 	0x0201D, 	0x0 }, 	/* =double quotation mark, right : 9573-2003-isonum*/
+{ "CloseCurlyDoubleQuote", 	0x0201D, 	0x0 }, 	/* alias ISONUM rdquo : mmlalias*/
+{ "rdquor", 	0x0201D, 	0x0 }, 	/* rising dbl quote, right (high) : 9573-2003-isopub*/
+{ "imof", 	0x022B7, 	0x0 }, 	/* image of : 9573-2003-isoamsa*/
+{ "ZHcy", 	0x00416, 	0x0 }, 	/* =capital ZHE, Cyrillic : 9573-2003-isocyr1*/
+{ "aogon", 	0x00105, 	0x0 }, 	/* =small a, ogonek : 9573-2003-isolat2*/
+{ "fbowtie", 	0x029D3, 	0x0 }, 	/*  : STIX*/
+{ "boxVR", 	0x02560, 	0x0 }, 	/* upper and lower right quadrants : 9573-2003-isobox*/
+{ "DoubleLeftArrow", 	0x021D0, 	0x0 }, 	/* alias ISOTECH lArr : mmlalias*/
+{ "Leftarrow", 	0x021D0, 	0x0 }, 	/* alias ISOTECH lArr : mmlalias*/
+{ "lArr", 	0x021D0, 	0x0 }, 	/* /Leftarrow A: is implied by : 9573-2003-isotech*/
+{ "numero", 	0x02116, 	0x0 }, 	/* =numero sign : 9573-2003-isocyr1*/
+{ "tritime", 	0x02A3B, 	0x0 }, 	/* multiply in triangle : 9573-2003-isoamsb*/
+{ "infintie", 	0x029DD, 	0x0 }, 	/* tie, infinity : 9573-2003-isotech*/
+{ "cudarrr", 	0x02935, 	0x0 }, 	/* right, curved, down arrow : 9573-2003-isoamsa*/
+{ "darr2", 	0x021CA, 	0x0 }, 	/* /downdownarrows A: two down arrows  : 8879-isoamsa*/
+{ "downdownarrows", 	0x021CA, 	0x0 }, 	/* alias ISOAMSA ddarr : mmlalias*/
+{ "ddarr", 	0x021CA, 	0x0 }, 	/* /downdownarrows A: two down arrows : 9573-2003-isoamsa*/
+{ "acirc", 	0x000E2, 	0x0 }, 	/* =small a, circumflex accent : 9573-2003-isolat1*/
+{ "copf", 	0x1D554, 	0x0 }, 	/*  : mmlextra*/
+{ "Uogon", 	0x00172, 	0x0 }, 	/* =capital U, ogonek : 9573-2003-isolat2*/
+{ "lopar", 	0x02985, 	0x0 }, 	/* left open parenthesis : 9573-2003-isotech*/
+{ "vDash", 	0x022A8, 	0x0 }, 	/* /vDash R: vertical, dbl dash : 9573-2003-isoamsr*/
+{ "DoubleRightTee", 	0x022A8, 	0x0 }, 	/* alias ISOAMSR vDash : mmlalias*/
+{ "gla", 	0x02AA5, 	0x0 }, 	/* greater, less, apart : 9573-2003-isoamsr*/
+{ "lacute", 	0x0013A, 	0x0 }, 	/* =small l, acute accent : 9573-2003-isolat2*/
+{ "ClockwiseContourIntegral", 	0x02232, 	0x0 }, 	/* alias ISOTECH cwconint : mmlalias*/
+{ "cwconint", 	0x02232, 	0x0 }, 	/* contour integral, clockwise : 9573-2003-isotech*/
+{ "vopf", 	0x1D567, 	0x0 }, 	/*  : mmlextra*/
+{ "fdonearr", 	0x0292F, 	0x0 }, 	/*  : STIX*/
+{ "nvlt", 	0x0003C, 	0x020D2 }, 	/* not, vert, less-than : 9573-2003-isoamsn*/
+{ "lesdoto", 	0x02A81, 	0x0 }, 	/* less-than-or-equal, slanted, dot above : 9573-2003-isoamsr*/
+{ "rbrace", 	0x0007D, 	0x0 }, 	/* alias ISONUM rcub : mmlalias*/
+{ "rcub", 	0x0007D, 	0x0 }, 	/* /rbrace C: =right curly bracket : 9573-2003-isonum*/
+{ "drcrop", 	0x0230C, 	0x0 }, 	/* downward right crop mark  : 9573-2003-isopub*/
+{ "angmsdab", 	0x029A9, 	0x0 }, 	/* angle-measured, arrow, up, left : 9573-2003-isoamso*/
+{ "oopf", 	0x1D560, 	0x0 }, 	/*  : mmlextra*/
+{ "UpEquilibrium", 	0x0296E, 	0x0 }, 	/* alias ISOAMSA udhar : mmlalias*/
+{ "udhar", 	0x0296E, 	0x0 }, 	/* up harp, down harp : 9573-2003-isoamsa*/
+{ "cirfdarr", 	0x029ED, 	0x0 }, 	/*  : STIX*/
+{ "zgr", 	0x003B6, 	0x0 }, 	/* =small zeta, Greek : 9573-2003-isogrk1*/
+{ "zeta", 	0x003B6, 	0x0 }, 	/* /zeta small zeta, Greek : 9573-2003-isogrk3*/
+{ "awint", 	0x02A11, 	0x0 }, 	/* anti clock-wise integration : 9573-2003-isotech*/
+{ "profline", 	0x02312, 	0x0 }, 	/* profile of a line : 9573-2003-isotech*/
+{ "fopf", 	0x1D557, 	0x0 }, 	/*  : mmlextra*/
+{ "nwarr", 	0x02196, 	0x0 }, 	/* /nwarrow A: NW pointing arrow : 9573-2003-isoamsa*/
+{ "UpperLeftArrow", 	0x02196, 	0x0 }, 	/* alias ISOAMSA nwarr : mmlalias*/
+{ "nwarrow", 	0x02196, 	0x0 }, 	/* alias ISOAMSA nwarr : mmlalias*/
+{ "conint", 	0x0222E, 	0x0 }, 	/* /oint L: contour integral operator : 9573-2003-isotech*/
+{ "ContourIntegral", 	0x0222E, 	0x0 }, 	/* alias ISOTECH conint : mmlalias*/
+{ "oint", 	0x0222E, 	0x0 }, 	/* alias ISOTECH conint : mmlalias*/
+{ "Delta", 	0x00394, 	0x0 }, 	/* /Delta capital Delta, Greek : 9573-2003-isogrk3*/
+{ "Dgr", 	0x00394, 	0x0 }, 	/* =capital Delta, Greek : 9573-2003-isogrk1*/
+{ "roplus", 	0x02A2E, 	0x0 }, 	/* plus sign in right half circle : 9573-2003-isoamsb*/
+{ "RuleDelayed", 	0x029F4, 	0x0 }, 	/* rule-delayed (colon right arrow) : mmlextra*/
+{ "Eogon", 	0x00118, 	0x0 }, 	/* =capital E, ogonek : 9573-2003-isolat2*/
+{ "lmoust", 	0x023B0, 	0x0 }, 	/* /lmoustache : 9573-2003-isoamsc*/
+{ "lmoustache", 	0x023B0, 	0x0 }, 	/* alias ISOAMSC lmoust : mmlalias*/
+{ "Lfr", 	0x1D50F, 	0x0 }, 	/* /frak L, upper case l : 9573-2003-isomfrk*/
+{ "uarr2", 	0x021C8, 	0x0 }, 	/* /upuparrows A: two up arrows  : 8879-isoamsa*/
+{ "upuparrows", 	0x021C8, 	0x0 }, 	/* alias ISOAMSA uuarr : mmlalias*/
+{ "uuarr", 	0x021C8, 	0x0 }, 	/* /upuparrows A: two up arrows : 9573-2003-isoamsa*/
+{ "obsol", 	0x029B8, 	0x0 }, 	/*  : STIX*/
+{ "hbar", 	0x0210F, 	0x0 }, 	/* alias ISOAMSO plank : mmlalias*/
+{ "planck", 	0x0210F, 	0x0 }, 	/* /hbar - Planck's over 2pi : 9573-2003-isoamso*/
+{ "hslash", 	0x0210F, 	0x0 }, 	/* alias ISOAMSO plankv : mmlalias*/
+{ "plankv", 	0x0210F, 	0x0 }, 	/* /hslash - variant Planck's over 2pi : 9573-2003-isoamso*/
+{ "DoubleLongRightArrow", 	0x027F9, 	0x0 }, 	/* alias ISOAMSA xrArr : mmlalias*/
+{ "Longrightarrow", 	0x027F9, 	0x0 }, 	/* alias ISOAMSA xrArr : mmlalias*/
+{ "xrArr", 	0x027F9, 	0x0 }, 	/* /Longrightarrow A: long rt dbl arr : 9573-2003-isoamsa*/
+{ "burhar", 	0x0295C, 	0x0 }, 	/*  : STIX*/
+{ "RightUpTeeVector", 	0x0295C, 	0x0 }, 	/* up-right harpoon from bar : mmlextra*/
+{ "gesdot", 	0x02A80, 	0x0 }, 	/* greater-than-or-equal, slanted, dot inside : 9573-2003-isoamsr*/
+{ "NotRightTriangleBar", 	0x029D0, 	0x00338 }, 	/* not vertical bar, right triangle : mmlextra*/
+{ "nvbrtri", 	0x029D0, 	0x00338 }, 	/*  : STIX*/
+{ "gbreve", 	0x0011F, 	0x0 }, 	/* =small g, breve : 9573-2003-isolat2*/
+{ "Iacgr", 	0x0038A, 	0x0 }, 	/* =capital Iota, accent, Greek : 9573-2003-isogrk2*/
+{ "b.Sigma", 	0x1D6BA, 	0x0 }, 	/* capital Sigma, Greek : 8879-isogrk4*/
+{ "odsold", 	0x029BC, 	0x0 }, 	/* dot, solidus, dot in circle : 9573-2003-isoamsb*/
+{ "jscr", 	0x1D4BF, 	0x0 }, 	/* /scr j, script letter j : 9573-2003-isomscr*/
+{ "lbrksld", 	0x0298F, 	0x0 }, 	/* left bracket, solidus bottom corner : 9573-2003-isoamsc*/
+{ "iscr", 	0x1D4BE, 	0x0 }, 	/* /scr i, script letter i : 9573-2003-isomscr*/
+{ "curren", 	0x000A4, 	0x0 }, 	/* =general currency sign : 9573-2003-isonum*/
+{ "ldot", 	0x022D6, 	0x0 }, 	/* /lessdot R: less than, with dot : 8879-isoamsr*/
+{ "lessdot", 	0x022D6, 	0x0 }, 	/* alias ISOAMSR ltdot : mmlalias*/
+{ "ltdot", 	0x022D6, 	0x0 }, 	/* /lessdot R: less than, with dot : 9573-2003-isoamsr*/
+{ "Dashv", 	0x02AE4, 	0x0 }, 	/* dbl dash, vertical : 9573-2003-isoamsr*/
+{ "DoubleLeftTee", 	0x02AE4, 	0x0 }, 	/* alias for  &Dashv;  : mmlalias*/
+{ "Xscr", 	0x1D4B3, 	0x0 }, 	/* /scr X, script letter X : 9573-2003-isomscr*/
+{ "mumap", 	0x022B8, 	0x0 }, 	/* /multimap A: : 9573-2003-isoamsa*/
+{ "multimap", 	0x022B8, 	0x0 }, 	/* alias ISOAMSA mumap : mmlalias*/
+{ "boxhu", 	0x02534, 	0x0 }, 	/* upper left and right quadrants : 9573-2003-isobox*/
+{ "swArr", 	0x021D9, 	0x0 }, 	/* SW pointing dbl arrow : 9573-2003-isoamsa*/
+{ "luruhar", 	0x02966, 	0x0 }, 	/* left harpoon-up over right harpoon-up : 9573-2003-isoamsa*/
+{ "Umacr", 	0x0016A, 	0x0 }, 	/* =capital U, macron : 9573-2003-isolat2*/
+{ "demptyv", 	0x029B1, 	0x0 }, 	/* circle, slash, bar above : 9573-2003-isoamso*/
+{ "Efr", 	0x1D508, 	0x0 }, 	/* /frak E, upper case e : 9573-2003-isomfrk*/
+{ "Kcy", 	0x0041A, 	0x0 }, 	/* =capital KA, Cyrillic : 9573-2003-isocyr1*/
+{ "sce", 	0x02AB0, 	0x0 }, 	/*  : STIX*/
+{ "SucceedsEqual", 	0x02AB0, 	0x0 }, 	/* alias ISOAMSR sce : mmlalias*/
+{ "succeq", 	0x02AB0, 	0x0 }, 	/* alias ISOAMSR sce : mmlalias*/
+{ "Escr", 	0x02130, 	0x0 }, 	/* /scr E, script letter E : 9573-2003-isomscr*/
+{ "expectation", 	0x02130, 	0x0 }, 	/* expectation (operator) : mmlalias*/
+{ "OverParenthesis", 	0x023DC, 	0x0 }, 	/* over parenthesis : mmlextra*/
+{ "ovrpar", 	0x023DC, 	0x0 }, 	/*  : STIX*/
+{ "lbbrk", 	0x02772, 	0x0 }, 	/* left broken bracket : 9573-2003-isotech*/
+{ "subsub", 	0x02AD5, 	0x0 }, 	/* subset above subset : 9573-2003-isoamsr*/
+{ "Ecirc", 	0x000CA, 	0x0 }, 	/* =capital E, circumflex accent : 9573-2003-isolat1*/
+{ "lfisht", 	0x0297C, 	0x0 }, 	/* left fish tail : 9573-2003-isoamsa*/
+{ "lbrack", 	0x0005B, 	0x0 }, 	/* alias ISONUM lsqb : mmlalias*/
+{ "lsqb", 	0x0005B, 	0x0 }, 	/* /lbrack O: =left square bracket : 9573-2003-isonum*/
+{ "homtht", 	0x0223B, 	0x0 }, 	/* homothetic : 9573-2003-isoamsr*/
+{ "jcy", 	0x00439, 	0x0 }, 	/* =small short i, Cyrillic : 9573-2003-isocyr1*/
+{ "Aopf", 	0x1D538, 	0x0 }, 	/* /Bbb A, open face A : 9573-2003-isomopf*/
+{ "ultri", 	0x025F8, 	0x0 }, 	/* upper left triangle : 9573-2003-isoamso*/
+{ "notinvb", 	0x022F7, 	0x0 }, 	/* negated set membership, variant : 9573-2003-isotech*/
+{ "larrfs", 	0x0291D, 	0x0 }, 	/* left arrow, filled square : 9573-2003-isoamsa*/
+{ "Map", 	0x02905, 	0x0 }, 	/* twoheaded mapsto : 9573-2003-isoamsa*/
+{ "micro", 	0x000B5, 	0x0 }, 	/* =micro sign : 9573-2003-isonum*/
+{ "block", 	0x02588, 	0x0 }, 	/* =full block : 9573-2003-isopub*/
+{ "Uscr", 	0x1D4B0, 	0x0 }, 	/* /scr U, script letter U : 9573-2003-isomscr*/
+{ "KHgr", 	0x003A7, 	0x0 }, 	/* =capital Chi, Greek : 9573-2003-isogrk1*/
+{ "Chi", 	0x003A7, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "rect", 	0x025AD, 	0x0 }, 	/* =rectangle, open : 9573-2003-isopub*/
+{ "nsub", 	0x02284, 	0x0 }, 	/* not subset : 9573-2003-isoamsn*/
+{ "Bopf", 	0x1D539, 	0x0 }, 	/* /Bbb B, open face B : 9573-2003-isomopf*/
+{ "trisb", 	0x029CD, 	0x0 }, 	/* triangle, serifs at bottom : 9573-2003-isoamsb*/
+{ "maltese", 	0x02720, 	0x0 }, 	/* alias ISOPUB malt : mmlalias*/
+{ "malt", 	0x02720, 	0x0 }, 	/* /maltese =maltese cross : 9573-2003-isopub*/
+{ "b.Phi", 	0x1D6BD, 	0x0 }, 	/* capital Phi, Greek : 8879-isogrk4*/
+{ "eparsl", 	0x029E3, 	0x0 }, 	/* parallel, slanted, equal; homothetically congruent to : 9573-2003-isotech*/
+{ "Hscr", 	0x0210B, 	0x0 }, 	/* /scr H, script letter H : 9573-2003-isomscr*/
+{ "hamilt", 	0x0210B, 	0x0 }, 	/* Hamiltonian (script capital H)  : 8879-isotech*/
+{ "HilbertSpace", 	0x0210B, 	0x0 }, 	/* Hilbert space : mmlalias*/
+{ "nsce", 	0x02AB0, 	0x00338 }, 	/* /nsucceq N: not succeeds, equals : 9573-2003-isoamsn*/
+{ "NotSucceedsEqual", 	0x02AB0, 	0x00338 }, 	/* alias ISOAMSN nsce : mmlalias*/
+{ "nsucceq", 	0x02AB0, 	0x00338 }, 	/* alias ISOAMSN nsce : mmlalias*/
+{ "Vvdash", 	0x022AA, 	0x0 }, 	/* /Vvdash R: triple vertical, dash : 9573-2003-isoamsr*/
+{ "apos", 	0x00027, 	0x0 }, 	/* =apostrophe : 9573-2003-isonum*/
+{ "brvbar", 	0x000A6, 	0x0 }, 	/* =broken (vertical) bar : 9573-2003-isonum*/
+{ "Mellintrf", 	0x02133, 	0x0 }, 	/* Mellin transform : mmlalias*/
+{ "phmmat", 	0x02133, 	0x0 }, 	/* physics M-matrix (script capital M)  : 9573-2003-isotech*/
+{ "Mscr", 	0x02133, 	0x0 }, 	/* /scr M, script letter M : 9573-2003-isomscr*/
+{ "mlcp", 	0x02ADB, 	0x0 }, 	/* /mlcp : 9573-2003-isoamsr*/
+{ "triangleleft", 	0x025C3, 	0x0 }, 	/* alias ISOPUB ltri : mmlalias*/
+{ "ltri", 	0x025C3, 	0x0 }, 	/* /triangleleft B: l triangle, open : 9573-2003-isopub*/
+{ "THORN", 	0x000DE, 	0x0 }, 	/* =capital THORN, Icelandic : 9573-2003-isolat1*/
+{ "hercon", 	0x022B9, 	0x0 }, 	/* hermitian conjugate matrix : 9573-2003-isoamsb*/
+{ "umacr", 	0x0016B, 	0x0 }, 	/* =small u, macron : 9573-2003-isolat2*/
+{ "map", 	0x021A6, 	0x0 }, 	/* /mapsto A: : 9573-2003-isoamsa*/
+{ "RightTeeArrow", 	0x021A6, 	0x0 }, 	/* alias ISOAMSA map : mmlalias*/
+{ "mapsto", 	0x021A6, 	0x0 }, 	/* alias ISOAMSA map : mmlalias*/
+{ "ncong", 	0x02247, 	0x0 }, 	/* /ncong N: not congruent with : 9573-2003-isoamsn*/
+{ "NotTildeFullEqual", 	0x02247, 	0x0 }, 	/* alias ISOAMSN ncong : mmlalias*/
+{ "Nfr", 	0x1D511, 	0x0 }, 	/* /frak N, upper case n : 9573-2003-isomfrk*/
+{ "equals", 	0x0003D, 	0x0 }, 	/* =equals sign R: : 9573-2003-isonum*/
+{ "oror", 	0x02A56, 	0x0 }, 	/* two logical or : 9573-2003-isotech*/
+{ "puncsp", 	0x02008, 	0x0 }, 	/* =punctuation space (width of comma) : 9573-2003-isopub*/
+{ "andv", 	0x02A5A, 	0x0 }, 	/* and with middle stem : 9573-2003-isotech*/
+{ "lmidot", 	0x00140, 	0x0 }, 	/* =small l, middle dot : 9573-2003-isolat2*/
+{ "lbrkslu", 	0x0298D, 	0x0 }, 	/* left bracket, solidus top corner : 9573-2003-isoamsc*/
+{ "ecaron", 	0x0011B, 	0x0 }, 	/* =small e, caron : 9573-2003-isolat2*/
+{ "notindot", 	0x022F5, 	0x00338 }, 	/* negated set membership, dot above : 9573-2003-isotech*/
+{ "bulhar", 	0x02960, 	0x0 }, 	/*  : STIX*/
+{ "LeftUpTeeVector", 	0x02960, 	0x0 }, 	/* up-left harpoon from bar : mmlextra*/
+{ "And", 	0x02A53, 	0x0 }, 	/* dbl logical and : 9573-2003-isotech*/
+{ "Dopf", 	0x1D53B, 	0x0 }, 	/* /Bbb D, open face D : 9573-2003-isomopf*/
+{ "Jcy", 	0x00419, 	0x0 }, 	/* =capital short I, Cyrillic : 9573-2003-isocyr1*/
+{ "kgreen", 	0x00138, 	0x0 }, 	/* =small k, Greenlandic : 9573-2003-isolat2*/
+{ "b.rhov", 	0x1D6E0, 	0x0 }, 	/* variant rho : 8879-isogrk4*/
+{ "period", 	0x0002E, 	0x0 }, 	/* =full stop, period : 9573-2003-isonum*/
+{ "boxUr", 	0x02559, 	0x0 }, 	/* upper right quadrant : 9573-2003-isobox*/
+{ "half", 	0x000BD, 	0x0 }, 	/* =fraction one-half : 9573-2003-isonum*/
+{ "frac12", 	0x000BD, 	0x0 }, 	/* =fraction one-half : 9573-2003-isonum*/
+{ "locub", 	0x02983, 	0x0 }, 	/*  : STIX*/
+{ "Bumpeq", 	0x0224E, 	0x0 }, 	/* alias ISOAMSR bump : mmlalias*/
+{ "bump", 	0x0224E, 	0x0 }, 	/* /Bumpeq R: bumpy equals : 9573-2003-isoamsr*/
+{ "HumpDownHump", 	0x0224E, 	0x0 }, 	/* alias ISOAMSR bump : mmlalias*/
+{ "LeftRightArrow", 	0x02194, 	0x0 }, 	/* alias ISOAMSA harr : mmlalias*/
+{ "leftrightarrow", 	0x02194, 	0x0 }, 	/* alias ISOAMSA harr : mmlalias*/
+{ "harr", 	0x02194, 	0x0 }, 	/* /leftrightarrow A: l&r arrow : 9573-2003-isoamsa*/
+{ "SquareSubset", 	0x0228F, 	0x0 }, 	/* alias ISOAMSR sqsub : mmlalias*/
+{ "sqsub", 	0x0228F, 	0x0 }, 	/* /sqsubset R: square subset : 9573-2003-isoamsr*/
+{ "sqsubset", 	0x0228F, 	0x0 }, 	/* alias ISOAMSR sqsub : mmlalias*/
+{ "ldrdhar", 	0x02967, 	0x0 }, 	/* left harpoon-down over right harpoon-down : 9573-2003-isoamsa*/
+{ "squerr", 	0x029EE, 	0x0 }, 	/*  : STIX*/
+{ "kappav", 	0x003F0, 	0x0 }, 	/* /varkappa : 9573-2003-isogrk3*/
+{ "varkappa", 	0x003F0, 	0x0 }, 	/* alias ISOGRK3 kappav : mmlalias*/
+{ "gfr", 	0x1D524, 	0x0 }, 	/* /frak g, lower case g : 9573-2003-isomfrk*/
+{ "veeBar", 	0x02A63, 	0x0 }, 	/* 225A : STIX*/
+{ "xsquf", 	0x025FC, 	0x0 }, 	/*  : STIX*/
+{ "FilledSmallSquare", 	0x025FC, 	0x0 }, 	/* filled small square : mmlextra*/
+{ "hyphen", 	0x02010, 	0x0 }, 	/* =hyphen : 9573-2003-isonum*/
+{ "dash", 	0x02010, 	0x0 }, 	/* =hyphen (true graphic) : 9573-2003-isopub*/
+{ "DownLeftVector", 	0x021BD, 	0x0 }, 	/* alias ISOAMSA lhard : mmlalias*/
+{ "leftharpoondown", 	0x021BD, 	0x0 }, 	/* alias ISOAMSA lhard : mmlalias*/
+{ "lhard", 	0x021BD, 	0x0 }, 	/* /leftharpoondown A: l harpoon-down : 9573-2003-isoamsa*/
+{ "boxHd", 	0x02564, 	0x0 }, 	/* lower left and right quadrants : 9573-2003-isobox*/
+{ "rightsquigarrow", 	0x0219D, 	0x0 }, 	/* alias ISOAMSA rarrw : mmlalias*/
+{ "rarrw", 	0x0219D, 	0x0 }, 	/* /rightsquigarrow A: rt arrow-wavy : 9573-2003-isoamsa*/
+{ "seonearr", 	0x0292D, 	0x0 }, 	/*  : STIX*/
+{ "ReverseUpEquilibrium", 	0x0296F, 	0x0 }, 	/* alias ISOAMSA duhar : mmlalias*/
+{ "duhar", 	0x0296F, 	0x0 }, 	/* down harp, up harp : 9573-2003-isoamsa*/
+{ "agrave", 	0x000E0, 	0x0 }, 	/* =small a, grave accent : 9573-2003-isolat1*/
+{ "Kscr", 	0x1D4A6, 	0x0 }, 	/* /scr K, script letter K : 9573-2003-isomscr*/
+{ "target", 	0x02316, 	0x0 }, 	/* register mark or target : 9573-2003-isopub*/
+{ "NotGreaterEqual", 	0x02271, 	0x0 }, 	/* alias ISOAMSN nge : mmlalias*/
+{ "nge", 	0x02271, 	0x0 }, 	/* /ngeq N: not greater-than-or-equal : 9573-2003-isoamsn*/
+{ "ngeq", 	0x02271, 	0x0 }, 	/* alias ISOAMSN nge : mmlalias*/
+{ "Implies", 	0x021D2, 	0x0 }, 	/* alias ISOTECH rArr : mmlalias*/
+{ "Rightarrow", 	0x021D2, 	0x0 }, 	/* alias ISOTECH rArr : mmlalias*/
+{ "DoubleRightArrow", 	0x021D2, 	0x0 }, 	/* alias ISOTECH rArr : mmlalias*/
+{ "rArr", 	0x021D2, 	0x0 }, 	/* /Rightarrow A: implies : 9573-2003-isotech*/
+{ "wcirc", 	0x00175, 	0x0 }, 	/* =small w, circumflex accent : 9573-2003-isolat2*/
+{ "Oacute", 	0x000D3, 	0x0 }, 	/* =capital O, acute accent : 9573-2003-isolat1*/
+{ "yopf", 	0x1D56A, 	0x0 }, 	/*  : mmlextra*/
+{ "LeftFloor", 	0x0230A, 	0x0 }, 	/* alias ISOAMSC lfloor : mmlalias*/
+{ "lfloor", 	0x0230A, 	0x0 }, 	/* /lfloor O: left floor : 9573-2003-isoamsc*/
+{ "eacgr", 	0x003AD, 	0x0 }, 	/* =small epsilon, accent, Greek : 9573-2003-isogrk2*/
+{ "ropf", 	0x1D563, 	0x0 }, 	/*  : mmlextra*/
+{ "lowast", 	0x0204E, 	0x0 }, 	/*  : STIX*/
+{ "nbump", 	0x0224E, 	0x00338 }, 	/* not bumpy equals : mmlextra*/
+{ "NotHumpDownHump", 	0x0224E, 	0x00338 }, 	/* alias for &nbump; : mmlalias*/
+{ "prurel", 	0x022B0, 	0x0 }, 	/* element precedes under relation : 9573-2003-isoamsr*/
+{ "lagran", 	0x02112, 	0x0 }, 	/* Lagrangian (script capital L)  : 9573-2003-isotech*/
+{ "Lscr", 	0x02112, 	0x0 }, 	/* /scr L, script letter L : 9573-2003-isomscr*/
+{ "Laplacetrf", 	0x02112, 	0x0 }, 	/* Laplace transform : mmlalias*/
+{ "nsupset", 	0x02283, 	0x020D2 }, 	/* alias ISOAMSN vnsup : mmlalias*/
+{ "NotSuperset", 	0x02283, 	0x020D2 }, 	/* alias ISOAMSN vnsup : mmlalias*/
+{ "vnsup", 	0x02283, 	0x020D2 }, 	/* /nsupset N: not superset, var : 9573-2003-isoamsn*/
+{ "dtrilf", 	0x029E8, 	0x0 }, 	/*  : STIX*/
+{ "EmptyVerySmallSquare", 	0x025AB, 	0x0 }, 	/*  : mmlextra*/
+{ "Uarr", 	0x0219F, 	0x0 }, 	/* up two-headed arrow : 9573-2003-isoamsa*/
+{ "zscr", 	0x1D4CF, 	0x0 }, 	/* /scr z, script letter z : 9573-2003-isomscr*/
+{ "veebar", 	0x022BB, 	0x0 }, 	/* /veebar B: logical or, bar below : 9573-2003-isoamsb*/
+{ "urcorner", 	0x0231D, 	0x0 }, 	/* alias ISOAMSC urcorn : mmlalias*/
+{ "urcorn", 	0x0231D, 	0x0 }, 	/* /urcorner C: upper right corner : 9573-2003-isoamsc*/
+{ "capcap", 	0x02A4B, 	0x0 }, 	/* intersection, intersection, joined : 9573-2003-isoamsb*/
+{ "Breve", 	0x002D8, 	0x0 }, 	/* alias ISODIA breve : mmlalias*/
+{ "breve", 	0x002D8, 	0x0 }, 	/* =breve : 9573-2003-isodia*/
+{ "mgr", 	0x003BC, 	0x0 }, 	/* =small mu, Greek : 9573-2003-isogrk1*/
+{ "mu", 	0x003BC, 	0x0 }, 	/* /mu small mu, Greek : 9573-2003-isogrk3*/
+{ "gtquest", 	0x02A7C, 	0x0 }, 	/* greater than, questionmark above : 9573-2003-isoamsr*/
+{ "models", 	0x022A7, 	0x0 }, 	/* /models R: : 9573-2003-isoamsr*/
+{ "MediumSpace", 	0x0205F, 	0x0 }, 	/*  : mmlextra*/
+{ "Bcy", 	0x00411, 	0x0 }, 	/* =capital BE, Cyrillic : 9573-2003-isocyr1*/
+{ "tcaron", 	0x00165, 	0x0 }, 	/* =small t, caron : 9573-2003-isolat2*/
+{ "Oscr", 	0x1D4AA, 	0x0 }, 	/* /scr O, script letter O : 9573-2003-isomscr*/
+{ "hrglass", 	0x029D6, 	0x0 }, 	/*  : STIX*/
+{ "ffllig", 	0x0FB04, 	0x0 }, 	/* small ffl ligature : 9573-2003-isopub*/
+{ "roang", 	0x027ED, 	0x0 }, 	/* right open angular bracket : 9573-2003-isotech*/
+{ "ufr", 	0x1D532, 	0x0 }, 	/* /frak u, lower case u : 9573-2003-isomfrk*/
+{ "lfr", 	0x1D529, 	0x0 }, 	/* /frak l, lower case l : 9573-2003-isomfrk*/
+{ "smashp", 	0x02A33, 	0x0 }, 	/* smash product : 9573-2003-isoamsb*/
+{ "Mfr", 	0x1D510, 	0x0 }, 	/* /frak M, upper case m : 9573-2003-isomfrk*/
+{ "copy", 	0x000A9, 	0x0 }, 	/* =copyright sign : 9573-2003-isonum*/
+{ "COPY", 	0x000A9, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "ntlg", 	0x02278, 	0x0 }, 	/* not less, greater : 9573-2003-isoamsn*/
+{ "NotLessGreater", 	0x02278, 	0x0 }, 	/* alias ISOAMSN ntvlg : mmlalias*/
+{ "plustwo", 	0x02A27, 	0x0 }, 	/* plus, two; Nim-addition : 9573-2003-isoamsb*/
+{ "yscr", 	0x1D4CE, 	0x0 }, 	/* /scr y, script letter y : 9573-2003-isomscr*/
+{ "nfr", 	0x1D52B, 	0x0 }, 	/* /frak n, lower case n : 9573-2003-isomfrk*/
+{ "nVDash", 	0x022AF, 	0x0 }, 	/* /nVDash N: not dbl vert, dbl dash : 9573-2003-isoamsn*/
+{ "b.nu", 	0x1D6CE, 	0x0 }, 	/* small nu, Greek : 8879-isogrk4*/
+{ "rx", 	0x0211E, 	0x0 }, 	/* pharmaceutical prescription (Rx) : 9573-2003-isopub*/
+{ "lsime", 	0x02A8D, 	0x0 }, 	/* less, similar, equal : 9573-2003-isoamsr*/
+{ "softcy", 	0x0044C, 	0x0 }, 	/* =small soft sign, Cyrillic : 9573-2003-isocyr1*/
+{ "dagger", 	0x02020, 	0x0 }, 	/* /dagger B: dagger relation : 9573-2003-isoamsb*/
+{ "boxvL", 	0x02561, 	0x0 }, 	/* upper and lower left quadrants : 9573-2003-isobox*/
+{ "supsim", 	0x02AC8, 	0x0 }, 	/* superset, similar : 9573-2003-isoamsr*/
+{ "oast", 	0x0229B, 	0x0 }, 	/* /circledast B: asterisk in circle : 9573-2003-isoamsb*/
+{ "circledast", 	0x0229B, 	0x0 }, 	/* alias ISOAMSB oast : mmlalias*/
+{ "Iuml", 	0x000CF, 	0x0 }, 	/* =capital I, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "jnodot", 	0x00237, 	0x0 }, 	/* /jmath - small j, no dot  : 8879-isoamso*/
+{ "jmath", 	0x00237, 	0x0 }, 	/* /jmath - small j, no dot : 9573-2003-isoamso*/
+{ "angdnr", 	0x0299F, 	0x0 }, 	/*  : STIX*/
+{ "nwnear", 	0x02927, 	0x0 }, 	/* NW & NE arrows : 9573-2003-isoamsa*/
+{ "Jsercy", 	0x00408, 	0x0 }, 	/* =capital JE, Serbian : 9573-2003-isocyr2*/
+{ "nhArr", 	0x021CE, 	0x0 }, 	/* /nLeftrightarrow A: not l&r dbl arr : 9573-2003-isoamsa*/
+{ "nLeftrightarrow", 	0x021CE, 	0x0 }, 	/* alias ISOAMSA nhArr : mmlalias*/
+{ "bsolb", 	0x029C5, 	0x0 }, 	/* reverse solidus in square : 9573-2003-isoamsb*/
+{ "racute", 	0x00155, 	0x0 }, 	/* =small r, acute accent : 9573-2003-isolat2*/
+{ "trade", 	0x02122, 	0x0 }, 	/* =trade mark sign : 9573-2003-isonum*/
+{ "TRADE", 	0x02122, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "ngeqslant", 	0x02A7E, 	0x00338 }, 	/* alias ISOAMSN nges : mmlalias*/
+{ "nges", 	0x02A7E, 	0x00338 }, 	/* /ngeqslant N: not gt-or-eq, slanted : 9573-2003-isoamsn*/
+{ "NotGreaterSlantEqual", 	0x02A7E, 	0x00338 }, 	/* alias ISOAMSN nges : mmlalias*/
+{ "tshcy", 	0x0045B, 	0x0 }, 	/* =small tshe, Serbian : 9573-2003-isocyr2*/
+{ "hfr", 	0x1D525, 	0x0 }, 	/* /frak h, lower case h : 9573-2003-isomfrk*/
+{ "angsph", 	0x02222, 	0x0 }, 	/* /sphericalangle angle-spherical : 9573-2003-isotech*/
+{ "nhpar", 	0x02AF2, 	0x0 }, 	/* not, horizontal, parallel : 9573-2003-isotech*/
+{ "boxdL", 	0x02555, 	0x0 }, 	/* lower left quadrant : 9573-2003-isobox*/
+{ "gtrless", 	0x02277, 	0x0 }, 	/* alias ISOAMSR gl : mmlalias*/
+{ "gl", 	0x02277, 	0x0 }, 	/* /gtrless R: greater, less : 9573-2003-isoamsr*/
+{ "GreaterLess", 	0x02277, 	0x0 }, 	/* alias ISOAMSR gl : mmlalias*/
+{ "sumint", 	0x02A0B, 	0x0 }, 	/*  : STIX*/
+{ "starf", 	0x02605, 	0x0 }, 	/* /bigstar - star, filled  : 9573-2003-isopub*/
+{ "bigstar", 	0x02605, 	0x0 }, 	/* ISOPUB    starf  : mmlalias*/
+{ "gcirc", 	0x0011D, 	0x0 }, 	/* =small g, circumflex accent : 9573-2003-isolat2*/
+{ "laemptyv", 	0x029B4, 	0x0 }, 	/* circle, slash, left arrow above : 9573-2003-isoamso*/
+{ "odot", 	0x02299, 	0x0 }, 	/* /odot B: middle dot in circle : 9573-2003-isoamsb*/
+{ "CircleDot", 	0x02299, 	0x0 }, 	/* alias ISOAMSB odot : mmlalias*/
+{ "b.thetav", 	0x1D6DD, 	0x0 }, 	/* variant thete : 8879-isogrk4*/
+{ "ucirc", 	0x000FB, 	0x0 }, 	/* =small u, circumflex accent : 9573-2003-isolat1*/
+{ "dfisht", 	0x0297F, 	0x0 }, 	/* down fish tail : 9573-2003-isoamsa*/
+{ "lowast", 	0x02217, 	0x0 }, 	/* low asterisk : 9573-2003-isotech*/
+{ "cscr", 	0x1D4B8, 	0x0 }, 	/* /scr c, script letter c : 9573-2003-isomscr*/
+{ "frac16", 	0x02159, 	0x0 }, 	/* =fraction one-sixth : 9573-2003-isopub*/
+{ "Edot", 	0x00116, 	0x0 }, 	/* =capital E, dot above : 9573-2003-isolat2*/
+{ "xsqcap", 	0x02A05, 	0x0 }, 	/* 2293 : STIX*/
+{ "angmsdaf", 	0x029AD, 	0x0 }, 	/* angle-measured, arrow, left, up : 9573-2003-isoamso*/
+{ "simdot", 	0x02A6A, 	0x0 }, 	/* similar, dot : 9573-2003-isotech*/
+{ "boxv", 	0x02502, 	0x0 }, 	/* vertical line : 9573-2003-isobox*/
+{ "cirerr", 	0x029F2, 	0x0 }, 	/*  : STIX*/
+{ "frac18", 	0x0215B, 	0x0 }, 	/* =fraction one-eighth : 9573-2003-isonum*/
+{ "nrarrc", 	0x02933, 	0x00338 }, 	/* not right arrow-curved : 9573-2003-isoamsa*/
+{ "smt", 	0x02AAA, 	0x0 }, 	/* smaller than : 9573-2003-isoamsr*/
+{ "eqeq", 	0x02A75, 	0x0 }, 	/*  : STIX*/
+{ "Equal", 	0x02A75, 	0x0 }, 	/* two consecutive equal signs : mmlextra*/
+{ "frac45", 	0x02158, 	0x0 }, 	/* =fraction four-fifths : 9573-2003-isopub*/
+{ "varpropto", 	0x0221D, 	0x0 }, 	/* alias ISOAMSR vprop : mmlalias*/
+{ "prop", 	0x0221D, 	0x0 }, 	/* /propto R: is proportional to : 9573-2003-isotech*/
+{ "Proportional", 	0x0221D, 	0x0 }, 	/* alias ISOTECH prop : mmlalias*/
+{ "vprop", 	0x0221D, 	0x0 }, 	/* /varpropto R: proportional, variant : 9573-2003-isoamsr*/
+{ "propto", 	0x0221D, 	0x0 }, 	/* alias ISOTECH prop : mmlalias*/
+{ "rtimes", 	0x022CA, 	0x0 }, 	/* /rtimes B: times sign, right closed : 9573-2003-isoamsb*/
+{ "fscr", 	0x1D4BB, 	0x0 }, 	/* /scr f, script letter f : 9573-2003-isomscr*/
+{ "SquareSuperset", 	0x02290, 	0x0 }, 	/* alias ISOAMSR sqsup : mmlalias*/
+{ "sqsupset", 	0x02290, 	0x0 }, 	/* alias ISOAMSR sqsup : mmlalias*/
+{ "sqsup", 	0x02290, 	0x0 }, 	/* /sqsupset R: square superset : 9573-2003-isoamsr*/
+{ "urtri", 	0x025F9, 	0x0 }, 	/* upper right triangle : 9573-2003-isoamso*/
+{ "precnsim", 	0x022E8, 	0x0 }, 	/* alias ISOAMSN prnsim : mmlalias*/
+{ "prnsim", 	0x022E8, 	0x0 }, 	/* /precnsim N: precedes, not similar : 9573-2003-isoamsn*/
+{ "nesim", 	0x02242, 	0x00338 }, 	/* not equal or similar : mmlextra*/
+{ "NotEqualTilde", 	0x02242, 	0x00338 }, 	/* alias for  &nesim; : mmlalias*/
+{ "dharl", 	0x021C3, 	0x0 }, 	/* /downharpoonleft A: dn harpoon-left : 9573-2003-isoamsa*/
+{ "downharpoonleft", 	0x021C3, 	0x0 }, 	/* alias ISOAMSA dharl : mmlalias*/
+{ "LeftDownVector", 	0x021C3, 	0x0 }, 	/* alias ISOAMSA dharl : mmlalias*/
+{ "AElig", 	0x000C6, 	0x0 }, 	/* =capital AE diphthong (ligature) : 9573-2003-isolat1*/
+{ "mapstoleft", 	0x021A4, 	0x0 }, 	/* leftwards arrow from bar : mmlextra*/
+{ "LeftTeeArrow", 	0x021A4, 	0x0 }, 	/* alias for mapstoleft : mmlalias*/
+{ "Hcirc", 	0x00124, 	0x0 }, 	/* =capital H, circumflex accent : 9573-2003-isolat2*/
+{ "lneqq", 	0x02268, 	0x0 }, 	/* alias ISOAMSN lnE : mmlalias*/
+{ "lnE", 	0x02268, 	0x0 }, 	/* /lneqq N: less, not double equals : 9573-2003-isoamsn*/
+{ "Star", 	0x022C6, 	0x0 }, 	/* alias ISOAMSB sstarf : mmlalias*/
+{ "sstarf", 	0x022C6, 	0x0 }, 	/* /star B: small star, filled : 9573-2003-isoamsb*/
+{ "xodot", 	0x02A00, 	0x0 }, 	/* /bigodot L: circle dot operator : 9573-2003-isoamsb*/
+{ "bigodot", 	0x02A00, 	0x0 }, 	/* alias ISOAMSB xodot : mmlalias*/
+{ "clubs", 	0x02663, 	0x0 }, 	/* black club suit = shamrock : xhtml1-symbol*/
+{ "clubsuit", 	0x02663, 	0x0 }, 	/* ISOPUB    clubs  : mmlalias*/
+{ "isinsv", 	0x022F3, 	0x0 }, 	/* large set membership, vertical bar on horizontal stroke : 9573-2003-isotech*/
+{ "supdot", 	0x02ABE, 	0x0 }, 	/* superset, with dot : 9573-2003-isoamsb*/
+{ "EEgr", 	0x00397, 	0x0 }, 	/* =capital Eta, Greek : 9573-2003-isogrk1*/
+{ "Eta", 	0x00397, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "IJlig", 	0x00132, 	0x0 }, 	/* =capital IJ ligature : 9573-2003-isolat2*/
+{ "udigr", 	0x003CB, 	0x0 }, 	/* =small upsilon, dieresis, Greek : 9573-2003-isogrk2*/
+{ "ofcir", 	0x029BF, 	0x0 }, 	/* filled circle in circle : 9573-2003-isoamsb*/
+{ "cross", 	0x02717, 	0x0 }, 	/* =ballot cross : 9573-2003-isopub*/
+{ "eng", 	0x0014B, 	0x0 }, 	/* =small eng, Lapp : 9573-2003-isolat2*/
+{ "hopf", 	0x1D559, 	0x0 }, 	/*  : mmlextra*/
+{ "Topf", 	0x1D54B, 	0x0 }, 	/* /Bbb T, open face T : 9573-2003-isomopf*/
+{ "RightUpDownVector", 	0x0294F, 	0x0 }, 	/* up-right-down-right harpoon : mmlextra*/
+{ "urdrshar", 	0x0294F, 	0x0 }, 	/*  : STIX*/
+{ "Iopf", 	0x1D540, 	0x0 }, 	/* /Bbb I, open face I : 9573-2003-isomopf*/
+{ "precapprox", 	0x02AB7, 	0x0 }, 	/* alias ISOAMSR prap : mmlalias*/
+{ "prap", 	0x02AB7, 	0x0 }, 	/* /precapprox R: precedes, approximate : 9573-2003-isoamsr*/
+{ "uscr", 	0x1D4CA, 	0x0 }, 	/* /scr u, script letter u : 9573-2003-isomscr*/
+{ "scy", 	0x00441, 	0x0 }, 	/* =small es, Cyrillic : 9573-2003-isocyr1*/
+{ "Ccaron", 	0x0010C, 	0x0 }, 	/* =capital C, caron : 9573-2003-isolat2*/
+{ "Hat", 	0x0005E, 	0x0 }, 	/*  : mmlextra*/
+{ "arrsrll", 	0x02944, 	0x0 }, 	/*  : STIX*/
+{ "rdosearr", 	0x02930, 	0x0 }, 	/*  : STIX*/
+{ "tgr", 	0x003C4, 	0x0 }, 	/* =small tau, Greek : 9573-2003-isogrk1*/
+{ "tau", 	0x003C4, 	0x0 }, 	/* /tau small tau, Greek : 9573-2003-isogrk3*/
+{ "Wopf", 	0x1D54E, 	0x0 }, 	/* /Bbb W, open face W : 9573-2003-isomopf*/
+{ "b.Omega", 	0x1D6C0, 	0x0 }, 	/* capital Omega, Greek : 8879-isogrk4*/
+{ "PrecedesTilde", 	0x0227E, 	0x0 }, 	/* alias ISOAMSR prsim : mmlalias*/
+{ "prsim", 	0x0227E, 	0x0 }, 	/* /precsim R: precedes, similar : 9573-2003-isoamsr*/
+{ "precsim", 	0x0227E, 	0x0 }, 	/* alias ISOAMSR prsim : mmlalias*/
+{ "LeftRightVector", 	0x0294E, 	0x0 }, 	/* left-up-right-up harpoon : mmlextra*/
+{ "lurushar", 	0x0294E, 	0x0 }, 	/*  : STIX*/
+{ "range", 	0x029A5, 	0x0 }, 	/* reverse angle, equal : 9573-2003-isoamso*/
+{ "b.Xi", 	0x1D6B5, 	0x0 }, 	/* capital Xi, Greek : 8879-isogrk4*/
+{ "Pi", 	0x003A0, 	0x0 }, 	/* /Pi capital Pi, Greek : 9573-2003-isogrk3*/
+{ "Pgr", 	0x003A0, 	0x0 }, 	/* =capital Pi, Greek : 9573-2003-isogrk1*/
+{ "boxUl", 	0x0255C, 	0x0 }, 	/* upper left quadrant : 9573-2003-isobox*/
+{ "uacute", 	0x000FA, 	0x0 }, 	/* =small u, acute accent : 9573-2003-isolat1*/
+{ "OElig", 	0x00152, 	0x0 }, 	/* =capital OE ligature : 9573-2003-isolat2*/
+{ "prime", 	0x02032, 	0x0 }, 	/* /prime prime or minute : 9573-2003-isotech*/
+{ "vprime", 	0x02032, 	0x0 }, 	/* /varprime - prime, variant : 8879-isoamso*/
+{ "horbar", 	0x02015, 	0x0 }, 	/* =horizontal bar : 9573-2003-isonum*/
+{ "SHCHcy", 	0x00429, 	0x0 }, 	/* =capital SHCHA, Cyrillic : 9573-2003-isocyr1*/
+{ "b.omega", 	0x1D6DA, 	0x0 }, 	/* small omega, Greek : 8879-isogrk4*/
+{ "NotSubsetEqual", 	0x02288, 	0x0 }, 	/* alias ISOAMSN nsube : mmlalias*/
+{ "nsubseteq", 	0x02288, 	0x0 }, 	/* alias ISOAMSN nsube : mmlalias*/
+{ "nsube", 	0x02288, 	0x0 }, 	/* /nsubseteq N: not subset, equals : 9573-2003-isoamsn*/
+{ "subsetneq", 	0x0228A, 	0x0 }, 	/* alias ISOAMSN subne : mmlalias*/
+{ "subne", 	0x0228A, 	0x0 }, 	/* /subsetneq N: subset, not equals : 9573-2003-isoamsn*/
+{ "ii", 	0x02148, 	0x0 }, 	/* i for use as a square root of -1 : mmlextra*/
+{ "ImaginaryI", 	0x02148, 	0x0 }, 	/* i for use as a square root of -1 : mmlalias*/
+{ "natur", 	0x0266E, 	0x0 }, 	/* /natural - music natural : 9573-2003-isopub*/
+{ "natural", 	0x0266E, 	0x0 }, 	/* alias ISOPUB natur : mmlalias*/
+{ "TildeTilde", 	0x02248, 	0x0 }, 	/* alias ISOTECH ap : mmlalias*/
+{ "thickapprox", 	0x02248, 	0x0 }, 	/* ISOAMSR   thkap  : mmlalias*/
+{ "approx", 	0x02248, 	0x0 }, 	/* alias ISOTECH ap : mmlalias*/
+{ "asymp", 	0x02248, 	0x0 }, 	/* almost equal to = asymptotic to : xhtml1-symbol*/
+{ "thkap", 	0x02248, 	0x0 }, 	/* /thickapprox R: thick approximate : 9573-2003-isoamsr*/
+{ "ap", 	0x02248, 	0x0 }, 	/* /approx R: approximate : 9573-2003-isotech*/
+{ "notinva", 	0x02209, 	0x0 }, 	/* negated set membership, variant : 9573-2003-isotech*/
+{ "NotElement", 	0x02209, 	0x0 }, 	/* alias ISOTECH notin : mmlalias*/
+{ "notin", 	0x02209, 	0x0 }, 	/* /notin N: negated set membership : 9573-2003-isotech*/
+{ "gvnE", 	0x02269, 	0x0FE00 }, 	/* /gvertneqq N: gt, vert, not dbl eq : 9573-2003-isoamsn*/
+{ "gvertneqq", 	0x02269, 	0x0FE00 }, 	/* alias ISOAMSN gvnE : mmlalias*/
+{ "oslash", 	0x000F8, 	0x0 }, 	/* latin small letter o with stroke, = latin small letter o slash, : xhtml1-lat1*/
+{ "solbar", 	0x0233F, 	0x0 }, 	/* solidus, bar through : 9573-2003-isoamsn*/
+{ "zwnj", 	0x0200C, 	0x0 }, 	/*  : xhtml1-special*/
+{ "sqcaps", 	0x02293, 	0x0FE00 }, 	/* square intersection, serifs : 9573-2003-isoamsb*/
+{ "rfbowtie", 	0x029D2, 	0x0 }, 	/*  : STIX*/
+{ "itilde", 	0x00129, 	0x0 }, 	/* =small i, tilde : 9573-2003-isolat2*/
+{ "bnequiv", 	0x02261, 	0x020E5 }, 	/* reverse not equivalent : 9573-2003-isotech*/
+{ "blk12", 	0x02592, 	0x0 }, 	/* =50% shaded block : 9573-2003-isopub*/
+{ "iocy", 	0x00451, 	0x0 }, 	/* =small io, Russian : 9573-2003-isocyr1*/
+{ "chi", 	0x003C7, 	0x0 }, 	/* /chi small chi, Greek : 9573-2003-isogrk3*/
+{ "khgr", 	0x003C7, 	0x0 }, 	/* =small chi, Greek : 9573-2003-isogrk1*/
+{ "Cup", 	0x022D3, 	0x0 }, 	/* /Cup /doublecup B: dbl union : 9573-2003-isoamsb*/
+{ "it", 	0x02062, 	0x0 }, 	/* marks multiplication when it is understood without a mark : mmlextra*/
+{ "InvisibleTimes", 	0x02062, 	0x0 }, 	/* marks multiplication when it is understood without a mark : mmlalias*/
+{ "boxhU", 	0x02568, 	0x0 }, 	/* upper left and right quadrants : 9573-2003-isobox*/
+{ "ltrie", 	0x022B4, 	0x0 }, 	/* /trianglelefteq R: left triangle, eq : 9573-2003-isoamsr*/
+{ "LeftTriangleEqual", 	0x022B4, 	0x0 }, 	/* alias ISOAMSR ltrie : mmlalias*/
+{ "trianglelefteq", 	0x022B4, 	0x0 }, 	/* alias ISOAMSR ltrie : mmlalias*/
+{ "rbrksld", 	0x0298E, 	0x0 }, 	/* right bracket, solidus bottom corner : 9573-2003-isoamsc*/
+{ "IEcy", 	0x00415, 	0x0 }, 	/* =capital IE, Cyrillic : 9573-2003-isocyr1*/
+{ "nlsim", 	0x02274, 	0x0 }, 	/* not less, similar : 9573-2003-isoamsn*/
+{ "NotLessTilde", 	0x02274, 	0x0 }, 	/* alias ISOAMSN nlsim : mmlalias*/
+{ "rdiag", 	0x02571, 	0x0 }, 	/*  : STIX*/
+{ "xbsol", 	0x02571, 	0x0 }, 	/*  : STIX*/
+{ "RightVector", 	0x021C0, 	0x0 }, 	/* alias ISOAMSA rharu : mmlalias*/
+{ "rightharpoonup", 	0x021C0, 	0x0 }, 	/* alias ISOAMSA rharu : mmlalias*/
+{ "rharu", 	0x021C0, 	0x0 }, 	/* /rightharpoonup A: rt harpoon-up : 9573-2003-isoamsa*/
+{ "pluse", 	0x02A72, 	0x0 }, 	/* plus, equals : 9573-2003-isoamsb*/
+{ "rnmid", 	0x02AEE, 	0x0 }, 	/* reverse /nmid : 9573-2003-isoamsn*/
+{ "Bfr", 	0x1D505, 	0x0 }, 	/* /frak B, upper case b : 9573-2003-isomfrk*/
+{ "gtrapprox", 	0x02A86, 	0x0 }, 	/* alias ISOAMSR gap : mmlalias*/
+{ "gap", 	0x02A86, 	0x0 }, 	/* /gtrapprox R: greater, approximate : 9573-2003-isoamsr*/
+{ "LongRightArrow", 	0x027F6, 	0x0 }, 	/* alias ISOAMSA xrarr : mmlalias*/
+{ "longrightarrow", 	0x027F6, 	0x0 }, 	/* alias ISOAMSA xrarr : mmlalias*/
+{ "xrarr", 	0x027F6, 	0x0 }, 	/* /longrightarrow A: long right arrow : 9573-2003-isoamsa*/
+{ "iecy", 	0x00435, 	0x0 }, 	/* =small ie, Cyrillic : 9573-2003-isocyr1*/
+{ "Eacute", 	0x000C9, 	0x0 }, 	/* =capital E, acute accent : 9573-2003-isolat1*/
+{ "cap", 	0x02229, 	0x0 }, 	/* /cap B: intersection : 9573-2003-isotech*/
+{ "rightrightarrows", 	0x021C9, 	0x0 }, 	/* alias ISOAMSA rrarr : mmlalias*/
+{ "rrarr", 	0x021C9, 	0x0 }, 	/* /rightrightarrows A: two rt arrows : 9573-2003-isoamsa*/
+{ "rarr2", 	0x021C9, 	0x0 }, 	/* /rightrightarrows A: two rt arrows  : 8879-isoamsa*/
+{ "llhard", 	0x0296B, 	0x0 }, 	/* left harpoon-down below long dash : 9573-2003-isoamsa*/
+{ "uring", 	0x0016F, 	0x0 }, 	/* =small u, ring : 9573-2003-isolat2*/
+{ "gdot", 	0x00121, 	0x0 }, 	/* =small g, dot above : 9573-2003-isolat2*/
+{ "sup1", 	0x000B9, 	0x0 }, 	/* =superscript one : 9573-2003-isonum*/
+{ "gsime", 	0x02A8E, 	0x0 }, 	/* greater, similar, equal : 9573-2003-isoamsr*/
+{ "b.psi", 	0x1D6D9, 	0x0 }, 	/* small psi, Greek : 8879-isogrk4*/
+{ "Barv", 	0x02AE7, 	0x0 }, 	/* vert, dbl bar (over) : 9573-2003-isoamsr*/
+{ "vldash", 	0x023A3, 	0x0 }, 	/*  : STIX*/
+{ "darrln", 	0x02908, 	0x0 }, 	/* 2356 : STIX*/
+{ "zigrarr", 	0x021DD, 	0x0 }, 	/* right zig-zag arrow : 9573-2003-isoamsa*/
+{ "ofr", 	0x1D52C, 	0x0 }, 	/* /frak o, lower case o : 9573-2003-isomfrk*/
+{ "xfr", 	0x1D535, 	0x0 }, 	/* /frak x, lower case x : 9573-2003-isomfrk*/
+{ "mldr", 	0x02026, 	0x0 }, 	/* em leader : 9573-2003-isopub*/
+{ "hellip", 	0x02026, 	0x0 }, 	/* =ellipsis (horizontal) : 9573-2003-isopub*/
+{ "scnE", 	0x02AB6, 	0x0 }, 	/* /succneqq N: succeeds, not dbl eq : 9573-2003-isoamsn*/
+{ "succneqq", 	0x02AB6, 	0x0 }, 	/* alias ISOAMSN scnE : mmlalias*/
+{ "primes", 	0x02119, 	0x0 }, 	/* the prime natural numbers : mmlalias*/
+{ "Popf", 	0x02119, 	0x0 }, 	/* /Bbb P, open face P : 9573-2003-isomopf*/
+{ "vcy", 	0x00432, 	0x0 }, 	/* =small ve, Cyrillic : 9573-2003-isocyr1*/
+{ "Ffr", 	0x1D509, 	0x0 }, 	/* /frak F, upper case f : 9573-2003-isomfrk*/
+{ "lurdshar", 	0x0294A, 	0x0 }, 	/* left-up-right-down harpoon : 9573-2003-isoamsa*/
+{ "Bvert", 	0x02506, 	0x0 }, 	/*  : STIX*/
+{ "blk34", 	0x02593, 	0x0 }, 	/* =75% shaded block : 9573-2003-isopub*/
+{ "scaron", 	0x00161, 	0x0 }, 	/* =small s, caron : 9573-2003-isolat2*/
+{ "Eopf", 	0x1D53C, 	0x0 }, 	/* /Bbb E, open face E : 9573-2003-isomopf*/
+{ "varpi", 	0x003D6, 	0x0 }, 	/* alias ISOGRK3 piv : mmlalias*/
+{ "piv", 	0x003D6, 	0x0 }, 	/* /varpi : 9573-2003-isogrk3*/
+{ "ne", 	0x02260, 	0x0 }, 	/* /ne /neq R: not equal : 9573-2003-isotech*/
+{ "NotEqual", 	0x02260, 	0x0 }, 	/* alias ISOTECH ne : mmlalias*/
+{ "congdot", 	0x02A6D, 	0x0 }, 	/* congruent, dot : 9573-2003-isoamsr*/
+{ "capdot", 	0x02A40, 	0x0 }, 	/* intersection, with dot : 9573-2003-isoamsb*/
+{ "DownBreve", 	0x00311, 	0x0 }, 	/*  : mmlextra*/
+{ "lsaquo", 	0x02039, 	0x0 }, 	/*  : xhtml1-special*/
+{ "sqcap", 	0x02293, 	0x0 }, 	/* /sqcap B: square intersection : 9573-2003-isoamsb*/
+{ "SquareIntersection", 	0x02293, 	0x0 }, 	/* alias ISOAMSB sqcap : mmlalias*/
+{ "dotminus", 	0x02238, 	0x0 }, 	/* alias ISOAMSB minusd : mmlalias*/
+{ "minusd", 	0x02238, 	0x0 }, 	/* /dotminus B: minus sign, dot above : 9573-2003-isoamsb*/
+{ "MinusPlus", 	0x02213, 	0x0 }, 	/* alias ISOTECH mnplus : mmlalias*/
+{ "mp", 	0x02213, 	0x0 }, 	/* alias ISOTECH mnplus : mmlalias*/
+{ "mnplus", 	0x02213, 	0x0 }, 	/* /mp B: minus-or-plus sign : 9573-2003-isotech*/
+{ "nprec", 	0x02280, 	0x0 }, 	/* alias ISOAMSN npr : mmlalias*/
+{ "npr", 	0x02280, 	0x0 }, 	/* /nprec N: not precedes : 9573-2003-isoamsn*/
+{ "NotPrecedes", 	0x02280, 	0x0 }, 	/* alias ISOAMSN npr : mmlalias*/
+{ "dashv", 	0x022A3, 	0x0 }, 	/* /dashv R: dash, vertical : 9573-2003-isoamsr*/
+{ "LeftTee", 	0x022A3, 	0x0 }, 	/* alias ISOAMSR dashv : mmlalias*/
+{ "gesl", 	0x022DB, 	0x0FE00 }, 	/* greater, equal, slanted, less : 9573-2003-isoamsr*/
+{ "fflig", 	0x0FB00, 	0x0 }, 	/* small ff ligature : 9573-2003-isopub*/
+{ "GreaterGreater", 	0x02AA2, 	0x0 }, 	/* alias for GT : mmlextra*/
+{ "Gt", 	0x02AA2, 	0x0 }, 	/*  : STIX*/
+{ "check", 	0x02713, 	0x0 }, 	/* /checkmark =tick, check mark : 9573-2003-isopub*/
+{ "checkmark", 	0x02713, 	0x0 }, 	/* alias ISOPUB check : mmlalias*/
+{ "sscr", 	0x1D4C8, 	0x0 }, 	/* /scr s, script letter s : 9573-2003-isomscr*/
+{ "VDash", 	0x022AB, 	0x0 }, 	/* dbl vert, dbl dash : 9573-2003-isoamsr*/
+{ "eg", 	0x02A9A, 	0x0 }, 	/* equal-or-greater : 9573-2003-isoamsr*/
+{ "btimes", 	0x02A32, 	0x0 }, 	/*  : STIX*/
+{ "cudarrr", 	0x02939, 	0x0 }, 	/*  : STIX*/
+{ "larrpl", 	0x02939, 	0x0 }, 	/* left arrow, plus : 9573-2003-isoamsa*/
+{ "alpha", 	0x003B1, 	0x0 }, 	/* /alpha small alpha, Greek : 9573-2003-isogrk3*/
+{ "agr", 	0x003B1, 	0x0 }, 	/* =small alpha, Greek : 9573-2003-isogrk1*/
+{ "Ogr", 	0x0039F, 	0x0 }, 	/* =capital Omicron, Greek : 9573-2003-isogrk1*/
+{ "Omicron", 	0x0039F, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "fltns", 	0x025B1, 	0x0 }, 	/* flatness : 9573-2003-isotech*/
+{ "ccupssm", 	0x02A50, 	0x0 }, 	/* closed union, serifs, smash product : 9573-2003-isoamsb*/
+{ "iukcy", 	0x00456, 	0x0 }, 	/* =small i, Ukrainian : 9573-2003-isocyr2*/
+{ "b.zeta", 	0x1D6C7, 	0x0 }, 	/* small zeta, Greek : 8879-isogrk4*/
+{ "dollar", 	0x00024, 	0x0 }, 	/* =dollar sign : 9573-2003-isonum*/
+{ "dbkarow", 	0x0290F, 	0x0 }, 	/* alias ISOAMSA rBarr : mmlalias*/
+{ "rBarr", 	0x0290F, 	0x0 }, 	/* /dbkarow A: right doubly broken arrow : 9573-2003-isoamsa*/
+{ "ncedil", 	0x00146, 	0x0 }, 	/* =small n, cedilla : 9573-2003-isolat2*/
+{ "yen", 	0x000A5, 	0x0 }, 	/* /yen =yen sign : 9573-2003-isonum*/
+{ "subsup", 	0x02AD3, 	0x0 }, 	/* subset above superset : 9573-2003-isoamsr*/
+{ "dcaron", 	0x0010F, 	0x0 }, 	/* =small d, caron : 9573-2003-isolat2*/
+{ "LeftArrow", 	0x02190, 	0x0 }, 	/* alias ISONUM larr : mmlalias*/
+{ "leftarrow", 	0x02190, 	0x0 }, 	/* alias ISONUM larr : mmlalias*/
+{ "ShortLeftArrow", 	0x02190, 	0x0 }, 	/* alias ISOAMSA slarr : mmlalias*/
+{ "slarr", 	0x02190, 	0x0 }, 	/* short left arrow : 9573-2003-isoamsa*/
+{ "larr", 	0x02190, 	0x0 }, 	/* /leftarrow /gets A: =leftward arrow : 9573-2003-isonum*/
+{ "SupersetEqual", 	0x02287, 	0x0 }, 	/* alias ISOTECH supe : mmlalias*/
+{ "supseteq", 	0x02287, 	0x0 }, 	/* alias ISOTECH supe : mmlalias*/
+{ "supe", 	0x02287, 	0x0 }, 	/* /supseteq R: superset, equals : 9573-2003-isotech*/
+{ "auml", 	0x000E4, 	0x0 }, 	/* =small a, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "simplus", 	0x02A24, 	0x0 }, 	/* plus, similar above : 9573-2003-isoamsb*/
+{ "cfr", 	0x1D520, 	0x0 }, 	/* /frak c, lower case c : 9573-2003-isomfrk*/
+{ "triangledown", 	0x025BF, 	0x0 }, 	/* alias ISOPUB dtri : mmlalias*/
+{ "dtri", 	0x025BF, 	0x0 }, 	/* /triangledown =down triangle, open : 9573-2003-isopub*/
+{ "robrk", 	0x027E7, 	0x0 }, 	/* right open bracket : 9573-2003-isotech*/
+{ "RightDoubleBracket", 	0x027E7, 	0x0 }, 	/* right double bracket delimiter : mmlalias*/
+{ "ENG", 	0x0014A, 	0x0 }, 	/* =capital ENG, Lapp : 9573-2003-isolat2*/
+{ "lesges", 	0x02A93, 	0x0 }, 	/* less, equal, slanted, greater, equal, slanted : 9573-2003-isoamsr*/
+{ "NotNestedLessLess", 	0x02AA1, 	0x00338 }, 	/* not double less-than sign : mmlextra*/
+{ "nsLt", 	0x02AA1, 	0x00338 }, 	/*  : STIX*/
+{ "slint", 	0x02A0F, 	0x0 }, 	/*  : STIX*/
+{ "nearr", 	0x02197, 	0x0 }, 	/* /nearrow A: NE pointing arrow : 9573-2003-isoamsa*/
+{ "nearrow", 	0x02197, 	0x0 }, 	/* alias ISOAMSA nearr : mmlalias*/
+{ "UpperRightArrow", 	0x02197, 	0x0 }, 	/* alias ISOAMSA nearr : mmlalias*/
+{ "plus", 	0x0002B, 	0x0 }, 	/* =plus sign B: : 9573-2003-isonum*/
+{ "Otimes", 	0x02A37, 	0x0 }, 	/* multiply sign in double circle : 9573-2003-isoamsb*/
+{ "squb", 	0x029C8, 	0x0 }, 	/*  : STIX*/
+{ "triminus", 	0x02A3A, 	0x0 }, 	/* minus in triangle : 9573-2003-isoamsb*/
+{ "times", 	0x000D7, 	0x0 }, 	/* /times B: =multiply sign : 9573-2003-isonum*/
+{ "imacr", 	0x0012B, 	0x0 }, 	/* =small i, macron : 9573-2003-isolat2*/
+{ "emacr", 	0x00113, 	0x0 }, 	/* =small e, macron : 9573-2003-isolat2*/
+{ "Jcirc", 	0x00134, 	0x0 }, 	/* =capital J, circumflex accent : 9573-2003-isolat2*/
+{ "cacute", 	0x00107, 	0x0 }, 	/* =small c, acute accent : 9573-2003-isolat2*/
+{ "sdote", 	0x02A66, 	0x0 }, 	/* equal, dot below : 9573-2003-isoamsr*/
+{ "cent", 	0x000A2, 	0x0 }, 	/* =cent sign : 9573-2003-isonum*/
+{ "Zacute", 	0x00179, 	0x0 }, 	/* =capital Z, acute accent : 9573-2003-isolat2*/
+{ "preccurlyeq", 	0x0227C, 	0x0 }, 	/* alias ISOAMSR prcue : mmlalias*/
+{ "prcue", 	0x0227C, 	0x0 }, 	/* /preccurlyeq R: precedes, curly eq : 9573-2003-isoamsr*/
+{ "PrecedesSlantEqual", 	0x0227C, 	0x0 }, 	/* alias ISOAMSR prcue : mmlalias*/
+{ "cupre", 	0x0227C, 	0x0 }, 	/* /curlypreceq R: curly precedes, eq : 8879-isoamsr*/
+{ "uopf", 	0x1D566, 	0x0 }, 	/*  : mmlextra*/
+{ "Lmidot", 	0x0013F, 	0x0 }, 	/* =capital L, middle dot : 9573-2003-isolat2*/
+{ "udblac", 	0x00171, 	0x0 }, 	/* =small u, double acute accent : 9573-2003-isolat2*/
+{ "VeryThinSpace", 	0x0200A, 	0x0 }, 	/* space of width 1/18 em alias ISOPUB hairsp : mmlalias*/
+{ "hairsp", 	0x0200A, 	0x0 }, 	/* =hair space : 9573-2003-isopub*/
+{ "emsp", 	0x02003, 	0x0 }, 	/* =em space : 9573-2003-isopub*/
+{ "planckh", 	0x0210E, 	0x0 }, 	/*  : mmlextra*/
+{ "supsup", 	0x02AD6, 	0x0 }, 	/* superset above superset : 9573-2003-isoamsr*/
+{ "lbarr", 	0x0290C, 	0x0 }, 	/* left broken arrow : 9573-2003-isoamsa*/
+{ "DScy", 	0x00405, 	0x0 }, 	/* =capital DSE, Macedonian : 9573-2003-isocyr2*/
+{ "sbsol", 	0x0FE68, 	0x0 }, 	/*  : 8879-isoamso*/
+{ "RightTeeVector", 	0x0295B, 	0x0 }, 	/* right-up harpoon from bar : mmlextra*/
+{ "bruhar", 	0x0295B, 	0x0 }, 	/*  : STIX*/
+{ "Xi", 	0x0039E, 	0x0 }, 	/* /Xi capital Xi, Greek : 9573-2003-isogrk3*/
+{ "Xgr", 	0x0039E, 	0x0 }, 	/* =capital Xi, Greek : 9573-2003-isogrk1*/
+{ "xtimes", 	0x02A09, 	0x0 }, 	/*  : STIX*/
+{ "opar", 	0x029B7, 	0x0 }, 	/* parallel in circle : 9573-2003-isoamsb*/
+{ "DZcy", 	0x0040F, 	0x0 }, 	/* =capital dze, Serbian : 9573-2003-isocyr2*/
+{ "nvap", 	0x0224D, 	0x020D2 }, 	/* not, vert, approximate : 9573-2003-isoamsn*/
+{ "chcy", 	0x00447, 	0x0 }, 	/* =small che, Cyrillic : 9573-2003-isocyr1*/
+{ "vzigzag", 	0x0299A, 	0x0 }, 	/* vertical zig-zag line : 9573-2003-isoamso*/
+{ "Yscr", 	0x1D4B4, 	0x0 }, 	/* /scr Y, script letter Y : 9573-2003-isomscr*/
+{ "suplarr", 	0x0297B, 	0x0 }, 	/* superset, left arrow : 9573-2003-isoamsr*/
+{ "prE", 	0x02AB3, 	0x0 }, 	/*  : STIX*/
+{ "succnapprox", 	0x02ABA, 	0x0 }, 	/* alias ISOAMSN scnap : mmlalias*/
+{ "scnap", 	0x02ABA, 	0x0 }, 	/* /succnapprox N: succeeds, not approx : 9573-2003-isoamsn*/
+{ "Acirc", 	0x000C2, 	0x0 }, 	/* =capital A, circumflex accent : 9573-2003-isolat1*/
+{ "nLeftarrow", 	0x021CD, 	0x0 }, 	/* alias ISOAMSA nlArr : mmlalias*/
+{ "nlArr", 	0x021CD, 	0x0 }, 	/* /nLeftarrow A: not implied by : 9573-2003-isoamsa*/
+{ "ltcir", 	0x02A79, 	0x0 }, 	/* less than, circle inside : 9573-2003-isoamsr*/
+{ "lparlt", 	0x02993, 	0x0 }, 	/* O: left parenthesis, lt : 9573-2003-isoamsc*/
+{ "Sfr", 	0x1D516, 	0x0 }, 	/* /frak S, upper case s : 9573-2003-isomfrk*/
+{ "nvge", 	0x02265, 	0x020D2 }, 	/* not, vert, greater-than-or-equal : 9573-2003-isoamsn*/
+{ "frac13", 	0x02153, 	0x0 }, 	/* =fraction one-third : 9573-2003-isopub*/
+{ "hookrightarrow", 	0x021AA, 	0x0 }, 	/* alias ISOAMSA rarrhk : mmlalias*/
+{ "rarrhk", 	0x021AA, 	0x0 }, 	/* /hookrightarrow A: rt arrow-hooked : 9573-2003-isoamsa*/
+{ "ETH", 	0x000D0, 	0x0 }, 	/* =capital Eth, Icelandic : 9573-2003-isolat1*/
+{ "biguplus", 	0x02A04, 	0x0 }, 	/* alias ISOAMSB xuplus : mmlalias*/
+{ "xuplus", 	0x02A04, 	0x0 }, 	/*  : STIX*/
+{ "larr2", 	0x021C7, 	0x0 }, 	/* /leftleftarrows A: two left arrows  : 8879-isoamsa*/
+{ "leftleftarrows", 	0x021C7, 	0x0 }, 	/* alias ISOAMSA llarr : mmlalias*/
+{ "llarr", 	0x021C7, 	0x0 }, 	/* /leftleftarrows A: two left arrows : 9573-2003-isoamsa*/
+{ "olcross", 	0x029BB, 	0x0 }, 	/* circle, cross : 9573-2003-isotech*/
+{ "Ggr", 	0x00393, 	0x0 }, 	/* =capital Gamma, Greek : 9573-2003-isogrk1*/
+{ "Gamma", 	0x00393, 	0x0 }, 	/* /Gamma capital Gamma, Greek : 9573-2003-isogrk3*/
+{ "thetasym", 	0x003D1, 	0x0 }, 	/* greek small letter theta symbol : xhtml1-symbol*/
+{ "vartheta", 	0x003D1, 	0x0 }, 	/* alias ISOGRK3 thetav : mmlalias*/
+{ "thetav", 	0x003D1, 	0x0 }, 	/* /vartheta - curly or open theta : 9573-2003-isogrk3*/
+{ "UpArrowBar", 	0x02912, 	0x0 }, 	/* up arrow to bar : mmlextra*/
+{ "uarrb", 	0x02912, 	0x0 }, 	/*  : STIX*/
+{ "nopf", 	0x1D55F, 	0x0 }, 	/*  : mmlextra*/
+{ "RightDownVector", 	0x021C2, 	0x0 }, 	/* alias ISOAMSA dharr : mmlalias*/
+{ "dharr", 	0x021C2, 	0x0 }, 	/* /downharpoonright A: down harpoon-rt : 9573-2003-isoamsa*/
+{ "downharpoonright", 	0x021C2, 	0x0 }, 	/* alias ISOAMSA dharr : mmlalias*/
+{ "capand", 	0x02A44, 	0x0 }, 	/* intersection, and : 9573-2003-isoamsb*/
+{ "Xopf", 	0x1D54F, 	0x0 }, 	/* /Bbb X, open face X : 9573-2003-isomopf*/
+{ "Gammad", 	0x003DC, 	0x0 }, 	/* capital digamma : 9573-2003-isogrk3*/
+{ "Intersection", 	0x022C2, 	0x0 }, 	/* alias ISOAMSB xcap : mmlalias*/
+{ "xcap", 	0x022C2, 	0x0 }, 	/* /bigcap L: intersection operator : 9573-2003-isoamsb*/
+{ "bigcap", 	0x022C2, 	0x0 }, 	/* alias ISOAMSB xcap : mmlalias*/
+{ "rbbrk", 	0x02773, 	0x0 }, 	/* right broken bracket : 9573-2003-isotech*/
+{ "YIcy", 	0x00407, 	0x0 }, 	/* =capital YI, Ukrainian : 9573-2003-isocyr2*/
+{ "ratail", 	0x0291A, 	0x0 }, 	/* right arrow-tail : 9573-2003-isoamsa*/
+{ "boxminus", 	0x0229F, 	0x0 }, 	/* alias ISOAMSB minusb : mmlalias*/
+{ "minusb", 	0x0229F, 	0x0 }, 	/* /boxminus B: minus sign in box : 9573-2003-isoamsb*/
+{ "sup2", 	0x000B2, 	0x0 }, 	/* =superscript two : 9573-2003-isonum*/
+{ "dashV", 	0x02AE3, 	0x0 }, 	/*  : STIX*/
+{ "khcy", 	0x00445, 	0x0 }, 	/* =small ha, Cyrillic : 9573-2003-isocyr1*/
+{ "daleth", 	0x02138, 	0x0 }, 	/* /daleth - daleth, Hebrew : 9573-2003-isoamso*/
+{ "b.upsi", 	0x1D6D6, 	0x0 }, 	/* small upsilon, Greek : 8879-isogrk4*/
+{ "sharp", 	0x0266F, 	0x0 }, 	/* /sharp =musical sharp : 9573-2003-isopub*/
+{ "Euml", 	0x000CB, 	0x0 }, 	/* =capital E, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "vellipv", 	0x02AF6, 	0x0 }, 	/*  : STIX*/
+{ "boxhD", 	0x02565, 	0x0 }, 	/* lower left and right quadrants : 9573-2003-isobox*/
+{ "supedot", 	0x02AC4, 	0x0 }, 	/* superset, equals, dot : 9573-2003-isoamsr*/
+{ "Ropf", 	0x0211D, 	0x0 }, 	/* /Bbb R, open face R : 9573-2003-isomopf*/
+{ "reals", 	0x0211D, 	0x0 }, 	/* the field of real numbers : mmlalias*/
+{ "notinE", 	0x022F9, 	0x00338 }, 	/* negated set membership, two horizontal strokes : 9573-2003-isotech*/
+{ "varsubsetneqq", 	0x02ACB, 	0x0FE00 }, 	/* alias ISOAMSN vsubnE : mmlalias*/
+{ "vsubnE", 	0x02ACB, 	0x0FE00 }, 	/* /varsubsetneqq N: subset not dbl eq, var : 9573-2003-isoamsn*/
+{ "ctdot", 	0x022EF, 	0x0 }, 	/* /cdots, three dots, centered : 9573-2003-isotech*/
+{ "veeeq", 	0x0225A, 	0x0 }, 	/* logical or, equals : 9573-2003-isotech*/
+{ "ldrushar", 	0x0294B, 	0x0 }, 	/* left-down-right-up harpoon : 9573-2003-isoamsa*/
+{ "elsdot", 	0x02A97, 	0x0 }, 	/* equal-or-less, slanted, dot inside : 9573-2003-isoamsr*/
+{ "DD", 	0x02145, 	0x0 }, 	/* D for use in differentials, e.g., within integrals : mmlextra*/
+{ "CapitalDifferentialD", 	0x02145, 	0x0 }, 	/* D for use in differentials, e.g., within integrals : mmlalias*/
+{ "sung", 	0x0266A, 	0x0 }, 	/* =music note (sung text sign) : 9573-2003-isonum*/
+{ "tstrok", 	0x00167, 	0x0 }, 	/* =small t, stroke : 9573-2003-isolat2*/
+{ "sim", 	0x0223C, 	0x0 }, 	/* /sim R: similar : 9573-2003-isotech*/
+{ "thicksim", 	0x0223C, 	0x0 }, 	/* ISOAMSR   thksim : mmlalias*/
+{ "thksim", 	0x0223C, 	0x0 }, 	/* /thicksim R: thick similar : 9573-2003-isoamsr*/
+{ "Tilde", 	0x0223C, 	0x0 }, 	/* alias ISOTECH sim : mmlalias*/
+{ "doublebarwedge", 	0x02306, 	0x0 }, 	/* alias ISOAMSB Barwed : mmlalias*/
+{ "Barwed", 	0x02306, 	0x0 }, 	/* /doublebarwedge B: log and, dbl bar above : 9573-2003-isoamsb*/
+{ "iiint", 	0x0222D, 	0x0 }, 	/* alias ISOTECH tint : mmlalias*/
+{ "tint", 	0x0222D, 	0x0 }, 	/* /iiint triple integral operator : 9573-2003-isotech*/
+{ "nis", 	0x022FC, 	0x0 }, 	/* contains, vertical bar on horizontal stroke : 9573-2003-isotech*/
+{ "simg", 	0x02A9E, 	0x0 }, 	/* similar, greater : 9573-2003-isoamsr*/
+{ "dlcrop", 	0x0230D, 	0x0 }, 	/* downward left crop mark  : 9573-2003-isopub*/
+{ "SquareUnion", 	0x02294, 	0x0 }, 	/* alias ISOAMSB sqcup : mmlalias*/
+{ "sqcup", 	0x02294, 	0x0 }, 	/* /sqcup B: square union : 9573-2003-isoamsb*/
+{ "xgr", 	0x003BE, 	0x0 }, 	/* =small xi, Greek : 9573-2003-isogrk1*/
+{ "xi", 	0x003BE, 	0x0 }, 	/* /xi small xi, Greek : 9573-2003-isogrk3*/
+{ "nacute", 	0x00144, 	0x0 }, 	/* =small n, acute accent : 9573-2003-isolat2*/
+{ "oacute", 	0x000F3, 	0x0 }, 	/* =small o, acute accent : 9573-2003-isolat1*/
+{ "gtrdot", 	0x022D7, 	0x0 }, 	/* alias ISOAMSR gtdot : mmlalias*/
+{ "gtdot", 	0x022D7, 	0x0 }, 	/* /gtrdot R: greater than, with dot : 9573-2003-isoamsr*/
+{ "gsdot", 	0x022D7, 	0x0 }, 	/* /gtrdot R: greater than, single dot : 8879-isoamsr*/
+{ "lvertneqq", 	0x02268, 	0x0FE00 }, 	/* alias ISOAMSN lvnE : mmlalias*/
+{ "lvnE", 	0x02268, 	0x0FE00 }, 	/* /lvertneqq N: less, vert, not dbl eq : 9573-2003-isoamsn*/
+{ "xutri", 	0x025B3, 	0x0 }, 	/* /bigtriangleup B: big up tri, open : 9573-2003-isoamsb*/
+{ "bigtriangleup", 	0x025B3, 	0x0 }, 	/* alias ISOAMSB xutri : mmlalias*/
+{ "b.iota", 	0x1D6CA, 	0x0 }, 	/* small iota, Greek : 8879-isogrk4*/
+{ "bNot", 	0x02AED, 	0x0 }, 	/* reverse not with two horizontal strokes : 9573-2003-isotech*/
+{ "UnderBrace", 	0x023DF, 	0x0 }, 	/* under brace  : mmlextra*/
+{ "udrcub", 	0x023DF, 	0x0 }, 	/*  : STIX*/
+{ "Ecy", 	0x0042D, 	0x0 }, 	/* =capital E, Cyrillic : 9573-2003-isocyr1*/
+{ "OpenCurlyDoubleQuote", 	0x0201C, 	0x0 }, 	/* alias ISONUM ldquo : mmlalias*/
+{ "ldquo", 	0x0201C, 	0x0 }, 	/* =double quotation mark, left : 9573-2003-isonum*/
+{ "lescc", 	0x02AA8, 	0x0 }, 	/* less than, closed by curve, equal, slanted : 9573-2003-isoamsr*/
+{ "Vdash", 	0x022A9, 	0x0 }, 	/* /Vdash R: dbl vertical, dash : 9573-2003-isoamsr*/
+{ "capcup", 	0x02A47, 	0x0 }, 	/* intersection above union : 9573-2003-isoamsb*/
+{ "quatint", 	0x02A16, 	0x0 }, 	/* quaternion integral operator : 9573-2003-isotech*/
+{ "DiacriticalDoubleAcute", 	0x002DD, 	0x0 }, 	/* alias ISODIA dblac : mmlalias*/
+{ "dblac", 	0x002DD, 	0x0 }, 	/* =double acute accent : 9573-2003-isodia*/
+{ "diamdarr", 	0x029EA, 	0x0 }, 	/*  : STIX*/
+{ "dopf", 	0x1D555, 	0x0 }, 	/*  : mmlextra*/
+{ "thorn", 	0x000FE, 	0x0 }, 	/* =small thorn, Icelandic : 9573-2003-isolat1*/
+{ "ensp", 	0x02002, 	0x0 }, 	/* =en space (1/2-em) : 9573-2003-isopub*/
+{ "star", 	0x02606, 	0x0 }, 	/* =star, open : 9573-2003-isopub*/
+{ "becaus", 	0x02235, 	0x0 }, 	/* /because R: because : 9573-2003-isotech*/
+{ "because", 	0x02235, 	0x0 }, 	/* alias ISOTECH becaus : mmlalias*/
+{ "Because", 	0x02235, 	0x0 }, 	/* alias ISOTECH becaus : mmlalias*/
+{ "oline", 	0x0203E, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "OverBar", 	0x0203E, 	0x0 }, 	/* over bar : mmlextra*/
+{ "angmsdaa", 	0x029A8, 	0x0 }, 	/* angle-measured, arrow, up, right : 9573-2003-isoamso*/
+{ "VerticalLine", 	0x0007C, 	0x0 }, 	/* alias ISONUM verbar : mmlextra*/
+{ "vert", 	0x0007C, 	0x0 }, 	/* alias ISONUM verbar : mmlalias*/
+{ "verbar", 	0x0007C, 	0x0 }, 	/* /vert =vertical bar : 9573-2003-isonum*/
+{ "harrcir", 	0x02948, 	0x0 }, 	/* left and right arrow with a circle : 9573-2003-isoamsa*/
+{ "Cayleys", 	0x0212D, 	0x0 }, 	/* the non-associative ring of octonions or Cayley numbers : mmlalias*/
+{ "Cfr", 	0x0212D, 	0x0 }, 	/* /frak C, upper case c : 9573-2003-isomfrk*/
+{ "uhblk", 	0x02580, 	0x0 }, 	/* =upper half block : 9573-2003-isopub*/
+{ "dlharb", 	0x02959, 	0x0 }, 	/*  : STIX*/
+{ "LeftDownVectorBar", 	0x02959, 	0x0 }, 	/* down-left harpoon to bar : mmlextra*/
+{ "ogt", 	0x029C1, 	0x0 }, 	/* greater-than in circle : 9573-2003-isoamsb*/
+{ "NJcy", 	0x0040A, 	0x0 }, 	/* =capital NJE, Serbian : 9573-2003-isocyr2*/
+{ "naturals", 	0x02115, 	0x0 }, 	/* the semi-ring of natural numbers : mmlalias*/
+{ "Nopf", 	0x02115, 	0x0 }, 	/* /Bbb N, open face N : 9573-2003-isomopf*/
+{ "Mopf", 	0x1D544, 	0x0 }, 	/* /Bbb M, open face M  : 9573-2003-isomopf*/
+{ "sgr", 	0x003C3, 	0x0 }, 	/* =small sigma, Greek : 9573-2003-isogrk1*/
+{ "sigma", 	0x003C3, 	0x0 }, 	/* /sigma small sigma, Greek : 9573-2003-isogrk3*/
+{ "ldrdshar", 	0x02950, 	0x0 }, 	/*  : STIX*/
+{ "DownLeftRightVector", 	0x02950, 	0x0 }, 	/* left-down-right-down harpoon : mmlextra*/
+{ "igrave", 	0x000EC, 	0x0 }, 	/* =small i, grave accent : 9573-2003-isolat1*/
+{ "eta", 	0x003B7, 	0x0 }, 	/* /eta small eta, Greek : 9573-2003-isogrk3*/
+{ "eegr", 	0x003B7, 	0x0 }, 	/* =small eta, Greek : 9573-2003-isogrk1*/
+{ "macr", 	0x000AF, 	0x0 }, 	/* =macron : 9573-2003-isodia*/
+{ "strns", 	0x000AF, 	0x0 }, 	/* straightness : 9573-2003-isotech*/
+{ "Idigr", 	0x003AA, 	0x0 }, 	/* =capital Iota, dieresis, Greek : 9573-2003-isogrk2*/
+{ "seArr", 	0x021D8, 	0x0 }, 	/* SE pointing dbl arrow : 9573-2003-isoamsa*/
+{ "yuml", 	0x000FF, 	0x0 }, 	/* =small y, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "nedot", 	0x02250, 	0x00338 }, 	/* not equal, dot : 9573-2003-isotech*/
+{ "olarr", 	0x02940, 	0x0 }, 	/* 21BA : STIX*/
+{ "b.rho", 	0x1D6D2, 	0x0 }, 	/* small rho, Greek : 8879-isogrk4*/
+{ "nparallel", 	0x02226, 	0x0 }, 	/* alias ISOAMSN npar : mmlalias*/
+{ "npar", 	0x02226, 	0x0 }, 	/* /nparallel N: not parallel : 9573-2003-isoamsn*/
+{ "nshortparallel", 	0x02226, 	0x0 }, 	/* alias ISOAMSN nspar : mmlalias*/
+{ "nspar", 	0x02226, 	0x0 }, 	/* /nshortparallel N: not short par : 9573-2003-isoamsn*/
+{ "NotDoubleVerticalBar", 	0x02226, 	0x0 }, 	/* alias ISOAMSN npar : mmlalias*/
+{ "leg", 	0x022DA, 	0x0 }, 	/* /lesseqgtr R: less, eq, greater : 9573-2003-isoamsr*/
+{ "lesseqgtr", 	0x022DA, 	0x0 }, 	/* alias ISOAMSR leg : mmlalias*/
+{ "LessEqualGreater", 	0x022DA, 	0x0 }, 	/* alias ISOAMSR leg : mmlalias*/
+{ "larrsim", 	0x02973, 	0x0 }, 	/* left arrow, similar : 9573-2003-isoamsa*/
+{ "iinfin", 	0x029DC, 	0x0 }, 	/* infinity sign, incomplete : 9573-2003-isotech*/
+{ "UpDownArrow", 	0x02195, 	0x0 }, 	/* alias ISOAMSA varr : mmlalias*/
+{ "varr", 	0x02195, 	0x0 }, 	/* /updownarrow A: up&down arrow : 9573-2003-isoamsa*/
+{ "updownarrow", 	0x02195, 	0x0 }, 	/* alias ISOAMSA varr : mmlalias*/
+{ "oplus", 	0x02295, 	0x0 }, 	/* /oplus B: plus sign in circle : 9573-2003-isoamsb*/
+{ "CirclePlus", 	0x02295, 	0x0 }, 	/* alias ISOAMSB oplus : mmlalias*/
+{ "blacklozenge", 	0x029EB, 	0x0 }, 	/* alias ISOPUB lozf : mmlalias*/
+{ "lozf", 	0x029EB, 	0x0 }, 	/* /blacklozenge - lozenge, filled : 9573-2003-isopub*/
+{ "aacute", 	0x000E1, 	0x0 }, 	/* =small a, acute accent : 9573-2003-isolat1*/
+{ "ccaron", 	0x0010D, 	0x0 }, 	/* =small c, caron : 9573-2003-isolat2*/
+{ "LessTilde", 	0x02272, 	0x0 }, 	/* alias ISOAMSR lsim : mmlalias*/
+{ "lsim", 	0x02272, 	0x0 }, 	/* /lesssim R: less, similar : 9573-2003-isoamsr*/
+{ "lesssim", 	0x02272, 	0x0 }, 	/* alias ISOAMSR lsim : mmlalias*/
+{ "DownArrow", 	0x02193, 	0x0 }, 	/* alias ISONUM darr : mmlalias*/
+{ "ShortDownArrow", 	0x02193, 	0x0 }, 	/* short down arrow : mmlalias*/
+{ "downarrow", 	0x02193, 	0x0 }, 	/* alias ISONUM darr : mmlalias*/
+{ "darr", 	0x02193, 	0x0 }, 	/* /downarrow A: =downward arrow : 9573-2003-isonum*/
+{ "qopf", 	0x1D562, 	0x0 }, 	/*  : mmlextra*/
+{ "inodot", 	0x00131, 	0x0 }, 	/* /imath =small i, no dot : 8879-isoamso*/
+{ "imath", 	0x00131, 	0x0 }, 	/* /imath - small i, no dot : 9573-2003-isoamso*/
+{ "dfr", 	0x1D521, 	0x0 }, 	/* /frak d, lower case d : 9573-2003-isomfrk*/
+{ "phgr", 	0x003C6, 	0x0 }, 	/* =small phi, Greek : 9573-2003-isogrk1*/
+{ "phi", 	0x003C6, 	0x0 }, 	/* greek small letter phi : xhtml1-symbol*/
+{ "Vopf", 	0x1D54D, 	0x0 }, 	/* /Bbb V, open face V : 9573-2003-isomopf*/
+{ "Lopf", 	0x1D543, 	0x0 }, 	/* /Bbb L, open face L  : 9573-2003-isomopf*/
+{ "rarrc", 	0x02933, 	0x0 }, 	/* right arrow-curved : 9573-2003-isoamsa*/
+{ "beth", 	0x02136, 	0x0 }, 	/* /beth - beth, Hebrew : 9573-2003-isoamso*/
+{ "ring", 	0x002DA, 	0x0 }, 	/* =ring : 9573-2003-isodia*/
+{ "nltrivb", 	0x029CF, 	0x00338 }, 	/*  : STIX*/
+{ "NotLeftTriangleBar", 	0x029CF, 	0x00338 }, 	/* not left triangle, vertical bar : mmlextra*/
+{ "Wcirc", 	0x00174, 	0x0 }, 	/* =capital W, circumflex accent : 9573-2003-isolat2*/
+{ "ohacgr", 	0x003CE, 	0x0 }, 	/* =small omega, accent, Greek : 9573-2003-isogrk2*/
+{ "curlywedge", 	0x022CF, 	0x0 }, 	/* alias ISOAMSB cuwed : mmlalias*/
+{ "cuwed", 	0x022CF, 	0x0 }, 	/* /curlywedge B: curly logical and : 9573-2003-isoamsb*/
+{ "aopf", 	0x1D552, 	0x0 }, 	/*  : mmlextra*/
+{ "zwj", 	0x0200D, 	0x0 }, 	/*  : xhtml1-special*/
+{ "Abreve", 	0x00102, 	0x0 }, 	/* =capital A, breve : 9573-2003-isolat2*/
+{ "pertenk", 	0x02031, 	0x0 }, 	/* per 10 thousand : 9573-2003-isotech*/
+{ "sup", 	0x02283, 	0x0 }, 	/* /supset R: superset or implies : 9573-2003-isotech*/
+{ "Superset", 	0x02283, 	0x0 }, 	/* alias ISOTECH sup : mmlalias*/
+{ "supset", 	0x02283, 	0x0 }, 	/* alias ISOTECH sup : mmlalias*/
+{ "race", 	0x0223D, 	0x00331 }, 	/* reverse most positive, line below : 9573-2003-isoamsb*/
+{ "frasl", 	0x02044, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "smeparsl", 	0x029E4, 	0x0 }, 	/* similar, parallel, slanted, equal : 9573-2003-isotech*/
+{ "Ufr", 	0x1D518, 	0x0 }, 	/* /frak U, upper case u : 9573-2003-isomfrk*/
+{ "NotGreaterLess", 	0x02279, 	0x0 }, 	/* alias ISOAMSN ntvgl : mmlalias*/
+{ "ntgl", 	0x02279, 	0x0 }, 	/* not greater, less : 9573-2003-isoamsn*/
+{ "notinvc", 	0x022F6, 	0x0 }, 	/* negated set membership, variant : 9573-2003-isotech*/
+{ "boxbox", 	0x029C9, 	0x0 }, 	/* two joined squares : 9573-2003-isoamso*/
+{ "Barwedl", 	0x02A5E, 	0x0 }, 	/* 2306 : STIX*/
+{ "loang", 	0x027EC, 	0x0 }, 	/* left open angular bracket : 9573-2003-isotech*/
+{ "backsim", 	0x0223D, 	0x0 }, 	/* alias ISOAMSR bsim : mmlalias*/
+{ "bsim", 	0x0223D, 	0x0 }, 	/* /backsim R: reverse similar : 9573-2003-isoamsr*/
+{ "djcy", 	0x00452, 	0x0 }, 	/* =small dje, Serbian : 9573-2003-isocyr2*/
+{ "barvee", 	0x022BD, 	0x0 }, 	/* bar, vee : 9573-2003-isoamsb*/
+{ "stigma", 	0x003DA, 	0x0 }, 	/* 03DA : STIX*/
+{ "cirscir", 	0x029C2, 	0x0 }, 	/* circle, small circle to the right : 9573-2003-isoamso*/
+{ "measuredangle", 	0x02221, 	0x0 }, 	/* alias ISOAMSO angmsd : mmlalias*/
+{ "angmsd", 	0x02221, 	0x0 }, 	/* /measuredangle - angle-measured : 9573-2003-isoamso*/
+{ "ThickSpace", 	0x0205F, 	0x0200A }, 	/*  : mmlextra*/
+{ "latail", 	0x02919, 	0x0 }, 	/* left arrow-tail : 9573-2003-isoamsa*/
+{ "omicron", 	0x003BF, 	0x0 }, 	/* greek small letter omicron : xhtml1-symbol*/
+{ "ogr", 	0x003BF, 	0x0 }, 	/* =small omicron, Greek : 9573-2003-isogrk1*/
+{ "OpenCurlyQuote", 	0x02018, 	0x0 }, 	/* alias ISONUM lsquo : mmlalias*/
+{ "lsquo", 	0x02018, 	0x0 }, 	/* =single quotation mark, left : 9573-2003-isonum*/
+{ "Egrave", 	0x000C8, 	0x0 }, 	/* =capital E, grave accent : 9573-2003-isolat1*/
+{ "b.sigmav", 	0x1D6D3, 	0x0 }, 	/* variant sigma : 8879-isogrk4*/
+{ "there4", 	0x02234, 	0x0 }, 	/* /therefore R: therefore : 9573-2003-isotech*/
+{ "Therefore", 	0x02234, 	0x0 }, 	/* alias ISOTECH there4 : mmlalias*/
+{ "therefore", 	0x02234, 	0x0 }, 	/* alias ISOTECH there4 : mmlalias*/
+{ "lpar", 	0x00028, 	0x0 }, 	/* O: =left parenthesis : 9573-2003-isonum*/
+{ "boxDR", 	0x02554, 	0x0 }, 	/* lower right quadrant : 9573-2003-isobox*/
+{ "nsupE", 	0x02AC6, 	0x00338 }, 	/* /nsupseteqq N: not superset, dbl eq : 9573-2003-isoamsn*/
+{ "nsupseteqq", 	0x02AC6, 	0x00338 }, 	/* alias ISOAMSN nsupE : mmlalias*/
+{ "ncongdot", 	0x02A6D, 	0x00338 }, 	/* not congruent, dot : 9573-2003-isoamsn*/
+{ "Igrave", 	0x000CC, 	0x0 }, 	/* =capital I, grave accent : 9573-2003-isolat1*/
+{ "Phi", 	0x003A6, 	0x0 }, 	/* /Phi capital Phi, Greek : 9573-2003-isogrk3*/
+{ "PHgr", 	0x003A6, 	0x0 }, 	/* =capital Phi, Greek : 9573-2003-isogrk1*/
+{ "zhcy", 	0x00436, 	0x0 }, 	/* =small zhe, Cyrillic : 9573-2003-isocyr1*/
+{ "plustrif", 	0x02A28, 	0x0 }, 	/*  : STIX*/
+{ "nvsim", 	0x0223C, 	0x020D2 }, 	/* not, vert, similar : 9573-2003-isoamsn*/
+{ "topcir", 	0x02AF1, 	0x0 }, 	/* top, circle below : 9573-2003-isotech*/
+{ "Mcy", 	0x0041C, 	0x0 }, 	/* =capital EM, Cyrillic : 9573-2003-isocyr1*/
+{ "kcy", 	0x0043A, 	0x0 }, 	/* =small ka, Cyrillic : 9573-2003-isocyr1*/
+{ "Pscr", 	0x1D4AB, 	0x0 }, 	/* /scr P, script letter P : 9573-2003-isomscr*/
+{ "rsqb", 	0x0005D, 	0x0 }, 	/* /rbrack C: =right square bracket : 9573-2003-isonum*/
+{ "rbrack", 	0x0005D, 	0x0 }, 	/* alias ISONUM rsqb : mmlalias*/
+{ "gnapprox", 	0x02A8A, 	0x0 }, 	/* alias ISOAMSN gnap : mmlalias*/
+{ "gnap", 	0x02A8A, 	0x0 }, 	/* /gnapprox N: greater, not approximate : 9573-2003-isoamsn*/
+{ "nvHarr", 	0x02904, 	0x0 }, 	/* not, vert, left and right double arrow  : 9573-2003-isoamsa*/
+{ "tfr", 	0x1D531, 	0x0 }, 	/* /frak t, lower case t : 9573-2003-isomfrk*/
+{ "ruharb", 	0x02953, 	0x0 }, 	/*  : STIX*/
+{ "RightVectorBar", 	0x02953, 	0x0 }, 	/* up-right harpoon to bar : mmlextra*/
+{ "sol", 	0x0002F, 	0x0 }, 	/* =solidus : 9573-2003-isonum*/
+{ "ruluhar", 	0x02968, 	0x0 }, 	/* right harpoon-up over left harpoon-up : 9573-2003-isoamsa*/
+{ "Rcedil", 	0x00156, 	0x0 }, 	/* =capital R, cedilla : 9573-2003-isolat2*/
+{ "nscr", 	0x1D4C3, 	0x0 }, 	/* /scr n, script letter n : 9573-2003-isomscr*/
+{ "Ouml", 	0x000D6, 	0x0 }, 	/* =capital O, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "Ubreve", 	0x0016C, 	0x0 }, 	/* =capital U, breve : 9573-2003-isolat2*/
+{ "rarrfs", 	0x0291E, 	0x0 }, 	/* right arrow, filled square : 9573-2003-isoamsa*/
+{ "uplus", 	0x0228E, 	0x0 }, 	/* /uplus B: plus sign in union : 9573-2003-isoamsb*/
+{ "UnionPlus", 	0x0228E, 	0x0 }, 	/* alias ISOAMSB uplus : mmlalias*/
+{ "fnof", 	0x1D453, 	0x0 }, 	/*  : STIX*/
+{ "Acy", 	0x00410, 	0x0 }, 	/* =capital A, Cyrillic : 9573-2003-isocyr1*/
+{ "LeftDownTeeVector", 	0x02961, 	0x0 }, 	/* down-left harpoon from bar : mmlextra*/
+{ "bdlhar", 	0x02961, 	0x0 }, 	/*  : STIX*/
+{ "Ocy", 	0x0041E, 	0x0 }, 	/* =capital O, Cyrillic : 9573-2003-isocyr1*/
+{ "raemptyv", 	0x029B3, 	0x0 }, 	/* circle, slash, right arrow above : 9573-2003-isoamso*/
+{ "precnapprox", 	0x02AB9, 	0x0 }, 	/* alias ISOAMSN prnap : mmlalias*/
+{ "prnap", 	0x02AB9, 	0x0 }, 	/* /precnapprox N: precedes, not approx : 9573-2003-isoamsn*/
+{ "orv", 	0x02A5B, 	0x0 }, 	/* or with middle stem : 9573-2003-isotech*/
+{ "b.Upsi", 	0x1D6BC, 	0x0 }, 	/* capital Upsilon, Greek : 8879-isogrk4*/
+{ "Cross", 	0x02A2F, 	0x0 }, 	/* cross or vector product : mmlextra*/
+{ "htimes", 	0x02A2F, 	0x0 }, 	/*  : STIX*/
+{ "rarrlp", 	0x021AC, 	0x0 }, 	/* /looparrowright A: rt arrow-looped : 9573-2003-isoamsa*/
+{ "looparrowright", 	0x021AC, 	0x0 }, 	/* alias ISOAMSA rarrlp : mmlalias*/
+{ "gnE", 	0x02269, 	0x0 }, 	/* /gneqq N: greater, not dbl equals : 9573-2003-isoamsn*/
+{ "gneqq", 	0x02269, 	0x0 }, 	/* alias ISOAMSN gnE : mmlalias*/
+{ "Aring", 	0x000C5, 	0x0 }, 	/* =capital A, ring : 9573-2003-isolat1*/
+{ "angst", 	0x000C5, 	0x0 }, 	/* Angstrom capital A, ring : 9573-2003-isotech*/
+{ "cupint", 	0x02A1A, 	0x0 }, 	/*  : STIX*/
+{ "Or", 	0x02A54, 	0x0 }, 	/* dbl logical or : 9573-2003-isotech*/
+{ "suphsub", 	0x02AD7, 	0x0 }, 	/* superset, subset : 9573-2003-isoamsr*/
+{ "ufisht", 	0x0297E, 	0x0 }, 	/* up fish tail : 9573-2003-isoamsa*/
+{ "longmapsto", 	0x027FC, 	0x0 }, 	/* alias ISOAMSA xmap : mmlalias*/
+{ "xmap", 	0x027FC, 	0x0 }, 	/* /longmapsto A: : 9573-2003-isoamsa*/
+{ "Rarrtl", 	0x02916, 	0x0 }, 	/* right two-headed arrow with tail : 9573-2003-isoamsa*/
+{ "cedil", 	0x000B8, 	0x0 }, 	/* =cedilla : 9573-2003-isodia*/
+{ "Cedilla", 	0x000B8, 	0x0 }, 	/* alias ISODIA cedil : mmlalias*/
+{ "nsubseteqq", 	0x02AC5, 	0x00338 }, 	/* alias ISOAMSN nsubE : mmlalias*/
+{ "nsubE", 	0x02AC5, 	0x00338 }, 	/*  : STIX*/
+{ "Nacute", 	0x00143, 	0x0 }, 	/* =capital N, acute accent : 9573-2003-isolat2*/
+{ "simne", 	0x02246, 	0x0 }, 	/* similar, not equals : 9573-2003-isoamsn*/
+{ "lopf", 	0x1D55D, 	0x0 }, 	/*  : mmlextra*/
+{ "ltcc", 	0x02AA6, 	0x0 }, 	/* less than, closed by curve : 9573-2003-isoamsr*/
+{ "Game", 	0x02141, 	0x0 }, 	/*  : STIX*/
+{ "Icy", 	0x00418, 	0x0 }, 	/* =capital I, Cyrillic : 9573-2003-isocyr1*/
+{ "numsp", 	0x02007, 	0x0 }, 	/* =digit space (width of a number) : 9573-2003-isopub*/
+{ "Vbar", 	0x02AEB, 	0x0 }, 	/* dbl vert, bar (under) : 9573-2003-isoamsr*/
+{ "ssmile", 	0x02323, 	0x0 }, 	/* /smallsmile R: small up curve : 9573-2003-isoamsr*/
+{ "smile", 	0x02323, 	0x0 }, 	/* /smile R: up curve : 9573-2003-isoamsr*/
+{ "gt", 	0x0003E, 	0x0 }, 	/* =greater-than sign R: : 9573-2003-isonum*/
+{ "GT", 	0x0003E, 	0x0 }, 	/* legacy uppercase name : html5-uppercase*/
+{ "uAarr", 	0x0290A, 	0x0 }, 	/*  : STIX*/
+{ "b.piv", 	0x1D6E1, 	0x0 }, 	/* variant pi : 8879-isogrk4*/
+{ "andand", 	0x02A55, 	0x0 }, 	/* two logical and : 9573-2003-isotech*/
+{ "cirferr", 	0x029F3, 	0x0 }, 	/*  : STIX*/
+{ "dscr", 	0x1D4B9, 	0x0 }, 	/* /scr d, script letter d : 9573-2003-isomscr*/
+{ "DoubleContourIntegral", 	0x0222F, 	0x0 }, 	/* alias ISOTECH Conint : mmlalias*/
+{ "Conint", 	0x0222F, 	0x0 }, 	/* double contour integral operator : 9573-2003-isotech*/
+{ "gesdoto", 	0x02A82, 	0x0 }, 	/* greater-than-or-equal, slanted, dot above : 9573-2003-isoamsr*/
+{ "lHar", 	0x02962, 	0x0 }, 	/* left harpoon-up over left harpoon-down : 9573-2003-isoamsa*/
+{ "Utilde", 	0x00168, 	0x0 }, 	/* =capital U, tilde : 9573-2003-isolat2*/
+{ "ltrif", 	0x025C2, 	0x0 }, 	/* /blacktriangleleft R: =l tri, filled : 9573-2003-isopub*/
+{ "blacktriangleleft", 	0x025C2, 	0x0 }, 	/* alias ISOPUB ltrif : mmlalias*/
+{ "rppolint", 	0x02A12, 	0x0 }, 	/* line integration, rectangular path around pole : 9573-2003-isotech*/
+{ "Imacr", 	0x0012A, 	0x0 }, 	/* =capital I, macron : 9573-2003-isolat2*/
+{ "aacgr", 	0x003AC, 	0x0 }, 	/* =small alpha, accent, Greek : 9573-2003-isogrk2*/
+{ "succapprox", 	0x02AB8, 	0x0 }, 	/* alias ISOAMSR scap : mmlalias*/
+{ "scap", 	0x02AB8, 	0x0 }, 	/* /succapprox R: succeeds, approximate : 9573-2003-isoamsr*/
+{ "ltquest", 	0x02A7B, 	0x0 }, 	/* less than, questionmark above : 9573-2003-isoamsr*/
+{ "Yacute", 	0x000DD, 	0x0 }, 	/* =capital Y, acute accent : 9573-2003-isolat1*/
+{ "eqvparsl", 	0x029E5, 	0x0 }, 	/* equivalent, equal; congruent and parallel : 9573-2003-isotech*/
+{ "imagpart", 	0x02111, 	0x0 }, 	/* alias ISOAMSO image : mmlalias*/
+{ "Ifr", 	0x02111, 	0x0 }, 	/* /frak I, upper case i : 9573-2003-isomfrk*/
+{ "Im", 	0x02111, 	0x0 }, 	/* alias ISOAMSO image : mmlalias*/
+{ "image", 	0x02111, 	0x0 }, 	/* /Im - imaginary   : 9573-2003-isoamso*/
+{ "LessLess", 	0x02AA1, 	0x0 }, 	/* alias for Lt : mmlextra*/
+{ "Lt", 	0x02AA1, 	0x0 }, 	/*  : STIX*/
+{ "Ccirc", 	0x00108, 	0x0 }, 	/* =capital C, circumflex accent : 9573-2003-isolat2*/
+{ "iuml", 	0x000EF, 	0x0 }, 	/* =small i, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "spades", 	0x02660, 	0x0 }, 	/* black spade suit : xhtml1-symbol*/
+{ "spadesuit", 	0x02660, 	0x0 }, 	/* ISOPUB    spades  : mmlalias*/
+{ "Ograve", 	0x000D2, 	0x0 }, 	/* =capital O, grave accent : 9573-2003-isolat1*/
+{ "twoheadrightarrow", 	0x021A0, 	0x0 }, 	/* alias ISOAMSA Rarr : mmlalias*/
+{ "Rarr", 	0x021A0, 	0x0 }, 	/* /twoheadrightarrow A: : 9573-2003-isoamsa*/
+{ "squferr", 	0x029EF, 	0x0 }, 	/*  : STIX*/
+{ "Zeta", 	0x00396, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "Zgr", 	0x00396, 	0x0 }, 	/* =capital Zeta, Greek : 9573-2003-isogrk1*/
+{ "subplus", 	0x02ABF, 	0x0 }, 	/* subset, plus : 9573-2003-isoamsr*/
+{ "atilde", 	0x000E3, 	0x0 }, 	/* =small a, tilde : 9573-2003-isolat1*/
+{ "olcir", 	0x029BE, 	0x0 }, 	/* large circle in circle : 9573-2003-isoamsb*/
+{ "Ubrcy", 	0x0040E, 	0x0 }, 	/* =capital U, Byelorussian : 9573-2003-isocyr2*/
+{ "ange", 	0x029A4, 	0x0 }, 	/* angle, equal : 9573-2003-isoamso*/
+{ "eqsim", 	0x02242, 	0x0 }, 	/* alias ISOAMSR esim : mmlalias*/
+{ "esim", 	0x02242, 	0x0 }, 	/* /esim R: equals, similar : 9573-2003-isoamsr*/
+{ "EqualTilde", 	0x02242, 	0x0 }, 	/* alias ISOAMSR esim : mmlalias*/
+{ "intlarhk", 	0x02A17, 	0x0 }, 	/* integral, left arrow with hook : 9573-2003-isotech*/
+{ "ltlarr", 	0x02976, 	0x0 }, 	/* less than, left arrow : 9573-2003-isoamsr*/
+{ "fdiordi", 	0x0292C, 	0x0 }, 	/*  : STIX*/
+{ "uuml", 	0x000FC, 	0x0 }, 	/* =small u, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "yicy", 	0x00457, 	0x0 }, 	/* =small yi, Ukrainian : 9573-2003-isocyr2*/
+{ "gel", 	0x022DB, 	0x0 }, 	/* /gtreqless R: greater, equals, less : 9573-2003-isoamsr*/
+{ "GreaterEqualLess", 	0x022DB, 	0x0 }, 	/* alias ISOAMSR gel : mmlalias*/
+{ "gtreqless", 	0x022DB, 	0x0 }, 	/* alias ISOAMSR gel : mmlalias*/
+{ "RightFloor", 	0x0230B, 	0x0 }, 	/* alias ISOAMSC rfloor : mmlalias*/
+{ "rfloor", 	0x0230B, 	0x0 }, 	/* /rfloor C: right floor : 9573-2003-isoamsc*/
+{ "profsurf", 	0x02313, 	0x0 }, 	/* profile of a surface : 9573-2003-isotech*/
+{ "OHacgr", 	0x0038F, 	0x0 }, 	/* =capital Omega, accent, Greek : 9573-2003-isogrk2*/
+{ "rarrpl", 	0x02945, 	0x0 }, 	/* right arrow, plus : 9573-2003-isoamsa*/
+{ "lcaron", 	0x0013E, 	0x0 }, 	/* =small l, caron : 9573-2003-isolat2*/
+{ "cudarrl", 	0x02938, 	0x0 }, 	/* left, curved, down arrow : 9573-2003-isoamsa*/
+{ "nrtri", 	0x022EB, 	0x0 }, 	/* /ntriangleright N: not rt triangle : 9573-2003-isoamsn*/
+{ "ntriangleright", 	0x022EB, 	0x0 }, 	/* alias ISOAMSN nrtri : mmlalias*/
+{ "NotRightTriangle", 	0x022EB, 	0x0 }, 	/* alias ISOAMSN nrtri : mmlalias*/
+{ "lAtail", 	0x0291B, 	0x0 }, 	/* left double arrow-tail : 9573-2003-isoamsa*/
+{ "ugrave", 	0x000F9, 	0x0 }, 	/* =small u, grave accent : 9573-2003-isolat1*/
+{ "VerticalSeparator", 	0x02758, 	0x0 }, 	/*  : mmlextra*/
+{ "rftimes", 	0x029D5, 	0x0 }, 	/*  : STIX*/
+{ "iquest", 	0x000BF, 	0x0 }, 	/* =inverted question mark : 9573-2003-isonum*/
+{ "Exists", 	0x02203, 	0x0 }, 	/* alias ISOTECH exist : mmlalias*/
+{ "exist", 	0x02203, 	0x0 }, 	/* /exists at least one exists : 9573-2003-isotech*/
+{ "excl", 	0x00021, 	0x0 }, 	/* =exclamation mark : 9573-2003-isonum*/
+{ "vee", 	0x02228, 	0x0 }, 	/* alias ISOTECH or : mmlalias*/
+{ "or", 	0x02228, 	0x0 }, 	/* /vee /lor B: logical or : 9573-2003-isotech*/
+{ "csube", 	0x02AD1, 	0x0 }, 	/* subset, closed, equals : 9573-2003-isoamsr*/
+{ "TScy", 	0x00426, 	0x0 }, 	/* =capital TSE, Cyrillic : 9573-2003-isocyr1*/
+{ "equest", 	0x0225F, 	0x0 }, 	/* /questeq R: equal with questionmark : 9573-2003-isoamsr*/
+{ "questeq", 	0x0225F, 	0x0 }, 	/* alias ISOAMSR equest : mmlalias*/
+{ "xscr", 	0x1D4CD, 	0x0 }, 	/* /scr x, script letter x : 9573-2003-isomscr*/
+{ "boxHU", 	0x02569, 	0x0 }, 	/* upper left and right quadrants : 9573-2003-isobox*/
+{ "ulcorner", 	0x0231C, 	0x0 }, 	/* alias ISOAMSC ulcorn : mmlalias*/
+{ "ulcorn", 	0x0231C, 	0x0 }, 	/* /ulcorner O: upper left corner : 9573-2003-isoamsc*/
+{ "Colone", 	0x02A74, 	0x0 }, 	/* double colon, equals : 9573-2003-isoamsr*/
+{ "HARDcy", 	0x0042A, 	0x0 }, 	/* =capital HARD sign, Cyrillic : 9573-2003-isocyr1*/
+{ "boxul", 	0x02518, 	0x0 }, 	/* upper left quadrant : 9573-2003-isobox*/
+{ "siml", 	0x02A9D, 	0x0 }, 	/* similar, less : 9573-2003-isoamsr*/
+{ "hksearow", 	0x02925, 	0x0 }, 	/* alias ISOAMSA searhk : mmlalias*/
+{ "searhk", 	0x02925, 	0x0 }, 	/* /hksearow A: SE arrow-hooken : 9573-2003-isoamsa*/
+{ "Sub", 	0x022D0, 	0x0 }, 	/* /Subset R: double subset : 9573-2003-isoamsr*/
+{ "Subset", 	0x022D0, 	0x0 }, 	/* alias ISOAMSR Sub : mmlalias*/
+{ "top", 	0x022A4, 	0x0 }, 	/* /top top : 9573-2003-isotech*/
+{ "DownTee", 	0x022A4, 	0x0 }, 	/* alias ISOTECH top : mmlalias*/
+{ "Ugr", 	0x003A5, 	0x0 }, 	/* =capital Upsilon, Greek : 9573-2003-isogrk1*/
+{ "Upsilon", 	0x003A5, 	0x0 }, 	/* greek capital letter upsilon : xhtml1-symbol*/
+{ "npreceq", 	0x02AAF, 	0x00338 }, 	/* alias ISOAMSN npre : mmlalias*/
+{ "NotPrecedesEqual", 	0x02AAF, 	0x00338 }, 	/* alias ISOAMSN npre : mmlalias*/
+{ "npre", 	0x02AAF, 	0x00338 }, 	/* /npreceq N: not precedes, equals : 9573-2003-isoamsn*/
+{ "hkswarow", 	0x02926, 	0x0 }, 	/* alias ISOAMSA swarhk : mmlalias*/
+{ "swarhk", 	0x02926, 	0x0 }, 	/* /hkswarow A: SW arrow-hooked : 9573-2003-isoamsa*/
+{ "csup", 	0x02AD0, 	0x0 }, 	/* superset, closed : 9573-2003-isoamsr*/
+{ "vBarv", 	0x02AE9, 	0x0 }, 	/* dbl bar, vert over and under : 9573-2003-isoamsr*/
+{ "squ", 	0x025A1, 	0x0 }, 	/* =square, open : 9573-2003-isopub*/
+{ "square", 	0x025A1, 	0x0 }, 	/* /square, square : 9573-2003-isotech*/
+{ "Square", 	0x025A1, 	0x0 }, 	/* alias for square : mmlalias*/
+{ "Assign", 	0x02254, 	0x0 }, 	/* assignment operator, alias ISOAMSR colone : mmlalias*/
+{ "colone", 	0x02254, 	0x0 }, 	/* /coloneq R: colon, equals : 9573-2003-isoamsr*/
+{ "coloneq", 	0x02254, 	0x0 }, 	/* alias ISOAMSR colone : mmlalias*/
+{ "astb", 	0x029C6, 	0x0 }, 	/*  : STIX*/
+{ "wedgeq", 	0x02259, 	0x0 }, 	/* /wedgeq R: corresponds to (wedge, equals) : 9573-2003-isotech*/
+{ "DownArrowUpArrow", 	0x021F5, 	0x0 }, 	/* alias ISOAMSA duarr : mmlalias*/
+{ "duarr", 	0x021F5, 	0x0 }, 	/* down arrow, up arrow : 9573-2003-isoamsa*/
+{ "boxVl", 	0x02562, 	0x0 }, 	/* upper and lower left quadrants : 9573-2003-isobox*/
+{ "subsim", 	0x02AC7, 	0x0 }, 	/* subset, similar : 9573-2003-isoamsr*/
+{ "RightUpVectorBar", 	0x02954, 	0x0 }, 	/* up-right harpoon to bar : mmlextra*/
+{ "urharb", 	0x02954, 	0x0 }, 	/*  : STIX*/
+{ "kjcy", 	0x0045C, 	0x0 }, 	/* =small kje Macedonian : 9573-2003-isocyr2*/
+{ "ecy", 	0x0044D, 	0x0 }, 	/* =small e, Cyrillic : 9573-2003-isocyr1*/
+{ "setminus", 	0x02216, 	0x0 }, 	/* alias ISOAMSB setmn : mmlalias*/
+{ "Backslash", 	0x02216, 	0x0 }, 	/* alias ISOAMSB setmn : mmlalias*/
+{ "setmn", 	0x02216, 	0x0 }, 	/* /setminus B: reverse solidus : 9573-2003-isoamsb*/
+{ "smallsetminus", 	0x02216, 	0x0 }, 	/* alias ISOAMSB ssetmn : mmlalias*/
+{ "ssetmn", 	0x02216, 	0x0 }, 	/* /smallsetminus B: sm reverse solidus : 9573-2003-isoamsb*/
+{ "curlyeqprec", 	0x022DE, 	0x0 }, 	/* alias ISOAMSR cuepr : mmlalias*/
+{ "cuepr", 	0x022DE, 	0x0 }, 	/* /curlyeqprec R: curly eq, precedes : 9573-2003-isoamsr*/
+{ "Fcy", 	0x00424, 	0x0 }, 	/* =capital EF, Cyrillic : 9573-2003-isocyr1*/
+{ "gscr", 	0x0210A, 	0x0 }, 	/* /scr g, script letter g : 9573-2003-isomscr*/
+{ "sdot", 	0x022C5, 	0x0 }, 	/* /cdot B: small middle dot : 9573-2003-isoamsb*/
+{ "backepsilon", 	0x003F6, 	0x0 }, 	/* alias ISOAMSR bepsi : mmlalias*/
+{ "bepsi", 	0x003F6, 	0x0 }, 	/* /backepsilon R: such that : 9573-2003-isoamsr*/
+{ "vellip", 	0x022EE, 	0x0 }, 	/* vertical ellipsis : 9573-2003-isopub*/
+{ "bsemi", 	0x0204F, 	0x0 }, 	/* reverse semi-colon : 9573-2003-isoamso*/
+{ "b.kappav", 	0x1D6DE, 	0x0 }, 	/* variant kappa : 8879-isogrk4*/
+{ "brdhar", 	0x0295F, 	0x0 }, 	/*  : STIX*/
+{ "DownRightTeeVector", 	0x0295F, 	0x0 }, 	/* right-down harpoon from bar : mmlextra*/
+{ "sext", 	0x02736, 	0x0 }, 	/* sextile (6-pointed star) : 9573-2003-isopub*/
+{ "vangrt", 	0x0299C, 	0x0 }, 	/* right angle, variant : 9573-2003-isotech*/
+{ "nlarr", 	0x0219A, 	0x0 }, 	/* /nleftarrow A: not left arrow : 9573-2003-isoamsa*/
+{ "nleftarrow", 	0x0219A, 	0x0 }, 	/* alias ISOAMSA nlarr : mmlalias*/
+{ "b.eta", 	0x1D6C8, 	0x0 }, 	/* small eta, Greek : 8879-isogrk4*/
+{ "opfsum", 	0x02140, 	0x0 }, 	/*  : STIX*/
+{ "rsquor", 	0x02019, 	0x0 }, 	/* rising single quote, right (high) : 9573-2003-isopub*/
+{ "rsquo", 	0x02019, 	0x0 }, 	/* =single quotation mark, right : 9573-2003-isonum*/
+{ "CloseCurlyQuote", 	0x02019, 	0x0 }, 	/* alias ISONUM rsquo : mmlalias*/
+{ "NotPrecedesSlantEqual", 	0x022E0, 	0x0 }, 	/* alias ISOAMSN nprcue : mmlalias*/
+{ "nprcue", 	0x022E0, 	0x0 }, 	/* not curly precedes, eq : 9573-2003-isoamsn*/
+{ "triS", 	0x029CC, 	0x0 }, 	/*  : STIX*/
+{ "frac14", 	0x000BC, 	0x0 }, 	/* =fraction one-quarter : 9573-2003-isonum*/
+{ "rbrkslu", 	0x02990, 	0x0 }, 	/* right bracket, solidus top corner : 9573-2003-isoamsc*/
+{ "lltri", 	0x025FA, 	0x0 }, 	/* lower left triangle : 9573-2003-isoamso*/
+{ "mapstodown", 	0x021A7, 	0x0 }, 	/* downwards arrow from bar : mmlextra*/
+{ "DownTeeArrow", 	0x021A7, 	0x0 }, 	/* alias for mapstodown : mmlalias*/
+{ "gtlPar", 	0x02995, 	0x0 }, 	/* dbl left parenthesis, greater : 9573-2003-isoamsc*/
+{ "NotSubset", 	0x02282, 	0x020D2 }, 	/* alias ISOAMSN vnsub : mmlalias*/
+{ "vnsub", 	0x02282, 	0x020D2 }, 	/* /nsubset N: not subset, var : 9573-2003-isoamsn*/
+{ "nsubset", 	0x02282, 	0x020D2 }, 	/* alias ISOAMSN vnsub : mmlalias*/
+{ "sqsubseteq", 	0x02291, 	0x0 }, 	/* alias ISOAMSR sqsube : mmlalias*/
+{ "sqsube", 	0x02291, 	0x0 }, 	/* /sqsubseteq R: square subset, equals : 9573-2003-isoamsr*/
+{ "SquareSubsetEqual", 	0x02291, 	0x0 }, 	/* alias ISOAMSR sqsube : mmlalias*/
+{ "angmsdae", 	0x029AC, 	0x0 }, 	/* angle-measured, arrow, right, up : 9573-2003-isoamso*/
+{ "equiv", 	0x02261, 	0x0 }, 	/* /equiv R: identical with : 9573-2003-isotech*/
+{ "Congruent", 	0x02261, 	0x0 }, 	/* alias ISOTECH equiv : mmlalias*/
+{ "topf", 	0x1D565, 	0x0 }, 	/*  : mmlextra*/
+{ "Cconint", 	0x02230, 	0x0 }, 	/* triple contour integral operator : 9573-2003-isotech*/
+{ "imped", 	0x001B5, 	0x0 }, 	/* impedance : 9573-2003-isotech*/
+{ "Mapto", 	0x02907, 	0x0 }, 	/* E835 : STIX*/
+{ "Qfr", 	0x1D514, 	0x0 }, 	/* /frak Q, upper case q : 9573-2003-isomfrk*/
+{ "iprodr", 	0x02A3D, 	0x0 }, 	/*  : STIX*/
+{ "tcy", 	0x00442, 	0x0 }, 	/* =small te, Cyrillic : 9573-2003-isocyr1*/
+{ "Udblac", 	0x00170, 	0x0 }, 	/* =capital U, double acute accent : 9573-2003-isolat2*/
+{ "disin", 	0x022F2, 	0x0 }, 	/* set membership, long horizontal stroke : 9573-2003-isotech*/
+{ "lobrk", 	0x027E6, 	0x0 }, 	/* left open bracket : 9573-2003-isotech*/
+{ "LeftDoubleBracket", 	0x027E6, 	0x0 }, 	/* left double bracket delimiter : mmlalias*/
+{ "lltrif", 	0x025E3, 	0x0 }, 	/*  : STIX*/
+{ "mdash", 	0x02014, 	0x0 }, 	/* em dash : xhtml1-special*/
+{ "Ascr", 	0x1D49C, 	0x0 }, 	/* /scr A, script letter A : 9573-2003-isomscr*/
+{ "Pcy", 	0x0041F, 	0x0 }, 	/* =capital PE, Cyrillic : 9573-2003-isocyr1*/
+{ "supsub", 	0x02AD4, 	0x0 }, 	/* superset above subset : 9573-2003-isoamsr*/
+{ "boxuR", 	0x02558, 	0x0 }, 	/* upper right quadrant : 9573-2003-isobox*/
+{ "Auml", 	0x000C4, 	0x0 }, 	/* =capital A, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "filig", 	0x0FB01, 	0x0 }, 	/* small fi ligature : 9573-2003-isopub*/
+{ "NotLessSlantEqual", 	0x02A7D, 	0x00338 }, 	/* alias ISOAMSN nles : mmlalias*/
+{ "nles", 	0x02A7D, 	0x00338 }, 	/* /nleqslant N: not less-or-eq, slant : 9573-2003-isoamsn*/
+{ "nleqslant", 	0x02A7D, 	0x00338 }, 	/* alias ISOAMSN nles : mmlalias*/
+{ "shortparallel", 	0x02225, 	0x0 }, 	/* alias ISOAMSR spar : mmlalias*/
+{ "spar", 	0x02225, 	0x0 }, 	/* /shortparallel R: short parallel : 9573-2003-isoamsr*/
+{ "parallel", 	0x02225, 	0x0 }, 	/* alias ISOTECH par : mmlalias*/
+{ "DoubleVerticalBar", 	0x02225, 	0x0 }, 	/* alias ISOTECH par : mmlalias*/
+{ "par", 	0x02225, 	0x0 }, 	/* /parallel R: parallel : 9573-2003-isotech*/
+{ "b.kappa", 	0x1D6CB, 	0x0 }, 	/* small kappa, Greek : 8879-isogrk4*/
+{ "Yuml", 	0x00178, 	0x0 }, 	/* =capital Y, dieresis or umlaut mark : 9573-2003-isolat2*/
+{ "gtcc", 	0x02AA7, 	0x0 }, 	/* greater than, closed by curve : 9573-2003-isoamsr*/
+{ "urcrop", 	0x0230E, 	0x0 }, 	/* upward right crop mark  : 9573-2003-isopub*/
+{ "varsigma", 	0x003C2, 	0x0 }, 	/* alias ISOGRK3 sigmav : mmlalias*/
+{ "sfgr", 	0x003C2, 	0x0 }, 	/* =final small sigma, Greek : 9573-2003-isogrk1*/
+{ "sigmaf", 	0x003C2, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "sigmav", 	0x003C2, 	0x0 }, 	/* /varsigma : 9573-2003-isogrk3*/
+{ "Cdot", 	0x0010A, 	0x0 }, 	/* =capital C, dot above : 9573-2003-isolat2*/
+{ "b.Gammad", 	0x1D7CA, 	0x0 }, 	/* capital Digamma : 8879-isogrk4*/
+{ "Eacgr", 	0x00388, 	0x0 }, 	/* =capital Epsilon, accent, Greek : 9573-2003-isogrk2*/
+{ "acE", 	0x0223E, 	0x00333 }, 	/* most positive, two lines below : 9573-2003-isoamsb*/
+{ "scpolint", 	0x02A13, 	0x0 }, 	/* line integration, semi-circular path around pole : 9573-2003-isotech*/
+{ "aring", 	0x000E5, 	0x0 }, 	/* =small a, ring : 9573-2003-isolat1*/
+{ "odiv", 	0x02A38, 	0x0 }, 	/* divide in circle : 9573-2003-isoamsb*/
+{ "uwangle", 	0x029A7, 	0x0 }, 	/* large upward pointing angle : 9573-2003-isotech*/
+{ "delta", 	0x003B4, 	0x0 }, 	/* /delta small delta, Greek : 9573-2003-isogrk3*/
+{ "dgr", 	0x003B4, 	0x0 }, 	/* =small delta, Greek : 9573-2003-isogrk1*/
+{ "blk14", 	0x02591, 	0x0 }, 	/* =25% shaded block : 9573-2003-isopub*/
+{ "caret", 	0x02041, 	0x0 }, 	/* =caret (insertion mark) : 9573-2003-isopub*/
+{ "Gscr", 	0x1D4A2, 	0x0 }, 	/* /scr G, script letter G : 9573-2003-isomscr*/
+{ "drarr", 	0x02198, 	0x0 }, 	/* /searrow A: downward rt arrow  : 8879-isoamsa*/
+{ "LowerRightArrow", 	0x02198, 	0x0 }, 	/* alias ISOAMSA searr : mmlalias*/
+{ "searr", 	0x02198, 	0x0 }, 	/* /searrow A: SE pointing arrow : 9573-2003-isoamsa*/
+{ "searrow", 	0x02198, 	0x0 }, 	/* alias ISOAMSA searr : mmlalias*/
+{ "xsol", 	0x02572, 	0x0 }, 	/*  : STIX*/
+{ "fdiag", 	0x02572, 	0x0 }, 	/*  : STIX*/
+{ "kopf", 	0x1D55C, 	0x0 }, 	/*  : mmlextra*/
+{ "lfbowtie", 	0x029D1, 	0x0 }, 	/*  : STIX*/
+{ "pound", 	0x000A3, 	0x0 }, 	/* =pound sign : 9573-2003-isonum*/
+{ "NotLeftTriangle", 	0x022EA, 	0x0 }, 	/* alias ISOAMSN nltri : mmlalias*/
+{ "ntriangleleft", 	0x022EA, 	0x0 }, 	/* alias ISOAMSN nltri : mmlalias*/
+{ "nltri", 	0x022EA, 	0x0 }, 	/* /ntriangleleft N: not left triangle : 9573-2003-isoamsn*/
+{ "Tscr", 	0x1D4AF, 	0x0 }, 	/* /scr T, script letter T : 9573-2003-isomscr*/
+{ "triplus", 	0x02A39, 	0x0 }, 	/* plus in triangle : 9573-2003-isoamsb*/
+{ "cupcap", 	0x02A46, 	0x0 }, 	/* union above intersection : 9573-2003-isoamsb*/
+{ "neArr", 	0x021D7, 	0x0 }, 	/* NE pointing dbl arrow : 9573-2003-isoamsa*/
+{ "dHar", 	0x02965, 	0x0 }, 	/* down harpoon-left, down harpoon-right : 9573-2003-isoamsa*/
+{ "Sopf", 	0x1D54A, 	0x0 }, 	/* /Bbb S, open face S : 9573-2003-isomopf*/
+{ "rdca", 	0x02937, 	0x0 }, 	/* right down curved arrow : 9573-2003-isoamsa*/
+{ "ifr", 	0x1D526, 	0x0 }, 	/* /frak i, lower case i : 9573-2003-isomfrk*/
+{ "lrarr2", 	0x021C6, 	0x0 }, 	/* /leftrightarrows A: l arr over r arr  : 8879-isoamsa*/
+{ "LeftArrowRightArrow", 	0x021C6, 	0x0 }, 	/* alias ISOAMSA lrarr : mmlalias*/
+{ "leftrightarrows", 	0x021C6, 	0x0 }, 	/* alias ISOAMSA lrarr : mmlalias*/
+{ "lrarr", 	0x021C6, 	0x0 }, 	/* /leftrightarrows A: l arr over r arr : 9573-2003-isoamsa*/
+{ "ascr", 	0x1D4B6, 	0x0 }, 	/* /scr a, script letter a : 9573-2003-isomscr*/
+{ "easter", 	0x02A6E, 	0x0 }, 	/* equal, asterisk above : 9573-2003-isoamsr*/
+{ "larrlp", 	0x021AB, 	0x0 }, 	/* /looparrowleft A: left arrow-looped : 9573-2003-isoamsa*/
+{ "looparrowleft", 	0x021AB, 	0x0 }, 	/* alias ISOAMSA larrlp : mmlalias*/
+{ "RightTriangleEqual", 	0x022B5, 	0x0 }, 	/* alias ISOAMSR rtrie : mmlalias*/
+{ "trianglerighteq", 	0x022B5, 	0x0 }, 	/* alias ISOAMSR rtrie : mmlalias*/
+{ "rtrie", 	0x022B5, 	0x0 }, 	/* /trianglerighteq R: right tri, eq : 9573-2003-isoamsr*/
+{ "Ast", 	0x02051, 	0x0 }, 	/*  : STIX*/
+{ "Dcy", 	0x00414, 	0x0 }, 	/* =capital DE, Cyrillic : 9573-2003-isocyr1*/
+{ "Oacgr", 	0x0038C, 	0x0 }, 	/* =capital Omicron, accent, Greek : 9573-2003-isogrk2*/
+{ "eplus", 	0x02A71, 	0x0 }, 	/* equal, plus : 9573-2003-isoamsb*/
+{ "zdot", 	0x0017C, 	0x0 }, 	/* =small z, dot above : 9573-2003-isolat2*/
+{ "dsol", 	0x029F6, 	0x0 }, 	/* solidus, bar above : 9573-2003-isotech*/
+{ "omid", 	0x029B6, 	0x0 }, 	/* vertical bar in circle : 9573-2003-isoamsb*/
+{ "cularrp", 	0x0293D, 	0x0 }, 	/* curved left arrow with plus : 9573-2003-isoamsa*/
+{ "Zscr", 	0x1D4B5, 	0x0 }, 	/* /scr Z, script letter Z : 9573-2003-isomscr*/
+{ "LeftTeeVector", 	0x0295A, 	0x0 }, 	/* left-up harpoon from bar : mmlextra*/
+{ "bluhar", 	0x0295A, 	0x0 }, 	/*  : STIX*/
+{ "rharul", 	0x0296C, 	0x0 }, 	/* right harpoon-up over long dash : 9573-2003-isoamsa*/
+{ "LongLeftRightArrow", 	0x027F7, 	0x0 }, 	/* alias ISOAMSA xharr : mmlalias*/
+{ "longleftrightarrow", 	0x027F7, 	0x0 }, 	/* alias ISOAMSA xharr : mmlalias*/
+{ "xharr", 	0x027F7, 	0x0 }, 	/* /longleftrightarrow A: long l&r arr : 9573-2003-isoamsa*/
+{ "Aacute", 	0x000C1, 	0x0 }, 	/* =capital A, acute accent : 9573-2003-isolat1*/
+{ "ncy", 	0x0043D, 	0x0 }, 	/* =small en, Cyrillic : 9573-2003-isocyr1*/
+{ "OverBrace", 	0x023DE, 	0x0 }, 	/* over brace  : mmlextra*/
+{ "ovrcub", 	0x023DE, 	0x0 }, 	/*  : STIX*/
+{ "niv", 	0x0220B, 	0x0 }, 	/* contains, variant : 9573-2003-isotech*/
+{ "SuchThat", 	0x0220B, 	0x0 }, 	/* ISOTECH  ni : mmlalias*/
+{ "ni", 	0x0220B, 	0x0 }, 	/* /ni /owns R: =contains : 8879-isotech*/
+{ "ReverseElement", 	0x0220B, 	0x0 }, 	/* alias ISOTECH niv : mmlalias*/
+{ "vert3", 	0x02AF4, 	0x0 }, 	/*  : STIX*/
+{ "bcy", 	0x00431, 	0x0 }, 	/* =small be, Cyrillic : 9573-2003-isocyr1*/
+{ "Gdot", 	0x00120, 	0x0 }, 	/* =capital G, dot above : 9573-2003-isolat2*/
+{ "yfr", 	0x1D536, 	0x0 }, 	/* /frak y, lower case y : 9573-2003-isomfrk*/
+{ "lates", 	0x02AAD, 	0x0FE00 }, 	/* larger than or equal, slanted : 9573-2003-isoamsr*/
+{ "hoarr", 	0x021FF, 	0x0 }, 	/* horizontal open arrow : 9573-2003-isoamsa*/
+{ "vDdash", 	0x02AE2, 	0x0 }, 	/*  : STIX*/
+{ "male", 	0x02642, 	0x0 }, 	/* =male symbol : 9573-2003-isopub*/
+{ "lcy", 	0x0043B, 	0x0 }, 	/* =small el, Cyrillic : 9573-2003-isocyr1*/
+{ "nGt", 	0x0226B, 	0x020D2 }, 	/* not, vert, much greater than : 9573-2003-isoamsn*/
+{ "ocirc", 	0x000F4, 	0x0 }, 	/* =small o, circumflex accent : 9573-2003-isolat1*/
+{ "percnt", 	0x00025, 	0x0 }, 	/* =percent sign : 9573-2003-isonum*/
+{ "CupCap", 	0x0224D, 	0x0 }, 	/* alias asympeq : mmlalias*/
+{ "asympeq", 	0x0224D, 	0x0 }, 	/* Old ISOAMSR asymp (for HTML compatibility) : mmlextra*/
+{ "Del", 	0x02207, 	0x0 }, 	/* alias ISOTECH nabla : mmlalias*/
+{ "nabla", 	0x02207, 	0x0 }, 	/* /nabla del, Hamilton operator : 9573-2003-isotech*/
+{ "digamma", 	0x003DD, 	0x0 }, 	/* alias ISOGRK3 gammad : mmlalias*/
+{ "gammad", 	0x003DD, 	0x0 }, 	/*  : STIX*/
+{ "b.xi", 	0x1D6CF, 	0x0 }, 	/* small xi, Greek : 8879-isogrk4*/
+{ "boxtimes", 	0x022A0, 	0x0 }, 	/* alias ISOAMSB timesb : mmlalias*/
+{ "timesb", 	0x022A0, 	0x0 }, 	/* /boxtimes B: multiply sign in box : 9573-2003-isoamsb*/
+{ "rscr", 	0x1D4C7, 	0x0 }, 	/* /scr r, script letter r : 9573-2003-isomscr*/
+{ "boxur", 	0x02514, 	0x0 }, 	/* upper right quadrant : 9573-2003-isobox*/
+{ "Tcedil", 	0x00162, 	0x0 }, 	/* =capital T, cedilla : 9573-2003-isolat2*/
+{ "YUcy", 	0x0042E, 	0x0 }, 	/* =capital YU, Cyrillic : 9573-2003-isocyr1*/
+{ "ngE", 	0x02267, 	0x00338 }, 	/* /ngeqq N: not greater, dbl equals : 9573-2003-isoamsn*/
+{ "ngeqq", 	0x02267, 	0x00338 }, 	/* alias ISOAMSN ngE : mmlalias*/
+{ "NotGreaterFullEqual", 	0x02267, 	0x00338 }, 	/* alias ISOAMSN ngE : mmlalias*/
+{ "nvdash", 	0x022AC, 	0x0 }, 	/* /nvdash N: not vertical, dash : 9573-2003-isoamsn*/
+{ "isinE", 	0x022F9, 	0x0 }, 	/* set membership, two horizontal strokes : 9573-2003-isotech*/
+{ "LeftUpVector", 	0x021BF, 	0x0 }, 	/* alias ISOAMSA uharl : mmlalias*/
+{ "upharpoonleft", 	0x021BF, 	0x0 }, 	/* alias ISOAMSA uharl : mmlalias*/
+{ "uharl", 	0x021BF, 	0x0 }, 	/* /upharpoonleft A: up harpoon-left : 9573-2003-isoamsa*/
+{ "xnis", 	0x022FB, 	0x0 }, 	/* large contains, vertical bar on horizontal stroke : 9573-2003-isotech*/
+{ "glE", 	0x02A92, 	0x0 }, 	/* greater, less, equal : 9573-2003-isoamsr*/
+{ "equivDD", 	0x02A78, 	0x0 }, 	/* equivalent, four dots above : 9573-2003-isoamsr*/
+{ "fork", 	0x022D4, 	0x0 }, 	/* /pitchfork R: pitchfork : 9573-2003-isoamsr*/
+{ "pitchfork", 	0x022D4, 	0x0 }, 	/* alias ISOAMSR fork : mmlalias*/
+{ "not", 	0x000AC, 	0x0 }, 	/* /neg /lnot =not sign : 9573-2003-isonum*/
+{ "lrcorner", 	0x0231F, 	0x0 }, 	/* alias ISOAMSC drcorn : mmlalias*/
+{ "drcorn", 	0x0231F, 	0x0 }, 	/* /lrcorner C: lower right corner : 9573-2003-isoamsc*/
+{ "straightphi", 	0x003D5, 	0x0 }, 	/* alias ISOGRK3 phiv : mmlalias*/
+{ "phiv", 	0x003D5, 	0x0 }, 	/* /varphi -  straight phi : 9573-2003-isogrk3*/
+{ "varphi", 	0x003D5, 	0x0 }, 	/* alias ISOGRK3 phiv : mmlalias*/
+{ "phis", 	0x003D5, 	0x0 }, 	/* /straightphi - straight phi : 8879-isogrk3*/
+{ "dd", 	0x02146, 	0x0 }, 	/* d for use in differentials, e.g., within integrals : mmlextra*/
+{ "DifferentialD", 	0x02146, 	0x0 }, 	/* d for use in differentials, e.g., within integrals : mmlalias*/
+{ "andslope", 	0x02A58, 	0x0 }, 	/* sloping large and : 9573-2003-isotech*/
+{ "sube", 	0x02286, 	0x0 }, 	/* /subseteq R: subset, equals : 9573-2003-isotech*/
+{ "SubsetEqual", 	0x02286, 	0x0 }, 	/* alias ISOTECH sube : mmlalias*/
+{ "subseteq", 	0x02286, 	0x0 }, 	/* alias ISOTECH sube : mmlalias*/
+{ "Not", 	0x02AEC, 	0x0 }, 	/* not with two horizontal strokes : 9573-2003-isotech*/
+{ "NotCupCap", 	0x0226D, 	0x0 }, 	/*  : mmlextra*/
+{ "nvltrie", 	0x022B4, 	0x020D2 }, 	/* not, vert, left triangle, equals : 9573-2003-isoamsn*/
+{ "Iogon", 	0x0012E, 	0x0 }, 	/* =capital I, ogonek : 9573-2003-isolat2*/
+{ "scirc", 	0x0015D, 	0x0 }, 	/* =small s, circumflex accent : 9573-2003-isolat2*/
+{ "profalar", 	0x0232E, 	0x0 }, 	/* all-around profile : 9573-2003-isotech*/
+{ "ulharb", 	0x02958, 	0x0 }, 	/*  : STIX*/
+{ "LeftUpVectorBar", 	0x02958, 	0x0 }, 	/* up-left harpoon to bar : mmlextra*/
+{ "nwsesarr", 	0x02921, 	0x0 }, 	/*  : STIX*/
+{ "scE", 	0x02AB4, 	0x0 }, 	/*  : STIX*/
+{ "kcedil", 	0x00137, 	0x0 }, 	/* =small k, cedilla : 9573-2003-isolat2*/
+{ "cupcup", 	0x02A4A, 	0x0 }, 	/* union, union, joined : 9573-2003-isoamsb*/
+{ "eacute", 	0x000E9, 	0x0 }, 	/* =small e, acute accent : 9573-2003-isolat1*/
+{ "OHgr", 	0x003A9, 	0x0 }, 	/* =capital Omega, Greek : 9573-2003-isogrk1*/
+{ "Omega", 	0x003A9, 	0x0 }, 	/* /Omega capital Omega, Greek : 9573-2003-isogrk3*/
+{ "ohm", 	0x003A9, 	0x0 }, 	/* =ohm sign : 9573-2003-isonum*/
+{ "angmsdah", 	0x029AF, 	0x0 }, 	/* angle-measured, arrow, left, down : 9573-2003-isoamso*/
+{ "Pr", 	0x02ABB, 	0x0 }, 	/* dbl precedes : 9573-2003-isoamsr*/
+{ "Uarrocir", 	0x02949, 	0x0 }, 	/* up two-headed arrow above circle : 9573-2003-isoamsa*/
+{ "crarr", 	0x021B5, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "euml", 	0x000EB, 	0x0 }, 	/* =small e, dieresis or umlaut mark : 9573-2003-isolat1*/
+{ "larrbfs", 	0x0291F, 	0x0 }, 	/* left arrow-bar, filled square : 9573-2003-isoamsa*/
+{ "heartsuit", 	0x02665, 	0x0 }, 	/* ISOPUB hearts : mmlalias*/
+{ "hearts", 	0x02665, 	0x0 }, 	/* black heart suit = valentine : xhtml1-symbol*/
+{ "DownRightVectorBar", 	0x02957, 	0x0 }, 	/* right-down harpoon to bar : mmlextra*/
+{ "rdharb", 	0x02957, 	0x0 }, 	/*  : STIX*/
+{ "b.Lambda", 	0x1D6B2, 	0x0 }, 	/* capital Lambda, Greek : 8879-isogrk4*/
+{ "Dstrok", 	0x00110, 	0x0 }, 	/* =capital D, stroke : 9573-2003-isolat2*/
+{ "simrarr", 	0x02972, 	0x0 }, 	/* similar, right arrow below : 9573-2003-isoamsa*/
+{ "dtrif", 	0x025BE, 	0x0 }, 	/* /blacktriangledown =dn tri, filled : 9573-2003-isopub*/
+{ "blacktriangledown", 	0x025BE, 	0x0 }, 	/* alias ISOPUB dtrif : mmlalias*/
+{ "b.gamma", 	0x1D6C4, 	0x0 }, 	/* small gamma, Greek : 8879-isogrk4*/
+{ "curlyvee", 	0x022CE, 	0x0 }, 	/* alias ISOAMSB cuvee : mmlalias*/
+{ "cuvee", 	0x022CE, 	0x0 }, 	/* /curlyvee B: curly logical or : 9573-2003-isoamsb*/
+{ "opfgamma", 	0x0213D, 	0x0 }, 	/*  : STIX*/
+{ "gtrpar", 	0x029A0, 	0x0 }, 	/*  : STIX*/
+{ "lpargt", 	0x029A0, 	0x0 }, 	/* /leftparengtr O: left parenthesis, gt : 8879-isoamsc*/
+{ "bgr", 	0x003B2, 	0x0 }, 	/* =small beta, Greek : 9573-2003-isogrk1*/
+{ "beta", 	0x003B2, 	0x0 }, 	/* /beta small beta, Greek : 9573-2003-isogrk3*/
+{ "LeftVector", 	0x021BC, 	0x0 }, 	/* alias ISOAMSA lharu : mmlalias*/
+{ "leftharpoonup", 	0x021BC, 	0x0 }, 	/* alias ISOAMSA lharu : mmlalias*/
+{ "lharu", 	0x021BC, 	0x0 }, 	/* /leftharpoonup A: left harpoon-up : 9573-2003-isoamsa*/
+{ "frac15", 	0x02155, 	0x0 }, 	/* =fraction one-fifth : 9573-2003-isopub*/
+{ "frac23", 	0x02154, 	0x0 }, 	/* =fraction two-thirds : 9573-2003-isopub*/
+{ "nvle", 	0x02264, 	0x020D2 }, 	/* not, vert, less-than-or-equal : 9573-2003-isoamsn*/
+{ "shcy", 	0x00448, 	0x0 }, 	/* =small sha, Cyrillic : 9573-2003-isocyr1*/
+{ "circ", 	0x002C6, 	0x0 }, 	/* circumflex accent : 9573-2003-isodia*/
+{ "suphsol", 	0x027C9, 	0x0 }, 	/* superset, solidus : 9573-2003-isoamsr*/
+{ "dAarr", 	0x0290B, 	0x0 }, 	/*  : STIX*/
+{ "DDotrahd", 	0x02911, 	0x0 }, 	/* right arrow with dotted stem : 9573-2003-isoamsa*/
+{ "gnsim", 	0x022E7, 	0x0 }, 	/* /gnsim N: greater, not similar : 9573-2003-isoamsn*/
+{ "comma", 	0x0002C, 	0x0 }, 	/* P: =comma : 9573-2003-isonum*/
+{ "Int", 	0x0222C, 	0x0 }, 	/* double integral operator : 9573-2003-isotech*/
+{ "boxHD", 	0x02566, 	0x0 }, 	/* lower left and right quadrants : 9573-2003-isobox*/
+{ "pfr", 	0x1D52D, 	0x0 }, 	/* /frak p, lower case p : 9573-2003-isomfrk*/
+{ "lbrace", 	0x0007B, 	0x0 }, 	/* alias ISONUM lcub : mmlalias*/
+{ "lcub", 	0x0007B, 	0x0 }, 	/* /lbrace O: =left curly bracket : 9573-2003-isonum*/
+{ "Jukcy", 	0x00404, 	0x0 }, 	/* =capital JE, Ukrainian : 9573-2003-isocyr2*/
+{ "iiiint", 	0x02A0C, 	0x0 }, 	/* alias ISOTECH qint : mmlalias*/
+{ "qint", 	0x02A0C, 	0x0 }, 	/* /iiiint quadruple integral operator : 9573-2003-isotech*/
+{ "twixt", 	0x0226C, 	0x0 }, 	/* /between R: between : 9573-2003-isoamsr*/
+{ "between", 	0x0226C, 	0x0 }, 	/* alias ISOAMSR twixt : mmlalias*/
+{ "Ngr", 	0x0039D, 	0x0 }, 	/* =capital Nu, Greek : 9573-2003-isogrk1*/
+{ "Nu", 	0x0039D, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "nleftrightarrow", 	0x021AE, 	0x0 }, 	/* alias ISOAMSA nharr : mmlalias*/
+{ "nharr", 	0x021AE, 	0x0 }, 	/* /nleftrightarrow A: not l&r arrow : 9573-2003-isoamsa*/
+{ "dtrirf", 	0x029E9, 	0x0 }, 	/*  : STIX*/
+{ "Beta", 	0x00392, 	0x0 }, 	/*  : xhtml1-symbol*/
+{ "Bgr", 	0x00392, 	0x0 }, 	/* =capital Beta, Greek : 9573-2003-isogrk1*/
+{ "vellip4", 	0x02999, 	0x0 }, 	/*  : STIX*/
+{ "Ecaron", 	0x0011A, 	0x0 }, 	/* =capital E, caron : 9573-2003-isolat2*/
+{ "ncap", 	0x02A43, 	0x0 }, 	/* bar, intersection : 9573-2003-isoamsb*/
+{ "leftthreetimes", 	0x022CB, 	0x0 }, 	/* alias ISOAMSB lthree : mmlalias*/
+{ "lthree", 	0x022CB, 	0x0 }, 	/* /leftthreetimes B: : 9573-2003-isoamsb*/
+{ "elinters", 	0x023E7, 	0x0 }, 	/* electrical intersection : 9573-2003-isotech*/
+{ "rpargt", 	0x02994, 	0x0 }, 	/* C: right paren, gt : 9573-2003-isoamsc*/
+{ "NotTilde", 	0x02241, 	0x0 }, 	/* alias ISOAMSN nsim : mmlalias*/
+{ "nsim", 	0x02241, 	0x0 }, 	/* /nsim N: not similar : 9573-2003-isoamsn*/
+{ "NotLessLess", 	0x0226A, 	0x00338 }, 	/* alias ISOAMSN nLtv : mmlalias*/
+{ "nLtv", 	0x0226A, 	0x00338 }, 	/* not much less than, variant : 9573-2003-isoamsn*/
+{ "esdot", 	0x02250, 	0x0 }, 	/* /doteq R: equals, single dot above : 9573-2003-isoamsr*/
+{ "doteq", 	0x02250, 	0x0 }, 	/* alias ISOAMSR esdot : mmlalias*/
+{ "DotEqual", 	0x02250, 	0x0 }, 	/* alias ISOAMSR esdot : mmlalias*/
+{ "xopf", 	0x1D569, 	0x0 }, 	/*  : mmlextra*/
+{ "GreaterEqual", 	0x02265, 	0x0 }, 	/* alias ISOTECH ge : mmlalias*/
+{ "geq", 	0x02265, 	0x0 }, 	/* alias ISOTECH ge : mmlalias*/
+{ "ge", 	0x02265, 	0x0 }, 	/* /geq /ge R: greater-than-or-equal : 9573-2003-isotech*/
+{ "PlusMinus", 	0x000B1, 	0x0 }, 	/* alias ISONUM plusmn : mmlalias*/
+{ "pm", 	0x000B1, 	0x0 }, 	/* alias ISONUM plusmn : mmlalias*/
+{ "plusmn", 	0x000B1, 	0x0 }, 	/* /pm B: =plus-or-minus sign : 9573-2003-isonum*/
+{ "b.phi", 	0x1D6D7, 	0x0 }, 	/* small phi, Greek : 8879-isogrk4*/
+{ "eqcolon", 	0x02255, 	0x0 }, 	/* alias ISOAMSR ecolon : mmlalias*/
+{ "ecolon", 	0x02255, 	0x0 }, 	/* /eqcolon R: equals, colon : 9573-2003-isoamsr*/
+{ "lesdot", 	0x02A7F, 	0x0 }, 	/* less-than-or-equal, slanted, dot inside : 9573-2003-isoamsr*/
+{ "sacute", 	0x0015B, 	0x0 }, 	/* =small s, acute accent : 9573-2003-isolat2*/
+{ "xvee", 	0x022C1, 	0x0 }, 	/* /bigvee L: logical or operator : 9573-2003-isoamsb*/
+{ "bigvee", 	0x022C1, 	0x0 }, 	/* alias ISOAMSB xvee : mmlalias*/
+{ "Vee", 	0x022C1, 	0x0 }, 	/* alias ISOAMSB xvee : mmlalias*/
+{ "Sscr", 	0x1D4AE, 	0x0 }, 	/* /scr S, script letter S : 9573-2003-isomscr*/
+{ "Iukcy", 	0x00406, 	0x0 }, 	/* =capital I, Ukrainian : 9573-2003-isocyr2*/
+{ "Re", 	0x0211C, 	0x0 }, 	/* alias ISOAMSO real : mmlalias*/
+{ "Rfr", 	0x0211C, 	0x0 }, 	/* /frak R, upper case r : 9573-2003-isomfrk*/
+{ "realpart", 	0x0211C, 	0x0 }, 	/* alias ISOAMSO real : mmlalias*/
+{ "real", 	0x0211C, 	0x0 }, 	/* /Re - real : 9573-2003-isoamso*/
+{ "Vscr", 	0x1D4B1, 	0x0 }, 	/* /scr V, script letter V : 9573-2003-isomscr*/
+{ "hardcy", 	0x0044A, 	0x0 }, 	/* =small hard sign, Cyrillic : 9573-2003-isocyr1*/
+{ "ltrivb", 	0x029CF, 	0x0 }, 	/*  : STIX*/
+{ "LeftTriangleBar", 	0x029CF, 	0x0 }, 	/* left triangle, vertical bar : mmlextra*/
+{ "gimel", 	0x02137, 	0x0 }, 	/* /gimel - gimel, Hebrew : 9573-2003-isoamso*/
+{ "nsqsub", 	0x0228F, 	0x00338 }, 	/*  : STIX*/
+{ "NotSquareSubset", 	0x0228F, 	0x00338 }, 	/* square not subset : mmlextra*/
+{ "rcaron", 	0x00159, 	0x0 }, 	/* =small r, caron : 9573-2003-isolat2*/
+{ "Yfr", 	0x1D51C, 	0x0 }, 	/* /frak Y, upper case y : 9573-2003-isomfrk*/
+{ "bigoplus", 	0x02A01, 	0x0 }, 	/* alias ISOAMSB xoplus : mmlalias*/
+{ "xoplus", 	0x02A01, 	0x0 }, 	/* /bigoplus L: circle plus operator : 9573-2003-isoamsb*/
+{ "boxvl", 	0x02524, 	0x0 }, 	/* upper and lower left quadrants : 9573-2003-isobox*/
+{ "lsimg", 	0x02A8F, 	0x0 }, 	/* less, similar, greater : 9573-2003-isoamsr*/
+{ "gcedil", 	0x00123, 	0x0 }, 	/*  : ISOlat2*/
+{ "minus", 	0x02212, 	0x0 }, 	/* B: minus sign : 9573-2003-isotech*/
+{ "subedot", 	0x02AC3, 	0x0 }, 	/* subset, equals, dot : 9573-2003-isoamsr*/
+{ "lne", 	0x02A87, 	0x0 }, 	/*  : STIX*/
+{ "lneq", 	0x02A87, 	0x0 }, 	/* alias ISOAMSN lne : mmlalias*/
+{ "Vdashl", 	0x02AE6, 	0x0 }, 	/* vertical, dash (long) : 9573-2003-isoamsr*/
+{ "boxdR", 	0x02552, 	0x0 }, 	/* lower right quadrant : 9573-2003-isobox*/
+{ "odblac", 	0x00151, 	0x0 }, 	/* =small o, double acute accent : 9573-2003-isolat2*/
+{ "Ucy", 	0x00423, 	0x0 }, 	/* =capital U, Cyrillic : 9573-2003-isocyr1*/
+{ "zcaron", 	0x0017E, 	0x0 }, 	/* =small z, caron : 9573-2003-isolat2*/

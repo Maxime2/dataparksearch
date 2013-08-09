@@ -1,0 +1,31 @@
+StopwordFile stopwords/cz.sl
+StopwordFile stopwords/da.sl
+StopwordFile stopwords/de.sl
+#StopwordFile stopwords/de.top100.sl
+#StopwordFile stopwords/de.top1000.sl
+StopwordFile stopwords/en.big.sl
+StopwordFile stopwords/en.huge.sl
+StopwordFile stopwords/en.sl
+#StopwordFile stopwords/en.top100.sl
+#StopwordFile stopwords/en.top1000.sl
+StopwordFile stopwords/es.sl
+StopwordFile stopwords/fr.sl
+#StopwordFile stopwords/fr.top100.sl
+#StopwordFile stopwords/fr.top1000.sl
+StopwordFile stopwords/it.sl
+# Uncomment this if you have japanese charsets enabled
+#StopwordFile stopwords/ja.sl
+StopwordFile stopwords/lt.sl
+StopwordFile stopwords/nl.sl
+#StopwordFile stopwords/nl.top100.sl
+#StopwordFile stopwords/nl.top1000.sl
+StopwordFile stopwords/no.sl
+StopwordFile stopwords/pl.sl
+StopwordFile stopwords/pt.sl
+StopwordFile stopwords/ru.sl
+StopwordFile stopwords/sk.sl
+StopwordFile stopwords/tr.sl
+StopwordFile stopwords/uk.sl
+# Uncomment this if you have chinese charsets enabled
+#StopwordFile stopwords/zh.sl
+

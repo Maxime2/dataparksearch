@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Установка
+
+        </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Авторы"
+HREF="dpsearch-authors.ru.html"><LINK
+REL="NEXT"
+TITLE="Поддерживаемые операционные системы"
+HREF="dpsearch-opsys.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-authors.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-opsys.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="INSTALL"
+></A
+>&#1043;&#1083;&#1072;&#1074;&#1072; 2. Установка
+<A
+NAME="AEN181"
+></A
+>
+        </H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>&#1057;&#1086;&#1076;&#1077;&#1088;&#1078;&#1072;&#1085;&#1080;&#1077;</B
+></DT
+><DT
+>2.1. <A
+HREF="dpsearch-install.ru.html#SQLREQ"
+>Требования к SQL базе даных</A
+></DT
+><DT
+>2.2. <A
+HREF="dpsearch-opsys.ru.html"
+>Поддерживаемые операционные системы</A
+></DT
+><DT
+>2.3. <A
+HREF="dpsearch-toolsreq.ru.html"
+>Инструментарий, необходимый для установки</A
+></DT
+><DT
+>2.4. <A
+HREF="dpsearch-installing.ru.html"
+>Инсталяция <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+<A
+NAME="AEN312"
+></A
+></A
+></DT
+><DT
+>2.5. <A
+HREF="dpsearch-installproblem.ru.html"
+>Возможные проблемы установки
+<A
+NAME="AEN497"
+></A
+></A
+></DT
+><DT
+>2.6. <A
+HREF="dpsearch-binarydistrib.ru.html"
+>Создание дистрибутивов исполняемых модулей</A
+></DT
+><DT
+>2.7. <A
+HREF="dpsearch-quick-usage.ru.html"
+>Простая рутина использования</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SQLREQ"
+>2.1. Требования к SQL базе даных</A
+></H1
+><P
+>Если вы хотите скомпилировать <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+с одной из поддерживаемых SQL баз данных, вы должны установить эту SQL базу данных до начала установки
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</P
+><P
+>Начиная с версии 3.2 возможно использовать несколько различных SQL баз данных одновременно.</P
+><P
+>Вы также должны иметь права на создание новой базы данных и/или записи в уже существующую базу данных.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>О <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+></I
+></SPAN
+>: Если вы хотите собрать
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с поддержкой <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+>,
+вам потребуется версия 4.1 или старше.
+Библиотека <TT
+CLASS="LITERAL"
+>libz</TT
+> должна быть также установлена для успешной компиляции <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+с поддержкой <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+>. Пользователи Linux могут установить ее из zlib-devel RPM.
+		</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>О <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+></I
+></SPAN
+>: Если вы хотите собрать
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с поддержкой <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+>,
+вам потребуется версия 8.2 или старше. Для новой установки рекомендуется поставить последнюю версию <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+>.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Об <SPAN
+CLASS="APPLICATION"
+>iODBC</SPAN
+></I
+></SPAN
+>: работает с iodbc-2.50.22a.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Об <SPAN
+CLASS="APPLICATION"
+>unixODBC</SPAN
+></I
+></SPAN
+>: работает с unixODBC-1.7.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Об <SPAN
+CLASS="APPLICATION"
+>InterBase</SPAN
+></I
+></SPAN
+>:</P
+><P
+></P
+><UL
+><LI
+><P
+>Работает с Interbase 4.0.</P
+></LI
+><LI
+><P
+>Работает с InterBase CS 6.0.</P
+></LI
+><LI
+><P
+>Работает с FirebirdCS-0.9-4.</P
+></LI
+></UL
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>О <SPAN
+CLASS="APPLICATION"
+>FreeTDS</SPAN
+></I
+></SPAN
+>: Работает с версий 0.52 и с MS SQL 7.0.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Об <SPAN
+CLASS="APPLICATION"
+>Oracle8</SPAN
+></I
+></SPAN
+>: Работает с версией 8.0.5.X.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Об <SPAN
+CLASS="APPLICATION"
+>Oracle8i</SPAN
+></I
+></SPAN
+>: Работает с версией 8.1.6 R2 EE.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-authors.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-opsys.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Авторы</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Поддерживаемые операционные системы</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

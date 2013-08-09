@@ -1,0 +1,146 @@
+
+CREATE TABLE ndict2 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n2_url   ON ndict2 (url_id);
+CREATE  INDEX n2_word  ON ndict2 (word_id);
+
+
+CREATE TABLE ndict3 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n3_url   ON ndict3 (url_id);
+CREATE  INDEX n3_word  ON ndict3 (word_id);
+
+CREATE TABLE ndict4 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n4_url   ON ndict4 (url_id);
+CREATE  INDEX n4_word  ON ndict4 (word_id);
+
+
+CREATE TABLE ndict5 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n5_url   ON ndict5 (url_id);
+CREATE  INDEX n5_word  ON ndict5 (word_id);
+
+
+
+
+CREATE TABLE ndict6 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n6_url   ON ndict6 (url_id);
+CREATE  INDEX n6_word  ON ndict6 (word_id);
+
+
+CREATE TABLE ndict7 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n7_url   ON ndict7 (url_id);
+CREATE  INDEX n7_word  ON ndict7 (word_id);
+
+
+
+CREATE TABLE ndict8 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n8_url   ON ndict8 (url_id);
+CREATE  INDEX n8_word  ON ndict8 (word_id);
+
+
+
+
+CREATE TABLE ndict9 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n9_url   ON ndict9 (url_id);
+CREATE  INDEX n9_word  ON ndict9 (word_id);
+
+
+
+CREATE TABLE ndict10 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n10_url   ON ndict10 (url_id);
+CREATE  INDEX n10_word  ON ndict10 (word_id);
+
+
+
+
+
+CREATE TABLE ndict11 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n11_url   ON ndict11 (url_id);
+CREATE  INDEX n11_word  ON ndict11 (word_id);
+
+
+
+
+CREATE TABLE ndict12 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n12_url   ON ndict12 (url_id);
+CREATE  INDEX n12_word  ON ndict12 (word_id);
+
+
+
+
+
+CREATE TABLE ndict16 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n16_url   ON ndict16 (url_id);
+CREATE  INDEX n16_word  ON ndict16 (word_id);
+
+
+
+
+CREATE TABLE ndict32 (
+  url_id  int4 DEFAULT 0 NOT NULL,
+  word_id int4 DEFAULT 0 NOT NULL,
+  intag   int4 DEFAULT 0 NOT NULL
+);
+
+CREATE  INDEX n32_url   ON ndict32 (url_id);
+CREATE  INDEX n32_word  ON ndict32 (word_id);
+
+

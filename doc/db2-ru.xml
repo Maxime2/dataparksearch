@@ -1,0 +1,18 @@
+<sect1 id="db2">
+	<title>Замечания по IBM DB2
+<indexterm><primary>DB2</primary><secondary>замечания</secondary></indexterm>
+</title>
+	<para>Для успешного использования <application>DataparkSearch</application> с
+IBM DB2 database, пожалуйста, добавьте следующие строки в файл конфигурации Apache
+<filename>httpd.conf</filename>:
+	<programlisting>
+SetEnv DB2DIR /usr/IBMdb2/V7.1
+SetEnv DB2INSTANCE db2
+PassEnv DB2DIR DB2INSTANCE
+</programlisting>
+	</para>
+
+	<para>Где <command>DB2DIR</command> - пусть до места установки DB2. 
+<command>DB2INSTANCE</command> - DB2 instance, которую должен использовать <filename>search.cgi</filename>.</para>
+
+</sect1>

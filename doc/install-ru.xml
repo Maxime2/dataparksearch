@@ -1,0 +1,457 @@
+<chapter id="install">
+	<title>Установка
+<indexterm><primary>Установка</primary><secondary>требования</secondary></indexterm>
+        </title>
+	<sect1 id="sqlreq">
+                <title>Требования к SQL базе даных</title>
+		<para>Если вы хотите скомпилировать <application>DataparkSearch</application>
+с одной из поддерживаемых SQL баз данных, вы должны установить эту SQL базу данных до начала установки
+<application>DataparkSearch</application>.</para>
+
+		<para>Начиная с версии 3.2 возможно использовать несколько различных SQL баз данных одновременно.</para>
+		<para>Вы также должны иметь права на создание новой базы данных и/или записи в уже существующую базу данных.</para>
+		<para>
+			<emphasis>О <application>MySQL</application></emphasis>: Если вы хотите собрать
+<application>DataparkSearch</application> с поддержкой <application>MySQL</application>,
+вам потребуется версия 4.1 или старше.
+Библиотека <literal>libz</literal> должна быть также установлена для успешной компиляции <application>DataparkSearch</application>
+с поддержкой <application>MySQL</application>. Пользователи Linux могут установить ее из zlib-devel RPM.
+		</para>
+
+		<para>
+			<emphasis>О <application>PostgreSQL</application></emphasis>: Если вы хотите собрать
+<application>DataparkSearch</application> с поддержкой <application>PostgreSQL</application>,
+вам потребуется версия 8.2 или старше. Для новой установки рекомендуется поставить последнюю версию <application>PostgreSQL</application>.
+</para>
+
+		<para>
+			<emphasis>Об <application>iODBC</application></emphasis>: работает с iodbc-2.50.22a.</para>
+		<para>
+			<emphasis>Об <application>unixODBC</application></emphasis>: работает с unixODBC-1.7.</para>
+		<!--para>
+			<emphasis>О <application>Solid</application></emphasis>: работает с версией 03.00.0043.</para-->
+		<para>
+			<emphasis>Об <application>InterBase</application></emphasis>:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Работает с Interbase 4.0.</para>
+			</listitem>
+			<listitem>
+				<para>Работает с InterBase CS 6.0.</para>
+			</listitem>
+			<listitem>
+				<para>Работает с FirebirdCS-0.9-4.</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			<emphasis>О <application>FreeTDS</application></emphasis>: Работает с версий 0.52 и с MS SQL 7.0.</para>
+		<para>
+			<emphasis>Об <application>Oracle8</application></emphasis>: Работает с версией 8.0.5.X.</para>
+		<para>
+			<emphasis>Об <application>Oracle8i</application></emphasis>: Работает с версией 8.1.6 R2 EE.</para>
+		<!--para>
+			<emphasis>Об <application>IBM DB2</application></emphasis>: Работает с V7.1 EE.</para-->
+	</sect1>
+
+	<sect1 id="opsys">
+		<title>Поддерживаемые операционные системы</title>
+		<para>Мы используем <application>GNU Autoconf</application>, что позволяет скомпилировать
+<application>DataparkSearch</application> почти на всех современных UNIX системах, имеющих копилятор C.
+Разработка ведётся на <application>FreeBSD 7.x</application> с использованием <application>PostgreSQL 8.3</application>. </para>
+
+<para>На даенный момент известно об успешных установках <application>DataparkSearch</application> на 
+следующих опреационных системах:</para>
+		<itemizedlist>
+			<listitem>
+				<para>CentOS 3.1, CentOS 3.3</para>
+			</listitem>
+			<listitem>
+				<para>Debian GNU/Linux (Lenny, Etch) (i386)</para>
+			</listitem>
+			<listitem>
+				<para>FreeBSD 2.2.x, 3.x, 4.x, 5.x, 6.x, 7.x</para>
+			</listitem>
+			<listitem>
+				<para>Linux Fedora Core-1, Kernel 2.4.22-1.2174</para>
+			</listitem>
+			<listitem>
+				<para>Linux Mandrake 10.2</para>
+			</listitem>
+			<listitem>
+				<para>Linux Red Hat 8.0, 9.0</para>
+			</listitem>
+			<listitem>
+				<para>Solaris 9</para>
+			</listitem>
+			<listitem>
+				<para>Solaris 10 x86, gcc</para>
+			</listitem>
+			<listitem>
+				<para>Ubuntu Linux 6.10, 7.x, 8.x, 9.04 (i386 and amd)</para>
+			</listitem>
+			<listitem>
+				<para>Gentoo Linux 2007.0 amd64</para>
+			</listitem>
+			<listitem>
+				<para>SUSE Linux</para>
+			</listitem>
+			<listitem>
+				<para>OpenBSD 4.5 (i386)</para>
+			</listitem>
+		</itemizedlist>
+
+		<para>Мы надеемся, что <application>DataparkSearch</application> будет работать и на других Unix платформах.
+Пожалуйста, сообщайте об успешных установках на других платформах по адресу 
+<ulink url="mailto:maxime@maxime.net.ru">maxime@maxime.net.ru</ulink>.</para>
+
+<para><emphasis>О NFS</emphasis>: Замечены проблемы при запуске <application>DataparkSearch</application> поверх 
+<application>NFS v4</application> на <application>Linux 2.6.17</application>. 
+Однако все прекрасно работает при использовании на этой системе <application>NFS v3</application>.
+</para>
+
+	</sect1>
+
+	<sect1 id="toolsreq">
+		<title>Инструментарий, необходимый для установки</title>
+		<para>Для компиляции и установки <application>DataparkSearch</application> из исходников вам потребуется
+следующий инструментарий:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<ulink url="http://www.bzip.org/"><literal>Bzip2</literal></ulink> для распаковки дисрибутива.</para>
+
+			</listitem>
+			<listitem>
+				<para><literal>tar</literal> для извлечения дерева исходников из дистрибутива.
+Рекомендуется <ulink url="http://www.gnu.org/software/tar/tar.html">GNU tar</ulink>.</para>
+
+			</listitem>
+			<listitem>
+				<para>Компилятор ANSI C. Рекомендуется <ulink url="http://gcc.gnu.org/">GNU gcc</ulink>.</para>
+			</listitem>
+			<listitem>
+				<para>Программа <literal>make</literal>.
+<ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink> рекомендуется, а зачастую и необходима.</para>
+
+			</listitem>
+<listitem>
+<para>Потоковый редактор <literal>sed</literal>.</para>
+</listitem>
+<listitem>
+<para>Интерпретатор языка <literal>perl</literal>, если при инсталяции будет использоваться скрипт
+<command>install.pl</command>.</para>
+</listitem>
+<listitem>
+<para>Для создания документации из XML-исходников, вам потребуется также установить 
+<filename>jade</filename> или <filename>openjade</filename>.</para> 
+<para>Для создания документации на английском языке в <application>PDF</application> формате, 
+вам также потребуется <filename>jadetex</filename>.
+Используйте команду <userinput>make book.pdf</userinput> в поддиректории <filename>doc/</filename> чтобы скомпилировать её.
+</para>
+</listitem>
+		</itemizedlist>
+	</sect1>
+
+	<sect1 id="installing">
+		<title>Инсталяция <application>DataparkSearch</application>
+<indexterm><primary>Инсталяция</primary><secondary>шаги</secondary></indexterm>
+</title>
+		<orderedlist>
+			<listitem>
+				<para>Разархивируйте дистрибутив и перейдите а корневую директорию распакованного дерева исходников.</para>
+
+				<para>
+					<userinput>tar -xyf dpsearch-x.x.tar.bz2</userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Для упрощения процесса конфигурирования мы добавили скрипт конфигурации
+<filename>install.pl</filename>. Запустите <filename>install.pl</filename>
+и отвечая на вопросы, выберите нужную конфигурацию <application>DataparkSearch</application>
+После того, как вы выберите все опции, этот скрипт запустит <literal>./configure</literal> с выбранными вами ключами.
+Он также создаст файл <filename>create install.options</filename>
+содержащий ваши настройки, которые будут использованы при следующих запусках этого скрипта.
+После того, как процесс конфигурирования будет завершен, создайте и проинсталируйте <application>DataparkSearch</application>
+как описано в разделе 3.
+</para>
+
+				<para>В случае, если вы желаете сконфигурировать <application>DataparkSearch</application>
+вручную без использования скрипта конфигурирования, проделайте следующие шаги:</para>
+
+				<para>Если нужна поддержка SQL базы данных:</para>
+				<para>
+					<userinput>sh$ ./configure --with-mysql</userinput>
+				</para>
+				<para>или</para>
+				<para>
+					<userinput>sh$ ./configure --with-pgsql</userinput>
+				</para>
+				<para>или другим ключом, соответствующим выбраной базе данных,</para>
+				<para>или с несколькими базами:</para>
+				<para>
+					<userinput>sh$ ./configure --with-mysql --with-pgsql --with-msql --with-freetds</userinput>
+				</para>
+				<para>По умолчанию, <application>DataparkSearch</application> устанавливается в директорию
+<literal>/usr/local/dpsearch</literal> и поддериктории:</para>
+
+				<informaltable>
+					<tgroup cols="2">
+						<tbody>
+							<row>
+								<entry>Поддиректория</entry>
+								<entry>Содержимое</entry>
+							</row>
+							<row>
+								<entry>bin</entry>
+								<entry>
+									<filename>search.cgi</filename>, <filename>storedoc.cgi</filename>, <filename>dps-config</filename>
+								</entry>
+							</row>
+							<row>
+								<entry>lib</entry>
+								<entry>
+									<filename>libdpsearch.a(so)</filename>,
+									<filename>libdpcharset.a(so)</filename>
+								</entry>
+							</row>
+							<row>
+								<entry>sbin</entry>
+								<entry>
+									<filename>indexer</filename>, <filename>cached</filename>,
+<filename>run-splitter</filename>,
+<filename>searchd</filename>, <filename>splitter</filename>, <filename>stored</filename>
+								</entry>
+							</row>
+							<row>
+								<entry>etc</entry>
+								<entry>
+									<filename>indexer.conf-dist, search.htm-dist</filename>,
+<filename>langmap.conf-dist</filename>,
+<filename>searchd.conf-dist</filename>,
+<filename>stopwords.conf-dist</filename>,
+<filename>stored.conf-dist</filename>, <filename>storedoc.htm-dist</filename>
+								</entry>
+							</row>
+							<!--row>
+								<entry>man</entry>
+								<entry>
+									<filename>indexer.1, indexer.conf.5</filename>
+								</entry>
+							</row-->
+							<row>
+								<entry>share</entry>
+								<entry>Документация и sql-скрипты</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+				<para>Если у вас нет прав для создания этой директории, или вы хотите установить 
+<application>DataparkSearch</application> в другую директорию, используйте для <command>configure</command> ключ 
+<option>--prefix</option>,
+например,</para>
+
+				<para>
+					<userinput>./configure --prefix=/user/home/data --with-mysql</userinput>
+				</para>
+				<para>Для установки <application>DataparkSearch</application> с поддержкой HTTPS, 
+используйте следующий ключ для <command>configure</command>:</para>
+				<para>
+					<userinput>./configure --with-openssl</userinput>
+				</para>
+				<para>или, в случае, когда, библиотека OpenSSL установлена не в стандартной директории:</para>
+				<para>
+					<userinput>./configure --with-openssl=/path/to/library</userinput>
+				</para>
+				<note>
+					<para>Пожалуйста, имейте в виду, что установка библиотеки OpenSSL на вашем компьютере
+необходима для поддержки HTTPS.</para>
+
+				</note>
+				<para>Вы можете видеть все ключи, запустив <literal>./configure --help</literal>
+				</para>
+				<para>Если вы хотите передать для компилятора C некоторые специфицеские ключи
+(например, <literal>'-O7 -mpentium'</literal> создания оптимизированного кода под процессор
+<trademark>Pentium</trademark>, если используется компилятор egcs/pgcc), это можно сделать при помощи следующей команды</para>
+
+				<para>
+					<userinput>sh$  CFLAGS="-O7 -mpentium"</userinput>
+				</para>
+				<para>
+					<emphasis>до</emphasis> запуска <command>configure</command>.</para>
+				<para>Для компиляции <application>DataparkSearch</application> под <application>FreeBSD</application>
+с поддержкой <literal>Solid</literal> в старом aout формате, используйте</para>
+				<para>
+					<userinput>sh$ CFLAGS="-aout"</userinput>
+				</para>
+				<para>
+					<emphasis>до</emphasis> запуска <command>configure</command>.</para>
+				<para>Для компиляции <application>DataparkSearch</application> под <application>FreeBSD</application>
+с aout InterBase используйте</para>
+				<para>
+					<userinput>sh$ CFLAGS="-aout -static"</userinput>
+				</para>
+				<para>
+					<emphasis>до</emphasis> запуска <command>configure</command>.</para>
+				<para>Вы можете также указать <option>--enable-pthreads</option>
+				для компиляции многопоточной версии <command>indexer</command>.</para>
+
+				<para>
+<indexterm><primary>DMALLOC</primary></indexterm>
+Для включения поддержки <ulink url="http://sourceforge.net/projects/dmalloc/">отладчика памяти DMALLOC</ulink>
+используйте ключ <option>--enable-dmalloc</option>. </para>
+
+				<para>Кодировки euc-kr, big5, gb2312, tscii, gujarati и shift-jis не поддерживаются по умолчанию.
+Для включения поддержки используйте ключ <option>--with-extra-charsets</option>.</para>
+
+				<para>Для включения поддержки всех кодовых страниц, используйте:</para>
+				<para>
+					<userinput>./configure --with-extra-charsets=all</userinput>
+				</para>
+				<para>Для включения поддержки только какой-то одной кодовой страницы:</para>
+				<para>
+					<userinput>./configure --with-extra-charsets=tscii</userinput>
+				</para>
+				<para>Для включения поддержки семейства кодировок китайского или японского языков:</para>
+				<para>
+					<userinput>./configure --with-extra-charsets=chinese</userinput>
+или
+					<userinput>./configure --with-extra-charsets=japanese</userinput>
+				</para>
+				<para>Чтобы включить поддержку нескольких нужных кодовых страниц, указывайте их через запятую:</para>
+
+				<para>
+					<userinput>./configure --with-extra-charset=chinese,gujarati</userinput>
+				</para>
+				<para>Если у вас возникли трудности с конфигурированием, пожалуйста, смотрите <xref linkend="installproblem"/>.</para>
+			</listitem>
+			<listitem>
+				<para>Скомпилируйте и установите <application>DataparkSearch</application>.</para>
+				<para>
+					<userinput>sh$ make</userinput>
+				</para>
+				<para>
+					<userinput>sh$ make install</userinput>
+				</para>
+				<para>Если у вас возникли трудности с компиляцией, пожалуйста, смотрите <xref linkend="installproblem"/>.</para>
+			</listitem>
+			<listitem>
+				<para>Создайте базу данных <literal>search</literal> (только для SQL баз данных).</para>
+				<para>Вы можете использовать существующую базу данных, в этом случае пропустите этот пункт.</para>
+				<para>MySQL:</para>
+				<para>
+					<userinput>sh$ mysqladmin create search</userinput>
+				</para>
+				<para>PostgreSQL:</para>
+				<para>
+					<userinput>sh$ createdb search</userinput>
+				</para>
+				<para>Для других баз данных см. документацию на соответствующую базу данных.</para>
+			</listitem>
+<listitem><para>Создайте файлы конфигурации.</para>
+<para>Для этого в директории конфигурационных файлов ( по умолчанию это <filename>/usr/local/dpsearch/etc/</filename>) скопируйте <filename>indexer.conf-dist</filename> 
+в <filename>indexer.conf</filename> и <filename>search.htm-dist</filename> в <filename>search.htm</filename>. Затем отредактируйте <filename>indexer.conf</filename> и <filename>search.htm</filename>
+согласно вашим потребностям. В основном вам необходимо только отредактировать команду <command>DBAddr</command> в обоих файлах указав соединение с SQL-сервером и необходимый dbmode.</para>
+</listitem>
+			<listitem>
+				<para>Создайте sql-таблицы</para>
+<para>Выполните команду:
+</para>
+<para>
+<userinput>sh$ indexer -Ecreate</userinput>
+</para>
+<para>
+<command>indexer</command> автоматически создаст все нужные таблицы согласно dbmode, указанному в <filename>indexer.conf</filename>.
+</para>
+
+
+			</listitem>
+			<listitem>
+				<para>Установка программы поиска</para>
+				<para>Скопируйте <filename>search.cgi</filename> в <literal>cgi-bin</literal> 
+директорию вашего веб-сервера или создайте алиас в Apache на поддиректорию <filename>bin/</filename>
+<application>DataparkSearch</application>. </para>
+
+			</listitem>
+		</orderedlist>
+	</sect1>
+	<!--sect1 id="ispellinst">
+		<title>Installing Ispell support</title>
+		<para>The ISpell-related procedures are described in </para>
+	</sect1-->
+
+	<sect1 id='installproblem'>
+		<title>Возможные проблемы установки
+<indexterm><primary>Установка</primary><secondary>возможные проблемы</secondary></indexterm>
+</title>
+		<itemizedlist>
+			<listitem>
+				<para>Каждый раз, когда вы запускаете <literal>configure</literal>,
+вы должны опять запустить <literal>make</literal> для перекомпиляции.</para>
+
+				<para>Во избежание использования информации о предыдущей конфигурации или устаревших объектных файлов,
+выполните эти команды перед повторным запуском <literal>configure</literal>:
+</para>
+				<para>
+					<userinput>sh$ rm config.cache</userinput>
+				</para>
+				<para>
+					<userinput>sh$ make clean</userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Завершение компиляции с ошибками иногда может быть связана с некорректной версией 
+<command>make</command>. Работа стандартной команды <command>make</command> под Solaris, FreeBSD, OpenBSD
+немного отличается от <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink>.
+Попробуйте использовать <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink> вместо стандартной версии,
+часто она называется <command>gmake</command>.
+</para>
+				<para>GNU <filename>make</filename> версии 3.77 проверена и работает.</para>
+			</listitem>
+<listitem>
+<para>Если при запуске <application>Apache</application> c модулем <application>mod_dpsearch</application> вы получаете такое
+сообщение об ошибке:  <userinput>Undefined symbol "pthread_join"</userinput> (или что-то подобное относящееся к pthreads),
+попробуйте добавить следующую команду в файл конфигурации <filename>httpd.conf</filename> до загрузки <filename>mod_dpsearch.so</filename>:
+</para>
+<para><userinput>LoadFile /usr/lib/libpthread.so</userinput></para>
+</listitem>
+		</itemizedlist>
+		<para>Если информация выше не помогла вам, пожалуйста, отправьте описание вашей проблемы на список рассылки
+<email>dataparksearch@yahoogroups.com</email> (пожалуйста, при возможности пишите на английском).
+</para>
+	</sect1>
+
+	<sect1 id="binarydistrib">
+		<title>Создание дистрибутивов исполняемых модулей</title>
+		<para>Вы можете создать дистрибутив исполняемых модулей для вашей системы (tar.bz2 архив, пакет Debian или пакет RPM).
+Для создания дистрибутива исполняемых модулей используйте команду <command>make bin-dist</command> для создания tar.bz2 архива, или команду
+<command>make pkg-deb</command> для создания Debian пакета, или команду <command>make pkg-rpm</command> для создания пакета RPM.
+Пожалуста, имейте в виду, что при создании паета RPM сначала создаётся Debian пакет, который затем конвертируется в формат RPM при помощи утилиты
+<application>alien</application>.
+</para>
+
+	</sect1>
+
+<sect1 id="quick-usage">
+<title>Простая рутина использования</title>
+<para>Перед первым запуском <command>indexer</command>, вам необходимо указать пространство индексирования (см. <xref linkend="follow" />). 
+В простом случае, когда вам необходимо индексировать один сайт, необходимо добавить команду <command>Server</command>, 
+аналогичную указанной ниже в ваш файл конфигурации <filename>indexer.conf</filename>:
+<programlisting>
+Server http://www.server.ext/
+</programlisting>
+</para>
+
+<para>Запустите <command>indexer</command> для индексирования ваших данных и записи информации об URL:</para>
+<para><userinput>sh$ /usr/local/dpsearch/sbin/indexer -W</userinput></para>
+
+</sect1>
+
+<!--sect1 id="register">
+<title>Регистрация установки</title>
+<para>Если вы используете <application>DataparkSearch</application> для организации поиска на публично доступном веб-сервере,
+вы можете сообщить нам об этом на нашем сайте, на
+<ulink url="http://www.dataparksearch.org/usersmap">странице наших пользователей</ulink>.
+</para>
+</sect1-->
+
+</chapter>

@@ -1,0 +1,174 @@
+<para><table>
+<title>Синонимы наименований кодировок</title>
+<tgroup cols="2">
+<tbody>
+<row><entry>armscii-8</entry><entry>
+armscii-8, armscii8</entry></row>
+<row><entry>Big5</entry><entry>
+big-5, big-five, big5, bigfive, cn-big5, csbig5</entry></row>
+<row><entry>Big5-HKSCS</entry><entry>
+big5-hkscs, big5_hkscs, big5hk, hkscs</entry></row>
+<row><entry>cp1026</entry><entry>
+1026, cp-1026, cp1026, ibm1026</entry></row>
+<row><entry>cp1133</entry><entry>
+1133, cp-1133, cp1133, ibm1133</entry></row>
+<row><entry>cp437</entry><entry>
+437, cp437, ibm437</entry></row>
+<row><entry>cp500</entry><entry>
+500, cp500, ibm500</entry></row>
+<row><entry>cp775</entry><entry>
+775, cp775, ibm775</entry></row>
+<row><entry>cp850</entry><entry>
+850, cp850, cspc850multilingual, ibm850</entry></row>
+<row><entry>cp852</entry><entry>
+852, cp852, ibm852</entry></row>
+<row><entry>cp855</entry><entry>
+855, cp855, ibm855</entry></row>
+<row><entry>cp857</entry><entry>
+857, cp857, ibm857</entry></row>
+<row><entry>cp860</entry><entry>
+860, cp860, ibm860</entry></row>
+<row><entry>cp861</entry><entry>
+861, cp861, ibm861</entry></row>
+<row><entry>cp862</entry><entry>
+862, cp862, ibm862</entry></row>
+<row><entry>cp863</entry><entry>
+863, cp863, ibm863</entry></row>
+<row><entry>cp864</entry><entry>
+864, cp864, ibm864</entry></row>
+<row><entry>cp865</entry><entry>
+865, cp865, ibm865</entry></row>
+<row><entry>cp866</entry><entry>
+866, cp866, csibm866, ibm866</entry></row>
+<row><entry>cp866u</entry><entry>
+866u, cp866u</entry></row>
+<row><entry>cp869</entry><entry>
+869, cp869, csibm869, ibm869</entry></row>
+<row><entry>cp874</entry><entry>
+874, cp874, cs874, ibm874, windows-874</entry></row>
+<row><entry>cp875</entry><entry>
+875, cp875, ibm875, windows-875</entry></row>
+<row><entry>cp950</entry><entry>
+950, cp950, windows-950</entry></row>
+<row><entry>EUC-JP</entry><entry>
+cseucjp, euc-jp, euc_jp, eucjp, ujis, x-euc-jp</entry></row>
+<row><entry>EUC-KR</entry><entry>
+cseuckr, euc-kr, euc_kr, euckr</entry></row>
+<row><entry>GB-18030</entry><entry>
+gb-18030, gb18030</entry></row>
+<row><entry>GB2312</entry><entry>
+chinese, cn-gb, csgb2312, csiso58gb231280, euc-cn, euc_cn, euccn, gb2312, gb_2312-80, iso-ir-58</entry></row>
+<row><entry>GBK</entry><entry>
+cp936, gbk, windows-936</entry></row>
+<row><entry>georgian-academy</entry><entry>
+georgian-academy</entry></row>
+<row><entry>georgian-ps</entry><entry>
+georgian-ps</entry></row>
+<row><entry>geostd8</entry><entry>
+geo8-gov, geostd8</entry></row>
+<row><entry>IBM037</entry><entry>
+037, cp037, csibm037, ibm037</entry></row>
+<row><entry>ISIRI3342</entry><entry>
+isiri-3342, isiri3342</entry></row>
+<row><entry>ISO-2022-JP</entry><entry>
+csiso2022jp, iso 2022-jp, iso-2022-jp</entry></row>
+<row><entry>ISO-8859-1</entry><entry>
+cp819, csisolatin1, ibm819, iso 8859-1, iso-8859-1, iso-ir-100, iso8859-1, iso_8859-1, iso_8859-1:1987, l1, latin-1, latin1</entry></row>
+<row><entry>ISO-8859-10</entry><entry>
+csisolatin6, iso 8859-10, iso-8859-10, iso-ir-157, iso8859-10, iso_8859-10, iso_8859-10:1992, l6, latin-6, latin6</entry></row>
+<row><entry>ISO-8859-11</entry><entry>
+iso 8859-11, iso-8859-11, iso8859-11, iso_8859-11, iso_8859-11:1992, tactis, thai, tis-620, tis620</entry></row>
+<row><entry>ISO-8859-13</entry><entry>
+iso 8859-13, iso-8859-13, iso-ir-179, iso8859-13, iso_8859-13, l7, latin-7, latin7</entry></row>
+<row><entry>ISO-8859-14</entry><entry>
+iso 8859-14, iso-8859-14, iso-ir-199, iso8859-14, iso_8859-14, iso_8859-14:1998, l8, latin-8, latin8</entry></row>
+<row><entry>ISO-8859-15</entry><entry>
+iso 8859-15, iso-8859-15, iso-ir-203, iso8859-15, iso_8859-15, iso_8859-15:1998, l9, latin-0, latin-9, latin0, latin9</entry></row>
+<row><entry>ISO-8859-16</entry><entry>
+iso 8859-16, iso-8859-16, iso-ir-226, iso8859-16, iso_8859-16, iso_8859-16:2000</entry></row>
+<row><entry>ISO-8859-2</entry><entry>
+csisolatin2, iso 8859-2, iso-8859-2, iso-ir-101, iso8859-2, iso_8859-2, iso_8859-2:1987, l2, latin-2, latin2</entry></row>
+<row><entry>ISO-8859-3</entry><entry>
+csisolatin3, iso 8859-3, iso-8859-3, iso-ir-109, iso8859-3, iso_8859-3, iso_8859-3:1988, l3, latin-3, latin3</entry></row>
+<row><entry>ISO-8859-4</entry><entry>
+csisolatin4, iso 8859-4, iso-8859-4, iso-ir-110, iso8859-4, iso_8859-4, iso_8859-4:1988, l4, latin-4, latin4</entry></row>
+<row><entry>ISO-8859-5</entry><entry>
+csisolatincyrillic, cyrillic, iso 8859-5, iso-8859-5, iso-ir-144, iso8859-5, iso_8859-5, iso_8859-5:1988</entry></row>
+<row><entry>ISO-8859-6</entry><entry>
+arabic, asmo-708, csisolatinarabic, ecma-114, iso 8859-6, iso-8859-6, iso-ir-127, iso8859-6, iso_8859-6, iso_8859-6:1987</entry></row>
+<row><entry>ISO-8859-7</entry><entry>
+csisolatingreek, ecma-118, elot_928, greek, greek8, iso 8859-7, iso-8859-7, iso-ir-126, iso8859-7, iso_8859-7, iso_8859-7:1987</entry></row>
+<row><entry>ISO-8859-8</entry><entry>
+csisolatinhebrew, hebrew, iso 8859-8, iso-8859-8, iso-ir-138, iso8859-8, iso_8859-8, iso_8859-8:1988</entry></row>
+<row><entry>ISO-8859-9</entry><entry>
+csisolatin5, iso 8859-9, iso-8859-9, iso-ir-148, iso8859-9, iso_8859-9, iso_8859-9:1989, l5, latin-5, latin5</entry></row>
+<row><entry>KOI-7</entry><entry>
+iso-ir-37, koi-7, koi7</entry></row>
+<row><entry>KOI8-C</entry><entry>
+cskoi8c, koi8-c, koi8c</entry></row>
+<row><entry>KOI8-R</entry><entry>
+cskoi8r, koi8-r, koi8r</entry></row>
+<row><entry>KOI8-T</entry><entry>
+cskoi8t, koi8-t, koi8t</entry></row>
+<row><entry>KOI8-U</entry><entry>
+cskoi8u, koi8-u, koi8u</entry></row>
+<row><entry>MacArabic</entry><entry>
+macarabic</entry></row>
+<row><entry>MacCE</entry><entry>
+cmac, macce, maccentraleurope, x-mac-ce</entry></row>
+<row><entry>MacCroatian</entry><entry>
+maccroation</entry></row>
+<row><entry>MacCyrillic</entry><entry>
+maccyrillic, x-mac-cyrillic</entry></row>
+<row><entry>MacGreek</entry><entry>
+macgreek</entry></row>
+<row><entry>MacGujarati</entry><entry>
+macgujarati</entry></row>
+<row><entry>MacHebrew</entry><entry>
+machebrew</entry></row>
+<row><entry>MacIceland</entry><entry>
+macisland</entry></row>
+<row><entry>MacRoman</entry><entry>
+csmacintosh, mac, macintosh, macroman</entry></row>
+<row><entry>MacRomania</entry><entry>
+macromania</entry></row>
+<row><entry>MacThai</entry><entry>
+macthai</entry></row>
+<row><entry>MacTurkish</entry><entry>
+macturkish</entry></row>
+<row><entry>Shift_JIS</entry><entry>
+csshiftjis, ms_kanji, s-jis, shift-jis, shift_jis, sjis, x-sjis</entry></row>
+<row><entry>sys-int</entry><entry>
+sys-int</entry></row>
+<row><entry>tscii</entry><entry>
+tscii</entry></row>
+<row><entry>US-ASCII</entry><entry>
+ansi_x3.4-1968, ascii, cp367, csascii, ibm367, iso-ir-6, iso646-us, iso_646.irv:1991, us, us-ascii</entry></row>
+<row><entry>UTF-16BE</entry><entry>
+utf-16, utf-16be, utf16, utf16be</entry></row>
+<row><entry>UTF-16LE</entry><entry>
+utf-16le, utf16le</entry></row>
+<row><entry>UTF-8</entry><entry>
+utf-8, utf8</entry></row>
+<row><entry>VISCII</entry><entry>
+csviscii, viscii, viscii1.1-1</entry></row>
+<row><entry>windows-1250</entry><entry>
+cp-1250, cp1250, ms-ee, windows-1250</entry></row>
+<row><entry>windows-1251</entry><entry>
+cp-1251, cp1251, ms-cyr, ms-cyrl, win-1251, win1251, windows-1251</entry></row>
+<row><entry>windows-1252</entry><entry>
+cp-1252, cp1252, ms-ansi, windows-1252</entry></row>
+<row><entry>windows-1253</entry><entry>
+cp-1253, cp1253, ms-greek, windows-1253</entry></row>
+<row><entry>windows-1254</entry><entry>
+cp-1254, cp1254, ms-turk, windows-1254</entry></row>
+<row><entry>windows-1255</entry><entry>
+cp-1255, cp1255, ms-hebr, windows-1255</entry></row>
+<row><entry>windows-1256</entry><entry>
+cp-1256, cp1256, ms-arab, windows-1256</entry></row>
+<row><entry>windows-1257</entry><entry>
+cp-1257, cp1257, winbaltrim, windows-1257</entry></row>
+<row><entry>windows-1258</entry><entry>
+cp-1258, cp1258, windows-1258</entry></row>
+</tbody></tgroup></table>
+</para>

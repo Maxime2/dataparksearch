@@ -1,0 +1,726 @@
+/* include/dps_config.h.in.  Generated automatically from configure.in by autoheader.  */
+/* --- BEGIN 'top' portion of acconfig.h --- */
+
+/* acconfig.h is here to make autoheader happy and smile. -kir */
+
+#ifndef _DPS_CONFIG_H
+#define _DPS_CONFIG_H
+
+#if defined(APACHE1) || defined(APACHE2)
+#include "httpd.h"
+#include "http_config.h"
+#include "http_core.h"
+#include "http_log.h"
+#include "http_main.h"
+#include "http_protocol.h"
+#ifdef APACHE2
+#include "http_request.h"
+#endif
+#include "util_script.h"
+#ifdef APACHE2
+#include "http_connection.h"
+/*#include "apr_strings.h"*/
+#endif
+#endif
+
+/* --- END 'top' portion of acconfig.h --- */
+
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef mode_t
+
+/* Define to `long' if <sys/types.h> doesn't define.  */
+#undef off_t
+
+/* Define to `int' if <sys/types.h> doesn't define.  */
+#undef pid_t
+
+/* Define as the return type of signal handlers (int or void).  */
+#undef RETSIGTYPE
+
+/* Define to `unsigned' if <sys/types.h> doesn't define.  */
+#undef size_t
+
+/* Define to 'long' if hasn't been defined. */
+#undef HAVE_LONG_LONG_INT
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if your processor stores words with the most significant
+   byte first (like Motorola and SPARC, unlike Intel and VAX).  */
+#undef WORDS_BIGENDIAN
+
+/* Define if you have tm_gmtoff in struct tm */
+#undef HAVE_TM_GMTOFF
+
+/* Define if you have POSIX type signal handling routines */
+#undef HAVE_POSIX_SIGNALS
+
+/* Define if you have union semun in sys/sem.h */
+#undef HAVE_UNION_SEMUN
+
+/* Define if you want to use syslog for logging indexer messages */
+#undef WITH_SYSLOG
+
+/* Define if you want tracing for debugging */
+#undef WITH_TRACE
+
+/* Define if you want Google-like grouping by site */
+#undef WITH_GOOGLEGRP
+
+/* Define if you want multi DBAddr support */
+#undef WITH_MULTIDBADDR
+
+/* Define what method of relevance calculation to be used. */
+#undef FULL_RELEVANCE
+#undef FAST_RELEVANCE
+#undef ULTRA_RELEVANCE
+
+/* Define if you want to take hops into account for the Neo Popularity Rank calculation */
+#undef WITH_POPHOPS
+
+/* hops factor in the Neo Popularity Rank calculation */
+#undef DPS_POPHOPS_FACTOR
+
+/* Define if you want average word distance in relevancy calculation */
+#undef WITH_REL_DISTANCE
+
+/* Define if you want average word position in relevncy calculation */
+#undef WITH_REL_POSITION
+
+/* Define if you want word count in relevancy calculation */
+#undef WITH_REL_WRDCOUNT
+
+/* Define if you want to track relevance commands */
+#undef WITH_REL_TRACK
+
+/* best first word position for relevancy calculation */
+#undef DPS_BEST_POSITION
+
+/* best average word position for relevancy calculation */
+#undef DPS_AVG_POSITION
+
+/* best average distance between words for relevancy calculation */
+#undef DPS_AVG_DISTANCE
+
+/* best words count for relevancy calculation */
+#undef DPS_BEST_WRD_CNT
+
+/* word counts factor for relevancy calculation */
+#undef DPS_WRD_CNT_FACTOR
+
+/* word less counts factor for relevancy calculation */
+#undef DPS_LESS_WRD_CNT_FACTOR
+
+/* first word position factor for relevancy calculation */
+#undef DPS_POSITION_FACTOR
+
+/* first word less position factor for relevancy calculation */
+#undef DPS_LESS_POSITION_FACTOR
+
+/* first word distance factor for relevancy calculation */
+#undef DPS_DISTANCE_FACTOR
+
+/* first word less distance factor for relevancy calculation */
+#undef DPS_LESS_DISTANCE_FACTOR
+
+/* border value for non-uniform word count distribution in relevancy calculation */
+#undef DPS_UNICNT_BORDER
+
+/* non-uniform word count distribution factor for relevancy calculation */
+#undef DPS_UNICNT_FACTOR
+
+/* non-uniform word less count distribution factor for relevancy calculation */
+#undef DPS_LESS_UNICNT_FACTOR
+
+/* Define if you want to use external parser */
+#undef WITH_PARSER
+
+/* Define if you want to use GNU libidn */
+#undef WITH_IDN
+
+/* Define if you want to use Solaris libidnkit */
+#undef WITH_IDNKIT
+
+/* Define if you want mp3 id3 tags support */
+#undef WITH_MP3
+
+/* Define if you want to support file:// URL schema */
+#undef WITH_FILE
+
+/* Define if you want to support http:// URL schema */
+#undef WITH_HTTP
+
+/* Define if you want to support https:// URL schema */
+#undef WITH_HTTPS
+
+/* Define if you want to support ftp:// URL schema */
+#undef WITH_FTP
+
+/* Define if you want to support news:// URL schema */
+#undef WITH_NEWS
+
+/* Define if you want to use MySQL */
+#undef HAVE_DP_MYSQL
+
+/* Define if you want to use PostgreSQL */
+#undef HAVE_DP_PGSQL
+
+/* Define if you want to use mSQL */
+#undef HAVE_DP_MSQL
+
+/* Define if you want to use iODBC */
+#undef HAVE_IODBC
+
+/* Define if you want to use unixODBC */
+#undef HAVE_UNIXODBC
+
+/* Define if you want to use IBM DB2 */
+#undef HAVE_DB2
+
+/* Define if you want to use Solid SQL Server */
+#undef HAVE_SOLID
+
+/* Define if you want to use OpenLink ODBC (Virtuoso) */
+#undef HAVE_VIRT
+
+/* Define if you want to use EasySoft ODBC */
+#undef HAVE_EASYSOFT
+
+/* Define if you want to use SAPDB ODBC library */
+#undef HAVE_SAPDB
+
+/* Define if you want to use Interbase SQL Server */
+#undef HAVE_IBASE
+
+/* Define if you want to use CT-LIB SyBase SQL Server */
+#undef HAVE_CTLIB
+
+/* Define if you want to use sqlite  */
+#undef HAVE_SQLITE
+
+/* Define if you want to use sqlite3 */
+#undef HAVE_SQLITE3
+
+/* Define if you want to use Oracle 8 SQL Server */
+#undef HAVE_ORACLE8
+
+/* Define if you want to use Oracle 7 SQL Server */
+#undef HAVE_ORACLE7
+
+/* Define VERSION_ID */
+#undef DPS_VERSION_ID
+
+/* Define DPS_DBTYPE */
+#undef DPS_DBTYPE
+
+/* Define if you havnt socklen_t type */
+#undef socklen_t
+
+/* Define if you want DMALLOC */
+#undef DMALLOC
+
+/* Define if you want Boehm's garbage collector support */
+#undef BOEHMGC
+
+/* Define if you want internal memory debugger based on Electric Fence 2.2 */
+#undef EFENCE
+
+/* Define if you want internal file handlers debugger */
+#undef FILENCE
+
+/* Define if you want HTTP Content Encoding support */
+#undef HAVE_ZLIB
+
+/* Define if you want readline support */
+#undef HAVE_READLINE
+
+/* Define if you want Chinese support */
+#undef HAVE_CHARSET_chinese
+
+/* Define if you want Japanese support */
+#undef HAVE_CHARSET_japanese
+
+/* Define if you want Korean euc-kr support */
+#undef HAVE_CHARSET_euc_kr
+
+/* Define if you want gujarati support */
+#undef HAVE_CHARSET_gujarati
+
+/* Define if you want tscii support */
+#undef HAVE_CHARSET_tscii
+
+/* Define if you want ChaSen support */
+#undef CHASEN
+
+/* Define if you want MeCab support */
+#undef MECAB
+
+/* The number of bytes in a char*.  */
+#undef SIZEOF_CHARP
+
+/* The number of bytes in a void*.  */
+#undef SIZEOF_VOIDP
+
+/* The number of bytes in a int.  */
+#undef SIZEOF_INT
+
+/* The number of bytes in a long.  */
+#undef SIZEOF_LONG
+
+/* The number of bytes in a long long.  */
+#undef SIZEOF_LONG_LONG
+
+/* The number of bytes in a short.  */
+#undef SIZEOF_SHORT
+
+/* Define if you have the bzero function.  */
+#undef HAVE_BZERO
+
+/* Define if you have the hstrerror function.  */
+#undef HAVE_HSTRERROR
+
+/* Define if you have timegm function */
+#undef HAVE_TIMEGM
+
+/* Define if you have the mergesort function.  */
+#undef HAVE_MERGESORT
+
+/* Define if you have the heapsort function.  */
+#undef HAVE_HEAPSORT
+
+/* Define if you have the putenv function.  */
+#undef HAVE_PUTENV
+
+/* Define if you have the regcomp function.  */
+#undef HAVE_REGCOMP
+
+/* Define if you have the setenv function.  */
+#undef HAVE_SETENV
+
+/* Define if you have the setproctitle function.  */
+#undef HAVE_SETPROCTITLE
+
+/* Define if you have the snprintf function.  */
+#undef HAVE_SNPRINTF
+
+/* Define if you have the socket function.  */
+#undef HAVE_SOCKET
+
+/* Define if you have the strcasecmp function.  */
+#undef HAVE_STRCASECMP
+
+/* Define if you have the strcasestr function.  */
+#undef HAVE_STRCASESTR
+
+/* Define if you have the strdup function.  */
+#undef HAVE_STRDUP
+
+/* Define if you have the strncasecmp function.  */
+#undef HAVE_STRNCASECMP
+
+/* Define if you have the strndup function.  */
+#undef HAVE_STRNDUP
+
+/* Define if you have the strnlen function.  */
+#undef HAVE_STRNLEN
+
+/* Define if you have the strstr function.  */
+#undef HAVE_STRSTR
+
+/* Define if you have the strtok_r function.  */
+#undef HAVE_STRTOK_R
+
+/* Define if you have the unsetenv function.  */
+#undef HAVE_UNSETENV
+
+/* Define if you have the daemon function.  */
+#undef HAVE_DAEMON
+
+/* Define if you have the vsnprintf function.  */
+#undef HAVE_VSNPRINTF
+
+/* Define if you have the getaddrinfo function. */
+#undef HAVE_GETADDRINFO
+
+/* Define if you have the inet_net_pton function. */
+#undef HAVE_INET_NET_PTON_PROTO
+
+/* Define if you have strerror_r function. */
+#undef HAVE_STRERROR_R
+
+/* Define if you have gmtime_r function. */
+#undef HAVE_GMTIME_R
+
+/* Define to use the three-argument variant of gethostbyname_r */
+#undef HAVE_GETHOSTBYNAME_R_3
+
+/* Define to use the five-argument variant of gethostbyname_r */
+#undef HAVE_GETHOSTBYNAME_R_5
+
+/* Define to use the six-argument variant of gethostbyname_r */
+#undef HAVE_GETHOSTBYNAME_R_6
+
+/* Define if you have the pthread_setconcurrency function. */
+#undef HAVE_PTHREAD_SETCONCURRENCY_PROTO
+
+/* Define if you have the pthread_yeild function. */
+#undef HAVE_PTHREAD_YIELD_PROTO
+
+/* Define if you have the thr_setconcurrency function. */
+#undef HAVE_THR_SETCONCURRENCY_PROTO
+
+/* Define if you have the <arpa/inet.h> header file.  */
+#undef HAVE_ARPA_INET_H
+
+/* Define if you have the <arpa/nameser.h> header file.  */
+#undef HAVE_ARPA_NAMESER_H
+
+/* Define if you have the <fcntl.h> header file.  */
+#undef HAVE_FCNTL_H
+
+/* Define if you have the <getopt.h> header file.  */
+#undef HAVE_GETOPT_H
+
+/* Define if you have the <libutil.h> header file.  */
+#undef HAVE_LIBUTIL_H
+
+/* Define if you have the <libutil.h> header file.  */
+#undef HAVE_LIBUTIL_H
+
+/* Define if you have the <bsd/libutil.h> header file.  */
+#undef HAVE_BSD_LIBUTIL_H
+
+/* Define if you have the <netdb.h> header file.  */
+#undef HAVE_NETDB_H
+
+/* Define if you have the <netinet/in.h> header file.  */
+#undef HAVE_NETINET_IN_H
+
+/* Define if you have the <netinet/in_systm.h> header file.  */
+#undef HAVE_NETINET_IN_SYSTM_H
+
+/* Define if you have the <netinet/ip.h> header file.  */
+#undef HAVE_NETINET_IP_H
+
+/* Define if you have the <netinet/tcp.h> header file.  */
+#undef HAVE_NETINET_TCP_H
+
+/* Define if you have the <resolv.h> header file.  */
+#undef HAVE_RESOLV_H
+
+/* Define if you have the <select.h> header file.  */
+#undef HAVE_SELECT_H
+
+/* Define if you have the <sched.h> header file.  */
+#undef HAVE_SCHED_H
+
+/* Define if you have the <sys/ioctl.h> header file.  */
+#undef HAVE_SYS_IOCTL_H
+
+/* Define if you have the <sys/mman.h> header file.  */
+#undef HAVE_SYS_MMAN_H
+
+/* Define if you have Posix style shared memory interface */
+#undef HAVE_SHAREDMEM_POSIX
+
+/* Define if you have the <sys/shm.h> header file.  */
+#undef HAVE_SYS_SHM_H
+
+/* Define if you have SysV style shared memory interface */
+#undef HAVE_SHAREDMEM_SYSV
+
+/* Define if you have the <sys/msg.h> header file. */
+#undef HAVE_SYS_MSG_H
+
+#if 0
+/* Define if you have the <semaphore.h> header file. */
+#undef HAVE_SEMAPHORE_H
+#endif
+
+/* Define if you have the <sys/sem.h> header file. */
+#undef HAVE_SYS_SEM_H
+
+#ifndef HAVE_SYS_SEM_H
+/* Define if you have the <semaphore.h> header file. */
+#undef HAVE_SEMAPHORE_H
+#endif
+
+
+/* Define if you have the <sys/ipc.h> header file.  */
+#undef HAVE_SYS_IPC_H
+
+/* Define if you have the <sys/param.h> header file.  */
+#undef HAVE_SYS_PARAM_H
+
+/* Define if you have the <sys/select.h> header file.  */
+#undef HAVE_SYS_SELECT_H
+
+/* Define if you have the <sys/socket.h> header file.  */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define if you have the <sys/un.h> header file.  */
+#undef HAVE_SYS_UN_H
+
+/* Define if you have the <sys/time.h> header file.  */
+#undef HAVE_SYS_TIME_H
+
+/* Define if you have the <sys/times.h> header file.  */
+#undef HAVE_SYS_TIMES_H
+
+/* Define if you have the <sys/wait.h> header file.  */
+#undef HAVE_SYS_WAIT_H
+
+/* Define if you have the <sys/sysctl.h> header file. */
+#undef HAVE_SYS_SYSCTL_H
+
+/* Define if you have the <tre/regex.h> header file. */
+#undef HAVE_TRE_REGEX_H
+
+/* Define if you have the <syslog.h> header file.  */
+#undef HAVE_SYSLOG_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H
+
+/* Define if you have the <limits.h> header file. */
+#undef HAVE_LIMITS_H
+
+/* Define if you have the nsl library (-lnsl).  */
+#undef HAVE_LIBNSL
+
+/* Define if you have the socket library (-lsocket).  */
+#undef HAVE_LIBSOCKET
+
+/* Define if you have the bind library (-lbind) */
+#undef HAVE_LIBBIND
+
+/* Define if you have the dns library (-ldns) */
+#undef HAVE_LIBDNS
+
+/* Define if you have the ares library (-lares) */
+#undef HAVE_LIBARES
+
+/* Define if you have the c-ares library (-lcares) */
+#undef HAVE_LIBCARES
+
+/* Define if you have the aspell library (libaspell) */
+#undef HAVE_ASPELL
+
+/* Define if you have the libextractor library */
+#undef HAVE_LIBEXTRACTOR
+
+/* Name of package */
+#undef PACKAGE
+
+/* Version number of package */
+#ifndef VERSION
+#undef VERSION
+#endif
+
+/* syslog facility */
+#undef LOG_FACILITY
+
+/* libparanoia usage */
+#undef WITH_PARANOIA
+
+/* cache mode version of mod_dpsearch */
+#if defined(APACHE1) || defined(APACHE2)
+#undef APACHE_CACHEONLY
+#endif
+
+/* Number of bits in a file offset, on hosts where this is settable. */
+#undef _FILE_OFFSET_BITS
+
+/* Define to enable large file support on some Linuxes, Red Hat 8.0, for example (e.g. glibc 2.2). */
+#undef _LARGEFILE_SOURCE
+
+/* Define for large files, on AIX-style hosts. */
+#undef _LARGE_FILES
+
+
+/* --- BEGIN 'bottom' portion from acconfig.h --- */
+
+/* ODBC Library */
+#if (HAVE_IODBC|| HAVE_UNIXODBC||HAVE_SOLID||HAVE_VIRT||HAVE_EASYSOFT||HAVE_SAPDB||HAVE_DB2)
+#define HAVE_ODBC 1
+#endif
+
+/* Backend */
+#if (HAVE_ODBC||HAVE_DP_MYSQL||HAVE_DP_PGSQL||HAVE_DP_MSQL||HAVE_IBASE||HAVE_ORACLE8||HAVE_ORACLE7||HAVE_CTLIB||HAVE_SQLITE||HAVE_SQLITE3) && !defined(APACHE_CACHEONLY)
+#define HAVE_SQL 1
+#endif
+
+#ifdef HAVE_PTHREAD
+#include <pthread.h>
+#endif
+
+#include <sys/types.h>
+
+
+
+
+#define __C_LINK
+#define __DPSCALL
+
+#define DPSSLASH		'/'
+#define DPSSLASHSTR		"/"
+#define DPSSLEEP(x)		sleep(x)
+#define DPS_MSLEEP(x)		usleep(1000*(x))
+#define DPS_IWRITE		0644
+
+#if SIZEOF_SHORT == 2
+typedef unsigned short dps_uint2;
+#elif SIZEOF_INT == 2
+typedef unsigned int dps_uint2;
+#else
+typedef unsigned int dps_uint2;
+#endif
+
+#if SIZEOF_SHORT == 4
+typedef short dpshash32_t;
+typedef unsigned short dps_uint4;
+typedef short dps_int4;
+#elif SIZEOF_INT == 4
+typedef int dpshash32_t;
+typedef unsigned int dps_uint4;
+typedef int dps_int4;
+#else
+typedef long dpshash32_t;
+typedef unsigned long dps_uint4;
+typedef long dps_int4;
+#endif
+
+#if SIZEOF_INT == 8
+typedef unsigned int dpshash64_t;
+typedef unsigned int dps_uint8;
+#elif SIZEOF_LONG == 8
+typedef unsigned long dpshash64_t;
+typedef unsigned long dps_uint8;
+#else
+/*#error No 64-bit integer detected. Giving up.*/
+
+typedef unsigned long long dpshash64_t;
+typedef unsigned long long dps_uint8;
+
+#endif
+
+#if (SIZEOF_CHARP == SIZEOF_INT)
+#define SDPALIGN int
+#elif (SIZEOF_CHARP == SIZEOF_LONG)
+#define SDPALIGN long
+#elif (SIZEOF_CHARP == SIZEOF_SHORT)
+#define SDPALIGN short
+#else
+#define SDPALIGN long long
+#endif
+
+#if (SIZEOF_VOIDP == SIZEOF_INT)
+#define DPS_PNTYPE unsigned int
+#elif (SIZEOF_VOIDP == SIZEOF_LONG)
+#define DPS_PNTYPE unsigned long
+#elif (SIZEOF_VOIDP == SIZEOF_SHORT)
+#define DPS_PNTYPE short
+#else
+#define DPS_PNTYPE unsigned long long
+#endif
+
+
+
+typedef dps_uint4 urlid_t;
+typedef dps_uint4 dpscrc32_t;
+typedef dps_uint4 dpsunicode_t;
+typedef unsigned int dps_word;
+typedef unsigned int dps_uintptr_t;
+
+
+#define HT_CHAR (char)9
+#define NL_CHAR (char)10
+#define CR_CHAR	(char)13
+#define HT_INT 	(int)9
+#define NL_INT 	(int)10
+#define CR_INT 	(int)13
+
+
+
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+#ifndef __USE_GNU
+#define __USE_GNU
+#endif
+
+/* For strtok_r() */
+#ifndef _REENTRANT
+#define _REENTRANT
+#endif
+
+
+#ifndef dps_max
+#define dps_max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+#ifndef dps_min
+#define dps_min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+
+
+#ifdef EFENCE
+
+#include "dps_efence.h"
+
+#elif defined(BOEHMGC)
+
+#include <stdlib.h>
+
+#define GC_DEBUG
+#include "gc.h"
+#define malloc(n) GC_MALLOC(n)
+#define calloc(m,n) GC_MALLOC((m)*(n))
+#define free(p) GC_FREE(p)
+#define realloc(p,n) GC_REALLOC((p),(n))
+
+#define DpsMalloc(n) GC_MALLOC(n)
+#define DpsCalloc(m,n) GC_MALLOC((m)*(n))
+#define DpsFree(p) GC_FREE(p)
+#define DpsRealloc(p,n) GC_REALLOC((p),(n))
+
+#define CHECK_LEAKS() GC_gcollect()
+#define DpsStrdup(x)     _DpsStrdup(x)
+extern char * _DpsStrdup(const char *str);
+
+#else
+
+extern void *DpsRealloc(void *p, size_t size);
+
+#define DpsFree free
+#define DpsMalloc malloc
+#define DpsCalloc calloc
+#define DpsValloc valloc
+#define DpsStrdup _DpsStrdup
+#define DpsStrndup _DpsStrndup
+
+#endif /* EFENCE */
+
+
+#define DpsSort qsort
+#define DpsPreSort dps_heapsort
+
+
+#ifdef WITH_PARANOIA
+#define DpsViolationExit(h,A) _DpsViolationExit(A, __FILE__, __LINE__, h)
+#define DpsViolationCheck(h,A) _DpsViolationCheck(A,__FILE__, __LINE__, h)
+extern void *DpsViolationEnter(void *);
+extern void _DpsViolationExit(void*, const char*, int, int h);
+extern void _DpsViolationCheck(void*, const char*, int, int h);
+#endif
+
+
+
+
+
+
+#endif /* _DPS_CONFIG_H */
+/* --- END 'bottom' portion from acconfig.h --- */

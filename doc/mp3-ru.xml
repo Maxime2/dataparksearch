@@ -1,0 +1,67 @@
+<sect2 id="mp3">
+	<title>Индексирование MP3 файлов
+        <indexterm><primary>MP3</primary></indexterm>
+</title>
+	<para>Индексирование Mp3 файлов работает только для серверов, поддерживающих протокол <literal>HTTP/1.1</literal>,
+если вам необходимо индекировать FTP-сервера, используйте для этого прокси.</para>
+
+	<sect3 id="mp3-indexer">
+		<title>MP3 команды <filename>indexer.conf</filename></title>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>CheckMp3Tag</secondary></indexterm>
+Для включения определения тэгов MP3 добавьте в ваш <filename>indexer.conf</filename> команду:
+		<programlisting>
+CheckMp3Tag yes
+</programlisting>
+		</para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>IndexMP3TagOnly</secondary></indexterm>
+Когда задана эта опция, поисковик скачивает только первые 128 байт для определения MP3 файла.
+		<programlisting>
+IndexMP3TagOnly yes
+</programlisting>
+		</para>
+
+		<para>Если указана эта опция, индексируются только тэги MP3, все HTML-документы сканируются только для поиска ссылок.
+В других случаях, HTML- и TEXT-докусменты индексируются обычным образом, и можно осуществлять поиск среди этих документов.
+		</para>
+	</sect3>
+
+	<sect3 id="mp3-tags">
+		<title>Как <command>indexer</command> обрабатывает тэги MP3</title>
+		<para>Если файл определяется как MP3, <command>indexer</command> создает документ следующего формата:
+		<programlisting>
+&lt;html&gt;
+&lt;title&gt;$SongName&lt;/title&gt;
+&lt;meta name=description content="$Artist"&gt;
+&lt;meta name=keywords content="$Album $Year"&gt;
+&lt;body&gt;$Artist $Album $Year $SongName&lt;/body&gt;
+&lt;/html&gt;
+</programlisting>
+</para>
+		<para>Т.е., в заголовке указывается название композиции, в описании - автор, в ключевых словах - альбом и год,
+В теле документа указывается автор, альбом, год и название композиции.</para>
+	</sect3>
+
+	<sect3 id="mp3-search">
+		<title>Поиск по автору, альбому, названию композиции</title>
+
+		<para>Если требуется ограничить поиск по автору, альбому или названию, смотрите стандартный сеханизм, описанный в
+<xref linkend="search-changeweight"/>. Например, если необходимо ограничить поиск по наименованию композиции, используйте стандартное
+ огрfничение поиска по заголовку.</para>
+
+		<para>Со стандартным порядком указания секций в <filename>indexer.conf-dist</filename>, 
+вы можете добавить следующий код в ваш <filename>search.htm</filename> для ограничения поиска по тэгам MP3:
+		<programlisting>
+&lt;SELECT NAME="wf"&gt;
+&lt;OPTION VALUE="11110" SELECTED="$(wf)"&gt;Все секции
+&lt;OPTION VALUE="01000" SELECTED="$(wf)"&gt;Автор
+&lt;OPTION VALUE="00100" SELECTED="$(wf)"&gt;Альбом
+&lt;OPTION VALUE="00010" SELECTED="$(wf)"&gt;Название
+&lt;/SELECT&gt;
+</programlisting>
+</para>
+	</sect3>
+</sect2>

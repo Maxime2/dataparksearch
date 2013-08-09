@@ -1,0 +1,149 @@
+<sect1 id="dbschema">
+<title>Database schema</title>
+<indexterm><primary>Database schema</primary></indexterm>
+<para>Full database schema used by <application>DataparkSearch</application>
+is defined in appropriate sql-scipts for database creation located under <filename>create</filename> subdirectory.
+
+<table id="db-server">
+<title><varname>server</varname> table schema</title>
+<tgroup cols="2">
+<tbody>
+
+<row><entry><varname>rec_id</varname></entry>
+<entry>Unique record identificator.</entry></row>
+
+<row><entry><varname>enabled</varname></entry><entry>A flag to enable/disable record for <command>indexer</command>.
+</entry></row>
+
+<row><entry><varname>url</varname></entry><entry>URL or pattern.</entry></row>
+
+<row><entry><varname>tag</varname></entry><entry>Tag value.</entry></row>
+
+<row><entry><varname>category</varname></entry><entry><literal>Categories</literal> table rec_id.</entry></row>
+
+<row><entry><varname>command</varname></entry><entry>
+<para>=S - this record is a <varname>server</varname>.</para>
+<para>=F - this record is a <varname>filter</varname>.</para>
+</entry></row>
+
+<row><entry><varname>ordre</varname></entry><entry>Sorting key, it define records order for <varname>server</varname> table loading.
+</entry></row>
+
+<row><entry><varname>parent</varname></entry><entry>If not null, this record is added automaticaly by <command>indexer</command> and
+<varname>url</varname> field contain a server name accepted on record pointed by this filed value.</entry></row>
+
+<row><entry><varname>weight</varname></entry><entry>This record weight for PopRank calculation.</entry></row>
+
+<row><entry><varname>pop_weight</varname></entry><entry>One link weight from pages of this server.
+Calculated automatically. Manually change will have no effect.</entry></row>
+
+
+</tbody>
+</tgroup>
+</table>
+</para>
+
+
+<para>Other server's parameters store in <varname>srvinfo</varname> table. Possible values for several parameters is
+given in table below.
+
+<table id="db-srvinfo">
+<title>Several server's parameters values in <varname>srvinfo</varname> table</title>
+<tgroup cols="2">
+<thead>
+
+<row><entry><varname>sname</varname> value</entry>
+<entry>Possible <varname>sval</varname> values.</entry></row>
+
+</thead>
+<tbody>
+
+<row><entry><varname>Alias</varname></entry><entry>Alias used for <varname>url</varname>.</entry></row>
+
+<row><entry><varname>Period</varname></entry><entry>Reindexing period in seconds.</entry></row>
+
+<row><entry><varname>DeleteOlder</varname></entry><entry>How much time to hold URLs before deleting them from the database.</entry></row>
+
+<row><entry><varname>RemoteCharset</varname></entry><entry>Default charset value.</entry></row>
+
+<row><entry><varname>DefaultLang</varname></entry><entry>Default language value.</entry></row>
+
+<row><entry><varname>Request.Authorization</varname></entry><entry>For basic authorization.</entry></row>
+
+<row><entry><varname>Request.Proxy</varname></entry><entry>Proxy server to access documents from this resource.</entry></row>
+
+<!--row><entry><varname>proxy_port</varname></entry><entry>Proxy server port.</entry></row-->
+
+<row><entry><varname>Request.Proxy-Authorization</varname></entry><entry>Proxy server authorization.</entry></row>
+
+<row><entry><varname>MaxHops</varname></entry><entry>Maximum depth of way in "mouse" clicks from start url.</entry></row>
+
+<row><entry><varname>Index</varname></entry><entry>A flag to enable/disable documents indexing.</entry></row>
+
+<row><entry><varname>Follow</varname></entry><entry><para>=0, "page"</para>
+<para>=1, "path"</para>
+<para>=2, "site"</para>
+<para>=3, "world"</para>
+</entry></row>
+
+<!--row><entry><varname>deletebad</varname></entry><entry>.</entry></row-->
+
+<row><entry><varname>Robots</varname></entry><entry>A flag to enable/disable <filename>robots.txt</filename> file using.</entry></row>
+
+<row><entry><varname>DetectClones</varname></entry><entry>A flag to enable/disable &quot;clones&quot; detection.</entry></row>
+
+<row><entry><varname>MaxNetErrors</varname></entry><entry>Maximum network errors for this server.</entry></row>
+
+<row><entry><varname>NetDelayTime</varname></entry><entry>Indexing delay time if a network error is occurred.</entry></row>
+
+<row><entry><varname>ReadTimeout</varname></entry><entry>Network timeout value.</entry></row>
+
+<row><entry><varname>match_type</varname></entry><entry>
+<para>=0, DPS_MATCH_FULL - full coincidence.</para>
+<para>=1, DPS_MATCH_BEGIN - pattern is a URL prefix.</para>
+<para>=2, DPS_MATCH_SUBSTR - pattern is a URL substring.</para>
+<para>=3, DPS_MATCH_END - pattern is a URL suffix.</para>
+<para>=4, DPS_MATCH_REGEX - pattern is a regular expression.</para>
+<para>=5, DPS_MATCH_WILD - pattern is a wildcards pattern (* and ? wildcards may be used).</para>
+<para>=6, DPS_MATCH_SUBNET - &lt; not yet supported &gt;.</para>
+</entry></row>
+
+<row><entry><varname>case_sense</varname></entry><entry>
+<para>=1, - case insensitive comparison.</para>
+<para>=0, - case sensitive comparison.</para>
+</entry></row>
+
+<row><entry><varname>nomatch</varname></entry><entry>
+<para>=1, - URLs not match this record is accepted.</para>
+<para>=0, - URL match this record is accepted.</para>
+</entry></row>
+
+
+<row><entry><varname>Method</varname></entry><entry>
+<para>Specify a document action for this command.</para>
+<para>=Allow, - all corresponding documents will be indexed and scanned for new links.</para>
+<para>=Disallow, - all corresponding documents will be ignored and deleted from database.</para>
+<para>=HrefOnly, - all corresponding documents will be only scanned for new links (not indexed).</para>
+<para>=CheckOnly, - all corresponding documents will be requested by HTTP HEAD request, not HTTP GET, 
+i.e. inly brief info about documents (size, last modified, content type) will be fetched.</para>
+<para>=Skip, - all corresponding documents will be skipped while indexing.</para>
+<para>=CheckMP3, - all corresponding documents will be checked for MP3 tags along if its Content-Type is equal to audio/mpeg.</para>
+<para>=CheckMP3Only, - is equal to CheckMP3, but if MP3 tag is not present, processing on Content-Type will not be taken.</para>
+<para>=TagIf, - all documents will be maked by tag specified.</para>
+<para>=CategoryIf, - all documents will be maked by category specified.</para>
+<para>=IndexIf, - all documents will be indexed, if the value of section specified match the pattern given.</para>
+<para>=NoIndexIf, - all documents will be ignored and deleted from database, if the value of section specified match the pattern given.</para>
+</entry></row>
+
+<row><entry><varname>Section</varname></entry><entry>
+<para>Section name used in pattern matching for IndexIf and NotIndexIf methods.</para>
+</entry></row>
+
+</tbody>
+</tgroup>
+</table>
+</para>
+
+
+</sect1>
+

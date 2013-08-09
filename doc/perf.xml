@@ -1,0 +1,129 @@
+<sect1 id="perf">
+<indexterm><primary>Performance issues</primary></indexterm>
+	<title><application>DataparkSearch</application> performance issues</title>
+
+<para>The cache mode is the fastest <application>DataparkSearch</application>'s storage mode. Use it if
+you need maximal search speed.
+</para>
+
+<para>
+<indexterm><primary>Command</primary><secondary>ColdVar</secondary></indexterm>
+If your <filename>/var</filename> directory isn't changed since the indexing has been finished, you may disable file locking using 
+<command>"ColdVar yes"</command> command placed in <filename>search.htm</filename> (or in <filename>searchd.conf</filename>,
+if <command>searchd</command> is used). This allow you to save some time on file locking.
+</para>
+
+<para>Using <userinput>UseCRC32URLId yes</userinput> command (see <xref linkend="usecrc32urlid_cmd"/>) allow to speed up indexing, but
+small number of collisions is possible, especially on large database. 
+</para>
+
+
+<sect2 id="searchd-rec">
+<title><command>searchd</command> usage recommendation</title>
+<para>If you plan use ispell data, synonym or stopword lists, it's recommended setup
+the <command>searchd</command> daemon for speed-up searches (See <xref linkend="searchd"/>). 
+<command>searchd</command> daemon preload all these data and lists
+and holds them in memory. This reduce average search query execution time.
+</para>
+<para>Also, <command>searchd</command> can preload url info data (20 bytes per URL indexed) and 
+cache mode limits (4 or 8 bytes per URL depend on limit type). This allow reduce average search time.
+</para>
+</sect2>
+
+
+<sect2 id="search-cache">
+<title>Search results caching</title>
+<indexterm><primary>Command</primary><secondary>Cache</secondary></indexterm>
+<para><para>Use "<command>Cache yes</command>" command in your <filename>search.htm</filename> template (or in <filename>searchd.conf</filename> file, if
+<application>searchd</application> is used) to enable search results cache. That allows to reduce significantly the answer time for repeating queries.</para>
+<para>
+If you use search results caching, please note you need to empty <filename>var/cache</filename> directory after each indexing/reindexing.
+</para>
+</sect2>
+
+
+<sect2 id="mfs-rec">
+<title>Memory based filesystem (mfs) usage recommendation</title>
+<para>If you use cache storage mode and you have enough RAM on your PC, 
+you may place <filename>/usr/local/dpsearch/var</filename>
+directory on memory based filesystem (mfs). This allow speedup both indexing and searching.
+</para>
+<para>If you haven't enough RAM to fit  <filename>/usr/local/dpsearch/var</filename>, 
+you may place on memory filesystem any of <filename>/usr/local/dpsearch/var/tree</filename>,
+<filename>/usr/local/dpsearch/var/url</filename> or <filename>/usr/local/dpsearch/var/store</filename>
+directories as well.
+</para>
+</sect2>
+
+
+<sect2 id="urlinfo-cmd">
+<title><command>URLInfoSQL</command> command</title>
+<indexterm><primary>Command</primary><secondary>URLinfoSQL</secondary></indexterm>
+<para>For dbmode cache, you may use <command>URLInfoSQL no</command> command to disable storing URL Info into SQL database.
+But using this command, you'll be unable to use limits by language and by Content-Type.
+</para>
+</sect2>
+
+<sect2 id="srvinfo-cmd">
+<title><command>SRVInfoSQL</command>command</title>
+<indexterm><primary>Command</primary><secondary>SRVInfoSQL</secondary></indexterm>
+<para>With the <command>SRVInfoSQL no</command> command you can switch off storing auxiliary data into "srvinfo" SQL-table.
+In this case this table can not be used to load configuration with <command>LoadServerTable</command> command (See <xref linkend="srvtable-load"/>).
+</para>
+</sect2>
+
+<sect2 id="markforindex-cmd">
+<title><command>MarkForIndex</command> command</title>
+<indexterm><primary>Command</primary><secondary>MarkForIndex</secondary></indexterm>
+<para>By default, <application>DataparkSearch</application> are marking all URLs selected for indexing as indexed for 4 hours.
+This prevent possible simultaneous indexing of the same URL by different indexer instance running. But for huge installation this feature
+can take some time for processing. You may switch off this markage using <command>"MarkForIndex no"</command> in your 
+<filename>indexer.conf</filename> file.
+</para>
+</sect2>
+
+
+<sect2 id="checkinsertsql-cmd">
+<title><command>CheckInsertSQL</command> command</title>
+<indexterm><primary>Command</primary><secondary>CheckInsertSQL</secondary></indexterm>
+<para>By default, <application>DataparkSearch</application> trying to insert data into SQL database regardless it's already present there.
+On some systems this raise some error loggings. To avoid such errors, 
+you may enable additional checks, is the inserting data new, by specifying
+<command>CheckInsertSQL yes</command> command in your <filename>indexer.conf</filename>.
+</para>
+</sect2>
+
+
+
+
+	<sect2 id="perf-mysql">
+		<title>MySQL performance</title>
+		<para>MySQL users may declare <application>DataparkSearch</application> tables with
+<option>DELAY_KEY_WRITE=1</option> option. This will make the updating
+of indexes faster, as these are not logged to disk until the file is
+closed. <option>DELAY_KEY_WRITE</option> excludes updating indexes on
+disk at all. </para>
+		<para>With it indexes are processed only in memory and
+written onto disk as last resort, command <command>FLUSH TABLES
+</command> or mysqld shutdown. This can take even minutes and
+impatient user can <literal>kill -9 mysql server</literal> and break
+index files with this.  Another downside is that you should run
+<literal>myisamchk</literal> on these tables before you start mysqld
+to ensure that they are okay if something killed mysqld in the
+middle.</para>
+		<para>Because of it we didn't include this table
+option into default tables structure. However as the key information
+can always be generated from the data, you should not lose anything by
+using <option>DELAY_KEY_WRITE</option>. So, use this option for your
+own risk.</para>
+	</sect2>
+
+<sect2 id="ares">
+<title>Asynchronous resolver library</title>
+<para>Using <ulink url="http://c-ares.haxx.se/">c-ares</ulink>, 
+an asynchronous resolver library (dns/c-ares in FreeBSD ports collection), allow to perform DNS queries without blocking for every
+indexing thread. Please note, this also increase the number of concurrent queries to your DNS server.
+</para>
+</sect2>
+
+</sect1>

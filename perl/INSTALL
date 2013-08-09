@@ -1,0 +1,15 @@
+INSTALLATION
+
+1. Install DataparkSearch at your system. You need enable threadsless 
+version of libdpsearch (use --enable-threadsless option for confirure).
+
+
+2. Follow the standard installation procedure for Perl modules, which is to
+type the following commands:
+
+	perl Makefile.PL
+	make
+	make test
+	make install
+
+You'll probably need to do the last as root.

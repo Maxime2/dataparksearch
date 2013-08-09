@@ -1,0 +1,312 @@
+DROP TABLE dellog;
+DROP TABLE bdict00;
+DROP TABLE bdict01;
+DROP TABLE bdict02;
+DROP TABLE bdict03;
+DROP TABLE bdict04;
+DROP TABLE bdict05;
+DROP TABLE bdict06;
+DROP TABLE bdict07;
+DROP TABLE bdict08;
+DROP TABLE bdict09;
+DROP TABLE bdict0A;
+DROP TABLE bdict0B;
+DROP TABLE bdict0C;
+DROP TABLE bdict0D;
+DROP TABLE bdict0E;
+DROP TABLE bdict0F;
+DROP TABLE bdict10;
+DROP TABLE bdict11;
+DROP TABLE bdict12;
+DROP TABLE bdict13;
+DROP TABLE bdict14;
+DROP TABLE bdict15;
+DROP TABLE bdict16;
+DROP TABLE bdict17;
+DROP TABLE bdict18;
+DROP TABLE bdict19;
+DROP TABLE bdict1A;
+DROP TABLE bdict1B;
+DROP TABLE bdict1C;
+DROP TABLE bdict1D;
+DROP TABLE bdict1E;
+DROP TABLE bdict1F;
+
+
+CREATE TABLE dellog (
+   tstamp int   not null,
+   ndocs  int   not null,
+   docs   varchar(32765)  not null
+);
+
+CREATE TABLE bdict00 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict00_word ON bdict00 (word);
+
+CREATE TABLE bdict01 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict01_word ON bdict01 (word);
+
+CREATE TABLE bdict02 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict02_word ON bdict02 (word);
+
+
+CREATE TABLE bdict03 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict03_word ON bdict03 (word);
+
+
+CREATE TABLE bdict04 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict04_word ON bdict04 (word);
+
+
+CREATE TABLE bdict05 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict05_word ON bdict05 (word);
+
+
+CREATE TABLE bdict06 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict06_word ON bdict06 (word);
+
+
+CREATE TABLE bdict07 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict07_word ON bdict07 (word);
+
+
+CREATE TABLE bdict08 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict08_word ON bdict08 (word);
+
+CREATE TABLE bdict09 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict09_word ON bdict09 (word);
+
+CREATE TABLE bdict0A (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict0A_word ON bdict0A (word);
+
+CREATE TABLE bdict0B (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict0B_word ON bdict0B (word);
+
+CREATE TABLE bdict0C (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict0C_word ON bdict0C (word);
+
+CREATE TABLE bdict0D (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict0D_word ON bdict0D (word);
+
+CREATE TABLE bdict0E (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict0E_word ON bdict0E (word);
+
+CREATE TABLE bdict0F (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict0F_word ON bdict0F (word);
+
+
+
+
+CREATE TABLE bdict10 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict10_word ON bdict10 (word);
+
+CREATE TABLE bdict11 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict11_word ON bdict11 (word);
+
+CREATE TABLE bdict12 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict12_word ON bdict12 (word);
+
+
+CREATE TABLE bdict13 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict13_word ON bdict13 (word);
+
+
+CREATE TABLE bdict14 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict14_word ON bdict14 (word);
+
+
+CREATE TABLE bdict15 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict15_word ON bdict15 (word);
+
+
+CREATE TABLE bdict16 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict16_word ON bdict16 (word);
+
+
+CREATE TABLE bdict17 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict17_word ON bdict17 (word);
+
+
+CREATE TABLE bdict18 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict18_word ON bdict18 (word);
+
+CREATE TABLE bdict19 (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict19_word ON bdict19 (word);
+
+CREATE TABLE bdict1A (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict1A_word ON bdict1A (word);
+
+CREATE TABLE bdict1B (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict1B_word ON bdict1B (word);
+
+CREATE TABLE bdict1C (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict1C_word ON bdict1C (word);
+
+CREATE TABLE bdict1D (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict1D_word ON bdict1D (word);
+
+CREATE TABLE bdict1E (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict1E_word ON bdict1E (word);
+
+CREATE TABLE bdict1F (
+   word    varchar(32) not null,
+   tstamp  int         not null,
+   ncoords int         not null,
+   coords  varchar(32765)        not null
+);
+CREATE INDEX bdict1F_word ON bdict1F (word);
+

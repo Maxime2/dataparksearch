@@ -1,0 +1,1032 @@
+<sect1 id="indexcmd">
+	<title>Остальные команды, используемые в <filename>indexer.conf</filename></title>
+
+
+<sect2>
+<title>Команда <command>Include</command></title>
+<indexterm><primary>Команда</primary><secondary>Include</secondary></indexterm>
+
+<para>Вы можете включить другой конфигурационный файл в любом месте файла <filename>indexer.conf</filename>
+при помощи команды <userinput>Include &lt;filename&gt;</userinput>.
+Путь считается абсолютным, если &lt;<filename>filename</filename>&gt; начинается с "/":
+<programlisting>
+Include /usr/local/dpsearch/etc/inc1.conf
+</programlisting></para>
+
+<para>В противном случае пусть считается относительным:
+
+<programlisting>
+Include inc1.conf
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="dbaddr_cmd">
+<title>Команда <command>DBAddr</command></title>
+<indexterm><primary>Команда</primary><secondary>DBAddr</secondary></indexterm>
+
+<para>Команда <command>DBAddr</command> является описание хранилища данных в URL-подобном стиле.
+Она определяет параметры (тип, хост, имя базы данных, порт, имя пользователя и пароль и т.д.)
+для соединения с <application>SQL</application>-сервером или другим хранилищем данных.
+Может быть задано несколько хранилищ данных. Но все команды <command>DBAddr</command> должны быть указаны
+первыми в файле конфигурации, до любой другой команды.
+Формат команды:
+<programlisting>
+DBAddr &lt;DBType&gt;:[//[DBUser[:DBPass]@]DBHost[:DBPort]]/DBName/[?[dbmode=mode]{&amp;&lt;имя параметра&gt;=&lt;значение параметра&gt;}]
+</programlisting>
+</para>
+
+<note>
+<para>об <application>ODBC</application>.
+       Используйте <option>DBName</option> для задания имени источника данных (DSN) <application>ODBC</application>.
+       <option>DBHost</option> не имеет значения, используйте <literal>localhost</literal>.
+</para>
+</note>
+<note>
+<para>о <application>Solid</application>.
+       Используйте <option>DBHost</option> для указания сервера <application>Solid</application>.
+       <option>DBName</option> не имеет значения для <application>Solid</application>.
+</para>
+</note>
+
+<para>Вы можете использовать URL-кодирование для  <option>DBUser</option> и <option>DBPass</option>, если вам необходимо использовать
+специальные символы в пароле или имени пользователя. Например, если у вас пароль <userinput>ABC@DEF</userinput>, его необходимо
+указывать в виде <userinput>ABC%40DEF</userinput>.
+</para>
+
+<para> На данный момент поддерживаются следующие значения <option>DBType</option>:
+mysql, pgsql, msql, solid, mssql, oracle, ibase, sqlite.
+Actually, it does not matter for native libraries support.
+But ODBC users should specify one of supported values.
+If your database type is not supported, you may use "unknown" instead.
+</para>
+
+<para>Пользователи <application>MySQL</application> и <application>PostgreSQL</application> могут указывать путь до
+<application>Unix</application>-сокета при соединении с <literal>localhost</literal>:
+<userinput>
+mysql://foo:bar@localhost/dpsearch/?socket=/tmp/mysql.sock
+</userinput>
+</para>
+
+<para>Если вы используете <application>PostgreSQL</application> и не указываете имя хоста,
+       т.е. <userinput>pgsql://user:password@/dbname/</userinput>
+в этом случае <application>PostgreSQL</application> не будет работать по <application>TCP</application>,
+а будет использовать стандартный <application>Unix</application>-сокет.
+</para>
+
+
+<para><literal>Параметр dbmode</literal>.
+Вы также можете указать способ хранения слов.
+Если указан "<option>single</option>", все слова сохраняются в одной таблице (файле).
+Если указан"<option>multi</option>", слова будут храниться в разных таблицах (файлах) в зависимости от длины этих слов.
+Режим "<option>multi</option>" обычно быстрее, но требует больше таблиц (файлов).
+Если выбран режим "<option>crc</option>", <application>DataparkSearch</application> будет сохранять вместо слов их 32-битное целые
+идентификаторы, вычисленные при помощи CRC32 алгоритма. Этот режим требует меньше дискового пространства и быстрее по
+сравнению с режимами "<option>single</option>" и "<option>multi</option>",
+однако он не поддерживает поиск подстрок.
+Режим "<option>crc-multi</option>" использует туже самую структуру, как и режим "<option>crc</option>", но еще сохраняет
+идетификаторы слов в различных таблицах (файлах) в зависимости от длины этих слов, аналогично режиму 
+"<option>multi</option>". По умолчанию используется режим "<option>single</option>".
+</para>
+
+<para><literal>Параметр stored</literal>. Формат:<userinput>
+stored=StoredHost[:StoredPort]</userinput>.
+Этот параметр служит для указания адреса хоста, на котором запущен демон <command>stored</command>, хранящий
+копии документов, относящихся к этому хранилищу.
+</para>
+
+<para><literal>Параметр cached</literal>. Формат:<userinput>
+cached=CachedHost[:CachedPort]</userinput>.
+Этот параметр служит для указания адреса хоста, на котором запущен демон <command>cached</command>.
+Используется только для способа хранения <literal>cache</literal> (см.<xref linkend="cachemode"/>).
+Каждый раз <command>indexer</command> будет при старте соединятся с <filename>cached</filename> по заданному адресу.
+</para>
+
+<para><literal>Параметр charset</literal>. Формат:<userinput>
+charset=DBCharacterSet</userinput>.
+Этот параметр может быть использован для задания кодировки соединения с базой данных. Кодровка, задаваемая в этом параметре должна
+совпадать с кодирокой, заданой командой <command>LocalCharset</command>.
+</para>
+
+<para><literal>Параметр label</literal>. Format: <userinput>
+label=DBAlabel</userinput>.
+Этот параметр может быть использован для назначения метки команде <command>DBAddr</command>. Таким образом, если вы передадите
+<application>DataparkSearch</application> CGI-переменную <option>label</option>, тогда только <command>DBAddr</command>, помеченная
+значением параметра <option>label</option> будет использоваться при выполнении поиска.
+Следовательно, вы можете использовать одного демона <command>searchd</command> для ответа на поисковые запросы по нескольким поисковым
+база, выбираемым по значению параметра <option>label</option>.
+</para>
+<note><para>Если не передано CGI-параметра <option>label</option>, в этом случае только DBAddr без пометки <option>label</option>
+будет использоваться для выполнения поискового запроса.</para>
+</note>
+
+<para>Пример:
+<programlisting>
+DBAddr          mysql://foo:bar@localhost/search/?dbmode=single
+</programlisting>
+</para>
+
+</sect2>
+
+
+<sect2 id="vardir_cmd">
+<title>Команда <command>VarDir</command></title>
+<indexterm><primary>Команда</primary><secondary>VarDir</secondary></indexterm>
+<para>Вы можете задать альтернативную директорию для данных способа хранения <literal>cache</literal> и данных
+<literal>stored</literal>:
+<programlisting>
+VarDir /usr/local/dpsearch/var
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="newsextensions_cmd">
+<title>Команда <command>NewsExtensions</command></title>
+<indexterm><primary>Команда</primary><secondary>NewsExtensions</secondary></indexterm>
+<para>Включает расширенную поддержку групп новостей. Значение по умолчанию <userinput>no</userinput>.
+<programlisting>
+NewsExtensions yes
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="syslogfacility_cmd">
+<title>Команда <command>SyslogFacility</command></title>
+<indexterm><primary>Команда</primary><secondary>SyslogFacility</secondary></indexterm>
+<para> Может быть использована, если <application>Datapark</application> был скомпилировал
+с поддержкой <literal>syslog</literal> и вы хотите изменить значение по умолчанию.
+Задаваемое значение должно быть одним из описаных в файле <filename>syslog.conf</filename>. 
+См. syslog.conf(5).
+<programlisting>
+SyslogFacility local7
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="wordlengths_cmd">
+<title>Команды указания длины слова</title>
+<indexterm><primary>Команда</primary><secondary>MinWordLength</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>MaxWordLength</secondary></indexterm>
+<para>Вы можете указать диапазон длин слов, сохраняемых в базе. По умолчанию, сохраняются слова длиной от 1 до 32 символов.
+<programlisting>
+MinWordLength 1
+MaxWordLength 32
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="maxdocsize_cmd">
+<title>Команда <command>MaxDocSize</command></title>
+<indexterm><primary>Команда</primary><secondary>MaxDocSize</secondary></indexterm>
+<para>Эта команда служит для указания максимального размера документа.
+Значение по умалчанию: 1048576 (1 Mb). Имеет глобальный эффект.
+<programlisting>
+MaxDocSize 1048576
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="mindocsize_cmd">
+<title>Команда <command>MinDocSize</command></title>
+<indexterm><primary>Команда</primary><secondary>MinDocSize</secondary></indexterm>
+<para>Данная команда включает режим только проверки наличия (CheckOnly) для документов размером менее указанного.
+Значение по умолчанию: 0. Имеет глобальный эффект.
+<programlisting>
+MinDocSize 1024
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="indexdocsizelimit_cmd">
+<title>Команда <command>IndexDocSizeLimit</command></title>
+<indexterm><primary>Команда</primary><secondary>IndexDocSizeLimit</secondary></indexterm>
+<para>Используйте эту команду для задания максимального размера данных, записываемых в индекс для одного документа.
+Значение по умолчанию: 0. Это обозначает без ограничений. Команда действует до следующей команды <command>IndexDocSizeLimit</command>.
+<programlisting>
+IndexDocSizeLimit 65536
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="urlselectcachesize_cmd">
+<title>Команда <command>URLSelectCacheSize</command></title>
+<indexterm><primary>Команда</primary><secondary>URLSelectCacheSize</secondary></indexterm>
+<para>Задаёт число документов отбираемых для индексации за раз. Значение по умолчанию: 1024.
+<programlisting>
+URLSelectCacheSize 10240
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="urldumpcachesize_cmd">
+<title>Команда <command>URLDumpCacheSize</command></title>
+<indexterm><primary>Команда</primary><secondary>URLDumpCacheSize</secondary></indexterm>
+<para>Задаёт число документов отбираемых за раз для записи индексов cache mode, загрузки данных в <command>searchd</command> или
+для расчёта индекса популярности. 
+Значение по умолчанию: 100000.
+<programlisting>
+URLDumpCacheSize 10240
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="usecrc32urlid_cmd">
+<title>Команда <command>UseCRC32URLId</command></title>
+<indexterm><primary>Команда</primary><secondary>UseCRC32URLId</secondary></indexterm>
+<para>Включает или выключает генерацию ID для URL используя алгоритм HASH32.
+Значение по умолчанию: "no".
+<programlisting>
+UseCRC32URLId yes
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="httpheader_cmd">
+<title>Команда <command>HTTPHeader</command></title>
+<indexterm><primary>Команда</primary><secondary>HTTPHeader</secondary></indexterm>
+<para>Вы можете добавить свои собсвенные заголовки в запрос HTTP на получение документов к индексации.
+Вы не можете вказывать таким образом заголовки "If-Modified-Since" или "Accept-Charset",
+эти заголовки формируются indexerом самостоятельно.
+Заголовок "User-Agent: DataparkSearch/version" также формируется самостоятельно, но вы можете заменить его.
+Command has global effect for all configuration file.
+<programlisting>
+HTTPHeader "User-Agent: My_Own_Agent"
+HTTPHeader "Accept-Language: ru, en"
+HTTPHeader "From: webmaster@mysite.com"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="allow_cmd">
+<title>Команда <command>Allow</command></title>
+<indexterm><primary>Команда</primary><secondary>Allow</secondary></indexterm>
+<programlisting>
+Allow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>Данная команда разрешает к индексирования URL, подпадающие под указаный шаблон.
+Первые три необязательных параметра задают тип сравнения.
+Значения по умолчанию: Match, NoCase, String.
+Используйте <option>NoCase</option> или <option>Case</option> чтобы указать чувтсвительное или нечувствительное к регистру сравнение.
+Используйте <option>Regex</option> чтобы выбрать сравнение на основе регулярного выражения. 
+Используйте <option>String</option> чтобы задать сравнение по текстовому шаблону с использование спецсимволов.
+Возможные спецсимволы: '*' - для обозначения любого числа символов и '?' - для обозначения одного символа.
+Обратите внимание, что символы '?' и '*' имеют специальное значение при указатии тпа сравнения <option>String</option>. 
+Вы можете использовать <option>Regex</option> для описания документов, содержащих символы '?' и/или '*' в URL.
+<option>String</option> намного быстрее <option>Regex</option>. Используйте <option>String</option> где это возможно.
+Вы можете задавать несколько аргументов для одной команды <command>Allow</command>.
+Вы можете использовать эту команду в любом месте файла конфигурации.
+Имеет глобальный эффект.
+Имейте ввиду, что <application>DataparkSearch</application> автоматически добавляет команду <literal>Allow regex .*</literal>
+после чтения файла конфигурации. Это означает, что разрешено всё, что не зыпрещено явно.
+</para>
+<para>Примеры
+<programlisting>
+#  Разрешить всё:
+Allow *
+#  Разрешить всё, исключая расширения .php .cgi .pl не учитывая регист и используя регулярные выражения:
+Allow NoMatch Regex \.php$|\.cgi$|\.pl$
+#  Разрешить расширение .HTM учитывая регистр:
+Allow NoCase *.HTM
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="disallow_cmd">
+<title>Команда <command>Disallow</command></title>
+<indexterm><primary>Команда</primary><secondary>Disallow</secondary></indexterm>
+<programlisting>
+Disallow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Данная команда запрещает к индексирования URL, подпадающие под указаный шаблон.
+Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
+Вы можете указывать несколько аргументов для одной команды <command>Disallow</command>.
+Имеет глобальный эффект.
+Примеры:
+<programlisting>
+# Disalow URLs that are not in udm.net domains using "string" match:
+Disallow NoMatch *.udm.net/*
+# Disallow any except known extensions and directory index using "regex" match:
+Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
+# Exclude cgi-bin and non-parsed-headers using "string" match:
+Disallow */cgi-bin/* *.cgi */nph-*
+# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# special meaning in "string" match, so we have to use "regex" match here:
+Disallow Regex  \?
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="checkonly_cmd">
+<title>Команда <command>CheckOnly</command></title>
+<indexterm><primary>Команда</primary><secondary>CheckOnly</secondary></indexterm>
+<programlisting>
+CheckOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Значение первый трёх необязательных параметров такое же, как и у команды
+<command>Allow</command>.
+Для URL, подпадающих под эту команду, вместо HTTP метода GET <command>indexer</command> будет использовать метод HEAD.
+Это означает, что будет проверятся только наличие документа, сам же документ скачиваться и индексироваться не будет.
+Это полезно для zip,exe,arj и других двоичных файлов, например, для организации поиска по имени файла (что-то наподобии ftp-поиска).
+Вы можете задавать несколько аргументов для одной команды <command>CheckOnly</command>.
+Имеет глобальный эффект.
+Примеры:
+<programlisting>
+# Check some known non-text extensions using "string" match:
+CheckOnly *.b	  *.sh   *.md5
+# or check ANY except known text extensions using "regex" match:
+CheckOnly NoMatch Regex \/$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="hrefonly_cmd">
+<title>Команда <command>HrefOnly</command></title>
+<indexterm><primary>Команда</primary><secondary>HrefOnly</secondary></indexterm>
+<programlisting>
+HrefOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Значение первый трёх необязательных параметров такое же, как и у команды
+<command>Allow</command>.
+
+Используйте эту команду для поиска ссылок в указанных URL.
+Содержимое самих файлов не
+индексируется. Команда имеет глобальный эффект.
+
+Например, при индексировании почтовых архивов, индесные страницы
+(типа mail.10.html, thread.21.html, etc.) будут сканировать для поиска ссылок на страницы с письмами,
+но не будут индексироваться:
+<programlisting>
+HrefOnly */mail*.html */thread*.html
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="checkmp3_cmd">
+<title>Команда <command>CheckMp3</command></title>
+<indexterm><primary>Команда</primary><secondary>CheckMp3</secondary></indexterm>
+<programlisting>
+CheckMp3 [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]
+</programlisting>
+<para>
+Значение первый трёх необязательных параметров такое же, как и у команды
+<command>Allow</command>.
+Если URL подпадает под эту команду, то <command>indexer</command> скачает небольшую порцию этого документа и попробует найти
+тэги MP3 в этом фрагменте. При обнаружении, тэги будут проиндексированы. В противном случае, документ будет скачен целиком и
+обработан в обычном порядке.
+Замечание: это работает только для серверов, поддерживающих HTTP/1.1, т.е. используется заголовок "Range: bytes".
+<programlisting>
+CheckMp3 *.bin *.mp3
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="checkmp3only_cmd">
+<title>Команда <command>CheckMp3Only</command></title>
+<indexterm><primary>Команда</primary><secondary>CheckMp3Only</secondary></indexterm>
+<programlisting>
+CheckMP3Only [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]
+</programlisting>
+<para>
+Эта команда аналогична команде <command>CheckMP3</command>, за исключением: если тэги MP3 не будут обнаружены,
+документ не скачивается целиком и не обрабатывается.
+
+<programlisting>
+CheckMP3Only *.bin *.mp3
+</programlisting>
+</para>
+</sect2>
+
+
+
+<sect2 id="indexif_cmd">
+<title>Команда <command>IndexIf</command></title>
+<indexterm><primary>Команда</primary><secondary>IndexIf</secondary></indexterm>
+<programlisting>
+IndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Эта команда служит для разрешения индексирования при совпадении шаблона <option>arg</option> 
+по заданой секции <option>section</option> документа.
+Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
+(см. <xref linkend="allow_cmd"/>).
+</para>
+<para>Пример
+<programlisting>
+IndexIf regex Title Manual
+IndexIf body "*important detail*"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="noindexif_cmd">
+<title>Команда <command>NoIndexIf</command></title>
+<indexterm><primary>Команда</primary><secondary>NoIndexIf</secondary></indexterm>
+<programlisting>
+NoIndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Эта команда служит для запрещения индексирования при совпадении шаблона <option>arg</option> 
+по заданой секции <option>section</option> документа.
+Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
+(см. <xref linkend="allow_cmd"/>).
+</para>
+<para>Пример
+<programlisting>
+NoIndexIf regex Title Sex
+IndexIf body *xxx*
+</programlisting>
+</para>
+</sect2>
+
+
+
+
+
+
+<sect2 id="holdbadhrefs_cmd">
+<title>Команда <command>HoldBadHrefs</command></title>
+<indexterm><primary>Команда</primary><secondary>HoldBadHrefs</secondary></indexterm>
+<programlisting>
+HoldBadHrefs &lt;time&gt;
+</programlisting>
+<para>
+Задаёт сколько времени хранить документы с ошибочными кодами статуса перед удалением их из базы.
+Например, если какой-либо веб-сервер временно недоступен, <command>indexer</command> не удалит страницы этого
+сервера сразу. Однако, если этот сайт будет недоступен продолжительное время, страницы с этого сайта будут удалены по истечении
+указаного интервала времени.
+Формат для параметра &lt;time&gt; см. в описании команды <command>Period</command> в <xref linkend="period_cmd"/>.
+<programlisting>
+HoldBadHrefs 30d
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="deleteolder_cmd">
+<title>Команда <command>DeleteOlder</command></title>
+<indexterm><primary>Команда</primary><secondary>DeleteOlder</secondary></indexterm>
+<programlisting>
+DeleteOlder &lt;time&gt;
+</programlisting>
+<para>
+Задаёт сколько времени хранить проиндексированные документы в базе.
+Например, при индексировании новостных сайтов, вы можете задать период, по истечении которого устаревшие
+страницы новостей будут удалены из базы, независимо от статуса этих документов.
+Формат для параметра &lt;time&gt; см. в описании команды <command>Period</command> в <xref linkend="period_cmd"/>.
+Значение по умолчанию: 0, - означает "не проверять". Вы можете указать несколько команд <command>DeleteOlder</command>,
+например, по одной для каждой команды <command>Server</command>.
+<programlisting>
+DeleteOlder 7d
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="useremotecontenttype_cmd">
+<title>Команда <command>UseRemoteContentType</command></title>
+<indexterm><primary>Команда</primary><secondary>UseRemoteContentType</secondary></indexterm>
+<programlisting>
+UseRemoteContentType yes/no
+</programlisting>
+<para>
+Данная команда указывает брать ли тип содержимого из заголовков ответа сервера (yes) или определять его на основании
+комманд <command>AddType</command>, указанных в файле конфигурации (no).
+Если задано 'no' и по заданым командам <command>AddType</command> определить тип не удаётся, то используется тип
+из заголовков ответа сервера.
+Значение по умолчанию: yes.
+<programlisting>
+UseRemoteContentType yes
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="addtype_cmd">
+<title>Команда <command>AddType</command></title>
+<indexterm><primary>Команда</primary><secondary>AddType</secondary></indexterm>
+<programlisting>
+AddType [String|Regex] [Case|NoCase] &lt;mime type&gt; &lt;arg&gt; [&lt;arg&gt;...]
+</programlisting>
+<para>
+Эта команда ассоциирует MIME тип с указаным расширением файла.
+Эти команды используются при индексировании ссылок со схемой file://.
+Первые два необязательных параметра используются для задания типа сравнения.
+По умолчанию используются "String" "NoCase" (нечувствительное к регистру стравнение строк с использованием
+символов-шаблонов '?' и '*').
+<programlisting>
+AddType image/x-xpixmap	*.xpm
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="period_cmd">
+<title>Команда <command>Period</command></title>
+<indexterm><primary>Команда</primary><secondary>Period</secondary></indexterm>
+<programlisting>
+Period &lt;time&gt;
+</programlisting>
+<para>
+Задаёт период переиндексирования.
+&lt;time&gt; указывается в формате 'xxxA[yyyB[zzzC]]'                                   
+ (пробелы допустимы между xxx и A и yyy и т.д)                     
+   здесь xxx, yyy, zzz - числа (возможно отризательные!)                         
+         A, B, C могут быть одним из следующего:                                 
+		s - секунда                                                      
+		M - минута                                                      
+		h - час                                                        
+		d - день                                                         
+		m - месяц                                                       
+		y - год                                                        
+      (эти символы такие же как и для функций strptime/strftime).
+                                                                              
+Примеры:
+<programlisting>
+ 15s - 15 секунд
+ 4h30M - 4 часа и 30 минут
+ 1y6m-15d - 1 год и шесть месяцев минус 15 дней
+ 1h-10M+1s - 1 час минус 10 минут плюс 1 секунда
+</programlisting>
+</para>
+<para>
+ Если указано только число без какого-либо символа, то подразумевается, что время задано в секундах.
+
+ Можно задавать несоклько команд <command>Period</command>, например по одной на каждую команду
+<command>Server</command>.
+<programlisting>
+Period 7d
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="periodbyhops_cmd">
+<title>Команда <command>PeriodByHops</command></title>
+<indexterm><primary>Команда</primary><secondary>PeriodByHops</secondary></indexterm>
+<programlisting>
+PeriodByHops &lt;hops&gt; [ &lt;time&gt; ]
+</programlisting>
+<para>Задаёт период переиндексирования для страниц зо значением глубины в &quot;мышиных кликах&quot; равным &lt;hops&gt;. 
+Формат для &lt;time&gt; такой же как и для команды <command>Period</command>.
+</para>
+ <para>
+ Можно задавать несоклько команд <command>PeriodByHops</command>, например по одной на каждую команду
+<command>Server</command>. Если параметр
+&lt;time&gt; опущен, действие указаного ранее значения отменяется.
+</para>
+<para>Если для конретного значения &lt;hops&gt; не задан период переиндексирования командой <command>PeriodByHops</command>,
+в этом случае используется значение, заданное командой <command>Period</command>.
+</para>
+</sect2>
+
+
+<sect2 id="expireat_cmd">
+<title>Команда <command>ExpireAt</command></title>
+<indexterm><primary>Команда</primary><secondary>ExpireAt</secondary></indexterm>
+<programlisting>
+ExpireAt [ A [ B [ C [ D [ E ]]]]]
+</programlisting>
+<para>Эта команда позволяет задать точное время устаревания документов. 
+Может задаваться для каждой команда Server/Realm в отдельности, действует до конца файла конфигурации или до следующей
+команды <command>ExpireAt</command>.
+<command>ExpireAt</command> указаная без аргументов означает отмену всех ранее указаных значений.
+A - обозначает минуту, может быть * или 0-59; B - обозначает час, может быть * или 0-23; C - обозначает день месяца, может быть * или 1-31;
+D - обозначает месяц, может быть * или 1-12; E - обозначает день недели, может быть * или 0-6, 0 - Воскресенье.
+Команда <command>ExpireAt</command> имеет больший приоритет над командами <command>Period</command> или <command>PeriodByHops</command>.
+</para>
+</sect2>
+
+
+<sect2 id="usedateheader_cmd">
+<title>Команда <command>UseDateHeader</command></title>
+<indexterm><primary>Команда</primary><secondary>UseDateHeader</secondary></indexterm>
+<programlisting>
+UseDateHeader yes|no|force
+</programlisting>
+<para>Использовать ли заголовок ответа сервера Date если в ответе сервера не содержится заголовок Last-Modified. 
+Если указано значение force, то заголовок Date используется даже если сервер отправляет заголовок Last-Modified.
+Значение по-умолчанию: no.
+</para>
+</sect2>
+
+
+
+
+
+
+<sect2 id="maxhops_cmd">
+<title>Команда <command>MaxHops</command></title>
+<indexterm><primary>Команда</primary><secondary>MaxHops</secondary></indexterm>
+<programlisting>
+MaxHops &lt;number&gt;
+</programlisting>
+<para>Максимальная глубина пути в "мышиных кликах" от начального URL.
+Значение по умолчанию: 256. Может быть задано несколько команд <command>MaxHops</command>, например,
+по одной на каждую команду <command>Server</command>. Действует до конца файла конфигурации, либо до следующей команды
+<command>MaxHops</command>.
+<programlisting>
+MaxHops 256
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="trackhops_cmd">
+<title>Команда <command>TrackHops</command></title>
+<indexterm><primary>Команда</primary><secondary>TrackHops</secondary></indexterm>
+<programlisting>
+TrackHops yes|no
+</programlisting>
+<para>Включает или выключает ведение счётчика hops при переиндексировании.
+Значение по умолчанию: no (выключено).
+Если включено, то при переиндексировании значение hops для url вычисляется заново, иначе
+значение hops вычисляется один раз при помещении url в базу.
+<programlisting>
+TrackHops yes
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="maxdepth_cmd">
+<title>Команда <command>MaxDepth</command></title>
+<indexterm><primary>Команда</primary><secondary>MaxDepth</secondary></indexterm>
+<programlisting>
+MaxDepth &lt;number&gt;
+</programlisting>
+<para>Максимальная глубина директории в url.
+Значение по умолчанию 16. Может быть задано несколько команд <command>MaxDepth</command>, например,
+по одной на каждую команду <command>Server</command>. Действует до конца файла конфигурации, либо до следующей команды
+<command>MaxDepth</command>.
+<programlisting>
+MaxDepth 2
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="maxdocsperserver_cmd">
+<title>Команда <command>MaxDocsPerServer</command></title>
+<indexterm><primary>Команда</primary><secondary>MaxDocsPerServer</secondary></indexterm>
+<programlisting>
+MaxDocsPerServer &lt;number&gt;
+</programlisting>
+<para>Ограничивает число документов, выкачиваемых с одного Server.
+Значение по умолчанию: -1, что обозначает &quot;без ограничений&quot;.
+Если задано неотрицательное значение, за один запуск <command>indexer</command>
+будет проиндексировано не более указанного числа документов,
+относящихся к одной команда <command>Server</command> или <command>Realm</command>.
+ Может быть задано несколько команд <command>MaxDocsPerServer</command>, например,
+по одной на каждую команду <command>Server</command>. Действует до конца файла конфигурации, либо до следующей команды
+<command>MaxDocsPerServer</command>.
+<programlisting>
+MaxDocsPerServer 100
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="maxhrefsperserver_cmd">
+<title>Команда <command>MaxHrefsPerServer</command></title>
+<indexterm><primary>Команда</primary><secondary>MaxHrefsPerServer</secondary></indexterm>
+<programlisting>
+MaxHrefsPerServer &lt;number&gt;
+</programlisting>
+<para>Ограничивает число ссылок, собираемых с одного Server.
+Значение по умолчанию: -1, что обозначает &quot;без ограничений&quot;.
+Если задано неотрицательное значение, за один запуск <command>indexer</command>
+будет собирать не более указанного числа ссылок,
+относящихся к одной команда <command>Server</command> или <command>Realm</command>.
+ Может быть задано несколько команд <command>MaxHrefsPerServer</command>, например,
+по одной на каждую команду <command>Server</command>. Действует до конца файла конфигурации, либо до следующей команды
+<command>MaxHrefsPerServer</command>.
+<programlisting>
+MaxHrefsPerServer 100
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="maxneterrors_cmd">
+<title>Команда <command>MaxNetErrors</command></title>
+<indexterm><primary>Команда</primary><secondary>MaxNetErrors</secondary></indexterm>
+<programlisting>
+MaxNetErrors &lt;number&gt;
+</programlisting>
+<para>
+Задаёт максимальное число сетевых ошибок для каждого сервера.
+Значение по умолчанию: 16. Используйте значение 0 для выключения проверки.
+Если число ошибок при обращении к какому-то серверу превысит заданое число (например, хост временно не доступен),
+<command>indexer</command> больше небудет пытаться получить документы с этого сервера.
+Команда действует до конца файла конфигурации, или до следующей команды <command>MaxNetErrors</command>.
+<programlisting>
+MaxNetErrors 16
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="readtimeout_cmd">
+<title>Команда <command>ReadTimeOut</command></title>
+<indexterm><primary>Команда</primary><secondary>ReadTimeOut</secondary></indexterm>
+<programlisting>
+ReadTimeOut &lt;time&gt;
+</programlisting>
+<para>
+Таймаут ожидания соединения или продолжения получения данных.
+Формат <option>&lt;time&gt;</option> см. <xref linkend="period_cmd"/>.
+Значение по умолчанию: 30 секунд.
+Команда действует до конца файла, или до следующей команды <command>ReadTimeOut</command>.
+<programlisting>
+ReadTimeOut 30s
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="doctimeout_cmd">
+<title>Команда <command>DocTimeOut</command></title>
+<indexterm><primary>Команда</primary><secondary>DocTimeOut</secondary></indexterm>
+<programlisting>
+DocTimeOut &lt;time&gt;
+</programlisting>
+<para>
+Указывает максимальное время ожидания получения всего документа.
+Формат <option>&lt;time&gt;</option> см. в <xref linkend="period_cmd"/>.
+Значение по умолчанию: 90 секунд.
+Команда действует до конца файла, или до следующей команды <command>DocTimeOut</command>.
+<programlisting>
+DocTimeOut 1m30s
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="neterrordelaytime_cmd">
+<title>Команда <command>NetErrorDelayTime</command></title>
+<indexterm><primary>Команда</primary><secondary>NetErrorDelayTime</secondary></indexterm>
+<programlisting>
+NetErrorDelayTime &lt;time&gt;
+</programlisting>
+<para>
+Указывает период, на который будет отложена обработка документа при возникновении сетевых ошибок при его получении.
+Формат <option>&lt;time&gt;</option> см. в <xref linkend="period_cmd"/>.
+Значение по умолчанию: один день.
+<programlisting>
+NetErrorDelayTime 1d
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="cookies_cmd">
+<title>Команда <command>Cookies</command></title>
+<indexterm><primary>Команда</primary><secondary>Cookies</secondary></indexterm>
+<programlisting>
+Cookies yes/no
+</programlisting>
+<para>
+Включает поддерку ключиков HTTP (HTTP cookies).
+Команда действует до конца файла, или до следующей команды <command>Cookies</command>.
+Значение по умолчанию: no.
+<programlisting>
+Cookies yes
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="section_cmd">
+<title>Команда <command>Section</command></title>
+<indexterm><primary>Команда</primary><secondary>Section</secondary></indexterm>
+<programlisting>
+Section &lt;string&gt; &lt;number&gt; &lt;maxlen&gt; [strict] [ &lt;pattern&gt; &lt;replacement&gt; ]
+</programlisting>
+<para>
+где <option>&lt;string&gt;</option> - имя секции и <option>&lt;number&gt;</option> - ID секции,
+от 0 до 255. Используйте 0 если вы не хотите индексировать какую-либо секцию.
+Лучше всего использовать различные ID для разных секций. В этом случае вы сможете во время поиска задавать различные веса
+конретным секциям, или же исключать их из результатов поиска.
+Параметр <option>&lt;maxlen&gt;</option>  задаёт максимальный размер секции, который будет сохранён в базе 
+(хотя сама секция будет проиндексирована целиком). Используйте 0, если вы не хотите сохранять в базе значение секции.
+<option>&lt;pattern&gt;</option> и <option>&lt;replacement&gt;</option> - шаблон и замена, аналогичная используемым в regex,
+для извления значения секции из тела документа.</para>
+<para>Вы можете указать параметр <option>strict</option> для задания строгой токенизации секции, что означает разбиение на слова
+на любом знаке, не являющемся буквой, независимо от контекста. Например, полезно для индексирования URL.
+</para>
+<para>Вы можете указать параметр <option>single</option> для секций с одним значением, любое следующее значение обрабатываться не будет. Это полезно, напрмер,
+для подавления двоящихся заголовком при использовании библиотеки <application>libextractor</application>, или для сохранения в чистоте заголовков страниц, использующих фреймы, при индексировании поддокументов.
+</para>
+<programlisting>
+# Standard HTML sections: body, title
+Section	body			1	256
+Section title			2	128
+# строгая токенизация для URL
+Section url                     3       0 strict
+# шаблон регулярного выражения для секции
+Section GoodName                3       128 "&lt;h1&gt;([^&lt;]*)&lt;/h1&gt;" "&lt;b&gt;GoodName:&lt;/b&gt; $1"
+</programlisting>
+</sect2>
+
+
+<sect2 id="hrefsection_cmd">
+<title>Команда <command>HrefSection</command></title>
+<indexterm><primary>Команда</primary><secondary>HrefSection</secondary></indexterm>
+<programlisting>
+HrefSection &lt;string&gt; [ &lt;pattern&gt; &lt;replacement&gt; ]
+</programlisting>
+<para>
+где <option>&lt;string&gt;</option> - имя секции,
+<option>&lt;pattern&gt;</option> и <option>&lt;replacement&gt;</option> - шаблон и замена, аналогичная используемым в regex,
+для извления значения секции из тела документа.
+Используйте эту команду для извлечения ссылок из тела документа.
+<programlisting>
+# Standard HTML sections: body, title
+HrefSection	link
+HrefSection     NewLink "&lt;newlink&gt;([^&lt;]*)&lt;/newlink&gt;" "$1"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="FastHrefCheck">
+<title>Команда <command>FastHrefCheck</command></title>
+<indexterm><primary>Команда</primary><secondary>FastHrefCheck</secondary></indexterm>
+<para>Команда "<command>FastHrefCheck yes</command>" полезна для ускорения индексирования, если ваш список команд <command>Server/Realm/Subnet</command> огромен, 
+т.к. она выключает проверку ссылок по списку серверов на этапе парсинга страницы.
+</para>
+</sect2>
+
+
+<sect2 id="index_cmd">
+<title>Команда <command>Index</command></title>
+<indexterm><primary>Команда</primary><secondary>Index</secondary></indexterm>
+<programlisting>
+Index yes/no
+</programlisting>
+<para>
+Разрешает или запрещает сохранения проиндексированных слов в базу.
+Применяется, например, при проверке ссылок на страницах сайта или сайтов.
+Команда действует до конца файла, или до следующей команды <command>Index</command>.
+Значение по умолчанию: yes.
+Prevent indexer from storing words into database.
+<programlisting>
+Index no
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="proxyauthbasic_cmd">
+<title>Команда <command>ProxyAuthBasic</command></title>
+<indexterm><primary>Команда</primary><secondary>ProxyAuthBasic</secondary></indexterm>
+<programlisting>
+ProxyAuthBasic login:passwd
+</programlisting>
+<para>
+Задаёт http proxy basic authorization.
+Может быть указана перед каждой командой <command>Server</command>, но действует только для этой команды!.
+Может также использовать перед командой <command>Proxy</command>.
+Примеры:
+<programlisting>
+ProxyAuthBasic somebody:something  
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="proxy_cmd">
+<title>Команда <command>Proxy</command></title>
+<indexterm><primary>Команда</primary><secondary>Proxy</secondary></indexterm>
+<programlisting>
+Proxy your.proxy.host[:port]
+</programlisting>
+<para>
+Вместо прямого соединения, использовать прокси-соединение.
+Значение номера порта по умолчанию: 3128 (Squid).
+Команда действует до конца файла, или до следующей команды <command>Proxy</command>.
+Если не указано ни одной команды <command>Proxy</command>, или для этой команды не указан хост - используется
+прямое соединение.
+Примеры:
+<programlisting>
+#           Proxy on atoll.anywhere.com, port 3128:
+Proxy atoll.anywhere.com
+#           Proxy on lota.anywhere.com, port 8090:
+Proxy lota.anywhere.com:8090
+#           Disable proxy (direct connect):
+Proxy
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="authbasic_cmd">
+<title>Команда <command>AuthBasic</command></title>
+<indexterm><primary>Команда</primary><secondary>AuthBasic</secondary></indexterm>
+<programlisting>
+AuthBasic login:passwd
+</programlisting>
+<para>
+Включает использование basic http authorization.
+Может быть указана перед каждой командой <command>Server</command>, но действует только для этой команды!.
+Примеры:
+<programlisting>
+AuthBasic somebody:something  
+
+# If you have password protected directory(ies), but whole server is open,use:
+AuthBasic login1:passwd1
+Server http://my.server.com/my/secure/directory1/
+AuthBasic login2:passwd2
+Server http://my.server.com/my/secure/directory2/
+Server http://my.server.com/
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="serverweight_cmd">
+<title>Команда <command>ServerWeight</command></title>
+<indexterm><primary>Команда</primary><secondary>ServerWeight</secondary></indexterm>
+<programlisting>
+ServerWeight &lt;number&gt;
+</programlisting>
+<para>
+Задаёт вес Server для расчёта Popularity Rank (см. <xref linkend="poprank"/>). 
+Значение по умолчанию: 1.
+<programlisting>
+ServerWeight 1
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="optimizeatupdate_cmd">
+<title>Команда <command>OptimizeAtUpdate</command></title>
+<indexterm><primary>Команда</primary><secondary>OptimizeAtUpdate</secondary></indexterm>
+<programlisting>
+OptimizeAtUpdate yes
+</programlisting>
+<para>
+Задаёт стратегию оптимизации индекса слов.
+Значение по умолчанию: no.
+Если включено, позволяет экономить дисковое пространство, однако замедляет процесс индексирования.
+Может указываться и в <filename>indexer.conf</filename> и в <filename>cached.conf</filename>.
+</para>
+</sect2>
+
+<sect2 id="skipunreferred_cmd">
+<title>Команда <command>SkipUnreferred</command></title>
+<indexterm><primary>Команда</primary><secondary>SkipUnreferred</secondary></indexterm>
+<programlisting>
+SkipUnreferred yes|no|del
+</programlisting>
+<para>
+Значение по умолчанию: no. Используйте эту команду для пропуска переиндексации или для удаления документов, на которые никто
+не ссылается. Для этой команды требуется включить сбор ссылок (см. <xref linkend="poprank"/>).
+</para>
+</sect2>
+
+
+
+<sect2 id="bind_cmd">
+<title>Команда <command>Bind</command></title>
+<indexterm><primary>Команда</primary><secondary>Bind</secondary></indexterm>
+<programlisting>
+Bind 127.0.0.1
+</programlisting>
+<para>
+Если ваша система имеет несколько сетевых интерфейсов, вы можете используйте эту команду для задания локального ip адреса.
+</para>
+</sect2>
+
+
+<sect2 id="provideref_cmd">
+<title>Команда <command>ProvideReferer</command></title>
+<indexterm><primary>Команда</primary><secondary>ProvideReferer</secondary></indexterm>
+<programlisting>
+ProvideReferer yes
+</programlisting>
+<para>
+Используйте эту команду для передачи заголовка запроса <literal>Referer:</literal> для HTTP и HTTPS соединений.
+</para>
+</sect2>
+
+<sect2 id="longesttextitems_cmd">
+<title>Команда <command>LongestTextItems</command></title>
+<indexterm><primary>Команда</primary><secondary>LongestTextItems</secondary></indexterm>
+<programlisting>
+LongestTextItems 4
+</programlisting>
+<para>
+Используйте эту команду для указания числа самых длинных текстовых элементов к индексированию.
+</para>
+</sect2>
+
+<sect2 id="mkprefix-cmd"><indexterm><primary>Команда</primary><secondary>MakePrefixes</secondary></indexterm><title>Команда <command>MakePrefixes</command></title>
+<para>При помощи команды <command>MakePrefixes yes</command> вы можете указать <command>indexer</command> автоматически создавать префиксы для всех индексируемых слов.
+В частности, это можно использовать при создании поисковых подсказок.
+</para>
+</sect2>
+
+</sect1>

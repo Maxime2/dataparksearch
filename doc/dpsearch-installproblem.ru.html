@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Возможные проблемы установки&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Установка
+
+        "
+HREF="dpsearch-install.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Инсталяция DataparkSearch
+"
+HREF="dpsearch-installing.ru.html"><LINK
+REL="NEXT"
+TITLE="Создание дистрибутивов исполняемых модулей"
+HREF="dpsearch-binarydistrib.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-installing.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 2. Установка
+<A
+NAME="AEN181"
+></A
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-binarydistrib.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="INSTALLPROBLEM"
+>2.5. Возможные проблемы установки
+<A
+NAME="AEN497"
+></A
+></A
+></H1
+><P
+></P
+><UL
+><LI
+><P
+>Каждый раз, когда вы запускаете <TT
+CLASS="LITERAL"
+>configure</TT
+>,
+вы должны опять запустить <TT
+CLASS="LITERAL"
+>make</TT
+> для перекомпиляции.</P
+><P
+>Во избежание использования информации о предыдущей конфигурации или устаревших объектных файлов,
+выполните эти команды перед повторным запуском <TT
+CLASS="LITERAL"
+>configure</TT
+>:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ rm config.cache</KBD
+>
+				</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ make clean</KBD
+>
+				</P
+></LI
+><LI
+><P
+>Завершение компиляции с ошибками иногда может быть связана с некорректной версией 
+<B
+CLASS="COMMAND"
+>make</B
+>. Работа стандартной команды <B
+CLASS="COMMAND"
+>make</B
+> под Solaris, FreeBSD, OpenBSD
+немного отличается от <A
+HREF="http://www.gnu.org/software/make/make.html"
+TARGET="_top"
+>GNU make</A
+>.
+Попробуйте использовать <A
+HREF="http://www.gnu.org/software/make/make.html"
+TARGET="_top"
+>GNU make</A
+> вместо стандартной версии,
+часто она называется <B
+CLASS="COMMAND"
+>gmake</B
+>.</P
+><P
+>GNU <TT
+CLASS="FILENAME"
+>make</TT
+> версии 3.77 проверена и работает.</P
+></LI
+><LI
+><P
+>Если при запуске <SPAN
+CLASS="APPLICATION"
+>Apache</SPAN
+> c модулем <SPAN
+CLASS="APPLICATION"
+>mod_dpsearch</SPAN
+> вы получаете такое
+сообщение об ошибке:  <KBD
+CLASS="USERINPUT"
+>Undefined symbol "pthread_join"</KBD
+> (или что-то подобное относящееся к pthreads),
+попробуйте добавить следующую команду в файл конфигурации <TT
+CLASS="FILENAME"
+>httpd.conf</TT
+> до загрузки <TT
+CLASS="FILENAME"
+>mod_dpsearch.so</TT
+>:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>LoadFile /usr/lib/libpthread.so</KBD
+></P
+></LI
+></UL
+><P
+>Если информация выше не помогла вам, пожалуйста, отправьте описание вашей проблемы на список рассылки
+<CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:dataparksearch@yahoogroups.com"
+>dataparksearch@yahoogroups.com</A
+>&#62;</CODE
+> (пожалуйста, при возможности пишите на английском).</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-installing.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-binarydistrib.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Инсталяция <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+<A
+NAME="AEN312"
+></A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-install.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Создание дистрибутивов исполняемых модулей</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

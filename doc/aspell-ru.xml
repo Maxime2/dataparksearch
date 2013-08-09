@@ -1,0 +1,20 @@
+<sect2 id="aspell">
+<indexterm><primary>Aspell</primary></indexterm>
+	<title>Aspell</title>
+	<para>Когда <application>DataparkSearch</application> используется с поддержкой <application>aspell</application>,
+возможно автоматическое расширение поискового запроса вариантами слов с исправленым правописанием. Чтобы включить эту возможность,
+необходимо установить <ulink url="http://aspell.net/">Aspell</ulink> на вашу систему до сборки <application>DataparkSearch</application>.
+Чтобы включить эту возможность, необходимо добавить команду
+<userinput>
+AspellExtensions yes
+</userinput>
+в файлы конфигурации <filename>indexer.conf</filename> и <filename>search.htm</filename> (или <filename>searchd.conf</filename>,
+если используется <command>searchd</command>).
+</para>
+
+<para>Автоматиская корректировка правописания при поиске происходит только при установке параметра поиска <option>sp</option>, см.
+<xref linkend="search_params"/>.
+</para>
+
+
+</sect2>

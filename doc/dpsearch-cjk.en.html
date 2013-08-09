@@ -1,0 +1,403 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Segmenters for Chinese, Japanese, Korean and Thai languages</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Languages support"
+HREF="dpsearch-international.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Making multi-language search pages"
+HREF="dpsearch-multilang.en.html"><LINK
+REL="NEXT"
+TITLE="Multilingual servers support"
+HREF="dpsearch-vary.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-multilang.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 7. Languages support</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-vary.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CJK"
+>7.3. Segmenters for Chinese, Japanese, Korean and Thai languages</A
+></H1
+><P
+>Chinese, Japanese, Korean and Thai writings have no spaces between words in phrase as in western languages.
+Thus, while indexing documents in these languages, it's need additionally to segment phrases into words.</P
+><P
+><A
+NAME="AEN4713"
+></A
+>
+<A
+NAME="AEN4716"
+></A
+>
+<A
+NAME="AEN4719"
+></A
+>
+<A
+NAME="AEN4722"
+></A
+>
+Sometimes, a text in Chinese, Japanese, Korean or Thai can be typed with a space between every hieroglyph for better view. 
+In this case, you may use <B
+CLASS="COMMAND"
+>"ResegmentChinese yes"</B
+>, <B
+CLASS="COMMAND"
+>"ResegmentJapanese yes"</B
+>,
+<B
+CLASS="COMMAND"
+>"ResegmentKorean yes"</B
+> or <B
+CLASS="COMMAND"
+>"ResegmentThai yes"</B
+> commands to index a text typed in such way.
+With resegmenting enabled, all spaces between characters are removing and then all the text is segmenting again using 
+DataparkSearch's segmenters (see below).</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="JA-SEGMENT"
+>7.3.1. Japanese language phrase segmenter</A
+></H2
+><A
+NAME="AEN4731"
+></A
+><P
+>For Japanese language phrase segmenting the one of 
+<SPAN
+CLASS="APPLICATION"
+><A
+HREF="http://chasen.aist-nara.ac.jp/"
+TARGET="_top"
+>ChaSen</A
+></SPAN
+>,
+a morphological system for Japanese language, or
+<SPAN
+CLASS="APPLICATION"
+><A
+HREF="http://cl.aist-nara.ac.jp/~taku-ku/software/mecab"
+TARGET="_top"
+>MeCab</A
+></SPAN
+>, a Japanese morphological analyser,
+ is used. Thus, you need one of these systems to be installed before
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>'s configuring and building.</P
+><P
+>To enable Japanese language phrase segmenting use <CODE
+CLASS="OPTION"
+>--enable-chasen</CODE
+> or <CODE
+CLASS="OPTION"
+>--enable-mecab</CODE
+>
+ switch for <B
+CLASS="COMMAND"
+>configure</B
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ZH-SEGMENT"
+>7.3.2. Chinese language phrase segmenter</A
+></H2
+><A
+NAME="AEN4746"
+></A
+><P
+>For Chinese language phrase segmenting the frequency dictionary of Chinese words is used.
+And segmenting itself is done by dynamic programming method to maximize the cumulative frequency of produced words.</P
+><P
+>To enable Chinese language phrase segmenting it's need to enable the support for Chinese charsets while 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> configuring,
+ and specify the frequency dictionary of Chinese words by
+<A
+NAME="AEN4752"
+></A
+>
+<B
+CLASS="COMMAND"
+>LoadChineseList</B
+> command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file.
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadChineseList [charset dictionaryfilename]</PRE
+></P
+><P
+>By default, the <TT
+CLASS="LITERAL"
+>GB2312</TT
+> charset and <TT
+CLASS="FILENAME"
+>mandarin.freq</TT
+> dictionary is used.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>You need to download frequency dictionaries from our web site, or from one of our mirrors,
+see <A
+HREF="dpsearch-get.en.html"
+>Section 1.2</A
+>&#62;.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TH-SEGMENT"
+>7.3.3. Thai language phrase segmenter</A
+></H2
+><A
+NAME="AEN4766"
+></A
+><P
+>For Thai language phrase segmenting the frequency dictionary of Thai words is used.
+And segmenting itself is done as for Chinese language.</P
+><P
+>To enable Thai language phrase segmenting it's need to specify the frequency dictionary of Thai words by
+<A
+NAME="AEN4771"
+></A
+>
+<B
+CLASS="COMMAND"
+>LoadThaiList</B
+> command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file.
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadThaiList [charset dictionaryfilename]</PRE
+></P
+><P
+>By default, the <TT
+CLASS="LITERAL"
+>tis-620</TT
+> charset and <TT
+CLASS="FILENAME"
+>thai.freq</TT
+> dictionary is used.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>You need to download frequency dictionaries from our web site, or from one of our mirrors,
+see <A
+HREF="dpsearch-get.en.html"
+>Section 1.2</A
+>&#62;.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="KO-SEGMENT"
+>7.3.4. Korean language phrase segmenter</A
+></H2
+><A
+NAME="AEN4785"
+></A
+><P
+>For Korean language phrase segmenting the frequency dictionary of Korean words is used.
+And segmenting itself is done as for Chinese language.</P
+><P
+>To enable Korean language phrase segmenting it's need to specify the frequency dictionary of Korean words by
+<A
+NAME="AEN4790"
+></A
+>
+<B
+CLASS="COMMAND"
+>LoadKoreanList</B
+> command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file.
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadKoreanList [charset dictionaryfilename]</PRE
+></P
+><P
+>By default, the <TT
+CLASS="LITERAL"
+>euc-kr</TT
+> charset and <TT
+CLASS="FILENAME"
+>korean.freq</TT
+> dictionary is used.</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>You need to download frequency dictionaries from our web site, or from one of our mirrors,
+see <A
+HREF="dpsearch-get.en.html"
+>Section 1.2</A
+>&#62;.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-multilang.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-vary.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Making multi-language search pages</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-international.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Multilingual servers support</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

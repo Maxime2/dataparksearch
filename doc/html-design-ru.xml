@@ -1,0 +1,199 @@
+<sect1 id="html">
+	<title>Дизайн search.html</title>
+	<para>В этой секции подразумевается, что в качестве фронтэнда используется <filename>search.cgi</filename>.</para>
+
+	<sect2 id="html-respage">
+		<title>Как создаётся страница результатов</title>
+
+		<para>Файл <filename>etc/search.htm</filename> состоит из некоторого числа блоков,
+разделённых HTML комментариями, начинающимися с &lt;!--comment--&gt; и заканчивающимися &lt;!--/comment--&gt;.</para>
+
+		<para>Блок &lt;!--variables--&gt; только используется <filename>search.cgi</filename>
+Остальные блоки формируют части страницы результатов поиска в зависимости от ситуации. </para>
+
+		<para>Блоки &lt;!--top--&gt; и &lt;!--bottom--&gt; всегда показываются пользователям как верх и низ
+страницы результатов соответственно. </para>
+
+		<para>также существуют следующие блоки    &lt;!--restop--&gt;,
+&lt;!--res--&gt; and &lt;!--resbot--&gt; , блоки навигации и блоки  &lt;!--notfound--&gt;,
+&lt;!--noquery--&gt; and &lt;!--error--&gt;. Последние выдаются в зависимости от результата поиска.</para>
+
+		<para>Любой HTML-код, расположенный вне этих блоков, игнорируется. </para>
+
+		<para>Таким образом, вывод <filename>search.cgi</filename> всегда будет примерно таким:
+		<programlisting>
+				
+  top                 
+  restop                top                 top              top
+  res           или     notfound     или    error     или    noquery
+  resbot                bottom              bottom           bottom
+  (navigation)
+  bottom
+			
+			</programlisting>
+</para>
+		<para>Навигационный блок строится таким же образом.
+Блоки &lt;!--navleft--&gt; и &lt;!--navright--&gt; отображаются на всех страницах и ссылаются на предыдущую и на
+следующую страницы с результатами поиска, тогда как &lt;!--navXXX_nop--&gt; используются, если нет больше страниц в
+том или другом направлении. </para>
+	</sect2>
+
+	<sect2 id="html-yourhtml">
+		<title>Ваш HTML-шаблон</title>
+
+		<para>Простейший HTML-шаблон, необходимый для работы, дан в <filename>etc/search.htm-dist</filename>.
+Рекомендуется начать работу именно с него, внеся только ваши настройки в блок &lt;!--variables--&gt;. </para>
+
+		<para>Если вы решили украсить ваш поиск, у вас есть два пути.
+Первый: оставить простой дизайн <filename>search.htm</filename>, но сделать его частью набора фреймов.
+Таким образом вы можете добавить меню и др. элементы в одном фрейме, и оставить вывод <filename>search.htm</filename>
+в другом.</para>
+
+		<para>Второй путь состоит во внесении вашего дизайна целиком в <filename>search.htm</filename>
+Если вы хорошо понимаете систему блоков, описанную выше, этот путь не будет слишком сложным. Самым важным моментом при этом будет
+отслеживание открытия html-тэгов в одном блоке и закрытие их в другом. </para>
+
+		<para>Например, вы желаете видеть страницу как таблицы примерно такого вида:
+		<programlisting>
+                   ----------------------------------
+                  |       верхняя таблица            |
+                  |..................................|
+                  |        .                         |
+                  |левая   .                         |
+                  |        .                         |
+                  |        .     основная таблица    |
+                  |таблица .                         |
+                  |        .                         |
+                  |        .                         |
+                   ----------------------------------
+</programlisting>
+</para>
+
+		<para>Если планируется поместить результаты поиска в основную таблицу, вы можете поместить в
+блок &lt;!--top--&gt; в <filename>search.htm</filename> весь HTML-код вплоть до открытия основной таблицы
+(&lt;table&gt;&lt;tr&gt;&lt;td&gt;). Если вы также поместите код закрытия основной таблицы и остальные закрывающие тэги страницы в
+блок &lt;!--bottom--&gt; (&lt;/table&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/body&gt;&lt;/html&gt;) и оставите остальные блоки без изменения,
+вы получите желаемый табличный дизайн и результаты поиска будут в основной таблице.
+ </para>
+
+		<para>При более сложном дизайне, если сами хотите формировать страницу с результатами поиска,
+вы можете и далее пользоваться этим методом, до тех пор, пока можете отслеживать открытие-закрытие тэгов в различных блоках или
+их комбинациях.
+ </para>
+		<para>Отдельные блоки могут быть отформатированы как угодно, если такое форматирование закончено в пределах этого
+блока. Т.е. ничто не мешает делать что-то вроде этого:
+			<programlisting>
+  &lt;!--error--&gt;
+    &lt;table&gt;
+    &lt;tr&gt;&lt;td bgcolor"red"&gt;
+      &lt;font color="#ffffff"&gt;  
+      [error variables]
+      &lt;/font&gt;
+    &lt;/tr&gt;&lt;td&gt;
+    &lt;/table&gt;
+  &lt;!--error--&gt;
+		</programlisting>
+		</para>
+
+		<para>Чего вы не можете сделать без редактирования исходного кода <application>DataparkSearch</application>,
+это изменить порядок обработки блоков из <filename>search.htm</filename>.</para>
+	</sect2>
+
+	<sect2 id="html-forms">
+		<title>О формах</title>
+		<para>Многие современные браузеры могут работать с формами, разнесёнными по разным элементам
+таблицы или разным таблицам, однако создание таких форм противоречит всем стандартам создания HTML-кода. 
+Создавайте такие формы только когда не можете избежать этого.
+ </para>
+		<para>Например,
+			<programlisting>
+  &lt;table&gt;
+  &lt;tr&gt;&lt;td&gt;
+     &lt;form&gt;
+     &lt;input type="text" name="something"&gt;
+     &lt;input type="radio" name"button1"&gt;
+     &lt;input type="radio" name"button2"&gt;
+     &lt;/form&gt;
+  &lt;/tr&gt;&lt;/td&gt;
+  &lt;/table&gt;
+			</programlisting>
+		это допустимо, а
+			<programlisting>
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;
+       &lt;form&gt;
+       &lt;input type="text" name="something"&gt;
+    &lt;/tr&gt;&lt;/td&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;
+       &lt;input type="radio" name"button1"&gt;
+       &lt;input type="radio" name"button2"&gt;
+       &lt;/form&gt;
+    &lt;/tr&gt;&lt;/td&gt;
+    &lt;/table&gt;
+			</programlisting>
+		это <emphasis>нет</emphasis>.</para>
+
+		<para>Заметим, что элементы ввода в формах поиска могут быть изменены по желанию.
+В образце шаблона поиска используются меню-раскладушки, но ничто не мешает использовать кнопки-переключалки или скрытые поля ввода, даже
+текста запроса поиска. Например, если в  <filename>search.htm</filename> указано
+			<programlisting>
+  Results per page:
+  &lt;SELECT NAME="ps"&gt;
+  &lt;OPTION VALUE="10" SELECTED="$ps"&gt;10
+  &lt;OPTION VALUE="20" SELECTED="$ps"&gt;20
+  &lt;OPTION VALUE="50" SELECTED="$ps"&gt;50
+  &lt;/SELECT&gt;
+			</programlisting>
+		вы можете заменить это на
+			<programlisting>
+  &lt;input type="radio" name="ps" value="10" checked="$(ps)"&gt;
+  &lt;input type="radio" name="ps" value="20" checked="$(ps)"&gt;
+  &lt;input type="radio" name="ps" value="50" checked="$(ps)"&gt;
+			</programlisting>
+		в результате чего получим три кнопки-переключалки вместо выпадающего меню, с тем же значением "20" по умолчанию и
+с той же функциональностью. Единственное, что вы не можете делать, это давать возможность множественного
+выбора в меню типа &lt;type="checkbox"&gt; или &lt;select multiple&gt;. </para>
+
+		<para>Заметим, что вы можете также использовать формат
+			<programlisting>
+  &lt;input type="hidden" name="XX" value="YY"&gt;
+  			</programlisting>
+		если вы хотите использовать другие значения вместо значений по умолчанию и/или не заботить пользователя выбором
+значения этого параметра. </para>
+	</sect2>
+
+	<sect2 id="html-rellinks">
+		<title>Относительные ссылки в search.htm</title>
+		<para>Необходимо отметить, что <filename>search.htm</filename> обрабатывается в вашей
+<filename>cgi-bin</filename> директории. Позиция этой директории относительно корня определяется вашим веб-сервером независимо от
+ее расположения на файловой системе. Вполне вероятно, это <literal>http://your_document_root/cgi-bin/</literal> . Т.к.
+<filename>search.cgi</filename> расположен в cgi-bin, любая ссылка на изображения или др. в search.htm
+подразумевает, что cgi-bin - базовая директория. Тем самым, если у вас файловая система вида
+			<programlisting>
+   home/
+   home/your_document_root/
+   home/your_document_root/img/
+   home/cgi-bin/
+			</programlisting>
+		правильная относительная ссылка с <filename>search.cgi</filename> на изображения в img/ должна быть
+<literal>&lt;img src="../img/image.gif"&gt;</literal>, несмотря на несоответствие структуре файловой системы.</para>
+	</sect2>
+
+	<sect2 id="html-searchform">
+		<title>Добавление формы поиска на другие страницы</title>
+		<para>Чтобы добавить форму поиска на любой вашей страницы, разместите следующий код на
+этих страницах где сочтёте нужным:
+			<programlisting>
+&lt;FORM 
+	METHOD=GET 
+	ACTION="http://path-to-search.cgi"&gt;
+      &lt;INPUT TYPE="text" NAME="q" VALUE=""&gt;
+      &lt;INPUT TYPE="submit" VALUE="Search!"&gt;
+
+&lt;/FORM&gt;
+</programlisting>
+		</para>
+	</sect2>
+</sect1>

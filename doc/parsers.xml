@@ -1,0 +1,481 @@
+<sect1 id="pars">
+	<title>External parsers</title>
+<indexterm><primary>Parsers</primary></indexterm>
+
+	<para><application>DataparkSearch</application> indexer can use external parsers to index various file types (MIME types).</para>
+	<para>Parser is an executable program which converts one of
+the mime types to <literal>text/plain</literal> or
+<literal>text/html</literal>. For example, if you have postscript
+files, you can use ps2ascii parser (filter), which reads postscript
+file from stdin and produces ascii to stdout.</para>
+
+	<sect2 id="pars-sup">
+		<title>Supported parser types</title>
+		<para>Indexer supports four types of parsers that can:</para>
+		<itemizedlist>
+			<listitem>
+				<para>read data from stdin and send result to stdout</para>
+			</listitem>
+			<listitem>
+				<para>read data from file  and send result to stdout</para>
+			</listitem>
+			<listitem>
+				<para>read data from file  and send result to file</para>
+			</listitem>
+			<listitem>
+				<para>read data from stdin and send result to file</para>
+			</listitem>
+		</itemizedlist>
+	</sect2>
+	<sect2 id="pars-setup">
+		<title>Setting up parsers</title>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>Configure mime types</para>
+				<para>Configure your web server to
+send appropriate "Content-Type" header. For apache, have a look at
+<filename>mime.types</filename> file, most mime types are already
+defined there.</para>
+
+				<para id="addtype-cmd">
+<indexterm><primary>Command</primary><secondary>AddType</secondary></indexterm>
+If you want to index local files or via <literal>ftp</literal>
+use "AddType" command in <filename>indexer.conf</filename> to
+associate file name extensions with their mime types. For
+example:
+
+				<programlisting>
+AddType text/html *.html
+</programlisting>
+				</para>
+			</listitem>
+			<listitem>
+				<para id="mime-cmd">
+<indexterm><primary>Command</primary><secondary>Mime</secondary></indexterm>
+Add parsers</para>
+				<para>Add lines with parsers definitions. Lines have the following format with three arguments:
+				<programlisting>
+Mime &lt;from_mime&gt; &lt;to_mime&gt; [&lt;command line&gt;]
+</programlisting>
+				</para>
+				<para>For example, the following line defines parser for man pages:
+				<programlisting>
+# Use deroff for parsing man pages ( *.man )
+Mime  application/x-troff-man   text/plain   deroff
+</programlisting>
+				</para>
+				<para>This parser will take data from stdin and output result to stdout.</para>
+				<para>Many parsers can not operate on
+stdin and require a file to read from. In this case indexer creates a
+temporary file in /tmp and will remove it when parser exits. Use $1
+macro in parser command line to substitute file name. For example,
+Mime command for "catdoc" MS Word to ASCII converters may look like
+this:
+
+				<programlisting>
+Mime application/msword text/plain "/usr/bin/catdoc -a $1"
+</programlisting>
+				</para>
+				<para>If your parser writes result
+into output file, use $2 macro. indexer will replace $2 by temporary
+file name, start parser, read result from this temporary file then
+remove it. For example:
+				<programlisting>
+Mime application/msword text/plain "/usr/bin/catdoc -a $1 >$2"
+</programlisting>
+				</para>
+				<para>The parser above will read data
+from first temporary file and write result to second one. Both
+temporary files will be removed when parser exists. Note that result
+of usage of this parser will be absolutely  the same with the previous
+one, but they use different execution mode: file-&gt;stdout and
+file-&gt;file correspondingly.</para>
+
+<para>If the &lt;command line&gt; parameter is omitted this means both MIME type are synonyms. 
+E.g. some sites can supply incorrect type for MP3 files as <userinput>application/mp3</userinput>. 
+You can alter it into correct one <userinput>audio/mpeg</userinput> and therefore process them:
+				<programlisting>
+Mime application/mp3 audio/mpeg
+</programlisting>
+</para>
+
+			</listitem>
+		</orderedlist>
+	</sect2>
+
+<sect2 id="ParserTimeOut">
+<title>Avoid indexer hang on parser execution</title>
+<para id="parsertimeout-cmd">
+<indexterm><primary>Command</primary><secondary>ParserTimeOut</secondary></indexterm>
+To avoid a indexer hang on parser execution, you may specify the amount of time in seconds for parser execution in your 
+<filename>indexer.conf</filename> by <literal>ParserTimeOut</literal> command. For example:
+		<programlisting>
+ParserTimeOut 600
+</programlisting>
+</para>
+<para>
+Default value is 300 seconds, i.e. 5 minutes.
+</para>
+</sect2>
+
+
+
+	<sect2 id="pars-pipes">
+		<title>Pipes in parser's command line</title>
+		<para>You can use pipes in parser's command line. For
+example, these lines will be useful to index gzipped man pages from
+local disk:
+		<programlisting>
+AddType  application/x-gzipped-man  *.1.gz *.2.gz *.3.gz *.4.gz
+Mime     application/x-gzipped-man  text/plain  "zcat | deroff"
+</programlisting>
+		</para>
+	</sect2>
+	<sect2 id="pars-char">
+		<title>Charsets and parsers</title>
+<indexterm><primary>Parsers</primary><secondary>Charsets</secondary></indexterm>
+
+		<para>Some parsers can produce output in other charset
+than given in LocalCharset command. Specify charset to make indexer
+convert parser's output to proper one. For example, if your catdoc is
+configured to produce output in windows-1251 charset but LocalCharset
+is koi8-r, use this command for parsing MS Word documents:
+		<programlisting>
+Mime  application/msword  "text/plain; charset=windows-1251" "catdoc -a $1"
+</programlisting>
+		</para>
+	</sect2>
+	<sect2 id="pars-udmurl">
+		<title>DPS_URL environment variable</title>
+<indexterm><primary>DPS_URL environment variable</primary></indexterm>
+		<para>When executing a parser <command>indexer</command> creates DPS_URL
+environment variable with an URL being processed as a value. You can
+use this variable in parser scripts.</para>
+
+	</sect2>
+	<sect2 id="pars-links">
+		<title>Some third-party parsers</title>
+<indexterm><primary>Parsers</primary><secondary>third-party</secondary></indexterm>
+
+		<itemizedlist>
+			<listitem>
+				<para>RPM parser by Mario Lang <email>lang@zid.tu-graz.ac.at</email></para>
+<para>        /usr/local/bin/rpminfo:
+
+<programlisting>
+#!/bin/bash
+/usr/bin/rpm -q --queryformat="&lt;html&gt;&lt;head&gt;&lt;title&gt;RPM: %{NAME} %{VERSION}-%{RELEASE}
+(%{GROUP})&lt;/title&gt;&lt;meta name=\"description\" content=\"%{SUMMARY}\"&gt;&lt;/head&gt;&lt;body&gt;
+%{DESCRIPTION}\n&lt;/body&gt;&lt;/html&gt;" -p $1
+</programlisting>
+</para>
+
+        <para>indexer.conf:
+<programlisting>
+Mime application/x-rpm text/html "/usr/local/bin/rpminfo $1"
+</programlisting>
+</para>
+        <para>It renders to such nice RPM information:
+
+<programlisting>
+3. RPM: mysql 3.20.32a-3 (Applications/Databases) [4]
+       Mysql is a SQL (Structured Query Language) database server.
+       Mysql was written by Michael (monty) Widenius. See the CREDITS
+       file in the distribution for more credits for mysql and related
+       things....
+       (application/x-rpm) 2088855 bytes
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>catdoc MS Word to text converter</para>
+				<para>
+					<ulink url="http://freshmeat.net/redir/catdoc/1055/url_homepage/">Home page</ulink>, also listed on <ulink url="http://freshmeat.net/">Freshmeat</ulink>.
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime application/msword         text/plain      "catdoc $1"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>xls2csv MS Excel to text converter</para>
+				<para>It is supplied with catdoc.
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime application/vnd.ms-excel   text/plain      "xls2csv $1"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>pdftotext Adobe PDF converter</para>
+				<para>Supplied with xpdf project.</para>
+				<para>
+					<ulink url="http://freshmeat.net/redir/xpdf/12080/url_homepage/">Homepage</ulink>, also listed on <ulink url="http://freshmeat.net/">Freshmeat</ulink>.
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime application/pdf            text/plain      "pdftotext $1 -"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>unrtf RTF to html converter</para>
+				<para>
+					<ulink url="ftp://ftp.gnu.org/pub/gnu/unrtf/">Homepage</ulink>
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime text/rtf*        text/html  "/usr/local/dpsearch/sbin/unrtf --html $1"
+Mime application/rtf  text/html  "/usr/local/dpsearch/sbin/unrtf --html $1"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>xlhtml XLS to html converter</para>
+				<para>
+					<ulink url="http://chicago.sourceforge.net/xlhtml/">Homepage</ulink>
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime	application/vnd.ms-excel  text/html  "/usr/local/dpsearch/sbin/xlhtml $1"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>ppthtml PowerPoint (PPT) to html converter. Part of <application>xlhtml 0.5</application>.</para>
+				<para>
+					<ulink url="http://chicago.sourceforge.net/xlhtml/">Homepage</ulink>
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime	application/vnd.ms-powerpoint  text/html  "/usr/local/dpsearch/sbin/ppthtml $1"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>Using <ulink url="http://wvWare.sourceforge.net/">vwHtml</ulink> (DOC to html).</para>
+				<para><filename>/usr/local/dpsearch/sbin/0vwHtml.pl</filename>:
+				<programlisting>
+#!/usr/bin/perl -w
+
+$p = $ARGV[1];
+$f = $ARGV[1];
+
+$p =~ s/(.*)\/([^\/]*)/$1\//;
+$f =~ s/(.*)\/([^\/]*)/$2/;
+
+system("/usr/local/bin/wvHtml --targetdir=$p $ARGV[0] $f");
+</programlisting>
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime  application/msword       text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $1 $2"
+Mime  application/vnd.ms-word  text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $1 $2"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>swf2html from 
+<ulink url="http://www.macromedia.com/software/flash/download/search_engine/">Flash Search Engine SDK</ulink>
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime  application/x-shockwave-flash  text/html  "/usr/local/dpsearch/sbin/swf2html $1"
+</programlisting>
+</para>
+			</listitem>
+			<listitem>
+				<para>djvutxt from 
+<ulink url="http://djvu.sourceforge.net/">djvuLibre</ulink>
+</para>
+        <para><filename>indexer.conf</filename>:
+				<programlisting>
+
+Mime  image/djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/x.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/x-djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/vnd.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+</programlisting>
+</para>
+			</listitem>
+
+		</itemizedlist>
+	</sect2>
+
+	<sect2 id="libextractor">
+		<title>libextractor library</title>
+<indexterm><primary>libextractor</primary></indexterm>
+
+<para><application>DataparkSearch</application> can be build with <ulink url="http://gnunet.org/libextractor/">libextractor library</ulink>. 
+Using this library, <application>DataparkSearch</application> can index keywords from files of the following formats: PDF, PS, OLE2 (DOC, XLS, PPT), OpenOffice (sxw), StarOffice (sdw), DVI, MAN, FLAC, MP3 (ID3v1 and ID3v2), NSF(E) (NES music), SID (C64 music), OGG, WAV, EXIV2, JPEG, GIF, PNG, TIFF, DEB, RPM, TAR(.GZ), ZIP, ELF, S3M (Scream Tracker 3), XM (eXtended Module), IT (Impulse Tracker), FLV, REAL, RIFF (AVI), MPEG, QT and ASF.</para>
+
+<para>To build <application>DataparkSearch</application> with <application>libextractor library</application>, install the library, and then configure and compile <application>DataparkSearch</application>.
+</para>
+
+<para>Bellow the relationship between keyword types of <application>libextractor</application> version prior to 0.6 and <application>DataparkSearch</application>'s section names is given:</para>
+	<table>
+		<title>Relationship between libextractor's keyword types and DataparkSearch section names</title>
+		<tgroup cols="2">
+<thead>
+	<row><entry>Keyword Type</entry>
+	<entry>Section name</entry></row>
+</thead>
+			<tbody>
+<row><entry>EXTRACTOR_FILENAME</entry><entry> 	Filename</entry></row>
+<row><entry>EXTRACTOR_MIMETYPE</entry><entry> 	Mimetype</entry></row>
+<row><entry>EXTRACTOR_TITLE</entry><entry> 	Title</entry></row>
+<row><entry>EXTRACTOR_AUTHOR</entry><entry> 	Author</entry></row>
+<row><entry>EXTRACTOR_ARTIST 	</entry><entry>Artist</entry></row>
+<row><entry>EXTRACTOR_DESCRIPTION 	</entry><entry>Description</entry></row>
+<row><entry>EXTRACTOR_COMMENT 	</entry><entry>Comment</entry></row>
+<row><entry>EXTRACTOR_DATE 	</entry><entry>Date</entry></row>
+<row><entry>EXTRACTOR_PUBLISHER 	</entry><entry>Publisher</entry></row>
+<row><entry>EXTRACTOR_LANGUAGE 	</entry><entry>Content-Language</entry></row>
+<row><entry>EXTRACTOR_ALBUM 	</entry><entry>Album</entry></row>
+<row><entry>EXTRACTOR_GENRE 	</entry><entry>Genre</entry></row>
+<row><entry>EXTRACTOR_LOCATION 	</entry><entry>Location</entry></row>
+<row><entry>EXTRACTOR_VERSIONNUMBER 	</entry><entry>VersionNumber</entry></row>
+<row><entry>EXTRACTOR_ORGANIZATION 	</entry><entry>Organization</entry></row>
+<row><entry>EXTRACTOR_COPYRIGHT 	</entry><entry>Copyright</entry></row>
+<row><entry>EXTRACTOR_SUBJECT 	</entry><entry>Subject</entry></row>
+<row><entry>EXTRACTOR_KEYWORDS 	</entry><entry>Meta.Keywords</entry></row>
+<row><entry>EXTRACTOR_CONTRIBUTOR 	</entry><entry>Contributor</entry></row>
+<row><entry>EXTRACTOR_RESOURCE_TYPE 	</entry><entry>Resource-Type</entry></row>
+<row><entry>EXTRACTOR_FORMAT 	</entry><entry>Format</entry></row>
+<row><entry>EXTRACTOR_RESOURCE_IDENTIFIER 	</entry><entry>Resource-Idendifier</entry></row>
+<row><entry>EXTRACTOR_SOURCE 	</entry><entry>Source</entry></row>
+<row><entry>EXTRACTOR_RELATION 	</entry><entry>Relation</entry></row>
+<row><entry>EXTRACTOR_COVERAGE 	</entry><entry>Coverage</entry></row>
+<row><entry>EXTRACTOR_SOFTWARE 	</entry><entry>Software</entry></row>
+<row><entry>EXTRACTOR_DISCLAIMER 	</entry><entry>Disclaimer</entry></row>
+<row><entry>EXTRACTOR_WARNING 	</entry><entry>Warning</entry></row>
+<row><entry>EXTRACTOR_TRANSLATED 	</entry><entry>Translated</entry></row>
+<row><entry>EXTRACTOR_CREATION_DATE 	</entry><entry>Creation-Date</entry></row>
+<row><entry>EXTRACTOR_MODIFICATION_DATE 	</entry><entry>Modification-Date</entry></row>
+<row><entry>EXTRACTOR_CREATOR 	</entry><entry>Creator</entry></row>
+<row><entry>EXTRACTOR_PRODUCER 	</entry><entry>Producer</entry></row>
+<row><entry>EXTRACTOR_PAGE_COUNT 	</entry><entry>Page-Count</entry></row>
+<row><entry>EXTRACTOR_PAGE_ORIENTATION 	</entry><entry>Page-Orientation</entry></row>
+<row><entry>EXTRACTOR_PAPER_SIZE 	</entry><entry>Paper-Size</entry></row>
+<row><entry>EXTRACTOR_USED_FONTS 	</entry><entry>Used-Fonts</entry></row>
+<row><entry>EXTRACTOR_PAGE_ORDER 	</entry><entry>Page-Order</entry></row>
+<row><entry>EXTRACTOR_CREATED_FOR 	</entry><entry>Created-For</entry></row>
+<row><entry>EXTRACTOR_MAGNIFICATION 	</entry><entry>Magnification</entry></row>
+<row><entry>EXTRACTOR_RELEASE 	</entry><entry>Release</entry></row>
+<row><entry>EXTRACTOR_GROUP 	</entry><entry>Group</entry></row>
+<row><entry>EXTRACTOR_SIZE 	</entry><entry>Size</entry></row>
+<row><entry>EXTRACTOR_SUMMARY 	</entry><entry>Summary</entry></row>
+<row><entry>EXTRACTOR_PACKAGER 	</entry><entry>Packager</entry></row>
+<row><entry>EXTRACTOR_VENDOR 	</entry><entry>Vendor</entry></row>
+<row><entry>EXTRACTOR_LICENSE 	</entry><entry>License</entry></row>
+<row><entry>EXTRACTOR_DISTRIBUTION 	</entry><entry>Distribution</entry></row>
+<row><entry>EXTRACTOR_BUILDHOST 	</entry><entry>BuildHost</entry></row>
+<row><entry>EXTRACTOR_OS 	</entry><entry>OS</entry></row>
+<row><entry>EXTRACTOR_DEPENDENCY 	</entry><entry>Dependency</entry></row>
+<row><entry>EXTRACTOR_HASH_MD4 	</entry><entry>Hash-MD4</entry></row>
+<row><entry>EXTRACTOR_HASH_MD5 	</entry><entry>Hash-MD5</entry></row>
+<row><entry>EXTRACTOR_HASH_SHA0 	</entry><entry>Hash-SHA0</entry></row>
+<row><entry>EXTRACTOR_HASH_SHA1 	</entry><entry>Hash-SHA1</entry></row>
+<row><entry>EXTRACTOR_HASH_RMD160 	</entry><entry>Hash-RMD160</entry></row>
+<row><entry>EXTRACTOR_RESOLUTION 	</entry><entry>Resolution</entry></row>
+<row><entry>EXTRACTOR_CATEGORY 	</entry><entry>Ext.Category</entry></row>
+<row><entry>EXTRACTOR_BOOKTITLE 	</entry><entry>BookTitle</entry></row>
+<row><entry>EXTRACTOR_PRIORITY 	</entry><entry>Priority</entry></row>
+<row><entry>EXTRACTOR_CONFLICTS 	</entry><entry>Conflicts</entry></row>
+<row><entry>EXTRACTOR_REPLACES 	</entry><entry>Replaces</entry></row>
+<row><entry>EXTRACTOR_PROVIDES 	</entry><entry>Provides</entry></row>
+<row><entry>EXTRACTOR_CONDUCTOR 	</entry><entry>Conductor</entry></row>
+<row><entry>EXTRACTOR_INTERPRET 	</entry><entry>Interpret</entry></row>
+<row><entry>EXTRACTOR_OWNER 	</entry><entry>Owner</entry></row>
+<row><entry>EXTRACTOR_LYRICS 	</entry><entry>Lyrics</entry></row>
+<row><entry>EXTRACTOR_MEDIA_TYPE 	</entry><entry>Media-Type</entry></row>
+<row><entry>EXTRACTOR_CONTACT 	</entry><entry>Contact</entry></row>
+<row><entry>EXTRACTOR_THUMBNAIL_DATA 	</entry><entry>Thumbnail-Data</entry></row>
+<row><entry>EXTRACTOR_PUBLICATION_DATE 	</entry><entry>Publication-Date</entry></row>
+<row><entry>EXTRACTOR_CAMERA_MAKE 	</entry><entry>Camera-Make</entry></row>
+<row><entry>EXTRACTOR_CAMERA_MODEL 	</entry><entry>Camera-Model</entry></row>
+<row><entry>EXTRACTOR_EXPOSURE 	</entry><entry>Exposure</entry></row>
+<row><entry>EXTRACTOR_APERTURE 	</entry><entry>Aperture</entry></row>
+<row><entry>EXTRACTOR_EXPOSURE_BIAS 	</entry><entry>Exposure-Bias</entry></row>
+<row><entry>EXTRACTOR_FLASH 	</entry><entry>Flash</entry></row>
+<row><entry>EXTRACTOR_FLASH_BIAS 	</entry><entry>Flash-Bias</entry></row>
+<row><entry>EXTRACTOR_FOCAL_LENGTH 	</entry><entry>Focal-Length</entry></row>
+<row><entry>EXTRACTOR_FOCAL_LENGTH_35MM 	</entry><entry>Focal-Length-35MM</entry></row>
+<row><entry>EXTRACTOR_ISO_SPEED 	</entry><entry>ISO-Speed</entry></row>
+<row><entry>EXTRACTOR_EXPOSURE_MODE 	</entry><entry>Exposure-Mode</entry></row>
+<row><entry>EXTRACTOR_METERING_MODE 	</entry><entry>Metering-Mode</entry></row>
+<row><entry>EXTRACTOR_MACRO_MODE 	</entry><entry>Macro-Mode</entry></row>
+<row><entry>EXTRACTOR_IMAGE_QUALITY 	</entry><entry>Image-Quality</entry></row>
+<row><entry>EXTRACTOR_WHITE_BALANCE 	</entry><entry>White-Balance</entry></row>
+<row><entry>EXTRACTOR_ORIENTATION 	</entry><entry>Orientation</entry></row>
+<row><entry>EXTRACTOR_TEMPLATE 	</entry><entry>Template</entry></row>
+<row><entry>EXTRACTOR_SPLIT 	</entry><entry>Split</entry></row>
+<row><entry>EXTRACTOR_PRODUCTVERSION 	</entry><entry>ProductVersion</entry></row>
+<row><entry>EXTRACTOR_LAST_SAVED_BY 	</entry><entry>Last-Saved-By</entry></row>
+<row><entry>EXTRACTOR_LAST_PRINTED 	</entry><entry>Last-Printed</entry></row>
+<row><entry>EXTRACTOR_WORD_COUNT 	</entry><entry>Word-Count</entry></row>
+<row><entry>EXTRACTOR_CHARACTER_COUNT 	</entry><entry>Character-Count</entry></row>
+<row><entry>EXTRACTOR_TOTAL_EDITING_TIME 	</entry><entry>Total-Editing-Time</entry></row>
+<row><entry>EXTRACTOR_THUMBNAILS 	</entry><entry>Thumbnails</entry></row>
+<row><entry>EXTRACTOR_SECURITY 	</entry><entry>Security</entry></row>
+<row><entry>EXTRACTOR_CREATED_BY_SOFTWARE 	</entry><entry>Created-By-Software</entry></row>
+<row><entry>EXTRACTOR_MODIFIED_BY_SOFTWARE 	</entry><entry>Modified-By-Software</entry></row>
+<row><entry>EXTRACTOR_REVISION_HISTORY 	</entry><entry>Revision-History</entry></row>
+<row><entry>EXTRACTOR_LOWERCASE 	</entry><entry>Lowercase</entry></row>
+<row><entry>EXTRACTOR_COMPANY 	</entry><entry>Company</entry></row>
+<row><entry>EXTRACTOR_GENERATOR 	</entry><entry>Generator</entry></row>
+<row><entry>EXTRACTOR_CHARACTER_SET 	</entry><entry>Meta-Charset</entry></row>
+<row><entry>EXTRACTOR_LINE_COUNT 	</entry><entry>Line-Count</entry></row>
+<row><entry>EXTRACTOR_PARAGRAPH_COUNT 	</entry><entry>Paragraph-Count</entry></row>
+<row><entry>EXTRACTOR_EDITING_CYCLES 	</entry><entry>Editing-Cycles</entry></row>
+<row><entry>EXTRACTOR_SCALE 	</entry><entry>Scale</entry></row>
+<row><entry>EXTRACTOR_MANAGER 	</entry><entry>Manager</entry></row>
+<row><entry>EXTRACTOR_MOVIE_DIRECTOR 	</entry><entry>Movie-Director</entry></row>
+<row><entry>EXTRACTOR_DURATION 	</entry><entry>Duration</entry></row>
+<row><entry>EXTRACTOR_INFORMATION 	</entry><entry>Information</entry></row>
+<row><entry>EXTRACTOR_FULL_NAME 	</entry><entry>Full-Name</entry></row>
+<row><entry>EXTRACTOR_CHAPTER 	</entry><entry>Chapter</entry></row>
+<row><entry>EXTRACTOR_YEAR 	</entry><entry>Year</entry></row>
+<row><entry>EXTRACTOR_LINK 	</entry><entry>Link</entry></row>
+<row><entry>EXTRACTOR_MUSIC_CD_IDENTIFIER 	</entry><entry>Music-CD-Identifier</entry></row>
+<row><entry>EXTRACTOR_PLAY_COUNTER 	</entry><entry>Play-Counter</entry></row>
+<row><entry>EXTRACTOR_POPULARITY_METER 	</entry><entry>Popularity-Meter</entry></row>
+<row><entry>EXTRACTOR_CONTENT_TYPE 	</entry><entry>Ext.Content-Type</entry></row>
+<row><entry>EXTRACTOR_ENCODED_BY 	</entry><entry>Encoded-By</entry></row>
+<row><entry>EXTRACTOR_TIME 	</entry><entry>Time</entry></row>
+<row><entry>EXTRACTOR_MUSICIAN_CREDITS_LIST 	</entry><entry>Musician-Credits-List</entry></row>
+<row><entry>EXTRACTOR_MOOD 	</entry><entry>Mood</entry></row>
+<row><entry>EXTRACTOR_FORMAT_VERSION 	</entry><entry>Format-Version</entry></row>
+<row><entry>EXTRACTOR_TELEVISION_SYSTEM 	</entry><entry>Television-System</entry></row>
+<row><entry>EXTRACTOR_SONG_COUNT 	</entry><entry>Song-Count</entry></row>
+<row><entry>EXTRACTOR_STARTING_SONG 	</entry><entry>Strting-Song</entry></row>
+<row><entry>EXTRACTOR_HARDWARE_DEPENDENCY 	</entry><entry>Hardware-Dependency</entry></row>
+<row><entry>EXTRACTOR_RIPPER 	</entry><entry>Ripper</entry></row>
+<row><entry>EXTRACTOR_FILE_SIZE 	</entry><entry>File-Size</entry></row>
+<row><entry>EXTRACTOR_TRACK_NUMBER 	</entry><entry>Track-Number</entry></row>
+<row><entry>EXTRACTOR_ISRC 	</entry><entry>ISRC</entry></row>
+<row><entry>EXTRACTOR_DISC_NUMBER 	</entry><entry>Disc-Number</entry></row>
+			</tbody>
+		</tgroup>
+	</table>
+<para>If a section name from the list above doesn't specified in sections.conf, the value of corresponding keyword is written as <varname>body</varname> section. 
+Keywords of unknown type are written as <varname>body</varname> section as well.
+</para>
+
+<para>For <application>libextractor 0.6.x</application>, the values returned by EXTRACTOR_metatype_to_string function are used as section names.
+</para>
+
+</sect2>
+
+
+</sect1>

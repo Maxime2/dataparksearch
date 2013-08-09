@@ -1,0 +1,408 @@
+<!--variables
+ImportEnv DPS_TEST_DBADDR0
+DBAddr $(DPS_TEST_DBADDR0)?dbmode=crc-multi
+
+LogLevel 0
+
+# Uncomment this line to enable search result cache
+#Cache yes
+
+#  Uncomment this line if you do not want to detect and show clones
+#DetectClones	no
+
+# Use proper local and browser charsets
+# Default charset is iso-8859-1 (latin1)
+# which is suitable for the most Western European languages
+
+#LocalCharset   iso-8859-1
+LocalCharset   utf-8
+BrowserCharset iso-8859-1
+#BrowserCharset koi8-r
+
+# Load stopwords file.  File name is either absolute
+# or relative to /etc directory of DataparkSearch installation.
+#
+#StopwordFile stopwords/en.sl
+#StopwordFile stopwords/ru.sl
+#
+
+#
+# Minimum and maximum word lengths
+#
+#MinWordLen 1
+#MaxWordLen 32
+
+# Number of pages in navigator bar
+#
+#PagesPerScreen 10
+
+# Load synonyms file.  File name is either absolute
+# or relative to /etc directory of DataparkSearch installation.
+#
+#Synonym synonym/english.syn
+#Synonym synonym/russian.syn
+#
+
+#
+# How to hilight searched words.
+#
+HlBeg	<b>
+HlEnd	</b>
+
+# Uncomment this line to enable error loging to stderr
+#Log2stderr yes
+#
+
+# Uncomment this line to change default URL basis for storedoc.cgi
+#StoredocURL     /cgi-bin/storedoc
+#
+
+# Uncoment this line to change default maximal excerpt size. Default value is 256.
+#ExcerptSize 1024
+#
+
+# Uncomment this line to change Last-Modified format output
+# Use strftime function meta variables
+#DateFormat %d %b %Y %X %Z
+
+DetectClones yes
+
+-->
+
+<!--top-->
+<HTML>
+<HEAD>
+<META NAME="Content-Type" Content="text/html; charset=$(BrowserCharset)">
+<TITLE>DataparkSearch: $(q)</TITLE>
+</HEAD>
+
+<body BGCOLOR="#FFFFFF" LINK="#0000CC" VLINK="#0000CC" ALINK="#0000CC">
+
+<!IF NAME="form" CONTENT="extended">
+<FORM METHOD=GET ACTION="$(Self)">
+<table bgcolor=#EEEEEE border=0>
+  <TR>
+    <TD>Search for:</TD>
+    <TD COLSPAN=4>
+      <INPUT TYPE="text"   NAME="q"    VALUE="$&(q)" SIZE=50 >
+      <INPUT TYPE="submit" NAME="cmd"  VALUE="Search!">
+      <INPUT TYPE="hidden" NAMe="form" VALUE="extended">
+      <small><a href="$(self)">Simple mode</a></small>
+    </TD>
+  </TR>
+
+  <TR>
+    <TD>Match:</TD>
+    <TD>
+      <SELECT NAME="m">
+        <OPTION VALUE="all"  SELECTED="$(m)">All
+        <OPTION VALUE="any"  SELECTED="$(m)">Any
+        <OPTION VALUE="bool" SELECTED="$(m)">Boolean
+      </SELECT>
+    </TD>
+    <TD>Results per page:</TD>
+    <TD>
+      <SELECT NAME="ps">
+        <OPTION VALUE="10" SELECTED="$(ps)">10
+        <OPTION VALUE="20" SELECTED="$(ps)">20
+        <OPTION VALUE="50" SELECTED="$(ps)">50
+      </SELECT>
+    </TD>
+    <TD>Output format:</TD>
+    <TD>
+      <SELECT NAME="fmt">
+        <OPTION VALUE="long"  SELECTED="$(fmt)">Long
+        <OPTION VALUE="short" SELECTED="$(fmt)">Short
+        <OPTION VALUE="url"   SELECTED="$(fmt)">URL
+      </SELECT>
+    </TD>
+  </TR>
+
+  <TR>
+    <TD>Search for:</TD>
+    <TD>
+      <SELECT NAME="wm">
+        <OPTION VALUE="wrd" SELECTED="$(wm)">Whole word
+        <OPTION VALUE="beg" SELECTED="$(wm)">Beginning
+        <OPTION VALUE="end" SELECTED="$(wm)">Ending
+        <OPTION VALUE="sub" SELECTED="$(wm)">Substring
+      </SELECT>
+    </TD>
+    <TD>Words forms:</TD>
+    <TD>
+       <SELECT NAME="sp">
+         <OPTION VALUE="1"  SELECTED="$(sp)">All
+         <OPTION VALUE="0" SELECTED="$(sp)">Exact
+       </SELECT>
+    </TD>
+    <TD>Use synonyms:</TD>
+    <TD>
+      <SELECT NAME="sy">
+        <OPTION VALUE="1"  SELECTED="$(sy)">Yes
+        <OPTION VALUE="0" SELECTED="$(sy)">No
+      </SELECT>
+    </TD>
+  </TR>
+
+
+  <TR>
+    <TD>In:</TD>
+    <TD>
+      <SELECT NAME="wf">
+        <OPTION VALUE="2221"  SELECTED="$(wf)">Whole document
+        <OPTION VALUE="2000"  SELECTED="$(wf)">Description
+        <OPTION VALUE="0200"  SELECTED="$(wf)">Keywords
+        <OPTION VALUE="0020"  SELECTED="$(wf)">Title
+        <OPTION VALUE="0001"  SELECTED="$(wf)">Body
+      </SELECT>
+    </TD>
+    <TD>Documnt types:</TD>
+    <TD>
+      <SELECT NAME="type">
+        <OPTION VALUE=""           SELECTED="$(type)">all types
+        <OPTION VALUE="text/html"  SELECTED="$(type)">text/html
+        <OPTION VALUE="text/plain" SELECTED="$(type)">text/plain
+      </SELECT>
+    </TD>
+    <TD>
+	<select name="GroupBySite">
+	<option value="yes" selected="$(GroupBySite)">group by site</option>
+	<option value="no" selected="$(GroupBySite)">do not group</option>
+	</select>
+    </TD>
+  </TR>
+
+  <TR>
+    <TD>URL matches:</TD>
+    <TD><INPUT TYPE="text" NAME="ul" VALUE="$&(ul)"></TD>
+    <TD COLSPAN=4>
+      <small>e.g. http://www.dataparksearch.org, /manual/ , index.html</small>
+    </TD>
+  </TR>
+
+<!-- Uncomment this to limit database subsection by "tag" -->
+<!--
+  <TR>
+    <TD>Search through:</TD>
+    <TD>
+      <SELECT NAME="t">
+        <OPTION VALUE=""  SELECTED="$(t)">All sites
+        <OPTION VALUE="1" SELECTED="$(t)">Sport
+        <OPTION VALUE="2" SELECTED="$(t)">Technology
+        <OPTION VALUE="3" SELECTED="$(t)">Shopping
+      </SELECT>
+    </TD>
+   </TR>
+-->
+
+</table>
+</form>
+
+<!ELSE>
+
+<center>
+<FORM METHOD=GET ACTION="$(Self)">
+<table bgcolor=#EEEEEE width=100%>
+  <tr>
+    <td>
+      <BR> Search for:
+      <INPUT TYPE="text" NAME="q" SIZE=50 VALUE="$&(q)">
+      <INPUT TYPE="submit" NAME="cmd" VALUE="Search!">
+      <small><a href="?form=extended">Extended</a></small>
+      <BR><BR>
+    </td>
+  </tr>
+</table>
+</form>
+</center>
+
+<!ENDIF>
+
+<!--/top-->
+
+
+<!--restop-->
+<table bgcolor=#EEEEEE width=100% border=0>
+  <tr>
+    <td>
+      <small>Search for <b>$&(q)</b>.</small>
+      <small>Search results: <b>$(W)</b>.</small>
+    </td>
+    <td>
+      <small>Results <b>$(first)-$(last)</b> of <B>$(total)</B>.</small>
+      <small>Search took <b>$(SearchTime-Can-Be-Used)</b> seconds</small>
+    </td>
+  </tr>
+  <tr><td colspan="2">
+      Sort by:
+      <!IF NAME="s" CONTENT="DRP">
+      <a href="$(FirstPage)&s=RPD">relevancy</a>&nbsp;|&nbsp;<b>last modified date</b><!ELSE>
+      <b>relevancy</b>&nbsp;|&nbsp;<a href="$(FirstPage)&s=DRP">last modified date</a>
+      <!ENDIF>
+  </td></tr>
+</table>
+<!--/restop-->
+
+
+<!--res-->
+<DL>
+<!IFNOT NAME="Alias" CONTENT=""><!COPY NAME="URL" CONTENT="Alias"><!ENDIF>
+<!IF   NAME="fmt" CONTENT="url">
+  <DT>$(Order).
+  <a href="$(URL)" TARGET="_blank">$(URL:40)</a>
+  <small>[<b>$(Score)</b>]</small>
+<!ELSEIF NAME="fmt" CONTENT="short">
+  <DT>$(Order).
+  <a href="$(URL)" TARGET="_blank">
+    <!IF NAME="Title" CONTENT="[no title]">$(URL:40)<!ELSE>$&(Title)<!ENDIF>
+  </a>
+  <small>[<b>$(Score)</b>]</small>
+<!ELSE>
+  <DT>$(Order).
+  <a href="$(URL)" TARGET="_blank">
+    <!IF NAME="Title" CONTENT="[no title]">$(URL:40)<!ELSE>$&(Title)<!ENDIF>
+  </a>
+  <small>[<b>$(Score)</b> Popularity: <b>$(Pop_Rank)</b>]</small>
+  <DD>
+  <table width=60%>
+    <tr>
+      <td>
+        <small>$&(Body)...</small>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <UL>
+         <li>
+           <small>
+             <A HREF="$(URL)" TARGET="_blank">$(URL:40)</A>
+             <font color="#008800">
+              - $(Content-Length) bytes [$(Content-Type)] 
+              - $(Last-Modified-Cannot-Use-In-Test) 
+	      <!IFNOT NAME="stored_href" CONTENT="">
+	      <DD><small>[<a href="$(stored_href-cannot-be-used)">Cached copy</a>]</small></DD>
+	      <!ENDIF>
+	      <!IFNOT NAME="sitelimit_href" CONTENT="">
+	      <DD><small>[<a href="$(self)$(sitelimit_href)">More result from this site
+		    <!IFNOT NAME="PerSite" CONTENT="0"> ($(PerSite) total)<!ENDIF>
+	        </a>]</small></DD>
+	      <!ENDIF>
+             </font>
+           </small>
+           <BR>
+           $(CL)
+        </UL>
+        $(STORED)
+	
+      </td>
+    </tr>
+  </table>
+  
+<!ENDIF>
+</DL>
+<!--/res-->
+
+
+<!--resbot-->
+<table width=100% bgcolor=#FFFFFF>
+  <tr>
+    <td align=center>
+      <TABLE BORDER=0>
+        <TR><TD><small>Result pages: <TD>&nbsp;</TD></TD>$(NL)$(NB)$(NR)</TD></TR>
+      </TABLE>
+    </td>
+  </tr>
+</table>
+<!--/resbot-->
+
+
+<!--clone-->
+<!IFNOT NAME="Alias" CONTENT=""><!COPY NAME="URL" CONTENT="Alias"><!ENDIF>
+<li>
+<small>
+  <A HREF="$(URL)" TARGET="_blank">$(URL:40)</A>
+  <font color="#008800">
+  - $(Content-Length) bytes
+  - $(Last-Modified) 
+  </font>
+</small>
+<!--/clone-->
+
+
+<!--navleft-->
+<TD><small><A HREF="$(self)$(NH)">&lt;&lt; Prev</A></TD>
+<!--/navleft-->
+
+<!--navleft_nop-->
+<TD><small><FONT COLOR=gray>&lt;&lt; Prev</FONT></TD>
+<!--/navleft_nop-->
+
+<!--navbar1-->
+<TD><small><A HREF="$(self)$(NH)">$(NP)</A></TD>
+<!--/navbar1-->
+
+<!--navbar0-->
+<TD><small>$(NP)</TD>
+<!--/navbar0-->
+
+<!--navright-->
+<TD><small><A HREF="$(self)$(NH)">Next &gt;&gt;</A></TD>
+<!--/navright-->
+
+<!--navright_nop-->
+<TD><small><FONT COLOR=gray>Next &gt;&gt;</FONT></TD>
+<!--/navright_nop-->
+
+
+
+<!--notfound-->
+<table bgcolor=#EEEEEE width=100%>
+  <tr>
+    <td>
+      <small>Search for <b>$&(q)</b>.</small>
+      <small>Search results: <b>$(W)</b></small>
+    </td>
+  </tr>
+</table>
+
+<p>
+Sorry, your search for <b>$&(q)</b> did not find any results.<br>
+No documents were found containing <b>"$&(q)"</b>.<br>
+
+<p>
+Suggestions:
+<UL>
+  <LI> Make sure all words are spelled correctly.
+  <LI> Try different keywords.
+  <LI> Try more general keywords. 
+  Also, you can try <a href="$(self)?form=extended">extended search mode</a>.
+</UL>
+<!--/notfound-->
+
+
+
+<!--noquery-->
+<CENTER>
+You haven't typed any word(s) to search for.
+</CENTER>
+<!--/noquery-->
+
+
+
+<!--error-->
+<CENTER>
+<FONT COLOR="#FF0000">An error occured!</FONT>
+<P><B>$(E)</B>
+</CENTER>
+<!--/error-->
+
+
+
+<!--bottom-->
+<table bgcolor=#EEEEEE width=100%>
+  <tr><td>&nbsp;</td></tr>
+</table>
+
+</BODY>
+</HTML>
+<!--/bottom-->

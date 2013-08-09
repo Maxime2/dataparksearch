@@ -1,0 +1,1054 @@
+<sect1 id="indexcmd">
+	<title>Other commands are used in <filename>indexer.conf</filename></title>
+
+<sect2 id="include_cmd">
+<title><command>Include</command> command</title>
+<indexterm><primary>Command</primary><secondary>Include</secondary></indexterm>
+
+<para>You may include another configuration file in any place of the <filename>indexer.conf</filename>
+using <userinput>Include &lt;filename&gt;</userinput> command.
+Absolute path if &lt;<filename>filename</filename>&gt; starts with "/":
+<programlisting>
+Include /usr/local/dpsearch/etc/inc1.conf
+</programlisting></para>
+
+<para>Relative path else:
+
+<programlisting>
+Include inc1.conf
+</programlisting>
+</para>
+</sect2>
+
+
+
+
+<sect2 id="dbaddr_cmd">
+<title><command>DBAddr</command> command</title>
+<indexterm><primary>Command</primary><secondary>DBAddr</secondary></indexterm>
+
+<para><command>DBAddr</command> command is URL-style database description.
+It specify options (type, host, database name, port, user and password)
+to connect to <application>SQL</application> database.
+Should be used before any other commands. You may specify several <command>DBAddr</command> commands.
+In this case <application>DataparkSearch</application> will merge result from every database specified.
+Command have global effect for whole config file.
+Format:
+<programlisting>
+DBAddr &lt;Type&gt;:[//[User[:Pass]@]Host[:Port]]/DBName/[?[dbmode=mode]{&amp;&lt;parameter name&gt;=&lt;parameter value&gt;}]
+</programlisting>
+</para>
+
+<note>
+<para><application>ODBC</application> related.
+       Use DBName to specify ODBC data source name (DSN)
+       <option>Host</option> does not matter, use "localhost".
+</para>
+</note>
+<note>
+<para><application>Solid</application> related.
+       Use <option>Host</option> to specify Solid server
+       DBName does not matter for <application>Solid</application>.
+</para>
+</note>
+
+<para>You may use CGI-like encoding for <option>User</option> and <option>Pass</option> if you need use special characters 
+in user name or password. For example, if you have <userinput>ABC@DEF</userinput> as password, you should write it as
+<userinput>ABC%40DEF</userinput>.
+</para>
+
+<para> Currently supported <option>Type</option> values are
+<literal>mysql</literal>, <literal>pgsql</literal>, <literal>msql</literal>, <literal>solid</literal>, <literal>mssql</literal>, 
+<literal>oracle</literal>, <literal>ibase</literal>, <literal>sqlite</literal>.
+Actually, it does not matter for native libraries support.
+But ODBC users should specify one of supported values.
+If your database type is not supported, you may use "unknown" instead.
+</para>
+
+<para><application>MySQL</application> and <application>PostgreSQL</application>users can specify path to Unix socket 
+when connecting to localhost:
+<userinput>
+mysql://foo:bar@localhost/dpsearch/?socket=/tmp/mysql.sock
+</userinput>
+</para>
+
+<para>If you are using <application>PostgreSQL</application> and do not specify hostname,
+       e.g. <userinput>pgsql://user:password@/dbname/</userinput>
+then <application>PostgreSQL</application> will not work via TCP, but will use default Unix socket.
+</para>
+
+<para><literal>dbmode parameter</literal>. You may also select database mode of words storage.
+When "<option>single</option>" is specified, all words are stored in the same table (file).
+If "<option>multi</option>" is selected, words will be located in different tables (files)
+depending of their lengths. "<option>multi</option>" mode is usually faster but requires more
+tables (files).
+If "<option>crc</option>" mode is selected, <application>DataparkSearch</application> will store 32 bit integer
+word IDs calculated by HASH32 algorithm instead of words. This mode requires
+less disk space and it is faster comparing with "single" and "multi" modes,
+however it doesn't support substring searches.
+"<option>crc-multi</option>" uses the same storage structure with the "crc" mode, but also
+stores words in different tables (files) depending on words lengths like
+"multi" mode. Default mode is "single".
+</para>
+
+<para><literal>stored parameter</literal>. Format:<userinput>
+stored=StoredHost[:StoredPort]</userinput>.
+This parameter is used to specify host and port, if specified, where <command>stored</command> daemon is running, if you plan
+to use document excerpts and cached copies.
+</para>
+
+<para><literal>cached parameter</literal>. Format:<userinput>
+cached=CachedHost[:CachedPort]</userinput>.
+Use <command>cached</command> at given host and port if specified.
+It is required for <literal>cache</literal> storage mode only (see <xref linkend="cachemode"/>).
+Each <command>indexer</command> will connect to <filename>cached</filename> on given address at startup.
+</para>
+
+<para><literal>charset parameter</literal>. Format:<userinput>
+charset=DBCharacterSet</userinput>.
+This parameter can be used to specity database connection charset. The charset specified by DBCharacterSet should be equal to
+charset specified by <command>LocalCharset</command> command.
+</para>
+
+<para><literal>label parameter</literal>. Format: <userinput>
+label=DBAlabel</userinput>.
+This parameter may be used to assign a label to <command>DBAddr</command> command. So, if you pass <option>label</option> CGI-variable to 
+the <application>DataparkSearch</application>, then only <command>DBAddr</command> marked by label value will be used to performing search.
+Thus, you can use one <command>searchd</command> daemon to answer queries for several search databases selectible by 
+<option>label</option> variable.
+</para>
+<note><para>If no <option>label</option> is passed as CGI-parameter, then only DBAddr without a <option>label</option> will be used
+to perform search query.</para>
+</note>
+
+<para>Example:
+<programlisting>
+DBAddr          mysql://foo:bar@localhost/dpsearch/?dbmode=single
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="vardir_cmd">
+<title><command>VarDir</command> command</title>
+<indexterm><primary>Command</primary><secondary>VarDir</secondary></indexterm>
+<para>You may choose alternative working directory for cache mode:
+<programlisting>
+VarDir /usr/local/dpsearch/var
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="newsextensions_cmd">
+<title><command>NewsExtensions</command> command</title>
+<indexterm><primary>Command</primary><secondary>NewsExtensions</secondary></indexterm>
+<para>Whether to enable news extensions. Default value is no.
+<programlisting>
+NewsExtensions yes
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="syslogfacility_cmd">
+<title><command>SyslogFacility</command> command</title>
+<indexterm><primary>Command</primary><secondary>SyslogFacility</secondary></indexterm>
+<para> This is used if <application>DataparkSearch</application> was compiled with syslog support and if you
+don't like the default value. Argument is the same as used in <filename>syslog.conf</filename>
+file. For list of possible facilities see syslog.conf(5)
+<programlisting>
+SyslogFacility local7
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="wordlengths_cmd">
+<title>Word length commands</title>
+<indexterm><primary>Command</primary><secondary>MinWordLength</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>MaxWordLength</secondary></indexterm>
+<para>Word lengths. You may change default length range of words
+stored in database. By default, words with the length in the
+range from 1 to 32 are stored.
+<programlisting>
+MinWordLength 1
+MaxWordLength 32
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="maxdocsize_cmd">
+<title><command>MaxDocSize</command> command</title>
+<indexterm><primary>Command</primary><secondary>MaxDocSize</secondary></indexterm>
+<para>This command is used for specify maximal document size.
+Default value 1048576 (1 Megabyte). Takes global effect for whole config file.
+<programlisting>
+MaxDocSize 1048576
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="mindocsize_cmd">
+<title><command>MinDocSize</command> command</title>
+<indexterm><primary>Command</primary><secondary>MinDocSize</secondary></indexterm>
+<para>This command is used to checkonly urls with content size less than value specified.
+Default value 0. Takes global effect for whole config file.
+<programlisting>
+MinDocSize 1024
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="indexdocsizelimit_cmd">
+<title><command>IndexDocSizeLimit</command> command</title>
+<indexterm><primary>Command</primary><secondary>IndexDocSizeLimit</secondary></indexterm>
+<para>Use this command to specify the maximal amount of data stored in index per document.
+Default value 0. This means no limit. Takes effect till next <command>IndexDocSizeLimit</command> command.
+<programlisting>
+IndexDocSizeLimit 65536
+</programlisting>
+</para>
+</sect2>
+
+
+
+
+<sect2 id="urlselectcachesize_cmd">
+<title><command>URLSelectCacheSize</command> command</title>
+<indexterm><primary>Command</primary><secondary>URLSelectCacheSize</secondary></indexterm>
+<para>Select number of targets to index at once. Default value is 1024.
+<programlisting>
+URLSelectCacheSize 10240
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="urldumpcachesize_cmd">
+<title><command>URLDumpCacheSize</command> command</title>
+<indexterm><primary>Command</primary><secondary>URLDumpCacheSize</secondary></indexterm>
+<para>Select at once this number of urls to write cache mode indexes, to preload url data or to calculate the Popularity Rank. 
+Default value is 100000.
+<programlisting>
+URLDumpCacheSize 10240
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="usecrc32urlid_cmd">
+<title><command>UseCRC32URLId</command> command</title>
+<indexterm><primary>Command</primary><secondary>UseCRC32URLId</secondary></indexterm>
+<para>Switch on or off the ID generation for URL using HASH32. 
+Default value is "no".
+<programlisting>
+UseCRC32URLId yes
+</programlisting>
+</para>
+<para>Switching it on allow speed up indexing a bit, but some small number of collisions is possible.</para>
+</sect2>
+
+
+<sect2 id="httpheader_cmd">
+<title><command>HTTPHeader</command> command</title>
+<indexterm><primary>Command</primary><secondary>HTTPHeader</secondary></indexterm>
+<para>You may add desired headers to indexer's HTTP request.
+You should not use "If-Modified-Since", "Accept-Charset" headers,
+these headers are composed by indexer itself.
+"User-Agent: DataparkSearch/version" header is sent too, but you may override it.
+Command has global effect for all configuration file.
+<programlisting>
+HTTPHeader "User-Agent: My_Own_Agent"
+HTTPHeader "Accept-Language: ru, en"
+HTTPHeader "From: webmaster@mysite.com"
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="allow_cmd">
+<title><command>Allow</command> command</title>
+<indexterm><primary>Command</primary><secondary>Allow</secondary></indexterm>
+<programlisting>
+Allow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>Use this command to allow URLs that match (doesn't match) given argument.
+First three optional parameters describe the type of comparison.
+Default values are Match, NoCase, String.
+Use <option>NoCase</option> or <option>Case</option> values to choose case sensitive or case insensitive
+comparison.
+Use <option>Regex</option> to choose regular expression comparison. 
+Use <option>String</option> to choose string with wildcards comparison.
+Wildcards are '*' for any number of characters and '?' for one character.
+Note that '?' and '*' have special meaning in <option>String</option> match type. Please use
+<option>Regex</option> to describe documents with '?' and '*' signs in URL.
+<option>String</option> match is much faster than <option>Regex</option>. Use <option>String</option> where it 
+is possible.
+You may use several arguments for one <command>Allow</command> command.
+You may use this command any times.
+Takes global effect for config file.
+Note that <application>DataparkSearch</application> automatically adds one "Allow regex .*"
+command after reading config file. It means that allowed everything
+that is not disallowed.
+</para>
+<para>Examples
+<programlisting>
+#  Allow everything:
+Allow *
+#  Allow everything but .php .cgi .pl extensions case insensitively using regex:
+Allow NoMatch Regex \.php$|\.cgi$|\.pl$
+#  Allow .HTM extension case sensitively:
+Allow NoCase *.HTM
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="disallow_cmd">
+<title><command>Disallow</command> command</title>
+<indexterm><primary>Command</primary><secondary>Disallow</secondary></indexterm>
+<programlisting>
+Disallow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Use this command to disallow URLs that match (doesn't match) given argument.
+The meaning of first three optional parameters is exactly the same 
+with <command>Allow</command> command.
+You can use several arguments for one <command>Disallow</command> command.
+Takes global effect for config file.
+Examples:
+<programlisting>
+# Disallow URLs that are not in udm.net domains using "string" match:
+Disallow NoMatch *.udm.net/*
+# Disallow any except known extensions and directory index using "regex" match:
+Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
+# Exclude cgi-bin and non-parsed-headers using "string" match:
+Disallow */cgi-bin/* *.cgi */nph-*
+# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# special meaning in "string" match, so we have to use "regex" match here:
+Disallow Regex  \?
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="checkonly_cmd">
+<title><command>CheckOnly</command> command</title>
+<indexterm><primary>Command</primary><secondary>CheckOnly</secondary></indexterm>
+<programlisting>
+CheckOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+The meaning of first three optional parameters is exactly the same 
+with <command>Allow</command> command.
+Indexer will use HEAD instead of GET HTTP method for URLs that
+match/do not match given regular expressions. It means that the file 
+will be checked only for being existing and will not be downloaded. 
+Useful for zip,exe,arj and other binary files.
+Note that you can disallow those files with commands given below.
+You may use several arguments for one <command>CheckOnly</command> commands.
+Useful for example for searching through the URL names rather than
+the contents (a la FTP-search).
+Takes global effect for config file.
+Examples:
+<programlisting>
+# Check some known non-text extensions using "string" match:
+CheckOnly *.b	  *.sh   *.md5
+# or check ANY except known text extensions using "regex" match:
+CheckOnly NoMatch Regex \/$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="hrefonly_cmd">
+<title><command>HrefOnly</command> command</title>
+<indexterm><primary>Command</primary><secondary>HrefOnly</secondary></indexterm>
+<programlisting>
+HrefOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+The meaning of first three optional parameters is exactly the same 
+with <command>Allow</command> command.
+
+Use this to scan a HTML page for "href" attribute of tags but not to index the contents
+of the page with an URLs that match (doesn't match) given argument.
+Commands have global effect for all configuration file.
+
+When indexing large mail list archives for example, the index and thread
+index pages (like mail.10.html, thread.21.html, etc.) should be scanned 
+for links but shouldn't be indexed:
+<programlisting>
+HrefOnly */mail*.html */thread*.html
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="checkmp3_cmd">
+<title><command>CheckMp3</command> command</title>
+<indexterm><primary>Command</primary><secondary>CheckMp3</secondary></indexterm>
+<programlisting>
+CheckMp3 [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]
+</programlisting>
+<para>
+The meaning of first three optional parameters is exactly the same 
+with <command>Allow</command> command.
+If an URL matches given rules, indexer will download only a little part
+of the document and try to find MP3 tags in it. On success, indexer
+will parse MP3 tags, else it will download whole document then parse
+it as usual.
+Notes:
+This works only with those servers which support HTTP/1.1 protocol.
+It is used "Range: bytes" header to download mp3 tag.
+<programlisting>
+CheckMp3 *.bin *.mp3
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="checkmp3only_cmd">
+<title><command>CheckMp3Only</command> command</title>
+<indexterm><primary>Command</primary><secondary>CheckMp3Only</secondary></indexterm>
+<programlisting>
+CheckMP3Only [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]
+</programlisting>
+<para>
+The meaning of first three optional parameters is exactly the same 
+with <command>Allow</command> command.
+If an URL matches given rules, indexer, like in the case <command>CheckMP3</command> command,
+will download only a little part of the document and try to find MP3 tags.
+On success, indexer will parse MP3 tags, else it will NOT download whole 
+document.
+<programlisting>
+CheckMP3Only *.bin *.mp3
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="indexif_cmd">
+<title><command>IndexIf</command> command</title>
+<indexterm><primary>Command</primary><secondary>IndexIf</secondary></indexterm>
+<programlisting>
+IndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Use this command to allow indexing, if the value of <option>section</option> match the <option>arg</option> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>).
+</para>
+<para>Example
+<programlisting>
+IndexIf regex Title Manual
+IndexIf body "*important detail*"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="noindexif_cmd">
+<title><command>NoIndexIf</command> command</title>
+<indexterm><primary>Command</primary><secondary>NoIndexIf</secondary></indexterm>
+<programlisting>
+NoIndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Use this command to disallow indexing, if the value of <option>section</option> match the <option>arg</option> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>).
+</para>
+<para>Example
+<programlisting>
+NoIndexIf regex Title Sex
+IndexIf body *xxx*
+</programlisting>
+</para>
+</sect2>
+
+
+
+
+
+<sect2 id="holdbadhrefs_cmd">
+<title><command>HoldBadHrefs</command> command</title>
+<indexterm><primary>Command</primary><secondary>HoldBadHrefs</secondary></indexterm>
+<programlisting>
+HoldBadHrefs &lt;time&gt;
+</programlisting>
+<para>
+How much time to hold URLs with erroneous status before deleting them
+from the database. For example, if host is down, indexer will not delete
+pages from this site immediately and search will use previous content
+of these pages. However if site doesn't respond for a month, probably 
+it's time to remove these pages from the database.
+For &lt;time&gt; format see description of <command>Period</command> command in <xref linkend="period_cmd"/>.
+<programlisting>
+HoldBadHrefs 30d
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="deleteolder_cmd">
+<title><command>DeleteOlder</command> command</title>
+<indexterm><primary>Command</primary><secondary>DeleteOlder</secondary></indexterm>
+<programlisting>
+DeleteOlder &lt;time&gt;
+</programlisting>
+<para>
+How much time to hold URLs before deleting them from the database. For example, 
+for news sites indexing, you may delete automatically old news articles after specified period.
+For &lt;time&gt; format see description of <command>Period</command> command in <xref linkend="period_cmd"/>.
+Default value is 0. "0" value mean "do not check". You may specify several <command>DeleteOlder</command> commands,
+for example, by one for every <command>Server</command> command.
+<programlisting>
+DeleteOlder 7d
+</programlisting>
+</para>
+</sect2>
+
+
+
+
+<sect2 id="useremotecontenttype_cmd">
+<title><command>UseRemoteContentType</command> command</title>
+<indexterm><primary>Command</primary><secondary>UseRemoteContentType</secondary></indexterm>
+<programlisting>
+UseRemoteContentType yes/no
+</programlisting>
+<para>
+This command specifies if the indexer should get content type
+from http server headers (yes) or from it's AddType settings (no).
+If set to 'no' and the indexer could not determine content-type
+by using its AddType settings, then it will use http header.
+Default: yes
+<programlisting>
+UseRemoteContentType yes
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="addtype_cmd">
+<title><command>AddType</command> command</title>
+<indexterm><primary>Command</primary><secondary>AddType</secondary></indexterm>
+<programlisting>
+AddType [String|Regex] [Case|NoCase] &lt;mime type&gt; &lt;arg&gt; [&lt;arg&gt;...]
+</programlisting>
+<para>
+This command associates filename extensions (for services
+that don't automatically include them) with their mime types.
+Currently "file:" protocol uses these commands.
+Use optional first two parameter to choose comparison type.
+Default type is "String" "Case" (case insensitive string match with
+'?' and '*' wildcards for one and several characters correspondently).
+<programlisting>
+AddType image/x-xpixmap	*.xpm
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="period_cmd">
+<title><command>Period</command> command</title>
+<indexterm><primary>Command</primary><secondary>Period</secondary></indexterm>
+<programlisting>
+Period &lt;time&gt;
+</programlisting>
+<para>
+Set reindex period.
+&lt;time&gt; is in the form 'xxxA[yyyB[zzzC]]'                                   
+ (Spaces are allowed between xxx and A and yyy and so on)                     
+   there xxx, yyy, zzz are numbers (can be negative!)                         
+         A, B, C can be one of the following:                                 
+		s - second                                                      
+		M - minute                                                      
+		h - hour                                                        
+		d - day                                                         
+		m - month                                                       
+		y - year
+      (these letters are the same as in strptime/strftime functions).
+
+Examples:
+<programlisting>
+ 15s - 15 seconds
+ 4h30M - 4 hours and 30 minutes
+ 1y6m-15d - 1 year and six month minus 15 days
+ 1h-10M+1s - 1 hour minus 10 minutes plus 1 second
+</programlisting>
+</para>
+<para>
+ If you specify only number without any character, it is assumed
+ that time is given in seconds.
+
+ Can be set many times before <command>Server</command> command and
+ takes effect till the end of config file or till next <command>Period</command> command.
+<programlisting>
+Period 7d
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="periodbyhops_cmd">
+<title><command>PeriodByHops</command> command</title>
+<indexterm><primary>Command</primary><secondary>PeriodByHops</secondary></indexterm>
+<programlisting>
+PeriodByHops &lt;hops&gt; [ &lt;time&gt; ]
+</programlisting>
+<para>Set reindex period per &lt;hops&gt; basis. The format for &lt;time&gt; is the same as for <command>Period</command>.
+</para>
+ <para>
+Can be set many times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>PeriodByHops</command> command with same &lt;hops&gt; value.
+If  &lt;time&gt; parameter is omitted, this undefine the previous defined value.
+</para>
+<para>If for given &lt;hops&gt; value the appropriate <command>PeriodByHops</command> command is not specified, in this case the value
+defined in <command>Period</command> command is used.
+</para>
+</sect2>
+
+<sect2 id="expireat_cmd">
+<title><command>ExpireAt</command> command</title>
+<indexterm><primary>Command</primary><secondary>ExpireAt</secondary></indexterm>
+<programlisting>
+ExpireAt [ A [ B [ C [ D [ E ]]]]]
+</programlisting>
+<para>This command allow specify the exactly expiration time for documents. 
+May be specified per Server/Realm basis and takes effect till the end of config file or till next <command>ExpireAt</command> command.
+<command>ExpireAt</command> specified without any arguments disable previously specified value.
+A - stand for minute, may be * or 0-59; B - stand for hour, may be * or 0-23; C - stand for day of month, may be * or 1-31;
+D - stand for month, may be * or 1-12; E - stand for day of week, may be * or 0-6, 0 - is Sunday.
+<command>ExpireAt</command> command have higher prioroty over <command>Period</command> or <command>PeriodByHops</command> command.
+</para>
+</sect2>
+
+
+<sect2 id="usedateheader_cmd">
+<title><command>UseDateHeader</command> command</title>
+<indexterm><primary>Command</primary><secondary>UseDateHeader</secondary></indexterm>
+<programlisting>
+UseDateHeader yes|no|force
+</programlisting>
+<para>Use Date header if no Last-Modified header is sent by remote web-server. The value "force" instructs to use Date header even if Last-Modified header has been sent by remote server.
+Default value: no.
+</para>
+</sect2>
+
+
+
+
+
+
+<sect2 id="maxhops_cmd">
+<title><command>MaxHops</command> command</title>
+<indexterm><primary>Command</primary><secondary>MaxHops</secondary></indexterm>
+<programlisting>
+MaxHops &lt;number&gt;
+</programlisting>
+<para>It limits the length of a way from a seeding URL to the indexing one in "mouse clicks".
+Default value is 256.
+Can be set multiple times before "Server" command and it takes effect till the end of config file or till next MaxHops command.
+<programlisting>
+MaxHops 256
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="tarckhops_cmd">
+<title><command>TrackHops</command> command</title>
+<indexterm><primary>Command</primary><secondary>TrackHops</secondary></indexterm>
+<programlisting>
+TrackHops yes|no
+</programlisting>
+<para>This command enable or disable hops tracking in reindexing.
+Default value is no.
+If enabled, the value of hops for url is recalculated when reindexing.
+Otherwise the value of hops is calculated only once at insertion of url into database.
+<programlisting>
+TrackHops yes
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="maxdepth_cmd">
+<title><command>MaxDepth</command> command</title>
+<indexterm><primary>Command</primary><secondary>MaxDepth</secondary></indexterm>
+<programlisting>
+MaxDepth &lt;number&gt;
+</programlisting>
+<para>It limits the directory depth of an URL indexed.
+Default value is 16.
+Can be set multiple times before "Server" command and
+takes effect till the end of config file or till next MaxDepth command.
+<programlisting>
+MaxDepth 2
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="maxdocsperserver_cmd">
+<title><command>MaxDocsPerServer</command> command</title>
+<indexterm><primary>Command</primary><secondary>MaxDocsPerServer</secondary></indexterm>
+<programlisting>
+MaxDocsPerServer &lt;number&gt;
+</programlisting>
+<para>Limits the number of hrefs accepted from a Server.
+Default value is -1, that means no limits.
+If set to positive value, no more than given number of pages will be
+indexed from one server during this run of index.
+Can be set multiple times before <command>Server</command> command and takes effect
+till the end of config file or till next <command>MaxDocsPerServer</command> command.
+<programlisting>
+MaxDocsPerServer 100
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="maxhrefsperserver_cmd">
+<title><command>MaxHrefsPerServer</command> command</title>
+<indexterm><primary>Command</primary><secondary>MaxHrefsPerServer</secondary></indexterm>
+<programlisting>
+MaxHrefsPerServer &lt;number&gt;
+</programlisting>
+<para>Limits the number of documents retrieved from a Server.
+Default value is -1, that means no limits.
+If set to positive value, no more than given number of hrefs will be picked up from one server during this run of index.
+Can be set multiple times before <command>Server</command> command and takes effect
+till the end of config file or till next <command>MaxHrefsPerServer</command> command.
+<programlisting>
+MaxHrefsPerServer 100
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="maxneterrors_cmd">
+<title><command>MaxNetErrors</command> command</title>
+<indexterm><primary>Command</primary><secondary>MaxNetErrors</secondary></indexterm>
+<programlisting>
+MaxNetErrors &lt;number&gt;
+</programlisting>
+<para>
+Maximum network errors for each server.
+Default value is 16. Use 0 for unlimited errors number.
+If there too many network errors on some server 
+(server is down, host unreachable, etc) <command>indexer</command> will try to do 
+not more then <option>'number'</option> attempts to connect to this server.
+Takes effect till the end of config file or till next <command>MaxNetErrors</command> command.
+<programlisting>
+MaxNetErrors 16
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="readtimeout_cmd">
+<title><command>ReadTimeOut</command> command</title>
+<indexterm><primary>Command</primary><secondary>ReadTimeOut</secondary></indexterm>
+<programlisting>
+ReadTimeOut &lt;time&gt;
+</programlisting>
+<para>
+Connect timeout and stalled connections timeout.
+For <option>&lt;time&gt;</option> format see <xref linkend="period_cmd"/>.
+Default value is 30 seconds.
+Can be set any times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>ReadTimeOut</command> command.
+<programlisting>
+ReadTimeOut 30s
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="doctimeout_cmd">
+<title><command>DocTimeOut</command> command</title>
+<indexterm><primary>Command</primary><secondary>DocTimeOut</secondary></indexterm>
+<programlisting>
+DocTimeOut &lt;time&gt;
+</programlisting>
+<para>
+Maximum amount of time indexer spends for one document downloading.
+For <option>&lt;time&gt;</option> format see <xref linkend="period_cmd"/>.
+Default value is 90 seconds.
+Can be set any times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>DocTimeOut</command> command.
+<programlisting>
+DocTimeOut 1m30s
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="neterrordelaytime_cmd">
+<title><command>NetErrorDelayTime</command> command</title>
+<indexterm><primary>Command</primary><secondary>NetErrorDelayTime</secondary></indexterm>
+<programlisting>
+NetErrorDelayTime &lt;time&gt;
+</programlisting>
+<para>
+Specify document processing delay time if network error has occurred.
+For <option>&lt;time&gt;</option> format see <xref linkend="period_cmd"/>.
+Default value is one day
+<programlisting>
+NetErrorDelayTime 1d
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="cookies_cmd">
+<title><command>Cookies</command> command</title>
+<indexterm><primary>Command</primary><secondary>Cookies</secondary></indexterm>
+<programlisting>
+Cookies yes/no
+</programlisting>
+<para>
+Enables/Disables the support for HTTP cookies.
+Command may be used several times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>Cookies</command> command.
+Default value is "no".
+<programlisting>
+Cookies yes
+</programlisting>
+</para>
+</sect2>
+
+
+
+
+<sect2 id="section_cmd">
+<title><command>Section</command> command</title>
+<indexterm><primary>Command</primary><secondary>Section</secondary></indexterm>
+<programlisting>
+Section &lt;string&gt; &lt;number&gt; &lt;maxlen&gt; [strict] [ &lt;pattern&gt; &lt;replacement&gt; ]
+</programlisting>
+<para>
+where <option>&lt;string&gt;</option> is a section name and <option>&lt;number&gt;</option> is section ID
+between 0 and 255. Use 0 if you don't want to index some of 
+these sections. It is better to use different IDs
+for different sections. In this case during search 
+time you'll be able to give different weight to each section
+or even disallow some sections at a search time.
+<option>&lt;maxlen&gt;</option> argument contains a maximum length of section
+which will be stored in database. Use 0 for <option>&lt;maxlen&gt;</option>, if you don't want to store this section.
+<option>&lt;pattern&gt;</option> and <option>&lt;replacement&gt;</option> are a regex-like
+pattern and replacement to extract section value from document content.</para>
+<para>You can specify <option>strict</option> option to set strict string tokenization for a section, which mean word break 
+at any non-character symbol despite the context. It's useful, for example, in indexing of URL, where hyphen, the character, 
+uses as delimiter between words.
+</para>
+<para>
+You can specify <option>single</option> option for a single value section, for which any second value will be skipped in processing. This is useful, for example, to clean up
+titles of pages with frames or to remove doubled titles when <application>libextractor</application> is used.
+</para>
+<programlisting>
+# Standard HTML sections: body, title
+Section	body			1	256
+Section title			2	128
+# strict tokenization for URL
+Section url                     3       0 strict
+# regex-pattern for a section
+Section GoodName                4       128 "&lt;h1&gt;([^&lt;]*)&lt;/h1&gt;" "&lt;b&gt;GoodName:&lt;/b&gt; $1"
+</programlisting>
+</sect2>
+
+
+<sect2 id="hrefsection_cmd">
+<title><command>HrefSection</command> command</title>
+<indexterm><primary>Command</primary><secondary>HrefSection</secondary></indexterm>
+<programlisting>
+HrefSection &lt;string&gt; [ &lt;pattern&gt; &lt;replacement&gt; ]
+</programlisting>
+<para>
+where <option>&lt;string&gt;</option> is a section name,
+<option>&lt;pattern&gt;</option> and <option>&lt;replacement&gt;</option> are a regex-like
+pattern and replacement to extract section value from document content.
+Use this command to extract links from document content.
+<programlisting>
+# Standard HTML sections: body, title
+HrefSection	link
+HrefSection     NewLink "&lt;newlink&gt;([^&lt;]*)&lt;/newlink&gt;" "$1"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="FastHrefCheck">
+<title><command>FastHrefCheck</command> command</title>
+<indexterm><primary>Command</primary><secondary>FastHrefCheck</secondary></indexterm>
+<para>The "<command>FastHrefCheck yes</command>" command is useful to speed-up the indexing when you have a huge list of <command>Server/Realm/Subnet</command> commands as 
+it disables the href checking against server list during parsing.</para>
+</sect2>
+
+
+<sect2 id="index_cmd">
+<title><command>Index</command> command</title>
+<indexterm><primary>Command</primary><secondary>Index</secondary></indexterm>
+<programlisting>
+Index yes/no
+</programlisting>
+<para>
+Prevent indexer from storing words into database.
+Useful for example for link validation.
+Can be set multiple times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>Index</command> command.
+Default value is "yes".
+<programlisting>
+Index no
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="proxyauthbasic_cmd">
+<title><command>ProxyAuthBasic</command> command</title>
+<indexterm><primary>Command</primary><secondary>ProxyAuthBasic</secondary></indexterm>
+<programlisting>
+ProxyAuthBasic login:passwd
+</programlisting>
+<para>
+Use http proxy basic authorization.
+Can be used before every <command>Server</command> command and
+takes effect only for next one <command>Server</command> command!
+It should be also before <command>Proxy</command> command.
+Examples:
+<programlisting>
+ProxyAuthBasic somebody:something  
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="proxy_cmd">
+<title><command>Proxy</command> command</title>
+<indexterm><primary>Command</primary><secondary>Proxy</secondary></indexterm>
+<programlisting>
+Proxy your.proxy.host[:port]
+</programlisting>
+<para>
+Use proxy rather then connect directly.
+One can index ftp servers when using proxy
+Default port value if not specified is 3128 (Squid)
+If proxy host is not specified direct connect will be used.
+Can be set before every <command>Server</command> command and
+takes effect till the end of config file or till next <command>Proxy</command> command.
+If no one <command>Proxy</command> command specified indexer will use direct connect.
+Examples:
+<programlisting>
+#           Proxy on atoll.anywhere.com, port 3128:
+Proxy atoll.anywhere.com
+#           Proxy on lota.anywhere.com, port 8090:
+Proxy lota.anywhere.com:8090
+#           Disable proxy (direct connect):
+Proxy
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="authbasic_cmd">
+<title><command>AuthBasic</command> command</title>
+<indexterm><primary>Command</primary><secondary>AuthBasic</secondary></indexterm>
+<programlisting>
+AuthBasic login:passwd
+</programlisting>
+<para>
+Use basic http authorization.
+Can be set before every <command>Server</command> command and
+takes effect only for next one <command>Server</command> command!
+Examples:
+<programlisting>
+AuthBasic somebody:something  
+
+# If you have password protected directory(-ies), but whole server is open,use:
+AuthBasic login1:passwd1
+Server http://my.server.com/my/secure/directory1/
+AuthBasic login2:passwd2
+Server http://my.server.com/my/secure/directory2/
+Server http://my.server.com/
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="serverweight_cmd">
+<title><command>ServerWeight</command> command</title>
+<indexterm><primary>Command</primary><secondary>ServerWeight</secondary></indexterm>
+<programlisting>
+ServerWeight &lt;number&gt;
+</programlisting>
+<para>
+Server weight for Popularity Rank calculation (see <xref linkend="poprank"/>). Default value is 1.
+<programlisting>
+ServerWeight 1
+</programlisting>
+</para>
+</sect2>
+
+
+
+<sect2 id="optimizeatupdate_cmd">
+<title><command>OptimizeAtUpdate</command> command</title>
+<indexterm><primary>Command</primary><secondary>OptimizeAtUpdate</secondary></indexterm>
+<programlisting>
+OptimizeAtUpdate yes
+</programlisting>
+<para>
+Specify word index optimize strategy. Default value: no
+If enabled, this save disk space, but slow down indexing.
+May be placed in <filename>indexer.conf</filename> and <filename>cached.conf</filename>.
+</para>
+</sect2>
+
+<sect2 id="skipunreferred_cmd">
+<title><command>SkipUnreferred</command> command</title>
+<indexterm><primary>Command</primary><secondary>SkipUnreferred</secondary></indexterm>
+<programlisting>
+SkipUnreferred yes|no|del
+</programlisting>
+<para>
+Default value: no. Use this command to skip reindexing or delete unreferred documents.
+An unreferred document is a document with no links to it.
+This command require the links collection to be enabled (see <xref linkend="poprank"/>).
+</para>
+</sect2>
+
+
+<sect2 id="bind_cmd">
+<title><command>Bind</command> command</title>
+<indexterm><primary>Command</primary><secondary>Bind</secondary></indexterm>
+<programlisting>
+Bind 127.0.0.1
+</programlisting>
+<para>
+You may use this command to specify local ip address, if your system have several network interfaces.
+</para>
+</sect2>
+
+
+<sect2 id="provideref_cmd">
+<title><command>ProvideReferer</command> command</title>
+<indexterm><primary>Command</primary><secondary>ProvideReferer</secondary></indexterm>
+<programlisting>
+ProvideReferer yes
+</programlisting>
+<para>
+Use this command to provide <literal>Referer:</literal> request header for HTTP and HTTPS connections.
+</para>
+</sect2>
+
+
+<sect2 id="longesttextitems_cmd">
+<title><command>LongestTextItems</command> command</title>
+<indexterm><primary>Command</primary><secondary>LongestTextItems</secondary></indexterm>
+<programlisting>
+LongestTextItems 4
+</programlisting>
+<para>
+Use this command to specify the number of longest text items to index.
+</para>
+</sect2>
+
+
+<sect2 id="mkprefix-cmd"><indexterm><primary>Command</primary><secondary>MakePrefixes</secondary></indexterm><title><command>MakePrefixes</command> command</title>
+<para>With <command>MakePrefixes yes</command> command you can instruct <command>indexer</command> to produce automatically all prefixes for words indexed.
+This is suitable, for example, for making search suggestions.
+</para>
+</sect2>
+
+
+</sect1>

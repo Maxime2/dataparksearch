@@ -1,0 +1,83 @@
+<sect2 id="mirror">
+	<title>Зеркалирование
+<indexterm><primary>Зеркалирование</primary></indexterm>
+</title>
+
+	<para>
+<indexterm><primary>Команда</primary><secondary>MirrorRoot</secondary></indexterm>
+Вы должны указать путь к корневой директории для активации зеркалирования сайтов
+	<programlisting>
+MirrorRoot /path/to/mirror
+</programlisting>
+	</para>
+
+	<para>
+<indexterm><primary>Команда</primary><secondary>MirrorHeadersRoot</secondary></indexterm>
+Вы также можете указать корневую директорию для хранения заголовков зеркалируемых документов, в этом случае
+<command>indexer</command> будет также записывать на диск HTTP заголовки.
+	<programlisting>
+MirrorHeadersRoot /path/to/headers
+</programlisting>
+	</para>
+
+	<para>
+<indexterm><primary>Команда</primary><secondary>MirrorPeriod</secondary></indexterm>
+Вы можете также указать период, в течении которого будут использоваться файлы из зеркала, вместо выкачивания оригинальных документов.
+	<programlisting>
+MirrorPeriod &lt;time&gt;
+</programlisting>
+	</para>
+
+	<para>Зеркалирование очень полезно когда вы экспериментируете с индексированием 
+<application>DataparkSearch</application> одних и тех же хостов и не хотите создавать много трафика в/из интернета.
+Если не задан <option>MirrorHeadersRoot</option> и тем самым заголовки не сохраняются на локальном диске,
+тогда тип файлов определяется по значениям, заданным командами <option>AddType</option>.
+Значение <option>MirrorPeriod</option> по умолчанию равно -1, что означает <literal>не использовать зеркалированые файлы</literal>.
+</para>
+
+	<para>&lt;time&gt; указывается в форме
+<literal>xxxA[yyyB[zzzC]]</literal> (пробелы допускаются между xxx и A и yyy и т.д.), где xxx, yyy, zzz - числа (могут быть
+отрицательными!). A, B, C могут быть одним из:
+	<programlisting>
+		s - секунда
+		M - минута
+		h - час
+		d - день
+		m - месяц
+		y - год
+</programlisting>
+</para>
+
+	<para>(эти буквы такие же, как и в функциях <literal>strptime</literal>/<literal>strftime</literal>)</para>
+
+	<para>Примеры:
+	<programlisting>
+15s - 15 секунд
+4h30M - 4 часа и 30 минут
+1y6m-15d - 1 год и шесть месяцев минус 15 дней
+1h-10M+1s - 1 час минус 10 минут плюс 1 секунда
+</programlisting>
+</para>
+
+	<para>Если указано только число без какой-либо буквы, считается, что время указано в секундах 
+(это сделано для совместимости с версиями, младше 3.1.7).</para>
+
+	<para>Следующая команда задаёт использование локальных копий в течении одного дня:
+	<programlisting>
+MirrorPeriod 1d
+</programlisting>
+	</para>
+
+	<para>Если ваши страницы уже проиндексированы, и вы реиндексируете с ключом <option>-a</option>,
+<command>indexer</command> будет проверять только заголовки и выкачивать только файлы, изменённые с момента
+предыдущего индексирования. Таким образом, все неизменившиесы файлы не будут выкачиваться, и тем самым не будут и зеркалироваться.
+Для создания зеркала, вам необходимо либо очистить базу и начать заново, либо использовать ключ <option>-m</option>.
+</para>
+
+	<para>Вы можете использовать созданное зеркало как полноценное зеркало вашего сайта.
+Тем не менее, обратите внимание: <command>indexer</command> не выкачивает документ, имеющий размер более
+<option>MaxDocSize</option>, вернее, усекает размер файлов до этого значения, если оно превышено.
+Если ваш сайт не cодержит таких больших документов, все будет нормально.
+</para>
+
+</sect2>

@@ -1,0 +1,58 @@
+<!--variables
+ImportEnv DPS_TEST_DBADDR0
+DBAddr $(DPS_TEST_DBADDR0)?dbmode=single
+
+LocalCharset   utf-8
+BrowserCharset utf-8
+
+LogLevel 0
+
+DetectClones	no
+MinWordLength 1
+MaxWordLength 64
+HlBeg	<b>
+HlEnd	</b>
+Locale en_US.UTF-8
+ExcerptSize 732
+ExcerptPadding 126
+DateFormat %s
+ResultContentType text/xml
+
+-->
+<!--top-->
+{"responseData": {
+<!--/top-->
+
+<!--restop-->
+"query":"$(q:json)",
+"found":"$(total:json)","first":"$(first:json)","last":"$(last:json)",
+"stat":"$(W:json)",
+"stat_extended":"$(WE:json)",
+"stat_all":"$(WA:json)",
+"stat_short":"$(WS:json)",
+"results":[
+<!--/restop-->
+
+<!--res-->
+{"title":"$(title:json)","url":"$(url:json)","content":"$(body:json)"}
+<!--/res-->
+
+<!--resbot-->
+]
+<!--/resbot-->
+
+<!--clone-->
+<!--/clone-->
+
+<!--notfound-->
+<!--/notfound-->
+
+<!--noquery-->
+<!--/noquery-->
+
+<!--error-->
+<!--/error-->
+
+<!--bottom-->
+}}
+<!--/bottom-->

@@ -1,0 +1,214 @@
+<sect1 id="stored">
+	<title>Storing compressed document copies</title>
+<indexterm><primary>stored</primary></indexterm>
+
+	<para>In <application>DataparkSearch</application> it is possible to store compressed copies of indexed
+documents. Copies are stored and retrieved by the new daemon -
+<command>stored</command>, that is installed into
+<filename>sbin</filename> directory of
+<application>DataparkSearch</application> installation (default:
+<filename>/usr/local/dpsearch/sbin</filename>).</para>
+
+<para><indexterm><primary>Command</primary><secondary>DoStore</secondary></indexterm>
+To enable documents copies archiving without <command>stored</command> usage,
+place <command>DoStore yes</command> command in your
+<filename>indexer.conf</filename> file instead of <command>stored</command> daemon configuration.
+</para>
+
+	<para>Stored document copies are retrieved by means of
+<filename>storedoc.cgi</filename> CGI script. It requests a saved copy
+of a documents from <command>stored</command>, then a copy is
+displayed with user's web browser with search keywords highlighted.
+</para>
+
+<para> To enable <command>stored</command> support, compile
+<application>DataparkSearch</application> with <literal>zlib</literal>
+support:
+	<programlisting>
+./configure --with-zlib &lt;other arguments&gt;
+</programlisting>
+	</para>
+
+
+<para>
+<indexterm><primary>Command</primary><secondary>Store</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>NoStore</secondary></indexterm>
+You may use the <command>Store</command> and <command>NoStore</command> commands to allow or disallow storing several files by pattern.
+For arguments of those commands are exactly the same 
+as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>). All documents are stores by defaults, 
+if support for stored is enabled.
+</para>
+
+
+	<sect2 id="stored-start">
+		<title>Configure stored</title>
+		<para>To start using <command>stored</command>, please do the following:</para>
+		<itemizedlist>
+			<listitem>
+<para>Copy <filename>/usr/local/dpsearch/etc/stored.conf-dist</filename> to
+<filename>/usr/local/dpsearch/etc/stored.conf</filename>.</para>
+				<para>Edit <filename>/usr/local/dpsearch/etc/stored.conf</filename>
+				</para>
+				<para>There are several commands available
+for using with <command>stored</command>: </para>
+				<itemizedlist>
+					<listitem>
+						<para>
+<command><indexterm><primary>Command</primary><secondary>Listen</secondary></indexterm>Listen</command>
+tells <command>stored</command> which address and/or port to bind
+to. By default <command>stored</command> listens to port 7004 and any
+address. It is possible to specify port only:</para>
+						<para>
+							<userinput>Listen 7004 </userinput>
+						</para>
+						<para>Or address only:</para>
+						<para>
+							<userinput>Listen 127.0.0.2</userinput>
+						</para>
+						<para>Or both address and port:</para>
+						<para>
+							<userinput>Listen 127.0.0.2:7004</userinput>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+<command><indexterm><primary>Command</primary><secondary>VarDir</secondary></indexterm>VarDir</command>
+command specifies an alternate <filename>var/</filename> working
+directory, e.g.</para>
+						<para>
+							<userinput>VarDir /mnt/d/dpsearch/var/ </userinput>
+						</para>
+					</listitem>
+<listitem>
+<para><command><indexterm><primary>Command</primary><secondary>StoredFiles</secondary></indexterm>StoredFiles</command>
+command specifies number of stored data files created in <filename>var/stored/</filename> directory,
+e.g.</para>
+<para>
+<userinput>StoredFiles 256</userinput>
+</para>
+</listitem>
+
+<listitem>
+<para><command><indexterm><primary>Command</primary><secondary>OptimizeInterval</secondary></indexterm>OptimizeInterval</command>
+command specifies interval in seconds between attempts to optimize a stored datafile, e.g.</para>
+<para>
+<userinput>OptimizeInterval 300</userinput>
+</para>
+</listitem>
+
+<listitem>
+<para><command><indexterm><primary>Command</primary><secondary>OptimizeRatio</secondary></indexterm>OptimizeRatio</command>
+command  specifies defragmentation threshold for a stored datafile optimization.  
+</para>
+<para>
+<userinput>OptimizeRatio 3</userinput>
+</para>
+</listitem>
+
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>Run <command>stored</command>:</para>
+				<para>
+					<userinput>/usr/local/dpsearch/sbin/stored &amp; </userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Configure <filename>indexer.conf</filename> and <filename>search.htm</filename>
+(or <filename>searchd.conf</filename>, if <command>searchd</command> is used). Specify address and port that <literal>indexer</literal> will use to connect to <command>stored</command>. 
+Use <literal>stored</literal> parameter for <command>DBAddr</command> command, e.g.:</para>
+				<para>
+					<userinput>DBAddr mysql://localhost/search/?dbmode=cache&amp;stored=localhost:7004</userinput>
+				</para>
+			</listitem>
+		</itemizedlist>
+	</sect2>
+	<sect2 id="stored-how">
+		<title>How stored works</title>
+		<para>After you have successfully configured
+<command>stored</command>, the <filename>indexer</filename> pass
+downloaded documents to <command>stored</command> daemon. After that,
+<command>stored</command> compress the received documents and
+save them.</para>
+	</sect2>
+	<sect2 id="stored-search">
+		<title>Using stored during search</title>
+		<para>To enable displaying stored documents during search, do the following: </para>
+		<itemizedlist>
+			<listitem>
+				<para>Configure
+<filename>storedoc.htm</filename> (<filename>storedoc.cgi</filename>
+template)  if necessary.</para>
+			</listitem>
+			<listitem>
+				<para>Add a <filename>storedoc.cgi</filename> link to <filename>search.htm</filename>
+					<literal>&lt;!--res--&gt;</literal> section: e.g. <literal>&lt;A HREF="$(stored_href)"&gt;Cached copy&lt;/A&gt; </literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Specify
+<filename>storedoc.cgi</filename> CGI script URL in
+<filename>search.htm</filename> (by default
+<literal>$(stored_href)</literal> will return
+<filename>/cgi-bin/storedoc.cgi</filename>). In case you have to
+specify other URL, add to <filename>search.htm</filename>
+					<literal>variables</literal> section the following line:</para>
+				<para>
+					<userinput>StoredocURL /path/to/storedoc.cgi</userinput>
+				</para>
+				<para>Or an absolute path:</para>
+				<para>
+					<userinput>StoredocURL http://servername/path/to/storedoc.cgi</userinput>
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>This is how <command>stored</command> works during search, if everything configured correctly:</para>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					<filename>search.htm</filename> displays a link to <filename>storedoc.cgi</filename>;</para>
+			</listitem>
+			<listitem>
+				<para>When user clicks the link,
+<filename>storedoc.cgi</filename> sends a query to
+<command>stored</command> daemon to the address, specified in
+<filename>storedoc.htm</filename> with the
+<literal>Stored</literal> parameter of <command>DBAddr</command> command;</para>
+			</listitem>
+			<listitem>
+				<para>After the query, <command>stored</command> will decompress the requested saved copy and send it to <filename>storedoc.cgi</filename>;</para>
+			</listitem>
+			<listitem>
+				<para>
+					<filename>storedoc.cgi</filename> parses the received document and apply highlighting of search keywords. Highlighting method is specified with <filename>storedoc.htm</filename>
+					<command><indexterm><primary>Command</primary><secondary>HlBeg</secondary></indexterm>HlBeg</command> and <command><indexterm><primary>Command</primary><secondary>HlEnd</secondary></indexterm>HlEnd</command> commands;</para>
+			</listitem>
+		</orderedlist>
+	</sect2>
+
+
+	<sect2 id="excerpts">
+		<title>Document excerpts</title>
+<indexterm><primary>Document</primary><secondary>excerpts</secondary></indexterm>
+
+<para><command>stored</command> is also used to make documents excerpts for search results.</para>
+
+<para><indexterm><primary>Command</primary><secondary>ExcerptSize</secondary></indexterm>
+You can use <command>ExcerptSize</command> command in <filename>search.htm</filename> template to specify average excerpt size in characters;
+value by default: 256.</para>
+
+<para><indexterm><primary>Command</primary><secondary>ExcerptPadding</secondary></indexterm>
+With <command>ExcerptPadding</command> command you can specify average number of characters is taken before and after a search word in excerpts; value by default: 40.</para>
+
+<para><indexterm><primary>Command</primary><secondary>ExcerptMark</secondary></indexterm>
+With <command>ExcerptMark</command> command you can alter the marking character sequence which delimits excerpt chunks; value by default: " ... " (a space, a dots, a space).</para>
+
+<para><indexterm><primary>Command</primary><secondary>DoExcerpt</secondary></indexterm>
+You may switch off document excerpts (but retain ability to show stored copies) 
+with <command>DoExcerpt no</command> command in your search template.
+</para>
+
+	</sect2>
+
+
+</sect1>

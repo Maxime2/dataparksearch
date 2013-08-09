@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Разное</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Нечёткий поиск"
+HREF="dpsearch-fuzzy.ru.html"><LINK
+REL="NEXT"
+TITLE="Использование библиотеки libdpsearch
+"
+HREF="dpsearch-lib.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-fuzzy.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-lib.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="MISC"
+></A
+>&#1043;&#1083;&#1072;&#1074;&#1072; 9. Разное</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>&#1057;&#1086;&#1076;&#1077;&#1088;&#1078;&#1072;&#1085;&#1080;&#1077;</B
+></DT
+><DT
+>9.1. <A
+HREF="dpsearch-misc.ru.html#BUGS"
+>Сообщение о багах</A
+></DT
+><DT
+>9.2. <A
+HREF="dpsearch-lib.ru.html"
+>Использование библиотеки <TT
+CLASS="LITERAL"
+>libdpsearch</TT
+>
+<A
+NAME="AEN6598"
+></A
+></A
+></DT
+><DT
+>9.3. <A
+HREF="dpsearch-dbschema.ru.html"
+>Структура таблиц базы данных</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="BUGS"
+>9.1. Сообщение о багах</A
+></H1
+><A
+NAME="AEN6561"
+></A
+><P
+>При составлении сообщения о баге, пожалуйста, указывайте версию <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> и
+сообщайте как моно больше информации о вашей проблеме. Такая информация, как используемая платформа,
+операционная система, версия базы данных, статистика базы данных (например, число URL в базе, или
+число записей в той или иной таблице базы данных) может быть весьма полезной для
+исправления возможной ошибки.
+ </P
+><P
+>Пожалуйста, сообщайте об ошибках и багах при помощи нашей
+<A
+HREF="http://www.dataparksearch.org/cgi-bin/bt.pl"
+TARGET="_top"
+>Системы учёта ошибок</A
+> доступной на веб-сервере
+<A
+HREF="http://www.dataparksearch.org/"
+TARGET="_top"
+>DataparkSearch</A
+>.
+Пожалуйста, не шлите сообщения об ошибках в списки рассылки или на почтовые адреса разработчиков! </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BUGS-CURRENT"
+>9.1.1. Известные ошибки и баги</A
+></H2
+><P
+>Используйте <A
+HREF="http://code.google.com/p/dataparksearch/issues/list"
+TARGET="_top"
+>Систему учёта ошибок DataparkSearch</A
+>
+для простомтра текущих и исправленых ошибок. Вы можете использовать эту систему для сообщения о замеченых вами ошибках или предложения новых функций или улучшений.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BUGS-CORE"
+>9.1.2. Посмертные дампы</A
+></H2
+><P
+>Если <TT
+CLASS="FILENAME"
+>indexer</TT
+> или <TT
+CLASS="FILENAME"
+>search.cgi</TT
+>
+умирают во время своей работы и оставляют посмертный дамп, очень полезно сообщить нам
+вывод <TT
+CLASS="FILENAME"
+>gdb</TT
+> (The GNU Debugger). Чтобы получить этот вывод, пожалуйста,
+выполните следующие шаги. Убедитесь, что <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> собран с опцией <CODE
+CLASS="OPTION"
+>--with-debug</CODE
+> для <B
+CLASS="COMMAND"
+>configure</B
+>. 
+Если нет, пересоберите его с этой опцией и попытайтесь повторить ситуацию, приведшую к трапу. 
+Затем, пусть, например, умершей программой будет <TT
+CLASS="FILENAME"
+>indexer</TT
+>,
+а файл посметрного дампа имеет имя <TT
+CLASS="FILENAME"
+>indexer.core</TT
+> 
+(или просто <TT
+CLASS="FILENAME"
+>core</TT
+> на некоторых платформах).</P
+><P
+>Запустите GNU Debugger вместе с именем программы в качестве первого аргумента и
+с именем файла посмертного дампа в качестве второго:</P
+><P
+>			<KBD
+CLASS="USERINPUT"
+>gdb indexer indexer.core</KBD
+>
+		</P
+><P
+>Отобразится некоторая информация о месте трапа:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Core was generated by `indexer'.
+Program terminated with signal 8, Floating point exception.
+Reading symbols from /usr/lib/libc.so.3...done.
+Reading symbols from /usr/libexec/ld-elf.so.1...done.
+#0  0x80483f3 in main () at indexer.c:4
+4               printf("%d",0/0);</PRE
+>
+		</P
+><P
+>Затем наберите команду <TT
+CLASS="LITERAL"
+>thread apply all backtrace</TT
+>:
+		<PRE
+CLASS="PROGRAMLISTING"
+>(gdb) thread apply all bt
+#0  0x80483f3 in main () at indexer.c:4
+#1  0x804837d in _start ()</PRE
+>
+		</P
+><P
+>Сообщите нам вывод в первом и втором случаях или просто скриншот сессии <TT
+CLASS="FILENAME"
+>gdb</TT
+>.</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-fuzzy.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-lib.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Нечёткий поиск</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Использование библиотеки <TT
+CLASS="LITERAL"
+>libdpsearch</TT
+>
+<A
+NAME="AEN6598"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

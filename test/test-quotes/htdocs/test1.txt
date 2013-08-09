@@ -1,0 +1,6 @@
+This is a text file. No title available.
+
+Some special characters:  "  '. ' . ' . ' . ' " . " . " . " \ \ \ \ \ 
+
+Let's check how they get escaped.
+

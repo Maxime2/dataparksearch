@@ -1,0 +1,38 @@
+<sect1 id="track">
+	<title>Регистрация поисковых запросов
+<indexterm><primary>Регистрация поисковых запросов</primary></indexterm>
+ </title>
+	<para><application>DataparkSearch</application> поддерживает регистрацию поисковых запросов.</para>
+
+	<para>При выполнении поисковых запросов, <application>DataparkSearch</application>
+использует таблицу <literal>qtrack</literal> для записи поискового запроса, IP адреса клиента, числа найденных документов и
+текущего времени в <application>UNIX</application> фомате, а также таблицу <literal>qinfo</literal> для записи всех параметров запроса.
+</para>
+
+
+	<para>Для того, чтобы включить регистрацию запросов, добавьте параметер <literal>trackquery</literal>
+для соответсвующей команды <command>DBAddr</command> (см. <xref linkend="dbaddr_cmd"/>) вашего шаблона поиска
+<filename>search.htm</filename>. Например:
+<programlisting>
+DBAddr pgsql://user:pass@localhost/search/?dbmode=cache&amp;trackquery
+</programlisting>
+</para>
+<note>
+ <para>
+ Если используется <command>searchd</command>, этот параметр необходимо добавить только в команду<command>DBAddr</command>
+из файла <filename>searchd.conf</filename>.
+ </para>
+ <para><indexterm><primary>Команда</primary><secondary>TrackDBAddr</secondary></indexterm>
+Вы можете использовать команду <command>TrackDBAddr</command> для указания другой SQL-базы для сохранения параметров поисковых запросов.
+Эта SQL-база должна содержать теже таблицы <literal>qtrack</literal> и <literal>qinfo</literal>, что и база DataparkSearch.
+ </para>
+</note>
+
+	<para>Регистрация запросов поиска полезна для получения статистики
+использования вашего поискового сервера. Для составления отчёта, вы можете, например, использовать
+следующий SQL-запрос:
+	<programlisting>
+SELECT qwords,count(*),sum(found),avg(found) FROM qtrack GROUP BY qwords;
+</programlisting>
+	</para>
+</sect1>

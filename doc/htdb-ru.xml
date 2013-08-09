@@ -1,0 +1,298 @@
+<sect2 id="htdb">
+	<title>Индексирование таблиц SQL баз данных (виртуальная URL схема <literal>htdb:</literal>)
+<indexterm><primary>HTDB</primary><secondary>индексирование таблиц SQL баз данных</secondary></indexterm>
+ </title>
+
+	<para><application>DataparkSearch</application> позволяет индексировать текстовые поля SQL баз данных
+используя так называемую виртуальную URL схему <literal>htdb:</literal>.</para>
+
+	<para>Используя виртуальную URL схему <literal>htdb:/</literal> вы можете создать полный индекс текстовых полей вашей
+SQL базы данных, а также вашего WWW сервера, использующего SQL для хранения информации.</para>
+
+	<note>
+		<para>Необходимо иметь PRIMARY индекс для таблиц, которые вы собираетесь индексировать.</para>
+	</note>
+
+	<sect3 id="htdb-indexer">
+		<title>HTDB команды в <filename>indexer.conf</filename></title>
+
+		<para>Для поддержки HTTDB в <filename>indexer.conf</filename> используются пять команд:
+<command>HTDBAddr</command>, <command>HTDBList</command>, <command>HTDBLimit</command>, <command>HTDBDoc</command> и
+<command>HTDBText</command>. </para>
+
+		<para>
+			Команда <command>HTDBAddr
+<indexterm><primary>Команда</primary><secondary>HTDBAddr</secondary></indexterm>
+</command> служит для описания соединения с базой данных, таблицу или таблицы которой вы собираетесь индексировать.
+Её систаксис совпадает с синтаксисом команды <command>DBAddr</command>.
+</para>
+
+		<para>
+			<command>HTDBList
+<indexterm><primary>Команда</primary><secondary>HTDBList</secondary></indexterm>
+</command> - это SQL запрос генерирования списка всех URL, соответсвующих записям в таблице по полю PRIMARY индекса.
+В команде <command>HTDBList</command> вы можете использовать и относительные и абсолютные URL.</para>
+		<para>Например:
+		<programlisting>
+HTDBList "SELECT concat('htdb:/',id) FROM messages"
+    или
+HTDBList "SELECT id FROM messages"
+</programlisting>
+</para>
+
+<para>Команда <indexterm><primary>Команда</primary><secondary>HTDBLimit</secondary></indexterm>
+<command>HTDBLimit</command> задаёт максимальное число записей, считываемых из базы за один раз.
+Это позволяет избежать черезмерного использования памяти при индексировании больших таблиц.
+Пример:
+<programlisting>
+HTDBLimit 512
+</programlisting>
+</para>
+
+		<para>
+			<command>HTDBDoc
+<indexterm><primary>Команда</primary><secondary>HTDBDoc</secondary></indexterm>
+</command> - это запрос для получения из базы записи, определенной по первичному ключу.</para>
+
+		<para>SQL запрос <literal>HTDBList</literal> используется для все URL, заканчивающихся символом '/'.
+Для остальных URL используется SQL запрос из <literal>HTDBDoc</literal>.</para>
+
+		<note>
+			<para>Запрос <literal>HTDBDoc</literal> должен возвращать ПОЛНЫЙ HTTP ответ с заголовками.
+Таким образом вы можете гибко управлять вашей системой индексирования выдавая различные HTTP коды статуса.
+См. <xref linkend="http-codes"/> для информации о реакции <command>indexer</command> на различные коды статуса HTTP.
+</para>
+
+		</note>
+		<para>Если по запросу <literal>HTDBDoc</literal> не будет найдено ни одной записи, система
+выборки HTDB сгенерирует ответ "HTTP 404 Not Found". Это может произойти при переиндексировании, если
+запись была удалена из вашей базы данных с момента предыдущего индексирования. Вы можете использовать команду
+<command>HoldBadHrefs 0</command> для удаления информации о таких записях и из таблиц <application>DataparkSearch</application>.
+</para>
+
+		<para>Вы можете использовать несколько команд <literal>HTDBDoc/List</literal> в одном файле 
+<filename>indexer.conf</filename> с различными соответсвующими им командами <command>Server</command>.
+</para>
+
+<para><command>HTDBText &lt;section&gt;
+<indexterm><primary>Команда</primary><secondary>HTDBText</secondary></indexterm>
+</command> - это запрос для получения из базы простого текста, соответсвующего первичному ключу, полученному при помощи
+команды <command>HTDBList</command>.
+Параметр &lt;section&gt; задаёт имя секции, под которой этот текст будет индексироваться. Такой запрос может возращать несколько
+строк с данными, если это необходимо.
+Вы можете указать несколько команд <command>HTDBText</command> для каждой команды <command>Server</command> или <command>Realm</command>.
+		<programlisting>
+DBAddr mysql://foo:bar@localhost/database/?dbmode=single
+
+HTDBAddr mysql://foofoo:barbar@localhost/database/
+
+HTDBList "SELECT DISTINCT topic_id FROM messages"
+
+HTDBText body "SELECT raw_text\
+FROM messages WHERE topic_id='$1'"
+
+Server htdb:/
+</programlisting>
+</para>
+
+<para>Возможно задавать одновременно обе команды <command>HTDBDoc</command> и <command>HTDBText</command> для одной команды
+<command>Server</command> или <command>Realm</command>. В этом случае сначала обрабатываются команды <command>HTDBText</command>.
+</para>
+
+	</sect3>
+	<sect3 id="htdb-var">
+		<title>Переменные HTDB
+<indexterm><primary>HTDB</primary><secondary>переменные</secondary></indexterm>
+</title>
+
+		<para>Вы можете использовать части пути в URL в качестве параметров для обоих SQL запросов
+<literal>HTDBList</literal> и <literal>HTDBDoc</literal>. Все части используются как $1,
+$2,  ... $n, где число n - число поддиректорий в пути:
+		<programlisting>
+htdb:/part1/part2/part3/part4/part5/
+         $1    $2    $3    $4    $5
+</programlisting>
+</para>
+
+		<para>Например, пусть в <filename>indexer.conf</filename> указана команду:
+
+		<programlisting>
+HTDBList "SELECT id FROM catalog WHERE category='$1'"
+</programlisting>
+		</para>
+
+		<para>При использовании URL <literal>htdb:/cars/</literal>, $1 будет заменено на 'cars':
+		<programlisting>
+SELECT id FROM catalog WHERE category='cars'
+</programlisting>
+		</para>
+
+		<para>Вы можете использовать длинные URL при передаче нескольких параметров для обоих SQL
+запросов <literal>HTDBList</literal> и <literal>HTDBDoc</literal>. Например,
+<literal>htdb:/path1/path2/path3/path4/id</literal> с запросом:
+		<programlisting>
+HTDBList "SELECT id FROM table WHERE field1='$1' AND field2='$2' and field3='$3'"
+</programlisting>
+		</para>
+
+		<para>Это запрос создаст списое таких URL:
+		<programlisting>
+htdb:/path1/path2/path3/path4/id1
+...
+htdb:/path1/path2/path3/path4/idN
+</programlisting>
+</para>
+		<para>для всех значений поля <literal>id</literal> в результате выполенния запроса <literal>HTDBList</literal>.</para>
+
+		<para>Для команд <command>HTDBDoc</command> и <command>HTDBtext</command> возможно указать свой regex-шаблон для сопоставления индексируемого URL с переменными HTDB:
+<programlisting>
+HTDBText header "SELECT header FROM news WHERE section=$1 AND article=$2" "^/section/([0-9]+)/art/([0-9]+)\.html"
+</programlisting>
+		</para>
+		<para>
+		в этом случае regex-шаблон сопоставляется с полным путем и именем файла индексируемого URL.
+		</para>
+		
+		<para>Для команды <command>HTDBText</command> можно использовать и мета-переменные шаблона страницы выдачи (например, $(DP_ID), $(URL)) для формирования SQL-запроса, например: 
+<programlisting>
+HTDBText hint "SELECT hint FROM hints WHERE url = '$(url)'"
+</programlisting>
+		</para>
+		
+		
+	</sect3>
+	<sect3 id="htdb-fulltext">
+		<title>Создание текстового индекса</title>
+		<para>Используя схему <literal>htdb:/</literal> вы можете создать текстовый индекс и использовать его в
+ваших приложениях. Предположим, у вас есть большая SQL таблица, в которой хранятся, например, сообщения
+электронной доски объявлений в текстовом формате. И пусть вы хотите создать приложение, обладающее возможностью поиска
+среди этих объявлений. Допустим, сообщения храняться в таблице <literal>messages</literal> с двумя полями <literal>id</literal>,
+используемом в качестве первичного ключа,
+и <literal>msg</literal>, в котором собственно и храняться тексты объявлений.
+Поиск при помощи SQL LIKE операции может занять слишком много времени:
+		<programlisting>
+SELECT id, message FROM message WHERE message LIKE '%someword%'
+</programlisting>
+		</para>
+
+		<para>Используя <application>DataparkSearch</application> вы можете создать текстовый индекс по таблице 
+<literal>message</literal>. Установите <application>DataparkSearch</application> обычным образом. Затем отредактируйте ваш
+<filename>indexer.conf</filename>:
+		<programlisting>
+DBAddr mysql://foo:bar@localhost/database/?dbmode=single
+
+HTDBAddr mysql://foofoo:barbar@localhost/database/
+
+HTDBList "SELECT id FROM messages"
+
+HTDBDoc "SELECT concat(\
+'HTTP/1.0 200 OK\\r\\n',\
+'Content-type: text/plain\\r\\n',\
+'\\r\\n',\
+msg) \
+FROM messages WHERE id='$1'"
+
+Server htdb:/
+</programlisting>
+		</para>
+
+		<para>После запуска <command>indexer</command> вставить URL 'htdb:/' в базу и выполнит SQL запрос,
+указанный в <literal>HTDBList</literal>. В результате вы получим значения 1,2,3, ..., N.
+Эти значения будут рассматриваться как ссылки относительно URL 'htdb:/'. Список новый URL в виде
+htdb:/1, htdb:/2, ... , htdb:/N будет добавлен в базу. Затем SQL запрос <literal>HTDBDoc</literal> будет выполнен
+для каждого из вновь добавленных URL. <literal>HTDBDoc</literal> создаст HTTP документ в виде:
+		<programlisting>
+HTTP/1.0 200 OK
+Content-Type: text/plain
+
+&lt;some text from 'message' field here&gt;
+</programlisting>
+		</para>
+
+		<para>Этот документ будет использован для создания текстового индекса по словам из полей 'message'.
+Слова будут сохранены в таблице 'dict' (предполагая, что используется способ хранения 'single').</para>
+
+		<para>После индексирования, вы можете использовать для поиска таблицы <application>DataparkSearch</application>:
+		<programlisting>
+SELECT url.url 
+FROM url,dict 
+WHERE dict.url_id=url.rec_id 
+AND dict.word='someword';
+</programlisting>
+		</para>
+
+		<para>Так как таблица 'dict' имеет индекс по полю 'word', этот запрос будет выполнен быстрее, нежели
+запрос с использованием SQL LIKE оператора при запросе по таблице 'messages'.</para>
+
+		<para>Вы также можете задать несколько слов при поиске:
+		<programlisting>
+SELECT url.url, count(*) as c 
+FROM url,dict
+WHERE dict.url_id=url.rec_id 
+AND dict.word IN ('some','word')
+GROUP BY url.url
+ORDER BY c DESC;
+</programlisting>
+		</para>
+
+		<para>Оба запроса вернут значения 'htdb:/XXX' в поле urll.url.
+Ваше приложение может отбросить 'htdb:/' для получения значения первичного ключа таблицы 'messages'.
+</para>
+	</sect3>
+
+	<sect3 id="htdb-web">
+		<title>Индексирование веб-сервера, использующего SQL базу данных</title>
+		<para>Вы можете также использовать виртуальную схему <literal>htdb:/</literal> для индексирования вашего
+веб-сервера, использующего базу данных для хранения отображаемой информации, без обращения к веб-серверу при индексировании.
+Т.е. намного быстрее и используя меньше ресурсов процессора нежели индексируя обращаясь к веб-серверу.
+ </para>
+		<para>Основная идея похожа на создание текстового индекса, за исключением того, что поиск должен
+давать реальные URL вместо URL в виде 'htdb:/...'. 
+Это достигается при помощи механизма алиасов <application>DataparkSearch</application>.
+</para>
+
+		<para>Команда <literal>HTDBList</literal> создаёт URL в форме:
+		<programlisting>
+http://search.site.ext/board/message.php?id=XXX
+</programlisting>
+		</para>
+
+		<para>где XXX - значение первичного ключа таблицы "messages".</para>
+
+		<para>Для каждого значения первичного ключа команда <literal>HTDBDoc</literal> создаёт text/html документ с
+HTTP заголовком примерно такого вида:
+		<programlisting>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt; ... subject field here .... &lt;/TITLE&gt;
+&lt;META NAME="Description" Content=" ... author here ..."&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt; ... message text here ... &lt;/BODY&gt;
+</programlisting>
+</para>
+
+		<para>В конце <filename>doc/samples/htdb.conf</filename> даны три команды:
+		<programlisting>
+Server htdb:/
+Realm  http://search.site.ext/board/message.php?id=*
+Alias  http://search.site.ext/board/message.php?id=  htdb:/
+</programlisting>
+		</para>
+
+		<para>Первая команда указывает <command>indexer</command> выполнить запрос <literal>HTDBList</literal>,
+который сгенерирует список сообщений в виде:
+		<programlisting>
+http://search.site.ext/board/message.php?id=XXX
+</programlisting>
+		</para>
+
+		<para>Вторая команда позволяет <command>indexer</command> принимать такие URL сообщений.</para>
+
+		<para>Третья команда заменяет в URL подстроку "htdb:/" на подстроку
+"http://search.site.ext/board/message.php?id=" при получении документа с сообщением.
+Что обозначает, что URL в виде <literal>"http://mysearch.udm.net/board/message.php?id=xxx"</literal>
+будет показан в результате поиска, хотя при индексировании будет использован URL <literal>"htdb:/xxx"</literal>,
+где xxx - значение первичного ключа, ID записи в таблице "messages".
+</para>
+	</sect3>
+</sect2>

@@ -1,0 +1,151 @@
+<sect2 id="ispell">
+	<title>Ispell</title>
+<indexterm><primary>Ispell</primary></indexterm>
+
+	<para>When <application>DataparkSearch</application> is used with ispell support enabled, it automatically
+extend search query by all grammatical forms of the query words. E.g. search front-end will try to
+find the word "test" if "testing" or "tests" is given in search
+query.</para>
+
+	<sect3 id="typesispellfiles">
+		<title>Two types of ispell files</title>
+		<para><application>DataparkSearch</application> understands two types of ispell
+files: affixes and dictionaries. Ispell affixes file contains rules
+for words and has approximately the following format:
+<programlisting>
+Flag V:
+       E   &gt; -E, IVE      # As in create&gt; creative
+      [^E] &gt; IVE          # As in prevent &gt; preventive
+Flag *N:
+       E   &gt; -E, ION      # As in create &gt; creation
+       Y   &gt; -Y, ICATION  # As in multiply &gt; multiplication
+     [^EY] &gt; EN           # As in fall &gt; fallen
+</programlisting>
+</para>
+
+
+		<para>Ispell dictionary file contains words themselves and has the following format:
+<programlisting>
+wop/S
+word/DGJMS
+wordage/S
+wordbook
+wordily
+wordless/P
+</programlisting>
+</para>
+	</sect3>
+	<sect3 id="using-ispell">
+		<title>Using Ispell</title>
+<indexterm><primary>Command</primary><secondary>Affix</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>Spell</secondary></indexterm>
+		<para>To make <application>DataparkSearch</application> support ispell you must
+specify <command>Affix</command> and <command>Spell</command> commands in <filename>search.htm</filename>
+file. The format of commands:
+		<programlisting>
+Affix [lang] [charset] [ispell affix file name]
+Spell [lang] [charset] [ispell dictionary filename]
+</programlisting>
+</para>
+		<para>The first parameter of both commands is two
+letters language abbreviation. The second is ispell files charset.
+The third one is filename. File names are relative to <application>DataparkSearch</application>
+<literal>/etc</literal> directory. Absolute paths can be also
+specified.</para>
+
+		<note>
+			<para>Simultaneous loading of several languages is supported, e.g.:
+			<programlisting>
+Affix en iso-8859-1 en.aff
+Spell en iso-8859-1 en.dict
+Affix de iso-8859-1 de.aff
+Spell de iso-8859-1 de.dict
+</programlisting>
+</para>
+			<para>Will load support for both English and German languages.</para>
+		</note>
+		<para>If you use <literal>searchd</literal>, add the same commands to <filename>searchd.conf</filename>.</para>
+		<para>When <application>DataparkSearch</application> is used with ispell support it
+is recommended to use <literal>searchd</literal>, especially for
+several languages support. Otherwise the starting time of
+<filename>search.cgi</filename> increases.</para>
+
+	</sect3>
+
+	<sect3 id="addwords-dict">
+		<title>Customizing dictionary</title>
+		<para>It is possible that several rare words are found
+in your site which are not in ispell dictionaries. In such case, an entry with longest match suffix is taking
+	  to produce word forms.</para>
+
+<para>But you can also create the
+list of such words in plain text file with the following format (one
+word per line):
+		<programlisting>
+rare.dict:
+----------
+webmaster
+intranet
+.......
+www
+http
+---------
+			</programlisting>
+</para>
+		<para>You may also use ispell flags in this file (for
+ispell flags refer to ISpell documentation). This will allow not
+writing the same word with different endings to the rare words file,
+for example "webmaster" and "webmasters". You may choose the word
+which has the same changing rules from existing ispell dictionary and
+just to copy flags from it. For example, English dictionary has this
+line:</para>
+
+		<para>
+			<literal>postmaster/MS</literal>
+		</para>
+		<para>So, webmaster with MS flags will be probably OK:</para>
+		<para>
+			<literal>webmaster/MS</literal>
+		</para>
+		<para>Then copy this file to <filename>/etc</filename> directory of
+<application>DataparkSearch</application> and add this file by <command>Spell</command> command in 
+<application>DataparkSearch</application> configuration:</para>
+
+		<para>During next reindexing using of all documents
+new words will be considered as words with correct spelling. The only
+really incorrect words will remain.</para>
+
+	</sect3>
+
+
+<sect3 id="where-to-get-ispell">
+<title>Where to get Ispell files</title>
+
+<para>You may find ispell files for many of languages at
+<ulink url="http://fmg-www.cs.ucla.edu/geoff/ispell-dictionaries.html">this page</ulink>.
+</para>
+
+<para>For Japanese language there exist quasi-ispell files suitable for use with <application>DataparkSearch</application> only.
+You may get this data from <ulink url="http://www.dataparksearch.org/">our web site</ulink> or from one of our mirrors.
+See <xref linkend="get"/>.
+</para>
+
+
+</sect3>
+
+
+<sect3 id="quffix">
+<title>Query words modification</title>
+<indexterm><primary>Command</primary><secondary>Quffix</secondary></indexterm>
+	<para><programlisting>
+Quffix [lang] [charset] [ispell-like suffix file name]
+</programlisting>
+The <command>Quffix</command> command is similar to <command>Affix</command> command described above, except that these rules apply to the query words, bot not to the normal word forms
+as it is done for <command>Affix</command> command. The file loaded with this command must contain only suffix rules (in terms of ispell affix files).
+</para>
+<para>This command is suitable, for example, to specify the rules to switch from one part of speech to an another for the Russian language when it is appropriate.
+</para>
+
+</sect3>
+
+</sect2>

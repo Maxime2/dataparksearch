@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Search results cache</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Searching documents"
+HREF="dpsearch-doingsearch.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Search queries tracking"
+HREF="dpsearch-track.en.html"><LINK
+REL="NEXT"
+TITLE="Fuzzy search"
+HREF="dpsearch-fuzzy.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-track.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 8. Searching documents</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-fuzzy.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SRCACHE"
+>8.7. Search results cache</A
+></H1
+><A
+NAME="AEN6134"
+></A
+><P
+>Search results cache allows <TT
+CLASS="FILENAME"
+>search.cgi</TT
+> to make very fast
+response on recently used queries as well as user's navigation though the pages of the same result.</P
+><P
+>Search results cache is disabled by default. You may use
+<B
+CLASS="COMMAND"
+>Cache yes</B
+> command in <TT
+CLASS="FILENAME"
+>search.htm</TT
+> to enable results
+caching. If you use <TT
+CLASS="LITERAL"
+>searchd</TT
+>, add "<B
+CLASS="COMMAND"
+>Cache yes</B
+>"
+command to <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> file.</P
+><P
+>Search cache is located in
+<TT
+CLASS="LITERAL"
+>$PREFIX/var/cache/</TT
+> subdirectory, where
+<TT
+CLASS="LITERAL"
+>$PREFIX</TT
+> is <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation base
+directory. Each result is stored in a separate file.</P
+><P
+><A
+NAME="AEN6149"
+></A
+>
+By defaults, search results cache is not deleted
+automatically. You have to delete it every time after indexer's work
+to avoid displaying non-recent cached results. 
+Or you may specify a refresh period for search results cache using
+<B
+CLASS="COMMAND"
+>HoldCache</B
+> command:
+<PRE
+CLASS="PROGRAMLISTING"
+>HoldCache &lt;time&gt;</PRE
+>
+For &lt;time&gt; format see description of <B
+CLASS="COMMAND"
+>Period</B
+> command in <A
+HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
+>Section 3.10.26</A
+>&#62;.
+<PRE
+CLASS="PROGRAMLISTING"
+>HoldCache 3h</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-track.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-fuzzy.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Search queries tracking</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Fuzzy search</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

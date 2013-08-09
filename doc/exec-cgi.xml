@@ -1,0 +1,88 @@
+<sect2 id="exec">
+	<title>Indexing binaries output (exec: and cgi: virtual URL schemes)</title>
+<indexterm><primary>Indexing binaries output</primary></indexterm>
+
+	<para><application>DataparkSearch</application> supports exec: and cgi: virtual URL
+schemes. They allows running an external program. This program must
+return a result to it's stdout. Result must be in HTTP standard,
+i.e. HTTP response header followed by document's content.</para>
+
+	<para>For example, when indexing both
+<literal>cgi:/usr/local/bin/myprog</literal> and
+<literal>exec:/usr/local/bin/myprog</literal>, indexer will execute
+the <filename>/usr/local/bin/myprog</filename> program.</para>
+
+	<sect3 id="exec-cgi">
+		<title>Passing parameters to cgi: virtual scheme</title>
+		<para>When executing a program given in cgi: virtual
+scheme, indexer emulates that program is running under HTTP server. It
+creates REQUEST_METHOD environment variable with "GET" value and
+QUERY_STRING variable according to HTTP standards. For example, if
+<literal>cgi:/usr/local/apache/cgi-bin/test-cgi?a=b&amp;d=e</literal>
+is being indexed, indexer creates QUERY_STRING with
+<literal>a=b&amp;d=e</literal> value.  cgi: virtual URL scheme allows
+indexing your site without having to invoke web servers even if you
+want to index CGI scripts. For example, you have a web site with
+static documents under <filename>/usr/local/apache/htdocs/</filename>
+and with CGI scripts under
+<filename>/usr/local/apache/cgi-bin/</filename>. Use the following
+configuration:
+		<programlisting>
+Server http://localhost/
+Alias  http://localhost/cgi-bin/	cgi:/usr/local/apache/cgi-bin/
+Alias  http://localhost/		file:/usr/local/apache/htdocs/
+</programlisting>
+		</para>
+	</sect3>
+	<sect3 id="exec-exec">
+		<title>Passing parameters to exec: virtual scheme</title>
+		<para>indexer does not create QUERY_STRING variable
+like in cgi: scheme. It creates a command line with argument given in
+URL after ? sign. For example, when indexing
+<literal>exec:/usr/local/bin/myprog?a=b&amp;d=e</literal>, this
+command will be executed:
+		<programlisting>
+/usr/local/bin/myprog "a=b&amp;d=e" 
+</programlisting>
+		</para>
+	</sect3>
+	<sect3 id="exec-ext">
+		<title>Using exec: virtual scheme as an external retrieval system</title>
+		<para>exec: virtual scheme allow using it as an
+external retrieval system. It allows using protocols which are not
+supported natively by <application>DataparkSearch</application>. For example, you can use curl
+program which is available from <ulink
+				       url="http://curl.haxx.se/">http://curl.haxx.se/</ulink> to index HTTPS sites.</para>
+
+		<para>Put this short script to
+<literal>/usr/local/dpsearch/bin/</literal> under
+<filename>curl.sh</filename> name.
+		<programlisting>
+#!/bin/sh
+/usr/local/bin/curl -i $1 2>/dev/null
+</programlisting>
+</para>
+		<para>This script takes an URL given in command line
+argument and executes curl program to download it.  -i argument says
+curl to output result together with HTTP headers.</para>
+		<para>Now use these commands in your <filename>indexer.conf</filename>:
+		<programlisting>
+Server https://some.https.site/
+Alias  https://  exec:/usr/local/dpsearch/etc/curl.sh?https://
+</programlisting>
+		</para>
+		<para>When indexing
+<filename>https://some.https.site/path/to/page.html</filename>,
+indexer will translate this URL to 
+		<programlisting>
+exec:/usr/local/dpsearch/etc/curl.sh?https://some.https.site/path/to/page.html
+</programlisting>
+		</para>
+		<para>execute the <filename>curl.sh</filename> script:
+		<programlisting>
+/usr/local/dpsearch/etc/curl.sh "https://some.https.site/path/to/page.html"
+</programlisting>
+		</para>
+		<para>and take it's output.</para>
+	</sect3>
+</sect2>

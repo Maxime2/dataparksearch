@@ -1,0 +1,277 @@
+CREATE TABLE ndict2 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict2_url_ind ON ndict2
+(
+       url_id
+)
+/
+
+
+CREATE INDEX ndict2_word_ind ON ndict2
+(
+       word_id
+)
+/
+
+
+CREATE TABLE ndict3 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict3_url_ind ON ndict3
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict3_word_ind ON ndict3
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict4 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict4_url_ind ON ndict4
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict4_word_ind ON ndict4
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict5 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict5_url_ind ON ndict5
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict5_word_ind ON ndict5
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict6 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict6_url_ind ON ndict6
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict6_word_ind ON ndict6
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict7 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict7_url_ind ON ndict7
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict7_word_ind ON ndict7
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict8 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict8_url_ind ON ndict8
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict8_word_ind ON ndict8
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict9 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict9_url_ind ON ndict9
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict9_word_ind ON ndict9
+(
+       word_id
+)
+/
+
+
+CREATE TABLE ndict10 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict10_url_ind ON ndict10
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict10_word_ind ON ndict10
+(
+       word_id
+)
+/
+
+
+CREATE TABLE ndict11 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict11_url_ind ON ndict11
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict11_word_ind ON ndict11
+(
+       word_id
+)
+/
+
+
+CREATE TABLE ndict12 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict12_url_ind ON ndict12
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict12_word_ind ON ndict12
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict16 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict16_url_ind ON ndict16
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict16_word_ind ON ndict16
+(
+       word_id
+)
+/
+
+CREATE TABLE ndict32 (
+  url_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  word_id	NUMBER(11) DEFAULT '0' NOT NULL,
+  intag		NUMBER(11) DEFAULT '0' NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX ndict32_url_ind ON ndict32
+(
+       url_id
+)
+/
+
+CREATE INDEX ndict32_word_ind ON ndict32
+(
+       word_id
+)
+/

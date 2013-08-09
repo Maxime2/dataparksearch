@@ -1,0 +1,181 @@
+PRAGMA default_synchronous=OFF;
+
+CREATE TABLE url (
+  rec_id	  INTEGER  NOT NULL PRIMARY KEY,
+  status	  smallint DEFAULT 0  NOT NULL,
+  docsize	  int      DEFAULT 0  NOT NULL,
+  next_index_time INT      DEFAULT 0  NOT NULL,
+  last_mod_time	  INT      DEFAULT 0  NOT NULL,
+  since 	  INT      DEFAULT 0  NOT NULL,
+  referrer	  int      DEFAULT 0  NOT NULL,
+  hops		  smallint DEFAULT 0  NOT NULL,
+  crc32		  int	   DEFAULT -1 NOT NULL,
+  seed		  smallint DEFAULT 0  NOT NULL,
+  bad_since_time  INT      DEFAULT 0  NOT NULL,
+  site_id	  int,
+  server_id	  int,
+  charset_id      smallint,
+  shows           int      DEFAULT 0  NOT NULL,
+  pop_rank	  float    DEFAULT 0  NOT NULL,
+  url		  BLOB     DEFAULT '' NOT NULL
+);
+
+CREATE UNIQUE INDEX key_url_url      ON url (url);
+CREATE INDEX key_url_crc             ON url (crc32);
+CREATE INDEX key_url_seed            ON url (seed);
+CREATE INDEX key_url_referrer        ON url (referrer);
+CREATE INDEX key_url_bad_since_time  ON url (bad_since_time);
+CREATE INDEX key_url_next_index_time ON url (next_index_time);
+CREATE INDEX key_url_site_id         ON url (site_id);
+CREATE INDEX key_url_server_id       ON url (server_id);
+CREATE INDEX key_url_hops            ON url (hops);
+CREATE INDEX key_url_status          ON url (status);
+CREATE INDEX key_url_poprank         ON url (pop_rank);
+
+
+CREATE TABLE urlinfo (
+  url_id INT   NOT NULL,
+  sname  TEXT  NOT NULL,
+  sval   TEXT  NOT NULL
+);
+CREATE INDEX key_uinfo_url_id ON urlinfo (url_id);
+CREATE INDEX key_uinfo_sname ON urlinfo (sname);
+CREATE INDEX key_uinfo_sval ON urlinfo (sval);
+
+
+CREATE TABLE dict (
+  url_id int    DEFAULT 0  NOT NULL,
+  word varchar  DEFAULT '' NOT NULL,
+  intag int     DEFAULT 0  NOT NULL
+);
+CREATE INDEX key_dict_url_id ON dict (url_id);
+CREATE INDEX key_dict_word   ON dict (word);
+
+
+CREATE TABLE categories (
+  rec_id INTEGER             NOT NULL PRIMARY KEY,
+  path   char(10) DEFAULT '' NOT NULL,
+  link   char(10) DEFAULT '' NOT NULL,
+  name   char(64) DEFAULT '' NOT NULL
+);
+CREATE INDEX key_cat_path ON categories (path);
+CREATE INDEX key_cat_link ON categories (link);
+INSERT INTO categories (path,link,name) VALUES ('', '', 'Root');
+
+
+CREATE TABLE qtrack (
+  rec_id  INTEGER                 NOT NULL PRIMARY KEY,
+  ip      varchar(16)  DEFAULT '' NOT NULL,
+  qwords  TEXT         DEFAULT '' NOT NULL,
+  qtime   int          DEFAULT 0  NOT NULL,
+  wtime   int          DEFAULT 0  NOT NULL,
+  found   int          DEFAULT 0  NOT NULL
+);
+CREATE INDEX key_qtrack_ipt ON qtrack(ip,qtime);
+
+
+CREATE TABLE qinfo (
+       q_id  int,
+       name  varchar(128),
+       value varchar(255)
+);
+CREATE INDEX key_qinfo_id ON qinfo (q_id);
+
+
+CREATE TABLE crossdict (
+  url_id int         DEFAULT 0  NOT NULL,
+  ref_id int         DEFAULT 0  NOT NULL,
+  word   varchar(32) DEFAULT '' NOT NULL,
+  intag  int         DEFAULT 0  NOT NULL
+);
+CREATE INDEX key_crossdict_url_id ON crossdict (url_id);
+CREATE INDEX key_crossdict_ref_id ON crossdict (ref_id);
+CREATE INDEX key_crossdict_word   ON crossdict (word);
+
+
+
+CREATE TABLE ndict (
+  url_id  int DEFAULT 0 NOT NULL,
+  word_id int DEFAULT 0 NOT NULL,
+  intag   int DEFAULT 0 NOT NULL
+);
+CREATE INDEX key_ndict_url_id ON ndict (url_id);
+CREATE INDEX key_ndict_word   ON ndict (word_id);
+
+
+create table server (
+	rec_id		INTEGER		not null primary key,
+	enabled		int		not null	default 0,
+	url		BLOB		not null	default '',
+	tag		TEXT		not null	default '',
+	category	int		not null	default 0,
+	command		char(1)		not null	default 'S',
+	ordre		int		not null	default 0,
+	parent		int		not null	default 0,
+	weight		float		not null	default 1,
+	pop_weight	float		not null	default 0
+);
+CREATE INDEX key_srv_ordre      ON server (ordre);
+CREATE INDEX key_srv_parent     ON server (parent);
+CREATE INDEX key_srv_command    ON server (command);
+CREATE UNIQUE INDEX key_srv_url ON server (url);
+CREATE INDEX key_srv_tag        ON server (tag);
+CREATE INDEX key_srv_category   ON server (category);
+
+
+CREATE TABLE srvinfo (
+       srv_id int  NOT NULL,
+       sname  text NOT NULL,
+       sval   text NOT NULL
+);
+CREATE INDEX srvinfo_id ON srvinfo (srv_id);
+
+
+create table links (
+       ot	   int   not null default 0,
+       k	   int   not null default 0,
+       weight	   float not null default 0,
+       valid       char(1) not null default 't'
+);
+
+CREATE UNIQUE INDEX key_links_links ON links (ot, k);
+CREATE        INDEX key_links_ot    ON links (ot);
+CREATE        INDEX key_links_k     ON links (k);
+
+CREATE TABLE robots (
+       cmd 	    int,
+       added_time   int,
+       ordre	    int,
+       hostinfo	    varchar(255),
+       path	    text
+);
+CREATE UNIQUE INDEX robots_idx ON robots (hostinfo, ordre);
+CREATE INDEX robots_time ON robots (added_time);
+
+CREATE TABLE cookies (
+       expires    int4,
+       secure     char(1),
+       domain     text,
+       path       text,
+       name       text,
+       value      text
+);
+CREATE UNIQUE INDEX cookies_idx ON cookies (domain, path, name, secure);
+CREATE INDEX cookies_time ON cookies (expires);
+
+CREATE TABLE storedchk (
+       rec_id int, 
+       url_id int
+);
+CREATE INDEX storedchk_i ON storedchk (url_id);
+
+CREATE TABLE cachedchk (
+       rec_id integer
+);
+CREATE UNIQUE INDEX cachedchk_i ON cachedchk (rec_id);
+
+CREATE TABLE "cachedchk2" (
+       url_id integer
+);
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
+

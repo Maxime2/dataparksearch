@@ -1,0 +1,267 @@
+<sect1 id="rel">
+	<title>Релевантность
+<indexterm><primary>Релевантность</primary></indexterm>
+</title>
+	<sect2 id="rel-order">
+		<title>Упорядочивание документов</title>
+<para>При сортировке документов перед выдачей результата поиска <application>DataparkSearch</application>
+по умолчанию учитывает два параметра каждого документа: <literal>релевантность</literal> и <literal>популярность</literal>.
+Сначала документы сортируются по релевантности, а при равенстве, по популярности.
+</para>
+	</sect2>
+
+<sect2 id="relevancy"><title>Расчёт релевантности</title>
+<para>Релевантность каждого документа вычисляется как косинус угла между вектором весов этого документа и вектором весов,
+соответствующему поисковому запросу, умноженный на 100%.
+Число координат векторов весов равно произведению числа слов в запросе
+(с учётом всех словоформ и синонимов) на число секций, определённых в
+<filename>indexer.conf</filename>. Каждая координата вектора весов соответсвует слову из запроса в той или иной секции
+документа. И значение для этой координаты вычисляется на основе весов секций, заданных параметром <option>wf</option>
+(см. <xref linkend="search-changeweight"/>) и на основании
+того, является ли данное слово именно указанным в запросе или его словоформой. Также еще одна координата соответсвует
+среднему расстоянию между найденными словами в данном документе. Для вектора запроса эта координата полагается равной 0.
+</para>
+<para>  Т.к. в файлах конфигурации поисковых фронтэндов
+(<filename>searchd.conf</filename> или <filename>search.htm</filename>) не предусмотрено указание секцией,
+используйте <indexterm><primary>Команда</primary><secondary>NumSections</secondary></indexterm> команду
+<command>NumSections</command> для указания числа используемых секций (по умолчанию оно равно 256).
+Впрочем, точное число секций не играет решающей роли в порядке сортировки документов, только
+в значении рейтинга релевантности.
+</para>
+
+<table><title>Параметры расчёта релевантности, задаваемые при компиляции (ключи для <command>configure</command>)</title>
+	<tgroup cols="2">
+	<tbody>
+<row><entry><option>--enable-rel</option></entry>
+<entry><para>Включает полный (full), быстрый (fast) или ультра (ultra) вариант расчёта релевантности. Значение по умолчанию: full (или полный расчёт релевантности).
+</para></entry></row>
+
+<row><entry><option>--disable-reldistance</option></entry>
+<entry><para>Выключает учёт среднего растояния между словами при расчёте релевантности. Значение по умолчанию: включено.
+</para></entry></row>
+
+<row><entry><option>--disable-relposition</option></entry>
+<entry><para>Выключает учёт позиции первого слова из запроса в тексте документа при расчёте релевантности. Значение по умолчанию: включено.
+</para></entry></row>
+
+<row><entry><option>--disable-relwrdcount</option></entry>
+<entry><para>Выключает учёт чисел вхождения слов из запроса в найденом документе при расчёте релевантности. Значение по умолчанию: включено.
+</para></entry></row>
+
+<row><entry><option>--with-bestpos=<option>NUM</option></option></entry>
+<entry><para>Задаёт <option>NUM</option> в качестве лучшего значения первой позиции слова запроса в найденом документе. 
+Значение по умолчанию: 4.
+</para></entry></row>
+
+<row><entry><option>--with-bestwrdcnt=<option>NUM</option></option></entry>
+<entry><para>Задаёт <option>NUM</option> в качестве лучшего числа каждого из слов запроса в найденом документе. 
+Значение по умолчанию: 11.
+</para></entry></row>
+
+<row><entry><option>--with-distfactor=<option>NUM</option></option></entry>
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для среднего растояния между словами запроса в найденом документе. 
+Значение по умолчанию: 0.2.
+</para></entry></row>
+
+<row><entry><option>--with-posfactor=<option>NUM</option></option></entry>
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для расстояния между первой позицией слова запроса в найденом документе и значением, указаным параметром <option>--with-bestpos</option>. 
+Значение по умолчанию: 0.5.
+</para></entry></row>
+
+<row><entry><option>--with-wrdcntfactor=<option>NUM</option></option></entry>
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для расстояния между числом слова запроса в найденом документе и значением, указаным параметром <option>--with-bestwrdcnt</option>. 
+Значение по умолчанию: 0.4.
+</para></entry></row>
+
+<row><entry><option>--with-wrdunifactor=<option>NUM</option></option></entry>
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для величины отклонения количеств вхождения слов запроса в найденый документ от равномерного распределения. 
+Значение по умолчанию: 1.5.
+</para></entry></row>
+
+	</tbody>
+	</tgroup>
+</table>
+
+</sect2>
+
+
+
+<sect2 id="poprank"><title>Рейтинг популярности<indexterm><primary>Рейтинг популярности</primary></indexterm></title>
+
+<para><indexterm><primary>Команда</primary><secondary>PopRankMethod</secondary></indexterm>
+<application>DataparkSearch</application> поддерживает два метода расчёта рейтинга популярности.
+Метод, использовавшийся в предыдущих версиях получил название <literal>Goo</literal>, а новый метод называется 
+<literal>Neo</literal>. По умолчанию используется метод <literal>Goo</literal>. Чтобы выбрать нужный метод расчёта популярности
+используйте команду <command>PopRankMethod</command>:
+<programlisting>
+PopRankMethod Neo
+</programlisting>
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>CollectLinks</secondary></indexterm>
+Для метода расчёта популярности <literal>Neo</literal>,а также для полного варианта метода <literal>Goo</literal> вам
+необходимо включить сбор ссылок между страницами командой <command>CollectLinks yes</command> в вашем файле конфигурации
+<filename>indexer.conf</filename>. Однако, это незначительно уменьшает скорость индексирования, поэтому по умолчанию
+сбор этих ссылок выключен. 
+</para>
+
+<para>По умолчанию, для расчета рейтинга популярности используются только ссылки между различными сайтами.
+ Если в <filename>indexer.conf</filename> указана опция 
+<option><indexterm><primary>Команда</primary><secondary>PopRankSkipSameSite</secondary></indexterm>PopRankSkipSameSite no</option>,
+ то при расчёте рейтинга популярности учитываются все ссылки.
+</para>
+
+<para>Вы можете присвоить начальное значение рейтинга популярности страницы используя МЕТА таг DP.PopRank 
+(см. <xref linkend="htmlparser-meta"/>).
+</para>
+
+
+<sect3 id="Goo-poprank"><title>Метод расчёта популярности Goo</title>
+
+<para>Рейтинг популярности рассчитывается в два этапа. На первом этапе значение параметра <option>Weight</option>
+для каждого сервера делится на число ссылок со страниц этого сервера. Таким образом определяется вес одной ссылки с этого сервера.
+На втором этапе для каждой страницы находится ссума весов всех ссылок, указывающих на эту страницу.
+Эта сумма и является индексом популярности страницы.
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>ServerWeight</secondary></indexterm>
+По умолчанию значение параметра <option>Weight</option> для каждого сервера равно 1. Изменить это значение вы можете непосредственно
+в SQL-таблице <literal>server</literal> или при помощи команды <command>ServerWeight</command> в файле конфигурации
+<filename>indexer.conf</filename>.
+</para>
+
+<para>Если в <filename>indexer.conf</filename> указана опция
+<option><indexterm><primary>Команда</primary><secondary>PopRankFeedBack</secondary></indexterm>PopRankFeedBack yes</option>,
+то перед расчётом рейтинга популярности страниц рассчитывается рейтинг сайтов. Для этого для каждого сайта находится сумма
+популярности всех его страниц, если она окажется меньше 1, то рейтинг сайта полагается равным 1, в противном случае он
+полагается равным найденной сумме.
+</para>
+
+<para>Если в <filename>indexer.conf</filename> указана опция
+<option><indexterm><primary>Команда</primary><secondary>PopRankUseTracking</secondary></indexterm>PopRankUseTracking yes</option>,
+то перед расчётом рейтинга популярности страниц в качестве рейтинга сайтов будет использована сумма числа запросов уточнения поиска
+для каждого сайта (т.е. число запросов поиска только среди документов с этого сайта).
+</para>
+
+<para>Если в <filename>search.htm</filename> (или <filename>searchd.conf</filename>) указана опция
+<option><indexterm><primary>Команда</primary><secondary>PopRankUseShowCnt</secondary></indexterm>PopRankUseShowCnt yes</option>,
+то для каждого выводимого пользователю результата поиска, имеющего значение релевантности выше, заданного командой
+<option><indexterm><primary>Команда</primary><secondary>PopRankShowCntRatio</secondary></indexterm>PopRankShowCntRatio</option>
+(по умолчанию используется значение 25.0), значение <literal>url.shows</literal> увеличивается на 1.
+Если в <filename>indexer.conf</filename> указана опция <option>PopRankUseShowCnt yes</option>,
+то при расчёте рейтинга популярности страниц, к полученному на предыдущих этапах значению рейтига каждой страницы будет прибавлено значение
+<literal>url.shows</literal>, умноженное на значение, заданное опцией
+<option><indexterm><primary>Команда</primary><secondary>PopRankShowCntWeight</secondary></indexterm>PopRankShowCntWeight</option>
+(по умолчанию используется значение 0.01).
+</para>
+</sect3>
+
+<sect3 id="Neo-poprank"><title>Метод расчёта популярности Neo</title>
+</sect3>
+
+<para>При этом методе расчёта популярности подразумевается, что страницы являются нейронами, а ссылки между страницами
+являются связями между нейронами. Такми образом для образованой нейросети можно использовать один методов её обучения -
+метод обратного распространения ошибки. Рейтингом популярности страницы в данном случае считается уровень активности 
+соответствующего нейрона. См. <ulink url="http://www.maxime.net.ru/doc/Neo.pdf">краткое описание метода расчёта популярности Neo</ulink>.
+</para>
+
+<para>Вы можете использовать команду
+<option><indexterm><primary>Команда</primary><secondary>PopRankNeoIterations</secondary></indexterm>PopRankNeoIterations</option>
+для задания числа итераций при расчёте популярности методом  &quot;Neo&quot;. Значение по умолчанию: 3.
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>PopRankPostpone</secondary></indexterm>
+По умолчанию, расчёт рейтинга популярности методом &quot;Neo&quot; ведётся одновременно с индексирования. Для ускорения индексирования,
+вы можете отложить расчёт рейтинга популярности методом &quot;Neo&quot; указав команду:
+</para>
+<programlisting>
+PopRankPostpone yes
+</programlisting>
+<para>Затем вы можете расчитать рейтинг популярности методом &quot;Neo&quot; также как и для метода &quot;Goo&quot;, т.е.:
+<command>indexer -TR</command>
+</para>
+
+</sect2>
+
+
+	<sect2 id="rel-bool">
+		<title>Булевы запросы
+<indexterm><primary>Булевы запросы</primary><secondary>релевантность</secondary></indexterm>
+</title>
+		<para>При булевом поиске, состоящем из двух и более слов, необходимо вводить операторы (&amp;, |, ~).
+Т.е. необходимо вводить <userinput>a &amp; book</userinput> вместо <userinput>a book</userinput>.
+См. также <xref linkend="search-bool"/>.
+</para>
+
+	</sect2>
+
+	<sect2 id="rel-cwords">
+		<title>Crosswords
+<indexterm><primary>Crosswords</primary></indexterm>
+</title>
+		<para>Эта возможность позволяет связать слова между
+&lt;a href="xxx"&gt; и &lt;/a&gt; с документом, на который указывает данная ссылка.
+Для включения этой возможности, используйте команду
+<command>CrossWords yes
+<indexterm><primary>Команда</primary><secondary>CrossWords</secondary></indexterm>
+</command> в <filename>indexer.conf</filename> и <filename>search.htm</filename>, а также определите секцию
+<userinput>crosswords</userinput> в файле <filename>sections.conf</filename>.
+</para>
+
+<para><indexterm><primary>Команда</primary><secondary>CrossWordsSkipSameSite</secondary></indexterm>
+При помощи команды <command>CrossWordsSkipSameSite</command> можно управлять сбором кросс-слов со страниц того же сайта.
+Если указана опция <userinput>yes</userinput> (по умолчанию), то сбор кросс-слов со страниц того же сайта не происходит. 
+Для включения учета таких слов необходимо явно задать опцию <userinput>no</userinput>:
+<programlisting>
+CrossWordsSkipSameSite no
+</programlisting>
+</para>
+
+	</sect2>
+
+<sect2 id="sea">
+<title>Алгоритм Построения Рефератов (SEA)</title>
+<indexterm><primary>Алгоритм Построения Рефератов</primary></indexterm>
+<indexterm><primary>SEA</primary><secondary>Алгоритм Построения Рефератов</secondary></indexterm>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(sea)</secondary></indexterm>
+<indexterm><primary>Документ</primary><secondary>реферат</secondary></indexterm>
+<para><literal>Алгоритм Построения Рефератов (SEA)</literal> позволяет построить реферат из трёх наиболее релевантных предложений для
+каждого проиндексированого документа, состоящего из более 6 предложений. Чтобы включить эту возможность, добавьте эту команду в ваш файл
+<filename>seaction.conf</filename>:
+<programlisting>
+Section sea x y
+</programlisting>
+где <option>x</option> - номер секции и <option>y</option> - максимальный размер значения секции, задайте его равным 0, если вы не хотите
+показывать эту секцию на тсраницах результатов поиска.
+Если вы указываете ненулевое значение для <option>y</option>, вы можете использовать мета-переменную <literal>$(sea)</literal> 
+в вашем шаблоне поиска для отображения реферата в результатах поиска.
+</para>
+
+<para>Соответствующие команды конфигурирования:
+</para>
+<para><indexterm><primary>Команда</primary><secondary>SEASentenceMinLength</secondary></indexterm>
+Команда <command>SEASentenceMinLength</command> задаёт минимальную длину предложения, которое будет использовано для создания реферата.
+Значение по умолчанию: 32.
+</para>
+<para><indexterm><primary>Команда</primary><secondary>SEASentences</secondary></indexterm>
+Команда <command>SEASentences</command> используется для задания максимального числа предложений, используемых при построении реферата.
+Значение по умолчанию: 64. В виду нелинейной сложности алгоритма SEA, вы можете установить значение этого параметра исходя из желаемой
+производительности индексирования.
+</para>
+<para id="seasections-cmd"><indexterm><primary>Команда</primary><secondary>SEASections</secondary></indexterm>
+При помощи команды <command>SEASections</command> вы можете указать список секций документов, по которым будут строиться рефераты.
+По умолчанию, для построения рефератов используется только секция "body".
+<programlisting>
+SEASections "body, title"
+</programlisting>
+</para>
+
+</sect2>
+
+
+	<!-- sect2 id="rel-dr">
+		<title>$(Score) template variable</title>
+		<para>
+			<varname>$(Score)</varname> template variable displays number of words from the query found in a document.</para>
+	</sect2 -->
+</sect1>

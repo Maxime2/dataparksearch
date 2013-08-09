@@ -1,0 +1,207 @@
+<sect1 id="oracle">
+	<title>Oracle notes</title>
+<indexterm><primary>Oracle</primary><secondary>notes</secondary></indexterm>
+
+	<sect2 id="oracle-intro">
+		<title>Introduction</title>
+		<!--para>By Anton Zemlyanov <email>az@hotmail.ru</email>
+		</para-->
+		<sect3 id="oracle-why">
+			<title>Why Oracle?</title>
+			<para>Oracle is a powerful, tunable, scalable
+and reliable industrial RDBMS. It provides some functionalities which
+are absent in simple freeware RDBMS like MySQL and PostgresSQL, such
+as: transactions support, concurrency and consistency, data integrity,
+partitioning, replication, cost-based and rule-based optimizers,
+parallel execution, redo logs, RAW devices and many other
+features. Although Oracle is a very functional database, the
+additional qualities like reliability impose some overhead. In fact,
+providing many advantages Oracle has some disadvantages. For example
+great tenability requires more experienced DBA, redo logs support
+provide great reliability against instance and media failures but
+requires more efficient disk system. I think you should select Oracle
+as a database for <application>DataparkSearch</application> if you want to search through hundreds
+of megabytes or several gigabytes of information, reliability is one
+of the primary concerns, need high availability of the database, and
+you are ready to pay higher sums for hardware and Oracle DBA to
+achieve better quality of service. </para>
+
+		</sect3>
+		<sect3 id="oracle-req">
+			<title><application>DataparkSearch</application>+Oracle8 Installation Requirements</title>
+			<para>In order to install <application>DataparkSearch</application> with Oracle RDBMS support 
+you must ensure the following requirements:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Oracle8 Server must be
+properly installed on any computer accessible from the site where
+<application>DataparkSearch</application> are to be installed. See the documentation provided with
+your Oracle server. </para>
+
+				</listitem>
+				<listitem>
+					<para>Oracle client software
+and libraries must be installed on the site where you plan to install
+<application>DataparkSearch</application>. I strongly recommend to install utilities also, it help
+you to test the client and server accessibility. </para>
+
+				</listitem>
+				<listitem>
+					<para>glibc 2.0 or glibc 2.1. Oracle 8.0.5.X libraries are built for glibc 2.0.</para>
+				</listitem>
+			</itemizedlist>
+		</sect3>
+		<sect3 id="oracle-platforms">
+			<title>Currently supported/tested platforms</title>
+			<para>Oracle versions:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Oracle 8.0.5.X </para>
+				</listitem>
+			</itemizedlist>
+			<para>Operation systems:</para>
+			<itemizedlist>
+				<listitem>
+					<para>Linux RedHat 6.1 (2.2.X + glibc 2.0) </para>
+				</listitem>
+			</itemizedlist>
+			<para>Oracle Server may be ran on any platform
+supporting tcp/ip connections. I see no difficulties to port
+<application>DataparkSearch</application> Oracle driver to any commercial and freeware unix systems,
+any contribution is appreciated. </para>
+
+		</sect3>
+	</sect2>
+	<sect2 id="oracle-install">
+		<title>Compilation, Installation and Configuration</title>
+		<sect3 id="oracle-compil">
+			<title>Compilation</title>
+			<para>Oracle 8.0.5.X and Linux RedHat 6.1</para>
+			<para>
+				<programlisting>
+./Configure --with-oracle8=oracle_home_dir
+make
+make install
+</programlisting>
+			</para>
+			<para>If you have any troubles, try to put
+<literal>CC = i386-glibc20-linux-gcc</literal> in the
+<filename>src/Makefile</filename>, this is old version of gcc compiler
+for glibc 2.0. </para>
+
+		</sect3>
+		<sect3 id="oracle-install-config">
+			<title>Installation and Configuration</title>
+			<para>
+				<emphasis>Check whether Oracle Server and Oracle Client work properly.</emphasis>
+			</para>
+			<para>First, try DataparkSearch service is accessible
+			<programlisting>
+
+ [oracle@ant oracle]$ tnsping DataparkSearch 3
+
+TNS Ping Utility for Linux: Version 8.0.5.0.0 - Production on 29-FEB-00 09:46:12
+(c) Copyright 1997 Oracle Corporation.  All rights reserved.
+
+Attempting to contact (ADDRESS=(PROTOCOL=TCP)(Host=ant.gpovz.ru)(Port=1521))
+OK (10 msec)
+OK (0 msec)
+OK (10 msec)
+
+</programlisting>
+			</para>
+			<para>Second, try to connect to Oracle Server with svrmgrl and check whether 
+<application>DataparkSearch</application> tables were created
+			<programlisting>
+[oracle@ant oracle]$ svrmgrl command='connect scott/tiger@DataparkSearch'
+
+Oracle Server Manager Release 3.0.5.0.0 - Production
+
+(c) Copyright 1997, Oracle Corporation.  All Rights Reserved.
+
+Oracle8 Release 8.0.5.1.0 - Production
+PL/SQL Release 8.0.5.1.0 - Production
+
+Connected.
+SVRMGR&gt; SELECT table_name FROM user_tables;
+TABLE_NAME
+------------------------------
+DICT
+DICT10
+DICT11
+DICT12
+DICT16
+DICT2
+DICT3
+DICT32
+DICT4
+DICT5
+DICT6
+DICT7
+DICT8
+DICT9
+PERFTEST
+ROBOTS
+STOPWORD
+TAB1
+URL
+19 rows selected.
+</programlisting>
+			</para>
+			<para>
+				<emphasis>Check the library paths in /etc/ld.so.conf</emphasis>
+			</para>
+			<para>
+				<programlisting>
+[oracle@ant oracle]$ cat /etc/ld.so.conf
+/usr/X11R6/lib
+/usr/lib
+/usr/i486-linux-libc5/lib
+/usr/lib/qt-2.0.1/lib
+/usr/lib/qt-1.44/lib
+/oracle8/app/oracle/product/8.0.5/lib
+</programlisting>
+			</para>
+			<para>This file should contain line
+<literal>oracle_home_path/lib</literal> to ensure <application>DataparkSearch</application> will be
+able to open libclntsh.so, the shared Oracle Client library</para>
+
+			<para>
+				<emphasis>Make symbolic link:</emphasis>
+			</para>
+			<para>
+				<userinput>
+ln -s /oracle8/app/oracle/product/8.0.5/network/admin/tnsnames.ora /etc
+</userinput>
+			</para>
+			<para>
+				<emphasis>Correct the indexer.conf file</emphasis>
+			</para>
+			<para>You should specify
+<option>DBName</option>, <option>DBUser</option>,
+<option>DBPass</option> in order that <application>DataparkSearch</application> can connect to
+Oracle Server. DBName is the service name, it should have the same
+name that was written to <filename>tnsnames.ora</filename> file,
+DBUSer and DBPass are Oracle user and his password
+correspondingly. You can run indexer now. </para>
+
+			<para>
+				<emphasis>Setting up search.cgi</emphasis>
+			</para>
+			<para>Copy the file
+<filename>/usr/local/dpsearch/bin/search.cgi</filename> to
+<filename>apache_root/cgi-bin/search.cgi</filename>. Then add two
+lines to apache's <filename>http.conf</filename> file:</para>
+
+			<literallayout>
+SetEnv ORACLE_HOME /oracle8/app/oracle/product/8.0.5
+PassEnv ORACLE_HOME
+</literallayout>
+			<para>Correct the
+<filename>search.htm</filename> to provide DBName, DBUser, DBPass
+information. <filename>search.cgi</filename> should work now. </para>
+
+		</sect3>
+	</sect2>
+</sect1>
+

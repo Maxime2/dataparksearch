@@ -1,0 +1,1553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Поддержка языков</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Категории
+"
+HREF="dpsearch-categories.ru.html"><LINK
+REL="NEXT"
+TITLE="Создание многоязычных страниц поиска
+"
+HREF="dpsearch-multilang.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-categories.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-multilang.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="INTERNATIONAL"
+></A
+>&#1043;&#1083;&#1072;&#1074;&#1072; 7. Поддержка языков</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>&#1057;&#1086;&#1076;&#1077;&#1088;&#1078;&#1072;&#1085;&#1080;&#1077;</B
+></DT
+><DT
+>7.1. <A
+HREF="dpsearch-international.ru.html#CHARSET"
+>Кодировки</A
+></DT
+><DT
+>7.2. <A
+HREF="dpsearch-multilang.ru.html"
+>Создание многоязычных страниц поиска
+<A
+NAME="AEN4781"
+></A
+></A
+></DT
+><DT
+>7.3. <A
+HREF="dpsearch-cjk.ru.html"
+>Сегментеры фраз японского, тайского, корейского и китайского языков</A
+></DT
+><DT
+>7.4. <A
+HREF="dpsearch-vary.ru.html"
+>Поддержка мультиязычных веб серверов</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CHARSET"
+>7.1. Кодировки</A
+></H1
+><A
+NAME="AEN4246"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SUPCHARSETS"
+>7.1.1. Поддерживаемые кодировки</A
+></H2
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> поддерживает почти все популярные
+		в современном Internet однобайтные и многобайтные кодировки, 
+		включая корейский euc-kr, китайские Big5, gbk и gb2312, японские shift-jis, euc-jp
+		и iso-2022-jp, а так же Unicode UTF-8. Это позволяет индексировать документы 
+		на более чем 650-ти языках мира, предусмотренных 
+в <A
+HREF="http://www.unicode.org/"
+TARGET="_top"
+>Unicode</A
+>.
+		</P
+><P
+>Внимание! Из-за большого объема перекодировочных таблиц, 
+		приводящего к увеличению размера исполняемых файлов, поддержка
+		многобайтных кодировок не компилируется
+		по-умолчанию. Смотрите параметры <TT
+CLASS="FILENAME"
+>configure</TT
+>,
+		как активизировать поддержку этих кодировок при компиляции.</P
+><P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN4256"
+></A
+><P
+><B
+>&#1058;&#1072;&#1073;&#1083;&#1080;&#1094;&#1072; 7-1. Кодировки и их языковые группы</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>&#62;Группа</TD
+><TD
+>Кодировки</TD
+></TR
+><TR
+><TD
+>Arabic</TD
+><TD
+>cp864, ISO-8859-6, MacArabic, windows-1256</TD
+></TR
+><TR
+><TD
+>Armenian</TD
+><TD
+>armscii-8</TD
+></TR
+><TR
+><TD
+>Baltic</TD
+><TD
+>cp775, ISO-8859-13, ISO-8859-4, windows-1257</TD
+></TR
+><TR
+><TD
+>Celtic</TD
+><TD
+>ISO-8859-14</TD
+></TR
+><TR
+><TD
+>Central European</TD
+><TD
+>cp852, ISO-8859-16, ISO-8859-2, MacCE, MacCroatian, MacRomania, windows-1250</TD
+></TR
+><TR
+><TD
+>Chinese Simplified</TD
+><TD
+>GB2312, GBK</TD
+></TR
+><TR
+><TD
+>Chinese Traditional</TD
+><TD
+>Big5, Big5-HKSCS, cp950, GB-18030</TD
+></TR
+><TR
+><TD
+>Cyrillic</TD
+><TD
+>cp855, cp866, cp866u, ISO-8859-5, KOI-7, KOI8-C, KOI8-R, KOI8-U, MacCyrillic, windows-1251</TD
+></TR
+><TR
+><TD
+>Georgian</TD
+><TD
+>georgian-academy, georgian-ps, geostd8</TD
+></TR
+><TR
+><TD
+>Greek</TD
+><TD
+>cp869, cp875, ISO-8859-7, MacGreek, windows-1253</TD
+></TR
+><TR
+><TD
+>Hebrew</TD
+><TD
+>cp862, ISO-8859-8, MacHebrew, windows-1255</TD
+></TR
+><TR
+><TD
+>Icelandic</TD
+><TD
+>cp861, MacIceland</TD
+></TR
+><TR
+><TD
+>Indian</TD
+><TD
+>MacGujarati, tscii</TD
+></TR
+><TR
+><TD
+>Iranian</TD
+><TD
+>ISIRI3342</TD
+></TR
+><TR
+><TD
+>Japanese</TD
+><TD
+>EUC-JP, ISO-2022-JP, Shift_JIS</TD
+></TR
+><TR
+><TD
+>Korean</TD
+><TD
+>EUC-KR</TD
+></TR
+><TR
+><TD
+>Lao</TD
+><TD
+>cp1133</TD
+></TR
+><TR
+><TD
+>Nordic</TD
+><TD
+>cp865, ISO-8859-10</TD
+></TR
+><TR
+><TD
+>South Eur</TD
+><TD
+>ISO-8859-3</TD
+></TR
+><TR
+><TD
+>Tajik</TD
+><TD
+>KOI8-T</TD
+></TR
+><TR
+><TD
+>Thai</TD
+><TD
+>cp874, ISO-8859-11, MacThai</TD
+></TR
+><TR
+><TD
+>Turkish</TD
+><TD
+>cp1026, cp857, ISO-8859-9, MacTurkish, windows-1254</TD
+></TR
+><TR
+><TD
+>Unicode</TD
+><TD
+>sys-int, UTF-16BE, UTF-16LE, UTF-8</TD
+></TR
+><TR
+><TD
+>Vietnamese</TD
+><TD
+>VISCII, windows-1258</TD
+></TR
+><TR
+><TD
+>Western</TD
+><TD
+>cp437, cp500, cp850, cp860, cp863, IBM037, ISO-8859-1, ISO-8859-15, MacRoman, US-ASCII, windows-1252</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHARSETSALIAS"
+>7.1.2. Разные названия кодировок</A
+></H2
+><P
+>Каждая кодировка имеет модет иметь несколько
+		различных вариантов названия. Например, iso-8859-2, iso8859-2, latin2 -
+		названия одной и той же кодировки. <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+		понимает следующие варианты названий кодировок:</P
+><P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN4343"
+></A
+><P
+><B
+>&#1058;&#1072;&#1073;&#1083;&#1080;&#1094;&#1072; 7-2. Синонимы наименований кодировок</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>armscii-8</TD
+><TD
+>armscii-8, armscii8</TD
+></TR
+><TR
+><TD
+>Big5</TD
+><TD
+>big-5, big-five, big5, bigfive, cn-big5, csbig5</TD
+></TR
+><TR
+><TD
+>Big5-HKSCS</TD
+><TD
+>big5-hkscs, big5_hkscs, big5hk, hkscs</TD
+></TR
+><TR
+><TD
+>cp1026</TD
+><TD
+>1026, cp-1026, cp1026, ibm1026</TD
+></TR
+><TR
+><TD
+>cp1133</TD
+><TD
+>1133, cp-1133, cp1133, ibm1133</TD
+></TR
+><TR
+><TD
+>cp437</TD
+><TD
+>437, cp437, ibm437</TD
+></TR
+><TR
+><TD
+>cp500</TD
+><TD
+>500, cp500, ibm500</TD
+></TR
+><TR
+><TD
+>cp775</TD
+><TD
+>775, cp775, ibm775</TD
+></TR
+><TR
+><TD
+>cp850</TD
+><TD
+>850, cp850, cspc850multilingual, ibm850</TD
+></TR
+><TR
+><TD
+>cp852</TD
+><TD
+>852, cp852, ibm852</TD
+></TR
+><TR
+><TD
+>cp855</TD
+><TD
+>855, cp855, ibm855</TD
+></TR
+><TR
+><TD
+>cp857</TD
+><TD
+>857, cp857, ibm857</TD
+></TR
+><TR
+><TD
+>cp860</TD
+><TD
+>860, cp860, ibm860</TD
+></TR
+><TR
+><TD
+>cp861</TD
+><TD
+>861, cp861, ibm861</TD
+></TR
+><TR
+><TD
+>cp862</TD
+><TD
+>862, cp862, ibm862</TD
+></TR
+><TR
+><TD
+>cp863</TD
+><TD
+>863, cp863, ibm863</TD
+></TR
+><TR
+><TD
+>cp864</TD
+><TD
+>864, cp864, ibm864</TD
+></TR
+><TR
+><TD
+>cp865</TD
+><TD
+>865, cp865, ibm865</TD
+></TR
+><TR
+><TD
+>cp866</TD
+><TD
+>866, cp866, csibm866, ibm866</TD
+></TR
+><TR
+><TD
+>cp866u</TD
+><TD
+>866u, cp866u</TD
+></TR
+><TR
+><TD
+>cp869</TD
+><TD
+>869, cp869, csibm869, ibm869</TD
+></TR
+><TR
+><TD
+>cp874</TD
+><TD
+>874, cp874, cs874, ibm874, windows-874</TD
+></TR
+><TR
+><TD
+>cp875</TD
+><TD
+>875, cp875, ibm875, windows-875</TD
+></TR
+><TR
+><TD
+>cp950</TD
+><TD
+>950, cp950, windows-950</TD
+></TR
+><TR
+><TD
+>EUC-JP</TD
+><TD
+>cseucjp, euc-jp, euc_jp, eucjp, ujis, x-euc-jp</TD
+></TR
+><TR
+><TD
+>EUC-KR</TD
+><TD
+>cseuckr, euc-kr, euc_kr, euckr</TD
+></TR
+><TR
+><TD
+>GB-18030</TD
+><TD
+>gb-18030, gb18030</TD
+></TR
+><TR
+><TD
+>GB2312</TD
+><TD
+>chinese, cn-gb, csgb2312, csiso58gb231280, euc-cn, euc_cn, euccn, gb2312, gb_2312-80, iso-ir-58</TD
+></TR
+><TR
+><TD
+>GBK</TD
+><TD
+>cp936, gbk, windows-936</TD
+></TR
+><TR
+><TD
+>georgian-academy</TD
+><TD
+>georgian-academy</TD
+></TR
+><TR
+><TD
+>georgian-ps</TD
+><TD
+>georgian-ps</TD
+></TR
+><TR
+><TD
+>geostd8</TD
+><TD
+>geo8-gov, geostd8</TD
+></TR
+><TR
+><TD
+>IBM037</TD
+><TD
+>037, cp037, csibm037, ibm037</TD
+></TR
+><TR
+><TD
+>ISIRI3342</TD
+><TD
+>isiri-3342, isiri3342</TD
+></TR
+><TR
+><TD
+>ISO-2022-JP</TD
+><TD
+>csiso2022jp, iso 2022-jp, iso-2022-jp</TD
+></TR
+><TR
+><TD
+>ISO-8859-1</TD
+><TD
+>cp819, csisolatin1, ibm819, iso 8859-1, iso-8859-1, iso-ir-100, iso8859-1, iso_8859-1, iso_8859-1:1987, l1, latin-1, latin1</TD
+></TR
+><TR
+><TD
+>ISO-8859-10</TD
+><TD
+>csisolatin6, iso 8859-10, iso-8859-10, iso-ir-157, iso8859-10, iso_8859-10, iso_8859-10:1992, l6, latin-6, latin6</TD
+></TR
+><TR
+><TD
+>ISO-8859-11</TD
+><TD
+>iso 8859-11, iso-8859-11, iso8859-11, iso_8859-11, iso_8859-11:1992, tactis, thai, tis-620, tis620</TD
+></TR
+><TR
+><TD
+>ISO-8859-13</TD
+><TD
+>iso 8859-13, iso-8859-13, iso-ir-179, iso8859-13, iso_8859-13, l7, latin-7, latin7</TD
+></TR
+><TR
+><TD
+>ISO-8859-14</TD
+><TD
+>iso 8859-14, iso-8859-14, iso-ir-199, iso8859-14, iso_8859-14, iso_8859-14:1998, l8, latin-8, latin8</TD
+></TR
+><TR
+><TD
+>ISO-8859-15</TD
+><TD
+>iso 8859-15, iso-8859-15, iso-ir-203, iso8859-15, iso_8859-15, iso_8859-15:1998, l9, latin-0, latin-9, latin0, latin9</TD
+></TR
+><TR
+><TD
+>ISO-8859-16</TD
+><TD
+>iso 8859-16, iso-8859-16, iso-ir-226, iso8859-16, iso_8859-16, iso_8859-16:2000</TD
+></TR
+><TR
+><TD
+>ISO-8859-2</TD
+><TD
+>csisolatin2, iso 8859-2, iso-8859-2, iso-ir-101, iso8859-2, iso_8859-2, iso_8859-2:1987, l2, latin-2, latin2</TD
+></TR
+><TR
+><TD
+>ISO-8859-3</TD
+><TD
+>csisolatin3, iso 8859-3, iso-8859-3, iso-ir-109, iso8859-3, iso_8859-3, iso_8859-3:1988, l3, latin-3, latin3</TD
+></TR
+><TR
+><TD
+>ISO-8859-4</TD
+><TD
+>csisolatin4, iso 8859-4, iso-8859-4, iso-ir-110, iso8859-4, iso_8859-4, iso_8859-4:1988, l4, latin-4, latin4</TD
+></TR
+><TR
+><TD
+>ISO-8859-5</TD
+><TD
+>csisolatincyrillic, cyrillic, iso 8859-5, iso-8859-5, iso-ir-144, iso8859-5, iso_8859-5, iso_8859-5:1988</TD
+></TR
+><TR
+><TD
+>ISO-8859-6</TD
+><TD
+>arabic, asmo-708, csisolatinarabic, ecma-114, iso 8859-6, iso-8859-6, iso-ir-127, iso8859-6, iso_8859-6, iso_8859-6:1987</TD
+></TR
+><TR
+><TD
+>ISO-8859-7</TD
+><TD
+>csisolatingreek, ecma-118, elot_928, greek, greek8, iso 8859-7, iso-8859-7, iso-ir-126, iso8859-7, iso_8859-7, iso_8859-7:1987</TD
+></TR
+><TR
+><TD
+>ISO-8859-8</TD
+><TD
+>csisolatinhebrew, hebrew, iso 8859-8, iso-8859-8, iso-ir-138, iso8859-8, iso_8859-8, iso_8859-8:1988</TD
+></TR
+><TR
+><TD
+>ISO-8859-9</TD
+><TD
+>csisolatin5, iso 8859-9, iso-8859-9, iso-ir-148, iso8859-9, iso_8859-9, iso_8859-9:1989, l5, latin-5, latin5</TD
+></TR
+><TR
+><TD
+>KOI-7</TD
+><TD
+>iso-ir-37, koi-7, koi7</TD
+></TR
+><TR
+><TD
+>KOI8-C</TD
+><TD
+>cskoi8c, koi8-c, koi8c</TD
+></TR
+><TR
+><TD
+>KOI8-R</TD
+><TD
+>cskoi8r, koi8-r, koi8r</TD
+></TR
+><TR
+><TD
+>KOI8-T</TD
+><TD
+>cskoi8t, koi8-t, koi8t</TD
+></TR
+><TR
+><TD
+>KOI8-U</TD
+><TD
+>cskoi8u, koi8-u, koi8u</TD
+></TR
+><TR
+><TD
+>MacArabic</TD
+><TD
+>macarabic</TD
+></TR
+><TR
+><TD
+>MacCE</TD
+><TD
+>cmac, macce, maccentraleurope, x-mac-ce</TD
+></TR
+><TR
+><TD
+>MacCroatian</TD
+><TD
+>maccroation</TD
+></TR
+><TR
+><TD
+>MacCyrillic</TD
+><TD
+>maccyrillic, x-mac-cyrillic</TD
+></TR
+><TR
+><TD
+>MacGreek</TD
+><TD
+>macgreek</TD
+></TR
+><TR
+><TD
+>MacGujarati</TD
+><TD
+>macgujarati</TD
+></TR
+><TR
+><TD
+>MacHebrew</TD
+><TD
+>machebrew</TD
+></TR
+><TR
+><TD
+>MacIceland</TD
+><TD
+>macisland</TD
+></TR
+><TR
+><TD
+>MacRoman</TD
+><TD
+>csmacintosh, mac, macintosh, macroman</TD
+></TR
+><TR
+><TD
+>MacRomania</TD
+><TD
+>macromania</TD
+></TR
+><TR
+><TD
+>MacThai</TD
+><TD
+>macthai</TD
+></TR
+><TR
+><TD
+>MacTurkish</TD
+><TD
+>macturkish</TD
+></TR
+><TR
+><TD
+>Shift_JIS</TD
+><TD
+>csshiftjis, ms_kanji, s-jis, shift-jis, shift_jis, sjis, x-sjis</TD
+></TR
+><TR
+><TD
+>sys-int</TD
+><TD
+>sys-int</TD
+></TR
+><TR
+><TD
+>tscii</TD
+><TD
+>tscii</TD
+></TR
+><TR
+><TD
+>US-ASCII</TD
+><TD
+>ansi_x3.4-1968, ascii, cp367, csascii, ibm367, iso-ir-6, iso646-us, iso_646.irv:1991, us, us-ascii</TD
+></TR
+><TR
+><TD
+>UTF-16BE</TD
+><TD
+>utf-16, utf-16be, utf16, utf16be</TD
+></TR
+><TR
+><TD
+>UTF-16LE</TD
+><TD
+>utf-16le, utf16le</TD
+></TR
+><TR
+><TD
+>UTF-8</TD
+><TD
+>utf-8, utf8</TD
+></TR
+><TR
+><TD
+>VISCII</TD
+><TD
+>csviscii, viscii, viscii1.1-1</TD
+></TR
+><TR
+><TD
+>windows-1250</TD
+><TD
+>cp-1250, cp1250, ms-ee, windows-1250</TD
+></TR
+><TR
+><TD
+>windows-1251</TD
+><TD
+>cp-1251, cp1251, ms-cyr, ms-cyrl, win-1251, win1251, windows-1251</TD
+></TR
+><TR
+><TD
+>windows-1252</TD
+><TD
+>cp-1252, cp1252, ms-ansi, windows-1252</TD
+></TR
+><TR
+><TD
+>windows-1253</TD
+><TD
+>cp-1253, cp1253, ms-greek, windows-1253</TD
+></TR
+><TR
+><TD
+>windows-1254</TD
+><TD
+>cp-1254, cp1254, ms-turk, windows-1254</TD
+></TR
+><TR
+><TD
+>windows-1255</TD
+><TD
+>cp-1255, cp1255, ms-hebr, windows-1255</TD
+></TR
+><TR
+><TD
+>windows-1256</TD
+><TD
+>cp-1256, cp1256, ms-arab, windows-1256</TD
+></TR
+><TR
+><TD
+>windows-1257</TD
+><TD
+>cp-1257, cp1257, winbaltrim, windows-1257</TD
+></TR
+><TR
+><TD
+>windows-1258</TD
+><TD
+>cp-1258, cp1258, windows-1258</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="RECODING"
+>7.1.3. Перекодировка во время индексации</A
+></H2
+><P
+><TT
+CLASS="LITERAL"
+>indexer</TT
+> перекодирует все
+документы в кодировку, указанную в команде 
+<A
+NAME="AEN4603"
+></A
+><B
+CLASS="COMMAND"
+>LocalCharset</B
+>
+в файле <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>. Внутри программы перекодировка
+реализована посредством промежуточного представления в виде Unicode. 
+Особенность <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> состоит в том, что перекодировка между 
+несовместимыми кодировками (например, между русской и греческой)
+не приводит к потере данных.  В случае, если перекодировка какого-либо
+символа невозможна, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> представит этот символ в базе данных
+в HTML-формате в виде &amp;#NNN; где NNN - код символа, закрепленного
+за ним в Unicode. Таким образом, вне зависимости от выбора 
+<B
+CLASS="COMMAND"
+>LocalCharset</B
+>, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> сохранит полную информацию
+о документе без каких-либо потерь. Однако, выбор <B
+CLASS="COMMAND"
+>LocalCharset</B
+>
+влияет на размер базы данных.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LOCAL-CHARSET-HOWTO"
+>7.1.4. Выбор LocalCharset</A
+></H2
+><P
+>Выбор <B
+CLASS="COMMAND"
+>LocalCharset</B
+>
+		должен производиться с учетом языкового наполнения
+		индексируемого пространства. Правильный выбор позволит
+		уменьшить место, требуемое для хранения, а так же увеличить
+		скорость индексации и поиска.
+		</P
+><P
+>Если командой <B
+CLASS="COMMAND"
+>LocalCharset</B
+> указана
+кодировка <TT
+CLASS="LITERAL"
+>UTF-8</TT
+>, то это позволит сохранять любые символы,
+поддерживаемым в <A
+HREF="http://www.unicode.org/"
+TARGET="_top"
+>Unicode</A
+>
+без необходимости представлять их в HTML-формате. Однако, следует иметь в виду,
+что это заведомо приводит к использованию до двух-трех байт на каждую
+не-латинскую букву. Например, на каждую букву кириллицы требуется два
+байта для сохранения ее в UTF-8.</P
+><P
+>Поскольку все кодировки включают в себя
+латинские буквы, то любая кодировка предоставляет поддержку по-крайней
+мере двух языков - английского и еще какого-то одного (или более) языка
+(единственное исключение - <TT
+CLASS="LITERAL"
+>US-ASCII</TT
+>, поддерживающий
+только латинские буквы). Это означает, что при использовании
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с <B
+CLASS="COMMAND"
+>LocalCharset</B
+>,
+отличным от UTF-8, одновременная индексация документов с языками из одной
+группы не приводит к необходимости использовать HTML-формат, а значит
+не приводит к увеличению необходимого дискового пространства.
+		</P
+><P
+>Например, если Ваша поисковая машина настроена
+использовать <B
+CLASS="COMMAND"
+>LocalCharset</B
+> из 5-й группы (Кирилица), 
+то документы на болгарском, белорусском, македонском, русском, сербском,
+украинском, а так же на английском языках будут сохранены компактно,
+с использованием одного байта на одну букву. Индексирование документов
+в других кодировках не из 5-й группы (включая UTF-8) также возможно;
+однако <TT
+CLASS="LITERAL"
+>indexer</TT
+> будет использовать HTML-формат для
+сохранения букв, отличных от кирилических и английских. Сохранение, 
+например, греческой буквы в кириллической кодировке требует применение
+семь байт на одну букву.
+		</P
+><P
+>Таким образом, следует придерживаться следующего
+		алгоритма при выборе <B
+CLASS="COMMAND"
+>LocalCharset</B
+>:
+		если Вы индексируете, например, в-основном кириллические
+		и анлгийские документы, то выгоднее изпользовать LocalCharset
+		из 5й группы. Если же Ваши документы сожержат информацию на
+		языках из многих языковыз групп одновременно, то в качестве
+		<B
+CLASS="COMMAND"
+>LocalCharset</B
+> выгоднее использовать UTF8.
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHARSETDETECT"
+>7.1.5. Определение кодировки документа</A
+></H2
+><P
+><TT
+CLASS="LITERAL"
+>indexer</TT
+> определяет кодировку в документа в следующем порядке:
+		</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>"Content-type: text/html; charset=xxx"</P
+></LI
+><LI
+><P
+>&lt;META NAME="Content-Type" CONTENT="text/html; charset=xxx"&gt;</P
+><P
+><A
+NAME="AEN4641"
+></A
+>
+Выбор этого варианта можно выключить указав команду <B
+CLASS="COMMAND"
+>GuesserUseMeta no</B
+> в файле
+конфигурации <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.</P
+></LI
+><LI
+><P
+>При выключенном автораспозновании: кодировка по-умолчанию, указанная командой "Charset"</P
+><P
+>При включенном автораспознавании: результат работы автоматического распознавания кодировки.</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHARSET-GUESSER"
+>7.1.6. Автоматическое распознавание кодировки</A
+></H2
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> имеет механизм
+		автоматического распознавания кодировки и языка документа. 
+		В настоящее время распознается около 100 различных комбинаций
+		кодировки и языка. Распознавание реализовано с использованием так
+		называемой <A
+HREF="http://www.maxime.net.ru/doc/guess.ru.shtml"
+TARGET="_top"
+>"N-Gram-Based Text Categorization"</A
+> технологии. В комплекте
+		программы поставляются файлы с так называемыми  "картами языков",
+		один файл на каждую пару кодировка-язык. По-умолчанию они устанавливаются
+		в  <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/langmap/</TT
+>. Чтобы
+		увидеть полный список распознаваемых в настоящий момент языков и кодировок,
+		взгляните в этот каталог. Распознавание работает хорошо на текстах в
+		500 байт и длиннее. Более короткие тексты могут распознаваться хуже.
+		Для активизации автоматического распознавания кодировки необходимо
+		загрузить языковые карты, используя команды 
+<A
+NAME="AEN4655"
+></A
+><B
+CLASS="COMMAND"
+>LangMap</B
+>.
+		</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="LANGMAPFILE_CMD"
+>7.1.6.1. Команда <B
+CLASS="COMMAND"
+>LangMapFile</B
+></A
+></H3
+><A
+NAME="AEN4662"
+></A
+><P
+>Загружает из указанного файла карту языка и кодировки для автоматического их определения.
+Вы можете задать как абсолютный, так и относительный путь.
+Относительный путь задаётся от директории <TT
+CLASS="FILENAME"
+>etc</TT
+>. 
+Можно использовать несколько команд <B
+CLASS="COMMAND"
+>LangMapFile</B
+>.
+<PRE
+CLASS="PROGRAMLISTING"
+>LangMapFile langmap/en.ascii.lm</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="DPGUESSER"
+>7.1.6.2. Создание собственных карт языков</A
+></H3
+><P
+>Для создания собственных карт языков служит утилита
+<A
+NAME="AEN4672"
+></A
+><TT
+CLASS="LITERAL"
+>dpguesser</TT
+>. Кроме этой утилиты вам
+также потребуется файл-образец текстов на данном языке в нужной кодировке. Для создания своей
+карты языка используйте следующий формат команды:
+<PRE
+CLASS="PROGRAMLISTING"
+>        dpguesser -p -c charset -l language &lt; FILENAME &gt; language.charset.lm</PRE
+></P
+><P
+>Утилиту <TT
+CLASS="LITERAL"
+>dpguesser</TT
+> можно также использовать для определения языка и кодировки
+файла на основании уже созданных карт языков. Для этого используйте следующий формат команды:
+<PRE
+CLASS="PROGRAMLISTING"
+>        dpguesser [-n maxhits] &lt; FILENAME</PRE
+></P
+><P
+>Для некоторых языков существует несколько используемых кодировок. Для преобразования
+текстов из одной, поддерживаемой <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> кодировки, в другую
+предназначена утилита <A
+NAME="AEN4681"
+></A
+><TT
+CLASS="LITERAL"
+>dpconv</TT
+>.
+<PRE
+CLASS="PROGRAMLISTING"
+>        dpconv [OPTIONS] -f charset_from -t charset_to [configfile] &lt; infile &gt; outfile</PRE
+></P
+><P
+>По умолчанию, утилиты <TT
+CLASS="LITERAL"
+>dpguesser</TT
+> и <TT
+CLASS="LITERAL"
+>dpconv</TT
+> устанавливаются в
+директорию <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/sbin/</TT
+>.</P
+></DIV
+><P
+><A
+NAME="AEN4690"
+></A
+>
+Поддерживается автоматическое обновление карт языков и кодировок, если удалённый сервер
+возвращает чётко указаные язык и кодировку. Для включения этой возможности необходимо в файле
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> указать команду
+<PRE
+CLASS="PROGRAMLISTING"
+>LangMapUpdate yes</PRE
+></P
+><P
+><A
+NAME="AEN4696"
+></A
+>
+По умолчанию, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> использует только первые 512 байт каждого индексируемого файла для 
+определения языка и кодировки. Вы можете изменить это значение при помощи команды <B
+CLASS="COMMAND"
+>GuesserBytes</B
+>. 
+Используйте значение 0 для учёта всего такста индексируемого документа.
+<PRE
+CLASS="PROGRAMLISTING"
+>GuesserBytes 16384</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DEFCHARSET"
+>7.1.7. Кодировка документов по-умолчанию</A
+></H2
+><A
+NAME="AEN4704"
+></A
+><P
+>Используйте команду <B
+CLASS="COMMAND"
+>RemoteCharset</B
+>
+		в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> чтобы установить
+		кодировку документов по-умолчанию.
+		</P
+><P
+>		Если индексируемый сервер не выдает кодировку документа
+		ни в заголовке Content-Type, ни в META-тэге, и при этом
+		автоматическое распознаывание либо отключено, либо не 
+		дало хорошего результата (т.е. язык и кодировка документа
+		"не похожи" на представленные в загруженных картах), то в
+		качестве кодировки документа будет использована кодировка,
+		указанная в команде <B
+CLASS="COMMAND"
+>RemoteCharset</B
+>.
+		Если же кодировка по-умолчанию не указана, то будет
+		использована iso-8859-1 (latin1).
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DEFLANG"
+>7.1.8. Язык документов по-умолчанию</A
+></H2
+><P
+>Вы можете установить язык документов по-умолчанию
+		с помощью команды <CODE
+CLASS="VARNAME"
+>DefaultLang</CODE
+> в
+		файле <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>. 
+		Это может пригодиться, например, во время поиска для
+		ограничения поиска только по документам на указанном языке.</P
+><PRE
+CLASS="PROGRAMLISTING"
+>DefaultLang &lt;string&gt;</PRE
+><P
+>Задаёт язык документов по умолчанию.</P
+><PRE
+CLASS="PROGRAMLISTING"
+>DefaultLang en</PRE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHARSET-SEARCHDEC"
+>7.1.9. Перекодировка во время поиска</A
+></H2
+><P
+>Чтобы указать кодировку, в которой будут оторбражаться
+		результаты поиска, используйте команду <B
+CLASS="COMMAND"
+>BrowserCharset</B
+>
+		в <TT
+CLASS="FILENAME"
+>search.htm</TT
+>. <B
+CLASS="COMMAND"
+>BrowserCharset</B
+> может отличаться от 
+		<B
+CLASS="COMMAND"
+>LocalCharset</B
+>. Поисковая программа произведет
+		перекодировку автоматически.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LOCALCHARSET_CMD"
+>7.1.10. Команда <B
+CLASS="COMMAND"
+>LocalCharset</B
+></A
+></H2
+><A
+NAME="AEN4730"
+></A
+><P
+>Задаёт кодировку, которая будет использоваться для хранения информации в базе данных.
+Данные во всех других кодировках будут перекодированы в эту кодировку.
+См. <A
+HREF="dpsearch-international.ru.html#CHARSET"
+>&#1056;&#1072;&#1079;&#1076;. 7.1</A
+>&#62; для подробного описания как выбрать <B
+CLASS="COMMAND"
+>LocalCharset</B
+>
+для языков, используемых на вашем сайте или сайтах, а также списка поддерживаемых кодировок.
+Эта команда должны быть задана один раз и имеет глобальный эффект для всего файла конфигрурации.
+Значение по умолчанию: <TT
+CLASS="LITERAL"
+>iso-8859-1</TT
+> (<TT
+CLASS="LITERAL"
+>latin1</TT
+>).
+<PRE
+CLASS="PROGRAMLISTING"
+>LocalCharset koi8-r</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REMOTECHARSET_CMD"
+>7.1.11. Команда <B
+CLASS="COMMAND"
+>RemoteCharset</B
+></A
+></H2
+><A
+NAME="AEN4742"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>RemoteCharset &lt;charset&gt;</PRE
+><P
+><CODE
+CLASS="OPTION"
+>&lt;сharset&gt;</CODE
+> - кодовая страница по умолчанию для последующих команд <B
+CLASS="COMMAND"
+>Server</B
+>,
+<B
+CLASS="COMMAND"
+>Realm</B
+> или <B
+CLASS="COMMAND"
+>Subnet</B
+>.
+Используется при индексировании &quot;плохих&quot; серверов, не предоставляющих информации о кодировке в заголовках ответа сервера или в
+&lt;META NAME="Content" Content="text/html; charset="some_charset"&gt; на страницах.
+Команда действует до конца файла, или до следующей команды <B
+CLASS="COMMAND"
+>RemoteCharset</B
+>.
+Значение по умолчанию: iso-8859-1 (latin1).
+<PRE
+CLASS="PROGRAMLISTING"
+>RemoteCharset iso-8859-5</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URLCHARSET_CMD"
+>7.1.12. Команда <B
+CLASS="COMMAND"
+>URLCharset</B
+></A
+></H2
+><A
+NAME="AEN4756"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>URLCharset &lt;charset&gt;</PRE
+><P
+><CODE
+CLASS="OPTION"
+>&lt;charset&gt;</CODE
+> - кодовая страница для аргументов последующих команд <B
+CLASS="COMMAND"
+>Server</B
+>, 
+<B
+CLASS="COMMAND"
+>Realm</B
+> или <B
+CLASS="COMMAND"
+>URL</B
+>.
+Эта команда задаёт кодовубю страницу только для аргументов последующих команду и не влияет на определение кодировки
+индексируемых страниц.
+Имеет меньший приоритет, нежели команда <B
+CLASS="COMMAND"
+>RemoteCharset</B
+>.
+Может задаваться перед каждой командой <B
+CLASS="COMMAND"
+>Server</B
+>, <B
+CLASS="COMMAND"
+>Realm</B
+> или <B
+CLASS="COMMAND"
+>URL</B
+> и
+действует до конца файла конфигурации или до следующей команды <B
+CLASS="COMMAND"
+>URLCharset</B
+>.
+Значение по умолчанию: ISO-8859-1 (latin1).
+<PRE
+CLASS="PROGRAMLISTING"
+>URLCharset KOI8-R</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHARSTOESCAPE"
+>7.1.13. Команда <B
+CLASS="COMMAND"
+>CharsToEscape</B
+></A
+></H2
+><A
+NAME="AEN4774"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>CharsToEscape &quot;\&quot;&amp;&lt;&gt;![]&quot;</PRE
+><P
+>Используйте эту команду в вашем поисковом шаблоне для указания списка эскейп-символов для мета-переменных поискового шаблона 
+типа $&amp;(x).</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-categories.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-multilang.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Категории
+<A
+NAME="AEN4170"
+></A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Создание многоязычных страниц поиска
+<A
+NAME="AEN4781"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

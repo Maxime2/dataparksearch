@@ -1,0 +1,475 @@
+<sect1 id="search">
+	<title>Использование поисковых фронт-эндов</title>
+
+	<sect2 id="search-perform">
+		<title>Осуществление поиска</title>
+
+		<para>Откройте предпочитаймый вами фронт-энд в окне броузера:
+		<programlisting>
+http://your.web.server/path/to/search.cgi
+<!-- или
+http://your.web.server/path/to/search.php3 -->
+<!-- или
+http://your.web.server/path/to/search.pl -->
+</programlisting>
+</para>
+		<para>Чтобы найти что-то, просто наберите слова, которые хотите найти и нажмите кнопку ОТОСЛАТЬ.
+Например: <userinput>mysql odbc</userinput>. 
+<application>DataparkSearch</application> найдет все документы, содержащие слово <option>mysql</option> и/или слово <option>odbc</option>.
+Лучшие документы, имеющий более высокую релевантность и популярность будут показаны первыми.</para>
+<para>Чтобы найти фразу, просто заключите её в кавычки. Например:
+<userinput>&quot;uncontrollable sphere&quot;</userinput>.
+</para>
+	</sect2>
+
+	<sect2 id="search_params">
+		<title>Параметры поиска
+<indexterm><primary>Параметры поиска</primary></indexterm>
+</title>
+		<para>Фронт-энды <application>DataparkSearch</application> поддерживают следующие параметры,
+указываемыме в CGI-запросе. Вы можете использовать их в HTML форме на странице поиска.</para>
+
+		<table id="search-params">
+			<title>Параметры поиска</title>
+			<tgroup cols="2">
+				<tbody>
+					<row>
+						<entry>q</entry>
+						<entry>текстовый параметр, содержащий запрос на поиск</entry>
+					</row>
+					<row>
+						<entry>vq</entry>
+						<entry>текстовый параметр, содержащий поисковый запрос на языке <application>Verity Query Language</application> (префиксный вариант), см <xref linkend="vql"/>. Чтобы использовать этот параметр, необходимо омтавить пустым параметр q.</entry>
+					</row>
+					<row>
+						<entry>s</entry>
+						<entry>строка символов, задающая порядок сортировки результатов поиска.
+Порадок сортировки задаётся слева направо. Большая буква соответсвует сортировке по убыванию, маленькая - по возрастанию.
+Возможные символы: <literal>R</literal> или <literal>r</literal> - сортировка по релевантности, 
+<literal>P</literal> или <literal>p</literal> - сортировка по PopularityRank,
+<literal>I</literal> или <literal>i</literal> - сортировка по важности (произведению релевантности и PopularityRank),
+<literal>A</literal> или <literal>a</literal> - сортировка по сумме релевантности и PopularityRank,
+<literal>D</literal> или <literal>d</literal> - сортировка по дате последнего изменения документа.
+Значение по умолчанию: <literal>RP</literal>.
+                                                </entry>
+					</row>
+					<row>
+						<entry>ps</entry>
+						<entry>
+число результатов поиска, отображаемых на одной странице, 20 по умолчанию. Максимальное значение равно 100.
+Это ограничение введено во избежание излишней перегрузки сервера и может быть изменено заменой значения  MAX_PS
+в файле <filename>search.c</filename>.
+
+</entry>
+					</row>
+					<row>
+						<entry>np</entry>
+						<entry>номер страницы начиная с 0, 0 по умолчанию (первая страница)</entry>
+					</row>
+					<row>
+						<entry>p</entry>
+						<entry>номер страницы начиная с 1, для использования с OpenSearch</entry>
+					</row>
+					<row>
+						<entry>m</entry>
+						<entry>Режим поиска. На данный момент поддерживаются значения <literal>all</literal>,
+<literal>any</literal>, <literal>near</literal> и <literal>bool</literal>.</entry>
+					</row>
+					<row>
+						<entry>wm</entry>
+						<entry>Совпадение слова. Вы можете использовать этот параметр для указания
+способа совпадения слов. Зачения <literal>wrd</literal>, <literal>beg</literal>, <literal>end</literal> и <literal>sub</literal>
+соответственно обозначают целое слово, начало слова, окончание слова и подстрока слова.</entry>
+					</row>
+					<row>
+						<entry>t</entry>
+						<entry>Лимит по тэгу. Задаёт поиск только среди документов, помеченых указаным тэгом.
+Этот параметр имеет то же значение, что и ключ <option>-t</option> у <command>indexer</command>.</entry>
+					</row>
+					<row>
+						<entry>c</entry>
+						<entry>Лимит по категории. См. <xref linkend="categories"/> для описания.</entry>
+					</row>
+					<row>
+						<entry>ul</entry>
+						<entry>Лимит по URL, подстрока URL для ограничения поиска по части базы.
+Поддерживаются SQL шаблоны % и _. Этот параметр имеет тот же эффект, что и ключ <option>-u</option> у <command>indexer</command>.
+Если указан неабсолютный URL, <filename>search.cgi</filename> дообавит знаки % до и после значения этого параметра,
+если используется SQL база данных для хранения информации. Например, 
+&lt;OPTION VALUE="/manual/"&gt; а не VALUE="%/manual/%". Если указан полный URL (с указанием схемы)б <filename>search.cgi</filename>
+добавляет знак % только после значения этого параметра. Например, для  &lt;OPTION VALUE="http://localhost/"&gt;
+ <filename>search.cgi</filename> передаст <literal>http://localhost/%</literal> в оператор SQL LIKE.
+<note>Не поддерживается для способа хранения cache.</note>
+</entry>
+					</row>
+					<row>
+						<entry>wf</entry>
+						<entry>Значения весов. Позволяет изменить значения весов различных секций
+документов во аремя поиска. Значение должно представлять из себя строку шестнадцатеричных чисел.
+См. обяснение ниже в <xref linkend="search-changeweight"/>.
+</entry>
+					</row>
+					<row>
+						<entry>g или lang</entry>
+						<entry>Лимит по языку. Стандартный двубуквенный код языка по ISO,
+для ограничения поиска по полю url.lang.</entry>
+					</row>
+					<row>
+						<entry>tmplt</entry>
+						<entry>Имя файла шаблона (без пути).
+Для указания имени файла шаблона, отличного от стандартного <filename>search.htm</filename>.
+</entry>
+					</row>
+					<row>
+						<entry>type</entry>
+						<entry>Лимит по Content-Type.
+Для способа хранения cache должно быть точное соответсвие. Для SQL-режимов возможно использование шаблонов SQL.
+</entry>
+					</row>
+					<row>
+						<entry>sp</entry>
+						<entry>Ограничение использования словоформ.
+=1, если необходим поиск по всем словоформам (включая корректировку правописания, если включена поддержка aspell) введённых слов.
+=0, если необходим поиск только введенных форм слов. Значение по умолчанию равно 1. Вы можете указать значение 0 для ускорения поиска.
+</entry>
+					</row>
+					<row>
+						<entry>sy</entry>
+						<entry>Ограничение использования синонимов.
+=1, если необходимо использовать синонимы введённых слов.
+=0, не использовать синонимы. Значение по умолчанию равно 1. Вы можете указать значение 0 для ускорения поиска.
+</entry>
+					</row>
+<row>
+<entry>empty</entry>
+<entry>Использовать ли лимиты для вывода результатов, если не задано ни одного слова в запросе.
+=yes, использовать лиминты для вывода результатов, если не задано ни одного слова в запросе (по умолчанию).
+=no, не использовать.
+</entry>
+</row>
+
+				        <row>
+					<entry>dt</entry>
+                                        <entry> Ограничение по времени. Поддерживается три типа.
+				<para>Если <literal>dt</literal> равно <literal>back</literal>, это означает, что вы хотите ограничить
+результаты поиска по давности. Давность ограничивается параметром <literal>dp</literal>.</para>
+				<para>Если <literal>dt</literal> равно <literal>er</literal>, это означает, что поиск поиск будет ограничен
+страницами старше или новее указаной даты. Старше/новее задаётся параметром <option>dx</option>.
+Дата задаётся параметрами <option>dm, dy, dd</option>.</para>
+				<para>Если <literal>dt</literal> равно <literal>range</literal>, обозначает, что поиск будет ограничен
+двумя датами, начала и конца. Даты задаются двумя параметрами, соответственно <option>db</option> и <option>de</option>.</para>
+</entry>
+                                </row>
+<row>
+<entry>dp</entry><entry>Ограничение по давности, если значение <literal>dt</literal> равно <literal>back</literal>.
+Задаётся в формате <literal>xxxA[yyyB[zzzC]]</literal>. Пробелы допускаются между xxx и A и yyy и т.д.).
+ xxx, yyy, zzz - суть числа (могут быть негативными!), A, B, C могут быть одним из следующего (буквы такие же как в функциях
+strptime/strftime): s - секунда, M - минута, h - час, d - день, m - месяц, y - год. Примеры:
+				<programlisting>
+  4h30M 	  - 2 часа и 30 минут
+  1Y6m-15d        - 1 год и шесть месяцев минус 15 дней
+  1h-60M+1s       - 1 час минус 60 минут плюс 1 секунда
+</programlisting>
+</entry>
+</row>
+
+<row> <entry>dx</entry>
+<entry>Флаг старше/новее, если значение <literal>dt</literal> равно <literal>er</literal>. =1 - новее. =-1 - старше.</entry>
+</row>
+
+<row> <entry>dm</entry>
+<entry>Месяц даты, если значение <literal>dt</literal> равно <literal>er</literal>. 0 - январь, 1 - февраль, ... 
+11 - декабрь.</entry>
+</row>
+<row> <entry>dy</entry>
+<entry>Год даты, если значение <literal>dt</literal> равно <literal>er</literal>. Четыре цифры. Например, 1999 или 2001.</entry>
+</row>
+<row> <entry>dd</entry>
+<entry>День даты, если значение <literal>dt</literal> равно <literal>er</literal>. 1...31.</entry>
+</row>
+
+<row> <entry>db</entry>
+<entry>Начальная дата интервала, если значение <literal>dt</literal> равно <literal>range</literal>. Дата указывается как строка в формате
+dd/mm/yyyy, где dd - день, mm - месяц, а yyyy - четырёхцифровой год.</entry>
+</row>
+<row> <entry>de</entry>
+<entry>Конечная дата интервала, если значение <literal>dt</literal> равно <literal>range</literal>. Дата указывается как строка в формате
+dd/mm/yyyy, где dd - день, mm - месяц, а yyyy - четырёхцифровой год.</entry>
+</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</sect2>
+
+	<sect2 id="search-changeweight">
+		<title>Изменение весов различных частей документов во время поиска</title>
+
+		<para> Параметр <option>wf</option>, передаваемый в <filename>search.cgi</filename> задаёт веса
+для различных секций документов. См. раздел "Section" в файле <filename>indexer.conf-dist</filename>.</para>
+
+		<para>Для использования этой возможности необходимо иметь уникальные ID для различных
+секций документов, указываемых в командах <command>Section</command> файла конфигурации 
+<filename>indexer.conf</filename> command. На данный момент поддерживается до 256 различных секций.</para>
+
+		<para>Предположим, что в <filename>indexer.conf</filename> определены следующие секции:
+		<programlisting>
+  Section body        1  256
+  Section title       2  128
+  Section keywords    3  128
+  Section description 4  128
+</programlisting>
+		</para>
+
+		<para>Значение <option>wf</option> - строка шестнадцатиричных цифр ABCD. Каждая цифра - вес
+соответствующей секции документа. Самая правая цифра соответсвует секции 1. Для указанной выше конфигурации секций:
+		<literallayout>
+      D - вес для секции 1 (body)
+      C - вес для секции 2 (title)
+      B - вес для секции 3 (keywords)
+      A - вес для секции 4 (description)
+</literallayout>
+</para>
+		<para>Примеры:
+		<literallayout>
+   wf=0001 поиск только по секции body.
+
+   wf=1110 поиск по секциям title,keywords,desctription, но не по секции body.
+
+   wf=F421 поиск по:
+          Description с весом 15  (F hex)
+          Keywords с весом 4
+          Title с весом  2
+          Body с весом 1
+</literallayout>
+</para>
+		<para>По умолчанию, все секции имеют вес 1. Если число секций, указанных в <option>wf</option>, меньше числа определенных секций, то для всех оставшихся секций устанавливается вес,
+равный весу секции с макимальным номером из <option>wf</option>. Т.е.:</para>
+		<literallayout>
+   wf=01 также ищет только по секции body.
+</literallayout>
+
+<para>Если <application>DataparkSearch</application> собирается с быстрым вариантом расчёта релевантности (указана опция <option>--enable-rel=fast</option> для <command>configure</command>),
+в этом случае только нулевое или ненулевое значение веса имеет смысл (это позволяет только включать/исключать
+заданные секции из результатов поиска). Чтобы использовать полную поддержку динамических весов секций, необходимо
+задать опцию <option>--enable-rel=full</option> для <command>configure</command> во время сборки <application>DataparkSearch</application>.
+</para>
+
+	</sect2>
+
+
+
+
+	<sect2 id="search-scriptname">
+		<title>Использование фронт-энда на страницах с SSI</title>
+		<para>При сипользовании динамических shtml страниц, содержащих SSI вызов <filename>search.cgi</filename>,
+т.е. <filename>search.cgi</filename> не вызывается напрямую как CGI программа,
+необходимо отвергнуть переменную окружения SCRIPT_NAME, т.к. все ссылки на страницах поиска должны вести на
+динамическую страницу, а не на  <filename>search.cgi</filename>.</para>
+
+		<para>Например, если shtml страница содержит строку
+<literal>&lt;--#include virtual="search.cgi"&gt;</literal>,
+переменная SCRIPT_NAME будет указывать на <filename>search.cgi</filename>, а не на shtml страницу.</para>
+
+		<para>Для возможности отказа от использования переменной SCRIPT_NAME, мы ввели переменную DPSEARCH_SELF,
+которую вам необходимо добавить в конфигурацию сервера Apache <filename>httpd.conf</filename>.А <filename>search.cgi</filename>
+сначала проверяет переменную DPSEARCH_SELF и только потом, при неудаче SCRIPT_NAME. 
+Вот пример использования переменной окружения DPSEARCH_SELF при помощи команд конфигурирования сервера Apache
+<command>SetEnv/PassEnv</command>:
+			<programlisting>
+SetEnv DPSEARCH_SELF /path/to/search.cgi
+PassEnv DPSEARCH_SELF
+</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="search-templates">
+		<title>Использование нескольких шаблонов</title>
+		<para>Зачастую необходимо использовать несколько различных шаблонов с одним и тем же <filename>search.cgi</filename>.
+Существует несколько способов сделать это. Они указываются ниже в том порядке, в каком <filename>search.cgi</filename>
+определяет имя шаблона:
+				<orderedlist numeration="arabic">
+					<listitem>
+						<para>
+							<filename>search.cgi</filename> проверяет CGI параметр <option>tmplt</option>.
+Таким образом вы можете задать имя файла нужного шаблона в этом параметре.</para>
+					</listitem>
+					<listitem>
+						<para>
+							<filename>search.cgi</filename> проверяет переменную окружения
+<varname>DPSEARCH_TEMPLATE</varname>. Таким образом вы можете установить путь до нужного шаблона в этой переменной.</para>
+					</listitem>
+<listitem>
+<para><filename>search.cgi</filename> проверяет path info часть URL, доступную через переменную окружения PATH_INFO.
+Например, <filename>http://localhost/cgi-bin/search.cgi/search1.html</filename> в качестве шаблона использует 
+<filename>search1.htm</filename>,
+а <filename>http://localhost/cgi-bin/search.cgi/search2.html</filename> использует <filename>search2.htm</filename>, и т.д.
+</para>
+</listitem>
+					<listitem>
+						<para>
+							<filename>search.cgi</filename> также поддерживает внуттрений релирект Apache.
+Он проверяет переменных окружения <varname>REDIRECT_STATUS</varname> и <varname>REDIRECT_URL</varname>.
+Для использования этого способа указания шаблона, необходимо добавить следующие строчки в файл конфигурации 
+Apache <filename>httpd.conf</filename>: </para>
+						<para>
+							<programlisting>
+               AddType text/html .zhtml
+               AddHandler zhtml .zhtml
+               Action zhtml /cgi-bin/search.cgi
+               </programlisting>
+						</para>
+						<para>Поместите
+<filename>search.cgi</filename> в вашу
+<filename>/cgi-bin/</filename> директорию. Затем поместите HTML-шаблон на вашем сервере с расширением .zhtml,
+например, <filename>template.zhtml</filename>. Теперь вы можете открыть страницу поиска:
+<literal>http://www.site.com/path/to/template.zhtml</literal> 
+Конечно, вы можете использовать любое свободное расширение вместо .zhtml. </para>
+
+					</listitem>
+					<listitem>
+						<para>Если два предыдущих способа не помогли определить имя шаблона,
+<filename>search.cgi</filename> откроет шаблон с тем же именем, что и выполняемая CGI-программа, имя которой указано в
+переменной окружения
+<varname>SCRIPT_NAME</varname>. Т.е. <filename>search.cgi</filename> бужет использовать шаблон
+<filename>ETC/search.htm</filename>, <filename>search1.cgi</filename>
+будет использовать шаблон <filename>ETC/search1.htm</filename> и т.д., где ETC - <filename>/etc</filename> директория
+<application>DataparkSearch</application> (обычно это
+<literal>/usr/local/dpsearch/etc</literal>). Таким образом вы можете использовать без перекомпиляции тот же 
+самый <command>search.cgi</command> с различными шаблонами. Просто создайте несколько линков на <command>search.cgi</command>
+с различными именами, соответствующими нужным шаблонам в директории <filename>/etc</filename>
+<application>DataparkSearch</application>. </para>
+
+				<para>См. также <xref linkend="multilang"/> </para>
+					</listitem>
+				</orderedlist>
+        </para>   
+	</sect2>
+
+<sect2 id="search-operators">
+<title>Операторы происка</title>
+
+<para>Оператор <command>allin&lt;section&gt;:</command>, где &lt;section&gt; - имя любой секции, 
+определенной в файле конфигурации <filename>sections.conf</filename> (или командами <command>Section</command> в 
+<filename>indexer.conf</filename> или в <filename>search.htm</filename>/<filename>searchd.conf</filename>) и имеющей ненулевой номер 
+секции (см. <xref linkend="section_cmd"/>), 
+позволяет ограничить область поиска указываемого слова в поисковом запросе только заданой секцией.</para>
+
+<para>От ограничения поиска по секциям при помощи CGI-параметра &amp;wf= отличается тем, 
+что ограничение действует только на слова поискового запроса, указываемые после данного оператора.</para>
+
+<para>Например, если <filename>sections.conf</filename> содержит команды
+<programlisting> 
+Section body 1 256
+Section title 2 128
+Section url 3 0 strict
+</programlisting>
+то в поисковом запросе можно использовать операторы <command>allinbody:</command>, <command>allintitle:</command> и 
+<command>allinurl:</command>.</para>
+ 
+<para>По запросу <userinput>computer allintitle: science</userinput> будут найдены документы, 
+содержащие слово "science" в заголовке и слово "computer" в любой секции документа. </para>
+
+</sect2>
+
+	<sect2 id="search-bool">
+		<title>Булев поиск
+<indexterm><primary>Булев поиск</primary></indexterm>
+</title>
+
+		<para>Для задания более сложных запросов, вы можете строить булевы запросы поиска.
+Необходимо в поисковой форме указать режим поиска <option>bool</option>.
+</para>
+
+		<para><application>DataparkSearch</application> понимает следющие булевы операторы:</para>
+		<para><userinput>AND</userinput> или <userinput>&amp;</userinput> - логическое И. 
+Например, <literal>mysql &amp; odbc</literal>.
+<application>DataparkSearch</application> будет искать URL, содержащие оба слова "mysql" и "odbc".
+Вы также можете использовать знак <userinput>+</userinput> для этого оператора.</para>
+
+		<para><userinput>NEAR</userinput> - Оператор NEAR принимает истиное значение если оба слова 
+находятся не далее, чем в 16 словах друг от друга. 
+Например, <literal>mysql NEAR odbc</literal>.
+<application>DataparkSearch</application> будет искать URL, содержащие оба слова "mysql" и "odbc", 
+расположеные на расстоянии не далее 16 слов друг от друга.</para>
+
+		<para><userinput>ANYWORD</userinput> или <userinput>*</userinput> - Оператор ANYWORD аналогичен оператору И, 
+но принимает истиное значение, если между обеими словами находится одно любое слово и левый операнд имеет меньшую позицию, нежели правый. 
+Например, "<userinput>mysql * odbc</userinput>"  - 
+<application>DataparkSearch</application> найдёт все документы, содержащие оба слова "mysql" и
+"odbc", и меющие любое слово между ними, например, документы с фразой "mysql via odbc".</para>
+
+		<para><userinput>OR</userinput> или <userinput>|</userinput> - логическое ИЛИ. 
+Например, <literal>mysql|odbc</literal>.
+<application>DataparkSearch</application> будет искать URL, содержащие или слово "mysql" или слово "odbc".</para>
+
+		<para><userinput>NOT</userinput> или <userinput>~</userinput> - логическое НЕ. 
+Например, <literal>mysql &amp; ~ odbc</literal>.
+<application>DataparkSearch</application> будет искать URL, содержащие слово "mysql" и в тоже время не содержащие слово "odbc".
+Обратите внимание, что ~ всего лишь исключает некоторые документы из результата поиска. Запрос "~ odbc" ничего не найдёт!
+</para>
+
+		<para><userinput>()</userinput> - оператор группирования для создания более сложных запросов поиска. Например,
+<literal>(mysql | msql) &amp; ~ postgres</literal>.</para>
+
+<para><userinput>"</userinput> - оператор выделения фраз. Например, <literal>"russian apache" & "web server"</literal>.
+Вы также можете использовать знак <userinput>'</userinput> для этого оператора.</para>
+
+                <para>Язык запросов хоть и прост, но достаточно мощный. Рассматривайте такой запрос как обычное
+булево выражение.</para>
+	</sect2>
+
+<sect2 id="vql">
+<title>Язык запросов Verity Query Language, VQL</title>
+<para><application>DataparkSearch</application> поддерживает только префиксный вариант <application>Verity Query Language</application>.</para>
+<para>Также поддерживается только следующее подмножество операторов VQL:</para>
+<table id="vql-operators">
+<title>Операторы VQL, поддерживаемые DataparkSearch</title>
+<tgroup cols="2">
+<tbody>
+
+<row>
+    <entry>&lt;ACCRUE&gt;</entry>
+    <entry>эквивалентен оператору <userinput>OR</userinput> булевого запроса.</entry>
+</row>
+<row>
+    <entry>&lt;AND&gt;</entry>
+    <entry>эквивалентен оператору <userinput>AND</userinput> булевого запроса.</entry>
+</row>
+<row>
+    <entry>&lt;ANY&gt;</entry>
+    <entry>эквивалентен оператору <userinput>OR</userinput> булевого запроса.</entry>
+</row>
+<row>
+    <entry>&lt;NEAR&gt;</entry>
+    <entry>эквивалентен оператору <userinput>NEAR</userinput> булевого запроса.</entry>
+</row>
+<row>
+    <entry>&lt;NOT&gt;</entry>
+    <entry>эквивалентен оператору <userinput>NOT</userinput> булевого запроса.</entry>
+</row>
+<row>
+    <entry>&lt;OR&gt;</entry>
+    <entry>эквивалентен оператору <userinput>OR</userinput> булевого запроса.</entry>
+</row>
+<row>
+    <entry>&lt;PHRASE&gt;</entry>
+    <entry>эквивалентен фразе в булевом запросе.</entry>
+</row>
+<row>
+    <entry>&lt;WORD&gt;</entry>
+    <entry>рассматривается как пустой оператор.</entry>
+</row>
+
+
+</tbody>
+</tgroup>
+</table>
+</sect2>
+
+	<sect2 id="search-exp">
+		<title>Как используются при поиске устаревшие документы</title>
+		<para>Устаревшие документы продолжают включаться в результаты поиска по их старому содержимому до тех пор,
+пока эти документы не будут удалены или обновлены с очередным переиндексированием.</para>
+	</sect2>
+
+</sect1>

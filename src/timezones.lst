@@ -1,0 +1,200 @@
+	{"A", -1, 3600}, 		/* 	Alpha Time Zone	Military	UTC + 1 hour*/
+	{"ACDT", -1, 10 * 3600 + 1800},	/*	Australian Central Daylight Time	Australia	UTC + 10:30 hours*/
+	{"ACST", -1, 9 *3600 + 1800}, 	/*	Australian Central Standard Time	Australia	UTC + 9:30 hours*/
+	{"ADT", 1, 3 * 3600},		/*	Atlantic Daylight Time	North America	UTC - 3 hours*/
+	{"AEDT", -1, 11 * 3600},	/*	Australian Eastern Daylight Time or Australian Eastern Summer Time	Australia	UTC + 11 hours*/
+	{"AEST", -1, 10 * 3600},	/* 	Australian Eastern Standard Time	Australia	UTC + 10 hours*/
+	{"AKDT", 1, 8 * 3600},		/*	Alaska Daylight Time	North America	UTC - 8 hours*/
+	{"AKST", 1, 9 * 3600},		/*	Alaska Standard Time	North America	UTC - 9 hours*/
+	{"AST", 1, 4 * 3600},		/*	Atlantic Standard Time	North America	UTC - 4 hours*/
+	{"AWDT", -1, 9 * 3600},		/*	Australian Western Daylight Time	Australia	UTC + 9 hours*/
+	{"AWST", -1, 8 * 3600},		/*	Australian Western Standard Time	Australia	UTC + 8 hours*/
+	{"B", -1, 2 * 3600},		/*	Bravo Time Zone	Military	UTC + 2 hours*/
+	{"BST", -1, 3600},		/*	British Summer Time	Europe	UTC + 1 hour*/
+	{"C", -1, 3 * 3600},		/*	Charlie Time Zone	Military	UTC + 3 hours*/
+/*	{"CDT", -1, 10 * 3600 + 1800}*/	/*	Central Daylight Time	Australia	UTC + 10:30 hours*/
+	{"CDT", 1, 5 * 3600},		/*	Central Daylight Time	North America	UTC - 5 hours*/
+	{"CEDT", -1, 2 * 3600},		/*	Central European Daylight Time	Europe	UTC + 2 hours*/
+	{"CEST", -1, 2 * 3600},		/*	Central European Summer Time	Europe	UTC + 2 hours*/
+	{"CET", -1, 3600},		/*	Central European Time	Europe	UTC + 1 hour*/
+/*	{"CST", -1, 10 * 3600 + 1800},*/	/*	Central Summer Time	Australia	UTC + 10:30 hours*/
+/*	{"CST", -1, 9 * 3600 + 1800},*/		/*	Central Standard Time	Australia	UTC + 9:30 hours*/
+	{"CST", 1, 6 * 3600},		/*	Central Standard Time	North America	UTC - 6 hours*/
+	{"CXT", -1, 7 * 3600},		/*	Christmas Island Time	Australia	UTC + 7 hours*/
+	{"D", -1, 4 * 3600},		/*	Delta Time Zone	Military	UTC + 4 hours*/
+	{"E", -1, 5 * 3600},		/*	Echo Time Zone	Military	UTC + 5 hours*/
+/*	{"EDT", -1, 11 * 3600},*/		/* 	Eastern Daylight Time	Australia	UTC + 11 hours*/
+	{"EDT", 1, 4 * 3600},		/*	Eastern Daylight Time	North America	UTC - 4 hours*/
+	{"EEDT", -1, 3 * 3600},		/*	Eastern European Daylight Time	Europe	UTC + 3 hours*/
+	{"EEST", -1, 3 * 3600},		/*	Eastern European Summer Time	Europe	UTC + 3 hours*/
+	{"EET", -1, 2 * 3600},		/*	Eastern European Time	Europe	UTC + 2 hours*/
+/*	{"EST", -1, 11 * 3600},*/		/*	Eastern Summer Time	Australia	UTC + 11 hours*/
+/*	{"EST", -1, 10 * 3600},*/		/*	Eastern Standard Time	Australia	UTC + 10 hours*/
+	{"EST", 1, 5 * 3600},		/*	Eastern Standard Time	North America	UTC - 5 hours*/
+	{"F", -1, 6 * 3600},		/*	Foxtrot Time Zone	Military	UTC + 6 hours*/
+	{"G", -1, 7 * 3600},		/*	Golf Time Zone	Military	UTC + 7 hours*/
+	{"GMT", 1, 0},			/*	Greenwich Mean Time	Europe	UTC*/
+	{"H", -1, 8 * 3600},		/*	Hotel Time Zone	Military	UTC + 8 hours*/
+	{"HAA", 1, 3 * 3600},		/*	Heure Avancée de l'Atlantique	North America	UTC - 3 hours*/
+	{"HAC", 1, 5 * 3600},		/*	Heure Avancée du Centre	North America	UTC - 5 hours*/
+	{"HADT", 1, 9 * 3600},		/*	Hawaii-Aleutian Daylight Time	North America	UTC - 9 hours*/
+	{"HAE", 1, 4 * 3600},		/*	Heure Avancée de l'Est	North America	UTC - 4 hours*/
+	{"HAP", 1, 7 * 3600},		/*	Heure Avancée du Pacifique	North America	UTC - 7 hours*/
+	{"HAR", 1, 6 * 3600},		/*	Heure Avancée des Rocheuses	North America	UTC - 6 hours*/
+	{"HAST", 1, 10 * 3600},		/*	Hawaii-Aleutian Standard Time	North America	UTC - 10 hours*/
+	{"HAT", 1, 2 * 3600 + 1800},	/*	Heure Avancée de Terre-Neuve	North America	UTC - 2:30 hours*/
+	{"HAY", 1, 8 * 3600},		/*	Heure Avancée du Yukon	North America	UTC - 8 hours*/
+	{"HNA", 1, 4 * 3600},		/*	Heure Normale de l'Atlantique	North America	UTC - 4 hours*/
+	{"HNC", 1, 6 * 3600},		/*	Heure Normale du Centre	North America	UTC - 6 hours*/
+	{"HNE", 1, 5 * 3600},		/*	Heure Normale de l'Est	North America	UTC - 5 hours*/
+	{"HNP", 1, 8 * 3600},		/*	Heure Normale du Pacifique	North America	UTC - 8 hours*/
+	{"HNR", 1, 7 * 3600},		/*	Heure Normale des Rocheuses	North America	UTC - 7 hours*/
+	{"HNT", 1, 3 * 3600 + 1800},	/*	Heure Normale de Terre-Neuve	North America	UTC - 3:30 hours*/
+	{"HNY", 1, 9 * 3600},		/*	Heure Normale du Yukon	North America	UTC - 9 hours*/
+	{"I", -1, 9 * 3600},		/*	India Time Zone	Military	UTC + 9 hours*/
+	{"IST", -1, 3600},		/*	Irish Summer Time	Europe	UTC + 1 hour*/
+	{"K", -1, 10 * 3600},		/*	Kilo Time Zone	Military	UTC + 10 hours*/
+	{"L", -1, 11 * 3600},		/*	Lima Time Zone	Military	UTC + 11 hours*/
+	{"M", -1, 12 * 3600},		/*	Mike Time Zone	Military	UTC + 12 hours*/
+	{"MDT", 1, 6 * 3600},		/*	Mountain Daylight Time	North America	UTC - 6 hours*/
+	{"MESZ", -1, 2 * 3600},		/*	Mitteleuroäische Sommerzeit	Europe	UTC + 2 hours*/
+	{"MEZ", -1, 3600},		/*	Mitteleuropäische Zeit	Europe	UTC + 1 hour*/
+	{"MSD", -1, 4 * 3600},		/*	Moscow Daylight Time	Europe	UTC + 4 hours*/
+	{"MSK", -1, 3 * 3600},		/*	Moscow Standard Time	Europe	UTC + 3 hours*/
+	{"MST", 1, 7 * 3600},		/*	Mountain Standard Time	North America	UTC - 7 hours*/
+	{"N", 1, 3600},			/*	November Time Zone	Military	UTC - 1 hour*/
+	{"NDT", 1, 2 * 3600 + 1800},	/*	Newfoundland Daylight Time	North America	UTC - 2:30 hours*/
+	{"NFT", -1, 11 * 3600 + 1800},	/*	Norfolk (Island) Time	Australia	UTC + 11:30 hours*/
+	{"NST", 1, 3 * 3600 + 1800},	/*	Newfoundland Standard Time	North America	UTC - 3:30 hours*/
+	{"O", 1, 2 * 3600},		/*	Oscar Time Zone	Military	UTC - 2 hours*/
+	{"P", 1, 3 * 3600},		/*	Papa Time Zone	Military	UTC - 3 hours*/
+	{"PDT", 1, 7 * 3600},		/*	Pacific Daylight Time	North America	UTC - 7 hours*/
+	{"PST", 1, 8 * 3600},		/*	Pacific Standard Time	North America	UTC - 8 hours*/
+	{"Q", 1, 4 * 3600},		/*	Quebec Time Zone	Military	UTC - 4 hours*/
+	{"R", 1, 5 * 3600},		/*	Romeo Time Zone	Military	UTC - 5 hours*/
+	{"S", 1, 6 * 3600},		/*	Sierra Time Zone	Military	UTC - 6 hours*/
+	{"T", 1, 7 * 3600},		/*	Tango Time Zone	Military	UTC - 7 hours*/
+	{"U", 1, 8 * 3600},		/*	Uniform Time Zone	Military	UTC - 8 hours*/
+	{"UTC", 1, 0},			/*	Coordinated Universal Time	Europe	UTC*/
+	{"V", 1, 9 * 3600},		/*	Victor Time Zone	Military	UTC - 9 hours*/
+	{"W", 1, 10 * 3600},		/*	Whiskey Time Zone	Military	UTC - 10 hours*/
+	{"WDT", -1, 9 * 3600},		/*	Western Daylight Time	Australia	UTC + 9 hours*/
+	{"WEDT", -1, 3600},		/*	Western European Daylight Time	Europe	UTC + 1 hour*/
+	{"WEST", -1, 3600},		/*	Western European Summer Time	Europe	UTC + 1 hour*/
+	{"WET", 1, 0}, 			/*	Western European Time	Europe	UTC*/
+/*	{"WST", -1, 9 * 3600},*/		/*	Western Summer Time	Australia	UTC + 9 hours*/
+	{"WST", -1, 8 * 3600},		/*	Western Standard Time	Australia	UTC + 8 hours*/
+	{"X", 1, 11 * 3600},		/*	X-ray Time Zone	Military	UTC - 11 hours*/
+	{"Y", 1, 12 * 3600},		/*	Yankee Time Zone	Military	UTC - 12 hours*/
+	{"Z", 1, 0},			/*	Zulu Time Zone	Military	UTC*/
+
+	{"ZW12", 1, 12 * 3600},
+	{"ZW3", 1, 3 * 3600},
+	{"ZW2", 1, 2 * 3600},
+	{"YW2", 1, 1 * 3600},
+	{"ZW1", 1, 1 * 3600},
+	{"YW1", 1, 0},
+
+	{"ZE2", -1, 2 * 3600},
+	{"ZE3", -1, 3 * 3600},
+	{"ZE3B", -1, 3 * 3600 + 1800},
+	{"ZE4", -1, 4 * 3600},
+	{"ZE4B", -1, 4 * 3600 + 1800},
+	{"ZE5", -1, 5 * 3600},
+	{"ZE5B", -1, 5 * 3600 + 1800},
+	{"ZE5C", -1, 5 * 3600 + 1800 + 900},
+	{"ZE6", -1, 6 * 3600},
+	{"ZE6B", -1, 6 * 3600 + 1800},
+	{"ZE7", -1, 7 * 3600},
+	{"ZE8", -1, 8 * 3600},
+	{"ZE9", -1, 9 * 3600},
+	{"ZE9B", -1, 9 * 3600 + 1800},
+	{"ZE10", -1, 10 * 3600},
+	{"ZE11", -1, 11 * 3600},
+	{"ZE12", -1, 12 * 3600},
+	{"ZE13", -1, 13 * 3600},
+
+	{"YST", 1, 9 * 3600},
+	{"YDT", 1, 8 * 3600},
+
+	{"UTC-12", 1, 12 * 3600},
+	{"UTC-11", 1, 11 * 3600},
+	{"UTC-10", 1, 10 * 3600},
+	{"UTC-9", 1, 9 * 3600},
+	{"UTC-9:30", 1, 9 * 3600 + 1800},
+	{"UTC-8", 1, 8 * 3600},
+	{"UTC-7", 1, 7 * 3600},
+	{"UTC-6", 1, 6 * 3600},
+	{"UTC-5", 1, 5 * 3600},
+	{"UTC-4", 1, 4 * 3600},
+	{"UTC-4:30", 1, 4 * 3600 + 1800},
+	{"UTC-3", 1, 3 * 3600},
+	{"UTC-3:30", 1, 3 * 3600 + 1800},
+	{"UTC-2", 1, 2 * 3600},
+	{"UTC-1", 1, 1 * 3600},
+
+	{"UTC+14", -1, 12 * 3600},
+	{"UTC+13", -1, 12 * 3600},
+	{"UTC+12", -1, 12 * 3600},
+	{"UTC+12:45", -1, 12 * 3600 + 1800 + 900},
+	{"UTC+11", -1, 11 * 3600},
+	{"UTC+11:30", -1, 11 * 3600 + 1800},
+	{"UTC+10", -1, 10 * 3600},
+	{"UTC+10:30", -1, 10 * 3600 + 1800},
+	{"UTC+9", -1, 9 * 3600},
+	{"UTC+9:30", -1, 9 * 3600 + 1800},
+	{"UTC+8", -1, 8 * 3600},
+	{"UTC+8:45", -1, 8 * 3600 + 1800 + 900},
+	{"UTC+7", -1, 7 * 3600},
+	{"UTC+6", -1, 6 * 3600},
+	{"UTC+6:30", -1, 6 * 3600 + 1800},
+	{"UTC+5", -1, 5 * 3600},
+	{"UTC+5:30", -1, 5 * 3600 + 1800},
+	{"UTC+5:45", -1, 5 * 3600 + 1800 + 900},
+	{"UTC+4", -1, 4 * 3600},
+	{"UTC+4:30", -1, 4 * 3600 + 1800},
+	{"UTC+3", -1, 3 * 3600},
+	{"UTC+3:30", -1, 3 * 3600 + 1800},
+	{"UTC+2", -1, 2 * 3600},
+	{"UTC+1", -1, 1 * 3600},
+/*****/	
+	{"GMT-12", 1, 12 * 3600},
+	{"GMT-11", 1, 11 * 3600},
+	{"GMT-10", 1, 10 * 3600},
+	{"GMT-9", 1, 9 * 3600},
+	{"GMT-9:30", 1, 9 * 3600 + 1800},
+	{"GMT-8", 1, 8 * 3600},
+	{"GMT-7", 1, 7 * 3600},
+	{"GMT-6", 1, 6 * 3600},
+	{"GMT-5", 1, 5 * 3600},
+	{"GMT-4", 1, 4 * 3600},
+	{"GMT-4:30", 1, 4 * 3600 + 1800},
+	{"GMT-3", 1, 3 * 3600},
+	{"GMT-3:30", 1, 3 * 3600 + 1800},
+	{"GMT-2", 1, 2 * 3600},
+	{"GMT-1", 1, 1 * 3600},
+
+	{"GMT+14", -1, 12 * 3600},
+	{"GMT+13", -1, 12 * 3600},
+	{"GMT+12", -1, 12 * 3600},
+	{"GMT+12:45", -1, 12 * 3600 + 1800 + 900},
+	{"GMT+11", -1, 11 * 3600},
+	{"GMT+11:30", -1, 11 * 3600 + 1800},
+	{"GMT+10", -1, 10 * 3600},
+	{"GMT+10:30", -1, 10 * 3600 + 1800},
+	{"GMT+9", -1, 9 * 3600},
+	{"GMT+9:30", -1, 9 * 3600 + 1800},
+	{"GMT+8", -1, 8 * 3600},
+	{"GMT+8:45", -1, 8 * 3600 + 1800 + 900},
+	{"GMT+7", -1, 7 * 3600},
+	{"GMT+6", -1, 6 * 3600},
+	{"GMT+6:30", -1, 6 * 3600 + 1800},
+	{"GMT+5", -1, 5 * 3600},
+	{"GMT+5:30", -1, 5 * 3600 + 1800},
+	{"GMT+5:45", -1, 5 * 3600 + 1800 + 900},
+	{"GMT+4", -1, 4 * 3600},
+	{"GMT+4:30", -1, 4 * 3600 + 1800},
+	{"GMT+3", -1, 3 * 3600},
+	{"GMT+3:30", -1, 3 * 3600 + 1800},
+	{"GMT+2", -1, 2 * 3600},
+	{"GMT+1", -1, 1 * 3600},

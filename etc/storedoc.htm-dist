@@ -1,0 +1,73 @@
+<!--
+    This is storedoc default template file for DataparkSearch 4
+    (C) 1999-2001, mnoGoSearch developers team <devel@mnogosearch.org>
+    (C) 2003-2004, Datapark corp.
+
+    Please rename to storedoc.htm and edit as desired.
+    See doc/README.templates for detailed information.
+    You may want to keep the original file for future reference.
+
+    WARNING: Use proper chmod to protect your passwords!
+-->
+<!--variables
+
+# Store server address
+DBAddr		searchd://localhost/?stored=localhost
+
+# Use proper local and browser charsets
+# Default charset is iso-8859-1 (latin1)
+# which is suitable for the most Western European languages
+
+LocalCharset   iso-8859-1
+BrowserCharset iso-8859-1
+
+#
+# How to hilight searched words.
+#
+HlBeg	<font color="000088"><b>
+HlEnd	</b></font>
+
+#
+# These Mime definitions should be the same as in indexer.conf
+#       from_mime                to_mime[charset]             [command line [$1]]
+#
+#Mime application/msword      "text/plain; charset=cp1251"  "catdoc $1"
+#Mime application/x-troff-man  text/plain                    "deroff"
+#Mime text/x-postscript        text/plain                    "ps2ascii"
+#Mime application/pdf          text/plain                    "pdftotext $1 -"
+#Mime application/vnd.ms-excel text/plain                    "xls2csv $1"
+#Mime "text/rtf*"              text/html                     "rthc --use-stdout $1 2>/dev/null"
+
+-->
+
+<!--top-->
+<BASE HREF="$&(DU)">
+
+<table border="1" cellpadding="2" cellspacing="0"><tr>
+<td><b>Document ID:</b> $&(rec_id) </td>
+<td><b>Last modified:</b>$&(DM) </td>
+<td><b>Language:</b>$&(L) </td>
+<td><b>Charset:</b> $&(CS) </td>
+<td><b>Size:</b> $&(DS) </td>
+</tr></table>
+<hr>
+<!--/top-->
+
+
+<!--result-->
+<!IFNOT NAME="subject" CONTENT=""><b>Subject:</b> $^(subject)<br><!ENDIF>
+<!IFNOT NAME="newsgroups" CONTENT=""><b>Newsgroups:</b> $^(newsgroups)<br><!ENDIF>
+<!IFNOT NAME="from" CONTENT=""><b>From:</b> $^(from)<br><!ENDIF>
+<!IF NAME="document" CONTENT="">
+<center>Document not found, probably it has been deleted.</center>
+<!ELSE>
+$^(document)
+<!ENDIF>
+<!--/result-->
+
+<!--bottom-->
+<hr>
+<center>
+<font size="1"><a href="http://www.dataparksearch.org/">Powered by DataparkSearch - free web search engine</a></font>
+</center>
+<!--/bottom-->

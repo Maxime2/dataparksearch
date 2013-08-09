@@ -1,0 +1,88 @@
+<!--variables
+DBAddr		searchd://v.sochi.org.ru/?socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr		searchd://v.sochi.org.ru/?label=sochi&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr		searchd://v.sochi.org.ru/?label=phones&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr		searchd://v.sochi.org.ru/?label=qsimilar&socket=/usr/local/dpsearch/var/dpsearchd.sock
+StoredocURL     /cgi-bin/storedoc.cgi
+LocalCharset 	utf-8
+BrowserCharset  UTF-8
+MakePrefixes yes
+DoExcerpt no
+MinWordLength 1
+MaxWordLength 64
+DetectClones no
+DateFormat %d %b %Y
+ExcerptSize 128
+ExcerptPadding 32
+HlBeg <span class="rhl">
+HlEnd </span>
+GrBeg 
+GrEnd 
+Locale ru_RU.UTF-8
+#ResultContentType text/html
+-->
+
+<!--top-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>$&(q)</title>
+</head>
+<body>
+<!--/top-->
+
+<!--bottom-->
+</body>
+</html>
+<!--/bottom-->
+
+<!--restop-->
+<!--/restop-->
+
+
+<!--res-->
+<!IF NAME="query" COONTENT=""><!IFNOT NAME="title" CONTENT="[no title]"><div onmouseover="javascript:suggestOver(this);" onmouseout="javascript:suggestOut(this);" onclick="javascript:setSearch(this.innerHTML);" class="suggest_link">$&(title:32)</div><!ENDIF><!ELSE><div onmouseover="javascript:suggestOver(this);" onmouseout="javascript:suggestOut(this);" onclick="javascript:setSearch(this.innerHTML);" class="suggest_link">$&(query:128)</div><!ENDIF>
+
+<!--/res-->
+
+<!--clone-->
+<li><A HREF="$(URL)">$(URL:50)</A>,&nbsp; $(Last-Modified)
+<!--/clone-->
+
+<!--navleft-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&laquo;&laquo;Prev.&laquo;</small></A></TD>
+<!--/navleft-->
+
+<!--navbar0-->
+<TD><b class="hl">$(NP)</b></TD>
+<!--/navbar0-->
+
+<!--navbar1-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(NP)</A></TD>
+<!--/navbar1-->
+
+<!--navright-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&raquo;Next&raquo;&raquo;</small></A></TD>
+<!--/navright-->
+
+<!--navigator-->
+<table border="0" cellspacing="0" cellpadding="3"><tr><td><small>Pages:</small></td>$(NL) $(NB) $(NR)</tr></table>
+<!--/navigator-->
+
+<!--resbot-->
+<div onclick="javascript:HideSuggest();" class="suggest_link" style="background-color: #ddd;" align="right">[x]</div>
+<!--/resbot-->
+
+
+<!--notfound-->
+
+<!--/notfound-->
+
+<!--noquery-->
+<!--/noquery-->
+
+<!--error-->
+$(E)
+<!--/error-->
+
+

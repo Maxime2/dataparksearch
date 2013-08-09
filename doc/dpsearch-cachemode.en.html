@@ -1,0 +1,953 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Cache mode storage</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Storing data"
+HREF="dpsearch-howstore.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Storing data"
+HREF="dpsearch-howstore.en.html"><LINK
+REL="NEXT"
+TITLE="DataparkSearch performance issues"
+HREF="dpsearch-perf.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-howstore.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Storing data</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-perf.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CACHEMODE"
+>5.2. Cache mode storage</A
+></H1
+><A
+NAME="AEN3377"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHEMODE-INTRO"
+>5.2.1. Introduction</A
+></H2
+><P
+><TT
+CLASS="LITERAL"
+>cache</TT
+> words storage mode is able to index and search 
+quickly through several millions of documents.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHEMODE-STR"
+>5.2.2. Cache mode word indexes structure</A
+></H2
+><P
+>The main idea of cache storage mode is that word
+index and data for URL sorting is stored on disk rather than in a <SPAN
+CLASS="APPLICATION"
+>SQL</SPAN
+> database. Full URL information
+however is kept in <SPAN
+CLASS="APPLICATION"
+>SQL</SPAN
+> database (tables <TT
+CLASS="LITERAL"
+>url</TT
+> and <TT
+CLASS="LITERAL"
+>urlinfo</TT
+>). 
+<A
+NAME="AEN3391"
+></A
+>
+Word index is divided into number of files specified by <B
+CLASS="COMMAND"
+>WrdFiles</B
+> command (default value is 0x300).
+<A
+NAME="AEN3395"
+></A
+>
+URLs sorting information is divided into number of files specified by <B
+CLASS="COMMAND"
+>URLDataFiles</B
+> command (default value is 0x300).
+<DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>Beware: you should have identical values for WrdFiles and URLDataFiles commands in all your configs.</P
+></BLOCKQUOTE
+></DIV
+></P
+><P
+> Word index is located in files under <TT
+CLASS="FILENAME"
+>/var/tree</TT
+> directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation. URLs sorting information is located in files under <TT
+CLASS="FILENAME"
+>/var/url</TT
+> directory of 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation. </P
+><P
+><A
+NAME="AEN3407"
+></A
+><A
+NAME="AEN3410"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>indexer</SPAN
+> and <SPAN
+CLASS="APPLICATION"
+>cached</SPAN
+> use memory buffers to cache some portion of cache mode data before flushing it to the disk.
+The size of such buffers can be adjusted by <B
+CLASS="COMMAND"
+>CacheLogWords</B
+> and <B
+CLASS="COMMAND"
+>CacheLogDels</B
+> commands in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>cached.conf</TT
+> 
+config files respectively. Default values are 1024 for <B
+CLASS="COMMAND"
+>CacheLogWords</B
+> and 10240 for <B
+CLASS="COMMAND"
+>CacheLogDels</B
+>.
+An estimation of total memory used for such buffers can be calculated as follow:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>Volume = WrdFiles * (16 + 16 * CacheLogWords + 8 * CacheLogDels), for 32-bit systems
+Volume = WrdFiles * (32 + 20 * CacheLogWords + 12 * CacheLogDels), for 64-bit systems</PRE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHEMODE-TOOLS"
+>5.2.3. Cache mode tools</A
+></H2
+><P
+>There are two additional programs
+<TT
+CLASS="FILENAME"
+>cached</TT
+> and <TT
+CLASS="FILENAME"
+>splitter</TT
+> used in <TT
+CLASS="LITERAL"
+>cache mode</TT
+> indexing.</P
+><P
+> <TT
+CLASS="FILENAME"
+>cached</TT
+> is a TCP daemon which collects word
+information from indexers and stores it on your hard disk. It can operate in two modes, as old
+<TT
+CLASS="FILENAME"
+>cachelogd</TT
+> daemon to logs data only, and in new mode, when <TT
+CLASS="FILENAME"
+>cachelogd</TT
+>
+and <TT
+CLASS="FILENAME"
+>splitter</TT
+> functionality are combined.</P
+><P
+> <TT
+CLASS="FILENAME"
+>splitter</TT
+> is
+a program to create fast word indexes using data collected by
+<TT
+CLASS="FILENAME"
+>cached</TT
+>. Those indexes are used later in search process.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHEMODE-START"
+>5.2.4. Starting cache mode</A
+></H2
+><P
+>To start "cache mode" follow these steps:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Start <TT
+CLASS="FILENAME"
+>cached</TT
+> server:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>cd /usr/local/dpsearch/sbin </KBD
+></P
+><P
+><KBD
+CLASS="USERINPUT"
+>./cached  2&gt;cached.out &amp;</KBD
+>
+				</P
+><P
+>It will write some debug
+information into <TT
+CLASS="FILENAME"
+>cached.out</TT
+> file. <TT
+CLASS="FILENAME"
+>cached</TT
+>
+also creates a <TT
+CLASS="FILENAME"
+>cached.pid</TT
+> file in /var directory of base
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation.</P
+><P
+><TT
+CLASS="FILENAME"
+>cached</TT
+> listens to TCP
+connections and can accept several indexers from different
+machines. Theoretical number of indexers connections is equal to 128. In old mode <TT
+CLASS="FILENAME"
+>cached</TT
+>
+stores information sent by indexers in <TT
+CLASS="FILENAME"
+>/var/splitter/</TT
+>
+directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation. 
+In new mode it stores in <TT
+CLASS="FILENAME"
+>/var/tree/</TT
+> directory.</P
+><P
+>By default, <TT
+CLASS="FILENAME"
+>cached</TT
+> starts in new mode. To run it in old mode, i.e. logs only mode, run it with
+-l switch:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>cached -l</KBD
+></P
+><P
+>Or by specify <A
+NAME="AEN3463"
+></A
+>
+<B
+CLASS="COMMAND"
+>LogsOnly yes</B
+> command in your <TT
+CLASS="FILENAME"
+>cached.conf</TT
+>.</P
+><P
+>You can specify port for
+<TT
+CLASS="FILENAME"
+>cached</TT
+> to use without recompiling. In order to do that, please run</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./cached -p8000 </KBD
+>
+				</P
+><P
+>where <TT
+CLASS="LITERAL"
+>8000</TT
+> is the port number you choose.</P
+><P
+>You can as well specify a
+directory to store data (it is <TT
+CLASS="LITERAL"
+>/var</TT
+> directory by
+default) with this command:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./cached -w /path/to/var/dir</KBD
+>
+				</P
+></LI
+><LI
+><P
+>Configure your <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> as usual and for <B
+CLASS="COMMAND"
+>DBAddr</B
+> command 
+add <TT
+CLASS="LITERAL"
+>cache</TT
+> as value of <TT
+CLASS="LITERAL"
+>dbmode</TT
+> parameter and <TT
+CLASS="LITERAL"
+>localhost:7000</TT
+>
+as value of <TT
+CLASS="LITERAL"
+>cached</TT
+> parameter (see <A
+HREF="dpsearch-indexcmd.en.html#DBADDR_CMD"
+>Section 3.10.2</A
+>&#62;).
+				</P
+></LI
+><LI
+><P
+>Run indexers. Several indexers
+can be executed simultaneously. Note that you may install indexers on
+different machines and then execute them with the same <TT
+CLASS="FILENAME"
+>cached</TT
+>
+server. This distributed system allows making indexing faster.</P
+></LI
+><LI
+><P
+>Flushing <SPAN
+CLASS="APPLICATION"
+>cached</SPAN
+> buffers and url data, and creating cache mode limits.
+To flush <SPAN
+CLASS="APPLICATION"
+>cached</SPAN
+> buffers and url data and to create cache mode limits after indexing is done, send -HUP
+signal to <TT
+CLASS="FILENAME"
+>cached</TT
+>.
+You can use <TT
+CLASS="FILENAME"
+>cached.pid</TT
+> file to do this:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>kill -HUP `cat /usr/local/dpsearch/var/cached.pid`</KBD
+></P
+><P
+>N.B.: you needs wait till all buffers will be flushed before going to next step.</P
+></LI
+><LI
+><P
+>Creating word index. This stage is no needs, if 
+<TT
+CLASS="FILENAME"
+>cached</TT
+> runs in new, i.e. combined, mode.
+ When some
+information is gathered by indexers and collected in
+<TT
+CLASS="FILENAME"
+>/var/splitter/</TT
+> directory by <TT
+CLASS="FILENAME"
+>cached</TT
+> it is possible
+to create fast word indexes. <TT
+CLASS="FILENAME"
+>splitter</TT
+> program is responsible for
+this. It is installed in <TT
+CLASS="FILENAME"
+>/sbin</TT
+> directory. Note
+that indexes can be created anytime without interrupting current
+indexing process.</P
+><P
+> Run <TT
+CLASS="FILENAME"
+>splitter</TT
+> without any arguments:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>/usr/local/dpsearch/sbin/splitter</KBD
+>
+						</P
+><P
+>It will take
+sequentially all prepared files in
+<TT
+CLASS="FILENAME"
+>/var/splitter/</TT
+> directory and use them to build
+fast word index. Processed logs in <TT
+CLASS="FILENAME"
+>/var/splitter/</TT
+>
+directory are truncated after this operation.</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHELOG-SEVSPL"
+>5.2.5. Optional usage of several splitters</A
+></H2
+><P
+>splitter has two command line arguments:
+<TT
+CLASS="LITERAL"
+>-f [first file] -t [second file]</TT
+> which allows
+limiting used files range. If no parameters are specified splitter
+distributes all prepared files. You can limit files range using
+-f and -t keys specifying parameters in HEX notation. For example,
+<TT
+CLASS="LITERAL"
+>splitter -f 000 -t A00</TT
+> will create word indexes
+using files in the range from 000 to A00. These keys allow using
+several splitters at the same time. It usually gives more quick
+indexes building. For example, this shell script starts four splitters
+in background:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>#!/bin/sh
+splitter -f 000 -t 3f0 &amp;
+splitter -f 400 -t 7f0 &amp;
+splitter -f 800 -t bf0 &amp;
+splitter -f c00 -t ff0 &amp;</PRE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHELOG-RUNSPL"
+>5.2.6. Using run-splitter script</A
+></H2
+><P
+>There is a <TT
+CLASS="FILENAME"
+>run-splitter</TT
+>
+script in <TT
+CLASS="FILENAME"
+>/sbin</TT
+> directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation. It helps to execute subsequently all three indexes
+building steps.</P
+><P
+>"run-splitter" has these two command line parameters:</P
+><P
+>			<KBD
+CLASS="USERINPUT"
+>run-splitter --hup --split</KBD
+>
+		</P
+><P
+>or a short version:</P
+><P
+>			<KBD
+CLASS="USERINPUT"
+>run-splitter -k -s</KBD
+>
+		</P
+><P
+>Each parameter activates corresponding indexes
+building step. <TT
+CLASS="FILENAME"
+>run-splitter</TT
+> executes all three
+steps of index building in proper order:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Sending -HUP signal to
+cached. <TT
+CLASS="LITERAL"
+>--hup</TT
+> (or <TT
+CLASS="LITERAL"
+>-k</TT
+>)
+run-splitter arguments are responsible for this.</P
+></LI
+><LI
+><P
+>Running splitter. Keys <TT
+CLASS="LITERAL"
+>--split</TT
+>  (or <TT
+CLASS="LITERAL"
+>-s</TT
+>).</P
+></LI
+></OL
+><P
+>In most cases just run <B
+CLASS="COMMAND"
+>run-splitter</B
+> script
+with all <TT
+CLASS="LITERAL"
+>-k -s</TT
+> arguments. Separate usage of those
+three flags which correspond to three steps of indexes building is
+rarely required. </P
+><P
+><B
+CLASS="COMMAND"
+>run-splitter</B
+> have optional parameters: <TT
+CLASS="LITERAL"
+>-p=n</TT
+> and <TT
+CLASS="LITERAL"
+>-v=m</TT
+>
+to specify pause in seconds after each log buffer update and verbose level respectively.
+<TT
+CLASS="LITERAL"
+>n</TT
+> is seconds number (default value: 0), <TT
+CLASS="LITERAL"
+>m</TT
+> is verbosity level (default value: 4).</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CACHELOG-SEARCH"
+>5.2.7. Doing search</A
+></H2
+><P
+>To start using <B
+CLASS="COMMAND"
+>search.cgi</B
+> in the "cache mode",
+edit as usually your <TT
+CLASS="FILENAME"
+>search.htm</TT
+> template and add the "cache" as value of <TT
+CLASS="LITERAL"
+>dbmode</TT
+> parameter of
+<B
+CLASS="COMMAND"
+>DBAddr</B
+> command.
+
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LIMITS"
+>5.2.8. Using search limits</A
+></H2
+><P
+><A
+NAME="AEN3561"
+></A
+>
+To use search limits in cache mode, you should add appropriate
+<TT
+CLASS="LITERAL"
+>Limit</TT
+> command(s) to your <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> 
+(or <TT
+CLASS="FILENAME"
+>cached.conf</TT
+>, if <B
+CLASS="COMMAND"
+>cached</B
+> is used) and to <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+or <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> (if <TT
+CLASS="LITERAL"
+>searchd</TT
+> is used).
+<PRE
+CLASS="SYNOPSIS"
+>Limit prm:type [SQL-Request [DBAddr]]</PRE
+></P
+><P
+>To use, for example, search limit by tag, by category and by site, add follow lines to
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> or to <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+(<TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, if <TT
+CLASS="LITERAL"
+>searchd</TT
+> is used).</P
+><PRE
+CLASS="PROGRAMLISTING"
+>Limit t:tag
+Limit c:category
+Limit site:siteid</PRE
+><P
+>where <TT
+CLASS="LITERAL"
+>t</TT
+> - name of CGI parameter (&amp;t=) for this
+constraint, <TT
+CLASS="LITERAL"
+>tag</TT
+> - type of constraint.</P
+><P
+>Instead of tag/category/siteid in example above you can use any of values from table below:
+<DIV
+CLASS="TABLE"
+><A
+NAME="AEN3582"
+></A
+><P
+><B
+>Table 5-1.  Cache mode predefined limit types</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>category</TD
+><TD
+>Category limit.</TD
+></TR
+><TR
+><TD
+>tag</TD
+><TD
+>Tag limit.</TD
+></TR
+><TR
+><TD
+>time</TD
+><TD
+>Time limit (a hour precision).</TD
+></TR
+><TR
+><TD
+>language</TD
+><TD
+>Language limit.</TD
+></TR
+><TR
+><TD
+>content</TD
+><TD
+>Content-Type limit.</TD
+></TR
+><TR
+><TD
+>siteid</TD
+><TD
+>url.site_id limit.</TD
+></TR
+><TR
+><TD
+>link</TD
+><TD
+>Limit by pages what links to url.rec_id specified.</TD
+></TR
+><TR
+><TD
+>hostname (obsolete)</TD
+><TD
+>Hostname (url) limit. This limit is obsolete and should be replaced by site_id limit</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></P
+><P
+>If the second, optional, parameter <CODE
+CLASS="OPTION"
+>SQL-Request</CODE
+> is specified for <B
+CLASS="COMMAND"
+>Limit</B
+> command, then this SQL-query is executed for limit construction. 
+This SQL-query should return all possible pairs of limit value and url.rec_id. E.g.:
+<PRE
+CLASS="PROGRAMLISTING"
+>Limit prm:strcrc32 "SELECT label, rec_id FROM labels" pgsql://u:p@localhost/sitedb/</PRE
+>
+where prm - is the name of limit and the name of CGI-parameter is used for this limit; strcrc32 - is the type of limit, particularly for this limit is a string. 
+Instead of strcrc32 it's possible to use any of the following limit types:
+<DIV
+CLASS="TABLE"
+><A
+NAME="AEN3614"
+></A
+><P
+><B
+>Table 5-2. SQL-based cache mode limit types</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>hex8str</TD
+><TD
+>Hex or hexavigesimal (base-26) string similar to those used in categories. The nested limit will be created.</TD
+></TR
+><TR
+><TD
+>strcrc32</TD
+><TD
+>A string, the hash32 value is calculated on, used as key for this limit.</TD
+></TR
+><TR
+><TD
+>int</TD
+><TD
+>An integer (4-byte wide).</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></P
+><P
+>With third, optional, parameter <CODE
+CLASS="OPTION"
+>DBAddr</CODE
+> for <B
+CLASS="COMMAND"
+>Limit</B
+> command it's possible to specify a connection to an alternate SQL-database where to get data for this limit.</P
+><P
+>It's possible to omit optional parameters <CODE
+CLASS="OPTION"
+>SQL-Request</CODE
+> and <CODE
+CLASS="OPTION"
+>DBAddr</CODE
+> of <B
+CLASS="COMMAND"
+>Limit</B
+> command in search template <TT
+CLASS="FILENAME"
+>search.htm</TT
+> or in <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> file (when <B
+CLASS="COMMAND"
+>searchd</B
+> is used), since they are used only for limit construction.
+<PRE
+CLASS="PROGRAMLISTING"
+>Limit prm:strcrc32</PRE
+></P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-howstore.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-perf.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Storing data</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-howstore.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> performance issues</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

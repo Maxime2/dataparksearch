@@ -1,0 +1,21 @@
+<sect2 id="accent">
+	<title>Поиск без учёта акцентов над буквами
+<indexterm><primary>Акценты над буквами</primary><secondary>нечувствительный поиск</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>AccentExtensions</secondary></indexterm>
+</title>
+	<para>Начиная с версии 4.17 <application>DataparkSearch</application> также поддерживает нечувствительный к
+акцентам над буквами поиск.</para>
+
+<para>Чтобы включить поддержку этой возможности, используйте команду <command>AccentExtensions</command> в вашем шаблоне 
+<filename>search.htm</filename> (или в файле конфигурации <filename>searchd.conf</filename>, если используется <command>searchd</command>)
+ для автоматического построений копий слов из запроса без учёта акцентов над буквами, и в вашем файле конфигурации
+<filename>indexer.conf</filename> для автоматического добавления таких копий в базу.
+<programlisting>
+AccentExtensions yes
+</programlisting>
+</para>
+<para>Если команда <command>AccentExtensions</command> в файле конфигурации указана перед командами <command>Spell</command> и
+ <command>Affix</command>, то копия этих данных без учёта акцентов над буквами будет загружаться автоматически.
+</para>
+</sect2>
+

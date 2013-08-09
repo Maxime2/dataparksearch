@@ -1,0 +1,861 @@
+<sect1 id="templates">
+	<title>Как создавать шаблоны результатов поиска
+<indexterm><primary>Шаблон</primary></indexterm>
+</title>
+	<para>Пользователи <application>DataparkSearch</application> имеют возможность настраивать вывод результатов поиска
+(вывод <filename>search.cgi</filename> <!--или <filename>search.php</filename-->).
+Эта настройка находится в файле <filename>search.htm</filename>, располагаемым в поддиректории <filename>/etc/</filename>
+относительно корневой директории установки <application>DataparkSearch</application>.</para>
+
+	<para>Файл шаблона это обычный HTML файл, разделённый на секции.</para>
+
+<note>
+<para>Каждая строка шаблона не должна превышать 1024 байт.</para>
+</note>
+
+	<para>Каждая секци начинается с разделителя &lt;!--sectionname--&gt; и заканчивается разделителем &lt;!--/sectionname--&gt;,
+оба разделителя должны находится на отдельной строке, в её начале.</para>
+
+	<para>Каждая секция состоит из HTML-кода, содержащего специальные метасимволы (переменные шаблона).
+Каждый метасимвол заменяется соответсвующей ему строкой во время заполнения шаблона при выдаче результатов поиска.
+</para>
+
+	<para>Формат переменных шаблона следующий:
+	<programlisting>
+$(x) - значение
+$&amp;(x) - значение с HTML-кодировкой недопустимых символов и выделением слов из запроса.
+$*(x) - значение с HTML-кодировкой недопустимых символов.
+$%(x) - значение с URL-кодированием запрещенных символов.
+$^(x) - значение с выделением слов из поискового запроса.
+$(x:128) - значение усекается до 128 байт, если оно длиннее.
+$(x:UTF-8) - значение записывается в кодировке UTF-8. Можно указывать любую поддерживаемую кодировку.
+$(x:128:right) - значение усекается слева до 128 байт, если оно длиннее.
+$(x:cite:160) - вывести цитату значения по словам из запроса, длиной не более 160 символов (приблизительно).
+$(url.host:idnd) - перекодировать имя хоста из пуникода в кодировку BrowserCharset.
+$(x:json) - JSON-кодировка символов.
+</programlisting>
+</para>
+
+	<sect2 id="templates-sect">
+		<title>Секции шаблона
+<indexterm><primary>Шаблоны</primary><secondary>секции</secondary></indexterm>
+</title>
+		<para>Определены следующие секции шаблонов:
+<xref linkend="top-section" endterm="top-name"/>,
+<xref linkend="bottom-section" endterm="bottom-name"/>,
+<xref linkend="restop-section" endterm="restop-name"/>,
+<xref linkend="res-section" endterm="res-name"/>,
+<xref linkend="clone-section" endterm="clone-name"/>,
+<xref linkend="resbot-section" endterm="resbot-name"/>,
+<xref linkend="navleft-section" endterm="navleft-name"/>,
+<xref linkend="navbar0-section" endterm="navbar0-name"/>,
+<xref linkend="navright-section" endterm="navright-name"/>,
+<xref linkend="navbar1-section" endterm="navbar1-name"/>,
+<xref linkend="notfound-section" endterm="notfound-name"/>,
+<xref linkend="noquery-section" endterm="noquery-name"/>,
+<xref linkend="error-section" endterm="error-name"/>,
+<xref linkend="templates-var" endterm="var-name"/>.
+</para>
+
+
+<sect3 id="top-section">
+<title>Секция <emphasis>TOP</emphasis></title>
+<titleabbrev id="top-name">TOP</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>TOP</secondary></indexterm>
+		<para>
+Эта секция всегда вставляется первой на каждой странице ответов. Вы должны начинать эту секцию с &lt;HTML&gt;&lt;HEAD&gt; и т.д.
+Также это подходящее место для размещения формы поиска.
+В этой секции вы можете использовать некоторые метасимволы (переменные шаблона):
+		<programlisting>
+$(self)     - аргумент атрибута ACTION тэга FORM
+$(q)        - запрос на поиск
+$(cat)      - текущее значение категории
+$(tag)      - текущее значение тэга
+$(rN)       - случайное число (здесь N - число)
+</programlisting>
+</para>
+		<para>Если вы хотите разместить на ваших страницах некоторые банеры случайным образом,
+используйте <option>$(rN)</option>. Вы также должны поместить строчку типа <literal>RN xxxx</literal>
+в секции 'variables' (см. <xref linkend="templates-var"/>), что даст вам для $(rN) значение из диапазона 0..xxxx.
+Вы можете использовать столько случайных переменных, сколько вам нужно.</para>
+
+		<para>Например: <literal>$(r0), $(r1), $(r45)</literal> и т.д.</para>
+		<para>Простая секция <emphasis>top</emphasis> может быть примерно такой:
+			<programlisting>
+&lt;!--top--&gt;
+&lt;HTML&gt;
+&lt;HEAD&gt;
+ &lt;TITLE&gt;Search query: $(q)&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+
+&lt;FORM METHOD=GET ACTION="$(self)"&gt;
+ &lt;INPUT TYPE="hidden" NAME="ul" VALUE=""&gt;
+ &lt;INPUT TYPE="hidden" NAME="ps" VALUE="20"&gt;
+ Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30 
+ VALUE="$&amp;(q)"&gt;
+ &lt;INPUT TYPE="submit" VALUE="Search!"&gt;&lt;BR&gt;
+&lt;/FORM&gt;
+&lt;!--/top--&gt;
+</programlisting>
+</para>
+		<para>Существует несколько переменных, указываемых в форме для установки различных параметров поиска.
+См. также <xref linkend="search_params"/>.</para>
+		<para>
+			<option>lang</option> Ограничение результатов поиска по языку. Значением является стандартный двубуквенный ISO код
+языка.
+			<programlisting>
+&lt;SELECT NAME="lang"&gt;
+&lt;OPTION VALUE="en" SELECTED="$(lang)"&gt;English
+.....
+&lt;/SELECT&gt;
+    </programlisting>
+</para>
+		<para>
+			<option>ul</option> задаёт фильтр по URL. Позволяет вам ограничить поиск одним сайтом или какой-то его части,
+и т.д. Например, вы можете добавить следующий код в вашу форму
+			<programlisting>
+Search through:
+&lt;SELECT NAME="ul"&gt;
+&lt;OPTION VALUE=""            SELECTED="$(ul)"&gt;Entire site
+&lt;OPTION VALUE="/manual/"    SELECTED="$(ul)"&gt;Manual
+&lt;OPTION VALUE="/products/"  SELECTED="$(ul)"&gt;Products
+&lt;OPTION VALUE="/support/"   SELECTED="$(ul)"&gt;Support
+&lt;/SELECT&gt;
+</programlisting>
+		для организации поиска по некоторым частям вашего сайта. Для способа хранения cache это ограничение работает только
+на уровне имени сайта из URL.</para>
+		<para>Выражение <literal>SELECTED="$(ul)"</literal> в примере выше (и во всехпримерах ниже)
+позволяет сохранять выбранным значение той или иной опции поиска на следующих страницах результатов.
+Если поисковый фронтэнд находит такое выражение, он выводит строку <literal>SELECTED</literal> только для того
+варианта <literal>OPTION</literal>, значение которого равно значению соответсвующей переменной.</para>
+
+		<para>
+			<option>pn</option> равно ps*np. Эта переменная не используется <application>DataparkSearch</application>,
+но может быть полезна, например, в директиве &lt;!INCLUDE CONTENT="..."&gt; если вы хотите включить результаты поиска другой 
+поисковой системы.</para>
+
+				<para>В этом примере формы помогается выбрать различные ограничения по времени.
+					<programlisting>
+&lt;!-- 'search with time limits' options --&gt;
+&lt;TR&gt;&lt;TD&gt;
+&lt;TABLE CELLPADDING=2 CELLSPACING=0 BORDER=0&gt;
+&lt;CAPTION&gt; 
+Limit results to pages published within
+a specified period of time.&lt;BR&gt;
+&lt;FONT SIZE=-1&gt;&lt;I&gt;(Please select only one option)
+&lt;/I&gt;&lt;/FONT&gt;
+&lt;/CAPTION&gt;
+&lt;TR&gt;
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" 
+VALUE="back" CHECKED&gt;&lt;/TD&gt;
+&lt;TD&gt;&lt;SELECT NAME="dp"&gt;
+&lt;OPTION VALUE="0" SELECTED="$(dp)"&gt;anytime
+&lt;OPTION VALUE="10M" SELECTED="$(dp)"&gt;in the last ten minutes
+&lt;OPTION VALUE="1h" SELECTED="$(dp)"&gt;in the last hour
+&lt;OPTION VALUE="7d" SELECTED="$(dp)"&gt;in the last week
+&lt;OPTION VALUE="14d" SELECTED="$(dp)"&gt;in the last 2 weeks
+&lt;OPTION VALUE="1m" SELECTED="$(dp)"&gt;in the last month
+&lt;OPTION VALUE="3m" SELECTED="$(dp)"&gt;in the last 3 months
+&lt;OPTION VALUE="6m" SELECTED="$(dp)"&gt;in the last 6 months
+&lt;OPTION VALUE="1y" SELECTED="$(dp)"&gt;in the last year
+&lt;OPTION VALUE="2y" SELECTED="$(dp)"&gt;in the last 2 years
+&lt;/SELECT&gt;
+&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;TR&gt;
+&lt;TD VALIGN=center&gt;&lt;INPUT type=radio NAME="dt" VALUE="er"&gt;
+&lt;/TD&gt;
+&lt;TD&gt;&lt;SELECT NAME="dx"&gt;
+&lt;OPTION VALUE="1" SELECTED="$(dx)"&gt;After
+&lt;OPTION VALUE="-1" SELECTED="$(dx)"&gt;Before
+&lt;/SELECT&gt;
+</programlisting>
+</para>
+				<para>или так
+					<programlisting>
+&lt;SELECT NAME="dm"&gt;
+&lt;OPTION VALUE="0" SELECTED="$(dm)"&gt;January
+&lt;OPTION VALUE="1" SELECTED="$(dm)"&gt;February
+&lt;OPTION VALUE="2" SELECTED="$(dm)"&gt;March
+&lt;OPTION VALUE="3" SELECTED="$(dm)"&gt;April
+&lt;OPTION VALUE="4" SELECTED="$(dm)"&gt;May
+&lt;OPTION VALUE="5" SELECTED="$(dm)"&gt;June
+&lt;OPTION VALUE="6" SELECTED="$(dm)"&gt;July
+&lt;OPTION VALUE="7" SELECTED="$(dm)"&gt;August
+&lt;OPTION VALUE="8" SELECTED="$(dm)"&gt;September
+&lt;OPTION VALUE="9" SELECTED="$(dm)"&gt;October
+&lt;OPTION VALUE="10" SELECTED="$(dm)"&gt;November
+&lt;OPTION VALUE="11" SELECTED="$(dm)"&gt;December
+&lt;/SELECT&gt;
+&lt;INPUT TYPE=text NAME="dd" VALUE="$(dd)" SIZE=2 maxlength=2&gt;
+,
+&lt;SELECT NAME="dy" &gt;
+&lt;OPTION VALUE="1990" SELECTED="$(dy)"&gt;1990
+&lt;OPTION VALUE="1991" SELECTED="$(dy)"&gt;1991
+&lt;OPTION VALUE="1992" SELECTED="$(dy)"&gt;1992
+&lt;OPTION VALUE="1993" SELECTED="$(dy)"&gt;1993
+&lt;OPTION VALUE="1994" SELECTED="$(dy)"&gt;1994
+&lt;OPTION VALUE="1995" SELECTED="$(dy)"&gt;1995
+&lt;OPTION VALUE="1996" SELECTED="$(dy)"&gt;1996
+&lt;OPTION VALUE="1997" SELECTED="$(dy)"&gt;1997
+&lt;OPTION VALUE="1998" SELECTED="$(dy)"&gt;1998
+&lt;OPTION VALUE="1999" SELECTED="$(dy)"&gt;1999
+&lt;OPTION VALUE="2000" SELECTED="$(dy)"&gt;2000
+&lt;OPTION VALUE="2001" SELECTED="$(dy)"&gt;2001
+&lt;/SELECT&gt;
+&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;/TR&gt;
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" VALUE="range"&gt;
+&lt;/TD&gt;
+&lt;TD&gt;
+Between
+&lt;INPUT TYPE=text NAME="db" VALUE="$(db)" SIZE=11 MAXLENGTH=11&gt;
+and
+&lt;INPUT TYPE=text NAME="de" VALUE="$(de)" SIZE=11 MAXLENGTH=11&gt;
+&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;/TD&gt;&lt;/TR&gt;
+&lt;!-- end of stl options --&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="bottom-section">
+<title><emphasis>Секция BOTTOM</emphasis></title>
+<titleabbrev id="bottom-name">BOTTOM</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>BOTTON</secondary></indexterm>
+		<para>
+Эта секция всегда выводится последней на каждой странице результатов поиска. Таким образом вы должны разместить здесь все
+закрывающие тэги для соответсвующих открывающих тэгов из секции <literal>top</literal>.
+Но совершенно необязательно размещать эту секцию в конце файла шаблона, что позволяет вам организовать ваш файл шаблон
+пости как обычный html файл, чтобы иметь возможность просматривать его в окне броузера для представления о том, как он будет выглядеть
+при выдаче пользователю.</para>
+
+		<para>Ниже дан пример секции <literal>bottom</literal>:
+			<programlisting>
+&lt;!--bottom--&gt;
+&lt;P&gt;
+&lt;HR&gt;
+&lt;DIV ALIGN=right&gt;
+&lt;A HREF="http://www.maxime.net.ru/"&gt;
+&lt;IMG SRC="dpsearch.gif" BORDER=0 
+ALT="[Powered by DataparkSearch search engine software]"&gt;
+&lt;/A&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+&lt;!--/bottom--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="restop-section">
+<title>Секция <emphasis>RESTOP</emphasis></title>
+<titleabbrev id="restop-name">RESTOP</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>RESTOP</secondary></indexterm>
+		<para>
+Эта секция вставляется непосредственно перед результатами поиска. Служит местом указания общих параметров результата поиска.
+Вы можете использовать для этого слудующие метасимволы (переменные):</para>
+
+		<itemizedlist>
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(first)</secondary></indexterm>
+					<literal>$(first)</literal> - номер первого документа, отображаемого на этой странице</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(last)</secondary></indexterm>
+					<literal>$(last)</literal>  - номер последнего документа, отображаемого на этой странице</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(total)</secondary></indexterm>
+					<literal>$(total)</literal> - общее число документов найденых документов</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(grand_total)</secondary></indexterm>
+					<literal>$(grand_total)</literal> - общее число документов найденых документов до группировки по сайтам</para>
+			</listitem>
+			<!--listitem>
+				<para>
+					<literal>$(W)</literal> - information about the number of word forms found, e.g. if your query was <literal>html template</literal> $(W) can be something 	like  <literal>html: 10  template: 20</literal> and about words that was excluded from search (e.g. <literal>if: stopword</literal>)</para>
+			</listitem-->
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(WE)</secondary></indexterm>
+					<literal>$(WE)</literal> - результат поиска со всей статистикой по каждой словоформе 
+поискового запроса</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(W)</secondary></indexterm>
+					<literal>$(W)</literal> -
+результат поиска со статистикой по словам запроса, указывается двумя числами, разделёнными знаком '/'.
+Первое число указывает число найденых вхождений слова из запроса, второе - число всех найденых словоформ этого слова.
+Например, <literal>test: 25/73</literal> обозначает, что слово "test" найдено 25 раз, а число всех его словоформ
+("test", "tests", "testing", и т.д..) - 73.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(WS)</secondary></indexterm>
+			<literal>$(WS)</literal> - результат поиска в короткой форме с отображением числа всех словоформ каждого 
+слова запроса.</para>
+			</listitem>
+<listitem>
+<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(SearchTime)</secondary></indexterm>
+<literal>$(SearchTime)</literal> - время выполения поискового запроса.
+</para>
+</listitem>
+<listitem>
+<para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(ndocs)</secondary></indexterm>
+<literal>$(ndocs)</literal> - число документов в базе. Внимание: для больших баз данных это потребует больших ресурсов.
+</para>
+</listitem>
+		</itemizedlist>
+		<para>Ниже дан пример секции <literal>restop</literal>:
+			<programlisting>
+&lt;!--restop--&gt;
+&lt;TABLE BORDER=0 WIDTH=100%&gt;
+&lt;TR&gt;
+&lt;TD&gt;Search&lt;BR&gt;results:&lt;/TD&gt;
+&lt;TD&gt;&lt;small&gt;$(WE)&lt;/small&gt;&lt;/TD&gt;
+&lt;TD&gt;&lt;small&gt;$(W)&lt;/small&gt;&lt;/TD&gt;
+&lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;HR&gt;
+&lt;CENTER&gt;
+Displaying documents $(first)-$(last) of total &lt;B&gt;$(total)&lt;/B&gt; found.
+&lt;/CENTER&gt;
+&lt;!--/restop--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="res-section">
+<title>Секция <emphasis>RES</emphasis></title>
+<titleabbrev id="res-name">RES</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>RES</secondary></indexterm>
+		<para>
+Эта секция используется для вывода разнообразной информации о каждом найденном документе. Могут использоваться
+слудующие метасимволы (переменные):</para>
+
+		<itemizedlist>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(URL)</secondary></indexterm>
+				$(URL)  URL документа</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Title)</secondary></indexterm>
+				$(Title)  Заголовок документа</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Score)</secondary></indexterm>
+				$(Score)  Рейтинг документа (как он вычислен <application>DataparkSearch</application></para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Body)</secondary></indexterm>
+				$(Body)  Текст документа, первые несколько строк, или цитаты из документа по словам запроса,
+если используется <command>stored</command>, чтобы дать представление о содержимом документа.</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Content-Type)</secondary></indexterm>
+				$(Content-Type)  Content-type документа (например, text/html)</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Last-Modified)</secondary></indexterm>
+				$(Last-Modified)  Дата последней модификации документа</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Content-Length)</secondary></indexterm>
+				$(Content-Length)  Размер документа в байтах</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(FancySize)</secondary></indexterm>
+				$(FancySize)  Размер документа в байтах, килобайтах или мегабайтах, что больше подходит</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Order)</secondary></indexterm>
+				$(Order) Общий номер документа (в порядке показа результатов поиска), т.е. от 1 до $(total).</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(Pos)</secondary></indexterm>
+				$(Pos) Новер документа на странице (в порядке показа результатов поиска), т.е. от 1 до $(ps).</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(meta.description)</secondary></indexterm>
+				$(meta.description)  Описание документа (из тэга META DESCRIPTION)</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(meta.keywords)</secondary></indexterm>
+				$(meta.keywords)  Ключевые слова документа (из тэга META KEYWORDS)</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(DY)</secondary></indexterm>
+				$(DY)  Категория документа с путём, т.е. <filename>/home/computers/software/www/</filename>
+				</para>
+			</listitem>
+			<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(CL)</secondary></indexterm>
+				$(CL)  Лист клонов (см. подробности в <xref linkend="clone-section"/>)</para>
+			</listitem>
+<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(BrowserCharset)</secondary></indexterm>
+$(BrowserCharset)  Кодировка, используемая для вывода результатов поиска</para>
+</listitem>
+<listitem><para>
+<indexterm><primary>Переменная шаблона</primary><secondary>$(PerSite)</secondary></indexterm>
+$(PerSite)  При использовании группировки по сайту, число суммарное число документов с сайта найденного документа. Иначе,
+значение равно 0.</para>
+</listitem>
+		</itemizedlist>
+		<note>
+			<para>
+    Возможно указывать максимальное сичло символов, возвращаемых любой из описаных выше переменной.
+Например,  <varname>$(URL)</varname> может возвращать длинный URL, который может разрушать табличный вывод результатов.
+Для указания максимального числа выводимых символов в отображаемом URL, используйте 
+<literal>$(URL:xx)</literal>, где <literal>xx</literal> - максимальное число символов:
+				<userinput>$(URL:40)</userinput>
+			вернёт URL, и если он окажется длиннее 40 символов, только превые 40 символов будут показаны на странице
+результатов поиска:
+				<userinput>http://very.long.url/path/veery/long/...</userinput>
+			</para>
+		</note>
+		<para>Ниже пример секции <literal>res</literal>:
+			<programlisting>
+&lt;!--res--&gt;
+&lt;DL&gt;&lt;DT&gt;
+&lt;b&gt;$(Order).&lt;/b&gt;&lt;a href="$(URL)" TARGET="_blank"&gt;
+&lt;b&gt;$(Title)&lt;/b&gt;&lt;/a&gt; [&lt;b&gt;$(Score)&lt;/b&gt;]&lt;DD&gt;
+$(Body)...&lt;BR&gt;
+&lt;b&gt;URL: &lt;/b&gt;
+&lt;A HREF="$(URL)" TARGET="_blank"&gt;$(URL)&lt;/A&gt;($(Content-Type))&lt;BR&gt;
+$(Last-Modified), $(Content-Length) bytes&lt;BR&gt;
+&lt;b&gt;Description: &lt;/b&gt;$(meta.description)&lt;br&gt;
+&lt;b&gt;Keywords: &lt;/b&gt;$(meta.keywords)&lt;br&gt;
+&lt;/DL&gt;
+&lt;UL&gt;
+$(CL)
+&lt;/UL&gt;
+&lt;!--/res--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="clone-section">
+<title>Секция <emphasis>CLONE</emphasis></title>
+<titleabbrev id="clone-name">CLONE</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>CLONE</secondary></indexterm>
+		<para>
+Содержимое этой секции включается в результат поиска вместо метасимвола $(CL) для каждого найденного клона документа.
+Служит для указания всех URL с одним и тем же содержимым (как зеркала и т.п.).
+Вы можете использовать те же мета символы, что и в секции <literal>res</literal>.</para>
+
+		<para>Ниже пример секции <literal>clone</literal>.
+			<programlisting>
+&lt;!--clone--&gt;
+&lt;li&gt;&lt;A HREF="$(DU)" TARGET="_blank"&gt;$(DU)&lt;/A&gt; ($(DC)) $(DM)
+&lt;!--/clone--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="resbot-section">
+<title>Секция <emphasis>RESBOT</emphasis></title>
+<titleabbrev id="resbot-name">RESBOT</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>RESBOT</secondary></indexterm>
+<para>
+та секция выводится непосредственно после результатов поиска. Обычно здесь размещается навигация по страницам поиска.</para>
+
+		<para>Вот пример секции <literal>resbot</literal>:
+			<programlisting>
+&lt;!--resbot--&gt;
+&lt;HR&gt;
+&lt;CENTER&gt;
+Result pages: $(NL)$(NB)$(NR)
+&lt;/CENTER&gt;
+&lt;!--/resbot--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+		<para>Навигация - сложная штука, создаваемая из следующих секций шаблона:
+<xref linkend="navleft-section" endterm="navleft-name"/>,
+<xref linkend="navbar0-section" endterm="navbar0-name"/>,
+<xref linkend="navright-section" endterm="navright-name"/>,
+<xref linkend="navbar1-section" endterm="navbar1-name"/>.
+</para> 
+
+<sect3 id="navleft-section">
+<title>Секция <emphasis>navleft, navleft_nop</emphasis></title>
+<titleabbrev id="navleft-name">navleft, navleft_nop</titleabbrev>
+
+<para>Используются для образования ссылки на предыдущую страницу. Если предыдущая страница существует,
+исаользуется  &lt;!--navleft--&gt;, если нет (на первой странице) - используется &lt;!--navleft_nop--&gt;.
+			<programlisting>
+&lt;!--navleft--&gt;
+&lt;TD&gt;&lt;A HREF="$(NH)"&gt;&lt;IMG...&gt;&lt;/A&gt;&lt;BR&gt;
+&lt;A HREF="$(NH)"&gt;Prev&lt;/A&gt;&lt;/TD&gt;
+&lt;!--/navleft--&gt;
+
+&lt;!--navleft_nop--&gt;
+&lt;TD&gt;&lt;IMG...&gt;&lt;BR&gt;
+&lt;FONT COLOR=gray&gt;Prev&lt;/FONT&gt;&lt;/TD&gt;
+&lt;!--/navleft_nop--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="navbar0-section">
+<title>Секция <emphasis>navbar0</emphasis></title>
+<titleabbrev id="navbar0-name">navbar0</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>navbar0</secondary></indexterm>
+		<para>
+Используется для печати текущей страницы в списе страниц.
+			<programlisting>
+&lt;!--navbar0--&gt;
+&lt;TD&gt;&lt;IMG...&gt;&lt;BR&gt;$(NP)&lt;/TD&gt;
+&lt;!--navbar0--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="navright-section">
+<title>Секции <emphasis>navright, navright_nop</emphasis> section</title>
+<titleabbrev id="navright-name">navright, navright_nop</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>navright, navright_nop</secondary></indexterm>
+		<para>
+Эти секции используются для печати ссылки на следующую страницу. Если следующая страница существует,
+используется секция &lt;!--navright--&gt;, на последней странице используется &lt;!--navright_nop--&gt;.
+			<programlisting>
+&lt;!--navright--&gt;
+&lt;TD&gt;
+&lt;A HREF="$(NH)"&gt;&lt;IMG...&gt;&lt;/A&gt;
+&lt;BR&gt;
+&lt;A HREF="$(NH)"&gt;Next&lt;/A&gt;&lt;/TD&gt;
+&lt;!--/navright--&gt;
+
+&lt;!--navright_nop--&gt;
+&lt;TD&gt;
+&lt;IMG...&gt;
+&lt;BR&gt;
+&lt;FONT COLOR=gray&gt;Next&lt;/FONT&gt;&lt;/TD&gt;
+&lt;!--/navright_nop--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="navbar1-section">
+<title>Секция <emphasis>navbar1</emphasis></title>
+<titleabbrev id="navbar1-name">navbar1</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>navbar1</secondary></indexterm>
+		<para>
+Используется для печати ссылок на другие страницы списка страниц результата поиска.
+			<programlisting>
+&lt;!--navbar1--&gt;
+&lt;TD&gt;
+&lt;A HREF="$(HR)"&gt;
+&lt;IMG...&gt;&lt;/A&gt;&lt;BR&gt;
+&lt;A HREF="$(NH)"&gt;$(NP)&lt;/A&gt;
+&lt;/TD&gt;
+&lt;!--/navbar1--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="notfound-section">
+<title>Секция <emphasis>notfound</emphasis></title>
+<titleabbrev id="notfound-name">notfound</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>notfound</secondary></indexterm>
+		<para>
+Как говорит имя этой секции, она выводится только в случае, если по запросу не найдено ни одного документа.
+Вы можете дать сдесь небольшие советы по изменению запроса, либо по ослаблению ограничений поиска.</para>
+
+		<para>Ниже пример секции <literal>notfound</literal>:
+			<programlisting>
+&lt;!--notfound--&gt;
+&lt;CENTER&gt;
+Sorry, but search hasn't returned results.&lt;P&gt;
+&lt;I&gt;Try to compose less restrictive search query or check spelling.&lt;/I&gt;
+&lt;/CENTER&gt;
+&lt;HR&gt;
+&lt;!--/notfound--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+<sect3 id="noquery-section">
+<title>Секция <emphasis>noquery</emphasis></title>
+<titleabbrev id="noquery-name">noquery</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>noquery</secondary></indexterm>
+		<para>
+Эта секция выводится если пользователь выдал пустой запрос на поиск.. Ниже приводится пример этой секции:
+			<programlisting>
+&lt;!--noquery--&gt;
+&lt;CENTER&gt;
+You haven't typed any word(s) to search for.
+&lt;/CENTER&gt;
+&lt;HR&gt;
+&lt;!--/noquery--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+<sect3 id="error-section">
+<title>Секция <emphasis>error</emphasis></title>
+<titleabbrev id="error-name">error</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>error</secondary></indexterm>
+		<para>
+Эта секция выводится только при обнаружении ошибок во время поиска. Например, если не запущен SQL сервер и т.п.
+Вы можете использовать следующий метасимвол (переменную):
+<indexterm><primary>Переменная шаблона</primary><secondary>$(E)</secondary></indexterm>
+<literal>$(E)</literal> - текст сообщения об ошибке.
+</para>
+
+		<para>Пример секции <literal>error</literal>:
+			<programlisting>
+&lt;!--error--&gt;
+&lt;CENTER&gt;
+&lt;FONT COLOR="#FF0000"&gt;An error occured!&lt;/FONT&gt;
+&lt;P&gt;
+&lt;B&gt;$(E)&lt;/B&gt;
+&lt;/CENTER&gt;
+&lt;!--/error--&gt;
+</programlisting>
+</para>
+</sect3>
+
+
+
+	</sect2>
+
+
+
+
+	<sect2 id="templates-var">
+		<title>Секция Variables
+<indexterm><primary>Секция шаблона</primary><secondary>Variables</secondary></indexterm>
+</title>
+<titleabbrev id="var-name">variables</titleabbrev>
+		<para>В специальной секции <literal>variables</literal> вы можеде задать значения некоторых переменных и параметров
+поиска. </para>
+		<para>Секция <literal>variables</literal> обычно выглядит примерно так:
+			<programlisting>
+&lt;!--variables
+DBAddr		  mysql://foo:bar@localhost/search/?dbmode=single
+VarDir            /usr/local/dpsearch/var/
+LocalCharset	  iso-8859-1
+BrowserCharset    iso-8859-1
+TrackQuery	  no
+Cache		  no
+DetectClones	  yes
+HlBeg		  &lt;font color="blue"&gt;&lt;b&gt;&lt;i&gt;
+HlEnd		  &lt;/i&gt;&lt;/b&gt;
+R1		  100
+R2		  256
+Synonym		  synonym/english.syn
+ResultContentType text/xml
+Locale            ru_Ru.KOI8-R
+TZ                Australia/Sydney
+--&gt;
+</programlisting>
+</para>
+		<note>
+			<para> Так же как и в <filename>indexer.conf</filename>,
+имя хоста в DBAddr имеет значение только для поддерживаемых баз данных и не играет никакой роли при 
+использовании ODBC баз данных. В случае ODBC, используйте имя базы в DBAddr для указания ODBC DSN.</para>
+		</note>
+		<para>
+<indexterm><primary>Команда</primary><secondary>VarDir</secondary></indexterm>
+			Команда <command>VarDir</command> задаёт альтернвтивный путь рабочей директории 
+при использовании способа хранения cache. По умолчанию используется поддиректория
+<filename>/var</filename> относительно корневой директории установки <application>DataparkSearch</application>.</para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>LocalCharset</secondary></indexterm>
+			Команда <command>LocalCharset</command> указывает кодировку локальной базы данных.
+Должна совпадать с кодировкой, заданной этой же командой в <filename>indexer.conf</filename>. </para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>BrowserCharset</secondary></indexterm>
+			Команда <command>BrowserCharset</command> указывает, какая кодировка используется для
+вывода результатов поиска. Она может отличаться от значения, указанного в <command>LocalCharset</command>.
+Значения всех метасимволов (переменных) при выводе будут перекодированы в эту кодировку, однако сам
+шаблон не перекодируется, он уже должен быть в этой кодировке. </para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>Cache</secondary></indexterm>
+Используйте "<command>Cache</command> yes/no" для включения/выключения кэширования результатов поиска.</para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>DetectClones</secondary></indexterm>
+Используйте "<command>DetectClones</command> yes/no" для включения/выключения определения клонов. Выключено по умолчанию при поиске.</para>
+
+		<para id="GroupBySite"><indexterm><primary>Команда</primary><secondary>GroupBySite</secondary></indexterm>
+Используйте "<command>GroupBySite</command> yes/no/full" для включения/выключения группировки результатов по url.site_id.
+Если указана опция <option>yes</option>, группируются только результаты с того же самого сайта, идущие подряд.
+Если же указана опция <option>full</option>, в этом случае группируются все результаты с того же самого сайта.
+</para>
+<note>
+<para>Если используется <filename>searchd</filename>, вы должны указывать <command>GroupBySite</command> в вашем файле 
+<filename>searchd.conf</filename>, или передавать его как CGI параметр.
+</para>
+<para>Если используется способ хранения cache, необходимо также создать лимит по сайту (см. <xref linkend="limits"/>).
+</para>
+<para><indexterm><primary>Команда</primary><secondary>PagesInGroup</secondary></indexterm>
+Используйте команду <command>PagesInGroup</command> для указания числа дополнительных результатов с одного сайта при
+группировке результатов а-ля Google.</para>
+
+<para><indexterm><primary>Команда</primary><secondary>MaxSiteLevel</secondary></indexterm>
+Вы можете использовать команду <command>MaxSiteLevel</command> для задания максимального уровня доменного имени, используемого для
+расчёта site_id. Значение по умолчанию: 2. Одно исключение: трёх и менее буквенные домены второго уровня считаются доменами первого уровня.
+Например: domain.ext - уровень 2, www.domain.ext - уровень 3, domain.com.ext - уровень 2. Отрицательное значение для 
+<command>MaxSiteLevel</command> означает группировку на уровне поддиректорий, т.е. при уровне -1 www.site.ru/dir1/ и
+www.site.ru/dir2/ группируются как разные сайты.
+</para>
+</note>
+		<para>
+<indexterm><primary>Команда</primary><secondary>HlBeg</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>HlEnd</secondary></indexterm>
+			Команды <command>HlBeg</command> и <command>HlEnd</command> используются для задания способа
+выделения подсвечиваемых слов. Найденные слова окружаются этими тэгами.</para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>Alias</secondary></indexterm>
+Команда <command>Alias</command> в <filename>search.htm</filename> похожа на одноимённую команду в <filename>indexer.conf</filename>,
+но имеет действие на отображение результатов поиска, а не при индексировании.
+См. детали в <xref linkend="aliases"/>.</para>
+
+		<para>
+<indexterm><primary>Команда</primary><secondary>R*</secondary></indexterm>
+			Команды <command>R1</command> и <command>R2</command> задают диапазон значений для переменных шаблона
+$(R1) и $(R2).</para>
+
+		<para><indexterm><primary>Команда</primary><secondary>Synonym</secondary></indexterm>
+Команда <command>Synonym</command>  используется для загрузки указанного списка синонимов.
+Имя файла синонимов может быть и абсолютным и относительно поддиректории <filename>/etc</filename>
+коренвой директории установки <application>DataparkSearch</application>.</para>
+
+		<para><indexterm><primary>Команда</primary><secondary>DateFormat</secondary></indexterm>
+Команда <command>DateFormat</command> служит для изменения формата вывода даты последней модификации файла.
+При задании своего формата, используйте метапеременные функции <literal>strftime</literal>.
+</para>
+<note>
+<para>Если используется <filename>searchd</filename>, вы можете указывать <command>DateFormat</command> в вашем файле 
+<filename>searchd.conf</filename> (отличие состоит в необходимости заключать строку фомата в кавычки <literal>&quot;</literal>),
+или передавать как CGI параметр.
+</para>
+</note>
+		<para><indexterm><primary>Команда</primary><secondary>Log2stderr</secondary></indexterm>
+Команда &quot;<command>Log2stderr</command> yes/no&quot; предписывает выводить все сообщения об ошибках на <literal>stderr</literal>.
+</para>
+
+<para>
+<indexterm><primary>Команда</primary><secondary>ResultsLimit</secondary></indexterm>
+Команда <command>ResultsLimit</command> может быть использована для ограничения максимального числа
+выводимых результатов поиска. При использовании <application>searchd</application>,
+эта команда может быть указана в файле конфигурации <filename>searchd.conf</filename>.
+</para>
+
+<para>
+<indexterm><primary>Команда</primary><secondary>ResultContentType</secondary></indexterm>
+Команда <command>ResultContentType</command> используется для указания заголовка Content-Type страницы с результатами. 
+Значение по умолчанию: <literal>text/html</literal>.
+</para>
+
+<para>
+<indexterm><primary>Команда</primary><secondary>Locale</secondary></indexterm>
+Команда <command>Locale</command> используется для указания заголовка для задания LC_ALL локали при выдаче результатов
+поиска. 
+Значение по умолчанию: <literal>не определено</literal> (используется установленное ранее значение).
+</para>
+
+<para>
+<indexterm><primary>Команда</primary><secondary>TZ</secondary></indexterm>
+Команда <command>TZ</command> ипользуется для задания часового пояса для дат, выводимых на страницах результатов поиска.
+Значение по умолчанию: <literal>используются системные установки</literal>.
+</para>
+
+<para id="mkprefix-template"><indexterm><primary>Команда</primary><secondary>MakePrefixes</secondary></indexterm>
+При помощи команды <command>MakePrefixes yes</command> вы можете автоматически расширять поисковый запрос префиксами слов запроса.
+В частности, это можно использовать при организации подсказок при поиске. (См. также <xref linkend="mkprefix-cmd"/>)
+</para>
+
+	</sect2>
+
+
+	<sect2 id="templates-incl">
+		<title>Включения в шаблонах</title>
+		<para>Вы можете использовать &lt;!INCLUDE Content="http://hostname/path"&gt; дял включения внешних
+URLs в страницу результатов поиска.</para>
+		<para>
+			<emphasis>ВНИМАНИЕ: Вы можете использовать &lt;!INCLUDE&gt; ТОЛЬКО в следующих секциях шаблона:</emphasis>
+		<literallayout>
+&lt;!--top--&gt;
+&lt;!--bottom--&gt;
+&lt;!--restop--&gt;
+&lt;!--resbot--&gt;
+&lt;!--notfound--&gt;
+&lt;!--error--&gt;
+</literallayout>
+</para>
+		<para>Это пример использования включения:
+			<programlisting>
+&lt;!--top--&gt;
+....
+&lt;!INCLUDE CONTENT="http://hostname/banner?query=$&amp;(q)"&gt;
+...
+&lt;!--/top--&gt;
+</programlisting>
+</para>
+	</sect2>
+
+<sect2 id="templates-if">
+<title>Условные операторы в шаблонах</title>
+<para><application>DataparkSearch</application> поддерживет в шаблонах условные операторы: &lt;!IF, &lt;!ELSE, &lt;!ENDIF, &lt;!ELIF, &lt;!ELSEIF, &lt;!SET, &lt;!COPY, &lt;!IFLIKE, &lt;!IFREGEX, &lt;!ELIKE, &lt;!EREGEX, &lt;!ELSELIKE, &lt;!ELSEREGEX.
+<programlisting>
+&lt;!IF   NAME="Content-Type" Content="application/pdf"&gt;
+&lt;img src="pdf.png"&gt;
+&lt;!ELIF NAME="Content-Type" Content="text/plain"&gt;
+&lt;img src="text.png"&gt;
+&lt;!ENDIF&gt;
+</programlisting>
+</para>
+
+<para>Возможно использовать вложенные конструкции условных операторов. Это обеспечивает большую гибкость при написании
+шаблонов результатов поиска. Смотрите примеры использования в файле <filename>etc/search.htm-dist</filename>.
+</para>
+</sect2>
+
+
+	<sect2 id="templates-sec">
+		<title>О безопасности</title>
+		<para>
+			<emphasis>ВНИМАНИЕ</emphasis>: Так как файл шаблона содержит такую информацию как пароль,
+во избежание утечки этого пароля, рекомендуется проверить права доступа к нему, чтобы обеспечить право чтения только для программы поиска.
+ </para>
+
+	</sect2>
+</sect1>

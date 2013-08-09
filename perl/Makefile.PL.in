@@ -1,0 +1,34 @@
+use strict;
+use ExtUtils::MakeMaker;
+
+my $dps_dir = "@prefix@";
+my $dps_conf_dir = "$dps_dir/etc";
+my $dps_var_dir = "$dps_dir/var";
+
+my $libs       = `perl @CDIR@/scripts/dps-config --threadsless-libs`;
+my $cflags     = `$dps_dir/bin/dps-config --threadsless-cflags`;
+$cflags     = "-I@CDIR@/include -DDPS_VAR_DIR=\\\"$dps_var_dir\\\" $cflags";
+my $dpsversion = "@DPS_BASE_VERSION@.@DPS_TAIL_VERSION@";
+#`perl @CDIR@/scripts/dps-config --version`;
+
+chomp($libs);
+chomp($cflags);
+chomp($dpsversion);
+
+die "Cant found DataparkSearch" unless $dpsversion && $libs && $cflags; 
+
+print "\nUsing DataparkSearch version : $dpsversion\n";
+print "\nUsing DataparkSearch libs    : $libs\n";
+print "\nUsing DataparkSearch cflags  : $cflags\n";
+
+
+WriteMakefile(
+    'NAME'         => 'Dataparksearch',
+    'VERSION'      => $dpsversion,
+    'LIBS'         => [$libs],
+    'DEFINE'       => "-DDPS_CONF_DIR=\\\"$dps_conf_dir\\\"",
+    'INC'          => $cflags,
+    'XSPROTOARG'   => '-prototypes',
+    'AUTHOR'       => 'Maxim Zakharov <maxime@sochi.net.ru>',
+    'DISTNAME'     => 'Dataparksearch'
+);

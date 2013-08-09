@@ -1,0 +1,155 @@
+<sect1 id="dbschema">
+<title>Структура таблиц базы данных</title>
+<indexterm><primary>Структура таблиц базы данных</primary></indexterm>
+
+<para>Полная структура таблиц базы данных, используемых <application>DataparkSearch</application>,
+описана в sql-скрптах создания структуры базы данных, находящихся в соответстувующих директориях
+поддиректории <filename>create</filename>.
+
+<table id="db-server">
+<title>Структура таблицы <varname>server</varname></title>
+<tgroup cols="2">
+<tbody>
+
+<row><entry><varname>rec_id</varname></entry>
+<entry>Уникальный идентификатор записи.</entry></row>
+
+<row><entry><varname>enabled</varname></entry><entry>Флаг включения записи для загрузки при старте <command>indexer</command>.
+</entry></row>
+
+<row><entry><varname>url</varname></entry><entry>URL или его фрагмент или шаблон, указываемый в соответствующей команде.</entry></row>
+
+<row><entry><varname>tag</varname></entry><entry>Значение тэга для этого ресурса.</entry></row>
+
+<row><entry><varname>category</varname></entry><entry>Ссылка на запись в наблице <literal>categories</literal>,
+соответсвующей категории для данного ресурса.</entry></row>
+
+<row><entry><varname>command</varname></entry><entry>
+<para>=S - тип записи <varname>сервер</varname></para>
+<para>=F - типа записи <varname>фильтр</varname></para>
+</entry></row>
+
+<row><entry><varname>ordre</varname></entry><entry>Ключ сортировки, задающий порядок загрузки записей таблицы <varname>server</varname>
+при запуске <command>indexer</command>.</entry></row>
+
+<row><entry><varname>parent</varname></entry><entry>Если значение не ноль, запись содержит в поле <varname>url</varname> имя
+сервера, добавленного автоматически при индексировании. Значение этого поля равно url_id записи этой таблицы, на основании которой
+дабавлена эта запись.</entry></row>
+
+<row><entry><varname>weight</varname></entry><entry>Вес данной записи при подсчёте рейтинга популярности документов.</entry></row>
+
+<row><entry><varname>pop_weight</varname></entry><entry>Вес одной ссылки со страниц данного русурса. Рассчитывается автоматически.
+Изменнеие значения вручную никакого влияния не оказывает.</entry></row>
+
+</tbody>
+</tgroup>
+</table>
+</para>
+
+<para>Остальные параметры серверов хранятся в таблице <varname>srvinfo</varname>, аналогичной по структуре таблице
+<varname>urlinfo</varname>. Значения некоторых параметров приведены в таблице ниже.
+
+<table id="db-srvinfo">
+<title>Значения некоторых параметров серверов в таблице <varname>srvinfo</varname></title>
+<tgroup cols="2">
+<thead>
+
+<row><entry>Значение <varname>sname</varname></entry>
+<entry>Возможные значения <varname>sval</varname>.</entry></row>
+
+</thead>
+<tbody>
+
+<row><entry><varname>Alias</varname></entry><entry>Алиас для указанного в поле <varname>server.url</varname>.</entry></row>
+
+<row><entry><varname>Period</varname></entry><entry>Интервал между повторными индексированиями этого ресурса, задаваемый в секундах.
+</entry></row>
+
+<row><entry><varname>DeleteOlder</varname></entry><entry>Задаёт сколько времени хранить проиндексированные документы в базе.</entry></row>
+
+<row><entry><varname>RemoteCharset</varname></entry><entry>Значение кодировки документа по умолчанию для данного ресурса.</entry></row>
+
+<row><entry><varname>DefaultLang</varname></entry><entry>Значение языка документа по умолчанию для данного русурса.</entry></row>
+
+<row><entry><varname>Request.Authorization</varname></entry><entry>Учётные данные, используемые для доступа с использованием авторизации.</entry></row>
+
+<row><entry><varname>Request.Proxy</varname></entry><entry>Имя прокси-сервера, используемое при доступе через прокси-сервер.</entry></row>
+
+<!-- row><entry><varname>proxy_port</varname></entry><entry>Порт прокси-сервера, используемого для доступа к ресурсу.</entry></row-->
+
+<row><entry><varname>Request.Proxy-Authorization</varname></entry><entry>Авторизация на прокси-сервере.</entry></row>
+
+<row><entry><varname>MaxHops</varname></entry><entry>Максимальная глубина перехода по ссылкам от корневого индеска.</entry></row>
+
+<row><entry><varname>Index</varname></entry><entry>Флаг, указывающий индексировать или нет документы данного ресурса.</entry></row>
+
+<row><entry><varname>Follow</varname></entry><entry><para>=0, "page"</para>
+<para>=1, "path"</para>
+<para>=2, "site"</para>
+<para>=3, "world"</para>
+</entry></row>
+
+<!--row><entry><varname>deletebad</varname></entry><entry>.</entry></row-->
+
+<row><entry><varname>Robots</varname></entry><entry>Флаг указывающий использование <filename>robots.txt</filename> для
+данного ресурса.</entry></row>
+
+<row><entry><varname>DetectClones</varname></entry><entry>Флаг включения механизма определения &quot;клонов&quot;.</entry></row>
+
+<row><entry><varname>MaxNetErrors</varname></entry><entry>Максимальное число ошибок сети для этой записи.
+Аналог команды <command>MaxNetError</command> в <filename>indexer.conf</filename>.</entry></row>
+
+<row><entry><varname>NetDelayTime</varname></entry><entry>Время задержки индексирования сети при обнаружении ошибки сети при его
+пролучении.</entry></row>
+
+<row><entry><varname>ReadTimeout</varname></entry><entry>Таймаут ожидания получения документа с этого ресурса.</entry></row>
+
+<row><entry><varname>match_type</varname></entry><entry>
+<para>=0, DPS_MATCH_FULL - полное совпадение.</para>
+<para>=1, DPS_MATCH_BEGIN - совпадает начало.</para>
+<para>=2, DPS_MATCH_SUBSTR - шаблон является подстрокой проверяемой ссылки.</para>
+<para>=3, DPS_MATCH_END - совпадает конец.</para>
+<para>=4, DPS_MATCH_REGEX - шаблон является регулярным выражением, на соответствие которому проверяются ссылки.</para>
+<para>=5, DPS_MATCH_WILD - используется шаблон файловой системы.</para>
+<para>=6, DPS_MATCH_SUBNET - &lt; пока нереализовано &gt;.</para>
+</entry></row>
+
+<row><entry><varname>case_sense</varname></entry><entry>
+<para>=1, - сравнивать без учёта регистра.</para>
+<para>=0, - сравнивать с учётом регистра.</para>
+</entry></row>
+
+<row><entry><varname>nomatch</varname></entry><entry>
+<para>=1, - соответствующими данной записи считаются URL, не совпадающие с указаным шаблоном.</para>
+<para>=0, - соответствующими данной записи считаются ссылки, совпадающие с шаблоном.</para>
+</entry></row>
+
+<row><entry><varname>Method</varname></entry><entry>
+<para>Задаёт действие, которое будет произведено с документами.</para>
+<para>=Allow, - документы будут индексироваться, а также сканироваться на наличие новых ссылок.</para>
+<para>=Disallow, - документы индекироваться и добавляться в базу не будут, если они уже находятся в базе, то они будут удалены.</para>
+<para>=HrefOnly, - документы не будут индексироваться, а будут только просканированы на наличие новых ссылок.</para>
+<para>=CheckOnly, - документы будут запрашиваться методом HTTP HEAD, а не HTTP GET, т.е. будет запрошено
+не содержимое документа, а только краткая информация о нем: размер, дата модификации, <literal>Content-Type</literal>.</para>
+<para>=Skip, - документы будут пропущены при очередной индексации.</para>
+<para>=CheckMP3, - документы будут проверяться на наличие тэгов MP3 несмотря на наличие <literal>Content-Type</literal>,
+отличного от <literal>audio/mpeg</literal>.</para>
+<para>=CheckMP3Only, - аналогично <literal>CheckMP3</literal>, однако при
+отсутствии тэгов MP3 <literal>indexer</literal> не будет запускать внутренний или внешний 
+парсер, предусмотренный для полученного <literal>Content-Type</literal>.</para>
+<para>=TagIf, - документы будут помечены заданым тэгом.</para>
+<para>=CategoryIf, - документы будут помечены заданой категорией.</para>
+<para>=IndexIf, - документы будут проиндексированы, если указаная секция подпадает под заданый шаблон.</para>
+<para>=NoIndexIf, - документы индексироваться и добавляться в базу не будут, если указаная секция подпадает под заданый шаблон.</para>
+</entry></row>
+
+<row><entry><varname>Section</varname></entry><entry>
+<para>Имя секции, используемой для сравнения с шаблоном для методов IndexIf и NoIndexIf.</para>
+</entry></row>
+
+</tbody>
+</tgroup>
+</table>
+</para>
+
+</sect1>

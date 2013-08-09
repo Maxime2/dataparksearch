@@ -1,0 +1,262 @@
+<sect1 id="aliases">
+	<title>Aliases</title>
+	<para><application>DataparkSearch</application> has an alias support making it possible to
+index sites taking information from another location. For example, if
+you index local web server, it is possible to take pages directly from
+disk without involving your web server in indexing process. Another
+example is building of search engine for primary site and using its
+mirror while indexing. There are several ways of using aliases.</para>
+
+	<sect2 id="alias-conf">
+		<title><command>Alias</command> <filename>indexer.conf</filename> command</title>
+<indexterm><primary>Command</primary><secondary>Alias</secondary></indexterm>
+
+		<para>Format of "Alias" <filename>indexer.conf</filename> command:
+		<programlisting>
+Alias &lt;masterURL&gt; &lt;mirrorURL&gt;
+</programlisting>
+</para>
+		
+		<para>E.g. you wish to index
+<literal>http://search.site.ru/</literal> using nearest German mirror
+<literal>http://www.other.com/mirrors/Search/</literal>. Add
+these lines in your indexer.conf:
+
+		<programlisting>
+Server http://search.site.ru/
+Alias  http://search.site.ru/  http://www.other.com/mirrors/Search/
+</programlisting>
+		</para>
+		<para>
+			<filename>search.cgi</filename> will display
+URLs from master site <literal>http://search.site.ru/</literal> but
+indexer will take corresponding page from mirror site
+<literal>http://www.other.com/mirrors/Search/</literal>.</para>
+
+		<para>Another example. If you want to index everything
+in udm.net domain and one of servers, for example
+<literal>http://home.udm.net/</literal> is stored on local machine in
+<literal>/home/httpd/htdocs/</literal> directory. These commands will
+be useful:
+		<programlisting>
+Realm http://*.udm.net/
+Alias http://home.udm.net/ file:/home/httpd/htdocs/
+</programlisting>
+		</para>
+		<para>Indexer will take <literal>home.udm.net</literal> from local disk and index other sites using HTTP.</para>
+	</sect2>
+
+	<sect2 id="aliases-diff">
+		<title>Different aliases for server parts</title>
+		<para>Aliases are searched in the order of their
+appearance in <filename>indexer.conf</filename>. So, you can create
+different aliases for server and its parts:
+
+		<programlisting>
+# First, create alias for example for /stat/ directory which
+# is not under common location:
+Alias http://home.udm.net/stat/  file:/usr/local/stat/htdocs/
+
+# Then create alias for the rest of the server:
+Alias http://home.udm.net/ file:/usr/local/apache/htdocs/
+</programlisting>
+		</para>
+		<note>
+			<para>if you change the order of these
+commands, alias for <filename>/stat/</filename> directory will never
+be found.</para>
+
+		</note>
+	</sect2>
+
+	<sect2 id="alias-server">
+		<title>Using aliases in <command>Server</command> commands</title>
+		<para>You may specify location used by indexer as an optional argument for Server command:
+		<programlisting>
+Server  http://home.udm.net/  file:/home/httpd/htdocs/
+</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="alias-realm">
+		<title>Using aliases in <command>Realm</command> commands</title>
+		<para>Aliases in Realm command is a very powerful
+feature based on regular expressions. The idea of aliases in Realm
+command implementation is similar to how PHP
+<function>preg_replace()</function> function works. Aliases in Realm
+command work only if "regex" match type is used and does not work with
+"string" match type.</para>
+
+		<para>Use this syntax for Realm aliases:
+		<programlisting>
+Realm regex &lt;URL_pattern&gt; &lt;alias_pattern&gt;
+</programlisting>
+		</para>
+		<para>Indexer searches URL for matches to URL_pattern
+and builds an URL alias using alias_pattern. alias_pattern may contain
+references of the form $n. Where n is a number in the range of
+0-9. Every such reference will be replaced by text captured by the
+n'th parenthesized pattern. $0 refers to text matched by the whole
+pattern. Opening parentheses are counted from left to right (starting
+from 1) to obtain the number of the capturing subpattern.</para>
+
+		<para>Example: your company hosts several hundreds
+users with their domains in the form of
+<literal>www.username.yourname.com</literal>. Every user's site is
+stored on disk in "htdocs" under user's home directory:
+<literal>/home/username/htdocs/</literal>.</para>
+
+		<para>You may write this command into indexer.conf
+(note that dot '.' character has a special meaning in regular
+expressions and must be escaped with '\' sign when dot is used in
+usual meaning):
+		<programlisting>
+Realm regex (http://www\.)(.*)(\.yourname\.com/)(.*)  file:/home/$2/htdocs/$4
+</programlisting>
+		</para>
+		<para>Imagine indexer process
+<filename>http://www.john.yourname.com/news/index.html</filename>
+page. It will build patterns from $0 to $4:</para>
+
+		<literallayout>
+   $0 = 'http://www.john.yourname.com/news/index.htm' (whole patter match)
+   $1 = 'http://www.'      subpattern matches '(http://www\.)'
+   $2 = 'john'             subpattern matches '(.*)'
+   $3 = '.yourname.com/'   subpattern matches '(\.yourname\.com/)'
+   $4 = '/news/index.html' subpattern matches '(.*)'
+</literallayout>
+		<para>Then indexer will compose alias using $2 and $4 patterns:
+		<programlisting>
+file:/home/john/htdocs/news/index.html
+</programlisting>
+		</para>
+		<para>and will use the result as document location to fetch it.</para>
+	</sect2>
+
+	<sect2 id="alias-prog">
+		<title><command>AliasProg</command> command</title>
+<indexterm><primary>Command</primary><secondary>AliasProg</secondary></indexterm>
+
+		<para>You may also specify <command>AliasProg</command> command for
+aliasing purposes. <command>AliasProg</command> is useful for major web hosting companies
+which want to index their web space taking documents directly from a
+disk without having to involve web server in indexing
+process. Documents layout may be very complex to describe it using
+alias in Realm command. AliasProg is an external program that can be
+called, that takes a URL and returns one string with the appropriate
+alias to stdout. Use $1 to pass URL to command line.</para>
+
+		<para>For example this AliasProg command uses
+'replace' command from MySQL distribution and replaces URL substring
+<literal>http://www.apache.org/</literal> to
+<literal>file:/usr/local/apache/htdocs/</literal>:
+
+		<programlisting>
+AliasProg  "echo $1 | /usr/local/mysql/bin/mysql/replace http://www.apache.org/ file:/usr/local/apache/htdocs/"
+</programlisting>
+		</para>
+		<para>You may also write your own very complex program to process URLs.</para>
+	</sect2>
+
+	<sect2 id="alias-reverse">
+		<title><command>ReverseAlias</command> command</title>
+<indexterm><primary>Command</primary><secondary>ReverseAlias</secondary></indexterm>
+
+		<para>The ReverseAlias
+<filename>indexer.conf</filename> command allows URL mapping before
+URL is inserted into database. Unlike Alias command, that triggers
+mapping right before a document is downloaded, ReverseAlias command
+triggers mapping after the link is found. </para>
+
+		<programlisting>
+ReverseAlias http://name2/   http://name2.yourname.com/
+Server       http://name2.yourname.com/
+</programlisting>
+
+		<para>All links with short server name will be mapped
+to links with full server name before they are inserted into
+database.</para>
+
+		<para>One of the possible use is cutting various unnecessary strings like <literal>PHPSESSION=XXXX</literal>
+		</para>
+		<para>E.g. cutting from URL like
+<literal>http://www/a.php?PHPSESSION=XXX</literal>, when PHPSESSION is
+the only parameter. The question sign is deleted as well:
+
+		<programlisting>
+ReverseAlias regex  (http://[^?]*)[?]PHPSESSION=[^&amp;]*$          $1$2
+</programlisting>
+		</para>
+		<para>Cutting from URL like
+<literal>w/a.php?PHPSESSION=xxx&amp;..</literal>, i.e. when PHPSESSION
+is the first parameter, but there are other parameters following
+it. The '&amp;' sign after PHPSESSION is deleted as well. Question
+mark is not deleted:
+
+		<programlisting>
+ReverseAlias regex  (http://[^?]*[?])PHPSESSION=[^&amp;]*&amp;(.*)      $1$2
+</programlisting>
+		</para>
+		<para>Cutting from URL like
+<literal>http://www/a.php?a=b&amp;PHPSESSION=xxx</literal> or
+<literal>http://www/a.php?a=b&amp;PHPSESSION=xxx&amp;c=d</literal>,
+where PHPSESSION is not the first parameter. The '&amp;' sign before
+PHPSESSION is deleted:
+
+		<programlisting>
+ReverseAlias regex  (http://.*)&amp;PHPSESSION=[^&amp;]*(.*)         $1$2
+</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="reversealias-prog">
+		<title>ReverseAliasProg command
+<indexterm><primary>Command</primary><secondary>ReverseAliasProg</secondary></indexterm>
+</title>
+		<para>
+			<command>ReverseAliasProg</command> - is a command similar to both <command>AliasProg</command> command and <command>ReverseAlias</command> command. 
+It takes agruments as <command>AliasProg</command> but maps URL before inserting it into database, as <command>ReverseAlias</command> command.
+</para>
+</sect2>
+
+	<sect2 id="alias-search">
+		<title><command>Alias</command> command in <filename>search.htm</filename> search template</title>
+<indexterm><primary>Command</primary><secondary>Alias</secondary></indexterm>
+
+		<para>It is also possible to define aliases in search
+template (<filename>search.htm</filename>). The Alias command in
+<filename>search.htm</filename> is identical to the one in
+<filename>indexer.conf</filename>, however it is active during
+searching, not indexing.</para>
+
+		<para>The syntax of the
+<filename>search.htm</filename> Alias command is the same as in
+<filename>indexer.conf</filename>:
+
+		<programlisting>
+Alias &lt;find-prefix&gt; &lt;replace-prefix&gt;
+</programlisting>
+		</para>
+		<para>For example, there is the following command in <filename>search.htm</filename>:
+		<programlisting>
+Alias http://localhost/ http://www.site.ext/
+</programlisting>
+		</para>
+		<para>Search returned a page with the following URL:
+		<programlisting>
+http://localhost/news/article10.html
+</programlisting>
+		</para>
+		<para>As a result, the $(DU) variable will be replace NOT with this URL:
+		<programlisting>
+http://localhost/news/article10.html
+</programlisting>
+		</para>
+		<para>but with the following URL (that results in processing with Alias):
+		<programlisting>
+http://www.site.ext/news/article10.html
+</programlisting>
+		</para>
+	</sect2>
+</sect1>
+

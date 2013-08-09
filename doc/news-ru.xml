@@ -1,0 +1,37 @@
+<sect2 id="news">
+	<title>Расширенные возможности индексирования новостей
+<indexterm><primary>Расширенные возможности индексирования новостей</primary></indexterm>
+</title>
+
+<para>Для включения расширенных возможностей индексирования новостей необходимо
+проделать следующее:
+
+<itemizedlist>
+
+<listitem><para>Сконфигурировать <application>DataparkSearch</application> с поддержкой схемы <literal>news://</literal>,
+вернее не выключать её (она включается по умолчанию)</para>
+</listitem>
+
+<listitem><para>
+<indexterm><primary>Команда</primary><secondary>NewsExtensions</secondary></indexterm>
+В файл конфигурации <filename>indexer.conf</filename> добавить команду <command>NewsExtensions yes</command> и
+следующие команды <command>Section</command>:
+<programlisting>
+Section Header.References 18 0
+Section Header.Message-ID 19 0
+Section Header.Parent-ID  20 0
+</programlisting>
+Вы также можете добавить для индексации и хранения в таблице <literal>urlinfo</literal> любого заголовка новостей,
+например, <literal>Header.Subject</literal> или <literal>Header.From</literal>.
+</para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para>Во время своей работы <command>indexer</command> в этом режиме в дополнение будет для каждого сообщения новостей определять Parent-ID
+(идентификатор статьи, на которую отвечает данное сообщение) и
+добавлять пары (<literal>Parent-ID</literal>, <literal>ID</literal>) в таблицу ссылок <literal>links</literal>.
+</para>
+
+</sect2>

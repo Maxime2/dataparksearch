@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Possible installation problems</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Installation"
+HREF="dpsearch-install.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Installing DataparkSearch"
+HREF="dpsearch-installing.en.html"><LINK
+REL="NEXT"
+TITLE="Creating binary distribution"
+HREF="dpsearch-binarydistrib.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-installing.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Installation</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-binarydistrib.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="INSTALLPROBLEM"
+>2.5. Possible installation problems</A
+></H1
+><A
+NAME="AEN486"
+></A
+><P
+></P
+><UL
+><LI
+><P
+>Every time you run
+<TT
+CLASS="LITERAL"
+>configure</TT
+>, you must run <TT
+CLASS="LITERAL"
+>make</TT
+>
+again to recompile.</P
+><P
+>To prevent old configuration
+information or object files from being used, run these commands before
+re-running <TT
+CLASS="LITERAL"
+>configure</TT
+>:&#13;</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ rm config.cache</KBD
+>
+				</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ make clean</KBD
+>
+				</P
+></LI
+><LI
+><P
+>If your compile fails with make
+errors, this can be because you are using the wrong version of
+make. The behavior of Solaris, FreeBSD, OpenBSD make is slightly
+different from <A
+HREF="http://www.gnu.org/software/make/make.html"
+TARGET="_top"
+>GNU make</A
+>. If you have make-related problems, you should use <A
+HREF="http://www.gnu.org/software/make/make.html"
+TARGET="_top"
+>GNU make</A
+> instead, often installed as gmake.</P
+><P
+>GNU <TT
+CLASS="FILENAME"
+>make</TT
+> version 3.77 is known to work.</P
+></LI
+><LI
+><P
+>If starting <SPAN
+CLASS="APPLICATION"
+>Apache</SPAN
+> with <SPAN
+CLASS="APPLICATION"
+>mod_dpsearch</SPAN
+> module, 
+you're getting the following error:
+<KBD
+CLASS="USERINPUT"
+>Undefined symbol "pthread_join"</KBD
+> (or something similar related to pthreads), 
+try to add the following commmand into <TT
+CLASS="FILENAME"
+>httpd.conf</TT
+> file before loading <TT
+CLASS="FILENAME"
+>mod_dpsearch.so</TT
+>:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>LoadFile /usr/lib/libpthread.so</KBD
+></P
+></LI
+></UL
+><P
+>If above information doesn't help you, please feel free to contact DataparkSearch mailing list
+<CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:dataparksearch@yahoogroups.com"
+>dataparksearch@yahoogroups.com</A
+>&#62;</CODE
+>.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-installing.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-binarydistrib.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Installing <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-install.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Creating binary distribution</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

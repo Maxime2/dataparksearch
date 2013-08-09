@@ -1,0 +1,16 @@
+FIELDS=OFF;
+SELECT status, docsize, hops, crc32, url FROM url ORDER BY status, crc32;
+SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,urlinfo WHERE url.rec_id=urlinfo.url_id ORDER BY url.status,url.crc32,lower(urlinfo.sname);
+--SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict2  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict3  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict4  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict5  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict6  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict7  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict8  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict9  d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict10 d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict11 d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict12 d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+--SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict16 d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;
+SELECT d.word_id,d.intag,u.crc32,u.url FROM ndict32 d, url u WHERE u.rec_id=d.url_id ORDER BY u.crc32,d.intag;

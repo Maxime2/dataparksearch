@@ -1,0 +1,129 @@
+<sect1 id="categories">
+	<title>Категории
+<indexterm><primary>Категории</primary></indexterm>
+</title>
+	<para>Существует редактор категорий, написаный на <application>perl</application>.
+Вы можете взять его в директории <filename>perl/cat_ed/</filename>.</para>
+
+	<para>Категории похожи на тэги, но обладают свойством вложенности.
+Т.е. вы можете иметь некоторую категорию внутри другой категории.</para>
+	<para>Основные моменты:</para>
+	<itemizedlist>
+		<listitem>
+			<para>Поддерживается до 6 уровней вложенности;</para>
+		</listitem>
+		<listitem>
+			<para>Каждому уровню соответсвует 2 шестнадцати- или 36-ричные цифры;</para>
+		</listitem>
+		<listitem>
+			<para>параметром категории является <parameter>path</parameter>,
+который может быть пустым (что обозначает корневую категорию) или иметь длину до 10 символов (для остальных категорий,
+вложенных отностительно корневой).</para>
+		</listitem>
+	</itemizedlist>
+	<para>Также можно установить ссылку, т.е категорию, ссылающуюся на другую категорию.
+Для этого предназначено поле <literal>link</literal> в базе данных. В ссылке последние два символа должны быть
+@@. В примере выше Moto-&gt;BMW - ссылка на Auto-&gt;BMW.</para>
+
+	<para>Категории могут разделяться на подкатегории произвольным образом, но для того, чтобы
+с ними можно было работать редактором категорий, необходимо использовать по два символа на каждый уровень.
+Если вы используете редактор категорий, вы можете выбрать для использования 16-ричные цифры 0-F или 36-ричные
+0-Z. Поэтому категория верхнего уровня 'Auto' будет обозначена 01. Если она будет иметь подкатегорию 'Ford', то мы получим
+01 для верхней категории и 01 мы присвоим для 'Ford', сложим вместе и получим 0101. Если 'Auto' имеет еще одну подкатегорию, например,
+'VW', её мы обозначили бы 02, т.к. 01 уже присвоено подкатегории 'Ford', т.е. в результате получим 0102. Если 'VW' имеет
+подкатегорию 'Engine', опять начнем с кода 01, а в результате получим 010201:  01 - 'Auto', 02 - 'VW', 01 - 'Engine'
+</para>
+
+	<para>Если вы хотите искать только среди сайтов этой категории, неободимо передать
+эту категорию в качестве параметра <literal>cat=010201</literal> в URL...т.е. создайте раскладушку такого типа:
+	<programlisting>
+&lt;OPTION value="01"&gt;AUTO
+&lt;OPTION value="0101"&gt;Ford
+</programlisting>
+	</para>
+	<para>и т.д....</para>
+
+
+<note><para>Для способа хранения cache вам нужно указать секцию category в вашем файле <filename>sections.conf</filename> с ненулевой
+максимальной длиной:
+<programlisting>
+Section category 0 32 single
+</programlisting>
+</para>
+</note>
+
+
+<sect2 id="category_cmd">
+<title>Команда <command>Category</command></title>
+<indexterm><primary>Команда</primary><secondary>Category</secondary></indexterm>
+<programlisting>
+Category &lt;string&gt;
+</programlisting>
+<para>
+Вы можете помечать документы при помощи вложеный категорий. Категория - строка шестнадцатиричных цмфр.
+Вы можете иметь до 6 уровней вложенности по 256 элементов на каждом уровне. Пустая категоря означает корень
+дерева категорий. См. <xref linkend="categories"/> для дальнейшего описания.
+<programlisting>
+# This command means a category on first level:
+Category AA
+# This command meand a category on 5th level:
+Category FFAABBCCDD
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="categoryif_cmd">
+<title>Команда <command>CategoryIf</command></title>
+<indexterm><primary>Команда</primary><secondary>CategoryIf</secondary></indexterm>
+<programlisting>
+CategoryIf &lt;category&gt; [Match|NoMatch] [NoCase|Case] [String|Regex] [loose] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Присвоить документу категорию &lt;category&gt;, если значение секции <option>section</option> подпадает под указаный 
+шаблон <option>arg</option>.
+Значение первых трёх необязательных параметров такое же как для команды 
+<command>Allow</command> (см. <xref linkend="allow_cmd"/>). Необязательный параметр <option>loose</option> используется для задания
+более низкого приоритета такому присвоению категории, т.е. если категория уже была присвоена на основании параметров сервера, новое значение категории присвоено не будет.
+</para>
+<para>Пример
+<programlisting>
+CategoryIf 010F regex Title "JOB ID"
+</programlisting>
+</para>
+</sect2>
+
+
+
+  <sect2 id="cattable">
+    <title>Загрузка таблицы категорий</title>
+<indexterm><primary>Команда</primary><secondary>CategoryTable</secondary></indexterm>
+    <para>Когда задана команда 
+<programlisting>
+CategoryTable mysql://user:pass@host/dbname/tablename[?charset=CHARSET]
+</programlisting>
+<application>indexer</application> будет загружать информацию о категориях из указаной SQL-таблицы <literal>tablename</literal>. 
+См. структуру этой таблицы в файле <filename>create/mysql/create.txt</filename>. 
+Если для вашей базы данных нет соответсвующего скрипта со структурой
+этой таблицы, возьмите этот файл в качестве образца.
+</para>
+
+    <para>Вы можете использовать несколько команд <command>CategoryTable</command> для загрузки информации о категориях из 
+различных таблиц. В этом случае значения полей <option>rec_id</option> должны быть уникальными в пределах всех таких таблиц.
+</para>
+  </sect2>
+
+
+<sect2 id="flushcattable">
+  <title>Команда FlushCategoryTable
+<indexterm><primary>Команда</primary><secondary>FlushCategoryTable</secondary></indexterm>
+</title>
+<para>
+Эта команда очищает содержимое таблицы <option>categories</option>.
+Используйте эту команду для удалений устаревших данных перед загрузкой новых при помощи команды <command>CategoryTable</command>.
+</para>
+</sect2>
+
+
+
+</sect1>

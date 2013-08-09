@@ -1,0 +1,54 @@
+<sect1 id="srvtable">
+  <title>Servers Table</title>
+<indexterm><primary>Command</primary><secondary>ServerTable</secondary></indexterm>
+
+  <para><application>DataparkSearch</application> has <command>ServerTable</command>
+<filename>indexer.conf</filename> command. It allow load servers and filters configuration from SQL table. </para>
+
+  <sect2 id="srvtable-load">
+    <title>Loading servers table</title>
+    <para>When <command>ServerTable mysql://user:pass@host/dbname/tablename[?srvinfo=infotablename]</command>
+is specified, indexer will load
+servers information from given <literal>tablename</literal> SQL table, and will load servers parameters
+from given <literal>infotablename</literal> SQL table. If <literal>srvinfo</literal> parameter is not specified,
+parameters will be loaded from <literal>srvinfo</literal> table. Check the structure for <literal>server</literal> and
+<literal>srvinfo</literal> tables in <filename>create/mysql/create.txt</filename> file. If there is no
+structure example for your database, take it as an example.</para>
+
+    <para>You may use several <command>ServerTable</command> command to load servers information from different tables.</para>
+  </sect2>
+
+  <sect2 id="srvtable-structure">
+    <title>Servers table structure</title>
+    <para>Servers table consists of all necessary fields which
+describe servers parameters. Field names have correspondent
+<filename>indexer.conf</filename> commands. For example, "period"
+field corresponds "Period" <filename>indexer.conf</filename>
+command. Default field values are the same with default
+<filename>indexer.conf</filename> parameters.</para>
+
+    <para>"gindex" field corresponds "Index" command. Name is slightly changed to avoid SQL reserved word usage.</para>
+
+<para>Description for several fields see in <xref linkend="dbschema"/>.</para>
+
+    <note>
+      <para>Only those servers are read from the table where "active"
+field has 1 value and "parent" field has 0 value. This is useful to allow users to submit new URLs
+into servers table and give administrator a possibility to approve
+added URLs.</para>
+
+    </note>
+  </sect2>
+
+<sect2 id="flushsrvtable">
+  <title>Flushing Servers Table</title>
+<indexterm><primary>Command</primary><secondary>FlushServerTable</secondary></indexterm>
+
+<para>
+ Flush server.enabled to inactive for all server table records. 
+Use this command to deactivate all command in servertable before load new from <filename>indexer.conf</filename>
+or from other servertable.
+</para>
+</sect2>
+
+</sect1>

@@ -1,0 +1,23 @@
+!!! THIS IS NOT COMPLETE YET. DON'T USE !!!
+
+Dataparksearch-perl -- a libdpsearch interface for perl.
+
+  Copyright (C) 2003-2004 Datapark corp. http://www.dataparksearch.org/
+  Copyright (C) 2000, Gecko. http://www.gecko.fr/
+  Copyright (C) 1999,2000 UdmSearch developers team <devel@search.udm.net>
+
+  You may distribute under the terms of the GNU General Public License
+  as specified in the COPYING file.
+
+DESCRIPTION:
+------------
+
+Dataparksearch-perl provide perl interface for libdpsearch:
+
+- Full DBMode support include crc-multi, single, crc, multi and cache.
+- Support TrackQuery ( UDM_TRACK_QUERIES ).
+- Support Sort modes by rate or by date.
+- Support Search modes 'all', 'any' and 'bool'.
+- Support Affix & Spell
+- Partial template support
+

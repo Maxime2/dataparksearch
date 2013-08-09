@@ -1,0 +1,59 @@
+<sect1 id="srvtable">
+  <title>ServerTable
+<indexterm><primary>Команда</primary><secondary>ServerTable</secondary></indexterm>
+</title>
+
+  <para><application>DataparkSearch</application> поддерживает команду <command>ServerTable</command>
+в <filename>indexer.conf</filename>. </para>
+
+
+  <sect2 id="srvtable-load">
+    <title>Загрузка таблицы серверов</title>
+    <para>Когда задана команда <command>ServerTable mysql://user:pass@host/dbname/tablename[?srvinfo=infotablename]</command>,
+<application>indexer</application>
+будет загружать информацию о серверах из указаной SQL таблицы <literal>tablename</literal>,
+а параметры этих серверов из таблицы <literal>infotablename</literal>. Если параметр <literal>srvinfo</literal>
+не указан, параметры загружаются из таблицы с именем <literal>srvinfo</literal>. См. структуру этих таблиц в
+файле <filename>create/mysql/create.txt</filename>. Если для вашей базы данных нет соответствующего скрипта со структурой
+этой таблицы, возьмите этот файл в качестве образца.
+</para>
+
+
+    <para>Вы можете использовать несколько команд <command>ServerTable</command> для
+загрузки информации о серверах из различных таблиц. </para>
+  </sect2>
+
+  <sect2 id="srvtable-structure">
+    <title>Структура таблицы серверов</title>
+    <para>Таблица серверов содержит поля для описания всех необходимых параметров серверов.
+Имена полей соответсвуют командам в <filename>indexer.conf</filename>. Например, поле <literal>period</literal>
+соответсвует команде <command>Period</command> в <filename>indexer.conf</filename>. 
+Значения полей по умолчанию равны значениям по умолчанию соответсвующих параметров из <filename>indexer.conf</filename>.
+</para>
+
+    <para>Поле <literal>gindex</literal> соответсвует команде <command>Index</command>.
+Имя слегка изменено во избежания использования зарезервированного в SQL имени.</para>
+
+<para>
+Зачения некоторых полей расшифрованы в <xref linkend="dbschema"/>.
+</para>
+    <note>
+      <para>Из таблицы серверов считываются только те записи, для которых значение поля <literal>active</literal>
+равно 1, а поле значение поля <literal>parent</literal> равно 0. Это даёт возможность пользователям добавлять новые
+URL в таблицу серверов, а администраторам - авторизовать добавленные записи.
+</para>
+
+    </note>
+  </sect2>
+
+<sect2 id="flushsrvtable">
+  <title>Команда FlushServerTable
+<indexterm><primary>Команда</primary><secondary>FlushServerTable</secondary></indexterm>
+</title>
+<para>
+ Сбрасывает server.enabled в неактивное состояние для всех записей таблицы серверов. 
+Используйте эту команду для деактивирования всех команд в таблице серверов перед загрузкой новых из <filename>indexer.conf</filename>
+или из другой таблицы серверов.
+</para>
+</sect2>
+</sect1>

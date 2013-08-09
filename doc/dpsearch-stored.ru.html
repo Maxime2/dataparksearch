@@ -1,0 +1,704 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Хранение сжатых копий документов&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Индексирование"
+HREF="dpsearch-indexing.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Использование syslog"
+HREF="dpsearch-syslog.ru.html"><LINK
+REL="NEXT"
+TITLE="HTML-парсер в DataparkSearch"
+HREF="dpsearch-htmlparser.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-syslog.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 3. Индексирование</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-htmlparser.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="STORED"
+>3.13. Хранение сжатых копий документов
+<A
+NAME="AEN3152"
+></A
+></A
+></H1
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> имеет возможность хранения сжатых копий проиндексированных документов.
+Копии сжимаются и хранятся при помощи нового демона -
+<B
+CLASS="COMMAND"
+>stored</B
+>, который устанавливается в поддиректорию
+<TT
+CLASS="FILENAME"
+>sbin</TT
+> корневой директории установки
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> (по умолчанию:
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/sbin</TT
+>).</P
+><P
+><A
+NAME="AEN3161"
+></A
+>
+В <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> можно хранить сжатые копии документов без
+использования демона <B
+CLASS="COMMAND"
+>stored</B
+>. Для этого вместо настройки параметров <B
+CLASS="COMMAND"
+>stored</B
+>
+в файле конфигурации <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> необходимо указать команду <B
+CLASS="COMMAND"
+>DoStore yes</B
+>.</P
+><P
+>Сохраненные копии документов отображаются отдельной CGI-программой
+<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>. Эта программа получает сохранённую копию от
+<B
+CLASS="COMMAND"
+>stored</B
+> и отображает содержимое этого документа в окне броузера предварительно
+выделив слова из поискового запроса.</P
+><P
+> Для использования возможностей <B
+CLASS="COMMAND"
+>stored</B
+>, 
+скомпилируйте <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с поддержкой <TT
+CLASS="LITERAL"
+>zlib</TT
+>:
+	<PRE
+CLASS="PROGRAMLISTING"
+>./configure --with-zlib &lt;other arguments&gt;</PRE
+>
+	</P
+><P
+><A
+NAME="AEN3178"
+></A
+>
+<A
+NAME="AEN3181"
+></A
+>
+Вы можете использовать команды <B
+CLASS="COMMAND"
+>Store</B
+> и <B
+CLASS="COMMAND"
+>NoStore</B
+> для разрешения или запрещения сохранения
+некоторых фалов по шаблону. Аргументы у этих команд точно такиеже, как и у команды <B
+CLASS="COMMAND"
+>Allow</B
+> 
+(см. <A
+HREF="dpsearch-indexcmd.ru.html#ALLOW_CMD"
+>&#1056;&#1072;&#1079;&#1076;. 3.10.14</A
+>&#62;). Все документы сохраняются по умолчанию, если включена поддержка stored.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STORED-START"
+>3.13.1. Конфигурирование stored</A
+></H2
+><P
+>Перед использованием <B
+CLASS="COMMAND"
+>stored</B
+>, пожалуйста, проделпйте следующее:</P
+><P
+></P
+><UL
+><LI
+><P
+>Скопируйте <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/stored.conf-dist</TT
+> в
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/stored.conf</TT
+>.</P
+><P
+>Отредактируйте <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/stored.conf</TT
+>
+				</P
+><P
+>Следующие команды используются для конфигурирования <B
+CLASS="COMMAND"
+>stored</B
+>: </P
+><P
+></P
+><UL
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3205"
+></A
+>Listen</B
+>
+говорит <B
+CLASS="COMMAND"
+>stored</B
+> к какому адресу и/или порту привязаться.
+По умолчанию, <B
+CLASS="COMMAND"
+>stored</B
+> привязывается к порту 7004 и каждому адресу.
+Возможно указывать только порт:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>Listen 7004 </KBD
+>
+						</P
+><P
+>Или только адрес:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>Listen 127.0.0.2</KBD
+>
+						</P
+><P
+>Или оба, алрес и порт:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>Listen 127.0.0.2:7004</KBD
+>
+						</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3221"
+></A
+>VarDir</B
+>
+задаёт альтернативную рабочую директорию <TT
+CLASS="FILENAME"
+>var/</TT
+>, например:</P
+><P
+>							<KBD
+CLASS="USERINPUT"
+>VarDir /mnt/d/dpsearch/var/ </KBD
+>
+						</P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3230"
+></A
+>StoredFiles</B
+>
+указывает число файлов-хранилищ, создаваемых в директории <TT
+CLASS="FILENAME"
+>var/stored/</TT
+>, например:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>StoredFiles 256</KBD
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3239"
+></A
+>OptimizeInterval</B
+>
+задаёт интервал в секундах между попытками оптимизировать очередной файл-хранилище, например:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>OptimizeInterval 300</KBD
+></P
+></LI
+><LI
+><P
+><B
+CLASS="COMMAND"
+><A
+NAME="AEN3247"
+></A
+>OptimizeRatio</B
+>
+задаёт уровень дефрагментации в процентах, по достижении которого файл-хранилище оптимизируется, например:.  </P
+><P
+><KBD
+CLASS="USERINPUT"
+>OptimizeRatio 3</KBD
+></P
+></LI
+></UL
+></LI
+><LI
+><P
+>Запустите <B
+CLASS="COMMAND"
+>stored</B
+>:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>/usr/local/dpsearch/sbin/stored &amp; </KBD
+>
+				</P
+></LI
+><LI
+><P
+>Отредактиируйте <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> и <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+(или <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, если используется <B
+CLASS="COMMAND"
+>searchd</B
+>). Укажите адрес и порт, кроторые
+<TT
+CLASS="LITERAL"
+>indexer</TT
+> будет использовать для связи с <B
+CLASS="COMMAND"
+>stored</B
+>.
+Используйте параметр <TT
+CLASS="LITERAL"
+>stored</TT
+> команды <B
+CLASS="COMMAND"
+>DBAddr</B
+>,
+например:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>DBAddr mysql://localhost/search/?dbmode=cache&amp;stored=localhost:7004</KBD
+>
+				</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STORED-HOW"
+>3.13.2. Как работает stored</A
+></H2
+><P
+>После того, как вы сконфигурируете и запустите
+<B
+CLASS="COMMAND"
+>stored</B
+>, <TT
+CLASS="FILENAME"
+>indexer</TT
+> будет передавать ему проиндексированные документы.
+А <B
+CLASS="COMMAND"
+>stored</B
+> будет сжимать полученные документы и сохранять их на диске.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="STORED-SEARCH"
+>3.13.3. Использование stored при поиске</A
+></H2
+><P
+>Для включения отображения сохраненных документов при поиске, проделайте следующее: </P
+><P
+></P
+><UL
+><LI
+><P
+>Отредактируйте
+<TT
+CLASS="FILENAME"
+>storedoc.htm</TT
+> (шаблон для <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>), если необходимо.</P
+></LI
+><LI
+><P
+>Добавьте в секцию <TT
+CLASS="LITERAL"
+>&lt;!--res--&gt;</TT
+> шаблона
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> ссылку на <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>, например:
+ <TT
+CLASS="LITERAL"
+>&lt;A HREF="$(stored_href)"&gt;Cached copy&lt;/A&gt; </TT
+>
+				</P
+></LI
+><LI
+><P
+>Укажите URL CGI-программы
+<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> в
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> (по умолчанию
+<TT
+CLASS="LITERAL"
+>$(stored_href)</TT
+> будет возвращать
+<TT
+CLASS="FILENAME"
+>/cgi-bin/storedoc.cgi</TT
+>). Если вам необходимо указать другой URL,
+добавьте в раздел переменных шаблона <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+					следующую строку:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>StoredocURL /path/to/storedoc.cgi</KBD
+>
+				</P
+><P
+>Или для абсолютной ссылки:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>StoredocURL http://servername/path/to/storedoc.cgi</KBD
+>
+				</P
+></LI
+></UL
+><P
+>Если все сконфигурировано правильно, при поиске <B
+CLASS="COMMAND"
+>stored</B
+> работает следующим образом:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>					<TT
+CLASS="FILENAME"
+>search.htm</TT
+> показывает ссылку на <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>;</P
+></LI
+><LI
+><P
+>Когда пользователь кликает по ссылке,
+<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> посылает запрос к демону
+<B
+CLASS="COMMAND"
+>stored</B
+> по адресу, указанному в
+<TT
+CLASS="FILENAME"
+>storedoc.htm</TT
+> при помощи параметра <TT
+CLASS="LITERAL"
+>stored</TT
+> команды
+<B
+CLASS="COMMAND"
+>DBAddr</B
+>;</P
+></LI
+><LI
+><P
+>По этому запросу, <B
+CLASS="COMMAND"
+>stored</B
+> находит и разжимает запрошенную копию и отправляет ее <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>;</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+> разбирает полученный документ и выделяет все слова из поискового запроса. Способ выделения указывается в шаблоне <TT
+CLASS="FILENAME"
+>storedoc.htm</TT
+> командами
+					<B
+CLASS="COMMAND"
+><A
+NAME="AEN3324"
+></A
+>HlBeg</B
+> and <B
+CLASS="COMMAND"
+><A
+NAME="AEN3328"
+></A
+>HlEnd</B
+>;</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="EXCERPTS"
+>3.13.4. Цитаты документов</A
+></H2
+><A
+NAME="AEN3333"
+></A
+><P
+><B
+CLASS="COMMAND"
+>stored</B
+> также используется для создания цитат документов на основе слов из запроса.</P
+><P
+><A
+NAME="AEN3339"
+></A
+>
+Для задания приблизительного размера цитаты в символах, используйте в <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+(в секции <TT
+CLASS="LITERAL"
+>variables</TT
+>) команду <B
+CLASS="COMMAND"
+>ExcerptSize</B
+>. Значение, используемое по умолчанию, равно 256.</P
+><P
+><A
+NAME="AEN3346"
+></A
+>
+С помощью команды <B
+CLASS="COMMAND"
+>ExcerptPadding</B
+> вы можете задать примерное число символов, возвращаемых в цитате перед и после найденного слова запроса; значение по умолчанию: 40.</P
+><P
+><A
+NAME="AEN3351"
+></A
+>
+При помощи команды <B
+CLASS="COMMAND"
+>ExcerptMark</B
+> вы можете изменить разделяющую последовательность символов, вставляемую между частями цитаты с ключевыми словами; значение по умолчанию: " ... " (пробел, многоточие, пробел).</P
+><P
+><A
+NAME="AEN3356"
+></A
+>
+Вы можете выключить создание цитат (но сохранив возможность показа сохраненных копий) документов указав команду <B
+CLASS="COMMAND"
+>DoExcerpt no</B
+> в вашем поисковом шаблоне.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-syslog.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-htmlparser.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Использование syslog</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>HTML-парсер в <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

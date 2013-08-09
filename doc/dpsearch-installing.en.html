@@ -1,0 +1,681 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Installing DataparkSearch</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Installation"
+HREF="dpsearch-install.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Tools required for installation"
+HREF="dpsearch-toolsreq.en.html"><LINK
+REL="NEXT"
+TITLE="Possible installation problems"
+HREF="dpsearch-installproblem.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-toolsreq.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Installation</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-installproblem.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="INSTALLING"
+>2.4. Installing <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></A
+></H1
+><A
+NAME="AEN308"
+></A
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Unpack the distribution and
+change directory into the top-level directory of the unpacked
+distribution.</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>tar -xyf dpsearch-x.x.tar.bz2</KBD
+>
+				</P
+></LI
+><LI
+><P
+>To simplify configuration
+process we included a configuration script with the package -
+<TT
+CLASS="FILENAME"
+>install.pl</TT
+>. Run <TT
+CLASS="FILENAME"
+>install.pl</TT
+>
+and select <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> configuration options in a question-and-answer
+manner. After you specify all the configuration options, the script
+will run <TT
+CLASS="LITERAL"
+>./configure</TT
+> with the options you chose. It
+will also create install.options file containing your configuration
+preferences that you can use to run the script later bypassing
+questions. After configuration is finished, build and install the
+package as described in section 3.</P
+><P
+>In case you would like to
+configure <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> manually without using the configuration script,
+do the following:</P
+><P
+>If you would like to configure the package with SQL database support:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ ./configure --with-mysql</KBD
+>
+				</P
+><P
+>or</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ ./configure --with-pgsql</KBD
+>
+				</P
+><P
+>or with another depending on what database you prefer,</P
+><P
+>or with multiple databases:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ ./configure --with-mysql --with-pgsql --with-msql --with-freetds</KBD
+>
+				</P
+><P
+>By default, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> is
+installed in <TT
+CLASS="LITERAL"
+>/usr/local/dpsearch</TT
+> in the following
+subdirectories:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN337"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>Directory</TD
+><TD
+>Contents</TD
+></TR
+><TR
+><TD
+>bin</TD
+><TD
+>									<TT
+CLASS="FILENAME"
+>search.cgi</TT
+>, <TT
+CLASS="FILENAME"
+>storedoc.cgi</TT
+>, <TT
+CLASS="FILENAME"
+>dps-config</TT
+>
+								</TD
+></TR
+><TR
+><TD
+>lib</TD
+><TD
+>									<TT
+CLASS="FILENAME"
+>libdpsearch.a(so)</TT
+>,
+									<TT
+CLASS="FILENAME"
+>libdpcharset.a(so)</TT
+>
+								</TD
+></TR
+><TR
+><TD
+>sbin</TD
+><TD
+>									<TT
+CLASS="FILENAME"
+>indexer</TT
+>, <TT
+CLASS="FILENAME"
+>cached</TT
+>,
+<TT
+CLASS="FILENAME"
+>run-splitter</TT
+>,
+<TT
+CLASS="FILENAME"
+>searchd</TT
+>, <TT
+CLASS="FILENAME"
+>splitter</TT
+>, <TT
+CLASS="FILENAME"
+>stored</TT
+>
+								</TD
+></TR
+><TR
+><TD
+>etc</TD
+><TD
+>									<TT
+CLASS="FILENAME"
+>indexer.conf-dist, search.htm-dist</TT
+>,
+<TT
+CLASS="FILENAME"
+>langmap.conf-dist</TT
+>,
+<TT
+CLASS="FILENAME"
+>searchd.conf-dist</TT
+>,
+<TT
+CLASS="FILENAME"
+>stopwords.conf-dist</TT
+>,
+<TT
+CLASS="FILENAME"
+>stored.conf-dist</TT
+>, <TT
+CLASS="FILENAME"
+>storedoc.htm-dist</TT
+>
+								</TD
+></TR
+><TR
+><TD
+>share</TD
+><TD
+>various documentation and sql scripts</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+><P
+>If you have no permission to
+write to that directory or just want to install <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> to another
+location, please use configure with <CODE
+CLASS="OPTION"
+>--prefix</CODE
+> option,
+e.g.</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --prefix=/user/home/data --with-mysql</KBD
+>
+				</P
+><P
+>To install <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with HTTPS support
+use configure with the following option:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --with-openssl</KBD
+>
+				</P
+><P
+>or in case the OpenSSL library is installed in a non-standard location:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --with-openssl=/path/to/library</KBD
+>
+				</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>Please note that OpenSSL
+library installed on your system is required for HTTPS support.</P
+></BLOCKQUOTE
+></DIV
+><P
+>You can see all available options with <TT
+CLASS="LITERAL"
+>./configure --help</TT
+>
+				</P
+><P
+>If you want to provide some
+specific flags to C compiler (for example, <TT
+CLASS="LITERAL"
+>'-O7
+-mpentium'</TT
+> to build highly optimized binary for
+<SPAN
+CLASS="TRADEMARK"
+>Pentium</SPAN
+>&#8482; processor if you use egcs/pgcc), you
+can do so using command</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$  CFLAGS="-O7 -mpentium"</KBD
+>
+				</P
+><P
+>					<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>before</I
+></SPAN
+> running configure.</P
+><P
+>To compile <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> on FreeBSD with Solid in old aout format use</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ CFLAGS="-aout"</KBD
+>
+				</P
+><P
+>					<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>before</I
+></SPAN
+> running configure.</P
+><P
+>To compile <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> on FreeBSD with aout InterBase use</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ CFLAGS="-aout -static"</KBD
+>
+				</P
+><P
+>					<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>before</I
+></SPAN
+> running configure.</P
+><P
+>You may also specify
+<CODE
+CLASS="OPTION"
+>--enable-freebsd-pthreads</CODE
+> or
+<CODE
+CLASS="OPTION"
+>--enable-linux-pthreads</CODE
+> to compile multi-threaded
+indexer on FreeBSD and Linux machines.</P
+><P
+><A
+NAME="AEN414"
+></A
+>
+To enable <A
+HREF="http://sourceforge.net/projects/dmalloc/"
+TARGET="_top"
+>DMALLOC memory debugger</A
+> support use <CODE
+CLASS="OPTION"
+>--enable-dmalloc</CODE
+>. </P
+><P
+>The euc-kr, big5, gb2312, tscii, gujarati and shift-jis character sets are not supported by default.
+To built <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with these charsets support use
+configure with <CODE
+CLASS="OPTION"
+>--with-extra-charsets</CODE
+> command line
+argument.</P
+><P
+>To build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with all additional charsets support use:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --with-extra-charsets=all</KBD
+>
+				</P
+><P
+>To build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with only one specified charset support use:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --with-extra-charsets=tscii</KBD
+>
+				</P
+><P
+>To build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with support for Chinese or Japanese charsets, use:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --with-extra-charsets=japanese</KBD
+>
+or
+					<KBD
+CLASS="USERINPUT"
+>./configure --with-extra-charsets=chinese</KBD
+>
+				</P
+><P
+>To build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with support for several specified charsets, 
+use a comma separated list of charsets you want:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>./configure --with-extra-charset=japanese,tscii</KBD
+>
+				</P
+><P
+>If you run into problems with configure, please see <A
+HREF="dpsearch-installproblem.en.html"
+>Section 2.5</A
+>&#62;.</P
+></LI
+><LI
+><P
+>Build and install the package.</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ make</KBD
+>
+				</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ make install</KBD
+>
+				</P
+><P
+>If you run into problems with configure, please see <A
+HREF="dpsearch-installproblem.en.html"
+>Section 2.5</A
+>&#62;.</P
+></LI
+><LI
+><P
+>Create database <TT
+CLASS="LITERAL"
+>search</TT
+> (for SQL database only).</P
+><P
+>You can use existing database, skip this step in this case.</P
+><P
+>MySQL:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ mysqladmin create search</KBD
+>
+				</P
+><P
+>PostgreSQL:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>sh$ createdb search</KBD
+>
+				</P
+><P
+>See database specific information if you use another database.</P
+></LI
+><LI
+><P
+>Create configuration files.</P
+><P
+>Copy <TT
+CLASS="FILENAME"
+>indexer.conf-dist</TT
+> to <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>search.htm-dist</TT
+> to <TT
+CLASS="FILENAME"
+>search.htm</TT
+> in the configuration directory 
+(by default this directory is <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/etc/</TT
+>). Then edit <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and <TT
+CLASS="FILENAME"
+>search.htm</TT
+> according your needs.
+Basically your only have to edit <B
+CLASS="COMMAND"
+>DBAddr</B
+> command in both of these files specifying a connection to SQL-server and desired dbmode.</P
+></LI
+><LI
+><P
+>Create sql-tables</P
+><P
+>Run the command:</P
+><P
+><KBD
+CLASS="USERINPUT"
+>sh$ indexer -Ecreate</KBD
+></P
+><P
+><B
+CLASS="COMMAND"
+>indexer</B
+> creates all tables automatically according to the dbmode selected in your <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file.</P
+></LI
+><LI
+><P
+>Install search scripts</P
+><P
+>Copy
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> to your web-server
+<TT
+CLASS="LITERAL"
+>cgi-bin</TT
+> directory or make Apache alias to
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> bin directory. </P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-toolsreq.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-installproblem.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Tools required for installation</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-install.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Possible installation problems</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

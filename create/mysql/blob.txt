@@ -1,0 +1,296 @@
+DROP TABLE bdict00;
+DROP TABLE bdict01;
+DROP TABLE bdict02;
+DROP TABLE bdict03;
+DROP TABLE bdict04;
+DROP TABLE bdict05;
+DROP TABLE bdict06;
+DROP TABLE bdict07;
+DROP TABLE bdict08;
+DROP TABLE bdict09;
+DROP TABLE bdict0A;
+DROP TABLE bdict0B;
+DROP TABLE bdict0C;
+DROP TABLE bdict0D;
+DROP TABLE bdict0E;
+DROP TABLE bdict0F;
+DROP TABLE bdict10;
+DROP TABLE bdict11;
+DROP TABLE bdict12;
+DROP TABLE bdict13;
+DROP TABLE bdict14;
+DROP TABLE bdict15;
+DROP TABLE bdict16;
+DROP TABLE bdict17;
+DROP TABLE bdict18;
+DROP TABLE bdict19;
+DROP TABLE bdict1A;
+DROP TABLE bdict1B;
+DROP TABLE bdict1C;
+DROP TABLE bdict1D;
+DROP TABLE bdict1E;
+DROP TABLE bdict1F;
+DROP TABLE dellog;
+
+CREATE TABLE dellog (
+  tstamp int  not null,
+  ndocs  int  not null,
+  docs   BLOB not null
+);
+
+CREATE TABLE bdict00 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict01 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict02 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict03 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict04 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict05 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict06 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict07 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict08 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict09 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict0A (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict0B (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict0C (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict0D (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict0E (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict0F (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict10 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict11 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict12 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict13 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict14 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict15 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict16 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict17 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict18 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict19 (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict1A (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict1B (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict1C (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict1D (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict1E (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+
+CREATE TABLE bdict1F (
+  word    varchar(32) not null,
+  tstamp  int not null,
+  ncoords int not null,
+  coords  blob not null,
+  KEY (word)
+); 
+

@@ -1,0 +1,73 @@
+<sect2 id="mirror">
+	<title>Mirroring</title>
+<indexterm><primary>Mirroring</primary></indexterm>
+
+	<para id="mirrorroot-cmd">
+<indexterm><primary>Command</primary><secondary>MirrorRoot</secondary></indexterm>
+You may specify a path to root dir to enable sites mirroring
+	<programlisting>
+MirrorRoot /path/to/mirror
+</programlisting>
+	</para>
+	<para id="mirrorheadersroot-cmd">
+<indexterm><primary>Command</primary><secondary>MirrorHeadersRoot</secondary></indexterm>
+You may specify as well root directory of mirrored document's headers indexer will store HTTP headers to local disk too.
+	<programlisting>
+MirrorHeadersRoot /path/to/headers
+</programlisting>
+	</para>
+	<para id="mirrorperiod-cmd">
+<indexterm><primary>Command</primary><secondary>MirrorPeriod</secondary></indexterm>
+You may specify period during which earlier mirrored files will be used while indexing instead of real downloading.
+	<programlisting>
+MirrorPeriod &lt;time&gt;
+</programlisting>
+	</para>
+	<para>It is very useful when you do some experiments with
+<application>DataparkSearch</application> indexing the same hosts and do not want much traffic
+from/to Internet. If MirrorHeadersRoot is not specified and headers
+are not stored to local disk then default Content-Type's given in
+AddType commands will be used. Default value of the MirrorPeriod is
+-1, which means <literal>do not use mirrored files</literal>.</para>
+	<para>&lt;time&gt; is in the form
+<literal>xxxA[yyyB[zzzC]]</literal> (Spaces are allowed between xxx
+and A and yyy and so on) where xxx, yyy, zzz are numbers (can be
+negative!). A, B, C can be one of the following:
+	<programlisting>
+		s - second
+		M - minute
+		h - hour
+		d - day
+		m - month
+		y - year
+</programlisting>
+</para>
+	<para>(these letters are the same as in strptime/strftime functions)</para>
+	<para>Examples:
+	<programlisting>
+15s - 15 seconds
+4h30M - 4 hours and 30 minutes
+1y6m-15d - 1 year and six month minus 15 days
+1h-10M+1s - 1 hour minus 10 minutes plus 1 second
+</programlisting>
+</para>
+	<para>If you specify only number without any character, it is
+assumed that time is given in seconds (this behavior is for
+compatibility with versions prior to 3.1.7).</para>
+	<para>The following command will force using local copies for one day:
+	<programlisting>
+MirrorPeriod 1d
+</programlisting>
+	</para>
+	<para>If your pages are already indexed, when you re-index
+with -a indexer will check the headers and only download files that
+have been modified since the last indexing. Thus, all pages that are
+not modified will not be downloaded and therefore not mirrored
+either. To create the mirror you need to either (a) start again with a
+clean database or (b) use the -m switch. </para>
+	<para>You can actually use the created files as a full
+featured mirror to you site. However be careful: indexer will not
+download a document that is larger than MaxDocSize. If a document is
+larger it will be only partially downloaded. If you site has no large
+documents, everything will be fine.</para>
+</sect2>

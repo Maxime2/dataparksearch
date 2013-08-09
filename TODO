@@ -1,0 +1,89 @@
+TODO
+----
+
+ General development directions
+
+* More various transport protocols support.
+* More various APIs. e.g write Java class with libdpsearch support.
+* Support for huge databases with hundred or thousand millions documents.
+* Make it more managable, i.e. administration tools, etc.
+
+
+Search quality and results presentation
+---------------------------------------
+* Click rank
+* Administator defined dynamic site priority:
+	- approved sites which should be displayed in the top of results;
+	- disapproved sites (e.g. for abuse) which should not be displayed.
+* Take in account words context: <b>, <font size="xx">, <big> and so on.
+* Optional automatic URL limit by SERVER_NAME variable.
+* "Exclude" limits, for example "to search though everything except
+  given site": ue=http://esite/
+* Rank URLs with long pathnames lower than direct hits on let's say a domain 
+name with no directory path.
+
+
+Indexing related stuff
+----------------------
+* Detect clones on site level. Currently it is implemented on page level
+only. The idea is to detect that site being indexed is a mirror of another
+site without having to index all pages but after indexing several pages only.
+* SPAM clearance.
+* Fix that indexer bacame slow when ServerTable is big. This is because
+of full consecutive examination. Make in-memory cache for ServerTable part.
+* Fix that "posgreSQL.org" and "posgresql.org" are considered as a
+different sites.
+* FTP digest ls-lR.gz support. For example,ftp://ftp.chg.ru/ls-lR.gz
+* Make it possible for external parsers to return converted content 
+together with headers like Content-Type, Title and so on.
+
+
+Charset related stuff
+---------------------
+* Remove "ForceIISCharset1251 yes/no"command. Replcase it with 
+enhanced "CharsetByServer <charset> <regexp> [<regexp>...]" 
+commmand.
+* Stateful character sets support: UTF-7, Asian ISO-2022-XX
+and others. They will not be used as a LocalCharset because
+of much space, however indexer should be able to index them,
+as well as search frontend should be able to use them as
+a BrowserCharset.
+
+
+Misc
+----
+* Smart search results cache cleaning after reindexing.
+* Make it possible to set table names in indexer.conf and search.htm
+* Learn about dublin core. A simple set of standard metadata for web pages.
+  http://www.searchtools.com/related/metadata.html#dc
+* Add curl library support.
+* Optimization for clusterisation.
+
+
+Portability and code quality
+----------------------------
+Remove warnings on various platforms. Currenly it is built without
+warnings on Linux and FreeBSD with these CFLAGS:
+
+-Wall 
+-Wconversion 
+-Wshadow  
+-Wpointer-arith 
+-Wcast-qual 
+-Wcast-align 
+-Wwrite-strings  
+-Waggregate-return  
+-Wstrict-prototypes  
+-Wmissing-prototypes 
+-Wmissing-declarations 
+-Wredundant-decls 
+-Wnested-externs 
+-Wlong-long 
+-Winline
+
+However some other platform compilers do produce warnings.
+For example, mixed signed/unsigned chars on NetBSD Alpha compiler. 
+Please report those warnings and suggetions to fix to maxime@sochi.net.ru
+
+
+

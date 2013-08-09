@@ -1,0 +1,38 @@
+SUBDIRS = .
+
+sbin_PROGRAMS= dpconv
+
+dpconv_SOURCES = dpconv.c
+dpconv_LDADD = libdpcharset.la @PTHREAD_LDADD@
+dpconv_LDFLAGS = @PTHREAD_LFLAGS@  
+
+CFLAGS = @CFLAGS@ -DDPS_CONF_DIR=\"@sysconfdir@\" -DDPS_VAR_DIR=\"@localstatedir@\"
+
+lib_LTLIBRARIES = libdpcharset.la
+libdpcharset_la_SOURCES = uconv.c unidata.c sgml.c unicode.c xmalloc.c \
+uconv-8bit.c uconv-alias.c uconv-big5.c uconv-big5hkscs.c uconv-eucjp.c uconv-euckr.c \
+uconv-gb2312.c uconv-gbk.c uconv-sjis.c uconv-sys.c uconv-utf8.c uconv-gujarati.c \
+uconv-tscii.c charset-utils.c
+libdpcharset_la_LDFLAGS = -release @DPS_BASE_VERSION@
+
+sgml.c: sgml.inc
+
+sgml.inc: sgml.entities
+	cat sgml.entities | sort -k 2 > sgml.inc
+
+
+include_HEADERS = \
+../include/dps_config.h \
+../include/dps_unicode.h \
+../include/dps_unidata.h \
+../include/dps_uniconv.h \
+../include/dps_sgml.h \
+../include/dps_charsetutils.h \
+../include/dps_filence.h \
+../include/dps_xmalloc.h
+
+
+INCLUDES = -I$(srcdir)/../include
+
+LIBS = @STATIC_LFLAGS@ \
+@LIBS@ 

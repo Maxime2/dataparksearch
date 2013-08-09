@@ -1,0 +1,611 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Making multi-language search pages</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Languages support"
+HREF="dpsearch-international.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Languages support"
+HREF="dpsearch-international.en.html"><LINK
+REL="NEXT"
+TITLE="Segmenters for Chinese, Japanese, Korean and Thai languages"
+HREF="dpsearch-cjk.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-international.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 7. Languages support</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-cjk.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="MULTILANG"
+>7.2. Making multi-language search pages</A
+></H1
+><A
+NAME="AEN4568"
+></A
+><P
+>Original idea instructions by Craig Small
+<CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:csmall@eye-net.com.au"
+>csmall@eye-net.com.au</A
+>&#62;</CODE
+>.  Some minor changes by Alex
+Barkov <CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:bar@mnogosearch.org"
+>bar@mnogosearch.org</A
+>&#62;</CODE
+>.</P
+><P
+>It is often required to allow for different languages
+which means different search.htm files depending on what language
+users have set in their browser. </P
+><P
+>Further installation should be done in three steps.</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Installing several templates.</P
+><P
+>The general idea is to have one
+<TT
+CLASS="FILENAME"
+>search.php</TT
+> or <TT
+CLASS="FILENAME"
+>search.cgi</TT
+>
+file and then many <TT
+CLASS="FILENAME"
+>search.[language].htm</TT
+> files.
+You also have a <TT
+CLASS="FILENAME"
+>search.htm</TT
+> file (usually a
+symlink to <TT
+CLASS="FILENAME"
+>search.en.htm</TT
+>) for the default.</P
+><P
+>If the name of the script is
+<TT
+CLASS="FILENAME"
+>search.en.php</TT
+> (or
+<TT
+CLASS="FILENAME"
+>search.en.cgi</TT
+>) then both CGI and PHP front-ends
+will be looking for <TT
+CLASS="FILENAME"
+>/somewhere/etc/search.en.htm</TT
+>
+assuming that <TT
+CLASS="FILENAME"
+>/somewhere/etc/</TT
+> is
+<TT
+CLASS="FILENAME"
+>/etc/</TT
+> directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation.</P
+><P
+>You would then populate
+<TT
+CLASS="FILENAME"
+>/somewhere/etc/</TT
+> with all the
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> files so
+<TT
+CLASS="FILENAME"
+>/somewhere/etc</TT
+> has:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN4595"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.en.htm</TT
+>
+							</TD
+><TD
+>English template</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.pl.htm</TT
+>
+							</TD
+><TD
+>Polish template</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.ru.htm</TT
+>
+							</TD
+><TD
+>Russian template</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+							</TD
+><TD
+>Symlink to English template</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></LI
+><LI
+><P
+>Installing front-ends</P
+><P
+>Create a directory and put
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> or <TT
+CLASS="FILENAME"
+>search.php</TT
+>
+there (along with the include files if you want, but I fiddle with the
+php include_path and put them elsewhere).</P
+><P
+>Then setup the symlinks:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN4620"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.cgi</TT
+>
+							</TD
+><TD
+>Original file</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.en.cgi</TT
+>
+							</TD
+><TD
+>symlink</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.pl.cgi</TT
+>
+							</TD
+><TD
+>symlink</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.ru.cgi</TT
+>
+							</TD
+><TD
+>symlink</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+><P
+>Or in the case of PHP front-end:</P
+><DIV
+CLASS="INFORMALTABLE"
+><P
+></P
+><A
+NAME="AEN4640"
+></A
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.php</TT
+>
+							</TD
+><TD
+>Original file</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.en.php</TT
+>
+							</TD
+><TD
+>symlink</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.pl.php</TT
+>
+							</TD
+><TD
+>symlink</TD
+></TR
+><TR
+><TD
+>								<TT
+CLASS="FILENAME"
+>search.ru.php</TT
+>
+							</TD
+><TD
+>symlink</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></LI
+><LI
+><P
+>Configuring Apache</P
+><P
+>Then you need to make apache understand
+what weirdness you are doing here. So you need to get negotiation
+happening and some magic with the indexes. I used
+<TT
+CLASS="FILENAME"
+>.htaccess</TT
+> file but you could stick it in the
+apache config proper.
+			<PRE
+CLASS="PROGRAMLISTING"
+>AddLanguage en .en
+AddLanguage pl .pl
+AddLanguage ru .ru
+
+DirectoryIndex search search.cgi  (or search.php)
+Options FollowSymlinks MultiViews</PRE
+>
+			</P
+></LI
+></OL
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MULTILANG-HOW"
+>7.2.1. How does it work?</A
+></H2
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>You type url <TT
+CLASS="LITERAL"
+>http://myhost/mydir/search</TT
+>
+					<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>no slash at end !!</I
+></SPAN
+>
+				</P
+></LI
+><LI
+><P
+>Your browser says <TT
+CLASS="LITERAL"
+>"I like english (well language negotiation en) "</TT
+>
+				</P
+></LI
+><LI
+><P
+>Apache finds
+<TT
+CLASS="FILENAME"
+>search.en.cgi</TT
+> (DirectoryIndex gives
+<TT
+CLASS="LITERAL"
+>search</TT
+>, MultiViews gives the
+<TT
+CLASS="LITERAL"
+>en.cgi</TT
+>)</P
+></LI
+><LI
+><P
+>The
+<B
+CLASS="COMMAND"
+>SCRIPT_FILENAME</B
+> which is used in both
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> and <TT
+CLASS="FILENAME"
+>search.php</TT
+> is
+<TT
+CLASS="FILENAME"
+>somepath/search.en.cgi</TT
+>
+				</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>Most other variables
+will give the wrong result, either <TT
+CLASS="LITERAL"
+>search</TT
+> or
+<TT
+CLASS="LITERAL"
+>search.cgi</TT
+>)</P
+></BLOCKQUOTE
+></DIV
+></LI
+><LI
+><P
+>Your hack in
+<TT
+CLASS="FILENAME"
+>config.inc</TT
+> means you will use
+<TT
+CLASS="FILENAME"
+>search.en.htm</TT
+>.</P
+></LI
+></OL
+><P
+>So what happens if the user wants, say, German?
+Well there is no <TT
+CLASS="FILENAME"
+>search.de.cgi</TT
+>
+(<TT
+CLASS="FILENAME"
+>search.de.php</TT
+>) so the first bit of
+DirectoryIndex fails, so it tries the second one,
+<TT
+CLASS="FILENAME"
+>search.php</TT
+>  OK, they get the page in English, but
+it's better than a 404.</P
+><P
+>This does work, you may need some more apache
+fiddling to get negotiation to work because I am testing this on a
+server that already has it setup, so I may have missed
+something.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MULTILANG-PROBLEM"
+>7.2.2. Possible troubles</A
+></H2
+><P
+>You may get some language negotiation problems caused by:</P
+><P
+></P
+><UL
+><LI
+><P
+>Dumb caches that don't follow standards</P
+></LI
+><LI
+><P
+>Dumb versions of browsers that don't follow standards</P
+></LI
+><LI
+><P
+>Dumb users fiddling with language settings and putting weird stuff in.</P
+></LI
+></UL
+><P
+>The apache team is working on some workarounds
+for most of these, if possible.  For a reasonably heavily used web site
+you can expect an email about it once a week or so.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-international.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-cjk.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Languages support</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-international.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Segmenters for Chinese, Japanese, Korean and Thai languages</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

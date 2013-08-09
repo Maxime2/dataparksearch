@@ -1,0 +1,302 @@
+<sect1 id="cachemode"><title>
+<indexterm><primary>Способы хранения</primary><secondary>cache</secondary></indexterm>
+Способ хранения Cache</title>
+
+	<sect2 id="cachemode-intro">
+		<title>Введение</title>
+		<para>В <application>DataparkSearch</application> реализован способ хранения <literal>cache</literal>,
+позволяющий быстро индексировать и искать среди миллионов документов.</para>
+	</sect2>
+
+	<sect2 id="cachemode-str">
+		<title>Структура индексов слов при способе хранения <literal>Cache</literal></title>
+		<para>Основная идея способа хранения слов cache заключается в хранении индекса слов и вспомогательной
+информации о документах непосредственно на диске,
+а не в <application>SQL</application> базе данных. Вся информация об URL (таблицы <literal>url</literal> и <literal>urlinfo</literal>)
+тем не менее продолжает храниться в <application>SQL</application> базе данных.
+Индекс слов разделён на несколько файлов, число которых может быть задано при помощи команды
+<indexterm><primary>Команда</primary><secondary>WrdFiles</secondary></indexterm>
+<command>WrdFiles</command> (по умолчанию - 0x300).
+<indexterm><primary>Команда</primary><secondary>URLDataFiles</secondary></indexterm>
+Число файлов хранения дополнительной информации о документах задаётся командой <command>URLDataFiles</command>
+(по умолчанию - 0x300).
+<note>Внимание: вы должны иметь одинаковые значения для WrdFiles и URLDataFiles во всех файлах конфигурации.
+</note>
+</para>
+<para>
+Индекс слов находится в файлах, расположенных в поддиректории <filename>/var/tree</filename> относительно корневой 
+директории установки <application>DataparkSearch</application>.
+Вспомогательная информация о документах храниится в файлах, расположенных в поддиректории 
+<filename>/var/url</filename> относительно корневой  директории установки <application>DataparkSearch</application>. </para>
+
+<para><indexterm><primary>Команда</primary><secondary>CacheLogWords</secondary></indexterm><indexterm><primary>Команда</primary><secondary>CacheLogDels</secondary></indexterm>
+<application>indexer</application> и <application>cached</application> используют буферы в памяти для кэширования данных cache mode перед записью их на диск.
+Размер таких буферов может быть изменен при помощи команд <command>CacheLogWords</command> и <command>CacheLogDels</command> в файлах конфигурации <filename>indexer.conf</filename> и <filename>cached.conf</filename>
+соответственно. Значения по умолчанию: 1024 для <command>CacheLogWords</command> и 10240 для <command>CacheLogDels</command>.
+Оценка объема памяти, используемой под эти буферы может быть вычислена как:
+</para>
+<programlisting>
+Volume = WrdFiles * (16 + 16 * CacheLogWords + 8 * CacheLogDels), для 32-битных систем
+Volume = WrdFiles * (32 + 20 * CacheLogWords + 12 * CacheLogDels), для 64-битных систем
+</programlisting>
+	</sect2>
+
+	<sect2 id="cachemode-tools">
+		<title>Утилиты для способа хранения <literal>Cache</literal></title>
+		<para>При выборе способа хранения <literal>cache</literal> используются две дополнительные программы:
+<command>cached</command> и <command>splitter</command>.</para>
+
+<para> <command>cached</command> - демон, получающий по сети информацию о хранимых словах от
+<command>indexer</command> и записывает её на ваш жёсткий диск. Этот демон может работать в двух режимах,
+как старый демон <command>cachelogd</command>, входивший в предыдущие версии и только записывающий получаемую информацию на диск,
+и в новом режиме, в котором объединены функции <command>cachelogd</command> и <command>splitter</command>.</para>
+
+<para> <command>splitter</command> - программа создания индексов слов для быстрого поиска на основе записей,
+сделаных <command>cached</command> при работе в старом режиме. Эти индексы слов и используются в дальнейшем 
+при обработке запросов на поиск.</para>
+
+	</sect2>
+	<sect2 id="cachemode-start">
+		<title>Запуск способа хранения <literal>cache</literal></title>
+		<para>Для запуска режима хранения <literal>cache</literal> проделайте следующее:</para>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>Запустите демон <command>cached</command>:</para>
+				<para>
+					<userinput>cd /usr/local/dpsearch/sbin </userinput></para>
+<para><userinput>./cached  2&gt;cached.out &amp;</userinput>
+				</para>
+				<para>Он будет писать некоторую отладочную информацию в файл
+<filename>cached.out</filename>. <filename>cached</filename> также создаст файл <filename>cached.pid</filename> в
+поддиректории <filename>/var</filename> относительно корневой директории установки <application>DataparkSearch</application>.</para>
+
+				<para><filename>cached</filename> может принимать соединения по TCP от нескольких различных машин.
+Теоритический предел одновременных соединений равен 128. В старом режиме <filename>cached</filename>
+записывает полученную от <command>indexer</command> информацию в поддиректорию <filename>/var/splitter/</filename> относительно
+корневой директории установки <application>DataparkSearch</application>.
+В новом режиме он записывает информацию в поддиректорию <filename>/var/tree/</filename>.</para>
+
+<para>По умолчанию, <filename>cached</filename> запускается в новом режиме. Для запуска в старом режиме,
+т.е. только для получения и сохранения на диске информации, получаемой от <command>indexer</command>,
+запустите его с ключом <option>-l</option>.</para>
+
+<para><userinput>cached -l</userinput></para>
+
+<para>Или укажите команду <indexterm><primary>Команда</primary><secondary>LogsOnly</secondary></indexterm>
+<command>LogsOnly yes</command> в вашем <filename>cached.conf</filename>.</para>
+
+				<para>Вы можете указать другой порт для <filename>cached</filename> без перекомпиляции.
+Для этого хапустите
+</para>
+
+				<para>
+					<userinput>
+./cached -p8000 
+</userinput>
+				</para>
+				<para>где <literal>8000</literal> - номер порта по вашему выбору.</para>
+				<para>Вы также можете указать другую директорию для записи информации 
+(по умолчанию это поддиректория <literal>/var</literal>) выдав такую команду:</para>
+
+				<para>
+					<userinput>
+./cached -w /path/to/var/dir
+</userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Сконфигурируйте <filename>indexer.conf</filename> как обычно, указав <literal>cache</literal> в
+качестве параметра dbmode команды <command>DBAddr</command> и <literal>localhost:7000</literal> в качестве параметра cached
+(см. <xref linkend="dbaddr_cmd"/>).
+				</para>
+			</listitem>
+			<listitem>
+				<para>Запустите один или несколько <command>indexer</command>.
+Несколько <command>indexer</command> могут быть запущены одновременно. Вы можете запускать <command>indexer</command>
+с различных машин, но работающих с одним сервером <filename>cached</filename>. Это позволяет
+проводить ускоренное распределенное индексирование.
+</para>
+			</listitem>
+<listitem><para>Сброс буферов <application>cached</application> и данных об url, а также создание лимитов 
+по завершении процесса индексирования.
+Пошлите сигнал -HUP для <filename>cached</filename>.
+Вы можете использовать файл <filename>cached.pid</filename> для этого:</para>
+<para>
+<userinput>
+kill -HUP `cat /usr/local/dpsearch/var/cached.pid`
+</userinput>
+</para>
+<para>Дождитесь окончания сброса буферов, прежде чем переходить к следующему шагу.
+</para>
+</listitem>
+
+			<listitem>
+				<para>Создание индекса слов. Этот шаг не требуется, если <filename>cached</filename>
+запущен в новом, объединённом, режиме.
+Когда соберётся достаточное количество информации в поддиреткории <filename>/var/splitter/</filename>,
+можно создать индексы для быстрого поиска слов.Программа <filename>splitter</filename> предназначена для этого.
+Она устанавливается в поддиректорию <filename>/sbin</filename>. Индексы для поиска слов могут создаваться в любое время без
+остановки процесса индексирования.</para>
+
+				<para>Создание индекса слов.
+Запустите <filename>splitter</filename> без каких либо ключей:
+<userinput>
+/usr/local/dpsearch/sbin/splitter
+</userinput>
+						</para>
+						<para>Он последовательно обработает все файлы из поддиректории
+<filename>/var/splitter/</filename> строя на их основе индекс слов для быстрого поиска. После этой обработки файлы
+в поддиректории <filename>/var/splitter/</filename> усекаются.</para>
+
+			</listitem>
+		</orderedlist>
+	</sect2>
+
+	<sect2 id="cachelog-sevspl">
+		<title>Использование нескольких <command>splitter</command> одновременно</title>
+		<para><command>splitter</command> имеет два ключа:
+<option>-f [first file] -t [second file]</option>, задающих границы обрабатываемых файлов.
+Если эти параметры не указаны, <command>splitter</command> последовательно обрабатывает все 
+приготовленные файлы. Вы можете ограничить обрабатываемое количество задав ключами
+-f и -t параметры в  HEX нотации. Например, 
+<command>splitter -f 000 -t A00</command> создаст индекс слов только из фалёлов с диапазона с 000 по A00.
+Используя эти ключи можно запускать одновременно несколько <command>splitter</command>. Что обычно позволяет ускорить
+создание общего индекса. Например, этот шеловский скрипт запускает в фоне четыре <command>splitter</command>:
+</para>
+
+		<programlisting>
+#!/bin/sh
+splitter -f 000 -t 3f0 &amp;
+splitter -f 400 -t 7f0 &amp;
+splitter -f 800 -t bf0 &amp;
+splitter -f c00 -t ff0 &amp;
+</programlisting>
+	</sect2>
+
+	<sect2 id="cachelog-runspl">
+		<title>Использование скрипта <command>run-splitter</command></title>
+		<para>В поддиректории <filename>/sbin</filename> находится скрипт <filename>run-splitter</filename>.
+Он помогает последовательно выполнить все шаги по построению индекса слов для быстрого поиска.
+</para>
+
+		<para><command>run-splitter</command> имеет два параметра командной строки:</para>
+		<para>
+			<userinput>
+run-splitter --hup --split
+</userinput>
+		</para>
+		<para>или в короткой форме:</para>
+		<para>
+			<userinput>
+run-splitter -k -s
+</userinput>
+		</para>
+		<para>Каждый параметр запускает соответсвующий шаг создания индекса слов. <filename>run-splitter</filename>
+выполняет все шаги созданяи индекса в правильной последовательности:</para>
+
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>Посылка сигнала -HUP к cached. 
+Этому соответствует парамет <literal>--hup</literal> (или <literal>-k</literal>).</para>
+
+			</listitem>
+			<listitem>
+				<para>Запуск <command>splitter</command>. 
+Этому соответсвует параметр <literal>--split</literal>  (или <literal>-s</literal>).</para>
+			</listitem>
+		</orderedlist>
+
+		<para>В большинстве случаев достаточно просто запустить скрипт <command>run-splitter</command> со
+всеми параметрами <literal>-k -s</literal>. Раздельное использование этих параметров редко необходимо. </para>
+
+<para><command>run-splitter</command> имеет необязательные параметры <literal>-p=n</literal> и <literal>-v=m</literal>
+для задания соответсвенно паузы в секунда после обработки каждого буффера и указания выдачи сообщений.
+<literal>n</literal> - число секунд (по умолчанию 0), <literal>m</literal> - уровень выдачи (по умолчанию 4).
+</para>
+	</sect2>
+
+
+	<sect2 id="cachelog-search">
+		<title>Поиск</title>
+		<para>Для использования <command>search.cgi</command> со способом хранения "cache",
+сконфигурируйте ваш шаблон <filename>search.htm</filename> как обычно, добавив "cache" в качестве значения
+параметра <literal>dbmode</literal> команды <command>DBAddr</command>
+		</para>
+	</sect2>
+
+<sect2 id="limits">
+<title>Использование лимитов при поиске</title>
+<para><indexterm><primary>Команда</primary><secondary>Limit</secondary></indexterm>
+Для применения лимитов при поиске с использование способа хранения cache,
+необходимо добавить соответсвующие команды <command>Limit</command> в ваши <filename>indexer.conf</filename> 
+(или <filename>cached.conf</filename>, если используется <command>cached</command>) и
+<filename>search.htm</filename> или <filename>searchd.conf</filename> (если используется <command>searchd</command>).
+<synopsis>
+Limit prm:type [SQL-Request [DBAddr]]
+</synopsis>
+</para>
+
+<para>
+Для использования, например, лимитов по тэгу, категории и сайту, добавьте следующие строки в ваши файлы конфигурации:
+</para>
+<programlisting>
+Limit t:tag
+Limit c:catategory
+Limit site:siteid
+</programlisting>
+<para>
+где <literal>t</literal> - имя CGI параметра (&amp;t=) этого ограничения, <literal>tag</literal> - тип ограничения.
+</para>
+
+<para>Вместо tag/category/siteid в примере выше вы можете использовать значения из следующей таблицы:
+<table>
+<title>Типы предопределенных лимитов способа хранения Cache</title>
+ <tgroup cols="2">
+  <tbody>
+
+<row><entry>category</entry><entry>Лимит по категории.</entry></row>
+<row><entry>tag</entry><entry>Лимит по тэгу.</entry></row>
+<row><entry>time</entry><entry>Лимит по времени (с точностью до часа).</entry></row>
+<row><entry>language</entry><entry>Лимит по языку.</entry></row>
+<row><entry>content</entry><entry>Лимит по MIME-типу.</entry></row>
+<row><entry>siteid</entry><entry>Лимит по url.site_id (по имени сервера).</entry></row>
+<row><entry>link</entry><entry>Лимит по документам, ссылающимся на указаный url.rec_id.</entry></row>
+<row><entry>hostname (устаревшее)</entry><entry>Лимит по имени сервера. Это устаревшая команда, вытесненная лимитом по site_id</entry></row>
+
+  </tbody>
+ </tgroup>
+</table>
+</para>
+
+<para>Если для команды <command>Limit</command> указан второй, необязательный, параметр <option>SQL-Request</option>, то при построении индекса будет выполнятся заданный запрос
+к SQL-базе. Этот запрос должен возращать все возможные пары значение лимита и соответсвующее ему значение url.rec_id. Например:
+<programlisting>
+Limit prm:strcrc32 "SELECT label, rec_id FROM labels" pgsql://u:p@localhost/sitedb/
+</programlisting>
+здесь prm - имя лимита и имя CGI-параметра, используемого для задания ограничения по этому лимиту; strcrc32 - тип используемого лимита, в данном случа - строка. Вместо strcrc32 возможно использовать
+следующие типы:
+<table>
+<title>Типы SQL-лимитов способа хранения Cache</title>
+ <tgroup cols="2">
+  <tbody>
+<row><entry>hex8str</entry><entry>Шестнадцатеричная строка, или строка в base-26, аналогичная используемым в лимите по категории. В этом случае строится вложенный лимит.</entry></row>
+<row><entry>strcrc32</entry><entry>Строка символов, по которой расчитывается значение hash32, служащее ключом этого лимита.</entry></row>
+<row><entry>int</entry><entry>Целое (4-байтовое) число.</entry></row>
+  </tbody>
+ </tgroup>
+</table>
+</para>
+
+<para>Третьим, необязательным, параметром <option>DBAddr</option> для команды <command>Limit</command> можно указать соединение к SQL-базе, отличной от базы, используемой для поиска.
+</para>
+
+<para>В поисковом шаблоне <filename>search.htm</filename> или в файле конфигурации <filename>searchd.conf</filename> (если используется <command>searchd</command>) указывать необязательные параметры
+<option>SQL-Request</option> и <option>DBAddr</option> не нужно, они используются только при построении лимита.
+<programlisting>
+Limit prm:strcrc32
+</programlisting>
+</para>
+
+</sect2>
+
+</sect1>

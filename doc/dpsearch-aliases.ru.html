@@ -1,0 +1,609 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Алиасы</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Индексирование"
+HREF="dpsearch-indexing.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Указание веб-пространства для индексирования"
+HREF="dpsearch-follow.ru.html"><LINK
+REL="NEXT"
+TITLE="ServerTable
+"
+HREF="dpsearch-srvtable.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-follow.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 3. Индексирование</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-srvtable.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="ALIASES"
+>3.7. Алиасы</A
+></H1
+><P
+>Встроенная в <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> поддержка алиасов дает возможность
+индексировать сайты, беря информацию для индексации из альтернативного источника
+данных. Например, при индексации локального веб-сервера можно выбирать 
+страницы напрямую с жесткого диска без использования веб-сервера и сетевых
+протоколов. Либо, например, можно для индексации какого-либо сайта использовать
+не его основной адрес, а его более быстрое зеркало.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIAS-CONF"
+>3.7.1. Команда Alias (из indexer.conf)
+<A
+NAME="AEN1321"
+></A
+></A
+></H2
+><P
+>Формат команды "Alias" <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Alias &lt;главныйURL&gt; &lt;вторичныйURL&gt;</PRE
+></P
+><P
+>Например, для индексации
+<TT
+CLASS="LITERAL"
+>http://www.site.ru/</TT
+> с использованием ближайшего зеркала
+<TT
+CLASS="LITERAL"
+>http://www.other.com/mirrors/site.ru/</TT
+> нужно добавить
+следующие строки в indexer.conf:
+
+		<PRE
+CLASS="PROGRAMLISTING"
+>Server http://www.site.ru/
+Alias  http://www.site.ru/  http://www.other.com/mirrors/site.ru/</PRE
+>
+		</P
+><P
+>			<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> будет указывать
+ссылки с главного сайта <TT
+CLASS="LITERAL"
+>http://www.site.ru/</TT
+>, но
+индексатор будет брать данные с зеркала
+<TT
+CLASS="LITERAL"
+>http://www.other.com/mirrors/site.ru/</TT
+>.</P
+><P
+>Другой пример. Допустим, вы хотите индексировать весь домен
+udm.net. И один из серверов этого домена,
+<TT
+CLASS="LITERAL"
+>http://home.udm.net/</TT
+>, расположен на локальном диске в каталоге
+<TT
+CLASS="LITERAL"
+>/home/httpd/htdocs/</TT
+>. Чтобы это настроить нужно добавить
+следующее:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Realm http://*.udm.net/
+Alias http://home.udm.net/ file:/home/httpd/htdocs/</PRE
+>
+		</P
+><P
+>Индексатор скачает <TT
+CLASS="LITERAL"
+>home.udm.net</TT
+> с локального диска,а другие сайты скачает по HTTP.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIASES-DIFF"
+>3.7.2. Алиасы для различных частей сервера</A
+></H2
+><P
+>Алиасы просматриваются в порядке их появления в
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>. Таким образом можно создавать алиасы 
+для сервера и для отдельных его частей:
+
+		<PRE
+CLASS="PROGRAMLISTING"
+># Первое - создадим алиас для каталога /stat/ , который физически находится 
+# не на ожидаемом месте по умолчанию:
+Alias http://home.udm.net/stat/  file:/usr/local/stat/htdocs/
+
+# Затем создадим алиас для всего остального сервера:
+Alias http://home.udm.net/ file:/usr/local/apache/htdocs/</PRE
+>
+		</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Обратите внимание на то, что при изменении порядка следования 
+команд, алиас для каталога<TT
+CLASS="FILENAME"
+>/stat/</TT
+> никогда не будет обработан.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIAS-SERVER"
+>3.7.3. использование алиасов в команде Server</A
+></H2
+><P
+>Возможно указание расположения данных для 
+		выборки индексером используя дополнительный аргумент команды Server:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Server  http://home.udm.net/  file:/home/httpd/htdocs/</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIAS-REALM"
+>3.7.4. Использование алиасов в команде Realm</A
+></H2
+><P
+>Алиасы в команде Realm command являются очень мощным
+инструментом при использовании регулярных выражений. Результат работы такой команды
+подобен работе функции PHP
+<CODE
+CLASS="FUNCTION"
+>preg_replace()</CODE
+>. Алиасы в команде Realm
+работают только при использовании "regex" типов сравнений и не работают для
+"string" типов сравнений.</P
+><P
+>Синтаксис Realm алиасов:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Realm regex &lt;URL_выражение&gt; &lt;алиас_выражение&gt;</PRE
+>
+		</P
+><P
+>Индексатор пропускает URL на совпадение с  URL_выражение
+строит алиас используя алиас_выражение. алиас_выражение может содержать
+ссылки вида $n. n - это число в диапазоне
+0-9. Каждая такая ссылка заменяется текстом, взятым из 
+n-ого по счету regex-выражения в круглых скобках. При этом
+$0 ссылается на текст которому соответствует все выражение целиком.
+Выражения в круглых скобках нумеруются слева направо (начиная с
+1).</P
+><P
+>Пример: пусть ваша фирма хостит несколько тысяч
+пользователей и их доменов вида
+<TT
+CLASS="LITERAL"
+>www.username.yourname.com</TT
+>. Сайт каждого пользователя
+расположен на диске в подкаталоге "htdocs" относительно домашнего каталога пользователя:
+<TT
+CLASS="LITERAL"
+>/home/username/htdocs/</TT
+>.</P
+><P
+>Для правильной настройки нужно следующее
+(напоминаем, что символ '.' имеет специальное значение в регулярных выражениях
+и должен быть экранирован использованием символа '\' в тех случаях, когда символ точки
+необходимо испольховать в своем обычном значении):
+		<PRE
+CLASS="PROGRAMLISTING"
+>Realm regex (http://www\.)(.*)(\.yourname\.com/)(.*)  file:/home/$2/htdocs/$4</PRE
+>
+		</P
+><P
+>Представим процесс индексации страницы
+<TT
+CLASS="FILENAME"
+>http://www.john.yourname.com/news/index.html</TT
+>
+. Он построит пять ссылок - от $0 до $4:</P
+><P
+CLASS="LITERALLAYOUT"
+>&nbsp;&nbsp;&nbsp;$0&nbsp;=&nbsp;'http://www.john.yourname.com/news/index.htm'&nbsp;(сожержит&nbsp;все&nbsp;выражение&nbsp;удовлетворяющее&nbsp;regex&nbsp;целиком)<br>
+&nbsp;&nbsp;&nbsp;$1&nbsp;=&nbsp;'http://www.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;соответствует&nbsp;подвыражению&nbsp;'(http://www\.)'<br>
+&nbsp;&nbsp;&nbsp;$2&nbsp;=&nbsp;'john'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;соответствует&nbsp;подвыражению&nbsp;'(.*)'<br>
+&nbsp;&nbsp;&nbsp;$3&nbsp;=&nbsp;'.yourname.com/'&nbsp;&nbsp;&nbsp;соответствует&nbsp;подвыражению&nbsp;'(\.yourname\.com/)'<br>
+&nbsp;&nbsp;&nbsp;$4&nbsp;=&nbsp;'/news/index.html'&nbsp;соответствует&nbsp;подвыражению&nbsp;'(.*)'</P
+><P
+>Затем индексатор построит алиас используя $2 and $4 ссылки:
+		<PRE
+CLASS="PROGRAMLISTING"
+>file:/home/john/htdocs/news/index.html</PRE
+>
+		</P
+><P
+>и использует этот результат для получения документа.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIAS-PROG"
+>3.7.5. Команда AliasProg
+<A
+NAME="AEN1373"
+></A
+></A
+></H2
+><P
+>			<B
+CLASS="COMMAND"
+>AliasProg</B
+> - еще одна команда для построения алиасов.
+			Иногда альтернативное расположение документов на локальном диске может быть слишком сложным,
+			чтобы описать его с помощью команд <B
+CLASS="COMMAND"
+>Alias</B
+> или <B
+CLASS="COMMAND"
+>Realm</B
+>.
+			<B
+CLASS="COMMAND"
+>AliasProg</B
+> - это внешняя исполняемая программа, которая принимает 
+			в качестве аргумента URL, и возвращает его алиас на STDOUT. Используйте $1 чтобы
+			передать значение URL.
+		</P
+><P
+>			Например, эта команда использует программу <TT
+CLASS="LITERAL"
+>replace</TT
+> из дистрибутива MySQL
+			для замены подстроки <TT
+CLASS="LITERAL"
+>http://www.apache.org/</TT
+> на подстроку
+			<TT
+CLASS="LITERAL"
+>file:/usr/local/apache/htdocs/</TT
+>:
+
+			<PRE
+CLASS="PROGRAMLISTING"
+>AliasProg  "echo $1 | /usr/local/mysql/bin/mysql/replace http://www.apache.org/ file:/usr/local/apache/htdocs/"</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIAS-REVERSE"
+>3.7.6. Команда ReverseAlias
+<A
+NAME="AEN1388"
+></A
+></A
+></H2
+><P
+>			Команда <B
+CLASS="COMMAND"
+>ReverseAlias</B
+> позволяет видоизменить URL документа
+			сразу же после того, как найдена ссылка на него.
+		<PRE
+CLASS="PROGRAMLISTING"
+>ReverseAlias http://name2/   http://name2.yourname.com/
+Server       http://name2.yourname.com/</PRE
+>
+		</P
+><P
+>			В это примере все ссылки с коротким именем сервера будут преобразованы
+			в ссылки с полным именем сервера. Это произойдет сразу же после обнаружения
+			"короткой" ссылки, а в базу данных попадет документ с уже длинным именем сервера
+			в адресе.
+		</P
+><P
+>			Еще одно возможное применение команды <B
+CLASS="COMMAND"
+>ReverseAlias</B
+> - это вырезание
+			различных ненужных кусков адреса, например <TT
+CLASS="LITERAL"
+>PHPSESSION=XXXX</TT
+>.
+		</P
+><P
+>			Например, для вырезания параметра PHPSESSION из URL типа <TT
+CLASS="LITERAL"
+>http://www/a.php?PHPSESSION=XXX</TT
+>,
+			если PHPSESSION - единственный параметр, будет выглядеть так (знак ? будет вырезан тоже):
+			<PRE
+CLASS="PROGRAMLISTING"
+>ReverseAlias regex  (http://[^?]*)[?]PHPSESSION=[^&amp;]*$   $1</PRE
+>
+		</P
+><P
+>			Чтобы вырезать PHPSESSION, когда он является первым параметром, при условии, что
+			после него следуют другие параметры, т.е. <TT
+CLASS="LITERAL"
+>http://www/a.php?PHPSESSION=xxx&amp;..</TT
+>, 
+			используйте эту команду:
+			<PRE
+CLASS="PROGRAMLISTING"
+>ReverseAlias regex  (http://[^?]*[?])PHPSESSION=[^&amp;]*&amp;(.*)  $1$2</PRE
+>
+			Знак '&amp;' после аргумента PHPSESSION будет вырезан, а знак вопроса не будет.
+		</P
+><P
+>			Для вырезания из URL типа
+			<TT
+CLASS="LITERAL"
+>http://www/a.php?a=b&amp;PHPSESSION=xxx</TT
+> или
+			<TT
+CLASS="LITERAL"
+>http://www/a.php?a=b&amp;PHPSESSION=xxx&amp;c=d</TT
+>,
+			где PHPSESSION не является первым параметром, используйте
+			<PRE
+CLASS="PROGRAMLISTING"
+>ReverseAlias regex  (http://.*)&amp;PHPSESSION=[^&amp;]*(.*)   $1$2</PRE
+>
+			Знак '&amp;' перед PHPSESSION будет тоже вырезан.
+
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REVERSEALIAS-PROG"
+>3.7.7. Команда ReverseAliasProg
+<A
+NAME="AEN1410"
+></A
+></A
+></H2
+><P
+>			<B
+CLASS="COMMAND"
+>ReverseAliasProg</B
+> - команда, аналогичная обеим командам <B
+CLASS="COMMAND"
+>AliasProg</B
+> и <B
+CLASS="COMMAND"
+>ReverseAlias</B
+>. 
+Она получает параметры аналогично команде <B
+CLASS="COMMAND"
+>AliasProg</B
+>, но преобразовывет URL перед вставкой в базу, аналогично команде <B
+CLASS="COMMAND"
+>ReverseAlias</B
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ALIAS-SEARCH"
+>3.7.8. Алиасы в search.htm 
+<A
+NAME="AEN1421"
+></A
+></A
+></H2
+><P
+>			Вы также можете использовать алиасы и в <TT
+CLASS="FILENAME"
+>search.htm</TT
+>.
+			Команда <B
+CLASS="COMMAND"
+>Alias</B
+> в <TT
+CLASS="FILENAME"
+>search.htm</TT
+> аналогична
+			такой же команде в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>, но работате во время
+			поиска, а не во время индексации.
+		</P
+><P
+>			Синтаксис команды также аналогичен команде в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Alias &lt;find-prefix&gt; &lt;replace-prefix&gt;</PRE
+>
+		</P
+><P
+>			Например, пусть в <TT
+CLASS="FILENAME"
+>search.htm</TT
+> есть такая команда:
+			<PRE
+CLASS="PROGRAMLISTING"
+>Alias http://localhost/ http://www.site.ru/</PRE
+>
+		</P
+><P
+>			Пусть поиск вернул страницу с адресом <TT
+CLASS="LITERAL"
+>http://localhost/news/article10.html</TT
+>
+			В результате, появится переменная $(Alias), которую значение которой будет равным
+			<TT
+CLASS="LITERAL"
+>http://www.site.ru/news/article10.html</TT
+>
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-follow.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-srvtable.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Указание веб-пространства для индексирования</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>ServerTable
+<A
+NAME="AEN1440"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

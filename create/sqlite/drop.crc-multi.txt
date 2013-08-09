@@ -1,0 +1,14 @@
+DROP TABLE ndict2;
+DROP TABLE ndict3;
+DROP TABLE ndict4;
+DROP TABLE ndict5;
+DROP TABLE ndict6;
+DROP TABLE ndict7;
+DROP TABLE ndict8;
+DROP TABLE ndict9;
+DROP TABLE ndict10;
+DROP TABLE ndict11;
+DROP TABLE ndict12;
+DROP TABLE ndict16;
+DROP TABLE ndict32;
+

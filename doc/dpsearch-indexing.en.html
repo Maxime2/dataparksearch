@@ -1,0 +1,729 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Indexing</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Quick usage tour"
+HREF="dpsearch-quick-usage.en.html"><LINK
+REL="NEXT"
+TITLE="Supported HTTP response codes"
+HREF="dpsearch-http-codes.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-quick-usage.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-http-codes.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="INDEXING"
+></A
+>Chapter 3. Indexing</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>3.1. <A
+HREF="dpsearch-indexing.en.html#GENERAL"
+>Indexing in general</A
+></DT
+><DT
+>3.2. <A
+HREF="dpsearch-http-codes.en.html"
+>Supported HTTP response codes</A
+></DT
+><DT
+>3.3. <A
+HREF="dpsearch-content-enc.en.html"
+>Content-Encoding support</A
+></DT
+><DT
+>3.4. <A
+HREF="dpsearch-stopwords.en.html"
+>Stopwords</A
+></DT
+><DT
+>3.5. <A
+HREF="dpsearch-clones.en.html"
+>Clones</A
+></DT
+><DT
+>3.6. <A
+HREF="dpsearch-follow.en.html"
+>Specifying WEB space to be indexed</A
+></DT
+><DT
+>3.7. <A
+HREF="dpsearch-aliases.en.html"
+>Aliases</A
+></DT
+><DT
+>3.8. <A
+HREF="dpsearch-srvtable.en.html"
+>Servers Table</A
+></DT
+><DT
+>3.9. <A
+HREF="dpsearch-pars.en.html"
+>External parsers</A
+></DT
+><DT
+>3.10. <A
+HREF="dpsearch-indexcmd.en.html"
+>Other commands are used in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+></A
+></DT
+><DT
+>3.11. <A
+HREF="dpsearch-extended-indexing.en.html"
+>Extended indexing features</A
+></DT
+><DT
+>3.12. <A
+HREF="dpsearch-syslog.en.html"
+>Using syslog</A
+></DT
+><DT
+>3.13. <A
+HREF="dpsearch-stored.en.html"
+>Storing compressed document copies</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="GENERAL"
+>3.1. Indexing in general</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-CONF"
+>3.1.1. Configuration</A
+></H2
+><P
+>First, you should configure <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>. Indexer
+configuration is covered mostly by
+<TT
+CLASS="FILENAME"
+>indexer.conf-dist</TT
+> file. You can find it in
+<TT
+CLASS="LITERAL"
+>etc</TT
+> directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> distribution. You may
+take a look at other *.conf samples in <TT
+CLASS="LITERAL"
+>doc/samples</TT
+>
+directory. </P
+><P
+>To set up <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+file, change directory to <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation <TT
+CLASS="LITERAL"
+>/etc</TT
+>
+directory, copy <TT
+CLASS="FILENAME"
+>indexer.conf-dist</TT
+> to
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and edit it.</P
+><P
+>To configure search front-ends
+(<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> and/or
+<TT
+CLASS="FILENAME"
+>search.php3</TT
+>, or other), you should copy <TT
+CLASS="FILENAME"
+>search.htm-dist</TT
+> file in /etc directory 
+of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> 
+installation to <TT
+CLASS="FILENAME"
+>search.htm</TT
+> and edit it. See <A
+HREF="dpsearch-templates.en.html"
+>Section 8.3</A
+>&#62; for detailed description.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-RUN"
+>3.1.2. Running <B
+CLASS="COMMAND"
+>indexer</B
+></A
+></H2
+><P
+>Just run indexer once a week (a day, an hour
+...) to find the latest modifications in your web sites. You may also
+insert indexer into your <TT
+CLASS="LITERAL"
+>crontab</TT
+> job.</P
+><A
+NAME="AEN566"
+></A
+><P
+>By default, indexer being called without any
+command line arguments reindex only expired documents. You can change
+expiration period with <B
+CLASS="COMMAND"
+>Period</B
+>
+
+			<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> command. If
+you want to reindex all documents irrelevant if those are expired or
+not, use <CODE
+CLASS="OPTION"
+>-a</CODE
+> option. indexer will mark all documents
+as expired at startup. </P
+><P
+>Retrieving documents, indexer sends
+<TT
+CLASS="LITERAL"
+>If-Modified-Since</TT
+> HTTP header for documents that
+are already stored in database. When indexer gets  next document it
+calculates document's checksum. If checksum is the same with old
+checksum stored in database, it will not parse document again. indexer
+<CODE
+CLASS="OPTION"
+>-m</CODE
+> command line option prevents indexer from sending
+<TT
+CLASS="LITERAL"
+>If-Modified-Since</TT
+> headers and make it parse
+document even if checksum is the same. It is useful for example when
+you have changed your <B
+CLASS="COMMAND"
+>Allow/Disallow</B
+> rules in
+<TT
+CLASS="FILENAME"
+>indexer.conf </TT
+> and it is required to add new pages
+that was disallowed earlier.</P
+><P
+>If <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> retrieves URL with redirect HTTP
+301,302,303 status it will index URL given in
+<TT
+CLASS="LITERAL"
+>Location:</TT
+> field of HTTP-header instead.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-CREATE-TABLES"
+>3.1.3. How to create SQL table structure</A
+></H2
+><A
+NAME="AEN584"
+></A
+><P
+>To create SQL tables required for 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> functionality, 
+use <TT
+CLASS="LITERAL"
+>indexer -Ecreate</TT
+>. Executed with this argument, 
+indexer looks up a file containing SQL statements necessary for creating
+all SQL tables for the database type and storage mode given
+in <B
+CLASS="COMMAND"
+>DBAddr</B
+> <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> command. 
+Files are looking up at <TT
+CLASS="FILENAME"
+>/share</TT
+> directory of 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> installation, which is usually 
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/share/</TT
+>. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-DROP-TABLES"
+>3.1.4. How to drop SQL table structure</A
+></H2
+><A
+NAME="AEN596"
+></A
+><P
+>To drop all SQL tables created by 
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>,  use <TT
+CLASS="LITERAL"
+>indexer -Edrop</TT
+>. 
+A file with SQL statements required to drop tables are looking up at 
+<TT
+CLASS="FILENAME"
+>/share</TT
+> directory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-SUBSECT"
+>3.1.5. Subsection control</A
+></H2
+><P
+>indexer has -t, -u, -s options to limit action
+to only a part of the database. -t corresponds 'Tag' limitation, -u is
+a URL substring limitation (SQL LIKE wildcards). -s limits URLs with
+given HTTP status. All limit options in the same group are ORed and in
+the different groups are ANDed.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-CLEARDB"
+>3.1.6. How to clear database</A
+></H2
+><A
+NAME="AEN608"
+></A
+><P
+>To clear the whole database, use 'indexer
+-C'. You may also delete only the part of database by using -t,-u,-s
+subsection control options.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-DBSTAT"
+>3.1.7. Database Statistics</A
+></H2
+><A
+NAME="AEN613"
+></A
+><P
+>If you run <TT
+CLASS="LITERAL"
+>indexer -S</TT
+>, it
+will show database statistics, including count of total and expired
+documents of each status. -t, -u, -s filters are usable in this mode
+too.</P
+><P
+>The meaning of status is:</P
+><P
+></P
+><UL
+><LI
+><P
+>0 - new (not indexed yet) URL</P
+></LI
+></UL
+><P
+>If status is not 0, then it is HTTP response code, some of the HTTP codes are:</P
+><P
+></P
+><UL
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>200</TT
+> - "OK" (url is successfully indexed)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>206</TT
+> - "Partial OK" (a part of url is successfully indexed)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>301</TT
+> - "Moved Permanently" (redirect to another URL)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>302</TT
+> - "Moved Temporarily" (redirect to another URL)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>303</TT
+> - "See Other" (redirect to another URL)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>304</TT
+> - "Not modified" (url has not been modified since last indexing)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>401</TT
+> - "Authorization required" (use login/password for given URL)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>403</TT
+> - "Forbidden" (you have no access to this URL(s))</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>404</TT
+> - "Not found" (there were references to URLs that do not exist)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>500</TT
+> - "Internal Server Error" (error in cgi, etc)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>503</TT
+> - "Service Unavailable" (host is down, connection timed out)</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>504</TT
+> - "Gateway Timeout" (read timeout when retrieving document)</P
+></LI
+></UL
+><P
+><A
+NAME="AEN660"
+></A
+>
+			<TT
+CLASS="LITERAL"
+>HTTP 401</TT
+> means that this
+URL is password protected. You can use <B
+CLASS="COMMAND"
+>AuthBasic</B
+>
+command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> to set
+<TT
+CLASS="LITERAL"
+>login:password</TT
+> for this URL(s).</P
+><P
+>			<TT
+CLASS="LITERAL"
+>HTTP 404</TT
+> means that you
+have incorrect reference in one of your document (reference to
+resource that does not exist).</P
+><P
+>Take a look on <A
+HREF="http://www.w3.org/Protocols/"
+TARGET="_top"
+>HTTP specific documentation</A
+> for further explanation of different HTTP status codes.</P
+><P
+>Status codes <TT
+CLASS="LITERAL"
+>2xxx</TT
+> are not in HTTP specification and they correspond to the documents marked as clones, 
+where <TT
+CLASS="LITERAL"
+>xxx</TT
+> - one of status codes described above.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-LINKVAL"
+>3.1.8. Link validation</A
+></H2
+><A
+NAME="AEN676"
+></A
+><P
+>Being started with -I command line argument,
+indexer displays URL and it's referrer pairs. It is very useful to
+find bad links on your site. Don't use <B
+CLASS="COMMAND"
+>HoldBadHrefs 0</B
+>
+command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> for this
+mode. You may use subsection  control options -t,-u,-s in this
+mode. For example, <TT
+CLASS="LITERAL"
+>indexer -I -s 404</TT
+> will display
+all 'Not found' URLs with referrers where links to those bad documents
+are found. Setting relevant <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> commands
+and command line options you may use <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> special for site
+validation purposes.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="GENERAL-PARALLEL"
+>3.1.9. Parallel indexing</A
+></H2
+><A
+NAME="AEN686"
+></A
+><P
+>It is possible to run several
+indexers simultaneously with the same <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file. We have
+successfully tested 30 simultaneous indexers with <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+>
+database. By default, <B
+CLASS="COMMAND"
+>indexer</B
+> marks documents selected for indexing as expired in 4 hours in the future to avoid
+double indexing of the same URL by different indexer. However this is not gives 100% garantee of avoiding such duplication.
+You may use multi-threaded version of indexer
+with any SQL  back-end though which does support several simultaneous
+connections. Multi-threaded indexer version uses own locking
+mechanism.</P
+><P
+>It is not recommended to use the same database
+with different <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> files! First process
+could add something but second could delete it, and it may never
+stop.</P
+><P
+>On the other hand, you may run several indexer
+processes with different databases with ANY supported SQL
+back-end.</P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-quick-usage.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-http-codes.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Quick usage tour</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Supported HTTP response codes</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

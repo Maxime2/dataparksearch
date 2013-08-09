@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Introduction</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="PREVIOUS"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="NEXT"
+TITLE="Where to get DataparkSearch."
+HREF="dpsearch-get.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="index.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-get.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="INTRO"
+></A
+>Chapter 1. Introduction</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1.1. <A
+HREF="dpsearch-intro.en.html#FEATURES"
+>DataparkSearch Features</A
+></DT
+><DT
+>1.2. <A
+HREF="dpsearch-get.en.html"
+>Where to get <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</A
+></DT
+><DT
+>1.3. <A
+HREF="dpsearch-disclaimer.en.html"
+>Disclaimer</A
+></DT
+><DT
+>1.4. <A
+HREF="dpsearch-authors.en.html"
+>Authors</A
+></DT
+></DL
+></DIV
+><A
+NAME="AEN16"
+></A
+><P
+>		<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> is a
+full-featured web search engine. <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> consists of two
+parts. The first part is an indexing mechanism (the <B
+CLASS="COMMAND"
+>indexer</B
+>). The indexer walks
+over hypertext references and stores found words and new references into the database. 
+The second part is a CGI front-end to
+provide the search service using the data collected by the indexer.</P
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> was cloned from the 3.2.16 CVS version of <SPAN
+CLASS="APPLICATION"
+>mnoGoSearch</SPAN
+>
+on 27 November 2003 as <SPAN
+CLASS="APPLICATION"
+>DataparkSearch 4.16</SPAN
+>.
+The <SPAN
+CLASS="APPLICATION"
+>mnoGoSearch's</SPAN
+> first release
+took place in November 1998. The search engine had the name of
+UDMSearch until October 2000 when the project was acquired by
+Lavtech.Com Corp. and changed its name to
+<SPAN
+CLASS="APPLICATION"
+>mnoGoSearch</SPAN
+>.</P
+><P
+><A
+NAME="AEN29"
+></A
+>
+The latest change log of DataparkSearch can be found <A
+HREF="http://www.dataparksearch.org/ChangeLog"
+TARGET="_top"
+>on our website</A
+>.</P
+><P
+><A
+NAME="AEN33"
+></A
+>
+Follow <A
+HREF="http://twitter.com/dataparksearch"
+TARGET="_top"
+>@dataparksearch</A
+> to see latest updates to the DataparkSearch.</P
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FEATURES"
+>1.1. DataparkSearch Features</A
+></H1
+><A
+NAME="AEN38"
+></A
+><P
+>Main <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> features are as follows:</P
+><P
+></P
+><UL
+><LI
+><P
+>MySQL (<TT
+CLASS="LITERAL"
+>libz</TT
+>
+library required), PostgreSQL,   iODBC, unixODBC, EasySoft
+ODBC-ODBC bridge,  InterBase, Oracle (see <A
+HREF="dpsearch-oracle.en.html"
+>Section 5.5</A
+>&#62;), 
+ MS SQL back-ends support.</P
+></LI
+><LI
+><P
+>HTTP support.</P
+></LI
+><LI
+><P
+>HTTP proxy support.</P
+></LI
+><LI
+><P
+>HTTPS support.</P
+></LI
+><LI
+><P
+>FTP support.</P
+></LI
+><LI
+><P
+>NNTP support (both news:// and nntp:// URL schemes).</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-extended-indexing.en.html#HTDB"
+>HTDB virtual URL scheme</A
+>
+support. One may build index and search through the big text
+fields/blobs of SQL database.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-extended-indexing.en.html#MIRROR"
+>Mirroring features</A
+>.</P
+></LI
+><LI
+><P
+>					<TT
+CLASS="LITERAL"
+>text/html</TT
+>, <TT
+CLASS="LITERAL"
+>text/xml</TT
+>, <TT
+CLASS="LITERAL"
+>text/plain</TT
+>,
+<TT
+CLASS="LITERAL"
+>audio/mpeg</TT
+> (MP3) and <TT
+CLASS="LITERAL"
+>image/gif</TT
+> built-in support.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-pars.en.html"
+>External parsers</A
+> support for other document types.</P
+></LI
+><LI
+><P
+>Ability to index multilingual sites using content negotiation.</P
+></LI
+><LI
+><P
+>Searching all of the word forms using ispell affixes and dictionaries</P
+></LI
+><LI
+><P
+>Basic authorization support. One may index password protected  intranet HTTP servers.</P
+></LI
+><LI
+><P
+>Proxy authorization support.</P
+></LI
+><LI
+><P
+>Reentry capability. One may use
+several indexing and searching processes at the same time even on the
+same database. Multi-threaded indexing support.</P
+></LI
+><LI
+><P
+>Stop-list support.</P
+></LI
+><LI
+><P
+>&lt;META NAME="robots" content="..."&gt; and <TT
+CLASS="FILENAME"
+>robots.txt</TT
+> support.</P
+></LI
+><LI
+><P
+>C language CGI  web front-end.</P
+></LI
+><LI
+><P
+>Boolean query language support.</P
+></LI
+><LI
+><P
+>Results sorting by relevance, popularity rank, last modified date and by importance 
+(a multiplication of relevance and popularity rank).</P
+></LI
+><LI
+><P
+>Fuzzy search: different word forms, spelling corrections, 
+<A
+HREF="dpsearch-fuzzy.en.html#SYNONYMS"
+>synonyms</A
+>, 
+<A
+HREF="dpsearch-fuzzy.en.html#ACRONYM"
+>acronyms and abbreviations</A
+>.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-international.en.html#CHARSET"
+>Various character sets support</A
+>.</P
+></LI
+><LI
+><P
+>HTML templates to easily customize search results.</P
+></LI
+><LI
+><P
+>Advanced search options like time limits, category and tags limits etc.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-cjk.en.html"
+>Phrases segmenting for Chinese, Japanese, Korean and Thai languages</A
+>.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-fuzzy.en.html#ACCENT"
+>Accent insensitive search</A
+>.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-mod_dpsearch.en.html"
+><B
+CLASS="COMMAND"
+>mod_dpsearch</B
+></A
+> - search module for <A
+HREF="http://httpd.apache.org/"
+TARGET="_top"
+>Apache</A
+> web server.</P
+></LI
+><LI
+><P
+>Internationalized Domain Names support.</P
+></LI
+><LI
+><P
+><A
+HREF="dpsearch-rel.en.html#SEA"
+>The Summary Extraction Algorithm</A
+> (SEA).</P
+></LI
+></UL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-get.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>DataparkSearch Engine 4.54</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Where to get <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

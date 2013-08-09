@@ -1,0 +1,1258 @@
+#
+# English computer science related acronyms
+# Compiled by Maxim Zakharov <maxime@sochi.net.ru>
+#
+Language: en
+Charset: latin1
+#
+A	accumulator
+AAAI	American Association for Artificial Intelligence
+ABEND	abnormal end
+abs	absolute
+absc	abscissa
+AC	alternating current
+ac	account
+ACC	automation classification code
+acc	acceptance
+acc	account
+acc	accumulator
+ACCES	automated catalog of computer equipment and software
+acct	account
+ACE	asynchronous communications element
+ACK	acknowledge
+ACM	Association for Computing Machinery
+ACPA	Association of Computer Programmers and Analysts
+act	actual
+AD	analog to digital
+ad	adapter
+ADA	automatic data acquisition
+ADAC	analog digital analog converter
+ADC	analog digital converter
+add	addition
+add	address
+ADE	automatic design engineering
+adj	adjacent
+adj	adjust
+adj	adjustement
+ADP	airborne data processor
+ADP	automatic data processing
+ADP	Association of Database Producers
+ADPC	automatic data processing center
+adr	adder
+ADSC	automatic data service center
+ADT	architecture definition technique
+ADX	automatic data exchange
+AE	absolute error
+AE	arithmetic element
+AE	arithmetic expression
+af	audio frequency
+AI	artificial intelligence
+alg	algebra
+alg	algebraic
+alg	algebraical
+algo	algorithm
+alloc	allocate
+alt	alteration
+alt	alternate
+alt	alternative
+ALU	arithmetic and logic unit
+am	amplitude
+amdt	amendment
+amp	amplifier
+ampl	amplifier
+amt	amount
+anal	analogous
+anal	analogu
+anal	analysis
+anal	analyze
+ANOVA	analysis of variance
+ans	answering
+AP	attached processor
+APP	associative parellel processor
+app	apparatus
+app	approximation
+appl	application
+approx	approximate
+approx	approximation
+APS	attached processor system
+aq	any quantity
+AQL	acceptable quality level
+AR	address register
+arg	argument
+arith	arithmetic
+arith	arithmetical
+ARM	asynchronous response mode
+arr	arrange
+arrgt	arangement
+ARU	audio response unit
+ASC	American Society for Cybernetics
+asg	assign
+asgmt	assignment
+asgn	assign
+ASIS	American Society for Information Science
+asm	assembly
+asm	assembler
+asmbler	assembler
+ASR	automatic speech recognition
+assur	assurance
+assy	assembly
+AT	automatic translation
+AT	action time
+ATDM	asynchronous time division multiplexing
+ATE	automatic test equipment
+ATM	automatic teller machine
+ATM	Asynchronous Transfer Mode
+ATS	automatic test system
+AU	arithmetic unit
+aug	augment
+avail	availability
+avg	average
+#
+B	binary
+b	bit
+BA	binary add
+bb	Broadband
+BC	binary code
+BCD	binary coded decimal
+BCI	binary code information
+BCW	buffer control word
+bd	board
+BDP	business data processing
+BDU	basic display unit
+BE	booleam expression
+BFLOPS	billion of floating point operations per second
+bfr	buffer
+bgp	Border Gateway Protocol
+BIFO	biased first in first out
+bin	binary
+BIPS	billion instructions per second
+BISAM	basic indexed sequential access method
+BIST	built in self test
+BIT	built in test
+bit	binary digit
+BIX	binary information exchange
+bkt	bracket
+bl	blanking
+bl	block
+blk	blank
+blk	block
+blnk	blank
+bn	binary number
+BNF	Backus Normal Form
+BNF	Backus Naur Form
+BOT	beginning of tape
+bpi	bit per inch
+bps	bit per second
+br	branch
+BS	backspace
+BS	binary substract
+bs	bit per second
+BWT	Burrows Wheeler Transform
+#
+c	capacitance
+c	capacity
+c	case
+c	circuit
+c	coefficient
+c	computer
+c	contact
+c	control
+c	current
+c	cycle
+CA	communication adapter
+CACE	computer aided control engineering
+CACSD	computer aided control system design
+CAD	computer aided design
+CADD	computer aided design and drafting
+CAE	computer aided engineering
+CAFS	content addressable file store
+CAI	computer aided instruction
+CAL	computer aided learning
+CAL	conversational algebraic language
+cal	calculate
+cal	calibrate
+calc	calculate
+calc	calculator
+calc	calculus
+calcn	calculation
+CAM	cascade access method
+CAM	communication access method
+CAM	computer aided manufacturing
+CAM	content	addressable memory
+CAM	cybernetic antropomorphous machine
+CAMAC	computer aided measurement and control
+CAN	cancel character
+can	cancellation
+CAP	computer aided planing
+cap	capacitor
+cap	capacity
+CAPM	computer aided production management
+caps	capital letters
+carr	carriage
+CAS	column address strobe
+CAT	computer aided testing
+CAW	channel address word
+CB	control board
+CB	control button
+CB	current bit
+CC	carriage control
+CC	central computer
+CC	central control
+CC	color code
+CC	connecting circuit
+CC	cross correlation
+cc	calculator
+cc	carbon copy
+CCITT	Comite Consultatif International Telegraphique et Telephonique
+CCP	certificate in computer programming
+CCP	channel control processor
+CCP	communication control package
+CCP	console command processor
+CCW	cjannel command word
+CD	clock driver
+cd	card
+cd	code
+cd	compact disk
+CDB	common data bus
+CDC	code directing character
+cdg	coding
+CDIP	ceramic DIP
+CDU	central display unit
+CELP	Code Excited Linear Prediction
+CF	central file
+CF	count forward
+CFL	context free language
+CG	categorial grammar
+CG	character generator
+cge	carriage
+CH	control heading
+ch	chain
+ch	channel
+ch	check
+chan	channel
+char	character
+chg	change
+chk	check
+chkpt	checkpoint
+chks	checksum
+chnl	channel
+CIM	computer integrated manufacturing
+cir	circuit
+ckt	circuit
+CL	computer language
+cl	clause
+cl	clearance
+cl	closed
+clar	clarification
+cld	called
+clg	calling
+clp	clamp
+clr	clear
+CLT	communication line terminal
+CLT	computer language translator
+CLU	central logic unit
+CM	computer module
+CM	configuration management
+cm	control mark
+cm	core memory
+cmct	communicate
+CMOS	complementary MOS
+CMOS	complementary metal oxid semiconductor
+cmp	compare
+cmp	computational
+cmpl	complement
+cmplx	complex
+cmpt	computer
+cmptr	computer
+CN	control number
+cnct	connect
+cnd	condition
+cnsl	console
+cnt	count
+cnt	counter
+co	changeover
+coax	coaxial
+coef	coefficient
+coeff	coefficient
+col	column
+coll	collateral
+coll	collect
+coll	collection
+coll	collector
+coln	column
+com	comma
+com	commercial
+com	communication
+com	communicator
+comb	combination
+comm	communication
+comm	communicator
+comp	comparison
+comp	compilation
+comp	component
+comp	composition
+comp	compound
+comp	computation
+compar	comparison
+compil	compilation
+comptr	comptometer
+con	concentration
+con	connection
+con	console
+con	constant
+concl	conclusion
+cond	condition
+conf 	Conference
+config	configuration
+conj	conjugation
+conj	conjunction
+conn	connection
+conn	connector
+cons	consecutive
+cons	consequence
+cons	construction
+const	constant
+cont	contact
+cont	continuous
+cont	control
+cont	controller
+conv	convergence
+corr	correction
+correl	correlation
+CP	clock pulse
+cp	control panel
+cp	control point
+cp	computer
+cpc	computer process control
+cpc	cyclic permuted code
+cpi	characters per inch
+cps	characters per second
+cps	cycle per second
+CPU	central processing unit
+CPU	central processor unit
+cpy	copy
+cr	call request
+cr 	card reader
+cr	carriage return
+cr	command register
+cr	count reverse
+CRC	cyclic redundancy check
+CRT	cathode ray tube
+crt	circuit
+crypto	cryptograph
+crypto	cryptography
+cs	channel status
+cs	control signal
+cs	cumulative sum
+csi	cahnnel status indicator
+CSW	channel status word
+ct	circuit
+ct	count
+ct	counter
+ctc	contact
+ctr	counter
+ctrl	control
+cu	control unit
+cum	cumulative
+cur	current
+curr	current
+CW	continuous waves
+cw	clockwise
+cx	central exchange
+cy	case copy
+cy	cycle
+cyl	cylinder
+#
+D	degree
+D	delete
+D	density
+D	development
+D	differential
+D	digit
+D	digital
+D	dimension
+D	display
+DA	data available
+DA	dicimal addition
+DA	define area
+da	digital to analog
+da	digital analog
+DAC	data acquisition and control
+DAC	design augmented by computer
+DAC	digital analog conversion
+DAC	digital to analog converter
+DAM	direct access method
+DAS	data acquisition system
+DASD	direct access storage device
+DAU	data acquisition unit
+DB	database
+DB	digital block
+DBA	database administrator
+dbl	double
+DBMS	database management system
+DC	data channel
+DC	data collection
+DC	decimal classification
+DC	digital computer
+DC	direct current
+DC	display console
+DCB	data control block
+DCC	data communication channel
+DCE	data communications equipment
+dcmt	document
+DCN	distributed computer network
+DCP	display control panel
+DCS	distributed computer system
+DCT	Direct Cosine Transform
+DD	data demand
+DD	decimal divide
+DD	digital data
+DD	digital display
+DDB	distributed database
+DDBMS	distributed database management system
+DDC	digital data converter
+DDC	direct digital control
+DDP	distributed data processing
+dec	decimal
+dec	decision
+decit	decimal digit
+decn	decision
+decr	decrement
+DED	double error detection
+ded	deduction
+deg	degree
+del	delay
+deriv	derivation
+deriv	derivative
+desc	description
+det	determinant
+dev	development
+dev	deviation
+dev	device
+DF	direct flow
+DFA	deterministic finite state automation
+DFT	discrete Fourier transform
+DI	digital input
+DIC	digital intergrated circuit
+diff	difference
+DIL	dual in line
+dim	dimension
+dio	diode
+DIP	dual in line package
+disc	disconnect
+disj	disjuncion
+distr	distribution
+div	dividend
+div	divisor
+DIVOT	digital to voice translator
+DL	data link
+DL	delay line
+DL	dynamic load
+DLP	data link processor
+dl	delay
+dly	delay
+DM	decimal multiply
+DMA	direct memory access
+DMA	direct memory address
+DMC	digital microcircuit
+DMC	dynamic Markov coding
+DMS	data management system
+DMS	dynamic mapping system
+dmux	demultiplexor
+DNC	direct numerical control
+DNF	disjunctive normal form
+DO	digital output
+DOC	date of change
+DOC	decimal to octal conversion
+doc	document
+doc	documentation
+DOS	disk operating system
+DP	data processing
+DP	driving power
+DP	dynamic programming
+DPC	data processing center
+DPM	documents per minute
+DPS	distributed processing system
+DR	drive
+DS	define symbol
+DS	device selector
+DS	dial system
+DS	dataset
+DSL	Digital Subscriber Line
+DSLAM	Digital Subscriber Line Access Multiplexer
+DSU	digital storage unit
+DT	data transmission
+DT	difference threshold
+DT	digital technique
+DTE	data terminal equipment
+DTMF	Dual Tone Multi Frequency
+dum	dummy
+dup	duplicate
+dwg	drawing
+dx	duplex
+#
+E	earth
+E	efficiency
+E	estimate
+e	emitter
+e	error
+EA	effective address
+EC	error correction
+ECC	error correction code
+ED	error detection
+ed	editor
+EDC	electronic digital computer
+EDC	error detection and correction
+EDP	electronic data processing
+EDPC	electronic data processing center
+EE	external environment
+EES	explainable expert system
+EGA	enhanced graphic adapter
+el	element
+elem	element
+elim	eliminate
+EM	end of medium
+ENQ	enquiry
+ent	entry
+enum	enumeration
+env	envelope
+EOA	end of address
+EOB	end of block
+EOC	end of conversion
+EOD	end of data
+EOF	end of file
+EOJ	end of job
+EOL	end of line
+EOM	end of message
+EOP	end of program
+EOR	end of run
+EOR	exclusive OR
+EOT	end of tape
+EOV	end of volume
+EP	entry point
+EPBX	electronic private branch exchange
+EPROM	erasable programmable read only memory
+EPU	electrical power unit
+EQ	equal
+EQ	equalizer
+EQ	equation
+EQ	equipment
+EQ	equivalent
+eqp	equipment
+eqpmt	equipment
+erf	error function
+EROM	erasable read only memory
+err	error
+ES	expert system
+ESC	escape
+est	estimate
+ETB	end of transmission block
+ETX	end of text
+eval	evaluation
+EX	exclusive OR
+EXCH	exchange
+excl	exclusion
+excl	exclusive
+EXD	external device
+exec	execution
+exp	expansion
+exp	exponent
+exp	expression
+expr	expression
+ext	extension
+ext	extent
+EXTRN	external reference
+#
+F	failure
+F	false
+F	feedback
+F	field
+F	filter
+F	fixed
+F	flip flop
+F	force
+F	frequency
+F	function
+fax	facsimile
+FDX	full duplex
+FEFO	first ended first out
+FEP	front end processor
+FF	flip flop
+FFT	fast Fourier transform
+FI	fixed interval
+FIFO	first in first out
+fld	field
+fldl	field length
+FLF	flip flop
+flg	flag
+FLOPS	floating point operations per second
+flp	floating point
+FM	frequency modulation
+fmt	format
+FPGA	field programmable gate array
+FR	Frame Relay
+frac	fraction
+freq	frequency
+FS	file separator
+FSA	finite state automaton
+FTCS	fault tolerent computing system
+ftg	fitting
+FTP	file transfer protocol
+fun	function
+func	function
+fxd	fixed
+fxp	fixed point
+#
+G	gate
+GB	gigabit
+GB	gigabyte
+gc	garbage collect
+gc	garbage collector
+gcd	greatest common divisor
+gcf	greatest common factor
+gen	generation
+gen	generator
+GHz	gigahertz
+gl	glossary
+gm	group mark
+gnd	fround
+GP	generalized programming
+GP	general purpose
+GPS	general problem solver
+grp	group
+GSM	Group Special Mobile
+GT	game theory
+#
+H	halt
+H	halting
+h	haedware
+hc	hard copy
+hdr	header
+hds	half duplex
+hdu	hard disk unit
+hdw	hardware
+hdx	half duplex
+HF	high frequency
+HF	high flexible
+HISAM	hierarchical indexed sequential access method
+HLL	high level language
+HLP	high level protocol
+hlt	halt
+hlt	halting
+hol	hologram
+HPF	highest possible frequency
+HSM	high speed memory
+HTTP	Hypertext Transfer Protocol
+hw	hardware
+#
+i	incomplete
+i	indicator
+i	initial
+i	instruction
+i	intransitive
+i	intrinsic
+IA	indirect addressing
+IB	input buffer
+IC	input circuit
+IC	instrution counter
+IC	integrated circuit
+IC	internal connection
+ICL	incoming line
+id	identification
+id	indicating device
+id	item description
+id	identifier
+IDB	integrated database
+ifn	information
+imp	impulse
+IMS	information management system
+in	input
+incr	increase
+ind	indicate
+ind	indicator
+indn	indication
+ineq	inequality
+inf	infinite
+inf	infinity
+inf	information
+infl	inflection
+info	information
+inq	inquire
+inq	inquiry
+instr	instruction
+int	initial
+int	integer
+int	integral
+int	integrate
+int 	interrupt
+int	intersection
+int	interval
+intel	intelligence
+inv	inverter
+inval	invalid
+invar	invariant
+inx	index
+IP	internet protocol
+IPS	information processing system
+IR	information retrieval
+IRS	information retrieval system
+IS	information science
+ISDN	integrated services digital network
+ISR	information storage and retrieval
+IT	information theory
+IT	information technology
+ITU	International Telecommunication Union
+iv	inverter
+IW	index word
+#
+jctn	junction
+#
+K	kilo
+KB	kilobit
+KB	kilobyte
+kb	keyboard
+kbd	keyboard
+kybd	keyboard
+#
+L	label
+L	law
+L	letter
+L	level
+L	light
+l	line
+l	load
+LAN	local area network
+lang	language
+lbl	label
+LCD	liquid crystal display
+lcd	lowest common denominator
+lcf	least common factor
+lcm	least common multiple
+lcm	lowest common multiple
+LCN	local computer network
+LCN	logical channel number
+ld	lead
+ld	load
+LDP	language data processing
+LED	light emitting diode
+lev	level
+LF	line feed
+LFU	least frequenly used
+libr	librarian
+libr	library
+LIFO	last in first out
+lim	limit
+lit	literal
+lk	link
+ln	natutal logarithm
+lng	length
+loc	location
+log	common logarithm
+log	logarithm
+log	logic
+LP	lightpen
+LPC	linear predictive coding
+LRU	least recently used
+LT	logic theory
+LT	language translation
+ltr	letter
+lyr	layer
+#
+M	magnetic
+M	measure
+M	mechanical
+M	medium
+M	mega
+M	model
+M	modulus
+m	milli
+mach	machine
+mag	magazine
+mag	magnetic
+maint	maintenance
+man	manual
+MANOP	manual operation
+marg	margin
+MAT	machine aided translation
+mat	matrix
+math	mathematical
+math	mathematics
+max	maximum
+mb	megabyte
+mbr	member
+mc	microcircuit
+MCC	man computer communication
+mech	mechanical
+mech	mechanism
+med	median
+med	medium
+mem	memory
+MFLOPS	million floating point operations per second
+mg	marginal
+NHz	megahertz
+MIMD	multiple instruction multiple data
+MIPS	million instructions per second
+MIS	management information system
+misc	miscellaneous
+MISD	multiple instructions single data
+mk	mark
+mkg	marking
+MLE	maximum likelihood estimate
+MMI	man machine interface
+MMU	memory management unit
+mntr	monitor
+mod	model
+mod	modification
+mod	modular
+mod	module
+mod	modulus
+MOE	measure of effectiveness
+mon	monitor
+MP	maintenance point
+MP	mathematical programming
+MP	microprocessor
+MPU	microprocessor unit
+mpx	multiplex
+mpxr	multiplexer
+mpy	multiply
+MR	memory register
+mrkd	marked
+MRO	maintenance repair operating
+ms	mesa
+ms	more significant
+ms	most significant
+MSE	mean square error
+msec	millisecond
+msg	message
+MSS	mass storage system
+MT	machine translation
+mt	mount
+MTBE	mean time between errors
+MTBF	mean time between failures
+mthd	method
+MTTC	mean time to crash
+MTTF	mean time to failure
+MTTR	mean time to repair
+mul	multiply
+mult	multiple
+mult	multiplication
+mult	multiplier
+mux	multiplex
+mux	multiplexer
+MV	mean value
+MV	measured value
+mxd	mixed
+my	myria
+#
+n	nano
+NAK	negative acknowledge
+NC	network control
+NC	no connection
+NC	normally closed
+NC	numerical control
+NCP	network control protocol
+NDE	nonlinear differential equation
+NDFA	nondeterministic finitestate automaton
+neg	negative
+NES	non elsewhere specified
+NL	new line
+NLS	nonlinear smoothing
+NM	non measured
+NO	normally open
+no	number
+nom	nominal
+NPC	nonprintable character
+nr	number
+nrm	normalize
+nsec	nanosecond
+NTU	network terminating unit
+NUL	null
+num	numeral
+num	numerator
+num 	numeric
+#
+OA	office automation
+OB	output buffer
+objv	objective
+obv	obverse
+OC	operating characteristic
+OCR	optical character reader
+OCR	optical character recognition
+oct	octal
+OEM	original equipment manufacturer
+ol	overlap
+op	operation
+oper	operator
+opn	open
+opt	optimum
+opt	optional
+OR	operations research
+ord	order
+ord	ordinary
+org	organization
+org	origin
+orig	origin
+OS	operating system
+osc	oscillator
+OSI	open systems interconnection
+OSI	optimum scale integration
+OT	operate time
+OT	overtime
+out	output
+OVD	optical videodisk
+OVF	overflow
+ovflo	overflow
+ovl	overlap
+ovld	overload
+ovly	overlay
+#
+P	page
+p	plug
+p	point
+p	power
+p	primary
+PA	programm address
+par	paragraph
+par	parallel
+par	parameter
+parens	parentheses
+patn	pattern
+PAX	private automatic exchange
+PBX	private branch exchange
+PC	personal computer
+PC	programmable controller
+pch	punch
+PCM	pulse code modulation
+PD	projected display
+PD	pulse duration
+pd	period
+PDF	probability distribution function
+PDF	Portable Document Format
+PDP	plasma display panel
+PE	probable error
+PE	processing element
+PE	program element
+perf	performance
+periquip	peripheral equipment
+PF	page formatter
+PF	power factor
+pg	page
+PH	page heading
+ph	phase
+PI	program interrupt
+PIC	programmable interface controller
+PIN	Personal Identification
+pkd	packed
+pkg	package
+PLAN	personal local area network
+PM	phase modulation
+PM	preventive maintenance
+PM	procedure manual
+PMD	postmortem dump
+PMUX	programmable multiplexer
+pnl	panel
+PO	printout
+poach	pc on a chip
+poc	pocket
+POL	problem oriented language
+POL	procedure oriented language
+POS	point of sale
+pos	position
+pos	positive
+PP	peripheral processor
+pp	pages
+PPM	Prediction by Partial Matching
+PPP	Point to Point Protocol
+PR	pay roll
+PR	print register
+PR	print restore
+PR	program register
+pr	print
+prec	precision
+prepn	preparation
+prf	proof
+pri	primary
+pri	priority
+pro	procedure
+prob	probability
+prob	probable
+prob	problem
+proc	processor
+proc	process
+procr	processor
+prod	product
+prod	production
+prog	program
+prog	programme
+PRS	pattern recognition system
+prt	printer
+PS	packet switching
+PS 	personal system
+PS	planning and sheduling
+PS	power supply
+PS	privileged state
+psec	picosecond
+PSN	packet switching network
+PSU	power supply unit
+pt	point
+ptr	printer
+PW	printed warning
+PWB	programmer's workbench
+pwr	power
+#
+q	quantity
+QBE	query by example
+QC	quality control
+qnt	quantizer
+QT	queueing theory
+qty	quantity
+qtzn	quantization
+qtzr	quantizer
+quad	quadrant
+quad	quadratic
+quad	quadruple
+quint	quintuple
+quot	quotient
+#
+R	reset
+R	resistor
+R	reserve
+R	reverse
+R	right
+RAM	random access memory
+RAS	row address strobe
+RC	remote control
+rcd	record
+rcv	receive
+rdbl	readable
+rdy	ready
+RE	real number
+RE	reset
+rec	record
+recomp	recomputation
+red	reducing
+ref	reference
+reg	register
+rel	release
+req	request
+req	requirement
+res	resustor
+res	result
+ret	return
+rev	revolution
+rev	reverse
+rew	rewind
+RFI	request for information
+RG	range
+RG	register
+RI	reliability index
+RIP	Routing Information Protocol
+RISC	reduced instruction set computer
+RLE	Run Length Encoding
+RM	record mark
+RM	reference manual
+rms	root mean square
+RMSE	root mean square error
+RO	read only
+RO	receive only
+ROM	read only memory
+rout	routine
+rp	repeater
+rprt	report
+rpt	repeat
+rpt	report
+rptr	repeater
+RS	record separator
+RS	remote station
+RS	reset key
+RS	resolver
+RSL	requirement statement language
+rslt	result
+RSN	release sequence number
+rst	reset
+rstrt 	restart
+RT	real time
+RT	realtime
+RTC	real time clock
+rte	route
+rtg	rating
+rtn	routine
+RTP	real time processing
+RW	read write
+rwd	rewind
+#
+S	search
+S	series
+S	side
+S	sign
+S	singular
+s	solid
+s	speed
+s	switch
+SADT	structured analysis and design technique
+SAP	Systems Applications Products
+sby	standby
+SC	supervisory control
+sc	scale
+sch	schedule
+sched	schedule
+SCP	session control protocol
+sctr	sector
+SD	standard deviation
+SEC	songle error correction
+sec	second
+sec	secondary
+sect	section
+seg	segment
+sel	selector
+sepn	separation
+seq	sequence
+ser	serial
+SF	safety factor
+SG	symbol generator
+sgl	signal
+SI	sample interval
+sig	signal
+SIM	simulation
+SIMD	single instruction multiple data
+SIR	selective information retrieval
+SIR	simplified information retrieval
+SIR	statistical information retrieval
+SISD	single instruction single data
+SM	storage mark
+sn	sign
+SNA	Systems Network Architecture
+sngl	single
+SNR	signal noise ratio
+soln	solution
+SOM	start of message
+sp	space
+spec	specification
+specs	specifications
+sq	square
+SQC	statistical quality control
+sqrt	square root
+SR	shift register
+SR	speed regulator
+SR	status register
+srch	search
+SS	sum of squares
+st	start
+st	store
+sta	station
+sta	stationery
+stat	statistical
+stat	statistics
+stby	snadby
+std	standard
+stdby	standby
+stg	stage
+stg	storage
+stmt	statement
+stn	station
+stx	start of text
+sub	substitution
+sub	substract
+subtr	substraction
+sum	summary
+summ	summarize
+supvr	supervisor
+SV	self verification
+SVC	switched virtual circuit
+SVC	supervisor call
+svc	service
+sw	software
+sw	switch
+swbd	switch board
+SX	simplex
+SY	synchronized
+sym	symmetrical
+sym	system
+SYN	synchronous
+sync	synchronizer
+sync	synchronizing
+sync	synchronous
+syst	system
+sz	size
+#
+T	teletype
+T	temperature
+T	tera
+T	transformer
+T	trigger
+T	true
+t	time
+tab	tabulation
+tab	tabulator
+TB	terabit
+TB	terabyte
+tbl	table
+TCP	transmission control protocol
+TD	time delay
+telex	teletypewriter exchange
+term	terminal
+TFLOPS	teraflops
+TI	time index
+TIPS	trillion instructions per second
+TL	time limit
+TL	transmission level
+TL	transmission line
+tltr	translator
+tly	tally
+tm	telemetering
+tmn	transmission
+tmp	temperature
+TN	technical note
+tot	total
+tp	tape
+TR	techical report
+tr	transfer
+tr	transistor
+tr	transmitter
+trans	transformer
+trans	transducer
+trip	triplicate
+trk	track
+trml	terminal
+trn	transfer
+trs	translator
+TS	time sharing
+TSP	travelling salesman problem
+TSS	time sharing system
+tst	test
+TT	teletype
+TTY	teletypewriter
+TU	transmission unit
+tw	typewriter
+Tx	transaction
+#
+UA	User area
+UA	user agent
+UC	upper case
+UFLO	underflow
+uid	universal identifier
+unc	unconditional
+unld	unload
+#
+va	value
+var	variable
+ver	version
+verif	verification
+VME	virtual machine environment
+VoIP	Voice over IP
+VPN	Virtual Private Network
+VT	vertical tabulation
+#
+WAN	Wide Area Network
+wd	word
+WORM	write once read many
+wrk	work
+WWW	World Wide Web
+#
+XNOR	exclusive NOR
+XOR	exclusive OR
+#
+z	zero
+ZIF	zero insertion force
+zn	zone
+	

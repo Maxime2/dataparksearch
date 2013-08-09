@@ -1,0 +1,209 @@
+<sect1 id="stored">
+	<title>Хранение сжатых копий документов
+<indexterm><primary>stored</primary></indexterm>
+</title>
+	<para><application>DataparkSearch</application> имеет возможность хранения сжатых копий проиндексированных документов.
+Копии сжимаются и хранятся при помощи нового демона -
+<command>stored</command>, который устанавливается в поддиректорию
+<filename>sbin</filename> корневой директории установки
+<application>DataparkSearch</application> (по умолчанию:
+<filename>/usr/local/dpsearch/sbin</filename>).</para>
+
+<para><indexterm><primary>Команда</primary><secondary>DoStore</secondary></indexterm>
+В <application>DataparkSearch</application> можно хранить сжатые копии документов без
+использования демона <command>stored</command>. Для этого вместо настройки параметров <command>stored</command>
+в файле конфигурации <filename>indexer.conf</filename> необходимо указать команду <command>DoStore yes</command>.
+</para>
+
+	<para>Сохраненные копии документов отображаются отдельной CGI-программой
+<filename>storedoc.cgi</filename>. Эта программа получает сохранённую копию от
+<command>stored</command> и отображает содержимое этого документа в окне броузера предварительно
+выделив слова из поискового запроса.
+</para>
+
+<para> Для использования возможностей <command>stored</command>, 
+скомпилируйте <application>DataparkSearch</application> с поддержкой <literal>zlib</literal>:
+	<programlisting>
+./configure --with-zlib &lt;other arguments&gt;
+</programlisting>
+	</para>
+
+<para>
+<indexterm><primary>Команда</primary><secondary>Store</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>NoStore</secondary></indexterm>
+Вы можете использовать команды <command>Store</command> и <command>NoStore</command> для разрешения или запрещения сохранения
+некоторых фалов по шаблону. Аргументы у этих команд точно такиеже, как и у команды <command>Allow</command> 
+(см. <xref linkend="allow_cmd"/>). Все документы сохраняются по умолчанию, если включена поддержка stored.
+</para>
+
+	<sect2 id="stored-start">
+		<title>Конфигурирование stored</title>
+		<para>Перед использованием <command>stored</command>, пожалуйста, проделпйте следующее:</para>
+		<itemizedlist>
+			<listitem>
+<para>Скопируйте <filename>/usr/local/dpsearch/etc/stored.conf-dist</filename> в
+<filename>/usr/local/dpsearch/etc/stored.conf</filename>.</para>
+				<para>Отредактируйте <filename>/usr/local/dpsearch/etc/stored.conf</filename>
+				</para>
+				<para>Следующие команды используются для конфигурирования <command>stored</command>: </para>
+				<itemizedlist>
+					<listitem>
+						<para>
+<command><indexterm><primary>Команда</primary><secondary>Listen</secondary></indexterm>Listen</command>
+говорит <command>stored</command> к какому адресу и/или порту привязаться.
+По умолчанию, <command>stored</command> привязывается к порту 7004 и каждому адресу.
+Возможно указывать только порт:</para>
+						<para>
+							<userinput>Listen 7004 </userinput>
+						</para>
+						<para>Или только адрес:</para>
+						<para>
+							<userinput>Listen 127.0.0.2</userinput>
+						</para>
+						<para>Или оба, алрес и порт:</para>
+						<para>
+							<userinput>Listen 127.0.0.2:7004</userinput>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+<command><indexterm><primary>Команда</primary><secondary>VarDir</secondary></indexterm>VarDir</command>
+задаёт альтернативную рабочую директорию <filename>var/</filename>, например:</para>
+						<para>
+							<userinput>VarDir /mnt/d/dpsearch/var/ </userinput>
+						</para>
+					</listitem>
+<listitem>
+<para><command><indexterm><primary>Команда</primary><secondary>StoredFiles</secondary></indexterm>StoredFiles</command>
+указывает число файлов-хранилищ, создаваемых в директории <filename>var/stored/</filename>, например:</para>
+<para>
+<userinput>StoredFiles 256</userinput>
+</para>
+</listitem>
+
+<listitem>
+<para><command><indexterm><primary>Команда</primary><secondary>OptimizeInterval</secondary></indexterm>OptimizeInterval</command>
+задаёт интервал в секундах между попытками оптимизировать очередной файл-хранилище, например:</para>
+<para>
+<userinput>OptimizeInterval 300</userinput>
+</para>
+</listitem>
+
+<listitem>
+<para><command><indexterm><primary>Команда</primary><secondary>OptimizeRatio</secondary></indexterm>OptimizeRatio</command>
+задаёт уровень дефрагментации в процентах, по достижении которого файл-хранилище оптимизируется, например:.  
+</para>
+<para>
+<userinput>OptimizeRatio 3</userinput>
+</para>
+</listitem>
+
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>Запустите <command>stored</command>:</para>
+				<para>
+					<userinput>/usr/local/dpsearch/sbin/stored &amp; </userinput>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Отредактиируйте <filename>indexer.conf</filename> и <filename>search.htm</filename>
+(или <filename>searchd.conf</filename>, если используется <command>searchd</command>). Укажите адрес и порт, кроторые
+<literal>indexer</literal> будет использовать для связи с <command>stored</command>.
+Используйте параметр <literal>stored</literal> команды <command>DBAddr</command>,
+например:</para>
+				<para>
+					<userinput>DBAddr mysql://localhost/search/?dbmode=cache&amp;stored=localhost:7004</userinput>
+				</para>
+			</listitem>
+		</itemizedlist>
+	</sect2>
+
+	<sect2 id="stored-how">
+		<title>Как работает stored</title>
+		<para>После того, как вы сконфигурируете и запустите
+<command>stored</command>, <filename>indexer</filename> будет передавать ему проиндексированные документы.
+А <command>stored</command> будет сжимать полученные документы и сохранять их на диске.</para>
+	</sect2>
+
+	<sect2 id="stored-search">
+		<title>Использование stored при поиске</title>
+		<para>Для включения отображения сохраненных документов при поиске, проделайте следующее: </para>
+		<itemizedlist>
+			<listitem>
+				<para>Отредактируйте
+<filename>storedoc.htm</filename> (шаблон для <filename>storedoc.cgi</filename>), если необходимо.</para>
+			</listitem>
+			<listitem>
+				<para>Добавьте в секцию <literal>&lt;!--res--&gt;</literal> шаблона
+<filename>search.htm</filename> ссылку на <filename>storedoc.cgi</filename>, например:
+ <literal>&lt;A HREF="$(stored_href)"&gt;Cached copy&lt;/A&gt; </literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Укажите URL CGI-программы
+<filename>storedoc.cgi</filename> в
+<filename>search.htm</filename> (по умолчанию
+<literal>$(stored_href)</literal> будет возвращать
+<filename>/cgi-bin/storedoc.cgi</filename>). Если вам необходимо указать другой URL,
+добавьте в раздел переменных шаблона <filename>search.htm</filename>
+					следующую строку:</para>
+				<para>
+					<userinput>StoredocURL /path/to/storedoc.cgi</userinput>
+				</para>
+				<para>Или для абсолютной ссылки:</para>
+				<para>
+					<userinput>StoredocURL http://servername/path/to/storedoc.cgi</userinput>
+				</para>
+			</listitem>
+		</itemizedlist>
+
+		<para>Если все сконфигурировано правильно, при поиске <command>stored</command> работает следующим образом:</para>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					<filename>search.htm</filename> показывает ссылку на <filename>storedoc.cgi</filename>;</para>
+			</listitem>
+			<listitem>
+				<para>Когда пользователь кликает по ссылке,
+<filename>storedoc.cgi</filename> посылает запрос к демону
+<command>stored</command> по адресу, указанному в
+<filename>storedoc.htm</filename> при помощи параметра <literal>stored</literal> команды
+<command>DBAddr</command>;</para>
+			</listitem>
+			<listitem>
+				<para>По этому запросу, <command>stored</command> находит и разжимает запрошенную копию и отправляет ее <filename>storedoc.cgi</filename>;</para>
+			</listitem>
+			<listitem>
+				<para>
+					<filename>storedoc.cgi</filename> разбирает полученный документ и выделяет все слова из поискового запроса. Способ выделения указывается в шаблоне <filename>storedoc.htm</filename> командами
+					<command><indexterm><primary>Команда</primary><secondary>HlBeg</secondary></indexterm>HlBeg</command> and <command><indexterm><primary>Команда</primary><secondary>HlEnd</secondary></indexterm>HlEnd</command>;</para>
+			</listitem>
+		</orderedlist>
+	</sect2>
+
+	<sect2 id="excerpts">
+		<title>Цитаты документов</title>
+<indexterm><primary>Документ</primary><secondary>цитаты</secondary></indexterm>
+<para>
+<command>stored</command> также используется для создания цитат документов на основе слов из запроса.</para>
+
+<para><indexterm><primary>Команда</primary><secondary>ExcerptSize</secondary></indexterm>
+Для задания приблизительного размера цитаты в символах, используйте в <filename>search.htm</filename>
+(в секции <literal>variables</literal>) команду <command>ExcerptSize</command>. Значение, используемое по умолчанию, равно 256.</para>
+
+<para><indexterm><primary>Команда</primary><secondary>ExcerptPadding</secondary></indexterm>
+С помощью команды <command>ExcerptPadding</command> вы можете задать примерное число символов, возвращаемых в цитате перед и после найденного слова запроса; значение по умолчанию: 40.</para>
+
+<para><indexterm><primary>Команда</primary><secondary>ExcerptMark</secondary></indexterm>
+При помощи команды <command>ExcerptMark</command> вы можете изменить разделяющую последовательность символов, вставляемую между частями цитаты с ключевыми словами; значение по умолчанию: " ... " (пробел, многоточие, пробел).</para>
+
+<para><indexterm><primary>Команда</primary><secondary>DoExcerpt</secondary></indexterm>
+Вы можете выключить создание цитат (но сохранив возможность показа сохраненных копий) документов указав команду <command>DoExcerpt no</command> в вашем поисковом шаблоне.
+</para>
+
+
+
+	</sect2>
+
+</sect1>

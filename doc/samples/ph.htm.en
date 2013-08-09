@@ -1,0 +1,180 @@
+<!--variables
+DBAddr		searchd://localhost/?label=phones
+StoredocURL     /cgi-bin/storedoc.cgi
+LocalCharset 	koi8-r
+BrowserCharset  iso-8859-1
+DoExcerpt no
+
+MinWordLength 1
+MaxWordLength 64
+DetectClones no
+DateFormat %d %b %Y
+ExcerptSize 128
+ExcerptPadding 32
+HlBeg <span class="rhl">
+HlEnd </span>
+GrBeg <!-- -->
+GrEnd <!-- -->
+Locale en_US.ISO8859-1
+
+ReplaceVar head.lng "Phones Info"
+ReplaceVar pages.lng "Pages"
+ReplaceVar main.lng "Sochi Phone numbers"
+ReplaceVar prev.lng "Prev."
+ReplaceVar next.lng "Next"
+ReplaceVar foot.lng "International prefix: +7-862-2"
+ReplaceVar error.lng "Error!"
+ReplaceVar notfound.lng "Nothing is found for this query."
+ReplaceVar SearchFor.lng "Search for"
+ReplaceVar otherse.lng "in other search engines"
+ReplaceVar yandex.lng "Yandex"
+ReplaceVar rambler.lng "Rambler"
+ReplaceVar nigma.lng "Nigma"
+ReplaceVar sochi.org.ru.lng "Sochi's Internet"
+ReplaceVar Search.lng "Search"
+
+-->
+
+<!--top-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ru">
+  <head>
+    <title>$&(head.lng): $&(q)</title>
+    <link href="http://sochi.org.ru/css/therm2.css" rel="stylesheet" type="text/css">
+    <link href="http://sochi.org.ru/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <script type="text/javascript">
+function myCopyContent2(domDoc, uri) {
+ var destId = 'similarArea';
+ var dest = document.getElementById ? document.getElementById(destId) :
+  (document.all ? document.all[destId] : null);
+ if (!dest) return;
+ if (dest.innerHTML) dest.innerHTML = domDoc;
+}
+    </script>
+</head>
+<!-- BrowserCharset: $(BrowserCharset) -->
+<body id="dir"> 
+<table border="0" cellpadding="2" cellspacing="0">
+<tr><td><div id="topmenu"><a href="http://sochi.org.ru/">sochi.org.ru<a/>: $(head.lng)</div></td><td rowspan="6" width="160" align="center" valign="top" style="border-left: 1px solid #EEE">
+<!-- ads here -->
+<iframe src="http://sbe.sochi-info.com/ru.cgi?id=36&amp;net=6" width="88" height="31" frameborder="0" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+<br><br><div id="similarArea">&nbsp;</div>
+</td></tr>
+<tr><td class="otherinverse">
+	   <form name="s" method="GET" action="http://s.sochi.org.ru/cgi-bin/search.cgi" enctype="application/x-www-form-urlencoded" style="margin:0; padding:0">
+			<INPUT TYPE="hidden" NAME="ps" VALUE="10">
+			<INPUT TYPE="hidden" NAME="np" VALUE="0">
+			<input type="hidden" name="dt" value="back">
+			<input type="hidden" name="sy" value="1">
+			<input type="hidden" name="sp" value="1">
+			<input type="hidden" name="s" value="RD">
+			<input type="hidden" name="tmplt" value="ph.htm.en">
+		        <input type="hidden" name="m" value="all">
+			<input type="hidden" name="label" value="phones">
+			<input type="hidden" name="GroupBySite" value="no">
+			<input type="hidden" name="wf" value="F1F1">
+	<a class="otherinverse" href="http://sochi.org.ru/phone15">$(main.lng)</a>&nbsp;&nbsp;&nbsp;
+			<input type="text" name="q" size="40" value="$&(q)"><input type="submit" value="$(Search.lng)">
+	    </form>
+</td></tr>
+<!--/top-->
+
+<!--bottom-->
+<tr><td><br>
+<div class="topmenu"><small>$(foot.lng)</small></div></td></tr>
+</table>
+<!IFNOT NAME="q" CONTENT="">
+<small>$(SearchFor.lng) &laquo;$&(q)&raquo; $(otherse.lng):<br>&nbsp;&nbsp;&nbsp;
+<a href="/cgi-bin/search.cgi?q=$%(q:utf-8)&amp;m=$&(m)&amp;label=sochi&amp;g=$&(g)&amp;sp=$&(sp)&amp;sy=$&(sy)&amp;np=0&amp;GroupBySite=yes&amp;c=01&amp;s=IRPD&amp;ps=10&amp;wf=F1F1&amp;tmplt=janus.htm.en">$(sochi.org.ru.lng)</a> &#150;
+<a href="http://www.google.com/search?ie=UTF-8&amp;hl=en&amp;q=$%(q:utf-8)">Google</a> &#150;
+<a href="http://www.yandex.ru/yandsearch?text=$%(q:cp1251)&amp;stype=www">$(yandex.lng)</a> &#150;
+<a href="http://www.rambler.ru/srch?oe=1251&amp;&set=www&amp;words=$%(q:cp1251)">$(rambler.lng)</a> &#150;
+<a href="http://gogo.ru/go?q=$%(q:cp1251)">GoGo</a> &#150;
+<a href="http://www.nigma.ru/index.php?0=1&1=1&2=1&3=1&4=1&5=1&6=1&7=1&q=$%(q:cp1251)">$(nigma.lng)</a>
+</small>
+<!ENDIF>
+<script type="text/javascript">
+function showBooksAndVideo() {
+var SimilarLoader = new HTMLHttpRequest('SimilarLoader', myCopyContent2);
+SimilarLoader.load('/cgi-bin/search.cgi?q=$%(q:utf-8)&s_c=$&(c)&s_sp=$&(sp)&s_sy=$&(sy)&m=any&sp=1&sy=1&p=$&(p)&GroupBySite=no&s=$&(s)&s_GroupBySite=$&(GroupBySite)&ps=7&tmplt=qsimilar8.htm.en&label=qsimilar&s_label=$&(label)&s_tmplt=ph.htm.en&s_cp=latin1&mode=all');
+}
+</script>
+<script type="text/javascript" src="http://sochi.org.ru/js/htmlhttprequest_commented.js"></script>
+<script type="text/javascript">showBooksAndVideo();</script>
+</body>
+</html>
+<!--/bottom-->
+
+<!--restop-->
+<tr><td valign="bottom">
+<table align="center" border="0" cellspacing="0" cellpadding="3"><tr><td>$(pages.lng):</td>$(NL)$(NB)$(NR)</tr></table></td></tr>
+<tr><td align="left">
+<!--/restop-->
+
+
+<!--res-->
+<div class="serp1">
+<!IFLIKE NAME="href" CONTENT="http://*"><a class="restop" href="$(href)"><!ENDIF>
+<small class="restop">$&(name:128)</small><!IFLIKE NAME="href" CONTENT="http://*"></a><!ENDIF><br>
+<!IFNOT NAME="desc" CONTENT=""><small class="serp2">$&(desc:132)</small><br>
+<!ELSE><!IFNOT NAME="urldesc" CONTENT=""><small class="serp2">$&(urldesc:132)</small><br><!ENDIF>
+<!ENDIF>
+<small class="result">$&(tel)</small>
+</div>
+<!--/res-->
+
+<!--clone-->
+<li><A HREF="$(URL)">$(URL:50)</A>,&nbsp; $(Last-Modified)
+<!--/clone-->
+
+<!--navleft-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&laquo;&laquo;$(prev.lng)&laquo;</small></A></TD>
+<!--/navleft-->
+
+<!--navbar0-->
+<TD><b class="hl">$(NP)</b></TD>
+<!--/navbar0-->
+
+<!--navbar1-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)">$(NP)</A></TD>
+<!--/navbar1-->
+
+<!--navright-->
+<TD><A class="leftmenu" HREF="$(self)$(NH)"><small>&raquo;$(next.lng)&raquo;&raquo;</small></A></TD>
+<!--/navright-->
+
+<!--navigator-->
+<table border="0" cellspacing="0" cellpadding="3"><tr><td><small>$(pages.lng):</small></td>$(NL) $(NB) $(NR)</tr></table>
+<!--/navigator-->
+
+<!--resbot-->
+</td></tr>
+<tr><td valign="bottom">
+<table align="center" border="0" cellspacing="0" cellpadding="3"><tr><td>$(pages.lng):</td>$(NL)$(NB)$(NR)</tr></table></td></tr>
+<!--/resbot-->
+
+
+<!--notfound-->
+<tr><td>
+<br>
+$(notfound.lng)
+<br><br>
+<td></tr>
+<!--/notfound-->
+
+<!--noquery-->
+&nbsp;
+<!--/noquery-->
+
+<!--error-->
+<tr><td>
+<CENTER>
+<FONT COLOR="#FF0000">$(error.lng)</FONT>
+<P>
+<B>$(E)</B>
+</CENTER>
+</td></tr>
+<!--/error-->
+
+

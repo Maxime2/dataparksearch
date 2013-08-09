@@ -1,0 +1,30 @@
+<sect2 id="data-acq">
+	<title>Сбор данных</title>
+<indexterm><primary>Сбор данных</primary></indexterm>
+<indexterm><primary>Команда</primary><secondary>ActionSQL</secondary></indexterm>
+
+<para>Используя команду <command>ActionSQL</command> вы можете выполнять SQL-запросы с данными документа во время индексирования.
+Команда <command>ActionSQL</command> имеет следующий синтаксис:
+<programlisting>
+ActionSQL [add | update | delete] &lt;section&gt; &lt;pattern&gt; &lt;sql-template&gt; [&lt;dbaddr&gt;]
+</programlisting>
+где &lt;section&gt; - имя секции, содержимое которой будет проверяться на соответствие шаблону регулярного выражения &lt;pattern&gt;, если соответствие будет найдено, то будет заполнен шаблон sql-запроса &lt;sql-template&gt;, в котором наряду с мета-переменными регулярного выражения $1-$9 можно использовать и мета-переменные шаблона страницы выдачи (например, $(title), $(Last-Modified)). Заполненый sql-запрос будет выполнен в первом <command>DBAddr</command>, указанном в файле конфигурации, или в новом соединении с sql-базой, задаваемой необязательным параметром &lt;dbaddr&gt;.
+</para>
+
+<para>Одина из опций <option>add</option>, <option>update</option> или <option>delete</option> задает когда эта команда выполняется, при индексировании нового документа, при переиндексировании,
+или при удалении документа.
+Если не указана ни одна опция, подразумеваетя опция <option>add</option> по умолчанию.
+</para>
+
+<para>
+Таким образом, команда <command>ActionSQL</command> предназначена для поиска и сбора различной информации с индексируемых страниц. 
+Например, следующие команды будет собирать в таблицу phonedata все найденные номера телефонов и заголовки страниц, на которых эти номера указаны:
+<programlisting>
+ActionSQL add body "\(([0-9]{3})\)[ ]*([0-9]{3})[- \.]*([0-9]{2})[- \.]*([0-9]{2})" "INSERT INTO phonedata(phone,title,id)VALUES('+7$1$2$3$4','$(title)',$(dp_id))"
+ActionSQL update body "\(([0-9]{3})\)[ ]*([0-9]{3})[- \.]*([0-9]{2})[- \.]*([0-9]{2})" "UPDATE phonedata SET phone='+7$1$2$3$4',title='$(title)' WHERE id=$(dp_id)"
+ActionSQL delete url "." "DELETE FROM phonedata WHERE id=$(dp_id)"
+</programlisting>
+</para>
+
+
+</sect2>

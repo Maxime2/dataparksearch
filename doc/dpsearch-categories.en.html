@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Categories</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Subsections"
+HREF="dpsearch-subsections.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Subsections"
+HREF="dpsearch-subsections.en.html"><LINK
+REL="NEXT"
+TITLE="Languages support"
+HREF="dpsearch-international.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-subsections.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 6. Subsections</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-international.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CATEGORIES"
+>6.2. Categories</A
+></H1
+><A
+NAME="AEN3967"
+></A
+><P
+>There is a categories editor written in  Perl. You can
+get it in <TT
+CLASS="FILENAME"
+>perl/cat_ed/</TT
+> subdirectory of <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+installation.</P
+><P
+>Categories are similar to tag feature, but nested. So you can have one category inside another and so on.</P
+><P
+>Basic points:
+	<P
+></P
+><UL
+><LI
+><P
+>there are up to 6 nested levels;</P
+></LI
+><LI
+><P
+>every level occupies 2 hex or 36 base digits;</P
+></LI
+><LI
+><P
+>parameter for setting category is
+<CODE
+CLASS="PARAMETER"
+>path</CODE
+>, which can be empty (means root category)
+or up to 10 chars long (means deepest category).</P
+></LI
+></UL
+>
+        </P
+><P
+>You can also set up symlinks, e.g. categories that are
+actually links to other categories. <TT
+CLASS="LITERAL"
+>link</TT
+> database
+field is used for that. In the symlink last two characters should be
+@@. In example above Moto-&gt;BMW is a link to Auto-&gt;BMW.</P
+><P
+>First notice that category in the server table is set to be
+11 characters long. This means you can use a valid character to keep
+track of categories. If you are going to keep a category tree of any
+size, then I would suggest using the category editor. But anyways, here's how it works.</P
+><P
+>You can use either the tag column or the category column
+in the server for the same thing. Or you can categorize a site in two
+different ways. For example you could keep track of sites that are
+owned by a certain company and then categorize them as well. You could
+use the tag option to keep of ownership and use the category option
+for categories. When I explain the category option, it goes the same
+for the tag option. </P
+><P
+>A category can be broken down any way you choose. But
+for it to work with the category editor, I believe for now, you have
+to use two characters for each level. If you use the category editor
+you have the choice to use a hex number going from 0-F or a 36 base
+number going from 0-Z. Therefore a top-level category like 'Auto'
+would be 01. If it has a subcategory like 'Ford', then it would be 01
+(the parent category) and then 'Ford' which we will give 01. Put those
+together and you get 0101. If 'Auto' had another subcategory named
+'VW', then its id would be 01 because it belongs to the 'Ford'
+category and then 02 because it's the next category. So its id would
+be 0102. If VW had a sub category called 'Engine' then it's id would
+start at 01 again and it would get the 'VW' id 02 and 'Auto' id of 01,
+making it 010201.</P
+><P
+>If you want to search for sites under that category then
+you pass it <TT
+CLASS="LITERAL"
+>cat=010201</TT
+> in the url...so create a
+select box and give like that:
+	<PRE
+CLASS="PROGRAMLISTING"
+>&lt;OPTION value="01"&gt;AUTO
+&lt;OPTION value="0101"&gt;Ford</PRE
+>
+	</P
+><P
+>and so on...</P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>Note: </B
+>For dbmode cache you need to have the following section defined in your
+<TT
+CLASS="FILENAME"
+>sections.conf</TT
+> file:
+<PRE
+CLASS="PROGRAMLISTING"
+>Section category 0 32 single</PRE
+>
+i.e. in overall you need to have the section 'category' defined with non-zero maximum length.</P
+></BLOCKQUOTE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CATEGORY_CMD"
+>6.2.1. <B
+CLASS="COMMAND"
+>Category</B
+> command</A
+></H2
+><A
+NAME="AEN3998"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Category &lt;string&gt;</PRE
+><P
+>You may distribute documents between nested categories. Category
+is a string in hex number notation. You may have up to 6 levels with
+256 members per level. Empty category means the root of category tree.
+Take a look into <A
+HREF="dpsearch-categories.en.html"
+>Section 6.2</A
+>&#62; for more information.
+<PRE
+CLASS="PROGRAMLISTING"
+># This command means a category on first level:
+Category AA
+# This command means a category on 5th level:
+Category FFAABBCCDD</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CATEGORYIF_CMD"
+>6.2.2. <B
+CLASS="COMMAND"
+>CategoryIf</B
+> command</A
+></H2
+><A
+NAME="AEN4008"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>CategoryIf &lt;category&gt; [Match|NoMatch] [NoCase|Case] [String|Regex] [loose] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Mark document by &lt;category&gt; category, if the value of <CODE
+CLASS="OPTION"
+>section</CODE
+> match <CODE
+CLASS="OPTION"
+>arg</CODE
+> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <B
+CLASS="COMMAND"
+>Allow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;). Optional parameter <CODE
+CLASS="OPTION"
+>loose</CODE
+> specify
+to do not override the category value if it has been already set from server parameters.</P
+><P
+>Example
+<PRE
+CLASS="PROGRAMLISTING"
+>CategoryIf 010F regex Title "JOB ID"</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CATTABLE"
+>6.2.3. Loading categories table</A
+></H2
+><A
+NAME="AEN4022"
+></A
+><P
+>When the command 
+<PRE
+CLASS="PROGRAMLISTING"
+>CategoryTable mysql://user:pass@host/dbname/tablename[?charset=CHARSET]</PRE
+>
+is specified, <SPAN
+CLASS="APPLICATION"
+>indexer</SPAN
+> loads categories information from given <TT
+CLASS="LITERAL"
+>tablename</TT
+> SQL-table. 
+Check the structure of <CODE
+CLASS="OPTION"
+>categories</CODE
+> table in <TT
+CLASS="FILENAME"
+>create/mysql/create.txt</TT
+> file. 
+If there is no structure example for your database, take it as an example.</P
+><P
+>You may use several <B
+CLASS="COMMAND"
+>CategoryTable</B
+> commands to load categories information from different tables.
+In such case, the values of <CODE
+CLASS="OPTION"
+>rec_id</CODE
+> field must be unique for all these tables.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FLUSHCATTABLE"
+>6.2.4. FlushCategoryTable command
+<A
+NAME="AEN4036"
+></A
+></A
+></H2
+><P
+>This command deletes all records from <CODE
+CLASS="OPTION"
+>categories</CODE
+> table.
+Use this command to delete outdated data before loading new data into <CODE
+CLASS="OPTION"
+>categories</CODE
+> table 
+with <B
+CLASS="COMMAND"
+>CategoryTable</B
+> commands.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-subsections.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-international.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Subsections</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-subsections.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Languages support</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

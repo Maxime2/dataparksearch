@@ -1,0 +1,147 @@
+<sect1 id="categories">
+	<title>Categories</title>
+<indexterm><primary>Categories</primary></indexterm>
+
+	<para>There is a categories editor written in <!--PHP3 and--> Perl. You can
+get it in <filename>perl/cat_ed/</filename> subdirectory of <application>DataparkSearch</application>
+installation.</para>
+	<para>Categories are similar to tag feature, but nested. So you can have one category inside another and so on.</para>
+	<para>Basic points:
+	<itemizedlist>
+		<listitem>
+			<para>there are up to 6 nested levels;</para>
+		</listitem>
+		<listitem>
+			<para>every level occupies 2 hex or 36 base digits;</para>
+		</listitem>
+		<listitem>
+			<para>parameter for setting category is
+<parameter>path</parameter>, which can be empty (means root category)
+or up to 10 chars long (means deepest category).</para>
+		</listitem>
+	</itemizedlist>
+        </para>
+	<para>You can also set up symlinks, e.g. categories that are
+actually links to other categories. <literal>link</literal> database
+field is used for that. In the symlink last two characters should be
+@@. In example above Moto-&gt;BMW is a link to Auto-&gt;BMW.</para>
+
+	<para>First notice that category in the server table is set to be
+11 characters long. This means you can use a valid character to keep
+track of categories. If you are going to keep a category tree of any
+size, then I would suggest using the category editor. But anyways, here's how it works.
+</para>
+
+	<para>You can use either the tag column or the category column
+in the server for the same thing. Or you can categorize a site in two
+different ways. For example you could keep track of sites that are
+owned by a certain company and then categorize them as well. You could
+use the tag option to keep of ownership and use the category option
+for categories. When I explain the category option, it goes the same
+for the tag option. </para>
+
+	<para>A category can be broken down any way you choose. But
+for it to work with the category editor, I believe for now, you have
+to use two characters for each level. If you use the category editor
+you have the choice to use a hex number going from 0-F or a 36 base
+number going from 0-Z. Therefore a top-level category like 'Auto'
+would be 01. If it has a subcategory like 'Ford', then it would be 01
+(the parent category) and then 'Ford' which we will give 01. Put those
+together and you get 0101. If 'Auto' had another subcategory named
+'VW', then its id would be 01 because it belongs to the 'Ford'
+category and then 02 because it's the next category. So its id would
+be 0102. If VW had a sub category called 'Engine' then it's id would
+start at 01 again and it would get the 'VW' id 02 and 'Auto' id of 01,
+making it 010201.</para>
+
+	<para>If you want to search for sites under that category then
+you pass it <literal>cat=010201</literal> in the url...so create a
+select box and give like that:
+	<programlisting>
+&lt;OPTION value="01"&gt;AUTO
+&lt;OPTION value="0101"&gt;Ford
+</programlisting>
+	</para>
+	<para>and so on...</para>
+
+<note><para>For dbmode cache you need to have the following section defined in your
+<filename>sections.conf</filename> file:
+<programlisting>
+Section category 0 32 single
+</programlisting>
+i.e. in overall you need to have the section 'category' defined with non-zero maximum length.
+</para>
+</note>
+
+
+<sect2 id="category_cmd">
+<title><command>Category</command> command</title>
+<indexterm><primary>Command</primary><secondary>Category</secondary></indexterm>
+<programlisting>
+Category &lt;string&gt;
+</programlisting>
+<para>
+You may distribute documents between nested categories. Category
+is a string in hex number notation. You may have up to 6 levels with
+256 members per level. Empty category means the root of category tree.
+Take a look into <xref linkend="categories"/> for more information.
+<programlisting>
+# This command means a category on first level:
+Category AA
+# This command means a category on 5th level:
+Category FFAABBCCDD
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="categoryif_cmd">
+<title><command>CategoryIf</command> command</title>
+<indexterm><primary>Command</primary><secondary>CategoryIf</secondary></indexterm>
+<programlisting>
+CategoryIf &lt;category&gt; [Match|NoMatch] [NoCase|Case] [String|Regex] [loose] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Mark document by &lt;category&gt; category, if the value of <option>section</option> match <option>arg</option> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>). Optional parameter <option>loose</option> specify
+to do not override the category value if it has been already set from server parameters.
+</para>
+<para>Example
+<programlisting>
+CategoryIf 010F regex Title "JOB ID"
+</programlisting>
+</para>
+</sect2>
+
+
+  <sect2 id="cattable">
+    <title>Loading categories table</title>
+<indexterm><primary>Command</primary><secondary>CategoryTable</secondary></indexterm>
+    <para>When the command 
+<programlisting>
+CategoryTable mysql://user:pass@host/dbname/tablename[?charset=CHARSET]
+</programlisting>
+is specified, <application>indexer</application> loads categories information from given <literal>tablename</literal> SQL-table. 
+Check the structure of <option>categories</option> table in <filename>create/mysql/create.txt</filename> file. 
+If there is no structure example for your database, take it as an example.</para>
+
+    <para>You may use several <command>CategoryTable</command> commands to load categories information from different tables.
+In such case, the values of <option>rec_id</option> field must be unique for all these tables.
+</para>
+  </sect2>
+
+<sect2 id="flushcattable">
+  <title>FlushCategoryTable command
+<indexterm><primary>Command</primary><secondary>FlushCategoryTable</secondary></indexterm>
+</title>
+<para>
+This command deletes all records from <option>categories</option> table.
+Use this command to delete outdated data before loading new data into <option>categories</option> table 
+with <command>CategoryTable</command> commands.
+</para>
+</sect2>
+
+
+
+</sect1>

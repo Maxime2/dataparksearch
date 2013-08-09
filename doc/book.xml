@@ -1,0 +1,170 @@
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+	<!ENTITY index SYSTEM "index.xml">
+	<!ENTITY intro SYSTEM "intro.xml">
+	<!ENTITY install SYSTEM "install.xml">
+	<!ENTITY general SYSTEM "general.xml">
+	<!ENTITY http SYSTEM "httpcodes.xml">
+	<!ENTITY content-enc SYSTEM "content-enc.xml">
+	<!ENTITY htmlparser SYSTEM "htmlparser.xml">
+	<!ENTITY follow SYSTEM "follow.xml">
+	<!ENTITY aliases SYSTEM "aliases.xml">
+	<!ENTITY servertable SYSTEM "servertable.xml">
+	<!ENTITY parsers SYSTEM "parsers.xml">
+	<!ENTITY news SYSTEM "news.xml">
+	<!ENTITY mp3 SYSTEM "mp3.xml">
+	<!ENTITY htdb SYSTEM "htdb.xml">
+	<!ENTITY exec SYSTEM "exec-cgi.xml">
+	<!ENTITY mirror SYSTEM "mirror.xml">
+	<!ENTITY syslog SYSTEM "syslog.xml">
+	<!ENTITY stored SYSTEM "stored.xml">
+	<!ENTITY sql-stor SYSTEM "sql-stor.xml">
+	<!ENTITY cachemode SYSTEM "cachemode.xml">
+	<!ENTITY perf SYSTEM "perf.xml">
+	<!ENTITY searchd SYSTEM "searchd.xml">
+	<!ENTITY oracle SYSTEM "oracle.xml">
+	<!ENTITY db2 SYSTEM "db2.xml">
+	<!ENTITY categories SYSTEM "categories.xml">
+	<!ENTITY tags SYSTEM "tags.xml">
+	<!ENTITY charset SYSTEM "charset.xml">
+	<!ENTITY negotiation SYSTEM "negotiation.xml">
+	<!ENTITY search SYSTEM "search.xml">
+	<!ENTITY tmpl SYSTEM "templates.xml">
+	<!ENTITY html-design SYSTEM "html-design.xml">
+	<!ENTITY relevancy SYSTEM "relevancy.xml">
+	<!ENTITY tracking SYSTEM "tracking.xml">
+	<!ENTITY cache SYSTEM "cache.xml">
+	<!ENTITY ispell SYSTEM "ispell.xml">
+	<!ENTITY aspell SYSTEM "aspell.xml">
+	<!ENTITY syn SYSTEM "syn.xml">
+	<!ENTITY bugs SYSTEM "bugs.xml">
+	<!ENTITY lib SYSTEM "lib.xml">
+	<!ENTITY cjk SYSTEM "cjk.xml">
+        <!ENTITY dbschema SYSTEM "dbschema.xml">
+        <!ENTITY vary SYSTEM "vary.xml">
+        <!ENTITY indexcmd SYSTEM "indexcmd.xml">
+        <!ENTITY accent SYSTEM "accent.xml">
+        <!ENTITY mod-dpsearch SYSTEM "mod_dpsearch.xml">
+        <!ENTITY csalias SYSTEM "cs-aliases.xml">
+        <!ENTITY groups SYSTEM "groups.xml">
+        <!ENTITY acronym SYSTEM "acronym.xml">
+        <!ENTITY misc SYSTEM "misc.xml">
+        <!ENTITY data SYSTEM "data.xml">
+]>
+<book>
+	<bookinfo>
+		<title>DataparkSearch Engine 4.54</title>
+                <subtitle>Reference manual</subtitle>
+		<copyright>
+			<year>2013</year>
+			<holder>Maxim Zakharov</holder>
+		</copyright>
+		<copyright>
+			<year>2003-2012</year>
+			<holder>DataPark Ltd.</holder>
+		</copyright>
+		<copyright>
+			<year>2001-2003</year>
+			<holder>Lavtech.com corp.</holder>
+		</copyright>
+	</bookinfo>
+&intro;
+&install;
+<chapter id="indexing">
+		<title>Indexing</title>
+&general;
+&http;
+&content-enc;
+&misc;
+<!--&htmlparser;-->
+&follow;
+&aliases;
+&servertable;
+&parsers;
+&indexcmd;
+		<sect1 id="extended-indexing">
+			<title>Extended indexing features</title>
+&news;
+<!--&mp3;-->
+&htdb;
+&exec;
+&mirror;
+&data;
+</sect1>
+&syslog;
+&stored;
+</chapter>
+&htmlparser;
+	<chapter id="howstore">
+		<title>Storing data</title>
+&sql-stor;
+&cachemode;
+&perf;
+&searchd;
+&oracle;
+<!--&db2;-->
+</chapter>
+	<chapter id="subsections">
+		<title>Subsections</title>
+&tags;
+&categories;
+</chapter>
+	<chapter id="international">
+		<title>Languages support</title>
+&charset;
+&negotiation;
+&cjk;
+&vary;
+</chapter>
+	<chapter id="doingsearch">
+		<title>Searching documents</title>
+&search;
+&mod-dpsearch;
+&tmpl;
+&html-design;
+&relevancy;
+&tracking;
+&cache;
+
+<sect1 id="fuzzy">
+		<title>Fuzzy search</title>
+&ispell;
+&aspell;
+&syn;
+&accent;
+&acronym;
+
+</sect1>
+	</chapter>
+
+	<chapter id="misc">
+		<title>Miscellaneous</title>
+&bugs;
+&lib;
+&dbschema;
+</chapter>
+
+<appendix id="donations">
+<title>Donations</title>
+<indexterm><primary>Donations</primary></indexterm>
+
+<para>If you like the <application>DataparkSearch Engine</application> and want to encourage further development, 
+feel free to make a <ulink url="http://order.kagi.com/?6CYPQ">donation
+with Kagi</ulink> or a <ulink url="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=ZTJBFWQUMTDPG">donation with PayPal</ulink> to support this project. Any donation is gratefully appreciated. 
+</para>
+
+<!--para>The following individuals have made donations to support <application>DataparkSearch</application> development, and deserve credit for it:</para>
+
+<itemizedlist id="donors"-->
+<!-- title>List of Donors</title -->
+<!--listitem><para>Mr. Haidut, <ulink url="http://arudius.sourceforge.net/">Arudius</ulink> project.
+</para></listitem-->
+<!--listitem><para>Many people prefer not to be listed, and the details of many others were not recorded (If anyone wishes to send details of their donation, we would be very happy to include them).
+</para></listitem>
+</itemizedlist-->
+
+</appendix>
+
+
+&index;
+
+</book>

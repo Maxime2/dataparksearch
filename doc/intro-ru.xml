@@ -1,0 +1,205 @@
+<chapter id="intro">
+	<title>Введение</title>
+        <indexterm><primary>Введение</primary></indexterm>
+	<para>
+		<application>DataparkSearch</application> является поисковым движком, использующим SQL, и предназначенным для
+организации поиска на одном или многих веб-серверах.
+<application>DataparkSearch</application> состоит из двух частей. Первая часть - индексирующий механизм 
+(<command>indexer</command>). <command>Indexer</command> пробегает по ссылкам и сохраняет в базе данных
+все найденные слова и новые ссылки.
+Вторая часть состоит из CGI-программы, предоставляющей возможность поиска в данных, собраенных <command>indexer</command>ом.
+</para>
+
+	<para>
+<application>DataparkSearch</application> отделился от <application>mnoGoSearch</application> CVS версии 3.2.16 27 ноября 2003
+года как <application>DataparkSearch</application> версии 4.16.
+Первая версия <application>mnoGoSearch</application> была выпушена в ноябре 1998.
+До октября 2000, когда проект был передан Lavtech.Com Corp. и переименован в <application>mnoGoSearch</application>,
+поисковый движок носил имя <application>UDMSearch</application>.</para>
+
+	<para><indexterm><primary>Changelog</primary></indexterm>
+Последние изменения можно найти <ulink url="http://www.dataparksearch.org/ChangeLog">на нашем web-сервере</ulink>.</para>
+	
+	<para><indexterm><primary>Twitter</primary></indexterm>
+Оперативная информация об изменениях в DatapakSearch доступна в Твиттере: <ulink url="http://twitter.com/dataparksearch">@dataparksearch</ulink>.</para>
+
+	<sect1 id="features">
+		<title>Возможности <application>DataparkSearch</application>
+                <indexterm><primary>Возможности</primary></indexterm>
+                </title>
+		<para>Основные возможности <application>DataparkSearch</application>:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Поддержка MySQL (требуется библиотека <literal>libz</literal>),
+PostgreSQL, <!--mySQL,--> <!--Solid,--> iODBC, unixODBC, EasySoft
+ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (см. <xref linkend="oracle"/>), 
+<!--SyBase,--> MS SQL<!--, SAPDB SQL--><!--, DB2 (см. <xref linkend="db2"/>)--> SQL-серверов.</para>
+
+			</listitem>
+			<listitem>
+				<para>Поддержка <literal>HTTP</literal>.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка HTTP-прокси.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка HTTPS.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка FTP.</para>
+			</listitem>
+			<listitem>
+				<para>Поддежка NNTP (обе схемы URL news:// и nntp://).</para>
+			</listitem>
+			<listitem>
+				<para>Виртуальная схема URL htdb://. Позволяет индексировать и искать по
+большим текстовым/блобовым полям SQL-баз данных.</para>
+			</listitem>
+			<listitem>
+				<para>Возможности зеркалирования.</para>
+			</listitem>
+			<listitem>
+				<para>
+					Встроенная поддержка <literal>text/html</literal>, <literal>text/xml</literal>,
+<literal>text/plain</literal>, <literal>audio/mpeg</literal> (MP3) и <literal>image/gif</literal>.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка внешних парсеров для остальных типов документов.</para>
+			</listitem>
+<listitem>
+<para>Возможность индексировать мультиязычные сайты используя механизм согласования содержимого.</para>
+</listitem>
+			<listitem>
+				<para>Нечёткий поиск на основе синонимов, акронимов и аббревиатур и всех форм (включая корректировку правописания) слов из поисковых запросов.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка Basic-авторизации. Позволяет индекировать интранет сервера, защищенные паролем.</para>
+			</listitem>
+			<listitem>
+				<para>Proxy authorization support.</para>
+			</listitem>
+			<listitem>
+				<para>Реентерабельность. Возможно выполнять одновременно несколько процессов
+индексирования и/или поиска по одной и тоже базе. Поддержка многопоточночти.</para>
+
+			</listitem>
+			<listitem>
+				<para>Поддержка стоп-листов.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка &lt;META NAME="robots" content="..."&gt; и <filename>robots.txt</filename>.</para>
+			</listitem>
+			<listitem>
+				<para>Интерфейсы и фронтэнды на C <!--, PHP, Perl-->.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка логических запросов.</para>
+			</listitem>
+<listitem>
+<para>Испольщзование синонимов и словоформ для улучшения результатов поиска.</para>
+</listitem>
+			<listitem>
+				<para>Сортировка документов по релевантности, популярности, дфте последнего изменения и
+по важности (произведению релевантности и популярности).</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка почти всех популярных в Интерете кодировок, включая Восточно-Азиатские мультибайтные и UTF8.</para>
+			</listitem>
+			<listitem>
+				<para>Поддержка HTML шаблонов для гибкой настройки вывода результатов поиска.</para>
+			</listitem>
+			<listitem>
+				<para>Расширенные возможности поиска: тэги, категории, лимиты по времени и т.д.</para>
+			</listitem>
+<listitem><para>Возможность разбиения на отдельные слова фраз японского, корейского, китайского и тайского языков.</para></listitem>
+<listitem>
+	<para>Поиск без учёта акцентов символов.</para>
+</listitem>
+<listitem>
+	<para><command>mod_dpsearch</command> - модуль для веб-сервера <ulink url="http://httpd/apache.org/">Apache</ulink>.</para>
+</listitem>
+<listitem>
+        <para>Поддержка доменных имён в национальных кдировках (Internationalized Domain Names).</para>
+</listitem>
+<listitem>
+        <para>Алгоритм автоматического построения рефератов (SEA).</para>
+</listitem>
+		</itemizedlist>
+	</sect1>
+
+	<sect1 id="get">
+		<title>Где взять <application>DataparkSearch</application>
+                 <indexterm><primary>Где взять <application>DataparkSearch</application></primary></indexterm>
+                </title>
+		<para>Последняя версия <application>DataparkSearch</application> доступна на 
+<ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>, а также на Google Code:
+<ulink url="http://code.google.com/p/dataparksearch/">http://code.google.com/p/dataparksearch/</ulink>.</para>
+
+<!-- para>Зеркало в Германии: <ulink url="http://dataparksearch.h0t.de/">http://dataparksearch.h0t.de/</ulink>.</para-->
+<!-- para>Зеркало в Москве, Россия: <ulink url="http://dataparksearch.newsa.ru/">http://dataparksearch.newsa.ru/</ulink>.</para-->
+
+<para><application>DataparkSearch</application> также доступен в коллекции портов FreeBSD, 
+см. <ulink url="http://www.freshports.org/www/dpsearch">www.freshports.org/www/dpsearch</ulink> и в репозитории 
+ <ulink url="http://www.t2-project.org/packages/dpsearch.html">T2 Linux SDE</ulink>.
+</para>
+
+<para>Исходники DataparkSearch доступны через SVN на Google Code:
+<programlisting>
+svn checkout http://dataparksearch.googlecode.com/svn/trunk/ dataparksearch-read-only
+</programlisting>
+</para>
+
+	</sect1>
+
+	<sect1 id="disclaimer">
+		<title>Отказ от ответственности и гарантий
+                <indexterm><primary>Отказ от ответственности и гарантий</primary></indexterm>
+                </title>
+		<para>Эта программа является свободным программным обеспечением; вы пожете распространять или модифицировать её в соответствии
+		с условиями Общей публичной лицензии GNU (GNU General
+Public License) опубликованной Фондом Свободного ПО (Free Software Foundation); либо в Версии 2 этой Лицензии, либо (на ваше усмотрение) более поздней версии.  Подробнее см. файл <filename>COPYING</filename>.</para>
+
+		<para>Эта программа распространяется в надежде, что она будет вам полезна, но БЕЗ КАКОЙ ЛИБО-ГАРАНТИИ; даже без подразумеваемой гарантии КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ОПРЕДЕЛЕННОЙ ЦЕЛИ. См. подробности в Общей публичной лицензии GNU.</para>
+
+		<para>Вы должны были получить копию Общей публичной лицензии GNU вместе с копией этой программы; если это не так, обратитесь в Фонд свободного программного обеспеченияя по адресу: 
+Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
+02111-1307 USA </para>
+
+	</sect1>
+
+	<sect1 id="authors">
+                <indexterm><primary>Авторы</primary></indexterm>
+		<title>Авторы</title>
+<para>
+	<author><firstname>Maxim</firstname><surname>Zakharov</surname></author>
+				<email>maxime@maxime.net.ru</email>, <ulink url="http://www.maxime.net.ru/">домашняя страница</ulink>
+</para>
+
+		<sect2 id="contriblist">
+<indexterm><primary>Помощники</primary></indexterm>
+			<title>Помощники</title>
+
+<para>
+	<author><firstname>Michael</firstname><surname>Kynast</surname></author> <email>kynast@newslookup.com</email>:
+Первый пользователь <application>DataparkSearch</application>. Тестирование на <application>Linux Red Hat</application>.
+</para>
+
+<para>
+	<author><firstname>Jean-Gerard</firstname><surname>Pailloncy</surname></author>:
+Тестирование на <application>OpenBSD</application>.
+</para>
+<para>
+	<author><firstname>Amit</firstname><surname>Joshi</surname></author>:
+Тестирование на <application>CentOS</application>, пэкадж для <application>Debian</application>, 
+идею по улучшению работы на нескольких PC и с несколькими DBAddr.
+</para>
+
+<para>
+<author><firstname><application>mnoGoSearch</application></firstname> <surname>разработчики и помощники</surname></author>
+<email>devel@mnogosearch.org</email>: Разработка и помощь в разработке <application>mnoGoSearch</application> до версии 3.2.15.
+</para>
+
+		</sect2>
+	</sect1>
+
+</chapter>

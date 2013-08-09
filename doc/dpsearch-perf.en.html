@@ -1,0 +1,467 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>DataparkSearch performance issues</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Storing data"
+HREF="dpsearch-howstore.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Cache mode storage"
+HREF="dpsearch-cachemode.en.html"><LINK
+REL="NEXT"
+TITLE="SearchD support"
+HREF="dpsearch-searchd.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-cachemode.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Storing data</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-searchd.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PERF"
+>5.3. <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> performance issues</A
+></H1
+><A
+NAME="AEN3639"
+></A
+><P
+>The cache mode is the fastest <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>'s storage mode. Use it if
+you need maximal search speed.</P
+><P
+><A
+NAME="AEN3646"
+></A
+>
+If your <TT
+CLASS="FILENAME"
+>/var</TT
+> directory isn't changed since the indexing has been finished, you may disable file locking using 
+<B
+CLASS="COMMAND"
+>"ColdVar yes"</B
+> command placed in <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (or in <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>,
+if <B
+CLASS="COMMAND"
+>searchd</B
+> is used). This allow you to save some time on file locking.</P
+><P
+>Using <KBD
+CLASS="USERINPUT"
+>UseCRC32URLId yes</KBD
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#USECRC32URLID_CMD"
+>Section 3.10.12</A
+>&#62;) allow to speed up indexing, but
+small number of collisions is possible, especially on large database. </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEARCHD-REC"
+>5.3.1. <B
+CLASS="COMMAND"
+>searchd</B
+> usage recommendation</A
+></H2
+><P
+>If you plan use ispell data, synonym or stopword lists, it's recommended setup
+the <B
+CLASS="COMMAND"
+>searchd</B
+> daemon for speed-up searches (See <A
+HREF="dpsearch-searchd.en.html"
+>Section 5.4</A
+>&#62;). 
+<B
+CLASS="COMMAND"
+>searchd</B
+> daemon preload all these data and lists
+and holds them in memory. This reduce average search query execution time.</P
+><P
+>Also, <B
+CLASS="COMMAND"
+>searchd</B
+> can preload url info data (20 bytes per URL indexed) and 
+cache mode limits (4 or 8 bytes per URL depend on limit type). This allow reduce average search time.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEARCH-CACHE"
+>5.3.2. Search results caching</A
+></H2
+><A
+NAME="AEN3668"
+></A
+><P
+></P
+><P
+>Use "<B
+CLASS="COMMAND"
+>Cache yes</B
+>" command in your <TT
+CLASS="FILENAME"
+>search.htm</TT
+> template (or in <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> file, if
+<SPAN
+CLASS="APPLICATION"
+>searchd</SPAN
+> is used) to enable search results cache. That allows to reduce significantly the answer time for repeating queries.</P
+><P
+>If you use search results caching, please note you need to empty <TT
+CLASS="FILENAME"
+>var/cache</TT
+> directory after each indexing/reindexing.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MFS-REC"
+>5.3.3. Memory based filesystem (mfs) usage recommendation</A
+></H2
+><P
+>If you use cache storage mode and you have enough RAM on your PC, 
+you may place <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var</TT
+>
+directory on memory based filesystem (mfs). This allow speedup both indexing and searching.</P
+><P
+>If you haven't enough RAM to fit  <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var</TT
+>, 
+you may place on memory filesystem any of <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var/tree</TT
+>,
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var/url</TT
+> or <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var/store</TT
+>
+directories as well.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URLINFO-CMD"
+>5.3.4. <B
+CLASS="COMMAND"
+>URLInfoSQL</B
+> command</A
+></H2
+><A
+NAME="AEN3691"
+></A
+><P
+>For dbmode cache, you may use <B
+CLASS="COMMAND"
+>URLInfoSQL no</B
+> command to disable storing URL Info into SQL database.
+But using this command, you'll be unable to use limits by language and by Content-Type.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SRVINFO-CMD"
+>5.3.5. <B
+CLASS="COMMAND"
+>SRVInfoSQL</B
+>command</A
+></H2
+><A
+NAME="AEN3699"
+></A
+><P
+>With the <B
+CLASS="COMMAND"
+>SRVInfoSQL no</B
+> command you can switch off storing auxiliary data into "srvinfo" SQL-table.
+In this case this table can not be used to load configuration with <B
+CLASS="COMMAND"
+>LoadServerTable</B
+> command (See <A
+HREF="dpsearch-srvtable.en.html#SRVTABLE-LOAD"
+>Section 3.8.1</A
+>&#62;).</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MARKFORINDEX-CMD"
+>5.3.6. <B
+CLASS="COMMAND"
+>MarkForIndex</B
+> command</A
+></H2
+><A
+NAME="AEN3709"
+></A
+><P
+>By default, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> are marking all URLs selected for indexing as indexed for 4 hours.
+This prevent possible simultaneous indexing of the same URL by different indexer instance running. But for huge installation this feature
+can take some time for processing. You may switch off this markage using <B
+CLASS="COMMAND"
+>"MarkForIndex no"</B
+> in your 
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHECKINSERTSQL-CMD"
+>5.3.7. <B
+CLASS="COMMAND"
+>CheckInsertSQL</B
+> command</A
+></H2
+><A
+NAME="AEN3719"
+></A
+><P
+>By default, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> trying to insert data into SQL database regardless it's already present there.
+On some systems this raise some error loggings. To avoid such errors, 
+you may enable additional checks, is the inserting data new, by specifying
+<B
+CLASS="COMMAND"
+>CheckInsertSQL yes</B
+> command in your <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PERF-MYSQL"
+>5.3.8. MySQL performance</A
+></H2
+><P
+>MySQL users may declare <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> tables with
+<CODE
+CLASS="OPTION"
+>DELAY_KEY_WRITE=1</CODE
+> option. This will make the updating
+of indexes faster, as these are not logged to disk until the file is
+closed. <CODE
+CLASS="OPTION"
+>DELAY_KEY_WRITE</CODE
+> excludes updating indexes on
+disk at all. </P
+><P
+>With it indexes are processed only in memory and
+written onto disk as last resort, command <B
+CLASS="COMMAND"
+>FLUSH TABLES</B
+> or mysqld shutdown. This can take even minutes and
+impatient user can <TT
+CLASS="LITERAL"
+>kill -9 mysql server</TT
+> and break
+index files with this.  Another downside is that you should run
+<TT
+CLASS="LITERAL"
+>myisamchk</TT
+> on these tables before you start mysqld
+to ensure that they are okay if something killed mysqld in the
+middle.</P
+><P
+>Because of it we didn't include this table
+option into default tables structure. However as the key information
+can always be generated from the data, you should not lose anything by
+using <CODE
+CLASS="OPTION"
+>DELAY_KEY_WRITE</CODE
+>. So, use this option for your
+own risk.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ARES"
+>5.3.9. Asynchronous resolver library</A
+></H2
+><P
+>Using <A
+HREF="http://c-ares.haxx.se/"
+TARGET="_top"
+>c-ares</A
+>, 
+an asynchronous resolver library (dns/c-ares in FreeBSD ports collection), allow to perform DNS queries without blocking for every
+indexing thread. Please note, this also increase the number of concurrent queries to your DNS server.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-cachemode.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-searchd.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Cache mode storage</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-howstore.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>SearchD support</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

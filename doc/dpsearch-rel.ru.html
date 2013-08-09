@@ -1,0 +1,818 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Релевантность&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Поиск документов"
+HREF="dpsearch-doingsearch.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Дизайн search.html"
+HREF="dpsearch-html.ru.html"><LINK
+REL="NEXT"
+TITLE="Регистрация поисковых запросов
+
+ "
+HREF="dpsearch-track.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-html.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 8. Поиск документов</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-track.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="REL"
+>8.5. Релевантность
+<A
+NAME="AEN6056"
+></A
+></A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REL-ORDER"
+>8.5.1. Упорядочивание документов</A
+></H2
+><P
+>При сортировке документов перед выдачей результата поиска <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+по умолчанию учитывает два параметра каждого документа: <TT
+CLASS="LITERAL"
+>релевантность</TT
+> и <TT
+CLASS="LITERAL"
+>популярность</TT
+>.
+Сначала документы сортируются по релевантности, а при равенстве, по популярности.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="RELEVANCY"
+>8.5.2. Расчёт релевантности</A
+></H2
+><P
+>Релевантность каждого документа вычисляется как косинус угла между вектором весов этого документа и вектором весов,
+соответствующему поисковому запросу, умноженный на 100%.
+Число координат векторов весов равно произведению числа слов в запросе
+(с учётом всех словоформ и синонимов) на число секций, определённых в
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>. Каждая координата вектора весов соответсвует слову из запроса в той или иной секции
+документа. И значение для этой координаты вычисляется на основе весов секций, заданных параметром <CODE
+CLASS="OPTION"
+>wf</CODE
+>
+(см. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-CHANGEWEIGHT"
+>&#1056;&#1072;&#1079;&#1076;. 8.1.3</A
+>&#62;) и на основании
+того, является ли данное слово именно указанным в запросе или его словоформой. Также еще одна координата соответсвует
+среднему расстоянию между найденными словами в данном документе. Для вектора запроса эта координата полагается равной 0.</P
+><P
+>  Т.к. в файлах конфигурации поисковых фронтэндов
+(<TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> или <TT
+CLASS="FILENAME"
+>search.htm</TT
+>) не предусмотрено указание секцией,
+используйте <A
+NAME="AEN6073"
+></A
+> команду
+<B
+CLASS="COMMAND"
+>NumSections</B
+> для указания числа используемых секций (по умолчанию оно равно 256).
+Впрочем, точное число секций не играет решающей роли в порядке сортировки документов, только
+в значении рейтинга релевантности.</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN6077"
+></A
+><P
+><B
+>&#1058;&#1072;&#1073;&#1083;&#1080;&#1094;&#1072; 8-3. Параметры расчёта релевантности, задаваемые при компиляции (ключи для <B
+CLASS="COMMAND"
+>configure</B
+>)</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--enable-rel</CODE
+></TD
+><TD
+><P
+>Включает полный (full), быстрый (fast) или ультра (ultra) вариант расчёта релевантности. Значение по умолчанию: full (или полный расчёт релевантности).</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--disable-reldistance</CODE
+></TD
+><TD
+><P
+>Выключает учёт среднего растояния между словами при расчёте релевантности. Значение по умолчанию: включено.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--disable-relposition</CODE
+></TD
+><TD
+><P
+>Выключает учёт позиции первого слова из запроса в тексте документа при расчёте релевантности. Значение по умолчанию: включено.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--disable-relwrdcount</CODE
+></TD
+><TD
+><P
+>Выключает учёт чисел вхождения слов из запроса в найденом документе при расчёте релевантности. Значение по умолчанию: включено.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-bestpos=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>Задаёт <CODE
+CLASS="OPTION"
+>NUM</CODE
+> в качестве лучшего значения первой позиции слова запроса в найденом документе. 
+Значение по умолчанию: 4.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-bestwrdcnt=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>Задаёт <CODE
+CLASS="OPTION"
+>NUM</CODE
+> в качестве лучшего числа каждого из слов запроса в найденом документе. 
+Значение по умолчанию: 11.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-distfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>Задаёт <CODE
+CLASS="OPTION"
+>NUM</CODE
+> в качестве коэффициента для среднего растояния между словами запроса в найденом документе. 
+Значение по умолчанию: 0.2.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-posfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>Задаёт <CODE
+CLASS="OPTION"
+>NUM</CODE
+> в качестве коэффициента для расстояния между первой позицией слова запроса в найденом документе и значением, указаным параметром <CODE
+CLASS="OPTION"
+>--with-bestpos</CODE
+>. 
+Значение по умолчанию: 0.5.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-wrdcntfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>Задаёт <CODE
+CLASS="OPTION"
+>NUM</CODE
+> в качестве коэффициента для расстояния между числом слова запроса в найденом документе и значением, указаным параметром <CODE
+CLASS="OPTION"
+>--with-bestwrdcnt</CODE
+>. 
+Значение по умолчанию: 0.4.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-wrdunifactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>Задаёт <CODE
+CLASS="OPTION"
+>NUM</CODE
+> в качестве коэффициента для величины отклонения количеств вхождения слов запроса в найденый документ от равномерного распределения. 
+Значение по умолчанию: 1.5.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="POPRANK"
+>8.5.3. Рейтинг популярности<A
+NAME="AEN6148"
+></A
+></A
+></H2
+><P
+><A
+NAME="AEN6151"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> поддерживает два метода расчёта рейтинга популярности.
+Метод, использовавшийся в предыдущих версиях получил название <TT
+CLASS="LITERAL"
+>Goo</TT
+>, а новый метод называется 
+<TT
+CLASS="LITERAL"
+>Neo</TT
+>. По умолчанию используется метод <TT
+CLASS="LITERAL"
+>Goo</TT
+>. Чтобы выбрать нужный метод расчёта популярности
+используйте команду <B
+CLASS="COMMAND"
+>PopRankMethod</B
+>:
+<PRE
+CLASS="PROGRAMLISTING"
+>PopRankMethod Neo</PRE
+></P
+><P
+><A
+NAME="AEN6161"
+></A
+>
+Для метода расчёта популярности <TT
+CLASS="LITERAL"
+>Neo</TT
+>,а также для полного варианта метода <TT
+CLASS="LITERAL"
+>Goo</TT
+> вам
+необходимо включить сбор ссылок между страницами командой <B
+CLASS="COMMAND"
+>CollectLinks yes</B
+> в вашем файле конфигурации
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>. Однако, это незначительно уменьшает скорость индексирования, поэтому по умолчанию
+сбор этих ссылок выключен. </P
+><P
+>По умолчанию, для расчета рейтинга популярности используются только ссылки между различными сайтами.
+ Если в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> указана опция 
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6171"
+></A
+>PopRankSkipSameSite no</CODE
+>,
+ то при расчёте рейтинга популярности учитываются все ссылки.</P
+><P
+>Вы можете присвоить начальное значение рейтинга популярности страницы используя МЕТА таг DP.PopRank 
+(см. <A
+HREF="dpsearch-htmlparser-meta.ru.html"
+>&#1056;&#1072;&#1079;&#1076;. 4.3</A
+>&#62;).</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="GOO-POPRANK"
+>8.5.3.1. Метод расчёта популярности Goo</A
+></H3
+><P
+>Рейтинг популярности рассчитывается в два этапа. На первом этапе значение параметра <CODE
+CLASS="OPTION"
+>Weight</CODE
+>
+для каждого сервера делится на число ссылок со страниц этого сервера. Таким образом определяется вес одной ссылки с этого сервера.
+На втором этапе для каждой страницы находится ссума весов всех ссылок, указывающих на эту страницу.
+Эта сумма и является индексом популярности страницы.</P
+><P
+><A
+NAME="AEN6181"
+></A
+>
+По умолчанию значение параметра <CODE
+CLASS="OPTION"
+>Weight</CODE
+> для каждого сервера равно 1. Изменить это значение вы можете непосредственно
+в SQL-таблице <TT
+CLASS="LITERAL"
+>server</TT
+> или при помощи команды <B
+CLASS="COMMAND"
+>ServerWeight</B
+> в файле конфигурации
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.</P
+><P
+>Если в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> указана опция
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6191"
+></A
+>PopRankFeedBack yes</CODE
+>,
+то перед расчётом рейтинга популярности страниц рассчитывается рейтинг сайтов. Для этого для каждого сайта находится сумма
+популярности всех его страниц, если она окажется меньше 1, то рейтинг сайта полагается равным 1, в противном случае он
+полагается равным найденной сумме.</P
+><P
+>Если в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> указана опция
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6197"
+></A
+>PopRankUseTracking yes</CODE
+>,
+то перед расчётом рейтинга популярности страниц в качестве рейтинга сайтов будет использована сумма числа запросов уточнения поиска
+для каждого сайта (т.е. число запросов поиска только среди документов с этого сайта).</P
+><P
+>Если в <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (или <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>) указана опция
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6204"
+></A
+>PopRankUseShowCnt yes</CODE
+>,
+то для каждого выводимого пользователю результата поиска, имеющего значение релевантности выше, заданного командой
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6208"
+></A
+>PopRankShowCntRatio</CODE
+>
+(по умолчанию используется значение 25.0), значение <TT
+CLASS="LITERAL"
+>url.shows</TT
+> увеличивается на 1.
+Если в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> указана опция <CODE
+CLASS="OPTION"
+>PopRankUseShowCnt yes</CODE
+>,
+то при расчёте рейтинга популярности страниц, к полученному на предыдущих этапах значению рейтига каждой страницы будет прибавлено значение
+<TT
+CLASS="LITERAL"
+>url.shows</TT
+>, умноженное на значение, заданное опцией
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6216"
+></A
+>PopRankShowCntWeight</CODE
+>
+(по умолчанию используется значение 0.01).</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="NEO-POPRANK"
+>8.5.3.2. Метод расчёта популярности Neo</A
+></H3
+></DIV
+><P
+>При этом методе расчёта популярности подразумевается, что страницы являются нейронами, а ссылки между страницами
+являются связями между нейронами. Такми образом для образованой нейросети можно использовать один методов её обучения -
+метод обратного распространения ошибки. Рейтингом популярности страницы в данном случае считается уровень активности 
+соответствующего нейрона. См. <A
+HREF="http://www.maxime.net.ru/doc/Neo.pdf"
+TARGET="_top"
+>краткое описание метода расчёта популярности Neo</A
+>.</P
+><P
+>Вы можете использовать команду
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6225"
+></A
+>PopRankNeoIterations</CODE
+>
+для задания числа итераций при расчёте популярности методом  &quot;Neo&quot;. Значение по умолчанию: 3.</P
+><P
+><A
+NAME="AEN6229"
+></A
+>
+По умолчанию, расчёт рейтинга популярности методом &quot;Neo&quot; ведётся одновременно с индексирования. Для ускорения индексирования,
+вы можете отложить расчёт рейтинга популярности методом &quot;Neo&quot; указав команду:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>PopRankPostpone yes</PRE
+><P
+>Затем вы можете расчитать рейтинг популярности методом &quot;Neo&quot; также как и для метода &quot;Goo&quot;, т.е.:
+<B
+CLASS="COMMAND"
+>indexer -TR</B
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REL-BOOL"
+>8.5.4. Булевы запросы
+<A
+NAME="AEN6237"
+></A
+></A
+></H2
+><P
+>При булевом поиске, состоящем из двух и более слов, необходимо вводить операторы (&amp;, |, ~).
+Т.е. необходимо вводить <KBD
+CLASS="USERINPUT"
+>a &amp; book</KBD
+> вместо <KBD
+CLASS="USERINPUT"
+>a book</KBD
+>.
+См. также <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-BOOL"
+>&#1056;&#1072;&#1079;&#1076;. 8.1.7</A
+>&#62;.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REL-CWORDS"
+>8.5.5. Crosswords
+<A
+NAME="AEN6246"
+></A
+></A
+></H2
+><P
+>Эта возможность позволяет связать слова между
+&lt;a href="xxx"&gt; и &lt;/a&gt; с документом, на который указывает данная ссылка.
+Для включения этой возможности, используйте команду
+<B
+CLASS="COMMAND"
+>CrossWords yes
+<A
+NAME="AEN6250"
+></A
+></B
+> в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> и <TT
+CLASS="FILENAME"
+>search.htm</TT
+>, а также определите секцию
+<KBD
+CLASS="USERINPUT"
+>crosswords</KBD
+> в файле <TT
+CLASS="FILENAME"
+>sections.conf</TT
+>.</P
+><P
+><A
+NAME="AEN6258"
+></A
+>
+При помощи команды <B
+CLASS="COMMAND"
+>CrossWordsSkipSameSite</B
+> можно управлять сбором кросс-слов со страниц того же сайта.
+Если указана опция <KBD
+CLASS="USERINPUT"
+>yes</KBD
+> (по умолчанию), то сбор кросс-слов со страниц того же сайта не происходит. 
+Для включения учета таких слов необходимо явно задать опцию <KBD
+CLASS="USERINPUT"
+>no</KBD
+>:
+<PRE
+CLASS="PROGRAMLISTING"
+>CrossWordsSkipSameSite no</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEA"
+>8.5.6. Алгоритм Построения Рефератов (SEA)</A
+></H2
+><A
+NAME="AEN6267"
+></A
+><A
+NAME="AEN6269"
+></A
+><A
+NAME="AEN6272"
+></A
+><A
+NAME="AEN6275"
+></A
+><P
+><TT
+CLASS="LITERAL"
+>Алгоритм Построения Рефератов (SEA)</TT
+> позволяет построить реферат из трёх наиболее релевантных предложений для
+каждого проиндексированого документа, состоящего из более 6 предложений. Чтобы включить эту возможность, добавьте эту команду в ваш файл
+<TT
+CLASS="FILENAME"
+>seaction.conf</TT
+>:
+<PRE
+CLASS="PROGRAMLISTING"
+>Section sea x y</PRE
+>
+где <CODE
+CLASS="OPTION"
+>x</CODE
+> - номер секции и <CODE
+CLASS="OPTION"
+>y</CODE
+> - максимальный размер значения секции, задайте его равным 0, если вы не хотите
+показывать эту секцию на тсраницах результатов поиска.
+Если вы указываете ненулевое значение для <CODE
+CLASS="OPTION"
+>y</CODE
+>, вы можете использовать мета-переменную <TT
+CLASS="LITERAL"
+>$(sea)</TT
+> 
+в вашем шаблоне поиска для отображения реферата в результатах поиска.</P
+><P
+>Соответствующие команды конфигурирования:</P
+><P
+><A
+NAME="AEN6288"
+></A
+>
+Команда <B
+CLASS="COMMAND"
+>SEASentenceMinLength</B
+> задаёт минимальную длину предложения, которое будет использовано для создания реферата.
+Значение по умолчанию: 32.</P
+><P
+><A
+NAME="AEN6293"
+></A
+>
+Команда <B
+CLASS="COMMAND"
+>SEASentences</B
+> используется для задания максимального числа предложений, используемых при построении реферата.
+Значение по умолчанию: 64. В виду нелинейной сложности алгоритма SEA, вы можете установить значение этого параметра исходя из желаемой
+производительности индексирования.</P
+><P
+><A
+NAME="AEN6298"
+></A
+>
+При помощи команды <B
+CLASS="COMMAND"
+>SEASections</B
+> вы можете указать список секций документов, по которым будут строиться рефераты.
+По умолчанию, для построения рефератов используется только секция "body".
+<PRE
+CLASS="PROGRAMLISTING"
+>SEASections "body, title"</PRE
+></P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-html.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-track.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Дизайн search.html</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Регистрация поисковых запросов
+<A
+NAME="AEN6305"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

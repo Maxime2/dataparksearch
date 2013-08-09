@@ -1,0 +1,151 @@
+#!/bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+VAR=@localstatedir@
+SPLITTER="@sbindir@/splitter"
+INDEXER="@sbindir@/indexer"
+HUP=0
+PRESPLIT=0
+SPLIT=0
+VERBOSE=4
+PAUSE=0
+OPTIMIZE=0
+OBI=0
+LIMITS=0
+
+usage()
+{
+	cat <<EOF
+Usage: $0 [OPTIONS]
+Options:
+	[-c=file]               Use file as configuration directory
+	[-k]	[--hup]		Send -HUP signal to cached (to flush buffers and to write limits)
+	[-l]                    Flush cached buffers only
+	[-s]	[--split]	Split logs
+	[-h]	[--help]	Display this page
+	[-b]	        	Optimize before update
+	[-o]	        	Optimize after update
+	[-v=n]                  Set verbose level to n (default: 4)
+	[-p=m]                  Pause m sec. after each log buffer update (default: 0)
+	[-w=dir]                Use dir as VarDir directory
+
+Configuration:
+        Base dir: $VAR
+        cached pid file: $CACHED_PID
+EOF
+	exit $1
+}
+
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+while test $# -gt 0; do
+
+	case $1 in
+	-c=*)
+		CONF=`echo $1 | sed 's/-c=//'`
+		;;
+	-k)
+		HUP=1
+		;;
+	-l)
+		LIMITS=1
+		;;
+	--hup)
+		HUP=1
+		;;
+	-s)
+		SPLIT=1
+		;;
+	--split)
+		SPLIT=1
+		;;
+	-v=*)
+		VERBOSE=`echo $1 | sed 's/-v=//'`
+		;;
+	-p=*)
+		PAUSE=`echo $1 | sed 's/-p=//'`
+		;;
+	-w=*)
+		VAR=`echo $1 | sed 's/-w=//'`
+		;;
+	-b)
+		OBI=1
+		;;
+	-o)
+		OPTIMIZE=1
+		;;
+	*)
+		usage 1 1>&2
+		;;
+	esac
+	shift
+done
+
+
+CACHED_PID=$VAR/cached.pid
+
+if [ x$HUP = x1 ]
+then
+	echo "Sending -HUP signal to cached..."
+	# Check whether cached is running
+	if [ -s $CACHED_PID ]
+	then
+		# Send HUP signal to cached process
+		PROC=`cat $CACHED_PID`
+		kill -HUP $PROC
+
+		# Check whether kill didn't fail
+		if [ x$? = x1 ]
+		then
+			echo "kill -HUP $PROC failed."
+			exit 1
+		fi
+		echo "Done"
+	else
+		echo "$CACHED_PID is empty or doesn't exist!"
+		echo "Check that cached is running."
+		exit 1
+	fi
+else
+    if [ x$LIMITS = x1 ]
+    then
+	echo "Flushing cached buffers..."
+	$INDEXER -TH
+    fi
+fi
+
+
+OPTOPT=""
+
+if [ x$OBI = x1 ]
+then
+    OPTOPT="-b"
+fi
+
+if [ x$OPTIMIZE = x1 ]
+then
+    OPTOPT="$OPTOPT -o"
+fi
+
+if [ x$SPLIT = x1 ]
+then
+        # Split logs
+
+	# Wait for del-split to appear.
+        while [ ! -f $VAR/splitter/del-split.log ]; do
+	    echo "Waiting for del-split.log..."
+            sleep 1;
+        done
+        echo "Runnig splitter -- verbose: $VERBOSE, pause: $PAUSE"
+        $SPLITTER -v $VERBOSE -p $PAUSE $OPTOPT -w $VAR $CONF && {
+            echo "Deleting logs..."
+            cd $VAR/splitter
+            rm del-split.log
+
+        }
+fi
+echo "Done"

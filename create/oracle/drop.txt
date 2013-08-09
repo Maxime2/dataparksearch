@@ -1,0 +1,34 @@
+delimiter=/
+DROP TABLE dict
+/
+DROP TABLE url
+/
+DROP TABLE urlinfo
+/
+DROP TABLE server
+/
+DROP TABLE links
+/
+DROP TABLE srvinfo
+/
+DROP TABLE categories
+/
+DROP TABLE storedchk
+/
+DROP TABLE cachedchk
+/
+DROP TABLE cachedchk2
+/
+DROP TABLE robots
+/
+DROP TABLE cookies
+/
+DROP SEQUENCE categories_seq
+/
+DROP SEQUENCE qtrack_seq
+/
+DROP SEQUENCE next_url_id
+/
+DROP SEQUENCE server_seq
+/
+

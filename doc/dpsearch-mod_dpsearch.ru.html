@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Модуль mod_dpsearch для Apache httpd
+
+
+&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Поиск документов"
+HREF="dpsearch-doingsearch.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Поиск документов"
+HREF="dpsearch-doingsearch.ru.html"><LINK
+REL="NEXT"
+TITLE="Как создавать шаблоны результатов поиска
+"
+HREF="dpsearch-templates.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-doingsearch.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 8. Поиск документов</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-templates.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="MOD_DPSEARCH"
+>8.2. Модуль <TT
+CLASS="LITERAL"
+>mod_dpsearch</TT
+> для Apache httpd
+<A
+NAME="AEN5417"
+></A
+>
+<A
+NAME="AEN5419"
+></A
+>
+<A
+NAME="AEN5422"
+></A
+>
+<A
+NAME="AEN5425"
+></A
+></A
+></H1
+><P
+>Начиная с версии 4.19 <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> также предоставляет модуль для
+веб-сервера <SPAN
+CLASS="APPLICATION"
+>Apache</SPAN
+>, реализующий возможности <B
+CLASS="COMMAND"
+>searchd</B
+> и <B
+CLASS="COMMAND"
+>search.cgi</B
+>.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MOD_DPSEARCH-WHY"
+>8.2.1. Для чего использовать <TT
+CLASS="LITERAL"
+>mod_dpsearch</TT
+></A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>Как и <B
+CLASS="COMMAND"
+>searchd</B
+> (см. <A
+HREF="dpsearch-searchd.ru.html#SEARCHD-WHY"
+>&#1056;&#1072;&#1079;&#1076;. 5.4.1</A
+>&#62;), для ускорения поиска, <B
+CLASS="COMMAND"
+>mod_dpsearch</B
+> может 
+держать в памяти предварительно загруженными некоторые данные.</P
+></LI
+><LI
+><P
+>В дополнение, <B
+CLASS="COMMAND"
+>mod_dpsearch</B
+> держит в памяти последний использованый шаблон поиска. 
+Тем саммым время поиска сокращается на время загрузки и разбора шаблона поиска для каждого поискового запроса начиная со второго.</P
+></LI
+><LI
+><P
+>Сам модуль <B
+CLASS="COMMAND"
+>mod_dpsearch</B
+> уже находится в памяти, когда приходит поисковый запрос от пользователя,
+в то время как <TT
+CLASS="FILENAME"
+>search.cgi</TT
+>, как правило, загружается с диска для каждого запроса.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MOD_DPSEARCH-CFG"
+>8.2.2. Конфигурирование <TT
+CLASS="LITERAL"
+>mod_dpsearch</TT
+></A
+></H2
+><P
+>Чтобы включить поддержку этой возможности, добавьте к <B
+CLASS="COMMAND"
+>configure</B
+> ключ <CODE
+CLASS="OPTION"
+>--enable-apache-module</CODE
+>.
+В добавление к основным программам, будет создана библиотека <TT
+CLASS="LITERAL"
+>mod_dpsearch.so</TT
+>. Эта библиотека устанавливается
+в дерево установки <SPAN
+CLASS="APPLICATION"
+>Apache</SPAN
+>. После этого вам необходимо активировать этот модуль добавив следующие
+строчки в ваш файл конфигурации <SPAN
+CLASS="APPLICATION"
+>Apache</SPAN
+>:
+
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadModule dpsearch_module       libexec/mod_dpsearch.so
+AddModule mod_dpsearch.c
+
+&lt;Ifmodule mod_dpsearch.c&gt;
+DataparkSearchdConf /usr/local/dpsearch/etc/modsearchd.conf
+    &lt;Location /search&gt;
+        SetHandler dpsearch
+        DataparkSearchTemplate /usr/local/dpsearch/etc/modsearch.htm
+    &lt;/Location&gt;
+    &lt;Location /storedoc&gt;
+        SetHandler dpstoredoc
+        DataparkStoredocTemplate /usr/local/dpsearch/etc/modstoredoc.htm
+    &lt;/Location&gt;
+&lt;/IfModule&gt;</PRE
+></P
+><P
+>Этим модулем поддерживаются три директивы конфигурации: <CODE
+CLASS="OPTION"
+>DataparkSearchdConf</CODE
+>,
+<CODE
+CLASS="OPTION"
+>DataparkSearchTemplate</CODE
+> и <CODE
+CLASS="OPTION"
+>DataparkStoredocTemplate</CODE
+>. 
+Необязательная директива <CODE
+CLASS="OPTION"
+>DataparkSearchdConf</CODE
+> задаёт файл конфигурации, 
+аналогичный файлу конфигурации для <B
+CLASS="COMMAND"
+>searchd</B
+>. Для сервера может быть указана только один такой файл.
+Директива <CODE
+CLASS="OPTION"
+>DataparkSearchdTemplate</CODE
+> указывает поисковый шаблон, аналогичный шаблону, используемому программой
+<B
+CLASS="COMMAND"
+>search.cgi</B
+>. 
+Директива <CODE
+CLASS="OPTION"
+>DataparkStoredocTemplate</CODE
+> указывает шаблон, для отображения сохранённой копии документа,
+аналогичный шаблону, используемому программой <B
+CLASS="COMMAND"
+>storedoc.cgi</B
+>. 
+Для сервера можут быть указано несколько директив <CODE
+CLASS="OPTION"
+>DataparkSearchdTemplate</CODE
+> и <CODE
+CLASS="OPTION"
+>DataparkStoredocTemplate</CODE
+>,
+по одной для каждого Location. Если указана директива <CODE
+CLASS="OPTION"
+>DataparkSearchdConf</CODE
+>, то в поисковых шаблонах не нужно указывать
+команды <CODE
+CLASS="OPTION"
+>DBAddr</CODE
+>.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-templates.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Поиск документов</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Как создавать шаблоны результатов поиска
+<A
+NAME="AEN5475"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

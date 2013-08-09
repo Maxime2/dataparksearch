@@ -1,0 +1,118 @@
+<sect1 id="http-codes">
+	<title>Реакция на коды HTTP-ответа</title>
+	<para>В этом разделе описана реакция <application>DataparkSearch</application> на
+разные коды HTTP-ответа. Для описания использован псевдо-язык.</para>
+	<itemizedlist>
+		<listitem>
+			<para>200 OK</para>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>Если указан ключ -m ("force reindex"), то переход к 4.</para>
+				</listitem>
+				<listitem>
+					<para>Сравнение новой и старой, сохраненной в БД, контрольных сумм документа</para>
+				</listitem>
+				<listitem>
+					<para>Если контрольные суммы равны, то next_index_time=Now()+Period, переход к 7</para>
+				</listitem>
+				<listitem>
+					<para>Разбор документа, создание списка слов, добавление в БД новых гипертекстовых ссылок</para>
+				</listitem>
+				<listitem>
+					<para>Удаление старого списка слов и секций из БД</para>
+				</listitem>
+				<listitem>
+					<para>Вставка нового списка слов и секций</para>
+				</listitem>
+				<listitem>
+					<para>Конец</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<para>304 Not Modified</para>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						<literal>next_index_time=now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Конец</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<literallayout>
+301 Moved Permanently
+302 Moved Temporarily
+303 See Other
+</literallayout>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>Удаление слов данного документа из БД</para>
+				</listitem>
+				<listitem>
+					<para><literal>next_index_time=Now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Добавление в БД URL из заголовка <literal>Location: </literal></para>
+				</listitem>
+				<listitem>
+					<para>Конец</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<literallayout>
+300 Multiple Choices
+305 Use Proxy (proxy redirect)
+400 Bad Request
+401 Unauthorized
+402 Payment Required
+403 Forbidden
+404 Not found
+405 Method Not Allowed
+406 Not Acceptable
+407 Proxy Authentication Required
+408 Request Timeout
+409 Conflict
+410 Gone
+411 Length Required
+412 Precondition Failed
+413 Request Entity Too Large
+414 Request-URI Too Long
+415 Unsupported Media Type
+500 Internal Server Error
+501 Not Implemented
+502 Bad Gateway
+505 Protocol Version Not Supported
+</literallayout>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>Удаление из БД слов документа</para>
+				</listitem>
+				<listitem>
+					<para><literal>next_index_time=Now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Конец</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<literallayout>
+503 Service Unavailable
+504 Gateway Timeout
+</literallayout>
+			<orderedlist numeration="arabic">
+				<listitem>
+					<para>
+						<literal>next_index_time=Now()</literal>+Period</para>
+				</listitem>
+				<listitem>
+					<para>Конец</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+	</itemizedlist>
+</sect1>

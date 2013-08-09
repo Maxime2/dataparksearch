@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Поддержка SearchD&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Хранение данных"
+HREF="dpsearch-howstore.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="К вопросу производительности DataparkSearch"
+HREF="dpsearch-perf.ru.html"><LINK
+REL="NEXT"
+TITLE="Oracle notes
+"
+HREF="dpsearch-oracle.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-perf.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 5. Хранение данных</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-oracle.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SEARCHD"
+>5.4. Поддержка SearchD
+<A
+NAME="AEN3949"
+></A
+></A
+></H1
+><P
+><B
+CLASS="COMMAND"
+>searchd</B
+> предназначен для ускорения поиска, особенно при использовании ispell-данных,
+синонимов и стоп-слов. </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEARCHD-WHY"
+>5.4.1. Для чего использовать <B
+CLASS="COMMAND"
+>searchd</B
+></A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>Для быстрого поиска, особенно если используется нечёткий поиск на основе ispell или 
+синонимов, а также сегментеры для азиатских языков. 
+Необходимые файлы загружаются в память однажды при запуске <B
+CLASS="COMMAND"
+>searchd</B
+>, в то время как
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> без использования <B
+CLASS="COMMAND"
+>searchd</B
+> загружает эти данные для каждого запроса.</P
+><P
+>Таже <B
+CLASS="COMMAND"
+>searchd</B
+> может загружать предварительно в память некоторые данные об URL 
+(по 20 байт на каждую проиндекированую страницу) и лимиты cache mode (4 или 8 байт на каждый URL в зависимости от
+типа лимита).</P
+></LI
+><LI
+><P
+>Для возможности разнесения поискового и веб-серверов на разные машины.</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEARCHD-START"
+>5.4.2. Запуск <B
+CLASS="COMMAND"
+>searchd</B
+></A
+></H2
+><P
+>Для запуска <B
+CLASS="COMMAND"
+>searchd</B
+> проделайте следующее:</P
+><P
+></P
+><UL
+><LI
+><P
+>Скопируйте <TT
+CLASS="FILENAME"
+>$PREFIX/etc/searchd.conf-dist</TT
+> в <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>.</P
+></LI
+><LI
+><P
+>Отредактируйте <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>.</P
+></LI
+><LI
+><A
+NAME="AEN3980"
+></A
+><P
+>Если ускорения поиска вы хотите для загрузить в память и информацию об url (примерно по 20 байт на url),
+добавьте в <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> следующую команду:
+				<PRE
+CLASS="PROGRAMLISTING"
+>PreloadURLData yes</PRE
+></P
+></LI
+><LI
+><A
+NAME="AEN3987"
+></A
+><P
+>Вы также можете загрузить в память индексы для наиболее часто исползуемых значений лимитов режима хранения cache используя
+команду <B
+CLASS="COMMAND"
+>PreloadLimit</B
+> в файде <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>PreloadLimit &lt;limit type&gt; &lt;limit value&gt;</PRE
+></P
+><P
+>Например:
+			<PRE
+CLASS="PROGRAMLISTING"
+>PreloadLimit tag Unix</PRE
+></P
+></LI
+><LI
+><P
+>Добавьте следующую команду в <TT
+CLASS="FILENAME"
+>search.htm</TT
+>:</P
+><P
+><TT
+CLASS="LITERAL"
+>DBAddr searchd://hostname/</TT
+> или <TT
+CLASS="LITERAL"
+>DBAddr searchd://hostname:port/</TT
+>, например:
+				<PRE
+CLASS="PROGRAMLISTING"
+>DBAddr searchd://localhost/</PRE
+></P
+><P
+>Значение по умолчанию для <TT
+CLASS="LITERAL"
+>port</TT
+> равно 7003</P
+></LI
+><LI
+><P
+><A
+NAME="AEN4007"
+></A
+>
+Вы можете запустить несколько чилдов searchd, отвечающих на поисковые заапросы параллельно. 
+Используете команду <B
+CLASS="COMMAND"
+>MaxClients</B
+> для задания этого числа. Значение по умолчанию: 1.</P
+><PRE
+CLASS="PROGRAMLISTING"
+>MaxClients 2</PRE
+></LI
+><LI
+><P
+>Запустите <B
+CLASS="COMMAND"
+>searchd</B
+>:</P
+><P
+>					<KBD
+CLASS="USERINPUT"
+>/usr/local/dpsearch/sbin/searchd &amp;</KBD
+>
+				</P
+></LI
+></UL
+><P
+>Чтобы обойтись без вывода на stderr, используйте ключ
+<TT
+CLASS="LITERAL"
+>-l</TT
+>. Вывод сообщений в этом слуае будет происходить только через syslog
+(если поддержка syslog не была выключена при инсталяции при помощи ключа
+<TT
+CLASS="LITERAL"
+>--disable-syslog</TT
+>). В случае, если поддержка syslog выключена, можно
+перенаправить stderr в файл: </P
+><P
+>			<KBD
+CLASS="USERINPUT"
+>/usr/local/dpsearch/sbin/searchd 2&gt;/var/log/searchd.log &amp;</KBD
+>
+		</P
+><P
+>			Для <TT
+CLASS="LITERAL"
+>searchd</TT
+>, так же как и для
+<TT
+CLASS="FILENAME"
+>indexer</TT
+> можно указывать имя файла конфигурации в качестве параметра, например,
+относительно поддиректории <TT
+CLASS="FILENAME"
+>/etc</TT
+>
+корневой директории установки <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>:
+		<PRE
+CLASS="PROGRAMLISTING"
+>searchd searchd1.conf</PRE
+>
+		</P
+><P
+>или указав абсолютный путь:</P
+><P
+>			<KBD
+CLASS="USERINPUT"
+>searchd /usr/local/dpsearch/etc/searchd1.conf</KBD
+>
+		</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-perf.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-oracle.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>К вопросу производительности <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-howstore.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Oracle notes
+<A
+NAME="AEN4033"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

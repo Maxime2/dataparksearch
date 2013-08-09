@@ -1,0 +1,607 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Designing search.html</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Searching documents"
+HREF="dpsearch-doingsearch.en.html"><LINK
+REL="PREVIOUS"
+TITLE="How to write search result templates"
+HREF="dpsearch-templates.en.html"><LINK
+REL="NEXT"
+TITLE="Relevance"
+HREF="dpsearch-rel.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-templates.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 8. Searching documents</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-rel.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="HTML"
+>8.4. Designing search.html</A
+></H1
+><P
+>This section is assuming that you are using the CGI front end.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HTML-RESPAGE"
+>8.4.1. How the results page is created</A
+></H2
+><P
+>The file <TT
+CLASS="FILENAME"
+>etc/search.htm</TT
+>
+consists of a number of blocks delimited by HTML comments that start
+with &lt;!--comment--&gt; and end with &lt;!--/comment--&gt;.</P
+><P
+>The &lt;!--variables--&gt; block is only used by
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+>. The other blocks form part of the
+results output depending on the situation. </P
+><P
+>The blocks &lt;--top--&gt; and
+&lt;!--bottom--&gt; are always returned to the user as the top and
+bottom part of the output respectively. </P
+><P
+>There are three series of &lt;!--restop--&gt;,
+&lt;!--res--&gt; and &lt;!--resbot--&gt; blocks. The first series is
+returned to users that have requested long results (default), the
+second one to those that have requested short results and the third
+one to those that have requested results as URL only. All three blocks
+must be present in <TT
+CLASS="FILENAME"
+>search.htm</TT
+>. Furthermore there
+is a series of navigation blocks and the blocks &lt;!--notfound--&gt;,
+&lt;!--noquery--&gt; and &lt;!--error--&gt;. The latter are returned
+occasionally instead of results.</P
+><P
+>Any HTML that is outside the pre-defined blocks in search.htm is completely ignored. </P
+><P
+>Thus, the output of <TT
+CLASS="FILENAME"
+>search.cgi</TT
+> will always be something like this:
+		<PRE
+CLASS="PROGRAMLISTING"
+>				
+  top                 
+  restop                top                 top              top
+  res            or     notfound      or    error     or     noquery
+  resbot                bottom              bottom           bottom
+  (navigation)
+  bottom
+			
+			</PRE
+></P
+><P
+>The navigation part is built in the same way,
+with the elements that pertain to each results page. For example,
+&lt;!--navleft--&gt; and &lt;!--navright--&gt; are used to link to the
+previous and next results pages, while &lt;!--navXXX_nop--&gt; is used
+when there are no more pages in one or either direction. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HTML-YOURHTML"
+>8.4.2. Your HTML</A
+></H2
+><P
+>The simplest HTML is provided ready for use in
+<TT
+CLASS="FILENAME"
+>etc/search.htm-dist</TT
+>. It is advisable that you use this
+until your back-end works fine. </P
+><P
+>Once you decide to add bells and whistles to
+your search, you have two options. One is to keep the simple design of
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+>, but make it part of a frame set. This
+way you can add elements such as menus etc in a frame and keep the
+output of <TT
+CLASS="FILENAME"
+>search.htm</TT
+> in another.</P
+><P
+>The other option is to incorporate your entire
+design in <TT
+CLASS="FILENAME"
+>search.htm</TT
+>. If you fully understand the
+"blocks" system described above, this should not be too difficult. The
+one most important factor is to keep track of elements that need to be
+opened in one block and closed in another. </P
+><P
+>For example, you might want a page in tables that looks like this:
+		<PRE
+CLASS="PROGRAMLISTING"
+>                   ----------------------------------
+                  |       top  table                 |
+                  |..................................|
+                  |        .                         |
+                  |left    .                         |
+                  |        .                         |
+                  |        .         main table      |
+                  |table   .                         |
+                  |        .                         |
+                  |        .                         |
+                   ----------------------------------</PRE
+></P
+><P
+>If you are planning to put your results in the
+main table, you can put all the HTML code in the &lt;!--top--&gt;
+block of <TT
+CLASS="FILENAME"
+>search.htm</TT
+>, up to and including the
+opening of the main table (&lt;table&gt;&lt;tr&gt;&lt;td&gt;). If you
+then put the closing of the main table and the closing tags of the
+page in the &lt;!--bottom--&gt; block
+(&lt;/table&gt;&lt;/tr&gt;&lt;/td&gt;&lt;/body&gt;&lt;/html&gt;) and
+leave all other blocks unformatted, you will have the design of your
+choice and all your results in the right place. </P
+><P
+>In a more complicated design, where you want to
+format results individually, you can apply the same method as long as
+you keep track of the opening and closing of HTML elements. You must
+either open and close them in the same block, or make sure that any
+possible combination of blocks will result in properly opened and
+closed HTML tags. </P
+><P
+>What you cannot do without editing the source
+code, is change the order in which the blocks are parsed. Taking the
+above example, let's assume that you want your page to look like this:
+		<PRE
+CLASS="PROGRAMLISTING"
+>                   ----------------------------------
+                  |  logo       banner ads           |
+                  |..................................|
+                  |            .                     |
+                  |choices     .                     |
+                  |            .                     |
+                  |            .    results          |
+                  |search      .                     |
+                  |button      .                     |
+                  |            .                     |
+                   ----------------------------------</PRE
+></P
+><P
+>To get this, you need to have everything except
+the results and navigation in the &lt;!--top--&gt; block, since that
+is the only block that can draw the page even if there are no results
+at all. In this case your search.htm would look like this:</P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5733"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+> &lt;!--variables--&gt;
+  [your configuration]
+ &lt;!--/variables--&gt;
+
+ &lt;!--top--&gt;
+  &lt;html&gt;
+  &lt;body&gt;
+  &lt;table&gt;
+    &lt;tr colspan="2"&gt;
+    &lt;td&gt;[logo, banner ads]&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+    &lt;td&gt;[search form]&lt;/td&gt;
+    &lt;td&gt;
+  &lt;!--/top--&gt;
+
+  [all other blocks in search.htm except "bottom"]
+
+  &lt;!--bottom--&gt;
+    [closing elements like the DataparkSearch link 
+     and a link to the webmaster]
+    &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+  &lt;!--/bottom--&gt;
+		</PRE
+><P
+></P
+></DIV
+><P
+>The individual blocks can be formatted
+individually as long as that formatting is closed within each
+block. Thus, nothing stops you from doing things like </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5736"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>  &lt;!--error--&gt;
+    &lt;table&gt;
+    &lt;tr&gt;&lt;td bgcolor"red"&gt;
+      &lt;font color="#ffffff"&gt;  
+      [error variables]
+      &lt;/font&gt;
+    &lt;/tr&gt;&lt;td&gt;
+    &lt;/table&gt;
+  &lt;!--error--&gt;
+		</PRE
+><P
+></P
+></DIV
+><P
+>as long as such formatting is opened and closed properly within the same block. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HTML-FORMS"
+>8.4.3. Forms considerations</A
+></H2
+><P
+>Most modern browsers can handle forms that
+stretch over different tables, but writing such forms is against all
+standards and is bad HTML. Unless you really can't avoid it, don't do
+it. </P
+><P
+>For example, </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5743"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>  &lt;table&gt;
+  &lt;tr&gt;&lt;td&gt;
+     &lt;form&gt;
+     &lt;input type="text" name="something"&gt;
+     &lt;input type="radio" name"button1"&gt;
+     &lt;input type="radio" name"button2"&gt;
+     &lt;/form&gt;
+  &lt;/tr&gt;&lt;/td&gt;
+  &lt;/table&gt;
+			</PRE
+><P
+></P
+></DIV
+><P
+>is fine, but </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5746"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;
+       &lt;form&gt;
+       &lt;input type="text" name="something"&gt;
+    &lt;/tr&gt;&lt;/td&gt;
+  &lt;/table&gt;
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;
+       &lt;input type="radio" name"button1"&gt;
+       &lt;input type="radio" name"button2"&gt;
+       &lt;/form&gt;
+    &lt;/tr&gt;&lt;/td&gt;
+    &lt;/table&gt;
+			</PRE
+><P
+></P
+></DIV
+><P
+>is <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>not</I
+></SPAN
+>.</P
+><P
+>Note that the input forms in search.htm can be
+changed at will. The default is drop-down menus, but nothing stops you
+from using radio buttons or hidden input or even text boxes. For
+instance, where <TT
+CLASS="FILENAME"
+>search.htm</TT
+> says </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5752"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>  Results per page:
+  &lt;SELECT NAME="ps"&gt;
+  &lt;OPTION VALUE="10" SELECTED="$(ps)"&gt;10
+  &lt;OPTION VALUE="20" SELECTED="$(ps)"&gt;20
+  &lt;OPTION VALUE="50" SELECTED="$(ps)"&gt;50
+  &lt;/SELECT&gt;
+			</PRE
+><P
+></P
+></DIV
+><P
+>you can very well substitute </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5755"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>  &lt;input type="radio" name="ps" value="10" checked="$(ps)"&gt;
+  &lt;input type="radio" name="ps" value="20" checked="$(ps)"&gt;
+  &lt;input type="radio" name="ps" value="50" checked="$(ps)"&gt;
+			</PRE
+><P
+></P
+></DIV
+><P
+>which will result in three radio buttons instead
+of a drop-down menu, with "20" as the default and the exact same
+functionality. What you obviously cannot do is provide multiple-choice
+menus like &lt;type="checkbox"&gt; or &lt;select multiple&gt;. </P
+><P
+>Note that you can also use the </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5759"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>  &lt;input type="hidden" name="XX" value="YY"&gt;
+  			</PRE
+><P
+></P
+></DIV
+><P
+>format if you want to set other defaults than the pre-defined and not allow the user to change them. </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HTML-RELLINKS"
+>8.4.4. Relative links in search.htm</A
+></H2
+><P
+>It might be worth mentioning that
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+> is parsed from your cgi-bin
+directory. The position of this directory in relation to your document
+root is determined by the web server, independently of its actual
+position in the file system. Almost invariably is
+http://your_document_root/cgi-bin/ . Since
+<TT
+CLASS="FILENAME"
+>search.cgi</TT
+> lives in cgi-bin, any links to images
+etc in search.htm will assume cgi-bin as the base
+directory. Therefore, if you have a file system structure like </P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5767"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>   home/
+   home/your_document_root/
+   home/your_document_root/img/
+   home/cgi-bin/
+			</PRE
+><P
+></P
+></DIV
+><P
+>the correct relative link from <TT
+CLASS="FILENAME"
+>search.cgi</TT
+> to images in img/ would still be </P
+><P
+>&lt;img src="../img/image.gif"&gt;</P
+><P
+>despite the fact that it doesn't match the file system structure.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HTML-SEARCHFORM"
+>8.4.5. Adding Search form to other pages</A
+></H2
+><P
+>To place a search form to any of your pages,
+please place the following code where you would like the form to be
+displayed:</P
+><DIV
+CLASS="INFORMALEXAMPLE"
+><P
+></P
+><A
+NAME="AEN5776"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>&lt;FORM 
+	METHOD=GET 
+	ACTION="http://path-to-search.cgi"&gt;
+      &lt;INPUT TYPE="text" NAME="q" VALUE=""&gt;
+      &lt;INPUT TYPE="submit" VALUE="Search!"&gt;
+
+&lt;/FORM&gt;</PRE
+><P
+></P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-templates.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-rel.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>How to write search result templates</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Relevance</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

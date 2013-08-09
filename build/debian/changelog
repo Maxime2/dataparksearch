@@ -1,0 +1,122 @@
+dpsearch (4.53~20091104-1adv) unstable; urgency=high
+
+  * Latest upstream version
+
+ -- Amit Joshi <ajoshi@advisen.com>  Thu, 12 Nov 2009 11:54:56 -0500
+
+dpsearch (4.53~20090613-1adv) unstable; urgency=high
+
+  * Latest upstream version
+
+ -- Amit Joshi <ajoshi@advisen.com>  Wed, 13 May 2009 11:54:56 -0500
+
+dpsearch (4.53~20090609-2adv) unstable; urgency=high
+
+  * Fix cache distinctions
+
+ -- Amit Joshi <ajoshi@advisen.com>  Wed, 13 May 2009 11:54:56 -0500
+
+dpsearch (4.53~20090609-1adv) unstable; urgency=high
+
+  * Update to new drop
+
+ -- Amit Joshi <ajoshi@advisen.com>  Wed, 13 May 2009 11:54:56 -0500
+
+dpsearch (4.53~20090519-2adv) testing; urgency=high
+
+  * Update to new drop
+
+ -- Amit Joshi <ajoshi@advisen.com>  Wed, 13 May 2009 11:54:56 -0500
+
+dpsearch (4.53~20090511-2adv) testing; urgency=high
+
+  * Adjust the number of lines in old code.
+
+ -- Amit Joshi <ajoshi@advisen.com>  Wed, 13 May 2009 11:54:56 -0500
+
+dpsearch (4.53~20090511-1adv) testing; urgency=high
+
+  * Change sea algortithm to get summaries
+  * Updated to new version
+
+ -- Amit Joshi <ajoshi@advisen.com>  Wed, 13 May 2009 11:54:56 -0500
+
+dpsearch (4.52~20090331-1adv) testing; urgency=high
+
+  * Change sea algortithm to get summaries
+  * Compile with no apache
+
+ -- Amit Joshi <ajoshi@advisen.com>  Fri, 20 Mar 2009 11:54:56 -0500
+
+dpsearch (4.51~20090320-1adv) testing; urgency=high
+
+  * Change sea algortithm to get summaries
+
+ -- Amit Joshi <ajoshi@advisen.com>  Fri, 20 Mar 2009 11:54:56 -0500
+
+dpsearch (4.51~20081023-1adv) testing; urgency=high
+
+  * Reclaim disk space on delete properly.
+
+ -- Amit Joshi <ajoshi@advisen.com>  Thu, 23 Oct 2008 11:54:56 -0500
+
+dpsearch (4.51~20080823-1adv) testing; urgency=high
+
+  * Fix search parsing errors.
+
+ -- Amit Joshi <ajoshi@advisen.com>  Mon, 23 Jun 2008 11:54:56 -0500
+
+dpsearch (4.51~20080818-1adv) testing; urgency=high
+
+  * Enable highlighting.
+
+ -- Amit Joshi <ajoshi@advisen.com>  Mon, 23 Jun 2008 11:54:56 -0500
+
+dpsearch (4.50~20080622-2adv) testing; urgency=high
+
+  * Fixed some duplicate issues
+  * Added in info file for apache module.
+
+ -- Amit Joshi <ajoshi@advisen.com>  Mon, 23 Jun 2008 11:54:56 -0500
+
+dpsearch (4.50~20080622-1) testing; urgency=high
+
+  * Latest snapshot with multiple fixes for duplicates and merges.
+
+ -- Maxime <dp.maxime@gmail.com>  Sun, 22 Jun 2008 11:54:56 -0500
+
+dpsearch (4.50~20080505-1adv) stable; urgency=low
+
+  * Fix multiple searchd issue
+
+ -- Maxime <dp.maxime@gmail.com>  Tue, 14 Nov 2006 11:54:56 -0500
+
+dpsearch (4.49-1adv) stable; urgency=low
+
+  * Initial Release.
+
+ -- Maxime <dp.maxime@gmail.com>  Tue, 14 Nov 2006 11:54:56 -0500
+
+dpsearch (4.49) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Maxime <dp.maxime@gmail.com>  Tue, 14 Nov 2006 11:54:56 -0500
+
+dpsearch (4.48) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Maxime <dp.maxime@gmail.com>  Tue, 14 Nov 2006 11:54:56 -0500
+
+dpsearch (4.46) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Maxime <dp.maxime@gmail.com>  Tue, 14 Nov 2006 11:54:56 -0500
+
+dpsearch (4.43) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Maxime <dp.maxime@gmail.com>  Tue, 14 Nov 2006 11:54:56 -0500

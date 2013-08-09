@@ -1,0 +1,2219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>DataparkSearch Engine 4.54</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="NEXT"
+TITLE="Введение"
+HREF="dpsearch-intro.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="BOOK"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>DataparkSearch Engine 4.54</A
+></H1
+><H2
+CLASS="SUBTITLE"
+>Справочное руководство</H2
+><P
+CLASS="COPYRIGHT"
+>Copyright &copy; 2013 Максим Захаров</P
+><P
+CLASS="COPYRIGHT"
+>Copyright &copy; 2003-2012 ООО "ДатаПарк" (DataPark Ltd.)</P
+><P
+CLASS="COPYRIGHT"
+>Copyright &copy; 2001-2003 Lavtech.com corp.</P
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>&#1057;&#1086;&#1076;&#1077;&#1088;&#1078;&#1072;&#1085;&#1080;&#1077;</B
+></DT
+><DT
+>1. <A
+HREF="dpsearch-intro.ru.html"
+>Введение</A
+></DT
+><DD
+><DL
+><DT
+>1.1. <A
+HREF="dpsearch-intro.ru.html#FEATURES"
+>Возможности <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+                <A
+NAME="AEN42"
+></A
+></A
+></DT
+><DT
+>1.2. <A
+HREF="dpsearch-get.ru.html"
+>Где взять <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+                 <A
+NAME="AEN119"
+></A
+></A
+></DT
+><DT
+>1.3. <A
+HREF="dpsearch-disclaimer.ru.html"
+>Отказ от ответственности и гарантий
+                <A
+NAME="AEN134"
+></A
+></A
+></DT
+><DT
+>1.4. <A
+HREF="dpsearch-authors.ru.html"
+>Авторы</A
+></DT
+><DD
+><DL
+><DT
+>1.4.1. <A
+HREF="dpsearch-authors.ru.html#CONTRIBLIST"
+>Помощники</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>2. <A
+HREF="dpsearch-install.ru.html"
+>Установка
+<A
+NAME="AEN181"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="dpsearch-install.ru.html#SQLREQ"
+>Требования к SQL базе даных</A
+></DT
+><DT
+>2.2. <A
+HREF="dpsearch-opsys.ru.html"
+>Поддерживаемые операционные системы</A
+></DT
+><DT
+>2.3. <A
+HREF="dpsearch-toolsreq.ru.html"
+>Инструментарий, необходимый для установки</A
+></DT
+><DT
+>2.4. <A
+HREF="dpsearch-installing.ru.html"
+>Инсталяция <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+<A
+NAME="AEN312"
+></A
+></A
+></DT
+><DT
+>2.5. <A
+HREF="dpsearch-installproblem.ru.html"
+>Возможные проблемы установки
+<A
+NAME="AEN497"
+></A
+></A
+></DT
+><DT
+>2.6. <A
+HREF="dpsearch-binarydistrib.ru.html"
+>Создание дистрибутивов исполняемых модулей</A
+></DT
+><DT
+>2.7. <A
+HREF="dpsearch-quick-usage.ru.html"
+>Простая рутина использования</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="dpsearch-indexing.ru.html"
+>Индексирование</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="dpsearch-indexing.ru.html#GENERAL"
+>Общая информация об индексировании</A
+></DT
+><DD
+><DL
+><DT
+>3.1.1. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-CONF"
+>Конфигурирование</A
+></DT
+><DT
+>3.1.2. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-RUN"
+>Запуск <B
+CLASS="COMMAND"
+>indexer</B
+></A
+></DT
+><DT
+>3.1.3. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-CREATE-TABLES"
+>Создание SQL-таблиц
+<A
+NAME="AEN606"
+></A
+></A
+></DT
+><DT
+>3.1.4. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-DROP-TABLES"
+>Удаление SQL-таблиц
+<A
+NAME="AEN618"
+></A
+></A
+></DT
+><DT
+>3.1.5. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-SUBSECT"
+>Управление подсекциями</A
+></DT
+><DT
+>3.1.6. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-CLEARDB"
+>Как очистить базу данных
+<A
+NAME="AEN637"
+></A
+></A
+></DT
+><DT
+>3.1.7. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-DBSTAT"
+>Статистика базы данных
+<A
+NAME="AEN644"
+></A
+></A
+></DT
+><DT
+>3.1.8. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-LINKVAL"
+>Проверка ссылок
+<A
+NAME="AEN701"
+></A
+></A
+></DT
+><DT
+>3.1.9. <A
+HREF="dpsearch-indexing.ru.html#GENERAL-PARALLEL"
+>Параллельное индекирование
+<A
+NAME="AEN710"
+></A
+></A
+></DT
+></DL
+></DD
+><DT
+>3.2. <A
+HREF="dpsearch-http-codes.ru.html"
+>Реакция на коды HTTP-ответа</A
+></DT
+><DT
+>3.3. <A
+HREF="dpsearch-content-enc.ru.html"
+>Поддержка Content-Encoding
+<A
+NAME="AEN787"
+></A
+></A
+></DT
+><DT
+>3.4. <A
+HREF="dpsearch-stopwords.ru.html"
+>Стопслова</A
+></DT
+><DD
+><DL
+><DT
+>3.4.1. <A
+HREF="dpsearch-stopwords.ru.html#STOPWORDFILE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>StopwordFile</B
+></A
+></DT
+><DT
+>3.4.2. <A
+HREF="dpsearch-stopwords.ru.html#STOPWORDFILE_FORMAT"
+>Формат файла стопслов</A
+></DT
+><DT
+>3.4.3. <A
+HREF="dpsearch-stopwords.ru.html#FILLDICT"
+>Команда <B
+CLASS="COMMAND"
+>FillDictionary</B
+>.</A
+></DT
+><DT
+>3.4.4. <A
+HREF="dpsearch-stopwords.ru.html#STOPWORDSLOOSE"
+>Команда <B
+CLASS="COMMAND"
+>StopwordsLoose</B
+>.</A
+></DT
+></DL
+></DD
+><DT
+>3.5. <A
+HREF="dpsearch-clones.ru.html"
+>Клоны документов</A
+></DT
+><DD
+><DL
+><DT
+>3.5.1. <A
+HREF="dpsearch-clones.ru.html#DETECTCLONES_CMD"
+>Команда <B
+CLASS="COMMAND"
+>DetectClones</B
+></A
+></DT
+></DL
+></DD
+><DT
+>3.6. <A
+HREF="dpsearch-follow.ru.html"
+>Указание веб-пространства для индексирования</A
+></DT
+><DD
+><DL
+><DT
+>3.6.1. <A
+HREF="dpsearch-follow.ru.html#FOLLOW-SERVER"
+>Команда <B
+CLASS="COMMAND"
+>Server</B
+>
+			<A
+NAME="AEN1104"
+></A
+></A
+></DT
+><DT
+>3.6.2. <A
+HREF="dpsearch-follow.ru.html#FOLLOW-REALM"
+>Команда <B
+CLASS="COMMAND"
+>Realm</B
+>
+			<A
+NAME="AEN1128"
+></A
+></A
+></DT
+><DT
+>3.6.3. <A
+HREF="dpsearch-follow.ru.html#FOLLOW-SUBNET"
+>Команда <B
+CLASS="COMMAND"
+>Subnet</B
+>
+			<A
+NAME="AEN1142"
+></A
+></A
+></DT
+><DT
+>3.6.4. <A
+HREF="dpsearch-follow.ru.html#FOLLOW-DIFPARAM"
+>Использование различным параметров для сервера и его подсекций</A
+></DT
+><DT
+>3.6.5. <A
+HREF="dpsearch-follow.ru.html#FOLLOW-F"
+>Использование <KBD
+CLASS="USERINPUT"
+>indexer -f &lt;filename&gt;</KBD
+></A
+></DT
+><DT
+>3.6.6. <A
+HREF="dpsearch-follow.ru.html#URL_CMD"
+>Команда <B
+CLASS="COMMAND"
+>URL</B
+></A
+></DT
+><DT
+>3.6.7. <A
+HREF="dpsearch-follow.ru.html#DB_CMD"
+>Команды <B
+CLASS="COMMAND"
+>ServerDB, RealmDB, SubnetDB и URLDB</B
+></A
+></DT
+><DT
+>3.6.8. <A
+HREF="dpsearch-follow.ru.html#FILE_CMD"
+>Команды <B
+CLASS="COMMAND"
+>ServerFile, RealmFile, SubnetFile и URLFile</B
+></A
+></DT
+><DT
+>3.6.9. <A
+HREF="dpsearch-follow.ru.html#ROBOTS_TXT"
+>Стандарт исключений для роботов</A
+></DT
+></DL
+></DD
+><DT
+>3.7. <A
+HREF="dpsearch-aliases.ru.html"
+>Алиасы</A
+></DT
+><DD
+><DL
+><DT
+>3.7.1. <A
+HREF="dpsearch-aliases.ru.html#ALIAS-CONF"
+>Команда Alias (из indexer.conf)
+<A
+NAME="AEN1321"
+></A
+></A
+></DT
+><DT
+>3.7.2. <A
+HREF="dpsearch-aliases.ru.html#ALIASES-DIFF"
+>Алиасы для различных частей сервера</A
+></DT
+><DT
+>3.7.3. <A
+HREF="dpsearch-aliases.ru.html#ALIAS-SERVER"
+>использование алиасов в команде Server</A
+></DT
+><DT
+>3.7.4. <A
+HREF="dpsearch-aliases.ru.html#ALIAS-REALM"
+>Использование алиасов в команде Realm</A
+></DT
+><DT
+>3.7.5. <A
+HREF="dpsearch-aliases.ru.html#ALIAS-PROG"
+>Команда AliasProg
+<A
+NAME="AEN1373"
+></A
+></A
+></DT
+><DT
+>3.7.6. <A
+HREF="dpsearch-aliases.ru.html#ALIAS-REVERSE"
+>Команда ReverseAlias
+<A
+NAME="AEN1388"
+></A
+></A
+></DT
+><DT
+>3.7.7. <A
+HREF="dpsearch-aliases.ru.html#REVERSEALIAS-PROG"
+>Команда ReverseAliasProg
+<A
+NAME="AEN1410"
+></A
+></A
+></DT
+><DT
+>3.7.8. <A
+HREF="dpsearch-aliases.ru.html#ALIAS-SEARCH"
+>Алиасы в search.htm 
+<A
+NAME="AEN1421"
+></A
+></A
+></DT
+></DL
+></DD
+><DT
+>3.8. <A
+HREF="dpsearch-srvtable.ru.html"
+>ServerTable
+<A
+NAME="AEN1440"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>3.8.1. <A
+HREF="dpsearch-srvtable.ru.html#SRVTABLE-LOAD"
+>Загрузка таблицы серверов</A
+></DT
+><DT
+>3.8.2. <A
+HREF="dpsearch-srvtable.ru.html#SRVTABLE-STRUCTURE"
+>Структура таблицы серверов</A
+></DT
+><DT
+>3.8.3. <A
+HREF="dpsearch-srvtable.ru.html#FLUSHSRVTABLE"
+>Команда FlushServerTable
+<A
+NAME="AEN1478"
+></A
+></A
+></DT
+></DL
+></DD
+><DT
+>3.9. <A
+HREF="dpsearch-pars.ru.html"
+>Внешние парсеры
+<A
+NAME="AEN1485"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>3.9.1. <A
+HREF="dpsearch-pars.ru.html#PARS-SUP"
+>Поддерживаемые типы парсеров</A
+></DT
+><DT
+>3.9.2. <A
+HREF="dpsearch-pars.ru.html#PARS-SETUP"
+>Установка парсеров</A
+></DT
+><DT
+>3.9.3. <A
+HREF="dpsearch-pars.ru.html#PARSERTIMEOUT"
+>Воизбежание зависания парсера при выполнении</A
+></DT
+><DT
+>3.9.4. <A
+HREF="dpsearch-pars.ru.html#PARS-PIPES"
+>Конвееры в командных строках парсеров</A
+></DT
+><DT
+>3.9.5. <A
+HREF="dpsearch-pars.ru.html#PARS-CHAR"
+>Кодировки и парсеры
+<A
+NAME="AEN1580"
+></A
+></A
+></DT
+><DT
+>3.9.6. <A
+HREF="dpsearch-pars.ru.html#PARS-UDMURL"
+>Переменная окружения DPS_URL
+<A
+NAME="AEN1592"
+></A
+></A
+></DT
+><DT
+>3.9.7. <A
+HREF="dpsearch-pars.ru.html#PARS-LINKS"
+>Некоторые внешние парсеры
+<A
+NAME="AEN1598"
+></A
+></A
+></DT
+><DT
+>3.9.8. <A
+HREF="dpsearch-pars.ru.html#LIBEXTRACTOR"
+>Библиотека libextractor</A
+></DT
+></DL
+></DD
+><DT
+>3.10. <A
+HREF="dpsearch-indexcmd.ru.html"
+>Остальные команды, используемые в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+></A
+></DT
+><DD
+><DL
+><DT
+>3.10.1. <A
+HREF="dpsearch-indexcmd.ru.html#AEN2111"
+>Команда <B
+CLASS="COMMAND"
+>Include</B
+></A
+></DT
+><DT
+>3.10.2. <A
+HREF="dpsearch-indexcmd.ru.html#DBADDR_CMD"
+>Команда <B
+CLASS="COMMAND"
+>DBAddr</B
+></A
+></DT
+><DT
+>3.10.3. <A
+HREF="dpsearch-indexcmd.ru.html#VARDIR_CMD"
+>Команда <B
+CLASS="COMMAND"
+>VarDir</B
+></A
+></DT
+><DT
+>3.10.4. <A
+HREF="dpsearch-indexcmd.ru.html#NEWSEXTENSIONS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>NewsExtensions</B
+></A
+></DT
+><DT
+>3.10.5. <A
+HREF="dpsearch-indexcmd.ru.html#SYSLOGFACILITY_CMD"
+>Команда <B
+CLASS="COMMAND"
+>SyslogFacility</B
+></A
+></DT
+><DT
+>3.10.6. <A
+HREF="dpsearch-indexcmd.ru.html#WORDLENGTHS_CMD"
+>Команды указания длины слова</A
+></DT
+><DT
+>3.10.7. <A
+HREF="dpsearch-indexcmd.ru.html#MAXDOCSIZE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MaxDocSize</B
+></A
+></DT
+><DT
+>3.10.8. <A
+HREF="dpsearch-indexcmd.ru.html#MINDOCSIZE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MinDocSize</B
+></A
+></DT
+><DT
+>3.10.9. <A
+HREF="dpsearch-indexcmd.ru.html#INDEXDOCSIZELIMIT_CMD"
+>Команда <B
+CLASS="COMMAND"
+>IndexDocSizeLimit</B
+></A
+></DT
+><DT
+>3.10.10. <A
+HREF="dpsearch-indexcmd.ru.html#URLSELECTCACHESIZE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>URLSelectCacheSize</B
+></A
+></DT
+><DT
+>3.10.11. <A
+HREF="dpsearch-indexcmd.ru.html#URLDUMPCACHESIZE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>URLDumpCacheSize</B
+></A
+></DT
+><DT
+>3.10.12. <A
+HREF="dpsearch-indexcmd.ru.html#USECRC32URLID_CMD"
+>Команда <B
+CLASS="COMMAND"
+>UseCRC32URLId</B
+></A
+></DT
+><DT
+>3.10.13. <A
+HREF="dpsearch-indexcmd.ru.html#HTTPHEADER_CMD"
+>Команда <B
+CLASS="COMMAND"
+>HTTPHeader</B
+></A
+></DT
+><DT
+>3.10.14. <A
+HREF="dpsearch-indexcmd.ru.html#ALLOW_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Allow</B
+></A
+></DT
+><DT
+>3.10.15. <A
+HREF="dpsearch-indexcmd.ru.html#DISALLOW_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Disallow</B
+></A
+></DT
+><DT
+>3.10.16. <A
+HREF="dpsearch-indexcmd.ru.html#CHECKONLY_CMD"
+>Команда <B
+CLASS="COMMAND"
+>CheckOnly</B
+></A
+></DT
+><DT
+>3.10.17. <A
+HREF="dpsearch-indexcmd.ru.html#HREFONLY_CMD"
+>Команда <B
+CLASS="COMMAND"
+>HrefOnly</B
+></A
+></DT
+><DT
+>3.10.18. <A
+HREF="dpsearch-indexcmd.ru.html#CHECKMP3_CMD"
+>Команда <B
+CLASS="COMMAND"
+>CheckMp3</B
+></A
+></DT
+><DT
+>3.10.19. <A
+HREF="dpsearch-indexcmd.ru.html#CHECKMP3ONLY_CMD"
+>Команда <B
+CLASS="COMMAND"
+>CheckMp3Only</B
+></A
+></DT
+><DT
+>3.10.20. <A
+HREF="dpsearch-indexcmd.ru.html#INDEXIF_CMD"
+>Команда <B
+CLASS="COMMAND"
+>IndexIf</B
+></A
+></DT
+><DT
+>3.10.21. <A
+HREF="dpsearch-indexcmd.ru.html#NOINDEXIF_CMD"
+>Команда <B
+CLASS="COMMAND"
+>NoIndexIf</B
+></A
+></DT
+><DT
+>3.10.22. <A
+HREF="dpsearch-indexcmd.ru.html#HOLDBADHREFS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>HoldBadHrefs</B
+></A
+></DT
+><DT
+>3.10.23. <A
+HREF="dpsearch-indexcmd.ru.html#DELETEOLDER_CMD"
+>Команда <B
+CLASS="COMMAND"
+>DeleteOlder</B
+></A
+></DT
+><DT
+>3.10.24. <A
+HREF="dpsearch-indexcmd.ru.html#USEREMOTECONTENTTYPE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>UseRemoteContentType</B
+></A
+></DT
+><DT
+>3.10.25. <A
+HREF="dpsearch-indexcmd.ru.html#ADDTYPE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>AddType</B
+></A
+></DT
+><DT
+>3.10.26. <A
+HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Period</B
+></A
+></DT
+><DT
+>3.10.27. <A
+HREF="dpsearch-indexcmd.ru.html#PERIODBYHOPS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>PeriodByHops</B
+></A
+></DT
+><DT
+>3.10.28. <A
+HREF="dpsearch-indexcmd.ru.html#EXPIREAT_CMD"
+>Команда <B
+CLASS="COMMAND"
+>ExpireAt</B
+></A
+></DT
+><DT
+>3.10.29. <A
+HREF="dpsearch-indexcmd.ru.html#USEDATEHEADER_CMD"
+>Команда <B
+CLASS="COMMAND"
+>UseDateHeader</B
+></A
+></DT
+><DT
+>3.10.30. <A
+HREF="dpsearch-indexcmd.ru.html#MAXHOPS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MaxHops</B
+></A
+></DT
+><DT
+>3.10.31. <A
+HREF="dpsearch-indexcmd.ru.html#TRACKHOPS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>TrackHops</B
+></A
+></DT
+><DT
+>3.10.32. <A
+HREF="dpsearch-indexcmd.ru.html#MAXDEPTH_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MaxDepth</B
+></A
+></DT
+><DT
+>3.10.33. <A
+HREF="dpsearch-indexcmd.ru.html#MAXDOCSPERSERVER_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MaxDocsPerServer</B
+></A
+></DT
+><DT
+>3.10.34. <A
+HREF="dpsearch-indexcmd.ru.html#MAXHREFSPERSERVER_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MaxHrefsPerServer</B
+></A
+></DT
+><DT
+>3.10.35. <A
+HREF="dpsearch-indexcmd.ru.html#MAXNETERRORS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>MaxNetErrors</B
+></A
+></DT
+><DT
+>3.10.36. <A
+HREF="dpsearch-indexcmd.ru.html#READTIMEOUT_CMD"
+>Команда <B
+CLASS="COMMAND"
+>ReadTimeOut</B
+></A
+></DT
+><DT
+>3.10.37. <A
+HREF="dpsearch-indexcmd.ru.html#DOCTIMEOUT_CMD"
+>Команда <B
+CLASS="COMMAND"
+>DocTimeOut</B
+></A
+></DT
+><DT
+>3.10.38. <A
+HREF="dpsearch-indexcmd.ru.html#NETERRORDELAYTIME_CMD"
+>Команда <B
+CLASS="COMMAND"
+>NetErrorDelayTime</B
+></A
+></DT
+><DT
+>3.10.39. <A
+HREF="dpsearch-indexcmd.ru.html#COOKIES_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Cookies</B
+></A
+></DT
+><DT
+>3.10.40. <A
+HREF="dpsearch-indexcmd.ru.html#SECTION_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Section</B
+></A
+></DT
+><DT
+>3.10.41. <A
+HREF="dpsearch-indexcmd.ru.html#HREFSECTION_CMD"
+>Команда <B
+CLASS="COMMAND"
+>HrefSection</B
+></A
+></DT
+><DT
+>3.10.42. <A
+HREF="dpsearch-indexcmd.ru.html#FASTHREFCHECK"
+>Команда <B
+CLASS="COMMAND"
+>FastHrefCheck</B
+></A
+></DT
+><DT
+>3.10.43. <A
+HREF="dpsearch-indexcmd.ru.html#INDEX_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Index</B
+></A
+></DT
+><DT
+>3.10.44. <A
+HREF="dpsearch-indexcmd.ru.html#PROXYAUTHBASIC_CMD"
+>Команда <B
+CLASS="COMMAND"
+>ProxyAuthBasic</B
+></A
+></DT
+><DT
+>3.10.45. <A
+HREF="dpsearch-indexcmd.ru.html#PROXY_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Proxy</B
+></A
+></DT
+><DT
+>3.10.46. <A
+HREF="dpsearch-indexcmd.ru.html#AUTHBASIC_CMD"
+>Команда <B
+CLASS="COMMAND"
+>AuthBasic</B
+></A
+></DT
+><DT
+>3.10.47. <A
+HREF="dpsearch-indexcmd.ru.html#SERVERWEIGHT_CMD"
+>Команда <B
+CLASS="COMMAND"
+>ServerWeight</B
+></A
+></DT
+><DT
+>3.10.48. <A
+HREF="dpsearch-indexcmd.ru.html#OPTIMIZEATUPDATE_CMD"
+>Команда <B
+CLASS="COMMAND"
+>OptimizeAtUpdate</B
+></A
+></DT
+><DT
+>3.10.49. <A
+HREF="dpsearch-indexcmd.ru.html#SKIPUNREFERRED_CMD"
+>Команда <B
+CLASS="COMMAND"
+>SkipUnreferred</B
+></A
+></DT
+><DT
+>3.10.50. <A
+HREF="dpsearch-indexcmd.ru.html#BIND_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Bind</B
+></A
+></DT
+><DT
+>3.10.51. <A
+HREF="dpsearch-indexcmd.ru.html#PROVIDEREF_CMD"
+>Команда <B
+CLASS="COMMAND"
+>ProvideReferer</B
+></A
+></DT
+><DT
+>3.10.52. <A
+HREF="dpsearch-indexcmd.ru.html#LONGESTTEXTITEMS_CMD"
+>Команда <B
+CLASS="COMMAND"
+>LongestTextItems</B
+></A
+></DT
+><DT
+>3.10.53. <A
+HREF="dpsearch-indexcmd.ru.html#MKPREFIX-CMD"
+>Команда <B
+CLASS="COMMAND"
+>MakePrefixes</B
+></A
+></DT
+></DL
+></DD
+><DT
+>3.11. <A
+HREF="dpsearch-extended-indexing.ru.html"
+>Расширенные возможности индексирования</A
+></DT
+><DD
+><DL
+><DT
+>3.11.1. <A
+HREF="dpsearch-extended-indexing.ru.html#NEWS"
+>Расширенные возможности индексирования новостей
+<A
+NAME="AEN2777"
+></A
+></A
+></DT
+><DT
+>3.11.2. <A
+HREF="dpsearch-extended-indexing.ru.html#HTDB"
+>Индексирование таблиц SQL баз данных (виртуальная URL схема <TT
+CLASS="LITERAL"
+>htdb:</TT
+>)
+<A
+NAME="AEN2805"
+></A
+></A
+></DT
+><DT
+>3.11.3. <A
+HREF="dpsearch-extended-indexing.ru.html#EXEC"
+>Индексирование вывода программ (виртуальные схемы URL <TT
+CLASS="LITERAL"
+>exec:</TT
+> и <TT
+CLASS="LITERAL"
+>cgi:</TT
+>)
+<A
+NAME="AEN2972"
+></A
+></A
+></DT
+><DT
+>3.11.4. <A
+HREF="dpsearch-extended-indexing.ru.html#MIRROR"
+>Зеркалирование
+<A
+NAME="AEN3034"
+></A
+></A
+></DT
+><DT
+>3.11.5. <A
+HREF="dpsearch-extended-indexing.ru.html#DATA-ACQ"
+>Сбор данных</A
+></DT
+></DL
+></DD
+><DT
+>3.12. <A
+HREF="dpsearch-syslog.ru.html"
+>Использование syslog</A
+></DT
+><DT
+>3.13. <A
+HREF="dpsearch-stored.ru.html"
+>Хранение сжатых копий документов
+<A
+NAME="AEN3152"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>3.13.1. <A
+HREF="dpsearch-stored.ru.html#STORED-START"
+>Конфигурирование stored</A
+></DT
+><DT
+>3.13.2. <A
+HREF="dpsearch-stored.ru.html#STORED-HOW"
+>Как работает stored</A
+></DT
+><DT
+>3.13.3. <A
+HREF="dpsearch-stored.ru.html#STORED-SEARCH"
+>Использование stored при поиске</A
+></DT
+><DT
+>3.13.4. <A
+HREF="dpsearch-stored.ru.html#EXCERPTS"
+>Цитаты документов</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>4. <A
+HREF="dpsearch-htmlparser.ru.html"
+>HTML-парсер в <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="dpsearch-htmlparser.ru.html#HTMLPARSER-TAG"
+>Tag-парсер
+<A
+NAME="AEN3365"
+></A
+></A
+></DT
+><DT
+>4.2. <A
+HREF="dpsearch-htmlparser-spec.ru.html"
+>Специальные символы</A
+></DT
+><DT
+>4.3. <A
+HREF="dpsearch-htmlparser-meta.ru.html"
+>META-тэги
+<A
+NAME="AEN3387"
+></A
+></A
+></DT
+><DT
+>4.4. <A
+HREF="dpsearch-htmlparser-links.ru.html"
+>Ссылки</A
+></DT
+><DT
+>4.5. <A
+HREF="dpsearch-htmlparser-comments.ru.html"
+>Комментарии</A
+></DT
+><DT
+>4.6. <A
+HREF="dpsearch-htmlparser-bodypatterns.ru.html"
+>Шаблоны для индексирования</A
+></DT
+><DT
+>4.7. <A
+HREF="dpsearch-subdocs.ru.html"
+>Sub-documents</A
+></DT
+></DL
+></DD
+><DT
+>5. <A
+HREF="dpsearch-howstore.ru.html"
+>Хранение данных</A
+></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR"
+>SQL режимы хранения</A
+></DT
+><DD
+><DL
+><DT
+>5.1.1. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-GENERAL"
+>Общая инфоромация о хранении</A
+></DT
+><DT
+>5.1.2. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-MODES"
+>Разнообразные способы хранения слов</A
+></DT
+><DT
+>5.1.3. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-SINGLE"
+>Способ хранения single
+                 <A
+NAME="AEN3529"
+></A
+></A
+></DT
+><DT
+>5.1.4. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-MULTI"
+>Способ хранения multi
+                 <A
+NAME="AEN3536"
+></A
+></A
+></DT
+><DT
+>5.1.5. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-CRC"
+>Способ хранения crc
+                 <A
+NAME="AEN3542"
+></A
+></A
+></DT
+><DT
+>5.1.6. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-CRCMULTI"
+>Способ хранения crc-multi
+                 <A
+NAME="AEN3549"
+></A
+></A
+></DT
+><DT
+>5.1.7. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-STRUCTURE"
+>Замечание о стуктуре таблиц для SQL серверов</A
+></DT
+><DT
+>5.1.8. <A
+HREF="dpsearch-howstore.ru.html#SQL-STOR-NONCRC"
+>Дополнительные возможности не-CRC режимов хранения</A
+></DT
+></DL
+></DD
+><DT
+>5.2. <A
+HREF="dpsearch-cachemode.ru.html"
+><A
+NAME="AEN3571"
+></A
+>
+Способ хранения Cache</A
+></DT
+><DD
+><DL
+><DT
+>5.2.1. <A
+HREF="dpsearch-cachemode.ru.html#CACHEMODE-INTRO"
+>Введение</A
+></DT
+><DT
+>5.2.2. <A
+HREF="dpsearch-cachemode.ru.html#CACHEMODE-STR"
+>Структура индексов слов при способе хранения <TT
+CLASS="LITERAL"
+>Cache</TT
+></A
+></DT
+><DT
+>5.2.3. <A
+HREF="dpsearch-cachemode.ru.html#CACHEMODE-TOOLS"
+>Утилиты для способа хранения <TT
+CLASS="LITERAL"
+>Cache</TT
+></A
+></DT
+><DT
+>5.2.4. <A
+HREF="dpsearch-cachemode.ru.html#CACHEMODE-START"
+>Запуск способа хранения <TT
+CLASS="LITERAL"
+>cache</TT
+></A
+></DT
+><DT
+>5.2.5. <A
+HREF="dpsearch-cachemode.ru.html#CACHELOG-SEVSPL"
+>Использование нескольких <B
+CLASS="COMMAND"
+>splitter</B
+> одновременно</A
+></DT
+><DT
+>5.2.6. <A
+HREF="dpsearch-cachemode.ru.html#CACHELOG-RUNSPL"
+>Использование скрипта <B
+CLASS="COMMAND"
+>run-splitter</B
+></A
+></DT
+><DT
+>5.2.7. <A
+HREF="dpsearch-cachemode.ru.html#CACHELOG-SEARCH"
+>Поиск</A
+></DT
+><DT
+>5.2.8. <A
+HREF="dpsearch-cachemode.ru.html#LIMITS"
+>Использование лимитов при поиске</A
+></DT
+></DL
+></DD
+><DT
+>5.3. <A
+HREF="dpsearch-perf.ru.html"
+>К вопросу производительности <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></A
+></DT
+><DD
+><DL
+><DT
+>5.3.1. <A
+HREF="dpsearch-perf.ru.html#SEARCHD-REC"
+>Рекомендация использовать <B
+CLASS="COMMAND"
+>searchd</B
+></A
+></DT
+><DT
+>5.3.2. <A
+HREF="dpsearch-perf.ru.html#SEARCH-CACHE"
+>Кэширование результатов поиска</A
+></DT
+><DT
+>5.3.3. <A
+HREF="dpsearch-perf.ru.html#MFS-REC"
+>Рекомендация использовать файловую систему в памяти (mfs)</A
+></DT
+><DT
+>5.3.4. <A
+HREF="dpsearch-perf.ru.html#URLINFO-CMD"
+>Команда <B
+CLASS="COMMAND"
+>URLInfoSQL</B
+></A
+></DT
+><DT
+>5.3.5. <A
+HREF="dpsearch-perf.ru.html#SRVINFO-CMD"
+>Команда <B
+CLASS="COMMAND"
+>SRVInfoSQL</B
+></A
+></DT
+><DT
+>5.3.6. <A
+HREF="dpsearch-perf.ru.html#MARKFORINDEX-CMD"
+>Команда <B
+CLASS="COMMAND"
+>MarkForIndex</B
+></A
+></DT
+><DT
+>5.3.7. <A
+HREF="dpsearch-perf.ru.html#CHECKINSERTSQL-CMD"
+>Команда <B
+CLASS="COMMAND"
+>CheckInsertSQL</B
+></A
+></DT
+><DT
+>5.3.8. <A
+HREF="dpsearch-perf.ru.html#PERF-MYSQL"
+>Производительность <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+></A
+></DT
+><DT
+>5.3.9. <A
+HREF="dpsearch-perf.ru.html#ARES"
+>Библиотека асинхронного резолвера</A
+></DT
+></DL
+></DD
+><DT
+>5.4. <A
+HREF="dpsearch-searchd.ru.html"
+>Поддержка SearchD
+<A
+NAME="AEN3949"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>5.4.1. <A
+HREF="dpsearch-searchd.ru.html#SEARCHD-WHY"
+>Для чего использовать <B
+CLASS="COMMAND"
+>searchd</B
+></A
+></DT
+><DT
+>5.4.2. <A
+HREF="dpsearch-searchd.ru.html#SEARCHD-START"
+>Запуск <B
+CLASS="COMMAND"
+>searchd</B
+></A
+></DT
+></DL
+></DD
+><DT
+>5.5. <A
+HREF="dpsearch-oracle.ru.html"
+>Oracle notes
+<A
+NAME="AEN4033"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>5.5.1. <A
+HREF="dpsearch-oracle.ru.html#ORACLE-INTRO"
+>Introduction</A
+></DT
+><DT
+>5.5.2. <A
+HREF="dpsearch-oracle.ru.html#ORACLE-INSTALL"
+>Compilation, Installation and Configuration</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>6. <A
+HREF="dpsearch-subsections.ru.html"
+>Подсекции</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="dpsearch-subsections.ru.html#TAGS"
+>Тэги
+<A
+NAME="AEN4113"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>6.1.1. <A
+HREF="dpsearch-subsections.ru.html#TAG_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Tag</B
+></A
+></DT
+><DT
+>6.1.2. <A
+HREF="dpsearch-subsections.ru.html#TAGIF_CMD"
+>Команда <B
+CLASS="COMMAND"
+>TagIf</B
+></A
+></DT
+><DT
+>6.1.3. <A
+HREF="dpsearch-subsections.ru.html#TAGS-SQL"
+>Тэги в SQL версии</A
+></DT
+></DL
+></DD
+><DT
+>6.2. <A
+HREF="dpsearch-categories.ru.html"
+>Категории
+<A
+NAME="AEN4170"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>6.2.1. <A
+HREF="dpsearch-categories.ru.html#CATEGORY_CMD"
+>Команда <B
+CLASS="COMMAND"
+>Category</B
+></A
+></DT
+><DT
+>6.2.2. <A
+HREF="dpsearch-categories.ru.html#CATEGORYIF_CMD"
+>Команда <B
+CLASS="COMMAND"
+>CategoryIf</B
+></A
+></DT
+><DT
+>6.2.3. <A
+HREF="dpsearch-categories.ru.html#CATTABLE"
+>Загрузка таблицы категорий</A
+></DT
+><DT
+>6.2.4. <A
+HREF="dpsearch-categories.ru.html#FLUSHCATTABLE"
+>Команда FlushCategoryTable
+<A
+NAME="AEN4236"
+></A
+></A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>7. <A
+HREF="dpsearch-international.ru.html"
+>Поддержка языков</A
+></DT
+><DD
+><DL
+><DT
+>7.1. <A
+HREF="dpsearch-international.ru.html#CHARSET"
+>Кодировки</A
+></DT
+><DD
+><DL
+><DT
+>7.1.1. <A
+HREF="dpsearch-international.ru.html#SUPCHARSETS"
+>Поддерживаемые кодировки</A
+></DT
+><DT
+>7.1.2. <A
+HREF="dpsearch-international.ru.html#CHARSETSALIAS"
+>Разные названия кодировок</A
+></DT
+><DT
+>7.1.3. <A
+HREF="dpsearch-international.ru.html#RECODING"
+>Перекодировка во время индексации</A
+></DT
+><DT
+>7.1.4. <A
+HREF="dpsearch-international.ru.html#LOCAL-CHARSET-HOWTO"
+>Выбор LocalCharset</A
+></DT
+><DT
+>7.1.5. <A
+HREF="dpsearch-international.ru.html#CHARSETDETECT"
+>Определение кодировки документа</A
+></DT
+><DT
+>7.1.6. <A
+HREF="dpsearch-international.ru.html#CHARSET-GUESSER"
+>Автоматическое распознавание кодировки</A
+></DT
+><DT
+>7.1.7. <A
+HREF="dpsearch-international.ru.html#DEFCHARSET"
+>Кодировка документов по-умолчанию</A
+></DT
+><DT
+>7.1.8. <A
+HREF="dpsearch-international.ru.html#DEFLANG"
+>Язык документов по-умолчанию</A
+></DT
+><DT
+>7.1.9. <A
+HREF="dpsearch-international.ru.html#CHARSET-SEARCHDEC"
+>Перекодировка во время поиска</A
+></DT
+><DT
+>7.1.10. <A
+HREF="dpsearch-international.ru.html#LOCALCHARSET_CMD"
+>Команда <B
+CLASS="COMMAND"
+>LocalCharset</B
+></A
+></DT
+><DT
+>7.1.11. <A
+HREF="dpsearch-international.ru.html#REMOTECHARSET_CMD"
+>Команда <B
+CLASS="COMMAND"
+>RemoteCharset</B
+></A
+></DT
+><DT
+>7.1.12. <A
+HREF="dpsearch-international.ru.html#URLCHARSET_CMD"
+>Команда <B
+CLASS="COMMAND"
+>URLCharset</B
+></A
+></DT
+><DT
+>7.1.13. <A
+HREF="dpsearch-international.ru.html#CHARSTOESCAPE"
+>Команда <B
+CLASS="COMMAND"
+>CharsToEscape</B
+></A
+></DT
+></DL
+></DD
+><DT
+>7.2. <A
+HREF="dpsearch-multilang.ru.html"
+>Создание многоязычных страниц поиска
+<A
+NAME="AEN4781"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>7.2.1. <A
+HREF="dpsearch-multilang.ru.html#MULTILANG-HOW"
+>Как это работает ?</A
+></DT
+><DT
+>7.2.2. <A
+HREF="dpsearch-multilang.ru.html#MULTILANG-PROBLEM"
+>Возможные сложности</A
+></DT
+></DL
+></DD
+><DT
+>7.3. <A
+HREF="dpsearch-cjk.ru.html"
+>Сегментеры фраз японского, тайского, корейского и китайского языков</A
+></DT
+><DD
+><DL
+><DT
+>7.3.1. <A
+HREF="dpsearch-cjk.ru.html#JA-SEGMENT"
+>Сегментер фраз японского языка
+<A
+NAME="AEN4962"
+></A
+></A
+></DT
+><DT
+>7.3.2. <A
+HREF="dpsearch-cjk.ru.html#ZH-SEGMENT"
+>Сегментер фраз китайского языка
+<A
+NAME="AEN4977"
+></A
+></A
+></DT
+><DT
+>7.3.3. <A
+HREF="dpsearch-cjk.ru.html#TH-SEGMENT"
+>Сегментер фраз тайского языка
+<A
+NAME="AEN5002"
+></A
+></A
+></DT
+><DT
+>7.3.4. <A
+HREF="dpsearch-cjk.ru.html#KO-SEGMENT"
+>Сегментер фраз корейского языка
+<A
+NAME="AEN5022"
+></A
+></A
+></DT
+></DL
+></DD
+><DT
+>7.4. <A
+HREF="dpsearch-vary.ru.html"
+>Поддержка мультиязычных веб серверов</A
+></DT
+></DL
+></DD
+><DT
+>8. <A
+HREF="dpsearch-doingsearch.ru.html"
+>Поиск документов</A
+></DT
+><DD
+><DL
+><DT
+>8.1. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH"
+>Использование поисковых фронт-эндов</A
+></DT
+><DD
+><DL
+><DT
+>8.1.1. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-PERFORM"
+>Осуществление поиска</A
+></DT
+><DT
+>8.1.2. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH_PARAMS"
+>Параметры поиска
+<A
+NAME="AEN5068"
+></A
+></A
+></DT
+><DT
+>8.1.3. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-CHANGEWEIGHT"
+>Изменение весов различных частей документов во время поиска</A
+></DT
+><DT
+>8.1.4. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-SCRIPTNAME"
+>Использование фронт-энда на страницах с SSI</A
+></DT
+><DT
+>8.1.5. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-TEMPLATES"
+>Использование нескольких шаблонов</A
+></DT
+><DT
+>8.1.6. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-OPERATORS"
+>Операторы происка</A
+></DT
+><DT
+>8.1.7. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-BOOL"
+>Булев поиск
+<A
+NAME="AEN5332"
+></A
+></A
+></DT
+><DT
+>8.1.8. <A
+HREF="dpsearch-doingsearch.ru.html#VQL"
+>Язык запросов Verity Query Language, VQL</A
+></DT
+><DT
+>8.1.9. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-EXP"
+>Как используются при поиске устаревшие документы</A
+></DT
+></DL
+></DD
+><DT
+>8.2. <A
+HREF="dpsearch-mod_dpsearch.ru.html"
+>Модуль <TT
+CLASS="LITERAL"
+>mod_dpsearch</TT
+> для Apache httpd
+<A
+NAME="AEN5417"
+></A
+>
+<A
+NAME="AEN5419"
+></A
+>
+<A
+NAME="AEN5422"
+></A
+>
+<A
+NAME="AEN5425"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>8.2.1. <A
+HREF="dpsearch-mod_dpsearch.ru.html#MOD_DPSEARCH-WHY"
+>Для чего использовать <TT
+CLASS="LITERAL"
+>mod_dpsearch</TT
+></A
+></DT
+><DT
+>8.2.2. <A
+HREF="dpsearch-mod_dpsearch.ru.html#MOD_DPSEARCH-CFG"
+>Конфигурирование <TT
+CLASS="LITERAL"
+>mod_dpsearch</TT
+></A
+></DT
+></DL
+></DD
+><DT
+>8.3. <A
+HREF="dpsearch-templates.ru.html"
+>Как создавать шаблоны результатов поиска
+<A
+NAME="AEN5475"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>8.3.1. <A
+HREF="dpsearch-templates.ru.html#TEMPLATES-SECT"
+>Секции шаблона
+<A
+NAME="AEN5492"
+></A
+></A
+></DT
+><DT
+>8.3.2. <A
+HREF="dpsearch-templates.ru.html#TEMPLATES-VAR"
+>Секция Variables
+<A
+NAME="AEN5827"
+></A
+></A
+></DT
+><DT
+>8.3.3. <A
+HREF="dpsearch-templates.ru.html#TEMPLATES-INCL"
+>Включения в шаблонах</A
+></DT
+><DT
+>8.3.4. <A
+HREF="dpsearch-templates.ru.html#TEMPLATES-IF"
+>Условные операторы в шаблонах</A
+></DT
+><DT
+>8.3.5. <A
+HREF="dpsearch-templates.ru.html#TEMPLATES-SEC"
+>О безопасности</A
+></DT
+></DL
+></DD
+><DT
+>8.4. <A
+HREF="dpsearch-html.ru.html"
+>Дизайн search.html</A
+></DT
+><DD
+><DL
+><DT
+>8.4.1. <A
+HREF="dpsearch-html.ru.html#HTML-RESPAGE"
+>Как создаётся страница результатов</A
+></DT
+><DT
+>8.4.2. <A
+HREF="dpsearch-html.ru.html#HTML-YOURHTML"
+>Ваш HTML-шаблон</A
+></DT
+><DT
+>8.4.3. <A
+HREF="dpsearch-html.ru.html#HTML-FORMS"
+>О формах</A
+></DT
+><DT
+>8.4.4. <A
+HREF="dpsearch-html.ru.html#HTML-RELLINKS"
+>Относительные ссылки в search.htm</A
+></DT
+><DT
+>8.4.5. <A
+HREF="dpsearch-html.ru.html#HTML-SEARCHFORM"
+>Добавление формы поиска на другие страницы</A
+></DT
+></DL
+></DD
+><DT
+>8.5. <A
+HREF="dpsearch-rel.ru.html"
+>Релевантность
+<A
+NAME="AEN6056"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>8.5.1. <A
+HREF="dpsearch-rel.ru.html#REL-ORDER"
+>Упорядочивание документов</A
+></DT
+><DT
+>8.5.2. <A
+HREF="dpsearch-rel.ru.html#RELEVANCY"
+>Расчёт релевантности</A
+></DT
+><DT
+>8.5.3. <A
+HREF="dpsearch-rel.ru.html#POPRANK"
+>Рейтинг популярности<A
+NAME="AEN6148"
+></A
+></A
+></DT
+><DT
+>8.5.4. <A
+HREF="dpsearch-rel.ru.html#REL-BOOL"
+>Булевы запросы
+<A
+NAME="AEN6237"
+></A
+></A
+></DT
+><DT
+>8.5.5. <A
+HREF="dpsearch-rel.ru.html#REL-CWORDS"
+>Crosswords
+<A
+NAME="AEN6246"
+></A
+></A
+></DT
+><DT
+>8.5.6. <A
+HREF="dpsearch-rel.ru.html#SEA"
+>Алгоритм Построения Рефератов (SEA)</A
+></DT
+></DL
+></DD
+><DT
+>8.6. <A
+HREF="dpsearch-track.ru.html"
+>Регистрация поисковых запросов
+<A
+NAME="AEN6305"
+></A
+></A
+></DT
+><DT
+>8.7. <A
+HREF="dpsearch-srcache.ru.html"
+>Кэш результатов поиска
+<A
+NAME="AEN6336"
+></A
+></A
+></DT
+><DT
+>8.8. <A
+HREF="dpsearch-fuzzy.ru.html"
+>Нечёткий поиск</A
+></DT
+><DD
+><DL
+><DT
+>8.8.1. <A
+HREF="dpsearch-fuzzy.ru.html#ISPELL"
+>Ispell
+<A
+NAME="AEN6363"
+></A
+></A
+></DT
+><DT
+>8.8.2. <A
+HREF="dpsearch-fuzzy.ru.html#ASPELL"
+>Aspell</A
+></DT
+><DT
+>8.8.3. <A
+HREF="dpsearch-fuzzy.ru.html#SYNONYMS"
+>Синонимы
+<A
+NAME="AEN6465"
+></A
+></A
+></DT
+><DT
+>8.8.4. <A
+HREF="dpsearch-fuzzy.ru.html#ACCENT"
+>Поиск без учёта акцентов над буквами
+<A
+NAME="AEN6500"
+></A
+>
+<A
+NAME="AEN6503"
+></A
+></A
+></DT
+><DT
+>8.8.5. <A
+HREF="dpsearch-fuzzy.ru.html#SYNONYMS"
+>Акронимы и аббревиатуры
+<A
+NAME="AEN6521"
+></A
+></A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>9. <A
+HREF="dpsearch-misc.ru.html"
+>Разное</A
+></DT
+><DD
+><DL
+><DT
+>9.1. <A
+HREF="dpsearch-misc.ru.html#BUGS"
+>Сообщение о багах</A
+></DT
+><DD
+><DL
+><DT
+>9.1.1. <A
+HREF="dpsearch-misc.ru.html#BUGS-CURRENT"
+>Известные ошибки и баги</A
+></DT
+><DT
+>9.1.2. <A
+HREF="dpsearch-misc.ru.html#BUGS-CORE"
+>Посмертные дампы</A
+></DT
+></DL
+></DD
+><DT
+>9.2. <A
+HREF="dpsearch-lib.ru.html"
+>Использование библиотеки <TT
+CLASS="LITERAL"
+>libdpsearch</TT
+>
+<A
+NAME="AEN6598"
+></A
+></A
+></DT
+><DD
+><DL
+><DT
+>9.2.1. <A
+HREF="dpsearch-lib.ru.html#LIB-DPSCONF"
+>Скрипт <TT
+CLASS="FILENAME"
+>dps-config</TT
+></A
+></DT
+><DT
+>9.2.2. <A
+HREF="dpsearch-lib.ru.html#API"
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> API</A
+></DT
+></DL
+></DD
+><DT
+>9.3. <A
+HREF="dpsearch-dbschema.ru.html"
+>Структура таблиц базы данных</A
+></DT
+></DL
+></DD
+><DT
+>A. <A
+HREF="dpsearch-donations.ru.html"
+>Помощь проекту</A
+></DT
+><DT
+><A
+HREF="dpsearch-index-ru.ru.html"
+>&#1048;&#1085;&#1076;&#1077;&#1082;&#1089; &#1087;&#1086;&#1076;&#1073;&#1086;&#1088;&#1082;&#1080;</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="LOT"
+><DL
+CLASS="LOT"
+><DT
+><B
+>&#1057;&#1087;&#1080;&#1089;&#1086;&#1082; &#1090;&#1072;&#1073;&#1083;&#1080;&#1094;</B
+></DT
+><DT
+>3-1. <A
+HREF="dpsearch-pars.ru.html#AEN1693"
+>Соответствие между типами keyword библиотеки libextractor и именами секций DataparkSearch</A
+></DT
+><DT
+>3-2. <A
+HREF="dpsearch-syslog.ru.html#AEN3106"
+>уровни подробности сообщений indexer'а</A
+></DT
+><DT
+>5-1. <A
+HREF="dpsearch-cachemode.ru.html#AEN3786"
+>Типы предопределенных лимитов способа хранения Cache</A
+></DT
+><DT
+>5-2. <A
+HREF="dpsearch-cachemode.ru.html#AEN3818"
+>Типы SQL-лимитов способа хранения Cache</A
+></DT
+><DT
+>7-1. <A
+HREF="dpsearch-international.ru.html#AEN4256"
+>Кодировки и их языковые группы</A
+></DT
+><DT
+>7-2. <A
+HREF="dpsearch-international.ru.html#AEN4343"
+>Синонимы наименований кодировок</A
+></DT
+><DT
+>8-1. <A
+HREF="dpsearch-doingsearch.ru.html#SEARCH-PARAMS"
+>Параметры поиска</A
+></DT
+><DT
+>8-2. <A
+HREF="dpsearch-doingsearch.ru.html#VQL-OPERATORS"
+>Операторы VQL, поддерживаемые DataparkSearch</A
+></DT
+><DT
+>8-3. <A
+HREF="dpsearch-rel.ru.html#AEN6077"
+>Параметры расчёта релевантности, задаваемые при компиляции (ключи для <B
+CLASS="COMMAND"
+>configure</B
+>)</A
+></DT
+><DT
+>9-1. <A
+HREF="dpsearch-dbschema.ru.html#DB-SERVER"
+>Структура таблицы <CODE
+CLASS="VARNAME"
+>server</CODE
+></A
+></DT
+><DT
+>9-2. <A
+HREF="dpsearch-dbschema.ru.html#DB-SRVINFO"
+>Значения некоторых параметров серверов в таблице <CODE
+CLASS="VARNAME"
+>srvinfo</CODE
+></A
+></DT
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-intro.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Введение</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

@@ -1,0 +1,78 @@
+#!/bin/sh
+
+prefix=@prefix@
+sysconfdir=@sysconfdir@
+
+dpsearch_cflags="@CFLAGS@ @PTHREAD_CFLAGS@ -I@prefix@/include @VIRT_INCLUDE@ @SOLID_INCLUDE@ @UNIXODBC_INCLUDE@ @IODBC_INCLUDE@ @EASYSOFT_INCLUDE@ @MYSQL_INCLUDE@ @PGSQL_INCLUDE@ @MSQL_INCLUDE@ @IBASE_INCLUDE@ @ORACLE8_INCLUDE@ @ORACLE7_INCLUDE@ @MECAB_INCLUDE@"
+dpsearch_tl_cflags="@CFLAGS@ -I@prefix@/include @VIRT_INCLUDE@ @SOLID_INCLUDE@ @UNIXODBC_INCLUDE@ @IODBC_INCLUDE@ @EASYSOFT_INCLUDE@ @MYSQL_INCLUDE@ @PGSQL_INCLUDE@ @MSQL_INCLUDE@ @IBASE_INCLUDE@ @ORACLE8_INCLUDE@ @ORACLE7_INCLUDE@ @MECAB_INCLUDE@"
+
+dpsearch_libs="-L@prefix@/lib -ldpsearch -ldpcharset @LIBS@ @PTHREAD_LFLAGS@ @VIRT_LFLAGS@ @SOLID_LFLAGS@ @UNIXODBC_LFLAGS@ @IODBC_LFLAGS@ @EASYSOFT_LFLAGS@ @MYSQL_LFLAGS@ @PGSQL_LFLAGS@ @MSQL_LFLAGS@ @IBASE_LFLAGS@ @ORACLE8_LFLAGS@ @ORACLE7_LFLAGS@ @SSL_LFLAGS@ @PTHREAD_LDADD@ @MECAB_LFLAGS@"
+dpsearch_tl_libs="-L@prefix@/lib -ldpsearch_mod -ldpcharset @LIBS@ @VIRT_LFLAGS@ @SOLID_LFLAGS@ @UNIXODBC_LFLAGS@ @IODBC_LFLAGS@ @EASYSOFT_LFLAGS@ @MYSQL_LFLAGS@ @PGSQL_LFLAGS@ @MSQL_LFLAGS@ @IBASE_LFLAGS@ @ORACLE8_LFLAGS@ @ORACLE7_LFLAGS@ @SSL_LFLAGS@ @MECAB_LFLAGS@"
+
+usage()
+{
+	cat <<EOF
+Usage: $0 [OPTIONS]
+Options:
+	[--version]
+	[--version-id]
+	[--cflags]
+	[--libs]
+	[--threadsless-cflags]
+	[--threadsless-libs]
+EOF
+	exit $1
+}
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+while test $# -gt 0; do
+  case "$1" in
+  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) optarg= ;;
+  esac
+
+  case $1 in
+    --version)
+      echo @VERSION@
+      ;;
+    --version-id)
+      echo @DPS_VERSION_ID@
+      ;;
+    --cflags)
+      echo_cflags=yes
+      ;;
+    --libs)
+      echo_libs=yes
+      ;;
+    --threadsless-cflags)
+      echo_tl_cflags=yes
+      ;;
+    --threadsless-libs)
+      echo_tl_libs=yes
+      ;;
+    *)
+      usage 1 1>&2
+      ;;
+  esac
+  shift
+done
+
+if test "$echo_cflags" = "yes"; then
+	echo $dpsearch_cflags
+fi
+
+if test "$echo_libs" = "yes"; then
+	echo $dpsearch_libs
+fi      
+
+if test "$echo_tl_cflags" = "yes"; then
+	echo $dpsearch_tl_cflags
+fi
+
+if test "$echo_tl_libs" = "yes"; then
+	echo $dpsearch_tl_libs
+fi      
+

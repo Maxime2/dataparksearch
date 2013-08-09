@@ -1,0 +1,60 @@
+<sect2 id="mp3">
+	<title>Indexing MP3 files
+<indexterm><primary>MP3</primary></indexterm>
+</title>
+	<para>The Mp3 search works only on servers supporting HTTP/1.1 protocol, if you wish to index ftp sites use proxy instead.</para>
+	<sect3 id="mp3-indexer">
+		<title>MP3 indexer.conf commands</title>
+		<para>
+<indexterm><primary>Command</primary><secondary>CheckMp3Tag</secondary></indexterm>
+To activate MP3 tags detection set up your <filename>indexer.conf</filename> with some variables:
+		<programlisting>
+CheckMp3Tag yes
+</programlisting>
+		</para>
+		<para>
+<indexterm><primary>Command</primary><secondary>IndexMP3TagOnly</secondary></indexterm>
+When this option is enabled the spider downloads only 128 bytes to determine an MP3 file.
+		<programlisting>
+IndexMP3TagOnly yes
+</programlisting>
+		</para>
+		<para>When this option is enabled only MP3 tags are indexed, all HTML documents are searched for links only. In other case HTML and TEXT documents are indexed in usual manner and will be searchable.
+		<programlisting>
+URLFileWeight 1  
+</programlisting>
+		</para>
+		<para>You may find useful to activate this option to index MP3 file names. </para>
+	</sect3>
+	<sect3 id="mp3-tags">
+		<title>How indexer processes MP3 tags</title>
+		<para>If file is recognized as MP3, indexer creates document in the following format:
+		<programlisting>
+&lt;html&gt;
+&lt;title&gt;$SongName&lt;/title&gt;
+&lt;meta name=description content="$Artist"&gt;
+&lt;meta name=keywords content="$Album $Year"&gt;
+&lt;body&gt;$Artist $Album $Year $SongName&lt;/body&gt;
+&lt;/html&gt;
+</programlisting>
+</para>
+		<para>So, title is filled with song name, description with artist, keywords is built as combination of album and year. Body is a combination of artist, album, year, song name.</para>
+	</sect3>
+	<sect3 id="mp3-search">
+		<title>Search through author, album, song name</title>
+		<para>If you want restricted search by author, album or song name, use standard mechanism described in the section 
+"Changing different document parts weights at search time" of Using search front-ends section. 
+For example, if you want to restrict search by song name use standard by title restriction.</para>
+		<para>With default weights configuration, given in <filename>indexer.conf-dist</filename>, you may find useful to add this into <filename>search.htm</filename> to restrict search area:
+		<programlisting>
+&lt;SELECT NAME="wf"&gt;
+&lt;OPTION VALUE="11110" SELECTED="$(wf)"&gt;All sections
+&lt;OPTION VALUE="01000" SELECTED="$(wf)"&gt;Artist
+&lt;OPTION VALUE="00100" SELECTED="$(wf)"&gt;Album
+&lt;OPTION VALUE="00010" SELECTED="$(wf)"&gt;Song name
+&lt;OPTION VALUE="10000" SELECTED="$(wf)"&gt;File name
+&lt;/SELECT&gt;
+</programlisting>
+</para>
+	</sect3>
+</sect2>

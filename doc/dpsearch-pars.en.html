@@ -1,0 +1,1548 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>External parsers</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Servers Table"
+HREF="dpsearch-srvtable.en.html"><LINK
+REL="NEXT"
+TITLE="Other commands are used in indexer.conf"
+HREF="dpsearch-indexcmd.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-srvtable.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-indexcmd.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PARS"
+>3.9. External parsers</A
+></H1
+><A
+NAME="AEN1417"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> indexer can use external parsers to index various file types (MIME types).</P
+><P
+>Parser is an executable program which converts one of
+the mime types to <TT
+CLASS="LITERAL"
+>text/plain</TT
+> or
+<TT
+CLASS="LITERAL"
+>text/html</TT
+>. For example, if you have postscript
+files, you can use ps2ascii parser (filter), which reads postscript
+file from stdin and produces ascii to stdout.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-SUP"
+>3.9.1. Supported parser types</A
+></H2
+><P
+>Indexer supports four types of parsers that can:</P
+><P
+></P
+><UL
+><LI
+><P
+>read data from stdin and send result to stdout</P
+></LI
+><LI
+><P
+>read data from file  and send result to stdout</P
+></LI
+><LI
+><P
+>read data from file  and send result to file</P
+></LI
+><LI
+><P
+>read data from stdin and send result to file</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-SETUP"
+>3.9.2. Setting up parsers</A
+></H2
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Configure mime types</P
+><P
+>Configure your web server to
+send appropriate "Content-Type" header. For apache, have a look at
+<TT
+CLASS="FILENAME"
+>mime.types</TT
+> file, most mime types are already
+defined there.</P
+><P
+><A
+NAME="AEN1444"
+></A
+>
+If you want to index local files or via <TT
+CLASS="LITERAL"
+>ftp</TT
+>
+use "AddType" command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> to
+associate file name extensions with their mime types. For
+example:
+
+				<PRE
+CLASS="PROGRAMLISTING"
+>AddType text/html *.html</PRE
+>
+				</P
+></LI
+><LI
+><P
+><A
+NAME="AEN1452"
+></A
+>
+Add parsers</P
+><P
+>Add lines with parsers definitions. Lines have the following format with three arguments:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime &lt;from_mime&gt; &lt;to_mime&gt; [&lt;command line&gt;]</PRE
+>
+				</P
+><P
+>For example, the following line defines parser for man pages:
+				<PRE
+CLASS="PROGRAMLISTING"
+># Use deroff for parsing man pages ( *.man )
+Mime  application/x-troff-man   text/plain   deroff</PRE
+>
+				</P
+><P
+>This parser will take data from stdin and output result to stdout.</P
+><P
+>Many parsers can not operate on
+stdin and require a file to read from. In this case indexer creates a
+temporary file in /tmp and will remove it when parser exits. Use $1
+macro in parser command line to substitute file name. For example,
+Mime command for "catdoc" MS Word to ASCII converters may look like
+this:
+
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/msword text/plain "/usr/bin/catdoc -a $1"</PRE
+>
+				</P
+><P
+>If your parser writes result
+into output file, use $2 macro. indexer will replace $2 by temporary
+file name, start parser, read result from this temporary file then
+remove it. For example:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/msword text/plain "/usr/bin/catdoc -a $1 &#62;$2"</PRE
+>
+				</P
+><P
+>The parser above will read data
+from first temporary file and write result to second one. Both
+temporary files will be removed when parser exists. Note that result
+of usage of this parser will be absolutely  the same with the previous
+one, but they use different execution mode: file-&gt;stdout and
+file-&gt;file correspondingly.</P
+><P
+>If the &lt;command line&gt; parameter is omitted this means both MIME type are synonyms. 
+E.g. some sites can supply incorrect type for MP3 files as <KBD
+CLASS="USERINPUT"
+>application/mp3</KBD
+>. 
+You can alter it into correct one <KBD
+CLASS="USERINPUT"
+>audio/mpeg</KBD
+> and therefore process them:
+				<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/mp3 audio/mpeg</PRE
+></P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARSERTIMEOUT"
+>3.9.3. Avoid indexer hang on parser execution</A
+></H2
+><P
+><A
+NAME="AEN1472"
+></A
+>
+To avoid a indexer hang on parser execution, you may specify the amount of time in seconds for parser execution in your 
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> by <TT
+CLASS="LITERAL"
+>ParserTimeOut</TT
+> command. For example:
+		<PRE
+CLASS="PROGRAMLISTING"
+>ParserTimeOut 600</PRE
+></P
+><P
+>Default value is 300 seconds, i.e. 5 minutes.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-PIPES"
+>3.9.4. Pipes in parser's command line</A
+></H2
+><P
+>You can use pipes in parser's command line. For
+example, these lines will be useful to index gzipped man pages from
+local disk:
+		<PRE
+CLASS="PROGRAMLISTING"
+>AddType  application/x-gzipped-man  *.1.gz *.2.gz *.3.gz *.4.gz
+Mime     application/x-gzipped-man  text/plain  "zcat | deroff"</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-CHAR"
+>3.9.5. Charsets and parsers</A
+></H2
+><A
+NAME="AEN1485"
+></A
+><P
+>Some parsers can produce output in other charset
+than given in LocalCharset command. Specify charset to make indexer
+convert parser's output to proper one. For example, if your catdoc is
+configured to produce output in windows-1251 charset but LocalCharset
+is koi8-r, use this command for parsing MS Word documents:
+		<PRE
+CLASS="PROGRAMLISTING"
+>Mime  application/msword  "text/plain; charset=windows-1251" "catdoc -a $1"</PRE
+>
+		</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-UDMURL"
+>3.9.6. DPS_URL environment variable</A
+></H2
+><A
+NAME="AEN1492"
+></A
+><P
+>When executing a parser <B
+CLASS="COMMAND"
+>indexer</B
+> creates DPS_URL
+environment variable with an URL being processed as a value. You can
+use this variable in parser scripts.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PARS-LINKS"
+>3.9.7. Some third-party parsers</A
+></H2
+><A
+NAME="AEN1498"
+></A
+><P
+></P
+><UL
+><LI
+><P
+>RPM parser by Mario Lang <CODE
+CLASS="EMAIL"
+>&#60;<A
+HREF="mailto:lang@zid.tu-graz.ac.at"
+>lang@zid.tu-graz.ac.at</A
+>&#62;</CODE
+></P
+><P
+>        /usr/local/bin/rpminfo:
+
+<PRE
+CLASS="PROGRAMLISTING"
+>#!/bin/bash
+/usr/bin/rpm -q --queryformat="&lt;html&gt;&lt;head&gt;&lt;title&gt;RPM: %{NAME} %{VERSION}-%{RELEASE}
+(%{GROUP})&lt;/title&gt;&lt;meta name=\"description\" content=\"%{SUMMARY}\"&gt;&lt;/head&gt;&lt;body&gt;
+%{DESCRIPTION}\n&lt;/body&gt;&lt;/html&gt;" -p $1</PRE
+></P
+><P
+>indexer.conf:
+<PRE
+CLASS="PROGRAMLISTING"
+>Mime application/x-rpm text/html "/usr/local/bin/rpminfo $1"</PRE
+></P
+><P
+>It renders to such nice RPM information:
+
+<PRE
+CLASS="PROGRAMLISTING"
+>3. RPM: mysql 3.20.32a-3 (Applications/Databases) [4]
+       Mysql is a SQL (Structured Query Language) database server.
+       Mysql was written by Michael (monty) Widenius. See the CREDITS
+       file in the distribution for more credits for mysql and related
+       things....
+       (application/x-rpm) 2088855 bytes</PRE
+></P
+></LI
+><LI
+><P
+>catdoc MS Word to text converter</P
+><P
+>					<A
+HREF="http://freshmeat.net/redir/catdoc/1055/url_homepage/"
+TARGET="_top"
+>Home page</A
+>, also listed on <A
+HREF="http://freshmeat.net/"
+TARGET="_top"
+>Freshmeat</A
+>.</P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime application/msword         text/plain      "catdoc $1"</PRE
+></P
+></LI
+><LI
+><P
+>xls2csv MS Excel to text converter</P
+><P
+>It is supplied with catdoc.</P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime application/vnd.ms-excel   text/plain      "xls2csv $1"</PRE
+></P
+></LI
+><LI
+><P
+>pdftotext Adobe PDF converter</P
+><P
+>Supplied with xpdf project.</P
+><P
+>					<A
+HREF="http://freshmeat.net/redir/xpdf/12080/url_homepage/"
+TARGET="_top"
+>Homepage</A
+>, also listed on <A
+HREF="http://freshmeat.net/"
+TARGET="_top"
+>Freshmeat</A
+>.</P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime application/pdf            text/plain      "pdftotext $1 -"</PRE
+></P
+></LI
+><LI
+><P
+>unrtf RTF to html converter</P
+><P
+>					<A
+HREF="ftp://ftp.gnu.org/pub/gnu/unrtf/"
+TARGET="_top"
+>Homepage</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime text/rtf*        text/html  "/usr/local/dpsearch/sbin/unrtf --html $1"
+Mime application/rtf  text/html  "/usr/local/dpsearch/sbin/unrtf --html $1"</PRE
+></P
+></LI
+><LI
+><P
+>xlhtml XLS to html converter</P
+><P
+>					<A
+HREF="http://chicago.sourceforge.net/xlhtml/"
+TARGET="_top"
+>Homepage</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime	application/vnd.ms-excel  text/html  "/usr/local/dpsearch/sbin/xlhtml $1"</PRE
+></P
+></LI
+><LI
+><P
+>ppthtml PowerPoint (PPT) to html converter. Part of <SPAN
+CLASS="APPLICATION"
+>xlhtml 0.5</SPAN
+>.</P
+><P
+>					<A
+HREF="http://chicago.sourceforge.net/xlhtml/"
+TARGET="_top"
+>Homepage</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime	application/vnd.ms-powerpoint  text/html  "/usr/local/dpsearch/sbin/ppthtml $1"</PRE
+></P
+></LI
+><LI
+><P
+>Using <A
+HREF="http://wvWare.sourceforge.net/"
+TARGET="_top"
+>vwHtml</A
+> (DOC to html).</P
+><P
+><TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/sbin/0vwHtml.pl</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>#!/usr/bin/perl -w
+
+$p = $ARGV[1];
+$f = $ARGV[1];
+
+$p =~ s/(.*)\/([^\/]*)/$1\//;
+$f =~ s/(.*)\/([^\/]*)/$2/;
+
+system("/usr/local/bin/wvHtml --targetdir=$p $ARGV[0] $f");</PRE
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime  application/msword       text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $1 $2"
+Mime  application/vnd.ms-word  text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $1 $2"</PRE
+></P
+></LI
+><LI
+><P
+>swf2html from 
+<A
+HREF="http://www.macromedia.com/software/flash/download/search_engine/"
+TARGET="_top"
+>Flash Search Engine SDK</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime  application/x-shockwave-flash  text/html  "/usr/local/dpsearch/sbin/swf2html $1"</PRE
+></P
+></LI
+><LI
+><P
+>djvutxt from 
+<A
+HREF="http://djvu.sourceforge.net/"
+TARGET="_top"
+>djvuLibre</A
+></P
+><P
+><TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>:
+				<PRE
+CLASS="PROGRAMLISTING"
+>&#13;Mime  image/djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/x.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/x-djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
+Mime  image/vnd.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"</PRE
+></P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="LIBEXTRACTOR"
+>3.9.8. libextractor library</A
+></H2
+><A
+NAME="AEN1579"
+></A
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> can be build with <A
+HREF="http://gnunet.org/libextractor/"
+TARGET="_top"
+>libextractor library</A
+>. 
+Using this library, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> can index keywords from files of the following formats: PDF, PS, OLE2 (DOC, XLS, PPT), OpenOffice (sxw), StarOffice (sdw), DVI, MAN, FLAC, MP3 (ID3v1 and ID3v2), NSF(E) (NES music), SID (C64 music), OGG, WAV, EXIV2, JPEG, GIF, PNG, TIFF, DEB, RPM, TAR(.GZ), ZIP, ELF, S3M (Scream Tracker 3), XM (eXtended Module), IT (Impulse Tracker), FLV, REAL, RIFF (AVI), MPEG, QT and ASF.</P
+><P
+>To build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with <SPAN
+CLASS="APPLICATION"
+>libextractor library</SPAN
+>, install the library, and then configure and compile <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</P
+><P
+>Bellow the relationship between keyword types of <SPAN
+CLASS="APPLICATION"
+>libextractor</SPAN
+> version prior to 0.6 and <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>'s section names is given:</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN1592"
+></A
+><P
+><B
+>Table 3-1. Relationship between libextractor's keyword types and DataparkSearch section names</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><THEAD
+><TR
+><TH
+>Keyword Type</TH
+><TH
+>Section name</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+>EXTRACTOR_FILENAME</TD
+><TD
+> 	Filename</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MIMETYPE</TD
+><TD
+> 	Mimetype</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TITLE</TD
+><TD
+> 	Title</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_AUTHOR</TD
+><TD
+> 	Author</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ARTIST 	</TD
+><TD
+>Artist</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DESCRIPTION 	</TD
+><TD
+>Description</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COMMENT 	</TD
+><TD
+>Comment</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DATE 	</TD
+><TD
+>Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PUBLISHER 	</TD
+><TD
+>Publisher</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LANGUAGE 	</TD
+><TD
+>Content-Language</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ALBUM 	</TD
+><TD
+>Album</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_GENRE 	</TD
+><TD
+>Genre</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LOCATION 	</TD
+><TD
+>Location</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_VERSIONNUMBER 	</TD
+><TD
+>VersionNumber</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ORGANIZATION 	</TD
+><TD
+>Organization</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COPYRIGHT 	</TD
+><TD
+>Copyright</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SUBJECT 	</TD
+><TD
+>Subject</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_KEYWORDS 	</TD
+><TD
+>Meta.Keywords</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONTRIBUTOR 	</TD
+><TD
+>Contributor</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RESOURCE_TYPE 	</TD
+><TD
+>Resource-Type</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FORMAT 	</TD
+><TD
+>Format</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RESOURCE_IDENTIFIER 	</TD
+><TD
+>Resource-Idendifier</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SOURCE 	</TD
+><TD
+>Source</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RELATION 	</TD
+><TD
+>Relation</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COVERAGE 	</TD
+><TD
+>Coverage</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SOFTWARE 	</TD
+><TD
+>Software</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DISCLAIMER 	</TD
+><TD
+>Disclaimer</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_WARNING 	</TD
+><TD
+>Warning</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TRANSLATED 	</TD
+><TD
+>Translated</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATION_DATE 	</TD
+><TD
+>Creation-Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MODIFICATION_DATE 	</TD
+><TD
+>Modification-Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATOR 	</TD
+><TD
+>Creator</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PRODUCER 	</TD
+><TD
+>Producer</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAGE_COUNT 	</TD
+><TD
+>Page-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAGE_ORIENTATION 	</TD
+><TD
+>Page-Orientation</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAPER_SIZE 	</TD
+><TD
+>Paper-Size</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_USED_FONTS 	</TD
+><TD
+>Used-Fonts</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PAGE_ORDER 	</TD
+><TD
+>Page-Order</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATED_FOR 	</TD
+><TD
+>Created-For</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MAGNIFICATION 	</TD
+><TD
+>Magnification</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RELEASE 	</TD
+><TD
+>Release</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_GROUP 	</TD
+><TD
+>Group</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SIZE 	</TD
+><TD
+>Size</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SUMMARY 	</TD
+><TD
+>Summary</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PACKAGER 	</TD
+><TD
+>Packager</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_VENDOR 	</TD
+><TD
+>Vendor</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LICENSE 	</TD
+><TD
+>License</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DISTRIBUTION 	</TD
+><TD
+>Distribution</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_BUILDHOST 	</TD
+><TD
+>BuildHost</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_OS 	</TD
+><TD
+>OS</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DEPENDENCY 	</TD
+><TD
+>Dependency</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_MD4 	</TD
+><TD
+>Hash-MD4</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_MD5 	</TD
+><TD
+>Hash-MD5</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_SHA0 	</TD
+><TD
+>Hash-SHA0</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_SHA1 	</TD
+><TD
+>Hash-SHA1</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HASH_RMD160 	</TD
+><TD
+>Hash-RMD160</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RESOLUTION 	</TD
+><TD
+>Resolution</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CATEGORY 	</TD
+><TD
+>Ext.Category</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_BOOKTITLE 	</TD
+><TD
+>BookTitle</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PRIORITY 	</TD
+><TD
+>Priority</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONFLICTS 	</TD
+><TD
+>Conflicts</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_REPLACES 	</TD
+><TD
+>Replaces</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PROVIDES 	</TD
+><TD
+>Provides</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONDUCTOR 	</TD
+><TD
+>Conductor</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_INTERPRET 	</TD
+><TD
+>Interpret</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_OWNER 	</TD
+><TD
+>Owner</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LYRICS 	</TD
+><TD
+>Lyrics</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MEDIA_TYPE 	</TD
+><TD
+>Media-Type</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONTACT 	</TD
+><TD
+>Contact</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_THUMBNAIL_DATA 	</TD
+><TD
+>Thumbnail-Data</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PUBLICATION_DATE 	</TD
+><TD
+>Publication-Date</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CAMERA_MAKE 	</TD
+><TD
+>Camera-Make</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CAMERA_MODEL 	</TD
+><TD
+>Camera-Model</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EXPOSURE 	</TD
+><TD
+>Exposure</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_APERTURE 	</TD
+><TD
+>Aperture</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EXPOSURE_BIAS 	</TD
+><TD
+>Exposure-Bias</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FLASH 	</TD
+><TD
+>Flash</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FLASH_BIAS 	</TD
+><TD
+>Flash-Bias</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FOCAL_LENGTH 	</TD
+><TD
+>Focal-Length</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FOCAL_LENGTH_35MM 	</TD
+><TD
+>Focal-Length-35MM</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ISO_SPEED 	</TD
+><TD
+>ISO-Speed</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EXPOSURE_MODE 	</TD
+><TD
+>Exposure-Mode</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_METERING_MODE 	</TD
+><TD
+>Metering-Mode</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MACRO_MODE 	</TD
+><TD
+>Macro-Mode</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_IMAGE_QUALITY 	</TD
+><TD
+>Image-Quality</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_WHITE_BALANCE 	</TD
+><TD
+>White-Balance</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ORIENTATION 	</TD
+><TD
+>Orientation</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TEMPLATE 	</TD
+><TD
+>Template</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SPLIT 	</TD
+><TD
+>Split</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PRODUCTVERSION 	</TD
+><TD
+>ProductVersion</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LAST_SAVED_BY 	</TD
+><TD
+>Last-Saved-By</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LAST_PRINTED 	</TD
+><TD
+>Last-Printed</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_WORD_COUNT 	</TD
+><TD
+>Word-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CHARACTER_COUNT 	</TD
+><TD
+>Character-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TOTAL_EDITING_TIME 	</TD
+><TD
+>Total-Editing-Time</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_THUMBNAILS 	</TD
+><TD
+>Thumbnails</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SECURITY 	</TD
+><TD
+>Security</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CREATED_BY_SOFTWARE 	</TD
+><TD
+>Created-By-Software</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MODIFIED_BY_SOFTWARE 	</TD
+><TD
+>Modified-By-Software</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_REVISION_HISTORY 	</TD
+><TD
+>Revision-History</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LOWERCASE 	</TD
+><TD
+>Lowercase</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_COMPANY 	</TD
+><TD
+>Company</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_GENERATOR 	</TD
+><TD
+>Generator</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CHARACTER_SET 	</TD
+><TD
+>Meta-Charset</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LINE_COUNT 	</TD
+><TD
+>Line-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PARAGRAPH_COUNT 	</TD
+><TD
+>Paragraph-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_EDITING_CYCLES 	</TD
+><TD
+>Editing-Cycles</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SCALE 	</TD
+><TD
+>Scale</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MANAGER 	</TD
+><TD
+>Manager</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MOVIE_DIRECTOR 	</TD
+><TD
+>Movie-Director</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DURATION 	</TD
+><TD
+>Duration</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_INFORMATION 	</TD
+><TD
+>Information</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FULL_NAME 	</TD
+><TD
+>Full-Name</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CHAPTER 	</TD
+><TD
+>Chapter</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_YEAR 	</TD
+><TD
+>Year</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_LINK 	</TD
+><TD
+>Link</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MUSIC_CD_IDENTIFIER 	</TD
+><TD
+>Music-CD-Identifier</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_PLAY_COUNTER 	</TD
+><TD
+>Play-Counter</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_POPULARITY_METER 	</TD
+><TD
+>Popularity-Meter</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_CONTENT_TYPE 	</TD
+><TD
+>Ext.Content-Type</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ENCODED_BY 	</TD
+><TD
+>Encoded-By</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TIME 	</TD
+><TD
+>Time</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MUSICIAN_CREDITS_LIST 	</TD
+><TD
+>Musician-Credits-List</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_MOOD 	</TD
+><TD
+>Mood</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FORMAT_VERSION 	</TD
+><TD
+>Format-Version</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TELEVISION_SYSTEM 	</TD
+><TD
+>Television-System</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_SONG_COUNT 	</TD
+><TD
+>Song-Count</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_STARTING_SONG 	</TD
+><TD
+>Strting-Song</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_HARDWARE_DEPENDENCY 	</TD
+><TD
+>Hardware-Dependency</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_RIPPER 	</TD
+><TD
+>Ripper</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_FILE_SIZE 	</TD
+><TD
+>File-Size</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_TRACK_NUMBER 	</TD
+><TD
+>Track-Number</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_ISRC 	</TD
+><TD
+>ISRC</TD
+></TR
+><TR
+><TD
+>EXTRACTOR_DISC_NUMBER 	</TD
+><TD
+>Disc-Number</TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><P
+>If a section name from the list above doesn't specified in sections.conf, the value of corresponding keyword is written as <CODE
+CLASS="VARNAME"
+>body</CODE
+> section. 
+Keywords of unknown type are written as <CODE
+CLASS="VARNAME"
+>body</CODE
+> section as well.</P
+><P
+>For <SPAN
+CLASS="APPLICATION"
+>libextractor 0.6.x</SPAN
+>, the values returned by EXTRACTOR_metatype_to_string function are used as section names.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-srvtable.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-indexcmd.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Servers Table</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Other commands are used in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

@@ -1,0 +1,321 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Supported HTTP response codes</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Indexing"
+HREF="dpsearch-indexing.en.html"><LINK
+REL="NEXT"
+TITLE="Content-Encoding support"
+HREF="dpsearch-content-enc.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Indexing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-content-enc.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="HTTP-CODES"
+>3.2. Supported HTTP response codes</A
+></H1
+><P
+>It is described here the way <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> processes
+different HTTP codes. Pseudo-language is used
+here for explanation.</P
+><P
+></P
+><UL
+><LI
+><P
+>200 OK</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>If -m command line argument ("force reindex") specified, GOTO 4.</P
+></LI
+><LI
+><P
+>Comparing new checksum with old one stored in database</P
+></LI
+><LI
+><P
+>If checksum are the same, next_index_time=Now()+Period, GOTO 7</P
+></LI
+><LI
+><P
+>Parsing the document, creating word list and adding in "url" table all of the found HREFs</P
+></LI
+><LI
+><P
+>Comparing created word list with old one stored in "dict" table</P
+></LI
+><LI
+><P
+>Doing UPDATEs, DELETEs or INSERTs in table "dict" if something is different in word lists.</P
+></LI
+><LI
+><P
+>Done</P
+></LI
+></OL
+></LI
+><LI
+><P
+>304 Not Modified</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>						<TT
+CLASS="LITERAL"
+>next_index_time=now()</TT
+>+Period</P
+></LI
+><LI
+><P
+>Done</P
+></LI
+></OL
+></LI
+><LI
+><P
+CLASS="LITERALLAYOUT"
+>301&nbsp;Moved&nbsp;Permanently<br>
+302&nbsp;Moved&nbsp;Temporarily<br>
+303&nbsp;See&nbsp;Other</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Deleting all words in table "dict" for current URL</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>next_index_time=Now()</TT
+>+Period</P
+></LI
+><LI
+><P
+>Adding an URL given in <TT
+CLASS="LITERAL"
+>Location: </TT
+> header</P
+></LI
+><LI
+><P
+>Done</P
+></LI
+></OL
+></LI
+><LI
+><P
+CLASS="LITERALLAYOUT"
+>300&nbsp;Multiple&nbsp;Choices<br>
+305&nbsp;Use&nbsp;Proxy&nbsp;(proxy&nbsp;redirect)<br>
+400&nbsp;Bad&nbsp;Request<br>
+401&nbsp;Unauthorized<br>
+402&nbsp;Payment&nbsp;Required<br>
+403&nbsp;Forbidden<br>
+404&nbsp;Not&nbsp;found<br>
+405&nbsp;Method&nbsp;Not&nbsp;Allowed<br>
+406&nbsp;Not&nbsp;Acceptable<br>
+407&nbsp;Proxy&nbsp;Authentication&nbsp;Required<br>
+408&nbsp;Request&nbsp;Timeout<br>
+409&nbsp;Conflict<br>
+410&nbsp;Gone<br>
+411&nbsp;Length&nbsp;Required<br>
+412&nbsp;Precondition&nbsp;Failed<br>
+413&nbsp;Request&nbsp;Entity&nbsp;Too&nbsp;Large<br>
+414&nbsp;Request-URI&nbsp;Too&nbsp;Long<br>
+415&nbsp;Unsupported&nbsp;Media&nbsp;Type<br>
+500&nbsp;Internal&nbsp;Server&nbsp;Error<br>
+501&nbsp;Not&nbsp;Implemented<br>
+502&nbsp;Bad&nbsp;Gateway<br>
+505&nbsp;Protocol&nbsp;Version&nbsp;Not&nbsp;Supported</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Deleting all words in table "dict" for current URL</P
+></LI
+><LI
+><P
+><TT
+CLASS="LITERAL"
+>next_index_time=Now()</TT
+>+Period</P
+></LI
+><LI
+><P
+>Done</P
+></LI
+></OL
+></LI
+><LI
+><P
+CLASS="LITERALLAYOUT"
+>503&nbsp;Service&nbsp;Unavailable<br>
+504&nbsp;Gateway&nbsp;Timeout</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>						<TT
+CLASS="LITERAL"
+>next_index_time=Now()</TT
+>+Period</P
+></LI
+><LI
+><P
+>Done</P
+></LI
+></OL
+></LI
+></UL
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-content-enc.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Indexing</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Content-Encoding support</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

@@ -1,0 +1,347 @@
+<sect1 id="rel">
+	<title>Relevance</title>
+<indexterm><primary>Relevance</primary></indexterm>
+
+	<sect2 id="rel-order">
+		<title>Ordering documents</title>
+		<para><application>DataparkSearch</application> by default sorts results first by <literal>relevency</literal>
+and second by <literal>popularity rank</literal>.</para>
+	</sect2>
+
+
+<sect2 id="relevancy"><title>Relevance calculation</title>
+
+<para>In indexing, <application>DataparkSearch</application> divides every document onto sections. A section is any part of the document, 
+for example, for HTML documents this may be TITLE or META Description tag.</para>
+
+<para>In addition to sections, some document factors are also take in account for relevance calculation: the average distance between
+query words, the number of query word occurrences, the position of first occurrence of a query word, the difference between the
+distribution of query word counts and the uniform distribution.</para>
+
+<para>In searching, <application>DataparkSearch</application> compares every document found against an "ideal" document. The "ideal"
+document should have query words in every section defined and should have also the predefined values of additional factors.</para>
+
+<!--para>Relevance for every found document is calculated as 100% multiply by cosine of an angle formed by weights vector for request
+and weights vector for document found. The number of vector coordinates is equal to multiplication of the number words forms in 
+search query and the number of sections defined in <filename>indexer.conf</filename>. Every vector's coordinate is corresponds to
+a word in search query that fit one of document section. The values of this coordinate is depends on weight for this section
+defined by <option>wf</option> parameter (see <xref linkend="search-changeweight"/>)
+and what this word is: exactly the same as in search query or it's word form or synonym.
+And one more coordinate is equal to average distance between searched words in document. 
+For query related vector this coordinate is equal to 0.
+</para-->
+
+<para id="numsections-cmd">
+Since sections definition located only in <filename>indexer.conf</filename> file, use
+<indexterm><primary>Command</primary><secondary>NumSections</secondary></indexterm> <command>NumSections</command>
+command in <filename>searchd.conf</filename> or in <filename>search.htm</filename> to specify the number od section used.
+By default, this value is 256. But note, <command>NumSections</command> do not affect document ordering, only the relevance value.
+</para>
+
+<table><title>Configure-time parameters to tune relevance calculation (switches for <command>configure</command>)</title>
+	<tgroup cols="2">
+	<tbody>
+<row><entry><option>--enable-rel</option></entry>
+<entry><para>This option enables "full", "fast" or "ultra" version of relevance calculation. Value by default: full (i.e. full relevance calculation).
+</para></entry></row>
+
+<row><entry><option>--disable-reldistance</option></entry>
+<entry><para>This option disables accounting of average word distance for relevance calculation. Value by default: enabled.
+</para></entry></row>
+
+<row><entry><option>--disable-relposition</option></entry>
+<entry><para>This option disables accounting of first query word position for relevance calculation. Value by default: enabled.
+</para></entry></row>
+
+<row><entry><option>--disable-relwrdcount</option></entry>
+<entry><para>This option disables accounting of word counts for relevance calculation. Value by default: enabled.
+</para></entry></row>
+
+<row><entry><option>--with-avgdist=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as the best average distance between words in document found.
+Value by default: 464.
+</para></entry></row>
+
+<row><entry><option>--with-bestpos=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as the best value of first word position in document found.
+Value by default: 4.
+</para></entry></row>
+
+<row><entry><option>--with-bestwrdcnt=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as the best number of each query word in document found. 
+Value by default: 11.
+</para></entry></row>
+
+<row><entry><option>--with-distfactor=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as a factor for average word distance for relevance calculation. 
+Value by default: 0.2.
+</para></entry></row>
+<row><entry><option>--with-lessdistfactor=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as factor of average word distance in relevance calculation when average
+distance is less than value specified with <option>--with-avgdist</option>.
+Default value is <option>--with-distancefactor</option> multiply by 2.
+</para></entry></row>
+
+<row><entry><option>--with-posfactor=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as factor for difference between first query word position in document found and best position specified by <option>--with-bestpos</option> option. 
+Value by default: 0.5.
+</para></entry></row>
+<row><entry><option>--with-lessposfactor=<option>NUM</option></option></entry>
+<entry><para>This option specify <option>NUM</option> as factor of first word position in relevance calculation when it less than value
+specified with <option>--with-bestpos</option>.
+Default value is <option>--with-posfactor</option> multyply by 4.
+</para></entry></row>
+
+<row><entry><option>--with-wrdcntfactor=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as factor for difference between count of query words in document found
+and the best value specified by <option>--with-bestwrdcnt</option> option. 
+Value by default: 0.4.
+</para></entry></row>
+<row><entry><option>--with-lesswrdcntfactor=<option>NUM</option></option></entry>
+<entry><para>This option specify <option>NUM</option> as factor of word count in relevance calculation when this word count is less than
+value specified with <option>--with-bestwrdcnt</option>.
+Default value is <option>--with-wrdcntfactor</option> multiply by 10.
+</para></entry></row>
+
+<row><entry><option>--with-wrdunifactor=<option>NUM</option></option></entry>
+<entry><para>This option specify the <option>NUM</option> as factor for difference of query word counts from uniform distribution. 
+Value by default: 1.5.
+</para></entry></row>
+
+	</tbody>
+	</tgroup>
+</table>
+
+<sect3 id="rel-full"><title>A full method of relevance calculation.</title>
+<indexterm><primary>Relevance</primary><secondary><literal>full</literal> method</secondary></indexterm>
+<para>Let <literal>x</literal> is the weighted sum of all sections. The weights for these sections are define by 
+<option>wf</option> parameter (see <xref linkend="search-changeweight"/>). Let <literal>y</literal> is the weighted sum of
+differences between values of additional factors of document found and corresponding values of additional factors of the "ideal"
+document. And let <literal>xy</literal> is the weighted sum of sections where at least one query word has been found. Then value of
+relevance for a document found is calculates as: <literal>0.5 * ( x + xy ) / (x + y)</literal>.
+</para>
+</sect3>
+
+<sect3 id="rel-fast"><title>A fast method of relevance calculation.</title>
+<indexterm><primary>Relevance</primary><secondary><literal>fast</literal> method</secondary></indexterm>
+<para>Let <literal>x</literal> is the number of bits used in weighted values of all sections defined. Let <literal>y</literal> is
+the weighted sum of differences between additional factors of document found and corresponding values of the "ideal" document.
+And let <literal>xy</literal> is the number of bits where weighted values of sections of the "ideal" document are different to weighted
+values of sections of document found. Then value of document relevance is calculates as: 
+<literal>( x - xy ) / ( x + y )</literal>.
+</para>
+</sect3>
+
+
+</sect2>
+
+
+<sect2 id="poprank"><title>Popularity rank</title>
+<indexterm><primary>Popularity rank</primary></indexterm>
+
+<para id="poprankmethod-cmd"><indexterm><primary>Command</primary><secondary>PopRankMethod</secondary></indexterm>
+<application>DataparkSearch</application> support two methods for popularity rank calculation. A method used in previous versions
+called &quot;Goo&quot;, and new method is called &quot;Neo&quot;. By default, the <literal>Goo</literal> method is used. To select
+desired PopRank calculation method use <command>PopRankMethod</command> command:
+<programlisting>
+PopRankMethod Neo
+</programlisting>
+</para>
+
+<para id="collectlinks-cmd"><indexterm><primary>Command</primary><secondary>CollectLinks</secondary></indexterm>
+You need enable links collection by <command>CollectLinks yes</command> command in your 
+<filename>indexer.conf</filename> file for <literal>Neo</literal> method and for full functionality
+of <literal>Goo</literal> method.
+But this slow down a bit indexing speed. By default, links collection is not enabled. 
+</para>
+
+<para id="poprankskipsamesite-cmd">By default, only intersite links (i.e. links from a page on 
+one site to a page on an another site) are taken in account for the popularity rank calculation.
+If you place
+<command><indexterm><primary>Command</primary><secondary>PopRankSkipSameSite</secondary></indexterm>PopRankSkipSameSite no</command>
+command in <filename>indexer.conf</filename> file, <command>indexer</command> take all links for this purpose.
+</para>
+
+<para>You may assign initial value for page popularity rank using DP.PopRank META tag (see <xref linkend="htmlparser-meta"/>).
+</para>
+
+
+<sect3 id="Goo-poprank"><title>&quot;Goo&quot; popularity rank calculation method</title>
+
+<para>
+The popularity rank calculation is made in two stages. At first stage, the value of <option>Weight</option> parameter
+for every server is divide by number of links from this server. Thus, the weight of one link from this server is calculated.
+At second stage, for every page we find the sum of weights of all links pointed to this page. This sum is popularity rank for this page.
+</para>
+
+<para id="weight-cmd"><indexterm><primary>Command</primary><secondary>ServerWeight</secondary></indexterm>
+By default, the value of <option>Weight</option> parameter is equal to 1 for all servers indexed.
+You may change this value by <command>ServerWeight</command> command in <filename>indexer.conf</filename> file or
+directly in <literal>server</literal> table, if you load servers configuration from this table.
+</para>
+
+<para id="poprankfeedback-cmd">If you place
+<option><indexterm><primary>Command</primary><secondary>PopRankFeedBack</secondary></indexterm>PopRankFeedBack yes</option>
+command in <filename>indexer.conf</filename> file, <command>indexer</command> will calculate site weights before page rank
+calculation. To do that, <command>indexer</command> calculate sum of popularity rank for all pages from same site. If this sum will
+great 1, the weight for site set to this sum, otherwise, site weight is set to 1.
+</para>
+
+<para id="poprankusetracking-cmd">If you place
+<option><indexterm><primary>Command</primary><secondary>PopRankUseTracking</secondary></indexterm>PopRankUseTracking yes</option>
+command in <filename>indexer.conf</filename> file, <command>indexer</command> will calculate site weight as the number of 
+tracked queries with restriction on this site.
+</para>
+
+<para id="poprankuseshowcnt-cmd">If you place
+<option><indexterm><primary>Command</primary><secondary>PopRankUseShowCnt</secondary></indexterm>PopRankUseShowCnt yes</option>
+command in <filename>search.htm</filename> (or <filename>searchd.conf</filename>) file, then for every result shown to user
+corresponding <literal>url.shows</literal> value will be increased on 1, if relevance for this result is great or equal to
+value specified by 
+<option><indexterm><primary>Command</primary><secondary>PopRankShowCntRatio</secondary></indexterm>PopRankShowCntRatio</option>
+command (default value is 25.0).
+If you place <option>PopRankUseShowCnt yes</option> in <filename>indexer.conf</filename> file, <command>indexer</command>
+will add to url's PopularityRank the value of <literal>url.shows</literal> multiplied by value, specified in
+<option><indexterm><primary>Command</primary><secondary>PopRankShowCntWeight</secondary></indexterm>PopRankShowCntWeight</option>
+command (default value is 0.01).
+</para>
+
+</sect3>
+
+<sect3 id="Neo-poprank"><title>&quot;Neo&quot; popularity rank calculation method</title>
+</sect3>
+
+<para>For this method is supposed all pages are neurons and links between pages are links between neurons.
+So it's possible use an error back-propagation algorithm to train this neural network. Popularity rank for a page is the 
+activity level for corresponding neuron. See <ulink url="http://www.maxime.net.ru/doc/Neo-en.pdf">short description of The Neo 
+Popularity Rank for web pages</ulink>.
+</para>
+
+<para>You may use
+<option><indexterm><primary>Command</primary><secondary>PopRankNeoIterations</secondary></indexterm>PopRankNeoIterations</option>
+command to specify the number of iterations of the Neo Popularity Rank calculation. Default value is 3.
+</para>
+
+<para><indexterm><primary>Command</primary><secondary>PopRankPostpone</secondary></indexterm>
+By default, the Neo Popularity Rank is caclulated along with indexing. To speed up indexing, 
+you may postpone Popularity Rank execution using <command>PopRankPostpone</command> command:
+</para>
+<programlisting>
+PopRankPostpone yes
+</programlisting>
+<para>Then you may calculate the Neo Popularity Rank after indexing in same way as for method Goo, i.e.: 
+<command>indexer -TR</command>
+</para>
+
+</sect2>
+
+
+
+
+	<sect2 id="rel-bool">
+		<title>Boolean search</title>
+<indexterm><primary>Boolean search</primary><secondary>relevance</secondary></indexterm>
+
+		<para>Please note that in case of boolean searching for two or more
+words, you have to enter operators (&amp;, |, ~, AND, OR, NOT, NEAR, ALL, etc.). I.e. it is necessary
+to enter <userinput>a &amp; book</userinput> instead of <userinput>a book</userinput>.
+See also <xref linkend="search-bool"/>.
+</para>
+
+	</sect2>
+	<sect2 id="rel-cwords">
+		<title>Crosswords</title>
+<indexterm><primary>Crosswords</primary></indexterm>
+<indexterm><primary>Command</primary><secondary>CrossWords</secondary></indexterm>
+
+		<para>This feature allows to assign words between
+&lt;a href="xxx"&gt; and &lt;/a&gt; also to a document this link leads
+to. <!--It works in SQL database mode and is not supported in cache mode.--> To enable Crosswords, please use
+<command>CrossWords yes</command> command in
+<filename>indexer.conf</filename> and
+<filename>search.htm</filename>, and define <userinput>crosswords</userinput> section in <filename>sections.conf</filename> file.
+</para>
+
+<para><indexterm><primary>Command</primary><secondary>CrossWordsSkipSameSite</secondary></indexterm>
+With the <command>CrossWordsSkipSameSite</command> command you can manage the collection of crosswords from the same site.
+If the option <userinput>yes</userinput> is set (by default), the crosswords from the same site doen't collected. 
+If you wish to collect such crosswords, you need to set <userinput>no</userinput> option explicitly:
+<programlisting>
+CrossWordsSkipSameSite no
+</programlisting>
+</para>
+
+	</sect2>
+
+
+
+<sect2 id="sea">
+<indexterm><primary>Summary Extraction Algorithm, The</primary></indexterm>
+<title>The Summary Extraction Algorithm (SEA)</title>
+<indexterm><primary>SEA</primary><secondary>The Summary Extraction Algorithm</secondary></indexterm>
+<indexterm><primary>Template variable</primary><secondary>$(sea)</secondary></indexterm>
+<indexterm><primary>Document</primary><secondary>summary</secondary></indexterm>
+<para><literal>The Summary Exctraction Algorith (SEA)</literal> builds the summary of three or more the most relevant sentences of the each
+document indexed, if this document consists of six or more sentences. To enable this feature, add this command to your
+<filename>seaction.conf</filename> file:
+<programlisting>
+Section sea x y
+</programlisting>
+where <option>x</option> - the number of section and <option>y</option> - the maximum length of this section value, 
+leave 0,  if you do not want show this in result pages.
+If you specify <option>y</option> non-zero, you may use <literal>$(sea)</literal> meta-variable in your search 
+template to show the summary in result pages.
+</para>
+
+<para>Related configuration directives:
+</para>
+<para id="seasentenceminlen-cmd"><indexterm><primary>Command</primary><secondary>SEASentenceMinLength</secondary></indexterm>
+The <command>SEASentenceMinLength</command> command specify the minimal length of sentence to be used in summary construction
+using the SEA. Default value: 64.
+</para>
+<para id="seasentences-cmd"><indexterm><primary>Command</primary><secondary>SEASentences</secondary></indexterm>
+The <command>SEASentences</command> command uses to specify the maximal number of sentences with length greater or equal to the value
+specified by the <command>SEASentenceMinLength</command> command, which are used for summary construction in the SEA. Default value: 32.
+Since the summary construction using SEA is nonlinear expensive (affects only indexing), 
+you may adjust this value according to desired indexing performance.
+</para>
+<para id="seasections-cmd"><indexterm><primary>Command</primary><secondary>SEASections</secondary></indexterm>
+With <command>SEASections</command> command you can specify the list of document sections which are used to construct SEA summary.
+By default, only the "body" section is used for SEA summary construction.
+<programlisting>
+SEASections "body, title"
+</programlisting>
+</para>
+
+
+
+<para>This algorithm of automatic summary construction is based on ideas of Rada Mihalcea described in the paper 
+<ulink url="http://www.cs.unt.edu/~rada/papers/mihalcea.ijcnlp05.pdf">Rada Mihalcea and Paul Tarau, 
+An Algorithm for Language Independent Single and Multiple Document Summarization, 
+in Proceedings of the International Joint Conference on Natural Language Processing (IJCNLP), Korea, October 2005</ulink>.
+</para>
+
+<para>Differences in DataparkSearch's SEA:</para>
+<itemizedlist>
+<listitem><para>Initial weights for graph edges are calculates as a measure of similarity between 
+3-gram distributions of corresponding sentences.</para>
+</listitem>
+<listitem>
+<para>Initial value for all graph vertexes is equal to the value of 1 / (number of sentences + 1) in the current implementation.</para>
+</listitem>
+<listitem><para>The Neo PopRank algorithm is used as ranking algorithm to iterate values assigned to vertexes.</para>
+</listitem>
+</itemizedlist>
+
+<para>After indexing of document collection with this section defined, you may use $(sea) meta-variable in your 
+template to show summary for a search result.</para>
+
+</sect2>
+
+
+	<!-- sect2 id="rel-dr">
+		<title>$(Score) template variable</title>
+		<para>
+			<varname>$(Score)</varname> template variable displays number of words from the query found in a document.</para>
+	</sect2 -->
+</sect1>

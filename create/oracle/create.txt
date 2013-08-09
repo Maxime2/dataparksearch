@@ -1,0 +1,254 @@
+delimiter=/
+
+CREATE TABLE dict (
+       word                 VARCHAR2(32) NOT NULL,
+       url_id               NUMBER(12) NOT NULL,
+       intag                NUMBER(12) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE INDEX dict_word   ON dict (word)
+/
+CREATE INDEX dict_url_id ON dict (url_id)
+/
+
+
+CREATE TABLE url (
+       rec_id               NUMBER(12) NOT NULL,
+       status               NUMBER(6) DEFAULT 0 NOT NULL,
+       docsize              NUMBER(12) DEFAULT 0 NOT NULL,
+       next_index_time      NUMBER(12) NULL,
+       last_mod_time        NUMBER(12) DEFAULT 0 NOT NULL,
+       since                NUMBER(12) DEFAULT 0 NOT NULL,
+       referrer             NUMBER(12) DEFAULT 0 NOT NULL,
+       hops                 NUMBER(6) DEFAULT 0 NOT NULL,
+       crc32                NUMBER(12) DEFAULT -1 NOT NULL,
+       seed                 NUMBER(6) DEFAULT 0 NOT NULL,
+       bad_since_time       NUMBER(12) NULL,
+       site_id		    NUMBER(12),
+       server_id	    NUMBER(12),
+       charset_id           NUMBER(6),
+       shows                NUMBER(4) DEFAULT 0 NOT NULL,
+       pop_rank	  	    FLOAT DEFAULT 0.0 NOT NULL,
+       url                  VARCHAR2(128) NOT NULL
+)
+       PCTFREE 5
+       PCTUSED 95
+/
+
+CREATE SEQUENCE next_url_id INCREMENT BY 1 START WITH 1 NOMAXVALUE
+/
+
+CREATE TRIGGER url_seq_trigger
+BEFORE INSERT ON url
+FOR EACH ROW
+BEGIN
+SELECT next_url_id.NEXTVAL INTO :NEW.rec_id FROM DUAL;
+END;
+/
+
+CREATE UNIQUE INDEX url_url ON url (url ASC)
+/
+CREATE INDEX url_rec_id ON url (rec_id)
+/
+CREATE INDEX url_crc32 ON url (crc32 ASC)
+/
+CREATE INDEX url_next_index_time_ind ON url (next_index_time)
+/
+CREATE INDEX url_poprank ON url (pop_rank)
+/
+
+
+CREATE TABLE urlinfo (
+       url_id NUMBER(38) NOT NULL,
+       sname  VARCHAR2(64) NOT NULL,
+       sval   VARCHAR2(1024)
+)
+/
+
+CREATE INDEX urlinfo_id_ind ON urlinfo (url_id)
+/
+
+
+CREATE TABLE server (
+	rec_id          NUMBER          DEFAULT 0   NOT NULL, 
+	enabled		NUMBER		DEFAULT 0   NOT NULL,
+	url		VARCHAR2(128)	DEFAULT ''  NOT NULL,
+	period		NUMBER		DEFAULT 604800 NOT NULL,
+	tag		VARCHAR2(16)	DEFAULT '',
+	category	VARCHAR2(16)	DEFAULT ''  NOT NULL,
+	command		CHAR(1)		DEFAULT 'S' NOT NULL,
+	ordre		NUMBER		DEFAULT 0   NOT NULL,
+	parent		NUMBER		DEFAULT 0   not null,
+	weight		float		DEFAULT 1   not null,
+	pop_weight	float		DEFAULT 0   not null
+)
+/
+
+CREATE SEQUENCE server_seq INCREMENT BY 1 START WITH 1 NOMAXVALUE
+/
+
+CREATE TRIGGER server_seq_trigger
+BEFORE INSERT ON server
+FOR EACH ROW
+BEGIN
+IF (:NEW.rec_id IS NULL) SELECT server_seq.NEXTVAL INTO :NEW.rec_id FROM DUAL;
+END;
+/
+
+ALTER TABLE server ADD CONSTRAINT server_pk PRIMARY KEY (rec_id)
+/
+CREATE UNIQUE INDEX srv_url ON server (url)
+/
+CREATE INDEX srv_ordre ON server (ordre)
+/
+CREATE INDEX srv_parent ON server (parent)
+/
+CREATE INDEX srv_command ON server (command)
+/
+
+
+CREATE TABLE srvinfo (
+     srv_id int           NOT NULL,
+     sname  varchar(96)   NOT NULL,
+     sval   varchar(1024) NOT NULL
+)
+/
+CREATE INDEX srvinfo_id ON srvinfo (srv_id)
+/
+
+	     
+CREATE TABLE links (
+	ot	 NUMBER not null,
+	k	 NUMBER not null,
+	weight   FLOAT DEFAULT 0.0 not null,
+	valid    CHAR(1) DEFAULT 't' not null
+)
+/
+
+CREATE UNIQUE INDEX links_links ON links (ot, k)
+/
+CREATE INDEX links_ot ON links (ot)
+/
+CREATE INDEX links_k ON links (k)
+/
+
+CREATE TABLE categories (
+  rec_id int    NOT NULL PRIMARY KEY,
+  path char(10) DEFAULT '' NOT NULL,
+  link char(10) DEFAULT '' NOT NULL,
+  name char(64) DEFAULT '' NOT NULL
+)
+/
+
+CREATE SEQUENCE categories_seq START WITH 1 INCREMENT BY 1 NOMAXVALUE
+/
+
+CREATE TRIGGER categories_seq_trigger
+BEFORE INSERT ON categories
+FOR EACH ROW
+BEGIN
+IF (:NEW.rec_id IS NULL) SELECT categories_seq.NEXTVAL INTO :NEW.rec_id FROM DUAL;
+END;
+/
+CREATE INDEX cat_path ON categories (path)
+/
+CREATE INDEX cat_link ON categories (link)
+/
+INSERT INTO categories (path,link,name) VALUES ('', '', 'Root')
+/
+
+
+CREATE TABLE qtrack (
+        rec_id int NOT NULL PRIMARY KEY,
+	ip     char(16) NOT NULL,
+	qwords varchar(1024) NOT NULL,
+	qtime  int NOT NULL,
+	wtime  int NOT NULL,
+	found  int NOT NULL
+)
+/
+
+CREATE SEQUENCE qtrack_seq START WITH 1 INCREMENT BY 1 NOMAXVALUE
+/
+
+CREATE TRIGGER qtrack_seq_trigger
+BEFORE INSERT ON qtrack
+FOR EACH ROW
+BEGIN
+IF (:NEW.rec_id IS NULL) SELECT qtrack_seq.NEXTVAL INTO :NEW.rec_id FROM DUAL;
+END;
+/
+
+CREATE INDEX qtrack_ipt ON qtrack(ip,qtime)
+/
+
+CREATE TABLE qinfo (
+       q_id  int,
+       name  varchar(96),
+       value varchar(1024)
+)
+/
+
+CREATE INDEX qinfo_id ON qinfo (q_id)
+/
+CREATE INDEX qinfo_nv ON qinfo (name, value)
+/
+
+
+CREATE TABLE robots (
+       cmd 	    int,
+       added_time   int,
+       ordre	    int,
+       hostinfo	    varchar(255),
+       path	    varchar2(4000)
+)
+/
+
+CREATE UNIQUE INDEX robots_idx ON robots (hostinfo, ordre)
+/
+CREATE INDEX robots_time ON robots (added_time)
+/
+
+
+CREATE TABLE cookies (
+       expires    int,
+       secure     char(1),
+       domain     varchar2(2000),
+       path       varchar2(2000),
+       name       varchar2(2000),
+       value      varchar2(2000)
+)
+/
+CREATE UNIQUE INDEX cookies_idx ON cookies (domain, path, name, secure)
+/
+CREATE INDEX cookies_time ON cookies ("expires")
+/
+
+
+CREATE TABLE storedchk (
+       rec_id int, 
+       url_id int
+       )
+/
+CREATE INDEX storedchk_i ON storedchk (url_id)
+/
+
+
+CREATE TABLE cachedchk (
+       rec_id integer
+)
+/
+
+CREATE UNIQUE INDEX cachedchk_i ON cachedchk (rec_id)
+/
+
+CREATE TABLE cachedchk2 (
+       url_id integer
+)
+/
+
+CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id)
+/

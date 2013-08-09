@@ -1,0 +1,13 @@
+GRANT ALL ON url,dict,robots,stopword,categories TO PUBLIC;
+
+GRANT ALL ON ndict TO PUBLIC;
+
+
+GRANT ALL ON ndict2,ndict3,ndict4,ndict5,ndict6,ndict7,ndict8,ndict9,
+ndict10,ndict11,ndict12,ndict16,ndict32 TO PUBLIC;
+
+GRANT ALL ON dict2,dict3,dict4,dict5,dict6,dict7,dict8,dict9,dict10,
+dict11,dict12,dict16,dict32 TO PUBLIC;
+
+
+GRANT ALL ON "qtrack" TO PUBLIC;

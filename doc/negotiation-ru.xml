@@ -1,0 +1,221 @@
+<sect1 id="multilang">
+
+	<title>Создание многоязычных страниц поиска
+<indexterm><primary>Многоязычность</primary></indexterm>
+</title>
+
+	<para>Основная идея Craig Small <email>csmall@eye-net.com.au</email>.
+  Небольшие изменения Alex Barkov <email>bar@mnogosearch.org</email>.</para>
+
+	<para>Зачастую требуется поддержка различных языков, что означает использование
+различных файлов <filename>search.htm</filename> в зависимости от языка, выбранного в настройках броузера пользователя. </para>
+
+	<para>Пожалуйста, устите, что замечания по конфигурированию, даваемы ниже, абсолютно
+одинаковы для обоих поисковых фронт-ендов <filename>search.php</filename> и <filename>search.cgi</filename>.</para>
+	<note>
+		<para>
+			<emphasis>специфика <literal>PHP</literal>:</emphasis> единственное отличие для <filename>search.php</filename>
+заключается в модификации <filename>config.inc</filename> для изменения файла шаблона:
+		<programlisting>
+$template_file= ereg_replace(".php", ".htm", basename(getenv("SCRIPT_FILENAME")));
+$template_file = "/etc/somewhere" . $template_file;
+</programlisting>
+</para>
+	</note>
+
+	<para>Дальнейшая установка проводится в три этапа.</para>
+
+	<orderedlist numeration="arabic">
+		<listitem>
+			<para>Установка нескольких шаблонов.</para>
+
+			<para>Основная идея состоит в том, чтобы иметь один файл <filename>search.php</filename>
+или <filename>search.cgi</filename> и несколько файлов <filename>search.[language].htm</filename>. Также, для ипользования по
+умолчанию необходимо иметь файл <filename>search.htm</filename> (обычно в качестве символьной ссылки на
+<filename>search.en.htm</filename>).</para>
+
+			<para>Если имя скрипта <filename>search.en.php</filename> (или
+<filename>search.en.cgi</filename>), оба CGI и PHP фронт-енды будут искать <filename>/somewhere/etc/search.en.htm</filename>,
+мы подразумеваем, чтоassuming <filename>/somewhere/etc/</filename> - поддиректория <filename>/etc/</filename>
+корневой директории установки <application>DataparkSearch</application>.</para>
+
+			<para>Вы должны поместить в <filename>/somewhere/etc/</filename> все такие шаблоны <filename>search.htm</filename>,
+т.е. <filename>/somewhere/etc</filename> будет иметь, например:</para>
+			<informaltable>
+				<tgroup cols="2">
+					<tbody>
+						<row>
+							<entry>
+								<filename>search.en.htm</filename>
+							</entry>
+							<entry>Шаблон для английского языка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.pl.htm</filename>
+							</entry>
+							<entry>Шаблон для польского языка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.ru.htm</filename>
+							</entry>
+							<entry>Шаблон для русского языка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.htm</filename>
+							</entry>
+							<entry>Символьная ссылка на шаблон английского языка</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</listitem>
+
+		<listitem>
+			<para>Установка фронт-ендов</para>
+			<para>Создайте поддиректорию и поместите в неё <filename>search.cgi</filename> или <filename>search.php</filename>
+(отдельно от включаемых файлов, если желаете, указав для PHP include_path и разместив их в другом месте).</para>
+			<para>Затем создайте символьные ссылки:</para>
+			<informaltable>
+				<tgroup cols="2">
+					<tbody>
+						<row>
+							<entry>
+								<filename>search.cgi</filename>
+							</entry>
+							<entry>Оригинальный файл</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.en.cgi</filename>
+							</entry>
+							<entry>символьная ссылка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.pl.cgi</filename>
+							</entry>
+							<entry>символьная ссылка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.ru.cgi</filename>
+							</entry>
+							<entry>символьная ссылка</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+			<para>Или для <literal>PHP</literal> фронт-енда:</para>
+			<informaltable>
+				<tgroup cols="2">
+					<tbody>
+						<row>
+							<entry>
+								<filename>search.php</filename>
+							</entry>
+							<entry>Оригинальный файл</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.en.php</filename>
+							</entry>
+							<entry>символьная ссылка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.pl.php</filename>
+							</entry>
+							<entry>символьная ссылка</entry>
+						</row>
+						<row>
+							<entry>
+								<filename>search.ru.php</filename>
+							</entry>
+							<entry>символьная ссылка</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</informaltable>
+		</listitem>
+
+		<listitem>
+			<para>Конфигурирование <application>Apache</application></para>
+			<para>Теперь нужно научить <literal>apache</literal> понимать, что надо здесь делать.
+Вам нужно включить процесс определения содержимого (negotiation) и изменить индексы. Я использовал файл 
+<filename>.htaccess</filename>, но вы можете задать это и в файле конфигурации <literal>apache</literal>.
+			<programlisting>
+AddLanguage en .en
+AddLanguage pl .pl
+AddLanguage ru .ru
+
+DirectoryIndex search search.cgi  (or search.php)
+Options FollowSymlinks MultiViews
+</programlisting>
+			</para>
+		</listitem>
+	</orderedlist>
+
+	<sect2 id="multilang-how">
+		<title>Как это работает ?</title>
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>Вы набираете url <literal>http://myhost/mydir/search</literal>
+					<emphasis>без слэша на конце !!</emphasis>
+				</para>
+			</listitem>
+			<listitem>
+				<para>Ваш броузер говорит <literal>"Я предпочитаю английский язык (т.е. определён язык en) "</literal>
+				</para>
+			</listitem>
+			<listitem>
+				<para><literal>Apache</literal> находит <filename>search.en.cgi</filename> (DirectoryIndex даёт
+<literal>search</literal>, MultiViews даёт <literal>en.cgi</literal>)</para>
+			</listitem>
+			<listitem>
+				<para><command>SCRIPT_FILENAME</command>, используемый обоими
+<filename>search.cgi</filename> и <filename>search.php</filename> равен
+<filename>somepath/search.en.cgi</filename>
+				</para>
+				<note>
+					<para>Большинство других переменных будут иметь неправильные значения,
+либо <literal>search</literal>, либо <literal>search.cgi</literal>)</para>
+				</note>
+			</listitem>
+			<listitem>
+				<para>Вы измезменяете <filename>config.inc</filename> как указано выше, для использования
+<filename>search.en.htm</filename>.</para>
+			</listitem>
+		</orderedlist>
+
+		<para>Что случится, если пользователь, к примеру, захочет немецкий ?
+У нас нет <filename>search.de.cgi</filename> (<filename>search.de.php</filename>), т.е. первый элемент в списке 
+DirectoryIndex не отработает, тогда сервер попробует второй,
+<filename>search.php</filename>  Да, он получит страницу на английском, но это лучше, чем 404.</para>
+
+		<para>Это работает, возможно вам понадобиться еще что-то подкрутить в конфигурации <literal>apache</literal>, -
+я пробовал на сервере, для которого уже всё было настроено и возможно что-то упустил в описании конфигурирования веб-сервера.</para>
+	</sect2>
+
+	<sect2 id="multilang-problem">
+		<title>Возможные сложности</title>
+		<para>У вас могут возникнуть некоторые проблемы с определением языка, вызванные:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Некотрыми кэшами, неследующими стандартам</para>
+			</listitem>
+			<listitem>
+				<para>Некоторыми броузерами, неследующими стандартам</para>
+			</listitem>
+			<listitem>
+				<para>Некоторыми пользователями, неуказывающими или неправильно указывающими предпочитаемый язык в
+настройках.</para>
+			</listitem>
+		</itemizedlist>
+		<para>Команда разработчиков <literal>apache</literal> работает над возможностями обхода некоторых из этих трудностей,
+если это возможно. Для плотно используемого веб-сервера, вы можете ожидать примерно один е-мейл в неделю с описанием подобной
+проблемы.</para>
+	</sect2>
+</sect1>

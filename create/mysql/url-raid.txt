@@ -1,0 +1,61 @@
+#
+# You can use this CREATE statement for "url" table instead of 
+# default one. This structure usefull for huge "cache mode" databases 
+# with several millions URLs.
+#
+#   New features of this scheme:
+#
+# * Support for MySQL RAID to break 2/4G data file size limit.
+# * Relatively small "url.MYI" index file size:
+#     there is no unique index on "url" field.
+# * Quick search for expired documents at indexing time using 
+#     "key_next_index_time" index. It significantly improves 
+#     indexing speed for big databases.
+# * UNIQUE rec_id is generated in indexer using CRC32(url)
+# * It turns on large file MySQL support for "url" table.
+#
+# Disadvantage:
+#  * This scheme probably will loose some documents as far as CRC32
+#  algorythm which is used for rec_id generation can give same values for
+#  different URLs. According to our tests it gives approximately
+#  100 URL pairs with the same CRC32 within 3.5 millions of unique URLs. 
+#  It means that 0.0028% documents will be losten.
+#
+# Requires:
+# * Specify "--with-raid" and omit "--disable-large-files" when
+#      installing MySQL.
+# * Use "UseCRC32UrlID yes" command in your indexer.conf
+#
+
+
+DROP TABLE url;
+
+CREATE TABLE url (
+  rec_id int(11) DEFAULT '0' NOT NULL,
+  status int(11) DEFAULT '0' NOT NULL,
+  docsize int(11) DEFAULT '0' NOT NULL,
+  next_index_time INT NOT NULL,
+  last_mod_time INT NOT NULL,
+  referrer int(11) DEFAULT '0' NOT NULL,
+  hops int(11) DEFAULT '0' NOT NULL,
+  crc32 int(11) DEFAULT '0' NOT NULL,
+  seed smallint(6) DEFAULT '0' NOT NULL,
+  bad_since_time INT NOT NULL,
+  site_id	  int(11),
+  server_id	  int(11),
+  pop_rank	  float DEFAULT 0 NOT NULL,
+  url char(128) binary DEFAULT '' NOT NULL,
+  PRIMARY KEY (rec_id),
+  UNIQUE url (url),
+  KEY key_crc (crc32),
+  KEY key_seed (seed),
+  KEY key_referrer (referrer),
+  KEY key_bad_since_time (bad_since_time),
+  KEY key_next_index_time (next_index_time),
+  KEY key_site_id (site_id)
+)  
+  RAID_TYPE=RAID0 RAID_CHUNKS=16 RAID_CHUNKSIZE=256
+  MAX_ROWS=100000000 
+  AVG_ROW_LENGTH=512
+;
+

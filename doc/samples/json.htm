@@ -1,0 +1,56 @@
+<!--variables
+DBAddr  searchd://localhost/
+LocalCharset   UTF-8
+BrowserCharset UTF-8
+
+DetectClones	no
+MinWordLength 1
+MaxWordLength 64
+HlBeg	<b>
+HlEnd	</b>
+Locale en_US.UTF-8
+ExcerptSize 732
+ExcerptPadding 126
+#DateFormat %d %b %Y %X %Z
+DateFormat %a, %d %b %Y %H:%M:%S %z
+ResultContentType application/json
+
+-->
+<!--top-->
+{"responseData": {
+<!--/top-->
+
+<!--restop-->
+"query":"$(q:json)",
+"found":"$(total:json)","first":"$(first:json)","last":"$(last:json)",
+"time":"$(SearchTime:json)",
+"stat":"$(W:json)",
+"stat_extended":"$(WE:json)",
+"stat_all":"$(WA:json)",
+"stat_short":"$(WS:json)",
+"results":[
+<!--/restop-->
+
+<!--res-->
+{"title":"$(title:json)","url":"$(url:json)","date":"$(Last-Modified)","content":"$(body:json)"}
+<!--/res-->
+
+<!--resbot-->
+]
+<!--/resbot-->
+
+<!--clone-->
+<!--/clone-->
+
+<!--notfound-->
+<!--/notfound-->
+
+<!--noquery-->
+<!--/noquery-->
+
+<!--error-->
+<!--/error-->
+
+<!--bottom-->
+}}
+<!--/bottom-->

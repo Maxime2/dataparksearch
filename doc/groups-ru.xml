@@ -1,0 +1,60 @@
+<para><table>
+<title>Кодировки и их языковые группы</title>
+<tgroup cols="2">
+<tbody>
+<row>
+ <entry>>Группа</entry>
+ <entry>Кодировки</entry>
+</row>
+<row><entry>Arabic</entry><entry>
+cp864, ISO-8859-6, MacArabic, windows-1256</entry></row>
+<row><entry>Armenian</entry><entry>
+armscii-8</entry></row>
+<row><entry>Baltic</entry><entry>
+cp775, ISO-8859-13, ISO-8859-4, windows-1257</entry></row>
+<row><entry>Celtic</entry><entry>
+ISO-8859-14</entry></row>
+<row><entry>Central European</entry><entry>
+cp852, ISO-8859-16, ISO-8859-2, MacCE, MacCroatian, MacRomania, windows-1250</entry></row>
+<row><entry>Chinese Simplified</entry><entry>
+GB2312, GBK</entry></row>
+<row><entry>Chinese Traditional</entry><entry>
+Big5, Big5-HKSCS, cp950, GB-18030</entry></row>
+<row><entry>Cyrillic</entry><entry>
+cp855, cp866, cp866u, ISO-8859-5, KOI-7, KOI8-C, KOI8-R, KOI8-U, MacCyrillic, windows-1251</entry></row>
+<row><entry>Georgian</entry><entry>
+georgian-academy, georgian-ps, geostd8</entry></row>
+<row><entry>Greek</entry><entry>
+cp869, cp875, ISO-8859-7, MacGreek, windows-1253</entry></row>
+<row><entry>Hebrew</entry><entry>
+cp862, ISO-8859-8, MacHebrew, windows-1255</entry></row>
+<row><entry>Icelandic</entry><entry>
+cp861, MacIceland</entry></row>
+<row><entry>Indian</entry><entry>
+MacGujarati, tscii</entry></row>
+<row><entry>Iranian</entry><entry>
+ISIRI3342</entry></row>
+<row><entry>Japanese</entry><entry>
+EUC-JP, ISO-2022-JP, Shift_JIS</entry></row>
+<row><entry>Korean</entry><entry>
+EUC-KR</entry></row>
+<row><entry>Lao</entry><entry>
+cp1133</entry></row>
+<row><entry>Nordic</entry><entry>
+cp865, ISO-8859-10</entry></row>
+<row><entry>South Eur</entry><entry>
+ISO-8859-3</entry></row>
+<row><entry>Tajik</entry><entry>
+KOI8-T</entry></row>
+<row><entry>Thai</entry><entry>
+cp874, ISO-8859-11, MacThai</entry></row>
+<row><entry>Turkish</entry><entry>
+cp1026, cp857, ISO-8859-9, MacTurkish, windows-1254</entry></row>
+<row><entry>Unicode</entry><entry>
+sys-int, UTF-16BE, UTF-16LE, UTF-8</entry></row>
+<row><entry>Vietnamese</entry><entry>
+VISCII, windows-1258</entry></row>
+<row><entry>Western</entry><entry>
+cp437, cp500, cp850, cp860, cp863, IBM037, ISO-8859-1, ISO-8859-15, MacRoman, US-ASCII, windows-1252</entry></row>
+</tbody></tgroup></table>
+</para>

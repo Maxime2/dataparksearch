@@ -1,0 +1,126 @@
+<sect1 id="stopwords">
+<title>Stopwords</title>
+<indexterm><primary>Stopwords</primary></indexterm>
+
+<para><literal>Stopwords</literal> - are the most frequently used words, i.e. words which appear in almost every document searched. 
+Stopwords are filtered out prior to index construction, what is allow to reduce the total size of the index without any 
+significant loss in quality of search.
+</para>
+
+
+<sect2 id="stopwordfile_cmd">
+<title><command>StopwordFile</command> command</title>
+<indexterm><primary>Command</primary><secondary>StopwordFile</secondary></indexterm>
+<para>Load stop words from the given text file. You may specify either absolute 
+file name or a name relative to <application>DataparkSearch</application> <filename>/etc</filename> directory. You may use
+several <command>StopwordFile</command> commands.
+<programlisting>
+StopwordFile stopwords/en.sl
+</programlisting>
+</para>
+<para>You must use the same set of <command>StopwordFile</command> commands in <filename>indexer.conf</filename> and <filename>search.htm</filename> (<filename>searchd.conf</filename> if <command>searchd</command> is used).
+</para>
+</sect2>
+
+<sect2 id="stopwordfile_format">
+<title>Format of stopword file</title>
+<indexterm><primary>Stopwords</primary><secondary>file format</secondary></indexterm>
+
+	<para>You may create your own stopword lists. As an example you may take the English stopword file <filename>etc/stopwords/en.sl</filename>. 
+In the beginning of the list please specify the
+following two commands:
+	<programlisting>
+Language: en
+Charset:  us-ascii
+</programlisting>
+</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				<varname>Language</varname> - standard
+(ISO 639) two-letter language abbreviation.</para>
+		</listitem>
+		<listitem>
+			<para>
+				<varname>Charset</varname> - any
+charset supported by <application>DataparkSearch</application> (see <xref linkend="charset"/>).</para>
+		</listitem>
+	</itemizedlist>
+<para>
+Then the list of stopwords is follow, one word per line. Each word is written in character set specified above by <command>Charset:</command> command.
+</para>
+
+<para>You may use optional <command>Match:</command> command to specify a pattern to treat any word match it as a stopword. E.g.:
+</para>
+	<programlisting>
+Match: regex ^\$##
+</programlisting>
+<para>
+According to this command, any word begins with <literal>$##</literal> will be considered as a stopword.
+</para>
+<para>
+Options of <command>Match:</command> command are the same as for <command>Allow</command> (see <xref linkend="allow_cmd"/>). Arguments are in character set specified by <command>Charset:</command> command. Regular expressions are limited at the moment (e.g. intervals aren't supported).
+</para>
+
+</sect2>
+
+<sect2 id="filldict">
+<title><command>FillDictionary</command> command.</title>
+<indexterm><primary>Command</primary><secondary>FillDictionary</secondary></indexterm>
+
+<para>With the command <userinput>"FillDictionary yes"</userinput> in <filename>indexer.conf</filename> 
+you can enable storage of all indexed words into <filename>"dict"</filename> table for dbmode cache. 
+This is usefull to track down which words are stopwords for your installation.
+</para>
+
+</sect2>
+
+
+<sect2 id="stopwordsloose">
+<title><command>StopwordsLoose</command> command.</title>
+<indexterm><primary>Command</primary><secondary>StopwordsLoose</secondary></indexterm>
+
+<para>With the command <userinput>"StopwordsLoose yes"</userinput> in <filename>indexer.conf</filename> and <filename>search.htm</filename> 
+only the stopwords of the same language as the language of a document indexing or the language of a search request are taken into accont as stopwords, i.e. the stopwords of different language are processed as regular words for this document indexing or search request executed.
+</para>
+
+</sect2>
+
+
+
+</sect1>
+
+
+
+<sect1 id="clones">
+<title>Clones</title>
+<indexterm><primary>Clones</primary></indexterm>
+
+<para><literal>Clones</literal> -- are documents having equal values of Hash32 on all document sections. Indentical copies of the same
+document always have equal values of Hash32. This allow to eliminate duplicate documents in a collection.
+However, if only <literal>title</literal> section is defined in <filename>sections.conf</filename>, all documents with different bodies but
+with identical titles will be considered as clones.
+</para>
+
+
+<sect2 id="detectclones_cmd">
+<title><command>DetectClones</command> command</title>
+<indexterm><primary>Command</primary><secondary>DetectClones</secondary></indexterm>
+<programlisting>
+DetectClones yes/no
+</programlisting>
+<para>
+Allow/disallow clone detection and eliminating. If allowed, indexer will 
+detect the same documents under different location, such as
+mirrors, and will index only one document from the group of
+such equal documents. "DetectClones yes" also allows to reduce space usage.
+Default value is "yes".
+<programlisting>
+DetectClones no
+</programlisting>
+</para>
+</sect2>
+
+
+</sect1>

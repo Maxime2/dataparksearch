@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Поддержка Content-Encoding&#13;</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Индексирование"
+HREF="dpsearch-indexing.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Реакция на коды HTTP-ответа"
+HREF="dpsearch-http-codes.ru.html"><LINK
+REL="NEXT"
+TITLE="Стопслова"
+HREF="dpsearch-stopwords.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-http-codes.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 3. Индексирование</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-stopwords.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CONTENT-ENC"
+>3.3. Поддержка Content-Encoding
+<A
+NAME="AEN787"
+></A
+></A
+></H1
+><P
+>		Поисковый движок <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> поддерживает сжатие HTTP
+запросов и ответов (Content encoding). Сжатие запросов и ответов http-сервера позволяет значительно
+улучшить производительность обработки http-запросов за счет уменьшения объёма передаваемых данных.</P
+><P
+>Использование сжатия http-запросов позволяет уменьшить трафик в два и более раз.</P
+><P
+>В <A
+HREF="ftp://ftp.isi.edu/in-notes/rfc2616.txt"
+TARGET="_top"
+>спецификации HTTP 1.1 (RFC 2616)</A
+>
+определены четыре метода кодирования содержимого ответов сервера:
+<TT
+CLASS="LITERAL"
+>gzip, deflate, compress</TT
+>, и <TT
+CLASS="LITERAL"
+>identity</TT
+>.</P
+><P
+>Если включена поддержка Content-encoding, <B
+CLASS="COMMAND"
+>indexer</B
+>
+шлёт http-серверу заголовок
+<TT
+CLASS="LITERAL"
+>Accept-Encoding: gzip,deflate,compress</TT
+>. </P
+><P
+>Если http-сервер поддерживает любой из методов кодирования gzip, deflate or compress
+он шлёт ответ, закодированый этим методом.</P
+><P
+>Для сборки <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с поддержкой сжатия
+HTTP-запросов, необходимо наличие библиотеки <TT
+CLASS="LITERAL"
+>zlib</TT
+>, установленной на вашем компьютере.</P
+><P
+>Чтобы включить поддержку Content encoding, сконфигурируйте
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> с указанием следующего ключа:</P
+><P
+>		<KBD
+CLASS="USERINPUT"
+>./configure --with-zlib</KBD
+>
+	</P
+><P
+>Используете этот ключ совместно с другими нужными вам ключами.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-http-codes.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-stopwords.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Реакция на коды HTTP-ответа</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-indexing.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Стопслова</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

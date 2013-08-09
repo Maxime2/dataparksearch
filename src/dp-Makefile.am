@@ -1,0 +1,19 @@
+SUBDIRS = .
+
+AM_CFLAGS = @CFLAGS@ -DDPS_CONF_DIR=\"@sysconfdir@\" -DDPS_VAR_DIR=\"@localstatedir@\"
+
+lib_LTLIBRARIES = libdp.la
+libdp_la_SOURCES = dp.c
+libdp_la_LDFLAGS = -release @DPS_BASE_VERSION@
+
+
+EXTRA_DIST = dps_memcpy.inc
+
+include_HEADERS = \
+../include/dps_config.h 
+
+
+INCLUDES = -I$(srcdir)/../include
+
+LIBS = @STATIC_LFLAGS@ \
+@LIBS@ 

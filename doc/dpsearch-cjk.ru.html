@@ -1,0 +1,442 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Сегментеры фраз японского, тайского, корейского и китайского языков</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Поддержка языков"
+HREF="dpsearch-international.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="Создание многоязычных страниц поиска
+"
+HREF="dpsearch-multilang.ru.html"><LINK
+REL="NEXT"
+TITLE="Поддержка мультиязычных веб серверов"
+HREF="dpsearch-vary.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-multilang.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 7. Поддержка языков</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-vary.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="CJK"
+>7.3. Сегментеры фраз японского, тайского, корейского и китайского языков</A
+></H1
+><P
+>Традиционное японское, корейское, тайское или китайское письмо не предусматривает размещение между словами фразы
+символов-разделителей, аналогичных пробелу, используемому, например, в европейских языках.
+Поэтому при индексировании текстов на этих языках необходимо дополнительно производить разбиение
+фраз на отдельные слова.</P
+><P
+><A
+NAME="AEN4944"
+></A
+>
+<A
+NAME="AEN4947"
+></A
+>
+<A
+NAME="AEN4950"
+></A
+>
+<A
+NAME="AEN4953"
+></A
+>
+Иногда для красоты, текст на китайском, японском, корейском или тайском языке набирается с пробелом между каждым иероглифом.
+В этом случае для индексирования таких текстов, вы можете использовать команды <B
+CLASS="COMMAND"
+>"ResegmentChinese yes"</B
+>, 
+<B
+CLASS="COMMAND"
+>"ResegmentJapanese yes"</B
+>, <B
+CLASS="COMMAND"
+>"ResegmentKorean yes"</B
+> or <B
+CLASS="COMMAND"
+>"ResegmentThai yes"</B
+>.
+При включенном ресегментировании все пробелы между символами в тексте убираются, а затем весь текст целиком обрабатывается
+сегментерами DataparkSearch (см. ниже).</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="JA-SEGMENT"
+>7.3.1. Сегментер фраз японского языка
+<A
+NAME="AEN4962"
+></A
+></A
+></H2
+><P
+>Для разбиения на слова фраз японского языка используется система морфологического анализа японского
+языка <SPAN
+CLASS="APPLICATION"
+><A
+HREF="http://chasen.aist-nara.ac.jp/"
+TARGET="_top"
+>ChaSen</A
+></SPAN
+> или
+морфологический анализатор японского языка <SPAN
+CLASS="APPLICATION"
+><A
+HREF="http://cl.aist-nara.ac.jp/~taku-ku/software/mecab"
+TARGET="_top"
+>MeCab</A
+></SPAN
+>.
+Поэтому её необходимо установить одну из этих систем до начала сборки и установки <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</P
+><P
+>Для включения поддержки разбиения фраз японского языка, вам необходимо указать для <B
+CLASS="COMMAND"
+>configure</B
+>
+ключ <CODE
+CLASS="OPTION"
+>--enable-chasen</CODE
+> или <CODE
+CLASS="OPTION"
+>--enable-mecab</CODE
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ZH-SEGMENT"
+>7.3.2. Сегментер фраз китайского языка
+<A
+NAME="AEN4977"
+></A
+></A
+></H2
+><P
+>Для разбиения на слова фраз китайского языка используется частотный словарь китайского языка,
+а разбиение производится методом динамического программирования чтобы суммарная частота использования всех получаемых слов
+после разбиения была максимальной.</P
+><P
+>Для включения поддержки сегментера фраз на китайском языке, необходимо при сборке <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+включить поддержку кодировки <TT
+CLASS="LITERAL"
+>GB2312</TT
+>, если будет использоваться словарь упрощенного
+китайского <TT
+CLASS="FILENAME"
+>mandarin.freq</TT
+>, или кодировки <TT
+CLASS="LITERAL"
+>Big5</TT
+>, если будет использоваться
+словарь традиционного китайского <TT
+CLASS="FILENAME"
+>TraditionalChinese.freq</TT
+>, 
+а также указать в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> при помощи команды
+<A
+NAME="AEN4988"
+></A
+>
+<B
+CLASS="COMMAND"
+>LoadChineseList</B
+> частотный словарь слов китайского языка для загрузки.
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadChineseList [charset dictionaryfilename]</PRE
+></P
+><P
+>По умолчанию используется кодировка <TT
+CLASS="LITERAL"
+>GB2312</TT
+> и словарь <TT
+CLASS="FILENAME"
+>mandarin.freq</TT
+>.
+Вы можете использовать свой собственный словарь в своей кодировке. Нужно только включить поддержку этой кодировки и
+указать кодировку и словаь в качестве параметров команды <B
+CLASS="COMMAND"
+>LoadChineseList</B
+></P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Вам необходимо скачать частнотные словари с нашего сайта или с одного из зеркал,
+см. <A
+HREF="dpsearch-get.ru.html"
+>&#1056;&#1072;&#1079;&#1076;. 1.2</A
+>&#62;.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TH-SEGMENT"
+>7.3.3. Сегментер фраз тайского языка
+<A
+NAME="AEN5002"
+></A
+></A
+></H2
+><P
+>Для разбиения на слова фраз тайского языка используется тот же метод, что и для китайского языка,
+оличие заключается в использовании частотного словаря тайского языка.</P
+><P
+>Для включения поддержки сегментера фраз на тайском языке, необходимо указать в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+при помощи команды <A
+NAME="AEN5008"
+></A
+>
+<B
+CLASS="COMMAND"
+>LoadThaiList</B
+> частотный словарь слов тайского языка для загрузки.
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadThaiList [charset dictionaryfilename]</PRE
+></P
+><P
+>По умолчанию используется кодировка <TT
+CLASS="LITERAL"
+>tis-620</TT
+> и словарь <TT
+CLASS="FILENAME"
+>thai.freq</TT
+>.
+Вы можете использовать свой собственный словарь в своей кодировке. Нужно только включить поддержку этой кодировки и
+указать кодировку и словаь в качестве параметров команды <B
+CLASS="COMMAND"
+>LoadThaiList</B
+></P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Вам необходимо скачать частнотные словари с нашего сайта или с одного из зеркал,
+см. <A
+HREF="dpsearch-get.ru.html"
+>&#1056;&#1072;&#1079;&#1076;. 1.2</A
+>&#62;.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="KO-SEGMENT"
+>7.3.4. Сегментер фраз корейского языка
+<A
+NAME="AEN5022"
+></A
+></A
+></H2
+><P
+>Для разбиения на слова фраз корейского языка используется тот же метод, что и для китайского языка,
+оличие заключается в использовании частотного словаря корейского языка.</P
+><P
+>Для включения поддержки сегментера фраз на корейском языке, необходимо указать в <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>
+при помощи команды <A
+NAME="AEN5028"
+></A
+>
+<B
+CLASS="COMMAND"
+>LoadKoreanList</B
+> частотный словарь слов корейского языка для загрузки.
+<PRE
+CLASS="PROGRAMLISTING"
+>LoadKoreanList [charset dictionaryfilename]</PRE
+></P
+><P
+>По умолчанию используется кодировка <TT
+CLASS="LITERAL"
+>euc-kr</TT
+> и словарь <TT
+CLASS="FILENAME"
+>korean.freq</TT
+>.
+Вы можете использовать свой собственный словарь в своей кодировке. Нужно только включить поддержку этой кодировки и
+указать кодировку и словаь в качестве параметров команды <B
+CLASS="COMMAND"
+>LoadKoreanList</B
+></P
+><DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
+>Вам необходимо скачать частнотные словари с нашего сайта или с одного из зеркал,
+см. <A
+HREF="dpsearch-get.ru.html"
+>&#1056;&#1072;&#1079;&#1076;. 1.2</A
+>&#62;.</P
+></BLOCKQUOTE
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-multilang.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-vary.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Создание многоязычных страниц поиска
+<A
+NAME="AEN4781"
+></A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-international.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Поддержка мультиязычных веб серверов</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

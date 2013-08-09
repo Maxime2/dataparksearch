@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Installation</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Authors"
+HREF="dpsearch-authors.en.html"><LINK
+REL="NEXT"
+TITLE="Supported operating systems"
+HREF="dpsearch-opsys.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-authors.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-opsys.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="INSTALL"
+></A
+>Chapter 2. Installation</H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>2.1. <A
+HREF="dpsearch-install.en.html#SQLREQ"
+>SQL database requirements</A
+></DT
+><DT
+>2.2. <A
+HREF="dpsearch-opsys.en.html"
+>Supported operating systems</A
+></DT
+><DT
+>2.3. <A
+HREF="dpsearch-toolsreq.en.html"
+>Tools required for installation</A
+></DT
+><DT
+>2.4. <A
+HREF="dpsearch-installing.en.html"
+>Installing <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></A
+></DT
+><DT
+>2.5. <A
+HREF="dpsearch-installproblem.en.html"
+>Possible installation problems</A
+></DT
+><DT
+>2.6. <A
+HREF="dpsearch-binarydistrib.en.html"
+>Creating binary distribution</A
+></DT
+><DT
+>2.7. <A
+HREF="dpsearch-quick-usage.en.html"
+>Quick usage tour</A
+></DT
+></DL
+></DIV
+><A
+NAME="AEN186"
+></A
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="SQLREQ"
+>2.1. SQL database requirements</A
+></H1
+><P
+>Note that if you want to compile <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>
+with one of supported SQL database you must have this database already
+installed before installing <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.</P
+><P
+>It is possible to use <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with several SQL databases.</P
+><P
+>You also should have enough permission to create new database or to write into already existing one.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>MySQL notes</I
+></SPAN
+>: If you
+want to build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+>, 4.1 or later release
+required. 
+<SPAN
+CLASS="APPLICATION"
+>libz</SPAN
+> library must be installed from <B
+CLASS="COMMAND"
+>zlib-devel</B
+> RPM to successfully compile
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+>.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>PostgreSQL notes</I
+></SPAN
+>: If you
+want to build <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> with <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+>, 8.2 or later release
+required. The latest <SPAN
+CLASS="APPLICATION"
+>PostgreSQL</SPAN
+> version is recommended for the fresh install.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>iODBC notes</I
+></SPAN
+>: iodbc-2.50.22a is known to work.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>unixODBC notes</I
+></SPAN
+>: unixODBC-1.7 is known to work.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>InterBase notes</I
+></SPAN
+>:</P
+><P
+></P
+><UL
+><LI
+><P
+>Interbase 4.0 is known to work.</P
+></LI
+><LI
+><P
+>InterBase CS 6.0 is known to work.</P
+></LI
+><LI
+><P
+>FirebirdCS-0.9-4 is known to work.</P
+></LI
+></UL
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>FreeTDS notes</I
+></SPAN
+>: 0.52 version is known to work with MS SQL 7.0.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Oracle8 notes</I
+></SPAN
+>: 8.0.5.X is known to work.</P
+><P
+>			<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>Oracle8i notes</I
+></SPAN
+>: 8.1.6 R2 EE is known to work.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-authors.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-opsys.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Authors</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Supported operating systems</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

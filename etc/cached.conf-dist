@@ -1,0 +1,66 @@
+# Listen: Allows to bind cached to specific IP address and/or port.
+# It is binded to all host addresses by default.
+#
+#Listen 7000
+#Listen 127.0.0.1:7000
+
+#
+# Database parameters
+#
+DBAddr mysql://foo:bar@localhost/search/?dbmode=cache
+
+#
+# Specify how many file-stores will be used for word index 
+#
+#WrdFiles 4096
+
+#
+# Specify how many word records hold in memory buffer for one file-store
+#
+#CacheLogWords 1024
+
+#
+# Specify how many delete records hold in memory buffer for one file-store
+#
+#CacheLogDels 1024
+
+#
+# Specify how many file-stores will be used for url data info
+#
+#URLDataFiles 256
+
+#
+# Specify word index optimize strategy. Default value: no
+# If enabled, this save disk space but slow down indexing a bit
+#
+OptimizeAtUpdate yes
+
+#
+# try optimize one base every OptimizeIntervel seconds.
+# default value: 600 seconds
+# for frequently updated database keep this value low.
+#
+#OptimizeInterval 60
+
+#
+# do optimize if defragmentation is great than OptimizeRatio percent
+# ATN: this is integer value
+# default value: 5
+#OptimizeRatio 5
+
+
+# Set non-standard /var directory
+# for cache mode and built-n database.
+#
+#VarDir /mnt/d/dpsearch/var/
+
+#
+# Create cache mode limits
+#
+#Limit t:tag
+#Limit c:category
+#Limit site:siteid
+#Limit g:language
+#Limit type:content
+#Limit dt:time
+

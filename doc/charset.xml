@@ -1,0 +1,267 @@
+<sect1 id="charset">
+	<title>Character sets</title>
+<indexterm><primary>Charsets</primary></indexterm>
+
+	<sect2 id="supcharsets">
+		<title>Supported character sets</title>
+		<para><application>DataparkSearch</application> supports almost all known 8 bit
+character sets as well as some multi-byte charsets including Korean
+euc-kr, Chinese big5 and gb2312, Japanese shift-jis, euc-jp and iso-2022-jp, as well as
+UTF-8. Some multi-byte character sets are not
+supported by default, because the conversion tables for them are
+rather large that leads to increase of the executable files
+size. See <filename>configure</filename> parameters to enable support
+for these charsets.</para>
+
+		<para><application>DataparkSearch</application> also supports the following
+Macintosh character sets: MacCE, MacCroatian, MacGreek, MacRoman,
+MacTurkish, MacIceland, MacRomania, MacThai, MacArabic, MacHebrew,
+MacCyrillic, MacGujarati.</para>
+
+&groups;
+
+	</sect2>
+
+	<sect2 id="charsetsalias">
+		<title>Character sets aliases</title>
+		<para>Each charset is recognized by a number of its
+aliases. Web servers can return the same charset in different
+notation. For example, iso-8859-2, iso8859-2, latin2 are the same
+charsets. There is support for charsets names aliases which search
+engine can understand:</para>
+
+&csalias;
+
+	</sect2>
+
+	<sect2 id="recoding">
+		<title>Recoding</title>
+		<para>
+			<literal>indexer</literal> recodes all
+documents to the character set specified in the <command>LocalCharset</command>
+command in your <filename>indexer.conf</filename> file. 
+Internally recoding is implemented using Unicode. Please note
+that if some recoding can't convert a character directly from one charset to another,
+<application>DataparkSearch</application> will use HTML numeric character references
+to escape this character (i.e. in form &amp;#NNN; where NNN - a character code in Unicode).
+Thus, for any <command>LocalCharset</command> you do not lost any information about indexed documents,
+but on <command>LocalCharset</command> selection depend the database volume you will get after indexing.
+</para>
+
+	</sect2>
+	<sect2 id="charset-searchdec">
+		<title>Recoding at search time</title>
+<indexterm><primary>Command</primary><secondary>BrowserCharset</secondary></indexterm>
+		<para>You may display search results in any charset supported by <application>DataparkSearch</application>.
+Use <command>BrowserCharset</command> command in <filename>search.htm</filename> to select charset for search results.
+This charset may be different from <command>LocalCharset</command> specified. All recodings will done automatically.
+</para>
+	</sect2>
+
+	<sect2 id="charsetdetect">
+		<title>Document charset detection</title>
+		<para>indexer detects document character set in this order:</para>
+		<orderedlist>
+			<listitem>
+				<para>"Content-type: text/html; charset=xxx"</para>
+			</listitem>
+			<listitem>
+				<para id="guesser-use-meta">&lt;META NAME="Content-Type" CONTENT="text/html; charset=xxx"&gt;</para>
+<para><indexterm><primary>Command</primary><secondary>GuesserUseMeta</secondary></indexterm>
+Selection of this variant may be switch off by command: <command>GuesserUseMeta no</command> in your
+<filename>indexer.conf</filename>.</para>
+			</listitem>
+			<listitem>
+				<para>Defaults from "Charset" field in Common Parameters</para>
+			</listitem>
+		</orderedlist>
+	</sect2>
+	<sect2 id="charset-guesser">
+		<title>Automatic charset guesser</title>
+		<para><application>DataparkSearch</application> has an automatic charset
+and language guesser. It currently recognizes more than 100 various
+charsets and languages. Charset and language detection  is implemented
+using <ulink url="http://www.maxime.net.ru/doc/guess.en.shtml">
+"N-Gram-Based Text Categorization"</ulink> technique. There is a number
+of so called "language map" files, one for each language-charset
+pair. They are installed under
+<filename>/usr/local/dpsearch/etc/langmap/</filename> directory by
+default. Take a look there to check the list of currently provided
+charset-language pairs. Guesser works fine for texts bigger than 500
+characters. Shorter texts may not be guessed well.</para>
+
+<sect3 id="langmapfile_cmd">
+<title><command>LangMapFile</command> command</title>
+<indexterm><primary>Command</primary><secondary>LangMapFile</secondary></indexterm>
+<para>Load language map for charset and language guesser from the given file. 
+You may specify either absolute file name or a name relative to <application>DataparkSearch</application>
+<filename>/etc</filename> directory. You may use several <command>LangMapFile</command> commands.
+<programlisting>
+LangMapFile langmap/en.ascii.lm
+</programlisting>
+</para>
+</sect3>
+
+<sect3 id="dpguesser">
+<title>Build your own language maps</title>
+<para id="dpguesser-util">
+To build your own language map use <indexterm><primary>dpguesser</primary></indexterm><literal>dpguesser</literal>
+utility. In addition, your need to collect file with language samples in charset desired. For new language map creation,
+use the following command:
+<programlisting>
+        dpguesser -p -c charset -l language &lt; FILENAME &gt; language.charset.lm
+</programlisting>
+</para>
+<para>You can also use <literal>dpguesser</literal> utility for guessing document's language and charset by existing 
+language maps. To do this, use following command:
+<programlisting>
+        dpguesser [-n maxhits] &lt; FILENAME
+</programlisting>
+</para>
+
+<para id="dpconv-util">For some languages, it may be used few different charset. To convert from one charset supported by 
+<application>DataparkSearch</application> to another, use <indexterm><primary>dpconv</primary></indexterm><literal>dpconv</literal>
+utility.
+<programlisting>
+        dpconv [OPTIONS] -f charset_from -t charset_to [configfile] &lt; infile &gt; outfile
+</programlisting>
+You may also specyfy -e switch for <literal>dpconv</literal> to use HTML escape entities for input, and -E switch - for output.
+</para>
+
+<para>By default, both <literal>dpguesser</literal> and <literal>dpconv</literal> utilities is installed into
+<filename>/usr/local/dpsearch/sbin/</filename> directory.
+</para>
+</sect3>
+
+<para id="lmupdate"><indexterm><primary>Command</primary><secondary>LangMapUpdate</secondary></indexterm>
+<application>DataparkSearch</application> can update language and charset maps
+automatically while indexing, if remote server is supply exactly specified language and charset with pages.
+To enable this function, specify the following command in your <filename>indexer.conf</filename> file:
+<programlisting>
+LangMapUpdate yes
+</programlisting>
+</para>
+
+<para id="guesser-bytes"><indexterm><primary>Command</primary><secondary>GuesserBytes</secondary></indexterm>
+By default, <application>DataparkSearch</application> uses only first 512 bytes of each file indexed to detect language and charset.
+You may change this value using <command>GuesserBytes</command> command. Use value of 0 to use all text from document indexed.
+<programlisting>
+GuesserBytes 16384
+</programlisting>
+</para>
+
+	</sect2>
+
+
+	<sect2 id="defcharset">
+		<title>Default charset</title>
+<indexterm><primary>Command</primary><secondary>RemoteCharset</secondary></indexterm>
+
+		<para>Use <command>RemoteCharset</command> command in <filename>indexer.conf</filename> 
+to choose the default charset of indexed servers.</para>
+	</sect2>
+
+	<sect2 id="deflang">
+		<title>Default Language</title>
+<indexterm><primary>Command</primary><secondary>DefaultLang</secondary></indexterm>
+
+		<para>You can set default language for Servers by using <varname>DefaultLang</varname>
+			<filename>indexer.conf</filename> variable. This is useful while restricting search by URL language.</para>
+<programlisting>
+DefaultLang &lt;string&gt;
+</programlisting>
+<para>Default language for server. Can be used if you need language
+restriction while doing search.</para>
+<programlisting>
+DefaultLang en
+</programlisting>
+	</sect2>
+
+
+<sect2 id="localcharset_cmd">
+<title><command>LocalCharset</command> command</title>
+<indexterm><primary>Command</primary><secondary>LocalCharset</secondary></indexterm>
+<para>Defines the charset which will be used to store data in database.
+All other character sets will be recoded into given charset.
+Take a look into <xref linkend="charset"/> for detailed explanation 
+how to choose a <command>LocalCharset</command> depending on languages used on your site(s).
+This command should be used once and takes global effect for the config file.
+Take a look into documentation to check whole list of supported charsets.
+Default LocalCharset is iso-8859-1 (latin1).
+<programlisting>
+LocalCharset koi8-r
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="forceiischarset1251_cmd">
+<title><command>ForceIISCharset1251</command> command</title>
+<indexterm><primary>Command</primary><secondary>ForceIISCharset1251</secondary></indexterm>
+<para>This option is useful for users which deals with Cyrillic content and broken
+(or misconfigured ?) Microsoft IIS web servers, which tends to not report
+charset correctly. This is really dirty hack, but if this option is turned on
+it is assumed that all servers which reports as 'Microsoft' or 'IIS' have
+content in Windows-1251 charset.
+This command should be used only once in configuration file and takes global
+effect.
+Default: no
+<programlisting>
+ForceIISCharset1251 yes
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="remotecharset_cmd">
+<title><command>RemoteCharset</command> command</title>
+<indexterm><primary>Command</primary><secondary>RemoteCharset</secondary></indexterm>
+<programlisting>
+RemoteCharset &lt;charset&gt;
+</programlisting>
+<para>
+<option>&lt;charset&gt;</option> is default character set for the server in next <command>Server</command>,
+<command>Realm</command> or <command>Subnet</command> command(s).
+This is required only for &quot;bad&quot; servers that do not send information
+about charset in header: "Content-type: text/html; charset=some_charset"
+and do not have &lt;META NAME="Content" Content="text/html; charset="some_charset"&gt;
+Can be set before every <command>Server</command>, <command>Realm</command> or <command>Subnet</command> command and
+takes effect till the end of config file or till next <command>RemoteCharset</command> command.
+Default value is iso-8859-1 (latin1).
+<programlisting>
+RemoteCharset iso-8859-5
+</programlisting>
+</para>
+</sect2>
+
+<sect2 id="urlcharset_cmd">
+<title><command>URLCharset</command> command</title>
+<indexterm><primary>Command</primary><secondary>URLCharset</secondary></indexterm>
+<programlisting>
+URLCharset &lt;charset&gt;
+</programlisting>
+<para>
+<option>&lt;charset&gt;</option> is character set for the URL argument in next <command>Server</command>, 
+<command>Realm</command> or <command>URL</command> command(s).
+This command specify character set only for arguments in commands follow and havn't effect on charset detection for indexing pages.
+Have less priority than <command>RemoteCharset</command>.
+Can be set before every <command>Server</command>, <command>Realm</command> or <command>URL</command> command and
+takes effect till the end of config file or till next <command>URLCharset</command> command.
+Default value is ISO-8859-1 (latin1).
+<programlisting>
+URLCharset KOI8-R
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="charstoescape">
+<title><command>CharsToEscape</command> command</title>
+<indexterm><primary>Command</primary><secondary>CharsToEscape</secondary></indexterm>
+<programlisting>
+CharsToEscape &quot;\&quot;&amp;&lt;&gt;![]&quot;
+</programlisting>
+<para>Use this command in your search template to specify the list of characters to escape for $&amp;(x) search template meta-variables.
+</para>
+</sect2>
+
+</sect1>

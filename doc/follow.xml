@@ -1,0 +1,662 @@
+<sect1 id="follow">
+	<title id="follow.title">Specifying WEB space to be indexed</title>
+	<para>When indexer tries to insert a new URL into database or
+is trying to index an existing one, it first of all checks whether
+this URL has corresponding <command>Server</command>, <command>Realm</command> or <command>Subnet</command> command given in
+<filename>indexer.conf</filename>. URLs without corresponding <command>Server</command>, <command>Realm</command>
+or <command>Subnet</command> command are not indexed. By default those URLs which are
+already in database and have no Server/Realm/Subnet commands will be deleted
+from database. It may happen for example after removing some
+Server/Realm/Subnet commands from <filename>indexer.conf</filename>.</para>
+
+
+<para>These commands have following format:
+<synopsis>&lt;command&gt; [method] [subsection] [CaseType] [MatchType] [CmpType] pattern [alias]</synopsis>
+</para>
+
+<para>Mandatory parameter <option>pattern</option> specify an URL, or it part, or pattern to compare.
+</para>
+
+
+		<para>
+			Optional parameter <option>method</option> specify an document action for this command.
+May take values:
+			<literal>Allow</literal>, <literal>Disallow</literal>, <literal>HrefOnly</literal>, 
+			<literal>CheckOnly</literal>, <literal>Skip</literal>, 	<literal>CheckMP3</literal>,
+			<literal>CheckMP3Only</literal>. By default, the value <literal>Allow</literal> is used.
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para id="allow-param">
+					<command>Allow</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>Allow</secondary></indexterm>
+				</para>
+				<para>
+					Value <literal>Allow</literal> specify that all corresponding documents will be indexed
+ and scanned for new links. Depends on <literal>Content-Type</literal> appropriate external parser is executed if need.
+				</para>
+			</listitem>
+			<listitem>
+				<para id="disallow-param">
+					<command>Disallow</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>Disallow</secondary></indexterm>
+				</para>
+				<para>
+					Value <literal>Disallow</literal> specify that all corresponding documents will be ignored and
+deleted from database, if its was placed into before.
+				</para>
+			</listitem>
+			<listitem>
+				<para id="hrefonly-param">
+					<command>HrefOnly</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>HrefOnly</secondary></indexterm>
+				</para>
+				<para>
+					Value <literal>HrefOnly</literal> specify that all corresponding documents will be only
+scanned for new links (not indexed). This is useful, for example, for getting new documents from a feed, when the feed page is only scanned to
+detect new messages for indexing. 
+<programlisting>
+Server HrefOnly Page http://www.site.ext/feed.xml
+Server Allow    Path http://www.site.ext/
+</programlisting>
+				</para>
+			</listitem>
+			<listitem>
+				<para id="checkonly-param">
+					<command>CheckOnly</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>CheckOnly</secondary></indexterm>
+				</para>
+				<para>
+					Value <literal>CheckOnly</literal> specify that all corresponding documents will be
+requested by HTTP HEAD request, not HTTP GET, i.e. inly brief info about documents (size, last modified, content type) will be
+ fetched. This allow, for example, check links on your site:
+<programlisting>
+Server HrefOnly  http://www.dataparksearch.org/
+Realm  CheckOnly *
+</programlisting>
+</para>
+<para>
+These commands instruct <command>indexer</command> to scan all documents on <literal>www.dataparksearch.org</literal> site and
+collect all links. Brief info about every document found will be requested by HEAD method.
+After indexing done, <command>indexer -S</command> command will show status for all documents from this site.
+				</para>
+			</listitem>
+			<listitem>
+				<para id="skip-param">
+					<command>Skip</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>Skip</secondary></indexterm>
+				</para>
+				<para>
+					Value <literal>Skip</literal> specify that all corresponding documents will be skipped
+while indexing. This is useful when need temporally disable reindexing several sites, but able search on.
+These documents will marked as expired.
+				</para>
+			</listitem>
+			<listitem>
+				<para id="checkmp3-param">
+					<command>CheckMP3</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>CheckMP3</secondary></indexterm>
+				</para>
+				<para>
+					Value <literal>CheckMP3</literal> specify that corresponding documents will be checked
+for MP3 tags along if its <literal>Content-Type</literal> is equal to <literal>audio/mpeg</literal>.
+This is useful, for example, if remote server supply <literal>application/octet-stream</literal> as 
+<literal>Content-Type</literal> for MP3 files. If this tag is present, these files will indexed as MP3 file, otherwise its
+will be processed according to <literal>Content-Type</literal>.
+				</para>
+			</listitem>
+			<listitem>
+				<para id="checkmp3only-param">
+					<command>CheckMP3Only</command>
+<indexterm><primary>Parameter <option>method</option></primary><secondary>CheckMP3Only</secondary></indexterm>
+				</para>
+
+				<para>
+					This value is equal to <literal>CheckMP3</literal>, but if MP3 tag is not present,
+processing on <literal>Content-Type</literal> will not be taken.
+				</para>
+			</listitem>
+		</orderedlist>
+		</para>
+
+
+
+
+
+
+
+
+
+<!--
+	<sect3 id="follow-check">
+		<title>Checking that URL matches "Server" command</title>
+		<para>There are several ways how indexer checks that
+URL corresponds to some Server command.
+-->
+<para>
+  Use optional <option>subsection</option>
+parameter to specify server's checking behavior. <!--Values of subsection
+are the same with "Follow" command arguments.--> Subsection value must be
+one of the following: <literal>nofollow</literal>, <literal>page</literal>, <literal>path</literal>, 
+<literal>site</literal>, <literal>world</literal> and has "path" value by
+default. <!--If subsection is not specified, current "Follow" value will
+be used. So, the only <literal>Server site http://localhost/</literal>
+command and combination of <literal>Follow site</literal> and
+<literal>Server http://localhost/</literal> have the same
+effect.-->
+		<orderedlist numeration="arabic">
+			<listitem>
+				<para>
+					<literal>path</literal> subsection</para>
+				<para>When indexer seeks for a
+"Server" command corresponding to an URL it checks that the discovered
+URL starts with URL given in Server command argument but without
+trailing file name. For example, if <literal>Server path
+http://localhost/path/to/index.html</literal> is given, all URLs which
+have <literal>http://localhost/path/to/</literal> at the beginning
+correspond to this Server command.</para>
+
+				<para>The following commands have the same effect except that they insert different URLs into database:</para>
+				<para>
+					<programlisting>
+Server path http://localhost/path/to/index.html
+Server path http://localhost/path/to/index
+Server path http://localhost/path/to/index.cgi?q=bla
+Server path http://localhost/path/to/index?q=bla
+</programlisting>
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<literal>site</literal> subsection</para>
+				<para>indexer checks that the
+discovered URL have the same hostname with URL given in Server
+command. For example, <literal>Server site
+http://localhost/path/to/a.html</literal> will allow to index whole
+<literal>http://localhost/</literal> server. </para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>world</literal> subsection</para>
+				<para>If world subsection is specified
+in Server command, it has the same effect that URL is considered to
+match this Server command. See explanation below.</para>
+
+			</listitem>
+			<listitem>
+				<para>
+					<literal>page</literal> subsection</para>
+				<para>This subsection describes the only one URL given in Server argument.</para>
+			</listitem>
+<listitem>
+<para><literal>nofollow</literal> subsection</para>
+<para>Skip links following for URL that match the pattern.</para>
+</listitem>
+			<listitem>
+				<para>subsection in <literal>news://</literal> schema</para>
+				<para>Subsection is always considered
+as "site" for news:// URL schema. This is because news:// schema has
+no nested paths like ftp:// or http://  Use  <literal>Server
+news://news.server.com/</literal> to index whole news server or for
+example <literal>Server news://news.server.com/udm</literal> to index
+all messages from "udm" hierarchy.</para>
+
+			</listitem>
+		</orderedlist>
+</para>
+<!--	</sect3> -->
+
+<para>
+Optional parameter <literal>CaseType</literal> is specify the case sensivity for string comparison, it can take one of follow value: 
+<literal>case</literal> - case insensitive comparison, or <literal>nocase</literal> - case sensitive comparison.
+</para>
+
+
+		<para>
+Optional parameter <literal>CmpType</literal> is specify the type of comparison and can take two value:
+<literal>Regex</literal> and <literal>String</literal>.
+<literal>String</literal> wildcards is default
+match type. You can use ? and * signs in URLMask parameters, they means "one character" and "any number of characters" respectively. 
+Use \ character to escape these characters in you patterns.
+For example, if you want to index all HTTP sites in .ru domain, use this
+command:<programlisting>Realm http://*.ru/*</programlisting>
+		</para>
+		
+		<para>Regex comparison type takes a regular expression
+as it's argument. Activate regex comparison type using <option>Regex</option>
+keyword. For example, you can describe everything in .ru domain using
+regex comparison type: <programlisting>Realm Regex ^http://.*\.ru/</programlisting>
+		</para>
+
+		
+		<para>Optional parameter <literal>MatchType</literal> means match type. There
+are <literal>Match</literal> and <literal>NoMatch</literal> possible values with <literal>Match</literal> as
+default. <literal>Realm NoMatch</literal> has reverse effect. It means
+that URL that does not match given <option>pattern</option> will correspond to this
+<command>Realm</command> command. For example, use this command to index everything
+without .com domain:<programlisting>Realm NoMatch http://*.com/*</programlisting>
+		</para>
+		
+		<para>Optional <option>alias</option> argument allows providing very
+complicated URL rewrite more powerful than other aliasing
+mechanism. Take a look <xref linkend="aliases"/> for <option>alias</option> argument usage
+explanation. <option>Alias</option> works only with <option>Regex</option> comparison type and has no
+effect with <option>String</option> type.</para>
+
+
+
+
+
+
+
+
+	<sect2 id="follow-server">
+		<title><command>Server</command> command</title>
+<indexterm><primary>Command</primary><secondary>Server</secondary></indexterm>
+
+		<para>This is the main command of the
+<filename>indexer.conf</filename> file. It is used to add servers or
+their parts to be indexed. 
+<!--
+The format of Server command is:</para>
+
+		<para>
+			<programlisting>
+Server [subsection] &lt;URL&gt; [alias]
+</programlisting>
+		</para>
+		<para>
+-->
+This command also says indexer to insert given URL into database at startup.</para>
+<!--
+		<para>"Server" command has required "URL" and two
+optional "subsection" and "alias" parameters. Usage of alias optional
+parameters is covered in Aliases section.</para>
+-->
+
+		<para>E.g. command <literal>Server
+http://localhost/</literal>  allows  to index whole
+<literal>http://localhost/</literal> server. It also makes indexer
+insert given URL into database at startup.  You can also specify some
+path to index server subsection: <literal>Server
+http://localhost/subsection/</literal>. It also says indexer to insert
+given URL at startup.</para>
+
+		<note>
+			<para>You can suppress indexer behavior to add
+URL given in Server command by using -q indexer command line
+argument. It is useful when you have hundreds or thousands Server
+commands and their URLs are already in database. This allows having
+more quick indexer startup.</para>
+
+		</note>
+	</sect2>
+
+
+	<sect2 id="follow-realm">
+		<title><command>Realm</command> command</title>
+<indexterm><primary>Command</primary><secondary>Realm</secondary></indexterm>
+
+		<para>Realm command is a more powerful means of describing web area to be indexed.
+<!--
+ The format of Realm command is:</para>
+		<para>
+			<programlisting>
+Realm [String|Regex] [Match|NoMatch] &lt;URLMask&gt; [alias]
+</programlisting>
+		</para>
+		<para>
+-->
+It works almost like <command>Server</command> command but takes
+a regular expression or string wildcards as it's <option>pattern</option> parameter and
+do not insert any URL into database for indexing.
+		</para>
+
+
+
+	</sect2>
+<!--
+	<sect2 id="follow-realmfollow">
+		<title><command>Realm</command> and <command>Follow</command> commands</title>
+<indexterm><primary>Command</primary><secondary>Realm</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>Follow</secondary></indexterm>
+
+		<para>As far as subsection actually means which part
+of argument given in Server command to compare with a URL, Realm
+command does not have similar optional subsection parameter. It is
+useless in the case of string wildcards and regular
+expressions. Because of it "Follow" command does not affect "Realm"
+command. Imagine that you have:</para>
+
+		<para>
+			<programlisting>
+Follow path
+Realm  http://localhost/*
+URL    http://localhost/somepath/
+</programlisting>
+		</para>
+		<para>If you add into database for example an URL
+<literal>http://localhost/somepath/</literal> either using "URL"
+<filename>indexer.conf</filename> command given above or using
+<literal>indexer -i -u http://localhost/somepath/</literal>, indexer
+WILL follow any URL beyond <filename>/somepath/</filename> directory
+of localhost if there is a link to it from
+<filename>/somepath/</filename>. <literal>Follow path</literal> has no
+effect if Realm command is used.</para>
+
+	</sect2>
+-->
+
+	<sect2 id="follow-subnet">
+		<title><command>Subnet</command> command</title>
+<indexterm><primary>Command</primary><secondary>Subnet</secondary></indexterm>
+
+		<para>Subnet command is another way to describe web area to be indexed.
+<!--
+ The format of Subnet command is:</para>
+		<para>
+			<programlisting>
+Subnet [Match|NoMatch] &lt;IP mask&gt;
+</programlisting>
+		</para>
+		<para>
+-->
+It works almost like <command>Server</command> command but takes
+a string wildcards or network specified in CIDR presentation format as it's <option>pattern</option> argument which is compared against IP
+address instead of URL. In case of string wilcards formant, argument may have * and ? signs, they means
+"one character" and "any number of characters" respectively. For
+example, if you want to index all HTTP sites in your local subnet,
+use this command:<programlisting>Subnet 192.168.*.*</programlisting>
+In case of network specified in CIDR presentation format, you may specify subnet in forms:  a.b.c.d/m, a.b.c, a.b, a
+<programlisting>Subnet 1291.168.10.0/24</programlisting>
+		</para>
+		<para>You may use "NoMatch" optional argument. For
+example, if you want to index everything without
+<literal>195.x.x.x</literal> subnet, use:<programlisting>Subnet NoMatch 195.*.*.*</programlisting>
+		</para>
+	</sect2>
+
+	<sect2 id="follow-difparam">
+		<title>Using different parameter for server and it's subsections</title>
+		<para>Indexer seeks for "Server" and "Realm" commands
+in order of their appearance. Thus if you want to give different
+parameters to e.g. whole server and its subsection you should add
+subsection line before whole server's. Imagine that you have server
+subdirectory which contains news articles. Surely those articles are
+to be reindexed more often than the rest of the server. The following
+combination may be useful in such cases:</para>
+
+		<para>
+			<programlisting>
+# Add subsection
+Period 200000
+Server http://servername/news/
+
+# Add server
+Period 600000
+Server http://servername/
+</programlisting>
+		</para>
+		<para>These commands give different reindexing period
+for <filename>/news/</filename> subdirectory comparing with the period
+of server as a whole. indexer will choose the first "Server" record
+for the <filename>http://servername/news/page1.html</filename> as far
+as it matches and was given first.</para>
+
+	</sect2>
+	<sect2 id="follow-default">
+		<title>Default <command>indexer</command> behavior</title>
+		<para>The default behavior of indexer is to follow
+through links having correspondent Server/Realm command in the
+<filename>indexer.conf</filename> file. It also jumps between servers
+if both of them are present in <filename>indexer.conf</filename>
+either directly in Server command or indirectly in Realm command. For
+example, there are two Server commands:</para>
+
+		<para>
+			<programlisting>
+Server http://www/
+Server http://web/
+</programlisting>
+		</para>
+		<para>When indexing
+<filename>http://www/page1.html</filename> indexer WILL follow the
+link <filename>http://web/page2.html</filename> if the last one has
+been found. Note that these pages are on different servers, but BOTH
+of them have correspondent Server record.</para>
+
+		<para>If one of the Server command is deleted, indexer
+will remove all expired URLs from this server during next
+reindexing.</para>
+
+	</sect2>
+<!--
+	<sect2 id="follow-world">
+		<title>Using Follow world</title>
+<indexterm><primary>Command</primary><secondary>Follow</secondary></indexterm>
+
+		<para>The first way to change described default
+behavior is to use "Follow world" <filename>indexer.conf</filename>
+command. indexer will walk through ANY found URLs and will jump
+between different servers. Theoretically, it will index all Internet
+in this case if there are no hardware limits</para>
+
+		<para>When "Follow world" command is specified,
+indexer just adds one server record to memory with an empty start URL
+during loading <filename>indexer.conf</filename>. This empty server
+will be found only in the case when no other Server records with
+non-empty start URL are found.</para>
+
+	</sect2>
+	<sect2 id="follow-deleteno">
+		<title>Using "DeleteNoServer no"</title>
+<indexterm><primary>Command</primary><secondary>DeleteNoServer</secondary></indexterm>
+
+		<para>The second way to change default behavior is to
+use "DeleteNoServer no" command. This command means that URLs which
+are already in database will not be deleted even if they have no
+corresponding Server/Realm command. "DeleteNoServer no" is implemented
+by adding one empty server just like "Follow world". The difference
+between those two commands is that in case of "DeleteNoServer no"
+indexer follows links ONLY INSIDE servers and does not jump between
+different servers. This allows to index only those servers which are
+already in database and do not follow other servers.</para>
+
+		<para>Example of command sequence:</para>
+		<para>
+			<programlisting>
+DeleteNoServer no
+Server http://www/
+Server http://web/
+</programlisting>
+		</para>
+		<para>While indexing
+<filename>http://www/page1.html</filename> indexer WILL follow the
+link <filename>http://www/page2.html</filename> but DOES NOT follow
+<filename>http://web/page2.html</filename> link because
+<filename>http://www/page1.html</filename> and
+<filename>http://web/page2.html</filename> are on different
+servers. </para>
+
+		<note>
+			<para>If you delete URL from the list in
+<filename>url.txt</filename> using the "DeleteNoServer no" scheme,
+indexer WILL NOT delete URLs from the same server. Imagine that you
+have removed <literal>http://www/</literal> from
+<filename>url.txt</filename>. To remove all URLs of this server from
+the database you'll have to run <literal>indexer -C -u
+http://www/%</literal>.</para>
+
+		</note>
+	</sect2>
+	<sect2 id="follow-realmall">
+		<title>Realm *</title>
+<indexterm><primary>Command</primary><secondary>Realm</secondary></indexterm>
+
+		<para>You may note that "Realm *" is something like
+"DeleteNoServer no". Actually it has almost the same effect with
+"DeleteNoServer no". The only difference is that this command does
+allow indexer to jump between servers.</para>
+
+	</sect2>
+-->
+	<sect2 id="follow-f">
+		<title>Using <userinput>indexer -f &lt;filename&gt;</userinput></title>
+		<para>The third scheme is very useful for
+<literal>indexer -i -f url.txt</literal> running. You may maintain
+required servers in the <filename>url.txt</filename>. When new URL is
+added into <filename>url.txt</filename> indexer will index the server
+of this URL during next startup. </para>
+
+<!--
+		<para>If you are using "DeleteNoServer no" it does not
+matter whether you have passed the root URL (http://www/) of the
+server or one of internal pages
+(http://www/path/to/some/page.html). Indexer will index whole server
+http://www/ </para>
+-->
+	</sect2>
+<!--
+	<sect2 id="follow-hrefonly">
+		<title>Using HrefOnly command</title>
+<indexterm><primary>Command</primary><secondary>HrefOnly</secondary></indexterm>
+
+		<para>The HrefOnly <filename>indexer.conf</filename>
+command is useful when indexing large mailing lists archives. Use it
+to index only the content of the actual messages and not the index and
+thread pages though still scan them for URLs.</para>
+
+	</sect2>
+-->
+
+
+<sect2 id="URL_cmd">
+<title><command>URL</command> command</title>
+<indexterm><primary>Command</primary><secondary>URL</secondary></indexterm>
+<programlisting>
+URL http://localhost/path/to/page.html
+</programlisting>
+<para>
+This command inserts given <option>URL</option> into database. This is usefull to add
+several entry points to one server. Has no effect if an URL is already
+in the database. 
+</para>
+</sect2>
+
+
+<sect2 id="DB_cmd">
+<title><command>ServerDB, RealmDB, SubnetDB and URLDB</command> commands</title>
+<indexterm><primary>Command</primary><secondary>URLDB</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>ServerDB</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>RealmDB</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>SubnetDB</secondary></indexterm>
+<programlisting>
+URLDB pgsql://foo:bar@localhost/portal/links?field=url
+</programlisting>
+<para>
+These commands are equal to <command>Server</command>, <command>Realm</command>, <command>Subnet</command> and 
+<command>URL</command> commands respectively, but takes arguments from field of SQL-table specified. 
+In example above, URLs are takes from database <option>portal</option>, SQL-table <option>links</option>
+and filed <option>url</option>.
+</para>
+</sect2>
+
+
+<sect2 id="File_cmd">
+<title><command>ServerFile, RealmFile, SubnetFile and URLFile</command> commands</title>
+<indexterm><primary>Command</primary><secondary>URLFile</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>ServerFile</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>RealmFile</secondary></indexterm>
+<indexterm><primary>Command</primary><secondary>SubnetFile</secondary></indexterm>
+<programlisting>
+URLFile url.lst
+</programlisting>
+<para>
+These commands are equal to <command>Server</command>, <command>Realm</command>, <command>Subnet</command> and 
+<command>URL</command> commands respectively, but takes arguments from a text file specified. 
+In example above, URLs are takes from the text file <option>url.lst</option> located in 
+<filename>/usr/local/dpsearch/etc</filename> directory, but the full path to a file can be specified as well.
+</para>
+</sect2>
+
+
+<sect2 id="robots_txt">
+<title>Robots exclusion standard</title>
+<indexterm><primary>Robots exclustion standard</primary></indexterm>
+<indexterm><primary>robots.txt</primary></indexterm>
+<para><application>DataparkSearch</application> obeys <ulink url="http://www.robotstxt.org/">the robots.txt standard</ulink>. 
+<ulink url="http://www.robotstxt.org/robotstxt.html"><filename>robots.txt</filename></ulink> is a file that you place in your web server's root directory that tells search engines what pages you do not want to be indexed.</para>
+
+<para>
+<indexterm><primary>Robots exclustion standard</primary><secondary>meta tags</secondary></indexterm>
+<application>DataparkSearch</application> also obeys the <option>nofollow</option>, <option>noarchive</option> and <option>noindex</option> <ulink url="http://www.robotstxt.org/meta.html">meta tags</ulink>.</para>
+
+<para>
+<indexterm><primary>robots.txt</primary><secondary>Crawl-Delay</secondary></indexterm>
+<indexterm><primary>robots.txt</primary><secondary>Host</secondary></indexterm>
+<application>DataparkSearch</application> also supports the <ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink> and <ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink> directives in <filename>robots.txt</filename>.</para>
+
+<para>Below are commands in <filename>indexer.conf</filename> file related to the Robots exclusion standard.</para>
+
+<sect3 id="robots_cmd">
+<title><command>Robots</command> command</title>
+<indexterm><primary>Command</primary><secondary>Robots</secondary></indexterm>
+<programlisting>
+Robots yes/no
+</programlisting>
+<para>
+Allows/disallows using <filename>robots.txt</filename> and &lt;META NAME="robots" ...&gt;
+exclusions. Use <option>no</option>, for example for link validation of your server(s).
+Command may be used several times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>Robots</command> command.
+Default value is "yes".
+<programlisting>
+Robots yes
+</programlisting>
+</para>
+</sect3>
+
+<sect3 id="robotsperiod_cmd">
+<title><command>RobotsPeriod</command> command</title>
+<para><indexterm><primary>Command</primary><secondary>RobotsPeriod</secondary></indexterm>
+By defaults, robots.txt data holds in SQL-database for one week. You may change this period using
+<command>RobotsPeriod</command> command:
+</para>
+<programlisting>
+RobotsPeriod &lt;time&gt;
+</programlisting>
+<para>For &lt;time&gt; format see description of <command>Period</command> command in <xref linkend="period_cmd"/>.</para>
+<programlisting>
+RobotsPeriod 30d
+</programlisting>
+</sect3>
+
+<sect3 id="crawldelay_cmd">
+<title><command>CrawlDelay</command> command</title>
+<para><indexterm><primary>Command</primary><secondary>CrawlDelay</secondary></indexterm>
+Use this command to specify default pause in seconds between consecutive fetches from same server. 
+This is similar to crawl-delay command in <filename>robots.txt</filename> file, but can specified in <filename>indexer.conf</filename> 
+file on per server basis. If no crawl-delay value is specified in <filename>robots.txt</filename>, 
+the value of <command>CrawlDelay</command> is used. 
+If crawl-delay is specified in robots.txt, then the maximum of <command>CrawlDelay</command> and crawl-delay is used as 
+interval between consecutive fetches.
+</para>
+</sect3>
+
+<sect3 id="maxcrawldelay_cmd">
+<title><command>MaxCrawlDelay</command> command</title>
+<para><indexterm><primary>Command</primary><secondary>MaxCrawlDelay</secondary></indexterm>
+When <application>indexer</application> is ready to index an URL from a server for which the Crawl-deley interval isn't expired yet since previous access, it waits until this period will be expired, 
+if waiting peiod is less than amount of time specified by <command>MaxCrawlDelay</command> command. If the waiting period is greater or equal to this value, selected URL is posponed in indexing for the time remained.
+</para>
+<programlisting>
+MaxCrawlDelay 60
+</programlisting>
+<para>Default value is 300 seconds.</para>
+</sect3>
+
+
+</sect2>
+
+
+</sect1>

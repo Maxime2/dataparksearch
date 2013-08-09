@@ -1,0 +1,481 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>К вопросу производительности DataparkSearch</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.ru.html"><LINK
+REL="UP"
+TITLE="Хранение данных"
+HREF="dpsearch-howstore.ru.html"><LINK
+REL="PREVIOUS"
+TITLE="
+Способ хранения Cache"
+HREF="dpsearch-cachemode.ru.html"><LINK
+REL="NEXT"
+TITLE="Поддержка SearchD
+"
+HREF="dpsearch-searchd.ru.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Справочное руководство</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-cachemode.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>&#1043;&#1083;&#1072;&#1074;&#1072; 5. Хранение данных</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-searchd.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PERF"
+>5.3. К вопросу производительности <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+></A
+></H1
+><A
+NAME="AEN3842"
+></A
+><P
+>Способ хранения cache - самый быстрый в <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.
+Используйте его, если хотите получить максимальную скорость поиска.</P
+><P
+><A
+NAME="AEN3849"
+></A
+>
+Если после окончания индексирования содержимое вашей директории <TT
+CLASS="FILENAME"
+>/var</TT
+> не изменяется, вы можете
+выключить блокировку файлов при открытиии используя команду <B
+CLASS="COMMAND"
+>"ColdVar yes"</B
+> в файле <TT
+CLASS="FILENAME"
+>search.htm</TT
+>
+(или в файле <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, если используется <B
+CLASS="COMMAND"
+>searchd</B
+>). Это позволит вам сэкономить некоторое время,
+затрачиваемое на блокировку файлов.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEARCHD-REC"
+>5.3.1. Рекомендация использовать <B
+CLASS="COMMAND"
+>searchd</B
+></A
+></H2
+><P
+>Если вы планируете использовать синонимы, стоп-слова или данные ispell,
+рекомендуется воспользоваться демоном <B
+CLASS="COMMAND"
+>searchd</B
+> (См. <A
+HREF="dpsearch-searchd.ru.html"
+>&#1056;&#1072;&#1079;&#1076;. 5.4</A
+>&#62;).
+Демон <B
+CLASS="COMMAND"
+>searchd</B
+> при запуске загружает эти данные и держит их в памяти.
+Это позволяет сократить среднее время выполнения запросов на поиск.</P
+><P
+>Таже <B
+CLASS="COMMAND"
+>searchd</B
+> может загружать предварительно в память некоторые данные об URL 
+(по 20 байт на каждую проиндекированую страницу) и лимиты cache mode (4 или 8 байт на каждый URL в зависимости от
+типа лимита). Это позволяет сократить среднее время обработки запроса.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEARCH-CACHE"
+>5.3.2. Кэширование результатов поиска</A
+></H2
+><A
+NAME="AEN3868"
+></A
+><P
+></P
+><P
+>Используйте команду "<B
+CLASS="COMMAND"
+>Cache yes</B
+>" в вашем поисковом шаблоне <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (или в файле конфигурации <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>, если используется <SPAN
+CLASS="APPLICATION"
+>searchd</SPAN
+>) для включения кэша результатов поиска.
+Это позволит значительно сократить время поиска при повторных запросах.</P
+><P
+>Если вы используете кэширование результатов поиска, пожалуйста, не забудьте очищать директорию <TT
+CLASS="FILENAME"
+>var/cache</TT
+> после каждого сеанса индексирования/переиндексирования.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MFS-REC"
+>5.3.3. Рекомендация использовать файловую систему в памяти (mfs)</A
+></H2
+><P
+>Если вы планируете использовать cache mode и имеете достаточно оперативной памяти на вашем компьютере, 
+вы можете разместить директорию <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var</TT
+>
+на файловой системе в памяти компьютера (mfs). Это ускорит как индексирование, так и поиск.</P
+><P
+>Если памяти недостаточно, что поместить в ней <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var</TT
+> целиком, 
+вы можете разместить на mfs любую из директорий <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var/tree</TT
+>,
+<TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var/url</TT
+> или <TT
+CLASS="FILENAME"
+>/usr/local/dpsearch/var/store</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="URLINFO-CMD"
+>5.3.4. Команда <B
+CLASS="COMMAND"
+>URLInfoSQL</B
+></A
+></H2
+><A
+NAME="AEN3891"
+></A
+><P
+>Для способа хранения cache вы можете использовать команду <B
+CLASS="COMMAND"
+>URLInfoSQL no</B
+> для выключения сохранения
+информации об URL в SQL-базе. Однако использовав эту команду, вы потеряете возможность использовать лимиты по языку и типу документов.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SRVINFO-CMD"
+>5.3.5. Команда <B
+CLASS="COMMAND"
+>SRVInfoSQL</B
+></A
+></H2
+><A
+NAME="AEN3899"
+></A
+><P
+>При помощи команды <B
+CLASS="COMMAND"
+>SRVInfoSQL no</B
+> вы можете выключить запись вспомогательной информации в SQL-таблицу "srvinfo".
+В этом случае содержимое таблицы не может быть использовано для загрузки конфигурации командой <B
+CLASS="COMMAND"
+>LoadServerTable</B
+> (См. <A
+HREF="dpsearch-srvtable.ru.html#SRVTABLE-LOAD"
+>&#1056;&#1072;&#1079;&#1076;. 3.8.1</A
+>&#62;).</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MARKFORINDEX-CMD"
+>5.3.6. Команда <B
+CLASS="COMMAND"
+>MarkForIndex</B
+></A
+></H2
+><A
+NAME="AEN3909"
+></A
+><P
+>По умолчанию, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> помечает все URL, отбираемые к индексированию, как ожидающие индексирования
+через 4 часа. 
+Это позволяет избежать возможного одновременного индексирования одно и того же URL двумя параллельно запущеными копиями indexer.
+Однако для больших поисковых баз эта операция пометки может занять некоторое время. Вы можете выключить такую пометку используя команду
+<B
+CLASS="COMMAND"
+>"MarkForIndex no"</B
+> в вашем файле конфигурации <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="CHECKINSERTSQL-CMD"
+>5.3.7. Команда <B
+CLASS="COMMAND"
+>CheckInsertSQL</B
+></A
+></H2
+><A
+NAME="AEN3919"
+></A
+><P
+>По умолчанию, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> пытается добавлять данные в SQL-базу вне зависимости, 
+есть она уже там или нет. На некоторых системах, это может вызывать дополнительную обработку сообщений об ошибках.
+Чтобы избежать появления таких ошибок, вы можете добавить команду <B
+CLASS="COMMAND"
+>CheckInsertSQL yes</B
+> в ваш файл конфигурации
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PERF-MYSQL"
+>5.3.8. Производительность <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+></A
+></H2
+><P
+>Пользователи <SPAN
+CLASS="APPLICATION"
+>MySQL</SPAN
+> могут задать
+опцию <CODE
+CLASS="OPTION"
+>DELAY_KEY_WRITE=1</CODE
+> для таблиц <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+>.
+Это позволит быстрее обновлять индексы, т.к.они не будут записываться на диск пока файл не будет закрыт.
+<CODE
+CLASS="OPTION"
+>DELAY_KEY_WRITE</CODE
+> целиком исключает обновление индексов на диске. </P
+><P
+>С этой опцией индексы хранятся только в памяти и записываются на диск
+в последнюю очередь, по команду  <B
+CLASS="COMMAND"
+>FLUSH TABLES</B
+> или по завершению <B
+CLASS="COMMAND"
+>mysqld</B
+>.
+Запись обновлённых индексов на диск может занимать минуты и нетерпеливые пользователи могут прибить сервер
+командой <TT
+CLASS="LITERAL"
+>kill -9</TT
+> и этим разрушить индексные файлы.
+Другим неудобством является необходимость запуска <TT
+CLASS="LITERAL"
+>myisamchk</TT
+> для этих таблиц перед стартом
+<B
+CLASS="COMMAND"
+>mysqld</B
+> для проверки, на случай, если <TT
+CLASS="LITERAL"
+>mysqld</TT
+> был убит до этого.</P
+><P
+>По этим причинам мы не включили эту опцию в структуру наших таблиц по умолчанию.
+Т.к. вся информация в индексах может быть восстановлена из данных, находящихся в таблицах, вы не потеряете данные,
+используя опцию <CODE
+CLASS="OPTION"
+>DELAY_KEY_WRITE</CODE
+>. Но используйте её на свой страх и риск.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ARES"
+>5.3.9. Библиотека асинхронного резолвера</A
+></H2
+><P
+>Использование <A
+HREF="http://c-ares.haxx.se/"
+TARGET="_top"
+>c-ares</A
+>, 
+библиотеки асинхронного резолвера (dns/c-ares в коллекции портов FreeBSD), позволяет для каждой индексирующей нити выполнять 
+запросы к DNS без блокировки. Пожалуйста учтите, это также повышает число одновременных запросов к вашему DNS серверу.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-cachemode.ru.html"
+ACCESSKEY="P"
+>&#1055;&#1088;&#1077;&#1076;.</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.ru.html"
+ACCESSKEY="H"
+>&#1053;&#1072;&#1095;&#1072;&#1083;&#1086;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-searchd.ru.html"
+ACCESSKEY="N"
+>&#1057;&#1083;&#1077;&#1076;.</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+NAME="AEN3571"
+></A
+>
+Способ хранения Cache</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-howstore.ru.html"
+ACCESSKEY="U"
+>&#1059;&#1088;&#1086;&#1074;&#1077;&#1085;&#1100; &#1074;&#1099;&#1096;&#1077;</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Поддержка SearchD
+<A
+NAME="AEN3949"
+></A
+></TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

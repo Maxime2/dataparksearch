@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDetails resource-id="25638033" lifetime="0"
+resource-status="RAW_CONTENT">
+ <body-text>
+   <fragment id="watermark">
+     <text>
+       <![CDATA[<a href="http://www.dowjones.com" target=new><img
+src="/img/djlogobluesm.gif" WIDTH="125" HEIGHT="30" }ALT="Dow Jones"
+border="0"></a><BR>
+]]>
+     </text>
+   </fragment>
+   <fragment id="20040101000791">
+     <headline>
+       <![CDATA[<H2>DJ CHINA PRESS: Netcom Wants IPO Shr Price Set Around Jan
+15</H2>]]>
+     </headline>
+     <pubdate>
+       <![CDATA[Thu Jan 1, 2004 23:41:00<BR>
+]]>
+     </pubdate>
+     <text>
+       <![CDATA[<FONT FACE='Courier'><BR>
+
+<P>  BEIJING (Dow Jones)--China Netcom Group has asked advisers to decide on
+the price of its initial public offering shares during the week of Jan. 15,
+with a final decision expected by Jan. 22, the Beijing Morning Post reports.
+<P>  The country's second largest fixed-line operator is likely to list no
+later than the summer of 2004, based on the group's current restructuring
+schedule, industry sources said without elaborating, according to the paper.
+<P>  Earlier reports have said Netcom intends to list shares in Hong Kong and
+New York.
+<P>  It is the only entity among China's four large state-run telecom
+companies that remains unlisted. Dominant fixed-line operator China Telecom
+Group lists part of its assets as China Telecom Corp. (CHA), while mobile
+phone network duopoly China Mobile Communications Corp. and China United
+Telecommunications Corp. list a portion of their assets as China Mobile Ltd.
+(CHL) and China Unicom Ltd. (CHU), respectively. <BR>
+
+<P>  Newspaper Web site: http://www.morningpost.com.cn <BR>
+
+<P>  -By China Bureau, Dow Jones Newswires; 8610 6588-5848;
+djnews.beijing@dowjones.com <BR>
+
+<P>  (END) Dow Jones Newswires
+<P>  01-01-04 2341ET- - 11 41 PM EST 01-01-04</FONT>]]>
+     </text>
+   </fragment>
+   <fragment id="footnote">
+     <text>
+       <![CDATA[<BR><I>This is a real-time news story and may be updated in
+the near future.</I><BR>]]>
+     </text>
+   </fragment>
+ </body-text>
+ <resource-id>
+   <![CDATA[25638033]]>
+ </resource-id>
+ <resource-status>
+   <![CDATA[RAW_CONTENT]]>
+ </resource-status>
+ <lifetime>
+   <![CDATA[0]]>
+ </lifetime>
+ <resource-title>
+   <![CDATA[DJ CHINA PRESS: Netcom Wants IPO Shr Price Set Around Jan 15]]>
+ </resource-title>
+ <resource-type>
+   <![CDATA[DOWJONES]]>
+ </resource-type>
+ <source>
+   <![CDATA[Dow Jones]]>
+ </source>
+ <author-name>
+   <![CDATA[none]]>
+ </author-name>
+ <content-provider>
+   <![CDATA[Dow Jones International Newswires]]>
+ </content-provider>
+ <copyright>
+   <![CDATA[none]]>
+ </copyright>
+ <email-contact>
+   <![CDATA[none]]>
+ </email-contact>
+ <resource-file-name>
+   <![CDATA[2004-01-01_BT_000791.story.xml]]>
+ </resource-file-name>
+ <publication-date>
+   <![CDATA[2004-01-01 23:41:00]]>
+ </publication-date>
+</ResourceDetails>
+
+
+

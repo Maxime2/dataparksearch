@@ -1,0 +1,1016 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Relevance</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="DataparkSearch Engine 4.54"
+HREF="index.en.html"><LINK
+REL="UP"
+TITLE="Searching documents"
+HREF="dpsearch-doingsearch.en.html"><LINK
+REL="PREVIOUS"
+TITLE="Designing search.html"
+HREF="dpsearch-html.en.html"><LINK
+REL="NEXT"
+TITLE="Search queries tracking"
+HREF="dpsearch-track.en.html"><LINK
+REL="STYLESHEET"
+TYPE="text/css"
+HREF="datapark.css"><META
+NAME="Description"
+CONTENT="DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."><META
+NAME="Keywords"
+CONTENT="shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000C4"
+VLINK="#1200B2"
+ALINK="#C40000"
+><!--#include virtual="body-before.html"--><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>DataparkSearch Engine 4.54: Reference manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="dpsearch-html.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 8. Searching documents</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="dpsearch-track.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="REL"
+>8.5. Relevance</A
+></H1
+><A
+NAME="AEN5780"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REL-ORDER"
+>8.5.1. Ordering documents</A
+></H2
+><P
+><SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> by default sorts results first by <TT
+CLASS="LITERAL"
+>relevency</TT
+>
+and second by <TT
+CLASS="LITERAL"
+>popularity rank</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="RELEVANCY"
+>8.5.2. Relevance calculation</A
+></H2
+><P
+>In indexing, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> divides every document onto sections. A section is any part of the document, 
+for example, for HTML documents this may be TITLE or META Description tag.</P
+><P
+>In addition to sections, some document factors are also take in account for relevance calculation: the average distance between
+query words, the number of query word occurrences, the position of first occurrence of a query word, the difference between the
+distribution of query word counts and the uniform distribution.</P
+><P
+>In searching, <SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> compares every document found against an "ideal" document. The "ideal"
+document should have query words in every section defined and should have also the predefined values of additional factors.</P
+><P
+>Since sections definition located only in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file, use
+<A
+NAME="AEN5797"
+></A
+> <B
+CLASS="COMMAND"
+>NumSections</B
+>
+command in <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+> or in <TT
+CLASS="FILENAME"
+>search.htm</TT
+> to specify the number od section used.
+By default, this value is 256. But note, <B
+CLASS="COMMAND"
+>NumSections</B
+> do not affect document ordering, only the relevance value.</P
+><DIV
+CLASS="TABLE"
+><A
+NAME="AEN5804"
+></A
+><P
+><B
+>Table 8-3. Configure-time parameters to tune relevance calculation (switches for <B
+CLASS="COMMAND"
+>configure</B
+>)</B
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><COL><COL><TBODY
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--enable-rel</CODE
+></TD
+><TD
+><P
+>This option enables "full", "fast" or "ultra" version of relevance calculation. Value by default: full (i.e. full relevance calculation).</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--disable-reldistance</CODE
+></TD
+><TD
+><P
+>This option disables accounting of average word distance for relevance calculation. Value by default: enabled.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--disable-relposition</CODE
+></TD
+><TD
+><P
+>This option disables accounting of first query word position for relevance calculation. Value by default: enabled.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--disable-relwrdcount</CODE
+></TD
+><TD
+><P
+>This option disables accounting of word counts for relevance calculation. Value by default: enabled.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-avgdist=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as the best average distance between words in document found.
+Value by default: 464.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-bestpos=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as the best value of first word position in document found.
+Value by default: 4.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-bestwrdcnt=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as the best number of each query word in document found. 
+Value by default: 11.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-distfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as a factor for average word distance for relevance calculation. 
+Value by default: 0.2.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-lessdistfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as factor of average word distance in relevance calculation when average
+distance is less than value specified with <CODE
+CLASS="OPTION"
+>--with-avgdist</CODE
+>.
+Default value is <CODE
+CLASS="OPTION"
+>--with-distancefactor</CODE
+> multiply by 2.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-posfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as factor for difference between first query word position in document found and best position specified by <CODE
+CLASS="OPTION"
+>--with-bestpos</CODE
+> option. 
+Value by default: 0.5.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-lessposfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as factor of first word position in relevance calculation when it less than value
+specified with <CODE
+CLASS="OPTION"
+>--with-bestpos</CODE
+>.
+Default value is <CODE
+CLASS="OPTION"
+>--with-posfactor</CODE
+> multyply by 4.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-wrdcntfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as factor for difference between count of query words in document found
+and the best value specified by <CODE
+CLASS="OPTION"
+>--with-bestwrdcnt</CODE
+> option. 
+Value by default: 0.4.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-lesswrdcntfactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as factor of word count in relevance calculation when this word count is less than
+value specified with <CODE
+CLASS="OPTION"
+>--with-bestwrdcnt</CODE
+>.
+Default value is <CODE
+CLASS="OPTION"
+>--with-wrdcntfactor</CODE
+> multiply by 10.</P
+></TD
+></TR
+><TR
+><TD
+><CODE
+CLASS="OPTION"
+>--with-wrdunifactor=<CODE
+CLASS="OPTION"
+>NUM</CODE
+></CODE
+></TD
+><TD
+><P
+>This option specify the <CODE
+CLASS="OPTION"
+>NUM</CODE
+> as factor for difference of query word counts from uniform distribution. 
+Value by default: 1.5.</P
+></TD
+></TR
+></TBODY
+></TABLE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="REL-FULL"
+>8.5.2.1. A full method of relevance calculation.</A
+></H3
+><A
+NAME="AEN5909"
+></A
+><P
+>Let <TT
+CLASS="LITERAL"
+>x</TT
+> is the weighted sum of all sections. The weights for these sections are define by 
+<CODE
+CLASS="OPTION"
+>wf</CODE
+> parameter (see <A
+HREF="dpsearch-doingsearch.en.html#SEARCH-CHANGEWEIGHT"
+>Section 8.1.3</A
+>&#62;). Let <TT
+CLASS="LITERAL"
+>y</TT
+> is the weighted sum of
+differences between values of additional factors of document found and corresponding values of additional factors of the "ideal"
+document. And let <TT
+CLASS="LITERAL"
+>xy</TT
+> is the weighted sum of sections where at least one query word has been found. Then value of
+relevance for a document found is calculates as: <TT
+CLASS="LITERAL"
+>0.5 * ( x + xy ) / (x + y)</TT
+>.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="REL-FAST"
+>8.5.2.2. A fast method of relevance calculation.</A
+></H3
+><A
+NAME="AEN5922"
+></A
+><P
+>Let <TT
+CLASS="LITERAL"
+>x</TT
+> is the number of bits used in weighted values of all sections defined. Let <TT
+CLASS="LITERAL"
+>y</TT
+> is
+the weighted sum of differences between additional factors of document found and corresponding values of the "ideal" document.
+And let <TT
+CLASS="LITERAL"
+>xy</TT
+> is the number of bits where weighted values of sections of the "ideal" document are different to weighted
+values of sections of document found. Then value of document relevance is calculates as: 
+<TT
+CLASS="LITERAL"
+>( x - xy ) / ( x + y )</TT
+>.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="POPRANK"
+>8.5.3. Popularity rank</A
+></H2
+><A
+NAME="AEN5933"
+></A
+><P
+><A
+NAME="AEN5936"
+></A
+>
+<SPAN
+CLASS="APPLICATION"
+>DataparkSearch</SPAN
+> support two methods for popularity rank calculation. A method used in previous versions
+called &quot;Goo&quot;, and new method is called &quot;Neo&quot;. By default, the <TT
+CLASS="LITERAL"
+>Goo</TT
+> method is used. To select
+desired PopRank calculation method use <B
+CLASS="COMMAND"
+>PopRankMethod</B
+> command:
+<PRE
+CLASS="PROGRAMLISTING"
+>PopRankMethod Neo</PRE
+></P
+><P
+><A
+NAME="AEN5944"
+></A
+>
+You need enable links collection by <B
+CLASS="COMMAND"
+>CollectLinks yes</B
+> command in your 
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file for <TT
+CLASS="LITERAL"
+>Neo</TT
+> method and for full functionality
+of <TT
+CLASS="LITERAL"
+>Goo</TT
+> method.
+But this slow down a bit indexing speed. By default, links collection is not enabled. </P
+><P
+>By default, only intersite links (i.e. links from a page on 
+one site to a page on an another site) are taken in account for the popularity rank calculation.
+If you place
+<B
+CLASS="COMMAND"
+><A
+NAME="AEN5953"
+></A
+>PopRankSkipSameSite no</B
+>
+command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file, <B
+CLASS="COMMAND"
+>indexer</B
+> take all links for this purpose.</P
+><P
+>You may assign initial value for page popularity rank using DP.PopRank META tag (see <A
+HREF="dpsearch-htmlparser-meta.en.html"
+>Section 4.3</A
+>&#62;).</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="GOO-POPRANK"
+>8.5.3.1. &quot;Goo&quot; popularity rank calculation method</A
+></H3
+><P
+>The popularity rank calculation is made in two stages. At first stage, the value of <CODE
+CLASS="OPTION"
+>Weight</CODE
+> parameter
+for every server is divide by number of links from this server. Thus, the weight of one link from this server is calculated.
+At second stage, for every page we find the sum of weights of all links pointed to this page. This sum is popularity rank for this page.</P
+><P
+><A
+NAME="AEN5965"
+></A
+>
+By default, the value of <CODE
+CLASS="OPTION"
+>Weight</CODE
+> parameter is equal to 1 for all servers indexed.
+You may change this value by <B
+CLASS="COMMAND"
+>ServerWeight</B
+> command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file or
+directly in <TT
+CLASS="LITERAL"
+>server</TT
+> table, if you load servers configuration from this table.</P
+><P
+>If you place
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN5974"
+></A
+>PopRankFeedBack yes</CODE
+>
+command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file, <B
+CLASS="COMMAND"
+>indexer</B
+> will calculate site weights before page rank
+calculation. To do that, <B
+CLASS="COMMAND"
+>indexer</B
+> calculate sum of popularity rank for all pages from same site. If this sum will
+great 1, the weight for site set to this sum, otherwise, site weight is set to 1.</P
+><P
+>If you place
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN5982"
+></A
+>PopRankUseTracking yes</CODE
+>
+command in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file, <B
+CLASS="COMMAND"
+>indexer</B
+> will calculate site weight as the number of 
+tracked queries with restriction on this site.</P
+><P
+>If you place
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN5989"
+></A
+>PopRankUseShowCnt yes</CODE
+>
+command in <TT
+CLASS="FILENAME"
+>search.htm</TT
+> (or <TT
+CLASS="FILENAME"
+>searchd.conf</TT
+>) file, then for every result shown to user
+corresponding <TT
+CLASS="LITERAL"
+>url.shows</TT
+> value will be increased on 1, if relevance for this result is great or equal to
+value specified by 
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN5996"
+></A
+>PopRankShowCntRatio</CODE
+>
+command (default value is 25.0).
+If you place <CODE
+CLASS="OPTION"
+>PopRankUseShowCnt yes</CODE
+> in <TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> file, <B
+CLASS="COMMAND"
+>indexer</B
+>
+will add to url's PopularityRank the value of <TT
+CLASS="LITERAL"
+>url.shows</TT
+> multiplied by value, specified in
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6004"
+></A
+>PopRankShowCntWeight</CODE
+>
+command (default value is 0.01).</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="NEO-POPRANK"
+>8.5.3.2. &quot;Neo&quot; popularity rank calculation method</A
+></H3
+></DIV
+><P
+>For this method is supposed all pages are neurons and links between pages are links between neurons.
+So it's possible use an error back-propagation algorithm to train this neural network. Popularity rank for a page is the 
+activity level for corresponding neuron. See <A
+HREF="http://www.maxime.net.ru/doc/Neo-en.pdf"
+TARGET="_top"
+>short description of The Neo 
+Popularity Rank for web pages</A
+>.</P
+><P
+>You may use
+<CODE
+CLASS="OPTION"
+><A
+NAME="AEN6013"
+></A
+>PopRankNeoIterations</CODE
+>
+command to specify the number of iterations of the Neo Popularity Rank calculation. Default value is 3.</P
+><P
+><A
+NAME="AEN6017"
+></A
+>
+By default, the Neo Popularity Rank is caclulated along with indexing. To speed up indexing, 
+you may postpone Popularity Rank execution using <B
+CLASS="COMMAND"
+>PopRankPostpone</B
+> command:</P
+><PRE
+CLASS="PROGRAMLISTING"
+>PopRankPostpone yes</PRE
+><P
+>Then you may calculate the Neo Popularity Rank after indexing in same way as for method Goo, i.e.: 
+<B
+CLASS="COMMAND"
+>indexer -TR</B
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REL-BOOL"
+>8.5.4. Boolean search</A
+></H2
+><A
+NAME="AEN6026"
+></A
+><P
+>Please note that in case of boolean searching for two or more
+words, you have to enter operators (&amp;, |, ~, AND, OR, NOT, NEAR, ALL, etc.). I.e. it is necessary
+to enter <KBD
+CLASS="USERINPUT"
+>a &amp; book</KBD
+> instead of <KBD
+CLASS="USERINPUT"
+>a book</KBD
+>.
+See also <A
+HREF="dpsearch-doingsearch.en.html#SEARCH-BOOL"
+>Section 8.1.7</A
+>&#62;.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="REL-CWORDS"
+>8.5.5. Crosswords</A
+></H2
+><A
+NAME="AEN6035"
+></A
+><A
+NAME="AEN6037"
+></A
+><P
+>This feature allows to assign words between
+&lt;a href="xxx"&gt; and &lt;/a&gt; also to a document this link leads
+to.  To enable Crosswords, please use
+<B
+CLASS="COMMAND"
+>CrossWords yes</B
+> command in
+<TT
+CLASS="FILENAME"
+>indexer.conf</TT
+> and
+<TT
+CLASS="FILENAME"
+>search.htm</TT
+>, and define <KBD
+CLASS="USERINPUT"
+>crosswords</KBD
+> section in <TT
+CLASS="FILENAME"
+>sections.conf</TT
+> file.</P
+><P
+><A
+NAME="AEN6047"
+></A
+>
+With the <B
+CLASS="COMMAND"
+>CrossWordsSkipSameSite</B
+> command you can manage the collection of crosswords from the same site.
+If the option <KBD
+CLASS="USERINPUT"
+>yes</KBD
+> is set (by default), the crosswords from the same site doen't collected. 
+If you wish to collect such crosswords, you need to set <KBD
+CLASS="USERINPUT"
+>no</KBD
+> option explicitly:
+<PRE
+CLASS="PROGRAMLISTING"
+>CrossWordsSkipSameSite no</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="SEA"
+>8.5.6. The Summary Extraction Algorithm (SEA)</A
+></H2
+><A
+NAME="AEN6055"
+></A
+><A
+NAME="AEN6058"
+></A
+><A
+NAME="AEN6061"
+></A
+><A
+NAME="AEN6064"
+></A
+><P
+><TT
+CLASS="LITERAL"
+>The Summary Exctraction Algorith (SEA)</TT
+> builds the summary of three or more the most relevant sentences of the each
+document indexed, if this document consists of six or more sentences. To enable this feature, add this command to your
+<TT
+CLASS="FILENAME"
+>seaction.conf</TT
+> file:
+<PRE
+CLASS="PROGRAMLISTING"
+>Section sea x y</PRE
+>
+where <CODE
+CLASS="OPTION"
+>x</CODE
+> - the number of section and <CODE
+CLASS="OPTION"
+>y</CODE
+> - the maximum length of this section value, 
+leave 0,  if you do not want show this in result pages.
+If you specify <CODE
+CLASS="OPTION"
+>y</CODE
+> non-zero, you may use <TT
+CLASS="LITERAL"
+>$(sea)</TT
+> meta-variable in your search 
+template to show the summary in result pages.</P
+><P
+>Related configuration directives:</P
+><P
+><A
+NAME="AEN6077"
+></A
+>
+The <B
+CLASS="COMMAND"
+>SEASentenceMinLength</B
+> command specify the minimal length of sentence to be used in summary construction
+using the SEA. Default value: 64.</P
+><P
+><A
+NAME="AEN6082"
+></A
+>
+The <B
+CLASS="COMMAND"
+>SEASentences</B
+> command uses to specify the maximal number of sentences with length greater or equal to the value
+specified by the <B
+CLASS="COMMAND"
+>SEASentenceMinLength</B
+> command, which are used for summary construction in the SEA. Default value: 32.
+Since the summary construction using SEA is nonlinear expensive (affects only indexing), 
+you may adjust this value according to desired indexing performance.</P
+><P
+><A
+NAME="AEN6088"
+></A
+>
+With <B
+CLASS="COMMAND"
+>SEASections</B
+> command you can specify the list of document sections which are used to construct SEA summary.
+By default, only the "body" section is used for SEA summary construction.
+<PRE
+CLASS="PROGRAMLISTING"
+>SEASections "body, title"</PRE
+></P
+><P
+>This algorithm of automatic summary construction is based on ideas of Rada Mihalcea described in the paper 
+<A
+HREF="http://www.cs.unt.edu/~rada/papers/mihalcea.ijcnlp05.pdf"
+TARGET="_top"
+>Rada Mihalcea and Paul Tarau, 
+An Algorithm for Language Independent Single and Multiple Document Summarization, 
+in Proceedings of the International Joint Conference on Natural Language Processing (IJCNLP), Korea, October 2005</A
+>.</P
+><P
+>Differences in DataparkSearch's SEA:</P
+><P
+></P
+><UL
+><LI
+><P
+>Initial weights for graph edges are calculates as a measure of similarity between 
+3-gram distributions of corresponding sentences.</P
+></LI
+><LI
+><P
+>Initial value for all graph vertexes is equal to the value of 1 / (number of sentences + 1) in the current implementation.</P
+></LI
+><LI
+><P
+>The Neo PopRank algorithm is used as ranking algorithm to iterate values assigned to vertexes.</P
+></LI
+></UL
+><P
+>After indexing of document collection with this section defined, you may use $(sea) meta-variable in your 
+template to show summary for a search result.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="dpsearch-html.en.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.en.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="dpsearch-track.en.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Designing search.html</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="dpsearch-doingsearch.en.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Search queries tracking</TD
+></TR
+></TABLE
+></DIV
+><!--#include virtual="body-after.html"--></BODY
+></HTML
+>

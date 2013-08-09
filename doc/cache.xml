@@ -1,0 +1,40 @@
+<sect1 id="srcache">
+	<title>Search results cache</title>
+<indexterm><primary>Search results cache</primary></indexterm>
+	<para>Search results cache allows <filename>search.cgi</filename> to make very fast
+response on recently used queries as well as user's navigation though the pages of the same result.</para>
+
+	<para>Search results cache is disabled by default. You may use
+<command>Cache yes</command> command in <filename>search.htm</filename> to enable results
+caching. If you use <literal>searchd</literal>, add "<command>Cache yes</command>"
+command to <filename>searchd.conf</filename> file.</para>
+
+	<para>Search cache is located in
+<literal>$PREFIX/var/cache/</literal> subdirectory, where
+<literal>$PREFIX</literal> is <application>DataparkSearch</application> installation base
+directory. Each result is stored in a separate file.</para>
+
+<para><indexterm><primary>Command</primary><secondary>HoldCache</secondary></indexterm>
+By defaults, search results cache is not deleted
+automatically. You have to delete it every time after indexer's work
+to avoid displaying non-recent cached results. 
+Or you may specify a refresh period for search results cache using
+<command>HoldCache</command> command:
+<programlisting>
+HoldCache &lt;time&gt;
+</programlisting>
+For &lt;time&gt; format see description of <command>Period</command> command in <xref linkend="period_cmd"/>.
+<programlisting>
+HoldCache 3h
+</programlisting>
+<!--
+It is also reasonable
+to insert cache cleaning into system crontab, for example once a
+day. To clean cache just remove all files in
+<literal>$PREFIX/var/cache/</literal> directory. For example:
+		<programlisting>
+/bin/rm -f /usr/local/dpsearch/var/cache/*
+</programlisting>
+-->
+		</para>
+</sect1>

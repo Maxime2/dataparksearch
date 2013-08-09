@@ -1,0 +1,278 @@
+<sect2 id="htdb">
+	<title>Indexing SQL database tables (htdb: virtual URL scheme)</title>
+<indexterm><primary>HTDB</primary><secondary>Indexing SQL database tables</secondary></indexterm>
+
+	<para><application>DataparkSearch</application> can index SQL database text fields - the 
+so called  htdb: virtual URL scheme.</para>
+	<para>Using htdb:/ virtual scheme you can build full text
+index of your SQL tables as well as index your database driven WWW
+server.</para>
+	<note>
+		<para>You must have PRIMARY key on the table you want to index.</para>
+	</note>
+	<sect3 id="htdb-indexer">
+		<title>HTDB indexer.conf commands</title>
+		<para>Five <filename>indexer.conf</filename> commands provide HTDB. They are 
+<command>HTDBAddr</command>, <command>HTDBList</command>, <command>HTDBLimit</command>, <command>HTDBDoc</command> and
+<command>HTDBText</command>. 
+</para>
+<para id="htdbaddr-cmd">
+<indexterm><primary>Command</primary><secondary>HTDBAddr</secondary></indexterm>
+			<command>HTDBAddr</command> is used to specify database connection. 
+It's syntax identical to <command>DBAddr</command> command.
+</para>
+
+		<para id="htdblist-cmd">
+<indexterm><primary>Command</primary><secondary>HTDBList</secondary></indexterm>
+			<command>HTDBList</command> is SQL query to
+generate list of all URLs which correspond to records in the table
+using PRIMARY key field. You may use either absolute or relative URLs
+in HTDBList command:</para>
+		<para>For example:
+		<programlisting>
+HTDBList "SELECT concat('htdb:/',id) FROM messages"
+    or
+HTDBList "SELECT id FROM messages"
+</programlisting>
+</para>
+
+<para id="htdblimit-cmd"><indexterm><primary>Command</primary><secondary>HTDBLimit</secondary></indexterm>
+<command>HTDBLimit</command> command may be used to specify maximal number of records in one SELECT operation.
+It allow reduce memory usage for big data tables indexing. For example:
+<programlisting>
+HTDBLimit 512
+</programlisting>
+</para>
+
+		<para id="htdbdoc-cmd">
+<indexterm><primary>Command</primary><secondary>HTDBDoc</secondary></indexterm>
+			<command>HTDBDoc</command> is a query to get only certain record from database using PRIMARY key value.</para>
+		<para>HTDBList SQL query is used for all URLs which
+end with '/' sign. For other URLs SQL query given in HTDBDoc is
+used.</para>
+		<note>
+			<para>HTDBDoc query must return FULL HTTP
+response with headers. So, you can build very flexible indexing system
+giving different HTTP status in query. Take a look at HTTP response
+codes section of documentation to understand indexer behavior when it
+gets different HTTP status.</para>
+
+		</note>
+		<para>If there is no result of HTDBDoc or query does
+return several records, HTDB retrieval system generates "HTTP 404 Not
+Found". This may happen at reindex time if record was deleted from
+your table since last reindexing. You may use <command>HoldBadHrefs 0</command> to
+delete such records from <application>DataparkSearch</application> tables as well.</para>
+
+		<para>You may use several HTDBDoc/List commands in one
+<filename>indexer.conf</filename> with corresponding Server
+commands.</para>
+
+<para id="htdbtext-cmd">
+<indexterm><primary>Command</primary><secondary>HTDBText</secondary></indexterm>
+<command>HTDBText &lt;section&gt;</command> is a query to get raw text data from database using PRIMARY key value 
+collected via <command>HTDBList</command> command.
+The &lt;section&gt; parameter is specify the section name useing for storing this data. This query may return as many rows as required.
+You may specify several <command>HTDBText</command> commands per <command>Server</command> or <command>Realm</command> command.
+		<programlisting>
+DBAddr mysql://foo:bar@localhost/database/?dbmode=single
+
+HTDBAddr mysql://foofoo:barbar@localhost/database/
+
+HTDBList "SELECT DISTINCT topic_id FROM messages"
+
+HTDBText body "SELECT raw_text\
+FROM messages WHERE topic_id='$1'"
+
+Server htdb:/
+</programlisting>
+</para>
+
+<para>It' possible to specify both <command>HTDBDoc</command> and <command>HTDBText</command> commands per one <command>Server</command>
+or <command>Realm</command> command. <command>HTDBText</command> commands are processing first.
+</para>
+
+	</sect3>
+	<sect3 id="htdb-var">
+		<title>HTDB variables</title>
+<indexterm><primary>HTDB</primary><secondary>variables</secondary></indexterm>
+
+		<para>You may use PATH parts of URL as parameters of
+both HTDBList and HTDBDoc SQL queries. All parts are to be used as $1,
+$2,  ... $n, where number is the number of PATH part:
+
+		<programlisting>
+htdb:/part1/part2/part3/part4/part5
+         $1    $2    $3    $4    $5
+</programlisting>
+</para>
+		<para>For example, you have this <filename>indexer.conf</filename> command:
+		<programlisting>
+HTDBList "SELECT id FROM catalog WHERE category='$1'"
+</programlisting>
+		</para>
+		<para>When htdb:/cars/  URL is indexed, $1 will be replaced with 'cars':
+		<programlisting>
+SELECT id FROM catalog WHERE category='cars'
+</programlisting>
+		</para>
+		<para>You may use long URLs to provide several
+parameters to both HTDBList and HTDBDoc queries. For example,
+<literal>htdb:/path1/path2/path3/path4/id</literal> with query:
+		<programlisting>
+HTDBList "SELECT id FROM table WHERE field1='$1' AND field2='$2' and field3='$3'"
+</programlisting>
+		</para>
+		<para>This query will generate the following URLs:
+		<programlisting>
+htdb:/path1/path2/path3/path4/id1
+...
+htdb:/path1/path2/path3/path4/idN
+</programlisting>
+</para>
+		<para>for all values of the field "id" which are in HTDBList output.</para>
+		
+		<para>It's possible to specify a regex-based pattern to match the URL into HTDB variables for <command>HTDBDoc</command> and 
+<command>HTDBtext</command> commands:
+<programlisting>
+HTDBText header "SELECT header FROM news WHERE section=$1 AND article=$2" "^/section/([0-9]+)/art/([0-9]+)\.html"
+</programlisting>
+		</para>
+		<para>
+		in this case the regex pattern specified is matched against the full path and filename of the URL.
+		</para>
+		<para>For the <command>HTDBText</command> command it is possible to use search template meta-variables (as for example, $(DP_ID), $(URL), etc.) to form a sql-query. E.g.:
+<programlisting>
+HTDBText hint "SELECT hint FROM hints WHERE url = '$(url)'"
+</programlisting>
+		</para>
+	</sect3>
+	<sect3 id="htdb-fulltext">
+		<title>Creating full text index</title>
+		<para>Using htdb:/ scheme you can create full text
+index and use it further in your application. Lets imagine you have a
+big SQL table which stores for example web board messages in plain
+text format. You also want to build an application with messages
+search facility. Lets say messages are stored in "messages" table with
+two fields "id" and "msg". "id" is an integer primary key and "msg"
+big text field contains messages themselves. Using usual SQL LIKE
+search may take long time to answer:
+		<programlisting>
+SELECT id, message FROM message WHERE message LIKE '%someword%'
+</programlisting>
+		</para>
+		<para>Using <application>DataparkSearch</application> htdb: scheme you have a
+possibility to create full text index on "message" table. Install
+<application>DataparkSearch</application> in usual order. Then edit your
+<filename>indexer.conf</filename>:
+		<programlisting>
+DBAddr mysql://foo:bar@localhost/search/?dbmode=single
+
+HTDBAddr mysql://foofoo:barbar@localhost/database/
+
+HTDBList "SELECT id FROM messages"
+
+HTDBDoc "SELECT concat(\
+'HTTP/1.0 200 OK\\r\\n',\
+'Content-type: text/plain\\r\\n',\
+'\\r\\n',\
+msg) \
+FROM messages WHERE id='$1'"
+
+Server htdb:/
+</programlisting>
+		</para>
+		<para>After start indexer will insert 'htdb:/' URL
+into database and will run an SQL query given in HTDBList. It will
+produce 1,2,3, ..., N values in result. Those values will be
+considered as links relative to 'htdb:/' URL. A list of new URLs in
+the form htdb:/1, htdb:/2, ... , htdb:/N will be added into
+database. Then HTDBDoc SQL query will be executed for each new
+URL. HTDBDoc will produce HTTP document for each document in the
+form:
+		<programlisting>
+HTTP/1.0 200 OK
+Content-Type: text/plain
+
+&lt;some text from 'message' field here&gt;
+</programlisting>
+		</para>
+		<para>This document will be used to create full text
+index using words from 'message' fields. Words will be stored in
+'dict' table assuming that we are using 'single' storage mode.</para>
+		<para>After indexing you can use <application>DataparkSearch</application> tables to perform search:
+		<programlisting>
+SELECT url.url 
+FROM url,dict 
+WHERE dict.url_id=url.rec_id 
+AND dict.word='someword';
+</programlisting>
+		</para>
+		<para>As far as <application>DataparkSearch</application> 'dict' table has an index
+on 'word' field this query will be executed much faster than queries
+which use SQL LIKE search on 'messages' table.</para>
+		<para>You can also use several words in search:
+		<programlisting>
+SELECT url.url, count(*) as c 
+FROM url,dict
+WHERE dict.url_id=url.rec_id 
+AND dict.word IN ('some','word')
+GROUP BY url.url
+ORDER BY c DESC;
+</programlisting>
+		</para>
+		<para>Both queries will return 'htdb:/XXX' values in
+url.url field. Then your application has to cat leading 'htdb:/' from
+those values to get PRIMARY key values of your 'messages'
+table.</para>
+	</sect3>
+	<sect3 id="htdb-web">
+		<title>Indexing SQL database driven web server</title>
+		<para>You can also use htdb:/ scheme to index your
+database driven WWW server. It allows to create indexes without having
+to invoke your web server while indexing. So, it is much faster and
+requires less CPU resources when direct indexing from WWW
+server. </para>
+		<para>The main idea of indexing database driven web
+server is to build full text index in usual order. The only thing is
+that search must produce real URLs instead of URLs in 'htdb:/...'
+form. This can be achieved using <application>DataparkSearch</application> aliasing tools.</para>
+
+		<para>HTDBList command generates URLs in the form:
+		<programlisting>
+http://search.site.ext/board/message.php?id=XXX
+</programlisting>
+		</para>
+		<para>where XXX is a "messages" table primary key values.</para>
+		<para>For each primary key value HTDBDoc command generates text/html document with HTTP headers and content like this:
+		<programlisting>
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt; ... subject field here .... &lt;/TITLE&gt;
+&lt;META NAME="Description" Content=" ... author here ..."&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt; ... message text here ... &lt;/BODY&gt;
+</programlisting>
+</para>
+		<para>At the end of <filename>doc/samples/htdb.conf</filename> we wrote three commands:
+		<programlisting>
+Server htdb:/
+Realm  http://search.site.ext/board/message.php?id=*
+Alias  http://search.site.ext/board/message.php?id=  htdb:/
+</programlisting>
+		</para>
+		<para>First command says indexer to execute HTDBList query which will generate a list of messages in the form:
+		<programlisting>
+http://search.site.ext/board/message.php?id=XXX
+</programlisting>
+		</para>
+		<para>Second command allow indexer to accept such message URLs using string match with '*' wildcard at the end.</para>
+		<para>Third command replaces
+"http://search.site.ext/board/message.php?id=" substring in URL with
+"htdb:/" when indexer retrieve documents with messages. It means that
+"http://mysearch.udm.net/board/message.php?id=xxx" URLs will be shown
+in search result, but "htdb:/xxx" URL will be indexed instead, where
+xxx is the PRIMARY key value, the ID of record in "messages"
+table.</para>
+	</sect3>
+</sect2>
