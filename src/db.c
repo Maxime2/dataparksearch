@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -398,8 +399,6 @@ static int DocUpdate(DPS_AGENT * Indexer, DPS_DOCUMENT *Doc) {
 	/* First of all check that URL must be delated */
 	
 	if(Doc->method==DPS_METHOD_DISALLOW){
-		DpsLog(Indexer,DPS_LOG_ERROR,"Deleting %s", DpsVarListFindStr(&Doc->Sections, "URL", ""));
-		DpsExecActions(Indexer, Doc, 'd');
 		result = DpsURLAction(Indexer, Doc, DPS_URL_ACTION_DELETE);
 		TRACE_OUT(Indexer);
 		return result;
@@ -823,6 +822,11 @@ __C_LINK int __DPSCALL DpsURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd) {
 	  res = DpsDocUpdate(A, D);
 	  TRACE_OUT(A);
 	  return res;
+	}
+
+	if (cmd == DPS_URL_ACTION_DELETE) {
+	    DpsLog(A, DPS_LOG_INFO, "Deleting %s", DpsVarListFindStr(&D->Sections, "URL", ""));
+	    DpsExecActions(A, D, 'd');
 	}
 
 	if (A->flags & DPS_FLAG_UNOCON) {

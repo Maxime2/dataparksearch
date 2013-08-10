@@ -2387,7 +2387,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	
 	/* Collect information from Conf */
 	
-	if(Indexer->Flags.cmd != DPS_IND_POPRANK && !Doc->Buf.buf) {
+	if(Indexer->Flags.cmd == DPS_IND_INDEX && !Doc->Buf.buf) {
 		/* Alloc buffer for document */
 		Doc->Buf.max_size = (size_t)DpsVarListFindInt(&Indexer->Vars, "MaxDocSize", DPS_MAXDOCSIZE);
 		Doc->Buf.allocated_size = DPS_NET_BUF_SIZE;
@@ -2553,6 +2553,19 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 #endif
 	    return result;
 	  }
+	}else if (Indexer->Flags.cmd == DPS_IND_FILTER) {
+	    if (Doc->method == DPS_METHOD_DISALLOW) {
+		result = DpsURLAction(Indexer, Doc, DPS_URL_ACTION_DELETE);
+		if (DPS_OK != result) {
+		    DPS_FREE(origurl); DPS_FREE(aliasurl);
+		    DpsDocFree(Doc);
+		    TRACE_OUT(Indexer);
+#ifdef WITH_PARANOIA
+		    DpsViolationExit(Indexer->handle, paran);
+#endif
+		    return result;
+		}
+	    }
 	}else if(Doc->method != DPS_METHOD_DISALLOW && Doc->method != DPS_METHOD_VISITLATER && Doc->method != DPS_METHOD_CRAWLDELAY) {
 		int	start,state;
 		int	mp3type=DPS_MP3_UNKNOWN;
@@ -2800,7 +2813,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 		}
 	}
 	
-	if (Indexer->Flags.cmd == DPS_IND_POPRANK) DpsDocFree(Doc);
+	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) DpsDocFree(Doc);
 	else {
 	  /* Free unnecessary information */
 	  DpsHrefListFree(&Doc->Hrefs);

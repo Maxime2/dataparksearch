@@ -1674,14 +1674,6 @@ int main(int argc, char **argv, char **envp) {
                     DpsLog(&Main, DPS_LOG_ERROR, "Error: '%s'", DpsEnvErrMsg(Main.Conf));
 	    }
 	    break;
-          case DPS_IND_FILTER:
-	    /*	    Conf.Flags.cmd = Main.Flags.cmd = cmd;
-		    DpsSetLockProc(&Conf, DpsLockProc);*/
-	    DpsLog(&Main,DPS_LOG_INFO, "indexer from %s-%s-%s, URL filter started with '%s'", PACKAGE, VERSION, DPS_DBTYPE, cname);
-	    if (DPS_OK != DpsURLAction(&Main, NULL, DPS_URL_ACTION_FILTER)) {
-                    DpsLog(&Main, DPS_LOG_ERROR, "Error: '%s'", DpsEnvErrMsg(Main.Conf));
-	    }
-	    break;
           case DPS_IND_REHASHSTORED:
 	    if (DPS_OK != DpsURLAction(&Main, NULL, DPS_URL_ACTION_REHASHSTORED)) {
                     DpsLog(&Main, DPS_LOG_ERROR, "Error: '%s'", DpsEnvErrMsg(Main.Conf));
