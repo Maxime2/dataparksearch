@@ -1888,7 +1888,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 
 		if ( !Server ) Server = Parent->Server;
 		if ( !Server ) {
-			DpsLog(Indexer,DPS_LOG_WARN,"No 'Server' command for url");
+			DpsLog(Indexer, DPS_LOG_INFO, "No 'Server' command for url");
 			Doc->method = DPS_METHOD_DISALLOW;
 		} else {
 		        DPS_GETLOCK(Indexer,DPS_LOCK_CONF);
@@ -2792,9 +2792,8 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 		    }
 		}
 
-/*		DpsExecActions(Indexer, Doc);*/
 		DpsVarListLog(Indexer, &Doc->Sections, DPS_LOG_DEBUG, "Response");
-	
+
 
 		if (DPS_OK == (result = DpsDocStoreHrefs(Indexer, Doc))) {
 		  if ((DPS_OK == (result = DpsStoreHrefs(Indexer))) && Indexer->Flags.collect_links  

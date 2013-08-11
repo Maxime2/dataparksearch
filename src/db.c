@@ -825,7 +825,7 @@ __C_LINK int __DPSCALL DpsURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd) {
 	}
 
 	if (cmd == DPS_URL_ACTION_DELETE) {
-	    DpsLog(A, DPS_LOG_INFO, "Deleting %s", DpsVarListFindStr(&D->Sections, "URL", ""));
+	    DpsLog(A, DPS_LOG_WARN, "Deleting %s", DpsVarListFindStr(&D->Sections, "URL", ""));
 	    DpsExecActions(A, D, 'd');
 	}
 
