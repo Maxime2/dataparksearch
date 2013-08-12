@@ -336,7 +336,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	  }
 	  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "ROBOTS.Request");
 
-	  if (Doc == NULL) {
+	  if (Doc == NULL || Indexer->Flags.cmd == DPS_IND_FILTER) {
 	    DpsDocLookupConn(Indexer, rDoc);
 	  } else {
 	    DPS_FREE(rDoc->connp.connp);
