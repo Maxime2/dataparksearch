@@ -1,4 +1,5 @@
-/* Copyright (C) 2005-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2005-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,8 +39,6 @@
 #define LOW_BORDER_EPS2 0.000001
 #define HI_BORDER_EPS  (1.0 - 0.000001)
 #define HI_BORDER_EPS2 (1.0 - 0.000001)
-#define PAS_HI -0.1
-#define PAS_LO -0.9
 
 
 static int SentCmp(const DPS_SENTENCE *s1, const DPS_SENTENCE *s2) {
@@ -68,7 +67,7 @@ int DpsSEAMake(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *excerpt,
   DPS_VAR	*Sec;
   dpsunicode_t *sentence, *lt, savec;
   double *links, *lang_cs, w;
-  /*  double delta, pdiv, cur_div, dw;*/
+  double delta, pdiv, cur_div;
   size_t l, sent_len, order;
   size_t min_len = 10000000, min_pos = 0;
   int  it;
@@ -162,115 +161,39 @@ int DpsSEAMake(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *excerpt,
     }
 
     for (i = 0; i < List.nitems; i++) {
-      List.Sent[i].Oi =  HI_BORDER_EPS / (List.nitems + 1);
-      List.Sent[i].pas = -0.499999;
+      List.Sent[i].Oi =  List.Sent[i].di = 0.5;
       if (Doc->lang_cs_map == NULL) {
-	links[i * List.nitems + i] = 1.0 /* / List.nitems*/;
+	  links[i * List.nitems + i] = 0.0;
       } else {
 	MapStat.map = &List.Sent[i].LangMap;
-	DpsCheckLangMap(Doc->lang_cs_map, &List.Sent[i].LangMap, &MapStat, DPS_LM_TOPCNT * DPS_LM_TOPCNT, 2 * DPS_LM_TOPCNT);
-	links[i * List.nitems + i] = (MapStat.miss == 0 || MapStat.hits == 0) ? 0.0 :
-	  (DPS_LM_TOPCNT * DPS_LM_TOPCNT / 2 - (double)MapStat.miss) / (DPS_LM_TOPCNT * DPS_LM_TOPCNT / 2 + (double)MapStat.hits/DPS_LM_TOPCNT) / (List.nitems + 1);
+	DpsCheckLangMap6(Doc->lang_cs_map, &List.Sent[i].LangMap, &MapStat, DPS_LM_TOPCNT * DPS_LM_TOPCNT, 2 * DPS_LM_TOPCNT);
+	links[i * List.nitems + i] = (double)MapStat.hits / (2.0 * DPS_LM_TOPCNT) / (List.nitems + 1);
       }
 #ifdef DEBUG
       DpsLog(Indexer, DPS_LOG_INFO, "Link %u->%u: %f [hits:%d miss:%d]", i, i, links[i * List.nitems + i], MapStat.hits, MapStat.miss);
 #endif
-      for (j = i + 1/*0*/; j < List.nitems; j++) {
-/*	if (i == j) { links[i * List.nitems + j] = 1.0 / List.nitems; continue; }*/
+      for (j = 0; j < List.nitems; j++) {
+	  if (j == i) continue;
 	MapStat.map = &List.Sent[j].LangMap;
-	DpsCheckLangMap(&List.Sent[j].LangMap, &List.Sent[i].LangMap, &MapStat, DPS_LM_TOPCNT * DPS_LM_TOPCNT, 2 * DPS_LM_TOPCNT);
-/*	links[i * List.nitems + j] =  (double)(DPS_LM_TOPCNT - MapStat.miss) / (double)(MapStat.hits + MapStat.miss + 1);*/
-/*	links[j * List.nitems + i] = links[i * List.nitems + j] = List.nitems / ((double)MapStat.hits + 1.0);*/
+	DpsCheckLangMap6(&List.Sent[j].LangMap, &List.Sent[i].LangMap, &MapStat, DPS_LM_TOPCNT * DPS_LM_TOPCNT, 2 * DPS_LM_TOPCNT);
 
-/*	links[j * List.nitems + i] = links[i * List.nitems + j] = (MapStat.miss == 0) ? ((MapStat.hits == 0) ? 0.0 : 1.0) :
-	  ((double)List.nitems / (double)(DPS_LM_TOPCNT * MapStat.miss + MapStat.hits));*/
-
-	links[j * List.nitems + i] = links[i * List.nitems + j] = (MapStat.miss == 0 || MapStat.hits == 0) ? 0.0 :
-	  (DPS_LM_TOPCNT * DPS_LM_TOPCNT / 2 - (double)MapStat.miss) / (DPS_LM_TOPCNT * DPS_LM_TOPCNT / 2 + (double)MapStat.hits/DPS_LM_TOPCNT) / (List.nitems + 1);
+	links[i * List.nitems + j] = (double)MapStat.hits / (2.0 * DPS_LM_TOPCNT) / (List.nitems + 1);
 #ifdef DEBUG
 	DpsLog(Indexer, DPS_LOG_INFO, "Link %u->%u: %f [hits:%d miss:%d]", i, j, links[i * List.nitems + j], MapStat.hits, MapStat.miss);
 #endif
       }
     }
 
-    for (it = 0; it < Indexer->Flags.PopRankNeoIterations; it++)
-      for (l = 0; l < List.nitems; l++) {
+    for (l = 0; l < List.nitems; l++) {
 	w = 0.0;
 	for (i = 0; i < List.nitems; i++) { 
-	  w += links[l * List.nitems + i] * List.Sent[i].Oi;
-	}
-	w = (w + f(w)) / 2.0;
-	if (w < LOW_BORDER_EPS2) w = LOW_BORDER_EPS2;
-	else if (w > HI_BORDER_EPS2) w = HI_BORDER_EPS2;
-	List.Sent[l].di = w;
-
-	w = 0.0;
-	for (i = 0; i < List.nitems; i++) w += List.Sent[i].Oi * links[i * List.nitems + l];
-	w = (w + f(w)) / 2.0;
-	if (w < LOW_BORDER_EPS) w = LOW_BORDER_EPS;
-	else if (w > HI_BORDER_EPS) w = HI_BORDER_EPS;
-	List.Sent[l].Oi = w;
-      }
-
-#if 0
-    for (it = 0; it < 10 * Indexer->Flags.PopRankNeoIterations; it++) {
-
-      for (l = 0; l < List.nitems; l++) {
-
-	pdiv = fabs(List.Sent[l].di - List.Sent[l].Oi);
-
-/*	delta = List.Sent[l].pas * (List.Sent[l].di - List.Sent[l].Oi) * List.Sent[l].Oi * (1.0 - List.Sent[l].Oi);*/
-	delta = List.Sent[l].pas * (List.Sent[l].Oi - List.Sent[l].di) * List.Sent[l].di * (1.0 - List.Sent[l].di);
-
-/*	fprintf(stderr, "Oi:%f, di:%f-- delta: %f\n", List.Sent[l].Oi, List.Sent[l].di, delta);*/
-
-	if (fabs(delta) > 0.0) {
-/*	  for (j = 0; j < List.nitems; j++) links[j * List.nitems + l] += List.Sent[j].Oi * delta;*/
-	  for (j = 0; j < List.nitems; j++) {
-	    links[l * List.nitems + j] += List.Sent[j].Oi * delta;
-	    if (links[l * List.nitems + j] < 0.0) links[l * List.nitems + j] = 0.0;
-	    if (links[l * List.nitems + j] > 1.0) links[l * List.nitems + j] = 1.0;
-	  }
-	} else {
-	  continue; /*break;*/
-	}
-
-	w = 0.0;
-	for (i = 0; i < List.nitems; i++) { 
-	  w += /*List.Sent[l].Oi **/ links[l * List.nitems + i] * List.Sent[i].Oi;
+	    w += links[l * List.nitems + i] * List.Sent[i].Oi;
 	}
 	w = f(w);
 	if (w < LOW_BORDER_EPS2) w = LOW_BORDER_EPS2;
 	else if (w > HI_BORDER_EPS2) w = HI_BORDER_EPS2;
 	List.Sent[l].di = w;
-
-	w = 0.0;
-	for (i = 0; i < List.nitems; i++) w += List.Sent[i].Oi * links[i * List.nitems + l]/* * List.Sent[l].Oi*/;
-	w = f(w);
-	if (w < LOW_BORDER_EPS) w = LOW_BORDER_EPS;
-	else if (w > HI_BORDER_EPS) w = HI_BORDER_EPS;
-	List.Sent[l].Oi = w;
-
-	cur_div = fabs(List.Sent[l].di - List.Sent[l].Oi);
-
-	if ((cur_div > pdiv) && ((cur_div - pdiv) > EPS)) {
-	  List.Sent[l].pas *= 0.73;
-	} else if (fabs(delta) < 0.1 && fabs(List.Sent[l].pas) < PAS_HI) {
-	  if (fabs(cur_div - pdiv) < 0.1 * pdiv) {
-	    List.Sent[l].pas *= 9.99;
-	  } else if (fabs(cur_div - pdiv) < 0.5 * pdiv) {
-	    List.Sent[l].pas *= 2.11;
-	  }
-	} else if (fabs(delta) > 1.0) List.Sent[l].pas *= 0.95;
-	if (List.Sent[l].pas > PAS_HI) List.Sent[l].pas = PAS_HI;
-	else if (PAS_LO > List.Sent[l].pas) List.Sent[l].pas = PAS_LO;
-
-	DpsLog(Indexer, DPS_LOG_DEBUG, "%d:%02d|%12.9f->%12.9f|di:%11.9f|Oi:%11.9f|delta:%12.9f|pas:%11.9f", 
-	       l, it, pdiv, cur_div,  List.Sent[l].di, List.Sent[l].Oi, delta, List.Sent[l].pas);
-
-      }
     }
-#endif
 
     DpsSort(List.Sent, List.nitems, sizeof(DPS_SENTENCE), (qsort_cmp)SentCmp);
 

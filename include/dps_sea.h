@@ -1,4 +1,5 @@
-/* Copyright (C) 2005-2012 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2005-2012 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,7 +25,6 @@
 typedef struct {
   dpsunicode_t *sentence;
   DPS_LANGMAP  LangMap;
-  double       pas;
   double       Oi;
   double       di;
   size_t       len;
