@@ -2221,7 +2221,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 				    DpsStopListFind(&Indexer->Conf->StopWords, p_word->uword, (Indexer->flags & DPS_FLAG_STOPWORDS_LOOSE) ? cont_lang : "" ) != NULL);
 			  if (rc) p_word->weight = 0;
 			  for(wordnum = 1; wordnum < Doc->CrossWords.ncrosswords; wordnum++) {
-			    if (DpsWordCmp(p_word, Doc->CrossWords.CrossWord + wordnum) == 0) {
+			    if (DpsCrossCmp(p_word, Doc->CrossWords.CrossWord + wordnum) == 0) {
 			      if (rc) Doc->CrossWords.CrossWord[wordnum].weight = 0;
 			    } else {
 			      p_word = Doc->CrossWords.CrossWord + wordnum;
