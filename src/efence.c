@@ -50,8 +50,13 @@
 
 #ifdef EFENCE
 
+#define USE_DPS_MUTEX 1
+
 #include "dps_efence.h"
 #include "dps_charsetutils.h"
+#if USE_DPS_MUTEX
+#include "dps_mutex.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -240,6 +245,8 @@ static int cmp_Slot(const Slot *s1, const Slot *s2) {
 }
 */
 
+static volatile dps_mutex_t ef_mutex = 0;
+
 static void lock(void) {
 #ifdef HAVE_PTHREAD
 	/* Are we using a semaphore? */
@@ -253,9 +260,19 @@ static void lock(void) {
 		return;
 	}
 
+#if USE_DPS_MUTEX
+	{
+	    dps_mutex_t self = (dps_mutex_t)pthread_self();
+	    
+	    DPS_MUTEX_LOCK(self, &ef_mutex);
+	}
+	
+#else
+
 	/* Wait for the semaphore. */
 	while (sem_wait(&EF_sem) < 0)
 		/* try again */;
+#endif
 
 	/* Let everyone know who has the semaphore. */
 	semThread = pthread_self();
@@ -291,8 +308,17 @@ static void release(void) {
 	if (semDepth == 0) {
 		/* Zero this before actually free'ing the semaphore. */
 		semThread = (pthread_t) 0;
+#if USE_DPS_MUTEX
+	    {
+		dps_mutex_t self = (dps_mutex_t)pthread_self();
+	    
+		DPS_MUTEX_UNLOCK(pthread_self(), &ef_mutex);
+	    }
+
+#else
 		if (sem_post(&EF_sem) < 0)
 			EF_InternalError("Failed to post the semaphore.");
+#endif
 	}
 #endif /* HAVE_PTHREAD */
 }
@@ -438,9 +464,13 @@ static void initialize(void) {
 #ifdef HAVE_PTHREAD
 	if (!semEnabled) {
 		semEnabled = 1;
+#if USE_DPS_MUTEX
+		InitMutex(&ef_mutex);
+#else
 		if (sem_init(&EF_sem, 0, 1) < 0) {
 		  semEnabled = 0;
 		}
+#endif
 	}
 #endif
 }
@@ -518,7 +548,7 @@ static void * _DpsMemalign(size_t alignment, size_t userSize, const char *filena
 
 	lock();
 
-	if ( userSize == 0 && !EF_ALLOW_MALLOC_0 )
+	if ( userSize == 0 && !EF_ALLOW_MALLOC_0 && strcmp(filename, "efence.c"))
 	  EF_Abort("Allocating 0 bytes, probably a bug at %s:%d.", filename, fileline);
 
 	/*
@@ -892,6 +922,7 @@ extern C_LINKAGE void _DpsFree(void * address, const char *filename, size_t file
 	if ( !slot ) {
 /*	  EF_Abort("DpsFree(%a): address not from DpsMalloc() at %s:%d.", address, filename, fileline);*/
 	  EF_Print("DpsFree(%a): address not from DpsMalloc() at %s:%d.\n", address, filename, fileline);
+	  release();
 	  return;
 	}
 	/*
@@ -1094,5 +1125,22 @@ char *strcat(char *d, const char *s)
 }
 #endif
 
+
+
+void free(void *ptr) {
+    _DpsFree(ptr, __FILE__, __LINE__);
+}
+
+void *realloc(void *ptr, size_t size) {
+    return _DpsRealloc(ptr, size, __FILE__, __LINE__);
+}
+
+void *malloc(size_t size) {
+    return _DpsMalloc(size, __FILE__, __LINE__);
+}
+
+void *calloc(size_t nmemb, size_t size) {
+    return _DpsCalloc(nmemb, size, __FILE__, __LINE__);
+}
 
 #endif /* EFENCE */

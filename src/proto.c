@@ -404,7 +404,7 @@ static int DpsHTTPGet(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 
 #ifdef WITH_HTTPS
 
-#define sslcleanup dps_closesocket(fd); SSL_free (ssl); SSL_CTX_free (ctx)
+#define sslcleanup dps_closesocket(fd); SSL_shutdown(ssl); SSL_set_quiet_shutdown(ssl, 1); SSL_free (ssl); SSL_CTX_free (ctx)
 
 #ifndef OPENSSL_VERSION_NUMBER
 #define OPENSSL_VERSION_NUMBER 0x0000
@@ -495,7 +495,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
       return DPS_NET_ERROR;
     }
 */    
-    SSL_shutdown (ssl);  /* send SSL/TLS close_notify */
+/*    SSL_shutdown (ssl);*/  /* send SSL/TLS close_notify */
 
 /*    Doc->Buf.size=nread;*/
     if (res == 0) Doc->Buf.buf[Doc->Buf.size] = '\0';

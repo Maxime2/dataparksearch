@@ -2154,6 +2154,16 @@ static char **new_environ = NULL;
 
 void DpsDeInit(void) {
 
+#ifdef WITH_HTTPS
+    CONF_modules_free();
+    ERR_remove_state(0);
+    ENGINE_cleanup();
+    CONF_modules_unload(1);
+    ERR_free_strings();
+    EVP_cleanup();
+    CRYPTO_cleanup_all_ex_data();
+    sk_SSL_COMP_free(SSL_COMP_get_compression_methods());
+#endif
   if (new_environ) {
     size_t i;
     for (i = 0; new_environ[i]; i++) DPS_FREE(new_environ[i]);
