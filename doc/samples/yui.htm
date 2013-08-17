@@ -1,0 +1,81 @@
+<!--variables
+DBAddr		searchd://localhost/?socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr		searchd://localhost/?label=sochi&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr		searchd://localhost/?label=phones&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr		searchd://localhost/?label=qsimilar&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr searchd://localhost/?label=rutube&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr searchd://localhost/?label=tabu&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr searchd://localhost/?label=momentum&socket=/usr/local/dpsearch/var/dpsearchd.sock
+DBAddr searchd://localhost/?label=msimilar&socket=/usr/local/dpsearch/var/dpsearchd.sock
+StoredocURL     /cgi-bin/storedoc.cgi
+LocalCharset 	utf-8
+BrowserCharset  UTF-8
+MakePrefixes yes
+DoExcerpt no
+MinWordLength 1
+MaxWordLength 64
+DetectClones no
+DateFormat %d %b %Y
+ExcerptSize 128
+ExcerptPadding 32
+HlBeg 
+HlEnd 
+GrBeg 
+GrEnd 
+Locale ru_RU.UTF-8
+#ResultContentType text/html
+ResultContentType application/json
+HTTPHeader "Cache-Control: public,max-age=3600"
+#CharsToEscape "\'"
+-->
+
+<!--top-->
+<!--/top-->
+
+<!--bottom-->
+<!--/bottom-->
+
+<!--restop-->
+$&(callback)([
+<!--/restop-->
+
+
+<!--res-->
+"$(query:128:json)",
+<!--/res-->
+
+<!--clone-->
+<!--/clone-->
+
+<!--navleft-->
+<!--/navleft-->
+
+<!--navbar0-->
+<!--/navbar0-->
+
+<!--navbar1-->
+<!--/navbar1-->
+
+<!--navright-->
+<!--/navright-->
+
+<!--navigator-->
+<!--/navigator-->
+
+<!--resbot-->
+"$(q:json)"]);
+<!--/resbot-->
+
+
+<!--notfound-->
+$&(callback)(["$(q:json)"]);
+<!--/notfound-->
+
+<!--noquery-->
+<!--/noquery-->
+
+<!--error-->
+$&(callback)(["$(E:json)"]);
+<!--/error-->
+
+
