@@ -824,6 +824,7 @@ static time_t ap_tm2sec(const struct tm * t)
  *     17 Jul 2013                    ; e.g.: Youtube upload date (not as HTTP header)
  *     Jul 25, 2013                   ; US style, e.g.: Youtube upload date (not as HTTP header)
  *     08.07.2013                     ; Widely used date stamp
+ *     2013-08-06T12:40:12            ; ISO8601 timestamp
  *
  * and returns the time_t number of seconds since 1 Jan 1970 GMT, or
  * 0 if this would be out of range or if the date is invalid.
@@ -889,17 +890,7 @@ time_t DpsHttpDate2Time_t(const char *date){
 
     bzero(&ds, sizeof(ds));
 
-    if (ap_checkmask(date, "####-##-##T##:##:##Z*")) {	/* ISO 8601 format, UTC  */
-      ds.tm_year = ((date[0] - '0') * 10 + (date[1] - '0') - 19) * 100;
-      if (ds.tm_year < 0)
-	return BAD_DATE;
-      ds.tm_year += ((date[2] - '0') * 10) + (date[3] - '0');
-
-      ds.tm_mon = mon = (date[5] - '0') * 10 + (date[6] - '0') - 1;
-      ds.tm_mday = (date[8] - '0') * 10 + (date[9] - '0');
-      timstr = date + 11;
-    }
-    else if (ap_checkmask(date, "####-##-##T##:##:##+##:##*")) {	/* ISO 8601 format */
+    if (ap_checkmask(date, "####-##-##T##:##:##+##:##*")) {	/* ISO 8601 format */
       ds.tm_year = ((date[0] - '0') * 10 + (date[1] - '0') - 19) * 100;
       if (ds.tm_year < 0)
 	return BAD_DATE;
@@ -910,6 +901,17 @@ time_t DpsHttpDate2Time_t(const char *date){
       timstr = date + 11;
       tz_str = date + 19;
     } 
+    else if (ap_checkmask(date, "####-##-##T##:##:##*")) {	/* ISO 8601 format, UTC  */
+      ds.tm_year = ((date[0] - '0') * 10 + (date[1] - '0') - 19) * 100;
+      if (ds.tm_year < 0)
+	return BAD_DATE;
+      ds.tm_year += ((date[2] - '0') * 10) + (date[3] - '0');
+
+      ds.tm_mon = mon = (date[5] - '0') * 10 + (date[6] - '0') - 1;
+      ds.tm_mday = (date[8] - '0') * 10 + (date[9] - '0');
+      timstr = date + 11;
+      if (date[19] == 'Z') tz_str = "UTC";
+    }
     else if (ap_checkmask(date, "# @$$ ####*")) { /* As 7 Jul 2013  */
 	ds.tm_year = ((date[6] - '0') * 10 + (date[7] - '0') - 19) * 100;
 	if (ds.tm_year < 0)
