@@ -1427,11 +1427,10 @@ int main(int argc, char **argv, char **envp) {
      }
      */
      flags |= add_servers | add_server_urls | load_langmaps | load_spells;
-     Main.flags = Conf.flags = flags;
-     Main.flags |= DPS_FLAG_UNOCON;
 #ifndef HAVE_PTHREAD
      Conf.flags |= DPS_FLAG_UNOCON;
 #endif
+     Main.flags = Conf.flags = flags;
 
      argc -= optind;argv += optind;
 
