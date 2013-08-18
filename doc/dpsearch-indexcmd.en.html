@@ -1328,14 +1328,43 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="MAXHOPS_CMD"
+NAME="LMDSECTION_CMD"
 >3.10.30. <B
+CLASS="COMMAND"
+>LMDSection</B
+> command</A
+></H2
+><A
+NAME="AEN2396"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>LMDSection &lt;section name&gt;</PRE
+><P
+>This command specify the section which will be used as the document last modification date instead of Last-Modified header sent by remote web-server. 
+Can be set many times before <B
+CLASS="COMMAND"
+>Server</B
+> command and takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>LMDSection</B
+> command.
+Default value is undefined. Use this command without any argument to make its value undefined.
+If the value of the section specified by this command is not defined for current document the value of Last-Modified header will be used.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXHOPS_CMD"
+>3.10.31. <B
 CLASS="COMMAND"
 >MaxHops</B
 > command</A
 ></H2
 ><A
-NAME="AEN2396"
+NAME="AEN2406"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1355,13 +1384,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="TARCKHOPS_CMD"
->3.10.31. <B
+>3.10.32. <B
 CLASS="COMMAND"
 >TrackHops</B
 > command</A
 ></H2
 ><A
-NAME="AEN2405"
+NAME="AEN2415"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1382,13 +1411,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDEPTH_CMD"
->3.10.32. <B
+>3.10.33. <B
 CLASS="COMMAND"
 >MaxDepth</B
 > command</A
 ></H2
 ><A
-NAME="AEN2414"
+NAME="AEN2424"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1409,13 +1438,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDOCSPERSERVER_CMD"
->3.10.33. <B
+>3.10.34. <B
 CLASS="COMMAND"
 >MaxDocsPerServer</B
 > command</A
 ></H2
 ><A
-NAME="AEN2423"
+NAME="AEN2433"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1444,13 +1473,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXHREFSPERSERVER_CMD"
->3.10.34. <B
+>3.10.35. <B
 CLASS="COMMAND"
 >MaxHrefsPerServer</B
 > command</A
 ></H2
 ><A
-NAME="AEN2434"
+NAME="AEN2444"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1478,13 +1507,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXNETERRORS_CMD"
->3.10.35. <B
+>3.10.36. <B
 CLASS="COMMAND"
 >MaxNetErrors</B
 > command</A
 ></H2
 ><A
-NAME="AEN2445"
+NAME="AEN2455"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1516,13 +1545,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="READTIMEOUT_CMD"
->3.10.36. <B
+>3.10.37. <B
 CLASS="COMMAND"
 >ReadTimeOut</B
 > command</A
 ></H2
 ><A
-NAME="AEN2457"
+NAME="AEN2467"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1556,13 +1585,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="DOCTIMEOUT_CMD"
->3.10.37. <B
+>3.10.38. <B
 CLASS="COMMAND"
 >DocTimeOut</B
 > command</A
 ></H2
 ><A
-NAME="AEN2470"
+NAME="AEN2480"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1596,13 +1625,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="NETERRORDELAYTIME_CMD"
->3.10.38. <B
+>3.10.39. <B
 CLASS="COMMAND"
 >NetErrorDelayTime</B
 > command</A
 ></H2
 ><A
-NAME="AEN2483"
+NAME="AEN2493"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1628,13 +1657,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="COOKIES_CMD"
->3.10.39. <B
+>3.10.40. <B
 CLASS="COMMAND"
 >Cookies</B
 > command</A
 ></H2
 ><A
-NAME="AEN2494"
+NAME="AEN2504"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1661,13 +1690,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SECTION_CMD"
->3.10.40. <B
+>3.10.41. <B
 CLASS="COMMAND"
 >Section</B
 > command</A
 ></H2
 ><A
-NAME="AEN2505"
+NAME="AEN2515"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1733,13 +1762,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="HREFSECTION_CMD"
->3.10.41. <B
+>3.10.42. <B
 CLASS="COMMAND"
 >HrefSection</B
 > command</A
 ></H2
 ><A
-NAME="AEN2525"
+NAME="AEN2535"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1771,13 +1800,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="FASTHREFCHECK"
->3.10.42. <B
+>3.10.43. <B
 CLASS="COMMAND"
 >FastHrefCheck</B
 > command</A
 ></H2
 ><A
-NAME="AEN2537"
+NAME="AEN2547"
 ></A
 ><P
 >The "<B
@@ -1795,13 +1824,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="INDEX_CMD"
->3.10.43. <B
+>3.10.44. <B
 CLASS="COMMAND"
 >Index</B
 > command</A
 ></H2
 ><A
-NAME="AEN2546"
+NAME="AEN2556"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1829,13 +1858,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXYAUTHBASIC_CMD"
->3.10.44. <B
+>3.10.45. <B
 CLASS="COMMAND"
 >ProxyAuthBasic</B
 > command</A
 ></H2
 ><A
-NAME="AEN2557"
+NAME="AEN2567"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1866,13 +1895,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXY_CMD"
->3.10.45. <B
+>3.10.46. <B
 CLASS="COMMAND"
 >Proxy</B
 > command</A
 ></H2
 ><A
-NAME="AEN2569"
+NAME="AEN2579"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1911,13 +1940,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="AUTHBASIC_CMD"
->3.10.46. <B
+>3.10.47. <B
 CLASS="COMMAND"
 >AuthBasic</B
 > command</A
 ></H2
 ><A
-NAME="AEN2581"
+NAME="AEN2591"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1951,13 +1980,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SERVERWEIGHT_CMD"
->3.10.47. <B
+>3.10.48. <B
 CLASS="COMMAND"
 >ServerWeight</B
 > command</A
 ></H2
 ><A
-NAME="AEN2592"
+NAME="AEN2602"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1978,13 +2007,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="OPTIMIZEATUPDATE_CMD"
->3.10.48. <B
+>3.10.49. <B
 CLASS="COMMAND"
 >OptimizeAtUpdate</B
 > command</A
 ></H2
 ><A
-NAME="AEN2602"
+NAME="AEN2612"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2006,13 +2035,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SKIPUNREFERRED_CMD"
->3.10.49. <B
+>3.10.50. <B
 CLASS="COMMAND"
 >SkipUnreferred</B
 > command</A
 ></H2
 ><A
-NAME="AEN2612"
+NAME="AEN2622"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2031,13 +2060,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="BIND_CMD"
->3.10.50. <B
+>3.10.51. <B
 CLASS="COMMAND"
 >Bind</B
 > command</A
 ></H2
 ><A
-NAME="AEN2621"
+NAME="AEN2631"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2051,13 +2080,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROVIDEREF_CMD"
->3.10.51. <B
+>3.10.52. <B
 CLASS="COMMAND"
 >ProvideReferer</B
 > command</A
 ></H2
 ><A
-NAME="AEN2629"
+NAME="AEN2639"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2074,13 +2103,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="LONGESTTEXTITEMS_CMD"
->3.10.52. <B
+>3.10.53. <B
 CLASS="COMMAND"
 >LongestTextItems</B
 > command</A
 ></H2
 ><A
-NAME="AEN2638"
+NAME="AEN2648"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2094,13 +2123,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MKPREFIX-CMD"
->3.10.53. <B
+>3.10.54. <B
 CLASS="COMMAND"
 >MakePrefixes</B
 > command</A
 ></H2
 ><A
-NAME="AEN2644"
+NAME="AEN2654"
 ></A
 ><P
 >With <B

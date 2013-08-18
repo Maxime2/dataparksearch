@@ -101,6 +101,7 @@
 	{"LangMapUpdate",	1,1,	env_rpl_bool_var},
 	{"Limit",		1,3,	add_limit},
 	{"Listen",		1,1,	env_rpl_var},
+	{"LMDSection",          1,1,    srv_rpl_var},
 	{"LoadChineseList",	0,2,	add_chinese},
 	{"LoadKoreanList",      0,2,    add_korean},
 	{"LoadThaiList",        0,2,    add_thai},

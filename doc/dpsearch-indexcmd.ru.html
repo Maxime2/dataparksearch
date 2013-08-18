@@ -1365,14 +1365,43 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="MAXHOPS_CMD"
+NAME="LMDSECTION_CMD"
 >3.10.30. Команда <B
+CLASS="COMMAND"
+>LMDSection</B
+></A
+></H2
+><A
+NAME="AEN2512"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>LMDSection &lt;section name&gt;</PRE
+><P
+>Эта команда задают секцию документа, которая будет использоваться в качестве даты последней модификации документа вместо HTTP-заголовка Last-Modified, отдаваемого удаленным сервером.
+Может задаваться неоднократно перед каждой командой <B
+CLASS="COMMAND"
+>Server</B
+> и последнее установленное значение имеет эффект до конца файла конфигурации или до следующей команды <B
+CLASS="COMMAND"
+>LMDSection</B
+>. 
+Значение по умолчанию не определено. Используйте эту команду без какого-либо аргумента, чтобы вернуться к значению по умолчанию.
+Если значение заданной этой командой секции не определено, будет использоваться значение HTTP-заголовка Last-Modified.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MAXHOPS_CMD"
+>3.10.31. Команда <B
 CLASS="COMMAND"
 >MaxHops</B
 ></A
 ></H2
 ><A
-NAME="AEN2512"
+NAME="AEN2522"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1402,13 +1431,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="TRACKHOPS_CMD"
->3.10.31. Команда <B
+>3.10.32. Команда <B
 CLASS="COMMAND"
 >TrackHops</B
 ></A
 ></H2
 ><A
-NAME="AEN2524"
+NAME="AEN2534"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1429,13 +1458,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDEPTH_CMD"
->3.10.32. Команда <B
+>3.10.33. Команда <B
 CLASS="COMMAND"
 >MaxDepth</B
 ></A
 ></H2
 ><A
-NAME="AEN2533"
+NAME="AEN2543"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1465,13 +1494,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDOCSPERSERVER_CMD"
->3.10.33. Команда <B
+>3.10.34. Команда <B
 CLASS="COMMAND"
 >MaxDocsPerServer</B
 ></A
 ></H2
 ><A
-NAME="AEN2545"
+NAME="AEN2555"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1514,13 +1543,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXHREFSPERSERVER_CMD"
->3.10.34. Команда <B
+>3.10.35. Команда <B
 CLASS="COMMAND"
 >MaxHrefsPerServer</B
 ></A
 ></H2
 ><A
-NAME="AEN2560"
+NAME="AEN2570"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1563,13 +1592,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXNETERRORS_CMD"
->3.10.35. Команда <B
+>3.10.36. Команда <B
 CLASS="COMMAND"
 >MaxNetErrors</B
 ></A
 ></H2
 ><A
-NAME="AEN2575"
+NAME="AEN2585"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1597,13 +1626,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="READTIMEOUT_CMD"
->3.10.36. Команда <B
+>3.10.37. Команда <B
 CLASS="COMMAND"
 >ReadTimeOut</B
 ></A
 ></H2
 ><A
-NAME="AEN2586"
+NAME="AEN2596"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1633,13 +1662,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="DOCTIMEOUT_CMD"
->3.10.37. Команда <B
+>3.10.38. Команда <B
 CLASS="COMMAND"
 >DocTimeOut</B
 ></A
 ></H2
 ><A
-NAME="AEN2598"
+NAME="AEN2608"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1669,13 +1698,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="NETERRORDELAYTIME_CMD"
->3.10.38. Команда <B
+>3.10.39. Команда <B
 CLASS="COMMAND"
 >NetErrorDelayTime</B
 ></A
 ></H2
 ><A
-NAME="AEN2610"
+NAME="AEN2620"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1701,13 +1730,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="COOKIES_CMD"
->3.10.39. Команда <B
+>3.10.40. Команда <B
 CLASS="COMMAND"
 >Cookies</B
 ></A
 ></H2
 ><A
-NAME="AEN2621"
+NAME="AEN2631"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1730,13 +1759,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SECTION_CMD"
->3.10.40. Команда <B
+>3.10.41. Команда <B
 CLASS="COMMAND"
 >Section</B
 ></A
 ></H2
 ><A
-NAME="AEN2631"
+NAME="AEN2641"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1796,13 +1825,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="HREFSECTION_CMD"
->3.10.41. Команда <B
+>3.10.42. Команда <B
 CLASS="COMMAND"
 >HrefSection</B
 ></A
 ></H2
 ><A
-NAME="AEN2650"
+NAME="AEN2660"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1834,13 +1863,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="FASTHREFCHECK"
->3.10.42. Команда <B
+>3.10.43. Команда <B
 CLASS="COMMAND"
 >FastHrefCheck</B
 ></A
 ></H2
 ><A
-NAME="AEN2662"
+NAME="AEN2672"
 ></A
 ><P
 >Команда "<B
@@ -1858,13 +1887,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="INDEX_CMD"
->3.10.43. Команда <B
+>3.10.44. Команда <B
 CLASS="COMMAND"
 >Index</B
 ></A
 ></H2
 ><A
-NAME="AEN2671"
+NAME="AEN2681"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1889,13 +1918,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXYAUTHBASIC_CMD"
->3.10.44. Команда <B
+>3.10.45. Команда <B
 CLASS="COMMAND"
 >ProxyAuthBasic</B
 ></A
 ></H2
 ><A
-NAME="AEN2681"
+NAME="AEN2691"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1922,13 +1951,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXY_CMD"
->3.10.45. Команда <B
+>3.10.46. Команда <B
 CLASS="COMMAND"
 >Proxy</B
 ></A
 ></H2
 ><A
-NAME="AEN2692"
+NAME="AEN2702"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1962,13 +1991,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="AUTHBASIC_CMD"
->3.10.46. Команда <B
+>3.10.47. Команда <B
 CLASS="COMMAND"
 >AuthBasic</B
 ></A
 ></H2
 ><A
-NAME="AEN2703"
+NAME="AEN2713"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1998,13 +2027,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SERVERWEIGHT_CMD"
->3.10.47. Команда <B
+>3.10.48. Команда <B
 CLASS="COMMAND"
 >ServerWeight</B
 ></A
 ></H2
 ><A
-NAME="AEN2713"
+NAME="AEN2723"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2026,13 +2055,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="OPTIMIZEATUPDATE_CMD"
->3.10.48. Команда <B
+>3.10.49. Команда <B
 CLASS="COMMAND"
 >OptimizeAtUpdate</B
 ></A
 ></H2
 ><A
-NAME="AEN2723"
+NAME="AEN2733"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2055,13 +2084,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SKIPUNREFERRED_CMD"
->3.10.49. Команда <B
+>3.10.50. Команда <B
 CLASS="COMMAND"
 >SkipUnreferred</B
 ></A
 ></H2
 ><A
-NAME="AEN2733"
+NAME="AEN2743"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2079,13 +2108,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="BIND_CMD"
->3.10.50. Команда <B
+>3.10.51. Команда <B
 CLASS="COMMAND"
 >Bind</B
 ></A
 ></H2
 ><A
-NAME="AEN2742"
+NAME="AEN2752"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2099,13 +2128,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROVIDEREF_CMD"
->3.10.51. Команда <B
+>3.10.52. Команда <B
 CLASS="COMMAND"
 >ProvideReferer</B
 ></A
 ></H2
 ><A
-NAME="AEN2750"
+NAME="AEN2760"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2122,13 +2151,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="LONGESTTEXTITEMS_CMD"
->3.10.52. Команда <B
+>3.10.53. Команда <B
 CLASS="COMMAND"
 >LongestTextItems</B
 ></A
 ></H2
 ><A
-NAME="AEN2759"
+NAME="AEN2769"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2142,13 +2171,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MKPREFIX-CMD"
->3.10.53. Команда <B
+>3.10.54. Команда <B
 CLASS="COMMAND"
 >MakePrefixes</B
 ></A
 ></H2
 ><A
-NAME="AEN2765"
+NAME="AEN2775"
 ></A
 ><P
 >При помощи команды <B

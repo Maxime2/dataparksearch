@@ -137,6 +137,7 @@
 	{"VaryLang",            1,1,    srv_rpl_var},
 	{"IndexDocSizeLimit",   0,1,    srv_rpl_var},
 	{"ExpireAt",            0,5,    srv_rpl_var},
+	{"LMDSection",          1,1,    srv_rpl_var},
 	{"MaxNetErrors",	1,1,	srv_rpl_num_var},
 	{"MaxHops",		1,1,	srv_rpl_num_var},
 	{"MaxDepth",		1,1,	srv_rpl_num_var},

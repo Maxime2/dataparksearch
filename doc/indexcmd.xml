@@ -629,6 +629,19 @@ Default value: no.
 </sect2>
 
 
+<sect2 id="LMDSection_cmd">
+<title><command>LMDSection</command> command</title>
+<indexterm><primary>Command</primary><secondary>LMDSection</secondary></indexterm>
+<programlisting>
+LMDSection &lt;section name&gt;
+</programlisting>
+<para>This command specify the section which will be used as the document last modification date instead of Last-Modified header sent by remote web-server. 
+Can be set many times before <command>Server</command> command and takes effect till the end of config file or till next <command>LMDSection</command> command.
+Default value is undefined. Use this command without any argument to make its value undefined.
+If the value of the section specified by this command is not defined for current document the value of Last-Modified header will be used.
+</para>
+</sect2>
+
 
 
 

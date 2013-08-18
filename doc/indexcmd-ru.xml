@@ -618,6 +618,19 @@ UseDateHeader yes|no|force
 
 
 
+<sect2 id="LMDSection_cmd">
+<title>Команда <command>LMDSection</command></title>
+<indexterm><primary>Команда</primary><secondary>LMDSection</secondary></indexterm>
+<programlisting>
+LMDSection &lt;section name&gt;
+</programlisting>
+<para>Эта команда задают секцию документа, которая будет использоваться в качестве даты последней модификации документа вместо HTTP-заголовка Last-Modified, отдаваемого удаленным сервером.
+Может задаваться неоднократно перед каждой командой <command>Server</command> и последнее установленное значение имеет эффект до конца файла конфигурации или до следующей команды <command>LMDSection</command>. 
+Значение по умолчанию не определено. Используйте эту команду без какого-либо аргумента, чтобы вернуться к значению по умолчанию.
+Если значение заданной этой командой секции не определено, будет использоваться значение HTTP-заголовка Last-Modified.
+</para>
+</sect2>
+
 
 
 

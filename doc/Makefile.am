@@ -164,6 +164,7 @@ JADE = @JADE@
 COLLATEINDEX = @COLLATEINDEX@
 
 dist-hook:
+	rm -f $(srcdir)/samples/*~ $(srcdir)/samples/*.bak
 	cp -rf $(srcdir)/samples $(distdir)
 
 

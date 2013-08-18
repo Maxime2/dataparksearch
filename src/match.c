@@ -144,7 +144,7 @@ int DpsMatchExec(DPS_MATCH * Match, const char * string, const char *net_string,
 			}
 			if(nparts>DPS_NSUBS)nparts=DPS_NSUBS;
 			res=regexec((regex_t*)Match->reg,string,nparts,subs,0);
-/*			fprintf(stderr, "regex res: %d\n", res);*/
+/*			fprintf(stderr, "regex res: %d\n--**-- %s", res, string);*/
 			if(res){
 /*			  char errstr[ERRSTRSIZ];
 				regerror(res, Match->reg, errstr, ERRSTRSIZ);

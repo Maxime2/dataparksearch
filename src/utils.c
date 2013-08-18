@@ -733,32 +733,39 @@ static int ap_checkmask(const char *data, const char *mask) {
 	    return 1;
 
 	case '@':
-	    if (!ap_isupper(d))
+	    if (!ap_isupper(d)) {
 		return 0;
+	    }
 	    break;
 	case '$':
-	    if (!ap_islower(d))
+	    if (!ap_islower(d)) {
 		return 0;
+	    }
 	    break;
 	case '#':
-	    if (!ap_isdigit(d))
+	    if (!ap_isdigit(d)) {
 		return 0;
+	    }
 	    break;
 	case '&':
-	    if (!ap_isxdigit(d))
+	    if (!ap_isxdigit(d)) {
 		return 0;
+	    }
 	    break;
 	case '~':
-	    if ((d != ' ') && !ap_isdigit(d))
+	    if ((d != ' ') && !ap_isdigit(d)) {
 		return 0;
+	    }
 	    break;
         case '+':
-	  if ((d != '+') && (d != '-'))
+	    if ((d != '+') && (d != '-')) {
 	        return 0;
+	    }
 	    break;
 	default:
-	    if (mask[i] != d)
+	    if (mask[i] != d) {
 		return 0;
+	    }
 	    break;
 	}
     }
@@ -808,12 +815,14 @@ static time_t ap_tm2sec(const struct tm * t)
 }
 
 /*
- * Parses an HTTP date in one of three standard forms:
+ * Parses an HTTP date in one of these forms:
  *
  *     Sun, 06 Nov 1994 08:49:37 GMT  ; RFC 822, updated by RFC 1123
  *     Sunday, 06-Nov-94 08:49:37 GMT ; RFC 850, obsoleted by RFC 1036
  *     Sat, 11-Feb-2006 18:54:55 GMT  ; "fixed RFC 850"/cookie format (?)
  *     Sun Nov  6 08:49:37 1994       ; ANSI C's asctime() format
+ *     17 Jul 2013                    ; e.g.: Youtube upload date (not as HTTP header)
+ *     Jul 25, 2013                   ; US style, e.g.: Youtube upload date (not as HTTP header)
  *
  * and returns the time_t number of seconds since 1 Jan 1970 GMT, or
  * 0 if this would be out of range or if the date is invalid.
@@ -858,7 +867,7 @@ static time_t ap_tm2sec(const struct tm * t)
 time_t DpsHttpDate2Time_t(const char *date){
     struct tm ds;
     int mint, mon;
-    const char *monstr = NULL, *timstr, *tz_str = NULL;
+    const char *monstr = NULL, *timstr = NULL, *tz_str = NULL;
     static const int months[12] =
     {
 	('J' << 16) | ('a' << 8) | 'n', ('F' << 16) | ('e' << 8) | 'b',
@@ -877,6 +886,7 @@ time_t DpsHttpDate2Time_t(const char *date){
     if (*date == '\0')
 	return BAD_DATE;
 
+    bzero(&ds, sizeof(ds));
 
     if (ap_checkmask(date, "####-##-##T##:##:##Z*")) {	/* ISO 8601 format, UTC  */
       ds.tm_year = ((date[0] - '0') * 10 + (date[1] - '0') - 19) * 100;
@@ -898,7 +908,41 @@ time_t DpsHttpDate2Time_t(const char *date){
       ds.tm_mday = (date[8] - '0') * 10 + (date[9] - '0');
       timstr = date + 11;
       tz_str = date + 19;
-    } else {
+    } 
+    else if (ap_checkmask(date, "# @$$ ####*")) { /* As 7 Jul 2013  */
+	ds.tm_year = ((date[6] - '0') * 10 + (date[7] - '0') - 19) * 100;
+	if (ds.tm_year < 0)
+	    return BAD_DATE;
+
+	ds.tm_year += ((date[8] - '0') * 10) + (date[9] - '0');
+	ds.tm_mday = (date[0] - '0');
+	
+	monstr = date + 2;
+    }
+    else if (ap_checkmask(date, "## @$$ ####*")) { /* As 17 Jul 2013  */
+	ds.tm_year = ((date[7] - '0') * 10 + (date[8] - '0') - 19) * 100;
+	if (ds.tm_year < 0)
+	    return BAD_DATE;
+
+	ds.tm_year += ((date[9] - '0') * 10) + (date[10] - '0');
+	ds.tm_mday = (date[0] - '0') * 10 + (date[1] - '0');
+	monstr = date + 3;
+    }
+    else if (ap_checkmask(date, "@$$ ~#, ####*")) { /* As Jul 25, 2013  */
+	ds.tm_year = ((date[8] - '0') * 10 + (date[9] - '0') - 19) * 100;
+	if (ds.tm_year < 0)
+	    return BAD_DATE;
+
+	ds.tm_year += ((date[10] - '0') * 10) + (date[11] - '0');
+	if (date[4] == ' ')
+	    ds.tm_mday = 0;
+	else
+	    ds.tm_mday = (date[4] - '0') * 10;
+
+	ds.tm_mday += (date[5] - '0');
+	monstr = date;
+    }
+    else {
 
 
       if ((date = strchr(date, ' ')) == NULL)	/* Find space after weekday */
@@ -965,12 +1009,14 @@ time_t DpsHttpDate2Time_t(const char *date){
     if (ds.tm_mday <= 0 || ds.tm_mday > 31)
 	return BAD_DATE;
 
-    ds.tm_hour = ((timstr[0] - '0') * 10) + (timstr[1] - '0');
-    ds.tm_min = ((timstr[3] - '0') * 10) + (timstr[4] - '0');
-    ds.tm_sec = ((timstr[6] - '0') * 10) + (timstr[7] - '0');
+    if (timstr != NULL) {
+	ds.tm_hour = ((timstr[0] - '0') * 10) + (timstr[1] - '0');
+	ds.tm_min = ((timstr[3] - '0') * 10) + (timstr[4] - '0');
+	ds.tm_sec = ((timstr[6] - '0') * 10) + (timstr[7] - '0');
 
-    if ((ds.tm_hour > 23) || (ds.tm_min > 59) || (ds.tm_sec > 61))
-	return BAD_DATE;
+	if ((ds.tm_hour > 23) || (ds.tm_min > 59) || (ds.tm_sec > 61))
+	    return BAD_DATE;
+    }
 
     if (monstr != NULL) {
       mint = (monstr[0] << 16) | (monstr[1] << 8) | monstr[2];

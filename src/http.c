@@ -164,7 +164,7 @@ void DpsParseHTTPResponse(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
 	oldstatus = DpsVarListFindInt(&Doc->Sections, "Status", 0);
 	DpsVarListReplaceInt(&Doc->Sections, "ResponseSize", (int)Doc->Buf.size);
 	DpsVarListDel(&Doc->Sections, "Content-Length");
-/*	DpsVarListDel(&Doc->Sections, "Last-Modified");*/
+	DpsVarListDel(&Doc->Sections, "Last-Modified");
 
 	if (Doc->Buf.buf == NULL) return;
 

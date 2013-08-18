@@ -624,6 +624,7 @@ uninstall-am: uninstall-local
 
 
 dist-hook:
+	rm -f $(srcdir)/samples/*~ $(srcdir)/samples/*.bak
 	cp -rf $(srcdir)/samples $(distdir)
 
 install-data-local: $(PDF_FILES) $(HTML_FILES)

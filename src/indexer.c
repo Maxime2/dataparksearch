@@ -2690,6 +2690,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 			DPS_THREADINFO(Indexer,"Parsing",url);
 			
 			result = DpsDocParseContent(Indexer, Doc);
+
 			if(result!=DPS_OK){
 			        DPS_FREE(origurl); DPS_FREE(aliasurl);
 				DpsDocFree(Doc);
@@ -2727,8 +2728,20 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 		    DPS_FREE(subsection);
 
 		    if (Doc->method != DPS_METHOD_HREFONLY) DpsPrepareWords(Indexer, Doc);
+
 		  } else Doc->method = m;
 		  DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
+		}
+
+		if (Server != NULL && Doc->method != DPS_METHOD_DISALLOW) {
+		    /* replace Last-Modified header if the replacement section is defined */
+		    char *LMDSection = DpsVarListFindStr(&Server->Vars, "LMDSection", NULL);
+		    if (LMDSection != NULL) {
+			char *value = DpsVarListFindStr(&Doc->Sections, LMDSection, NULL);
+			if (value != NULL) {
+			    DpsVarListReplaceStr(&Doc->Sections, "Last-Modified", value);
+			}
+		    }
 		}
 	
 		{
