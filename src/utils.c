@@ -823,6 +823,7 @@ static time_t ap_tm2sec(const struct tm * t)
  *     Sun Nov  6 08:49:37 1994       ; ANSI C's asctime() format
  *     17 Jul 2013                    ; e.g.: Youtube upload date (not as HTTP header)
  *     Jul 25, 2013                   ; US style, e.g.: Youtube upload date (not as HTTP header)
+ *     08.07.2013                     ; Widely used date stamp
  *
  * and returns the time_t number of seconds since 1 Jan 1970 GMT, or
  * 0 if this would be out of range or if the date is invalid.
@@ -941,6 +942,26 @@ time_t DpsHttpDate2Time_t(const char *date){
 
 	ds.tm_mday += (date[5] - '0');
 	monstr = date;
+    }
+    else if (ap_checkmask(date, "##.##.####*") || ap_checkmask(date, "##/##/####*")) { /* As 08.07.2013 or 08/07/2013  */
+	ds.tm_year = ((date[6] - '0') * 10 + (date[7] - '0') - 19) * 100;
+	if (ds.tm_year < 0)
+	    return BAD_DATE;
+
+	ds.tm_year += ((date[8] - '0') * 10) + (date[9] - '0');
+	ds.tm_mon = (date[3] - '0') * 10 + (date[4] - '0');
+	if (ds.tm_mon < 1)
+	    return BAD_DATE;
+	if (ds.tm_mon > 12) {
+	    ds.tm_mday = ds.tm_mon;
+	    ds.tm_mon = (date[0] - '0') * 10 + (date[1] - '0') - 1;
+	    if (ds.tm_mon > 11)
+		return BAD_DATE;
+	} else {
+	    ds.tm_mon--;
+	    ds.tm_mday = (date[0] - '0') * 10 + (date[1] - '0');
+	}
+	monstr = NULL;
     }
     else {
 
