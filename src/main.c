@@ -792,7 +792,7 @@ static void * thread_main(void *arg){
 /*     if (!(Indexer->flags & DPS_FLAG_UNOCON)) {*/
     
           
-     if(DPS_OK != DpsOpenCache(Indexer, 0/*1*/, (Indexer->flags & DPS_FLAG_UNOCON)) ) {
+     if(DPS_OK != DpsOpenCache(Indexer, 0/*1*/) ) {
           fprintf(stderr,"Cache mode initializing error: '%s'\n",DpsEnvErrMsg(&Conf));
 	  done = 1;
      }
@@ -1093,7 +1093,7 @@ static void * thread_main(void *arg){
      }
 
 /*     if (!(Indexer->flags & DPS_FLAG_UNOCON)) {*/
-     DpsCloseCache(Indexer, 0/*1*/, (Indexer->flags & DPS_FLAG_UNOCON) );
+     DpsCloseCache(Indexer, 0/*1*/, 0);
 /*     }*/
 
      DPS_GETLOCK(Indexer, DPS_LOCK_THREAD);
@@ -1542,7 +1542,7 @@ int main(int argc, char **argv, char **envp) {
      
      /* DpsOpenCache was here */
 /*     if (cmd != DPS_IND_INDEX && cmd != DPS_IND_POPRANK) {*/
-     if(DPS_OK != DpsOpenCache(&Main, 0, (Main.flags & DPS_FLAG_UNOCON))) {
+     if(DPS_OK != DpsOpenCache(&Main, 0)) {
 	 fprintf(stderr,"Cache mode initializing error: '%s'\n",DpsEnvErrMsg(&Conf));
 	 DpsEnvFree(&Conf);
 	 exit(1);
@@ -1817,7 +1817,7 @@ int main(int argc, char **argv, char **envp) {
      
 ex:
      if (cache_opened /*cmd != DPS_IND_INDEX && cmd != DPS_IND_POPRANK*/) {
-	 DpsCloseCache(&Main, 0, (Main.flags & DPS_FLAG_UNOCON));
+	 DpsCloseCache(&Main, 0, 1);
      }
      total_threads=0;
      DpsAgentFree(&Main);

@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -221,7 +222,7 @@ static int DpsCmp_urlid_t(const urlid_t *s1, const urlid_t *s2) {
 
 static int DpsLogdInit(DPS_AGENT *Agent, DPS_DB *db, char* var_dir, size_t i, int shared);
 
-int DpsOpenCache(DPS_AGENT *A, int shared, int light) {
+int DpsOpenCache(DPS_AGENT *A, int shared) {
 	DPS_DB		*db;
 	const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
 	size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
@@ -291,12 +292,13 @@ int DpsOpenCache(DPS_AGENT *A, int shared, int light) {
 /************************/
 
 	    } else {
-	      if (!light) {
+		if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
 		if(DPS_OK != DpsLogdInit(A, db, (db->vardir) ? db->vardir : vardir, i, shared)) {
-		  DpsLog(A, DPS_LOG_ERROR, "OpenCache error");
-		  return DPS_ERROR;
+		    if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+		    DpsLog(A, DPS_LOG_ERROR, "OpenCache error");
+		    return DPS_ERROR;
 		}
-	      }
+		if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
 	    }
 	  }
 	  DpsLog(A, DPS_LOG_DEBUG, "wrd_buf: %x", db->LOGD.wrd_buf);
@@ -308,7 +310,7 @@ int DpsOpenCache(DPS_AGENT *A, int shared, int light) {
 
 static int DpsLogdCloseLogs(DPS_AGENT *Agent);
 
-int DpsCloseCache(DPS_AGENT *A, int shared, int light) {
+int DpsCloseCache(DPS_AGENT *A, int shared, int last) {
   DPS_DB *db;
   const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
   size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
@@ -317,16 +319,18 @@ int DpsCloseCache(DPS_AGENT *A, int shared, int light) {
   TRACE_IN(A, "DpsCloseCache");
   res = DpsLogdCloseLogs(A);
 
-  if (!light) {
-    for (i = dbfrom; i < dbto; i++) {
-        db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	if(db->DBMode!=DPS_DBMODE_CACHE) continue;
-	if(db->logd_fd > 0) {
+  for (i = dbfrom; i < dbto; i++) {
+      db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
+      if(db->DBMode!=DPS_DBMODE_CACHE) continue;
+      if(db->logd_fd > 0) {
 	  dps_closesocket(db->logd_fd);
 	  res =  DPS_OK;
-	} else res = DpsLogdClose(A, db, (db->vardir) ? db->vardir : vardir, i, shared);
-	if (res != DPS_OK) break;
-    }
+      } else if (last || !(A->flags & DPS_FLAG_UNOCON)) {
+	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+	  res = DpsLogdClose(A, db, (db->vardir) ? db->vardir : vardir, i, shared);
+	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+      }
+      if (res != DPS_OK) break;
   }
   TRACE_OUT(A);
   return res;

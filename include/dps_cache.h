@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2006 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -22,8 +23,8 @@
 #include "dps_common.h"
 
 
-extern int DpsOpenCache(DPS_AGENT *A, int shared, int light);
-extern int DpsCloseCache(DPS_AGENT  *A, int shared, int light);
+extern int DpsOpenCache(DPS_AGENT *A, int shared);
+extern int DpsCloseCache(DPS_AGENT  *A, int shared, int last);
 extern void DpsRotateDelLog(DPS_AGENT *A);
 extern void DpsFlushAllBufs(DPS_AGENT *Agent, int rotate_logs_flag);
 

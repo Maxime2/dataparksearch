@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -796,7 +797,7 @@ int main(int argc,char **argv, char **envp) {
 #else
 				  0 /*1*/
 #endif
-				  , 0 )) {
+	       )) {
 		DpsLog(Agent, DPS_LOG_ERROR, "Error: %s", Conf->errstr);
 		goto err1;
 	}
@@ -1207,7 +1208,8 @@ int main(int argc,char **argv, char **envp) {
 #else
 		      0 /*1*/
 #endif
-		      ,0 );
+		      , 1
+	    );
 	DpsAgentFree(Agent);
 	DpsEnvFree(Conf);
 	DpsDestroyMutexes();
@@ -1235,7 +1237,8 @@ err2:
 #else
 				 0 /*1*/
 #endif
-				 , 0);
+				 , 1
+	    );
 	DpsAgentFree(Agent);
 	DpsEnvFree(Conf);
 	DpsDestroyMutexes();
