@@ -1,4 +1,5 @@
-/* Copyright (C) 2005-2012 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. Al rights reserved.
+   Copyright (C) 2005-2012 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -88,7 +89,7 @@ size_t DpsDSTRAppend(DPS_DSTR *dstr, const void *data, size_t append_size) {
         if (data == NULL || append_size == 0) return 0;
 
         if (bytes_left <= append_size + 2 * sizeof(dpsunicode_t)) {
-	  asize = dstr->allocated_size + ((append_size - bytes_left) / dstr->page_size + 1) * dstr->page_size + 3 * sizeof(dpsunicode_t);
+	  asize = dstr->allocated_size + ((append_size + 2 * sizeof(dpsunicode_t) - bytes_left) / dstr->page_size + 1) * dstr->page_size;
 	  dstr->data = DpsRealloc(dstr->data, asize);
 	  if (dstr->data == NULL) { dstr->allocated_size = dstr->data_size = 0; return 0; }
 	  dstr->allocated_size = asize;
