@@ -1428,9 +1428,10 @@ int main(int argc, char **argv, char **envp) {
      */
      flags |= add_servers | add_server_urls | load_langmaps | load_spells;
 #ifndef HAVE_PTHREAD
-     Conf.flags |= DPS_FLAG_UNOCON;
+     flags |= DPS_FLAG_UNOCON;
 #endif
      Main.flags = Conf.flags = flags;
+     Main.flags |= DPS_FLAG_UNOCON; /* we need it until DpsOpenCache to be able process URL, URLDB commands in config */
 
      argc -= optind;argv += optind;
 
@@ -1540,8 +1541,10 @@ int main(int argc, char **argv, char **envp) {
      DpsSigHandlersInit(&Main);
      DpsSetLockProc(&Conf, DpsLockProc);
      
-     /* DpsOpenCache was here */
 /*     if (cmd != DPS_IND_INDEX && cmd != DPS_IND_POPRANK) {*/
+     if (!(flags & DPS_FLAG_UNOCON)) {
+	 Main.flags &= ~DPS_FLAG_UNOCON;
+     }
      if(DPS_OK != DpsOpenCache(&Main, 0)) {
 	 fprintf(stderr,"Cache mode initializing error: '%s'\n",DpsEnvErrMsg(&Conf));
 	 DpsEnvFree(&Conf);
