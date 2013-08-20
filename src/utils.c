@@ -1705,8 +1705,8 @@ void dps_strerror(DPS_AGENT *Agent, int level, const char *fmt, ...) {
   int ret;
   int err_no = errno;
 #ifdef HAVE_PTHREAD
-  char err_str[128];
-  (void)strerror_r(err_no, err_str, sizeof(err_str));
+  char err_str_buf[128];
+  char *err_str = strerror_r(err_no, err_str_buf, sizeof(err_str_buf)); /* This is GNU-specific strerror_r, as _GNU_SOURCE defined in dps_config.h */
 #else
   char *err_str = DPS_NULL2EMPTY(strerror(errno));
 #endif
@@ -1734,7 +1734,7 @@ void dps_strerror(DPS_AGENT *Agent, int level, const char *fmt, ...) {
        if (Agent) {
 	 DpsLog(Agent, level, "%s - (%d) %s", buf, err_no, err_str);
        } else {
-	 fprintf(stderr, "%s - (%d) %s", buf, err_no, err_str);
+	 fprintf(stderr, "%s - (%d) %s\n", buf, err_no, err_str);
        }
 }
 

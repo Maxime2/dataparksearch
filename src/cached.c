@@ -767,18 +767,18 @@ int main(int argc,char **argv, char **envp) {
 	    }
 	    pid = kill((pid_t)pid, 0);
 	    if (pid == 0) {
-	      fprintf(stderr, "It seems that another indexer is already running!\n");
+	      fprintf(stderr, "It seems that another cached is already running!\n");
 	      fprintf(stderr, "Remove '%s' if it is not true.\n", dps_pid_name);
 	      close(pid_fd);
 	      goto err2;
 	    }
 	    if (errno == EPERM) {
-	      fprintf(stderr, "Can't check if another indexer is already running!\n");
+	      fprintf(stderr, "Can't check if another cached is already running!\n");
 	      fprintf(stderr, "Remove '%s' if it is not true.\n", dps_pid_name);
 	      close(pid_fd);
 	      goto err2;
 	    }
-	    dps_strerror(NULL, 0, "Process %s seems to be dead. Flushing '%s'", pidbuf, dps_pid_name);
+	    dps_strerror(NULL, 0, "Process %d seems to be dead. Flushing '%s'", pid, dps_pid_name);
 	    lseek(pid_fd, 0L, SEEK_SET);
 	    ftruncate(pid_fd, 0L);
 	  }

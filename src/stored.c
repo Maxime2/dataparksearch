@@ -386,18 +386,18 @@ int main(int argc, char **argv, char **envp) {
 	    }
 	    other_pid = kill((pid_t)other_pid, 0);
 	    if (other_pid == 0) {
-	      fprintf(stderr, "It seems that another indexer is already running!\n");
+	      fprintf(stderr, "It seems that another stored is already running!\n");
 	      fprintf(stderr, "Remove '%s' if it is not true.\n", dps_pid_name);
 	      close(pid_fd);
 	      exit(1);
 	    }
 	    if (errno == EPERM) {
-	      fprintf(stderr, "Can't check if another indexer is already running!\n");
+	      fprintf(stderr, "Can't check if another stored is already running!\n");
 	      fprintf(stderr, "Remove '%s' if it is not true.\n", dps_pid_name);
 	      close(pid_fd);
 	      exit(1);
 	    }
-	    dps_strerror(NULL, 0, "Process %s seems to be dead. Flushing '%s'", pidbuf, dps_pid_name);
+	    dps_strerror(NULL, 0, "Process %d seems to be dead. Flushing '%s'", other_pid, dps_pid_name);
 	    lseek(pid_fd, 0L, SEEK_SET);
 	    ftruncate(pid_fd, 0L);
 	  }
