@@ -372,7 +372,7 @@ int main(int argc, char **argv, char **envp) {
 
 	  dps_strerror(NULL, 0, "Can't create '%s'", dps_pid_name);
 	  if(errno == EEXIST){
-	    int other_pid = 0;
+	      int other_pid = 0, pid_rc;
 	    pid_fd = DpsOpen3(dps_pid_name, O_RDWR, 0644);
 	    if (pid_fd < 0) {
 	      dps_strerror(NULL, 0, "Can't open '%s'", dps_pid_name);
@@ -384,8 +384,8 @@ int main(int argc, char **argv, char **envp) {
 	      close(pid_fd);
 	      exit(1);
 	    }
-	    other_pid = kill((pid_t)other_pid, 0);
-	    if (other_pid == 0) {
+	    pid_rc = kill((pid_t)other_pid, 0);
+	    if (pid_rc == 0) {
 	      fprintf(stderr, "It seems that another stored is already running!\n");
 	      fprintf(stderr, "Remove '%s' if it is not true.\n", dps_pid_name);
 	      close(pid_fd);
