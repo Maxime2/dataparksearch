@@ -356,28 +356,40 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 
       dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X-split.log", db->log_dir, DPSSLASHSTR, log_num);
 	if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_CREAT | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
-	  dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
-	  return;
-	}
+	    if (errno == ENOENT) { /* So, the *split.log file dowsn't exists, we move it for fast work, but there may be some collisions */
+		char old_log_name[PATH_MAX];
+		dps_snprintf(old_log_name, sizeof(old_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
+		if (-1 == rename(old_log_name, del_log_name)) {
+		    if (errno != ENOENT) {
+			dps_strerror(A, DPS_LOG_ERROR, "Can't rename '%s' into '%s'", old_log_name, del_log_name);
+			return;
+		    }
+		}
+	    } else {
+		dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+		return;
+	    }
+	} else {
 
-	dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
-	if((log_fd = DpsOpen3(del_log_name, O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE)) == -1) {
-	  dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
-	  return;
-	}
+	    dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
+	    if((log_fd = DpsOpen3(del_log_name, O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE)) == -1) {
+		dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+		return;
+	    }
 
-	DpsWriteLock(log_fd);
+	    DpsWriteLock(log_fd);
   
-	lseek(log_fd, (off_t)0, SEEK_SET);
-	while((nbytes = read(log_fd, del_log_name, PATH_MAX)) > 0) {
-	  (void)write(split_fd, del_log_name, (size_t)nbytes);
+	    lseek(log_fd, (off_t)0, SEEK_SET);
+	    while((nbytes = read(log_fd, del_log_name, PATH_MAX)) > 0) {
+		(void)write(split_fd, del_log_name, (size_t)nbytes);
+	    }
+	    DpsClose(split_fd);
+	    lseek(log_fd, (off_t)0, SEEK_SET);
+	    (void)ftruncate(log_fd, (off_t)0);
+  
+	    DpsUnLock(log_fd);
+	    DpsClose(log_fd);
 	}
-	DpsClose(split_fd);
-	lseek(log_fd, (off_t)0, SEEK_SET);
-	(void)ftruncate(log_fd, (off_t)0);
-  
-	DpsUnLock(log_fd);
-	DpsClose(log_fd);
     }
 
     dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%s", db->log_dir, DPSSLASHSTR, "del-split.log");
@@ -2410,6 +2422,7 @@ int DpsLogdSaveBuf(DPS_AGENT *Indexer, DPS_ENV * Env, size_t log_num) { /* Shoul
       }
       DpsWriteLock(db->del_fd);
       if (logd->wrd_buf[log_num].ndel) 
+	lseek(db->del_fd, (off_t)0, SEEK_END);
 	if((ssize_t)(logd->wrd_buf[log_num].ndel * sizeof(DPS_LOGDEL)) != 
 	   write(db->del_fd, logd->wrd_buf[log_num].del_buf, logd->wrd_buf[log_num].ndel * sizeof(DPS_LOGDEL))) {
 	  dps_strerror(Indexer, DPS_LOG_ERROR, "Can't write to del.log");
@@ -3076,6 +3089,7 @@ int DpsLogdStoreDoc(DPS_AGENT *Agent, DPS_LOGD_CMD cmd, DPS_LOGD_WRD *wrd, DPS_D
 	    if (logd->cur_del_buf == NWrdFiles) {
 
 	      DpsWriteLock(db->del_fd);
+	      lseek(db->del_fd, (off_t)0, SEEK_END);
 	      for (i = 0; i < NWrdFiles; i++) {
 		if (logd->wrd_buf[i].ndel == 0) continue;
 		if((ssize_t)(logd->wrd_buf[i].ndel * sizeof(DPS_LOGDEL)) != write(db->del_fd, logd->wrd_buf[i].del_buf, logd->wrd_buf[i].ndel * sizeof(DPS_LOGDEL))) {
