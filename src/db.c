@@ -1037,7 +1037,7 @@ __C_LINK int __DPSCALL DpsSrvAction(DPS_AGENT *A, DPS_SERVER *S, int cmd) {
 	dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
 	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
 
-	dps_strcpy(A->Conf->errstr, "No appropriate storage support compiled");
+	dps_strcpy(A->Conf->errstr, "An error in DpsSRVAction (does appropriate storage support compiled in?)");
 	for (i = dbfrom; i < dbto; i++) {
 	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
 
