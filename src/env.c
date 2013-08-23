@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2010 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -114,7 +115,7 @@ void DpsEnvFree(DPS_ENV * Env){
 	DpsResultFree(&Env->Targets);
 	DpsParserListFree(&Env->Parsers);
 	DpsStopListFree(&Env->StopWords);
-	DpsRobotListFree(&Env->Robots);
+	DpsRobotListFree(NULL, &Env->Robots);
 	
 	DpsMatchListFree(&Env->MimeTypes);
 	DpsMatchListFree(&Env->Aliases);

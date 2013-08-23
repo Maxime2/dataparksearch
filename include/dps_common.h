@@ -768,12 +768,16 @@ typedef struct{
         size_t          len;
 } DPS_ROBOT_RULE;
 
+typedef struct {
+    time_t time;
+    size_t ref_cnt;
+} DPS_ROBOT_CRAWL;
+
 typedef struct{
 	const char	*hostinfo;
 	size_t		nrules;
         time_t          crawl_delay;
-        time_t          *last_crawled;
-        int             need_free;
+        DPS_ROBOT_CRAWL *last_crawled;
 	DPS_ROBOT_RULE	*Rule;
 } DPS_ROBOT;
 

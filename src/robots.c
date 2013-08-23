@@ -113,7 +113,7 @@ static DPS_ROBOT* DeleteRobotRules(DPS_AGENT *A, DPS_ROBOTS *Robots, const char 
 	return NULL;
 }
 
-static DPS_ROBOT* DpsRobotAddEmpty(DPS_ROBOTS *Robots, const char *hostinfo, time_t *last_crawled) {
+static DPS_ROBOT* DpsRobotAddEmpty(DPS_AGENT *A, DPS_ROBOTS *Robots, const char *hostinfo, DPS_ROBOT_CRAWL *last_crawled) {
   DPS_ROBOT *r;
 #ifdef WITH_PARANOIA
 	void *paran = DpsViolationEnter(paran);
@@ -130,20 +130,23 @@ static DPS_ROBOT* DpsRobotAddEmpty(DPS_ROBOTS *Robots, const char *hostinfo, tim
 
 	bzero((void*)&Robots->Robot[Robots->nrobots], sizeof(DPS_ROBOT));
 	Robots->Robot[Robots->nrobots].hostinfo = (char*)DpsStrdup(DPS_NULL2EMPTY(hostinfo));
+	DPS_GETLOCK(A, DPS_LOCK_ROBOTS);
 	if (last_crawled) {
 	  Robots->Robot[Robots->nrobots].last_crawled = last_crawled;
-	  Robots->Robot[Robots->nrobots].need_free = 0;
+	  last_crawled->ref_cnt++;
 	} else {
-	  Robots->Robot[Robots->nrobots].last_crawled = (time_t*)DpsMalloc(sizeof(time_t));
+	  Robots->Robot[Robots->nrobots].last_crawled = (DPS_ROBOT_CRAWL*)DpsMalloc(sizeof(DPS_ROBOT_CRAWL));
 	  if (Robots->Robot[Robots->nrobots].last_crawled == NULL) {
+	    DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 #ifdef WITH_PARANOIA
 	    DpsViolationExit(-1, paran);
 #endif
 	    return NULL;
 	  }
-	  *(Robots->Robot[Robots->nrobots].last_crawled) = (time_t)0;
-	  Robots->Robot[Robots->nrobots].need_free = 1;
+	  Robots->Robot[Robots->nrobots].last_crawled->time = (time_t)0;
+	  Robots->Robot[Robots->nrobots].last_crawled->ref_cnt = 1;
 	}
+	DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 	
 	Robots->nrobots++;
 	if (Robots->nrobots > 1) {
@@ -211,7 +214,7 @@ static int AddRobotRule(DPS_AGENT *A, DPS_ROBOT *robot, int cmd, const char *pat
 	return DPS_OK;
 }
 
-int DpsRobotListFree(DPS_ROBOTS *Robots){
+int DpsRobotListFree(DPS_AGENT *A, DPS_ROBOTS *Robots){
 	size_t i,j; 
 #ifdef WITH_PARANOIA
 	void *paran = DpsViolationEnter(paran);
@@ -223,14 +226,19 @@ int DpsRobotListFree(DPS_ROBOTS *Robots){
 #endif
 	  return 0;
 	}
+	if (A != NULL) DPS_GETLOCK(A, DPS_LOCK_ROBOTS);
 	for(i=0;i<Robots->nrobots;i++){
 		for(j=0;j<Robots->Robot[i].nrules;j++){
 			DPS_FREE(Robots->Robot[i].Rule[j].path);
 		}
 		DPS_FREE(Robots->Robot[i].hostinfo);
 		DPS_FREE(Robots->Robot[i].Rule);
-		if (Robots->Robot[i].need_free) DPS_FREE(Robots->Robot[i].last_crawled);
+		if (--Robots->Robot[i].last_crawled->ref_cnt == 0) {
+		    DPS_FREE(Robots->Robot[i].last_crawled);
+		}
+
 	}
+	if (A != NULL) DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 	DPS_FREE(Robots->Robot);
 	Robots->nrobots=0;
 #ifdef WITH_PARANOIA
@@ -258,7 +266,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	Robots = &Indexer->Conf->Robots;
 	if (Robots->nrobots == DPS_ROBOTS_CACHE_SIZE) {
 	  robot = NULL;
-	  DpsRobotListFree(Robots);
+	  DpsRobotListFree(Indexer, Robots);
 	} else {
 	  robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	}
@@ -281,7 +289,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	  if(DPS_OK == (rc = DpsSQLQuery(db, &Res, buf))) {
 	    rows = DpsSQLNumRows(&Res);
 	    if (rows > 0) {
-	      DpsRobotAddEmpty(&Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
+	      DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
 	      robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	      for(i = 0; i < rows; i++) {
 		cmd = atoi(DpsSQLValue(&Res,i,0));
@@ -378,7 +386,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		  result = DpsRobotParse(Indexer, rServer, rDoc->Buf.content, (char*)DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), 
 					 (Doc) ? DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1 : 0);
 	      else {
-		DpsRobotAddEmpty(&Indexer->Conf->Robots, DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), NULL);
+		DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), NULL);
 		if ((robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo))) != NULL) {
 		  if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
 		    DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
@@ -388,7 +396,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 /*	    } else if ((status == 0) || (status >= 500)) {
 	      Doc.method = DPS_METHOD_VISITLATER;*/
 	    } else {
-	      DpsRobotAddEmpty(&Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
+	      DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
 	      if ((robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo))) != NULL) {
 		if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
 		  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
@@ -404,7 +412,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 
 	if (robot != NULL) {
 	  rI = DeleteRobotRules(Indexer, &Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo));
-	  if (rI == NULL) rI = DpsRobotAddEmpty(&Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo), robot->last_crawled);
+	  if (rI == NULL) rI = DpsRobotAddEmpty(Indexer, &Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo), robot->last_crawled);
 	  if (rI != NULL) {
 	    register size_t j;
 	    rI->crawl_delay = robot->crawl_delay;
@@ -477,7 +485,7 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 	DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	if (u) {
 	  robot = NULL;
-	  DpsRobotListFree(&Indexer->Robots);
+	  DpsRobotListFree(Indexer, &Indexer->Robots);
 	} else {
 	  robot = DpsRobotFind(&Indexer->Robots, hostname);
 	}
@@ -529,7 +537,7 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 
 	      DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 	      now = time(NULL);
-	      diff = (size_t) (now - *(robot->last_crawled));
+	      diff = (size_t) (now - robot->last_crawled->time);
 	      while ((time_t)(1000 * diff) < robot->crawl_delay) {
 		to_sleep = robot->crawl_delay - 1000 * diff;
 		if ( (to_sleep > Indexer->Flags.MaxCrawlDelay * 1000) || (Indexer->action == DPS_TERMINATED) ) {
@@ -551,9 +559,9 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 		DPS_MSLEEP(to_sleep);
 		DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 		now = time(NULL);
-		diff = (size_t) (now - *(robot->last_crawled));
+		diff = (size_t) (now - robot->last_crawled->time);
 	      }
-	      *(robot->last_crawled) = Indexer->now = now;
+	      robot->last_crawled->time = Indexer->now = now;
 	      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	    }
 	  }
@@ -739,7 +747,7 @@ static int DpsSitemapParse(DPS_AGENT *Indexer, int hops, const char *s) {
   DpsLog(Indexer, DPS_LOG_DEBUG, "Executing Sitemap parser");
 
   method = DpsFilterFind(DPS_LOG_DEBUG, &Indexer->Conf->Filters, s, reason, DPS_METHOD_GET);
-  if (method == DPS_METHOD_DISALLOW || DPS_METHOD_VISITLATER) {
+  if (method == DPS_METHOD_DISALLOW || method == DPS_METHOD_VISITLATER) {
     return res;
   }
 
@@ -764,7 +772,7 @@ static int DpsSitemapParse(DPS_AGENT *Indexer, int hops, const char *s) {
 
   if (mServer != NULL) {
     method = DpsMethod(DpsVarListFindStr(&mServer->Vars, "Method", "Allow"));
-    if (method == DPS_METHOD_DISALLOW || DPS_METHOD_VISITLATER) {
+    if (method == DPS_METHOD_DISALLOW || method == DPS_METHOD_VISITLATER) {
       DpsDocFree(mDoc);
       return res;
     }
@@ -915,7 +923,7 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 
 	/* Wipe out any existing (default) rules for this host */
 	robot=DeleteRobotRules(Indexer, Robots, DPS_NULL2EMPTY(hostinfo));
-	if (robot == NULL) robot = DpsRobotAddEmpty(Robots, DPS_NULL2EMPTY(hostinfo), NULL);
+	if (robot == NULL) robot = DpsRobotAddEmpty(Indexer, Robots, DPS_NULL2EMPTY(hostinfo), NULL);
 	if(robot==NULL) return(DPS_ERROR);
 	
 	if(content==NULL) return(DPS_OK);

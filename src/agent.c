@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -369,7 +370,7 @@ __C_LINK void __DPSCALL DpsAgentFree(DPS_AGENT *Indexer){
 	DpsTemplateFree(&Indexer->tmpl);
 	DpsTemplateFree(&Indexer->st_tmpl);
 	DpsVarListFree(&Indexer->Vars);
-	DpsRobotListFree(&Indexer->Robots);
+	DpsRobotListFree(Indexer, &Indexer->Robots);
 	DpsCookiesFree(&Indexer->Cookies);
 	DPS_FREE(Indexer->Locked);
 	DPS_FREE(Indexer->LangMap);
