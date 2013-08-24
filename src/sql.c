@@ -1374,7 +1374,8 @@ static int DpsFindURL(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DB *db){
 	int             need_free_e_url = 0;
 	size_t          i, l, len;
 	
-	l = (len = ((e_url == NULL) ? (24 * dps_strlen(url)) : dps_strlen(e_url))) + 1;
+	len = dps_strlen(url);
+	l = ((e_url == NULL) ? (24 * len) : dps_strlen(e_url)) + 1;
 	if (e_url == NULL) {
 		
 	  doccs = DpsGetCharSetByID(Doc->charset_id);
