@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
@@ -18,7 +19,7 @@
 
 #define debug(STRING...) _debug(__FILE__, __LINE__, __FUNCTION__, ## STRING)
 
-FILE *log;
+FILE *flog;
 
 static char *str_store (char *dest, char *src) {
 	size_t d_size = (dest ? strlen(dest) : 0);
@@ -105,9 +106,9 @@ static void _debug (const char *file, int line, const char *func, const char *fm
 	str = strf(fmt, list);
 	va_end(list);
 
-	fseek(log, 0, SEEK_END);
-	fprintf(log, "%s %s(%d) [%s]: %s\n", tim, file, line, func, str);
-	fflush(log);
+	fseek(flog, 0, SEEK_END);
+	fprintf(flog, "%s %s(%d) [%s]: %s\n", tim, file, line, func, str);
+	fflush(flog);
 }
 
 static int testenv (char *key, char *val) {
@@ -393,7 +394,7 @@ int main (int argc, char **argv) {
 		return(1);
 	}
 
-	if (! (log = fopen(DPS_TEST_LOG, "w"))) {
+	if (! (flog = fopen(DPS_TEST_LOG, "w"))) {
 		fprintf(stderr, "fopen '%s' failed: %s.\n", DPS_TEST_LOG, strerror(errno));
 		return(1);
 	}
