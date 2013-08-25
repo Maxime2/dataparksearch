@@ -1963,9 +1963,9 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	  if(!strncmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "http", 4)) {
 	    if(!Doc->Spider.use_robots){
 	      DpsLog(Indexer,DPS_LOG_DEBUG, "robots.txt support is disallowed for '%s'", DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
-	      DPS_GETLOCK(Indexer,DPS_LOCK_CONF);
+/*	      DPS_GETLOCK(Indexer,DPS_LOCK_CONF);*/
 	      result = DpsRobotParse(Indexer, NULL, NULL, DPS_NULL2EMPTY(Doc->CurURL.hostinfo), hops + 1);
-	      DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);
+/*	      DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);*/
 	    }else{
 	      DPS_ROBOT_RULE	*rule;
 
@@ -2500,9 +2500,9 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	  if(!strncmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "http", 4)) {
 	    if(!Doc->Spider.use_robots){
 	      DpsLog(Indexer,DPS_LOG_DEBUG, "robots.txt support is disallowed for '%s'", DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
-	      DPS_GETLOCK(Indexer,DPS_LOCK_CONF);
+/*	      DPS_GETLOCK(Indexer,DPS_LOCK_CONF);*/
 	      result = DpsRobotParse(Indexer, NULL, NULL, DPS_NULL2EMPTY(Doc->CurURL.hostinfo), DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1);
-	      DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);
+/*	      DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);*/
 	    }else{
 	      DPS_ROBOT_RULE	*rule;
 

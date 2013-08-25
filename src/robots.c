@@ -130,23 +130,20 @@ static DPS_ROBOT* DpsRobotAddEmpty(DPS_AGENT *A, DPS_ROBOTS *Robots, const char 
 
 	bzero((void*)&Robots->Robot[Robots->nrobots], sizeof(DPS_ROBOT));
 	Robots->Robot[Robots->nrobots].hostinfo = (char*)DpsStrdup(DPS_NULL2EMPTY(hostinfo));
-	DPS_GETLOCK(A, DPS_LOCK_ROBOTS);
 	if (last_crawled) {
 	  Robots->Robot[Robots->nrobots].last_crawled = last_crawled;
 	  last_crawled->ref_cnt++;
 	} else {
 	  Robots->Robot[Robots->nrobots].last_crawled = (DPS_ROBOT_CRAWL*)DpsMalloc(sizeof(DPS_ROBOT_CRAWL));
 	  if (Robots->Robot[Robots->nrobots].last_crawled == NULL) {
-	    DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 #ifdef WITH_PARANOIA
 	    DpsViolationExit(-1, paran);
 #endif
 	    return NULL;
 	  }
-	  Robots->Robot[Robots->nrobots].last_crawled->time = (time_t)0;
+	  Robots->Robot[Robots->nrobots].last_crawled->time = (time_t)A->now;
 	  Robots->Robot[Robots->nrobots].last_crawled->ref_cnt = 1;
 	}
-	DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 	
 	Robots->nrobots++;
 	if (Robots->nrobots > 1) {
@@ -286,6 +283,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	  } else {
 	    db = &Indexer->dbl.db[url_id % Indexer->dbl.nitems];
 	  }
+	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
 	  if(DPS_OK == (rc = DpsSQLQuery(db, &Res, buf))) {
 	    rows = DpsSQLNumRows(&Res);
 	    if (rows > 0) {
@@ -298,6 +296,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	      }
 	    }
 	  }
+	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
 	  DpsSQLFree(&Res);
 	}
 
@@ -359,6 +358,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	  robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	  
 	  if (robot == NULL) {
+	    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	    if ((status = DpsVarListFindInt(&rDoc->Sections, "Status", 0)) == DPS_HTTP_STATUS_OK) {
 	      const char	*ce = DpsVarListFindStr(&rDoc->Sections, "Content-Encoding", "");
 #ifdef HAVE_ZLIB
@@ -403,6 +403,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		}
 	      }
 	    }
+	    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 	    robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	  }
 	  if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));
@@ -480,9 +481,7 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 
 	hostname = DPS_NULL2EMPTY(URL->hostinfo);
 
-	DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 	u = (Indexer->Robots.nrobots == DPS_ROBOTS_CACHE_SIZE);
-	DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	if (u) {
 	  robot = NULL;
 	  DpsRobotListFree(Indexer, &Indexer->Robots);
@@ -490,9 +489,7 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 	  robot = DpsRobotFind(&Indexer->Robots, hostname);
 	}
 	if (robot == NULL) {
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
 	  robot = DpsRobotClone(Indexer, Server, Doc, URL, rurl, rurlen);
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
 	}
 
 	if (robot != NULL) {
@@ -915,18 +912,29 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
         DPS_ROBOTS *Robots = &Conf->Robots;
 	DPS_ROBOT *robot;
 	int rule = 0, common = 0, my = 0, newrecord = 1, has_cmd = 0;
-	int result;
+	int result = DPS_OK;
 	char *s,*e,*lt;
 	char *agent = NULL;
+	struct sitemap_str {
+	    char *url;
+	    struct sitemap_str *next;
+	} *Sitemaps = NULL, *smp, *smt = NULL, *smnext;
 	const char *UA = (Srv != NULL) ? DpsVarListFindStr(&Srv->Vars, "Request.User-Agent", DPS_USER_AGENT) :
 	  DpsVarListFindStr(&Indexer->Vars, "Request.User-Agent", DPS_USER_AGENT);
 
 	/* Wipe out any existing (default) rules for this host */
-	robot=DeleteRobotRules(Indexer, Robots, DPS_NULL2EMPTY(hostinfo));
+	DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+	robot = DeleteRobotRules(Indexer, Robots, DPS_NULL2EMPTY(hostinfo));
 	if (robot == NULL) robot = DpsRobotAddEmpty(Indexer, Robots, DPS_NULL2EMPTY(hostinfo), NULL);
-	if(robot==NULL) return(DPS_ERROR);
+	if(robot==NULL) {
+	    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+	    return(DPS_ERROR);
+	}
 	
-	if(content==NULL) return(DPS_OK);
+	if(content == NULL) {
+	    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+	    return(DPS_OK);
+	}
 /*
 	fprintf(stderr, "ROBOTS CONTENT: %s\n", content);
 */
@@ -985,15 +993,19 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 			if(s && *s) {
 			  char *norm = dps_robots_normalise(s);
 			  if((norm != NULL) && AddRobotRule(Indexer, robot, DPS_METHOD_DISALLOW, norm, 1)) {
-			    DPS_FREE(norm);
-			    DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-			    return DPS_ERROR;
+			      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+			      DPS_FREE(norm);
+			      DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+			      result = DPS_ERROR;
+			      goto parse_exit;
 			  }
 			  DPS_FREE(norm);
 			} else { /* Empty Disallow == Allow all */
 			  if(AddRobotRule(Indexer, robot, DPS_METHOD_GET, "/", 1)) {
-				  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-					return(DPS_ERROR);
+			      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+			      DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+			      result = DPS_ERROR;
+			      goto parse_exit;
 			  }
 			}
 		  }else
@@ -1004,9 +1016,11 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 			if(s && *s){
 			  char *norm = dps_robots_normalise(s);
 			  if((norm != NULL) && AddRobotRule(Indexer, robot,DPS_METHOD_GET, norm, 1)) {
-			    DPS_FREE(norm);
-			    DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-			    return DPS_ERROR;
+			      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+			      DPS_FREE(norm);
+			      DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+			      result = DPS_ERROR;
+			      goto parse_exit;
 			  }
 			  DPS_FREE(norm);
 			}
@@ -1019,8 +1033,10 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 			  DPS_URL *hostURL = DpsURLInit(NULL);
 			  char robohost[512];
 			  if (hostURL == NULL) {
-				  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: can't init dps_url; no memory ?");
-					return(DPS_ERROR);
+			      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+			      DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: can't init dps_url; no memory ?");
+			      result = DPS_ERROR;
+			      goto parse_exit;
 			  }
 			  dps_snprintf(robohost, sizeof(robohost), "http://%s/", s);
 			  if (!DpsURLParse(hostURL, robohost)) {
@@ -1032,10 +1048,12 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 			    if (DpsHostLookup(Indexer, &roboconn) != 0) {
 			      DpsLog(Indexer, DPS_LOG_EXTRA, "robots.txt: can't resolve hostname (%s) in Host: directive, skip it", s);
 			    } else if(AddRobotRule(Indexer, robot, DPS_METHOD_HOST, s, 1)) {
-				  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-				  DpsFree(roboconn.hostname);
-				  DpsURLFree(hostURL);
-					return(DPS_ERROR);
+				DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+				DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+				DpsFree(roboconn.hostname);
+				DpsURLFree(hostURL);
+				result = DPS_ERROR;
+				goto parse_exit;
 			    }
 			    DpsURLFree(hostURL);
 			    DpsFree(roboconn.hostname);
@@ -1051,15 +1069,30 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 			DPS_SKIPN(e," \t");*e=0;
 			if(s && *s) {
 			  DpsSGMLUnescape(s);
-			  result = DpsSitemapParse(Indexer, hops, s);
+			  if (smt != NULL) {
+			      smt->next = (struct sitemap_str*)DpsMalloc(sizeof(struct sitemap_str));
+			      smt = smt->next;
+			  } else {
+			      smt = Sitemaps = (struct sitemap_str*)DpsMalloc(sizeof(struct sitemap_str));
+			  }
+			  if (smt == NULL) {
+			      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+			      DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+			      result = DPS_ERROR;
+			      goto parse_exit;
+			  }
+			  smt->next = NULL;
+			  smt->url = DpsStrdup(s);
 			}
 		  }else
 		  if((!(strncasecmp(s, "Crawl-delay", 11))) && (rule)) {
 		    e = s + 12; DPS_SKIP(e, " \t"); s = e;
 		    DPS_SKIPN(e, " \t"); *e = '\0';
 			  if(AddRobotRule(Indexer, robot, DPS_METHOD_CRAWLDELAY, s, 1)) {
-				  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-					return(DPS_ERROR);
+			      DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+			      DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+			      result = DPS_ERROR;
+			      goto parse_exit;
 			  }
 		  }
 		}
@@ -1072,9 +1105,21 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 	if (robot->nrules == 0) {
 	  DpsLog(Indexer, DPS_LOG_DEBUG, "RobotsParse: no valid rules specified, allow all by default");
 	  if(AddRobotRule(Indexer, robot, DPS_METHOD_GET, "/", 1)) {
+	    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	    DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-	    return(DPS_ERROR);
+	    result = DPS_ERROR;
+	    goto parse_exit;
 	  }
 	}
-	return(DPS_OK);
+	DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+
+parse_exit:
+	for (smp = Sitemaps; smp != NULL; smp = smnext) {
+	    smnext = smp->next;
+	    result = DpsSitemapParse(Indexer, hops, smp->url);
+	    DPS_FREE(smp->url);
+	    DPS_FREE(smp);
+	}
+	
+	return(result);
 }

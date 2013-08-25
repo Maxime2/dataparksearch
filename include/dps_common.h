@@ -1373,7 +1373,7 @@ typedef struct {
   int *secno, p_secno, n_secno;
   int nphrasecmd;
   int autophrase;
-  size_t order, order_inquery;
+  ssize_t order, order_inquery;
   const char *qlang;
 } DPS_PREPARE_STATE;
 
