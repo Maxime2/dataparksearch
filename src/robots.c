@@ -235,9 +235,9 @@ int DpsRobotListFree(DPS_AGENT *A, DPS_ROBOTS *Robots){
 		}
 
 	}
-	if (A != NULL) DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 	DPS_FREE(Robots->Robot);
 	Robots->nrobots=0;
+	if (A != NULL) DPS_RELEASELOCK(A, DPS_LOCK_ROBOTS);
 #ifdef WITH_PARANOIA
 	DpsViolationExit(-1, paran);
 #endif
@@ -249,7 +249,7 @@ static DPS_ROBOT_RULE DpsRobotErrRule = {DPS_METHOD_VISITLATER, "", 0};
 static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server, 
 				DPS_DOCUMENT *Doc, DPS_URL *URL, char *rurl, size_t rurlen) {
     DPS_ROBOTS *Robots;
-	DPS_ROBOT *robot, *rI = NULL;
+	DPS_ROBOT *robot = NULL, *rI = NULL;
 #ifdef HAVE_SQL
 	DPS_SERVER	*rServer;
 	DPS_DOCUMENT	*rDoc;
@@ -261,11 +261,9 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 
 	DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 	Robots = &Indexer->Conf->Robots;
-	if (Robots->nrobots == DPS_ROBOTS_CACHE_SIZE) {
-	  robot = NULL;
+	robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
+	if (robot == NULL && Robots->nrobots == DPS_ROBOTS_CACHE_SIZE) {
 	  DpsRobotListFree(Indexer, Robots);
-	} else {
-	  robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	}
 
 	if (robot == NULL) {
@@ -287,12 +285,13 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	  if(DPS_OK == (rc = DpsSQLQuery(db, &Res, buf))) {
 	    rows = DpsSQLNumRows(&Res);
 	    if (rows > 0) {
-	      DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
-	      robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
-	      for(i = 0; i < rows; i++) {
-		cmd = atoi(DpsSQLValue(&Res,i,0));
-		if (cmd != DPS_METHOD_UNKNOWN)
-		  AddRobotRule(Indexer, robot, cmd, DpsSQLValue(&Res,i,1), 0);
+	      robot = DpsRobotAddEmpty(Indexer, Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
+	      if (robot != NULL) {
+		  for(i = 0; i < rows; i++) {
+		      cmd = atoi(DpsSQLValue(&Res,i,0));
+		      if (cmd != DPS_METHOD_UNKNOWN)
+			  AddRobotRule(Indexer, robot, cmd, DpsSQLValue(&Res,i,1), 0);
+		  }
 	      }
 	    }
 	  }
@@ -382,29 +381,31 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		DpsLog(Indexer,DPS_LOG_ERROR,"Unsupported Content-Encoding");
 /*	          DpsVarListReplaceInt(&rDoc->Sections, "Status", status = DPS_HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE);*/
 	      }
-	      if (status == DPS_HTTP_STATUS_OK) 
+	      if (status == DPS_HTTP_STATUS_OK) {
 		  result = DpsRobotParse(Indexer, rServer, rDoc->Buf.content, (char*)DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), 
 					 (Doc) ? DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1 : 0);
-	      else {
-		DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), NULL);
-		if ((robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo))) != NULL) {
-		  if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
-		    DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+		  DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+	      } else {
+		  DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+		  robot = DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), NULL);
+		  if (robot != NULL) {
+		      if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
+			  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+		      }
 		  }
-		}
 	      }
-/*	    } else if ((status == 0) || (status >= 500)) {
-	      Doc.method = DPS_METHOD_VISITLATER;*/
 	    } else {
-	      DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
-	      if ((robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo))) != NULL) {
-		if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
-		  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+		DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+		robot = DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
+		if (robot != NULL) {
+		    if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
+			DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+		    }
 		}
-	      }
 	    }
-	    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
-	    robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
+	    if (robot == NULL) {
+		robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
+	    }
 	  }
 	  if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));
 	  DpsDocFree(rDoc);
