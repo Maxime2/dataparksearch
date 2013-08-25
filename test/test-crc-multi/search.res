@@ -36,7 +36,7 @@
   </tr>
   <tr><td colspan="2">
       Sort by:
-            <b>relevancy</b>&nbsp;|&nbsp;<a href="?np=0&amp;q=ford+motor+company&s=DRP">last modified date</a>
+            <b>relevancy</b>&nbsp;|&nbsp;<a href="?g=en&amp;np=0&amp;q=ford+motor+company&s=DRP">last modified date</a>
         </td></tr>
 </table><DL>
   <DT>1.
@@ -59,7 +59,7 @@
              <font color="#008800">
               - 87 bytes [text/plain]
               - 
-	      	      	      <DD><small>[<a href="?np=0&amp;q=ford+motor+company&amp;site=614987914">More result from this site
+	      	      	      <DD><small>[<a href="?g=en&amp;np=0&amp;q=ford+motor+company&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
