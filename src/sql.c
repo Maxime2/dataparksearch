@@ -4680,10 +4680,10 @@ int DpsFindWordsSQL(DPS_AGENT * query, DPS_RESULT *Res, DPS_DB *db) {
 SELECT %s.url_id,%s.intag \
 FROM %s, url%s \
 WHERE %s.word_id=%d \
-AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
+AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(%s.url_id)DESC,ABS(%s.url_id),intag",
 				     tablename,tablename,
 				     tablename, db->from, tablename,
-				     crc,tablename,where);
+				     crc, tablename, where, tablename, tablename);
 		      }else{
 			dps_snprintf(qbuf,sizeof(qbuf)-1,"SELECT url_id,intag FROM %s WHERE %s.word_id=%d ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
 				     tablename,tablename,crc);
@@ -4710,10 +4710,10 @@ AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
 SELECT %s.url_id,%s.intag \
 FROM %s, url%s \
 WHERE %s.word%s \
-AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
+AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(%s.url_id)DESC,ABS(%s.url_id),intag",
 				     tablename,tablename,
 				     tablename, db->from, tablename,
-				     cmparg,tablename,where);
+				     cmparg, tablename, where, tablename, tablename);
 		      }else{
 			dps_snprintf(qbuf,sizeof(qbuf)-1,"\
 SELECT url_id,intag FROM %s,url WHERE %s.word%s AND url.rec_id=%s.url_id ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
@@ -4786,10 +4786,10 @@ SELECT url_id,intag FROM %s,url WHERE %s.word%s AND url.rec_id=%s.url_id ORDER B
 SELECT %s.url_id,%s.intag \
 FROM %s, url%s \
 WHERE %s.word_id=%d \
-AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
+AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(%s.url_id)DESC,ABS(%s.url_id),intag",
 				   tablename,tablename,
 				   tablename, db->from, tablename,
-				   crc,tablename,where);
+				   crc, tablename, where, tablename, tablename);
 		    }else{
 		      dps_snprintf(qbuf,sizeof(qbuf)-1,"\
 SELECT url_id,intag FROM %s,url WHERE %s.word_id=%d AND url.rec_id=%s.url_id ORDER BY SIGN(url_id)DESC,ABS(url_id),intag", 
@@ -4818,10 +4818,10 @@ SELECT url_id,intag FROM %s,url WHERE %s.word_id=%d AND url.rec_id=%s.url_id ORD
 SELECT %s.url_id,%s.intag \
 FROM %s, url%s \
 WHERE %s.word%s \
-AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
+AND url.rec_id=%s.url_id AND %s ORDER BY SIGN(%s.url_id)DESC,ABS(%s.url_id),intag",
 				   tablename,tablename,
 				   tablename, db->from, tablename,
-				   cmparg,tablename,where);
+				   cmparg, tablename, where, tablename, tablename);
 		    } else {
 		      dps_snprintf(qbuf,sizeof(qbuf)-1,"\
 SELECT url_id,intag FROM %s,url WHERE %s.word%s AND url.rec_id=%s.url_id ORDER BY SIGN(url_id)DESC,ABS(url_id),intag",
