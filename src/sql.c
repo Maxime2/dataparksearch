@@ -3621,7 +3621,10 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 
 	if(!(nrows = DpsSQLNumRows(&SQLRes))) {
 		DpsSQLFree(&SQLRes);
-		if (Indexer->flags & DPS_FLAG_SORT_SEED && ntry++ < 3) goto one_try;
+		if (ntry++ < 3) {
+		    DPSSLEEP(1);
+		    goto one_try;
+		}
 		goto unlock;
 	}
 	if (!db->DBSQL_LIMIT && nrows > url_num) nrows = url_num;
