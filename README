@@ -2,7 +2,59 @@ DataparkSearch v.4
 ------------------
 Full featured web search engine
 
-### Please see the directory doc for documentation
+
+### Documentation and auxiliary files
+
+* Documentation in English: doc/index.en.html
+** as a single file: doc/single.en.html
+* Documentation in Russian: doc/index.ru.html
+** as s single file doc/single.ru.html
+* Auxiliary files available on [DataparkSearch download page in Gogle Code](https://code.google.com/p/dataparksearch/downloads/list)
+* You can find some packages on [DataparkSearch download page on Google Drive](https://drive.google.com/folderview?id=0B4LJSYsLtw_McTFUaU5mVW1ZRmc&usp=sharing)
+
+
+## Dicussion group
+
+Feel free to ask any question about DataparkSearch Engine in 
+[DataparkSearch group on Google Groups](https://groups.google.com/d/forum/dataparksearch)
+
+## Features
+
+* Support for http, https, ftp (passive mode), nntp and news URL schemes.
+* htdb virtual URL scheme for SQL database indexing.
+* Indexes text/html, text/xml, text/plain, audio/mpeg (mp3) and image/gif mime types natively.
+* External parsers support for other document types, including Microsoft Word, Excel, RTF, PowerPoint, Adobe Acrobat PDF and Flash.
+* Can index multilingual sites using content negotiation.
+* Can search all of the word forms using ispell affixes and dictionaries.
+* Synonym, acronym and abbreviation query expansion based on editable dictionaries, specified by language and charset.
+* Stop-words, synonyms and acronyms lists.
+* Options to query with all words, all words near to each others, any words, or Boolean queries. A subset of VQL
+(Verity Query Language) is supported.
+* Popularity Rank based on a neural network model.
+* Results can be sorted by relevancy (using vector calculation), popularity rank as &quot;Goo&quot; (adding weight
+  for incoming links), and &quot;Neo&quot; (neural network model), last modified time, and by
+  &quot;importance&quot; (a combination of relevancy and popularity rank).
+* Supports wide range of character sets support with automated character set and language detection.
+* Offers an accent insensitive search option.
+* Provides phrase segmenting (tokenizing) for Chinese, Japanese, Korean and Thai.*
+* Includes an indexer and a web CGI front-end, as well as a search module for Apache web server (mod_dpsearch).
+* Handles Internationalized Domain Names (IDN).
+* Summary Extraction Algorithm automatically sums up each document in several sentences.
+* Uses If-Modified-Since for efficient transfer of only changed files.
+* Can tweak URLs with session IDs and other weird formats, including some JavaScript link decoding.
+* Can perform parallel and multi-threaded indexing for faster updating.
+* Flexible update scheduling, including options for checking some sections of a site more frequently.
+* Handles basic authentication (user name and password) and cookies.
+* Stores a compressed text version of the documents for extracting and viewing.
+* Can specify a default character set and language for a server or subdirectory, or a list of possible languages.
+* Noindex tags: &lt;!--UdmComment--&gt;, &lt;NOINDEX&gt;, &lt;!--noindex--&gt;, Google&#x27;s special comments 
+&lt;!-- google_ad_section_start --&gt;, &lt;!-- google_ad_section_start(weight=ignore) --&gt; and &lt;!-- google_ad_section_end --&gt; 
+consider as tags to include/exclude.
+* Can specify a content body tag.
+* Spellchecking for query words with aspell.
+* Flexible options and commands to customize search result pages.
+* Effective caching gives significant time reduction in search times.
+* Query logging stores the query, query parameters and the number of results found.
 
 
 ### Disclaimer (see LICENSE for details)
