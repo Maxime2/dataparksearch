@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -329,7 +330,7 @@ int Dps_ftp_login(DPS_CONN *connp, const char *user, const char *passwd){
 	return 0;
 }
 
-static int ftp_parse_list(DPS_CONN *connp, char *path){
+static int ftp_parse_list(DPS_CONN *connp, const char *path) {
   char *line, *buf_in, *ch, *buf_out, *tok, *fname, *line_tok;
         int len_h, len_f,len_p, i;
 	char *dir, savec, line_savec;
