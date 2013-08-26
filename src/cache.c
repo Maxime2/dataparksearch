@@ -220,7 +220,7 @@ static int DpsCmp_urlid_t(const urlid_t *s1, const urlid_t *s2) {
 */
 
 
-static int DpsLogdInit(DPS_AGENT *Agent, DPS_DB *db, char* var_dir, size_t i, int shared);
+static int DpsLogdInit(DPS_AGENT *Agent, DPS_DB *db, const char* var_dir, size_t i, int shared);
 
 int DpsOpenCache(DPS_AGENT *A, int shared) {
 	DPS_DB		*db;
@@ -2553,7 +2553,7 @@ static int DpsLogdCloseLogs(DPS_AGENT *Agent) {
   return res;
 }
 
-static int DpsLogdInit(DPS_AGENT *A, DPS_DB *db, char* var_dir, size_t i, int shared) {
+static int DpsLogdInit(DPS_AGENT *A, DPS_DB *db, const char* var_dir, size_t i, int shared) {
         char shm_name[PATH_MAX];
 	DPS_ENV *Env = A->Conf;
 	int fd;

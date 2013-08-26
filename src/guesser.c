@@ -1146,7 +1146,7 @@ void DpsLangMapListSave(DPS_LANGMAPLIST *List) {
 }
 
 
-static char *dps_next_char2map(register char *p, register char *end) {
+static const char *dps_next_char2map(register const char *p, register const char *end) {
   for(; p < end; p++) {
     if (*p >= 0 && *p <= 0x40) continue;
     if (*p == '<') {
