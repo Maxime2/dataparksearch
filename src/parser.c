@@ -447,12 +447,17 @@ static char *parse_file (DPS_AGENT * Agent, DPS_PARSER * parser, DPS_DOCUMENT *D
 
 	if(arg1pos){
 		int fd;
+		ssize_t res;
+		size_t bytes_written = 0;
 
 		/* Create temporary file */
 		umask((mode_t)022);
 		fd = DpsOpen3(fnames[0], O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE);
 		/* Write to the temporary file */
-		(void)write(fd, Doc->Buf.content, Doc->Buf.size - gap);
+		while ((res = write(fd, Doc->Buf.content + bytes_written, Doc->Buf.size - gap - bytes_written)) > 0) {
+		  bytes_written += (size_t)res;
+		  if (bytes_written == Doc->Buf.size - gap) break;
+		}
 		DpsClose(fd);
 	}
 
