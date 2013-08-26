@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -1179,7 +1180,7 @@ static int DpsNNTPGet(DPS_AGENT * Indexer,DPS_DOCUMENT *Doc){
 			}else{
 				int n=0;
 				char * field[10];
-				memset(field,sizeof(field),0);
+				memset(field, 0, sizeof(field));
 				
 				tok = dps_strtok_r(str, "\t\r\n", &lt, NULL);
 				while(tok){
