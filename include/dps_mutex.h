@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -68,6 +69,7 @@
 void InitMutex(dps_mutex_t *);
 void DPS_MUTEX_LOCK(DPS_AGENT *A, dps_mutex_t *x);
 void DPS_MUTEX_UNLOCK(DPS_AGENT *A, dps_mutex_t *x);
+#define DPS_THREAD_ID           ((unsigned long)1117)
 
 
 #elif defined HAVE_SEMAPHORE_H
@@ -77,6 +79,7 @@ void InitMutex(dps_mutex_t *);
 #define DestroyMutex(x)         sem_close(x)
 #define DPS_MUTEX_LOCK(A,x)       sem_wait(x)
 #define DPS_MUTEX_UNLOCK(A,x)     sem_post(x)
+#define DPS_THREAD_ID           ((unsigned long)1117)
 
 
 #else
@@ -85,6 +88,7 @@ void InitMutex(dps_mutex_t *);
 #define DestroyMutex(x)
 #define DPS_MUTEX_LOCK(A,x)
 #define DPS_MUTEX_UNLOCK(A,x)
+#define DPS_THREAD_ID           ((unsigned long)1117)
 #endif
 
 
