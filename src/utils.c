@@ -1892,7 +1892,7 @@ const char *h_errlist[] = {
 
 
 
-int DpsBuild(char *path, int omode) {
+int DpsBuild(const char *path, int omode) {
 	struct stat sb;
 	mode_t numask, oumask;
 	int first, last, retval;

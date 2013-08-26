@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -183,7 +184,7 @@ extern __C_LINK size_t __DPSCALL dps_base64_decode (char * dst, const char * src
 extern char * dps_rfc1522_decode(char * dst, const char *src);
 
 /* Build directory */
-extern int   DpsBuild(char * path, int mode);
+extern int   DpsBuild(const char * path, int mode);
 
 /* SetEnv */
 extern int DpsSetEnv(const char * name,const char * value);
