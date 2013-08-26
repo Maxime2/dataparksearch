@@ -1372,7 +1372,7 @@ AC_ARG_WITH(aspell,
 [aspell=$withval],
 [aspell=yes])
   
-AC_MSG_RESULT([$aspell])
+dnl AC_MSG_RESULT([$aspell])
 
 if test "$aspell" = "no" ; then
   dnl to avoid bash error
@@ -1413,7 +1413,11 @@ elif test "$aspell" = "yes" ; then
 	AC_MSG_RESULT([$aspell])
 
     else
-	AC_MSG_ERROR([No aspell.h has been found.])
+	if test "$withval" = "yes" ; then
+	   AC_MSG_ERROR([No aspell.h has been found.])
+	else
+	   AC_MSG_RESULT([no])
+	fi
     fi
 
 
