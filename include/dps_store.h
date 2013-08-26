@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -99,7 +100,7 @@ typedef struct {
 } DPS_EXCERPT_CFG;
 
 /*extern void DpsExcerptDoc(DPS_AGENT *query, DPS_RESULT *Res, DPS_DOCUMENT *Doc, size_t size, size_t padding);*/
-extern void DpsExcerptDoc(void *excerpt_cfg);
+extern void * DpsExcerptDoc(void *excerpt_cfg);
 extern char * DpsExcerptString(DPS_AGENT *query, DPS_RESULT *Res, const char *value, size_t size, size_t padding);
 extern int DpsStoreSave(DPS_AGENT *Agent, int ns, const char *Client);
 extern int DpsStoreGet(DPS_AGENT *Agent, int ns, int sd, const char *Client);

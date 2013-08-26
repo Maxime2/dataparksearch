@@ -643,7 +643,7 @@ static char * DpsStrWWL(char **p, DPS_WIDEWORDLIST *wwl, char *c, size_t *len, s
 /** Make document excerpts on query words forms 
  */
 
-void DpsExcerptDoc(void *param) {
+void *DpsExcerptDoc(void *param) {
   static const dpsunicode_t prefix_dot[] = { 0x2e, 0x2e, 0x2e, 0x20, 0}, suffix_dot[] = {0x20, 0x2e, 0x2e, 0x2e, 0}, mark[] = {0x4, 0};
   DPS_EXCERPT_CFG *Cfg = (DPS_EXCERPT_CFG*)param;
   DPS_AGENT *query = Cfg->query;
@@ -673,7 +673,7 @@ void DpsExcerptDoc(void *param) {
   int needFreeSource = 1;
   int NOprefixHL = 0;
 
-  if (Res->WWList.nwords == 0) return;
+  if (Res->WWList.nwords == 0) return NULL;
   bzero(&ST, sizeof(ST));
   ST.section = 255;
   ST.name = "ST";
@@ -687,22 +687,22 @@ void DpsExcerptDoc(void *param) {
   bcs = DpsGetCharSet(lcharset);
   dcs = DpsGetCharSet(DpsVarListFindStr(&Doc->Sections,"Charset","iso-8859-1"));
   
-  if (!bcs || !dcs) return;
-  if (!(sys_int=DpsGetCharSet("sys-int"))) return;
+  if (!bcs || !dcs) return NULL;
+  if (!(sys_int=DpsGetCharSet("sys-int"))) return NULL;
   
   DpsConvInit(&uni_bc, sys_int, bcs, query->Conf->CharsToEscape, DPS_RECODE_HTML);
 
   c = (dpsunicode_t *) DpsMalloc(Res->WWList.nwords * sizeof(dpsunicode_t) + 1);
-  if (c == NULL) {  return; }
+  if (c == NULL) {  return NULL; }
   wlen = (size_t *) DpsMalloc(Res->WWList.nwords * sizeof(size_t) + 1);
   if (wlen == NULL) {
     DPS_FREE(c);
-    return;
+    return NULL;
   }
   wpos = (dpsunicode_t **) DpsMalloc(Res->WWList.nwords * sizeof(dpsunicode_t*) + 1);
   if (wpos == NULL) {
     DPS_FREE(c); DPS_FREE(wlen);
-    return;
+    return NULL;
   }
   for (i = 0; i < Res->WWList.nwords; i++) {
     wlen[i] = Res->WWList.Word[i].ulen - 1;
@@ -715,7 +715,7 @@ void DpsExcerptDoc(void *param) {
 
   if ((oi = (dpsunicode_t *)DpsMalloc(i)) == NULL) {
     DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos);
-    return;
+    return NULL;
   }
   oi[0]=0;
 
@@ -725,13 +725,13 @@ void DpsExcerptDoc(void *param) {
 
   if ((DocSize == 0) ||  ((HEnd = HDoc = (char *)DpsMalloc(2 * DocSize + 4)) == NULL) ) {
     DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos);
-    return;
+    return NULL;
   }
   HDoc[0]='\0';
 
   if ( (uni = (dpsunicode_t *)DpsMalloc((2 * DocSize + 10) * sizeof(dpsunicode_t)) ) == NULL) {
     DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc);
-    return;
+    return NULL;
   }
 
   DpsHTMLTOKInit(&tag);
@@ -797,18 +797,18 @@ void DpsExcerptDoc(void *param) {
 
     if (ChunkSize == 0) {
 	DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc); DPS_FREE(uni);
-      return;
+      return NULL;
     }
     DpsSend(s, &tag.chunks, sizeof(tag.chunks), 0);
     DpsRecvall(r, &ChunkSize, sizeof(ChunkSize), 360);
     if (ChunkSize == 0) {
       DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc); DPS_FREE(uni);
-      return;
+      return NULL;
     }
 
     if ((tag.Content = (char*)DpsMalloc(ChunkSize+10)) == NULL) {
       DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc); DPS_FREE(uni);
-      return;
+      return NULL;
     }
     DpsRecvall(r, tag.Content, ChunkSize, 360);
     tag.Content[ChunkSize] = '\0';
@@ -862,7 +862,7 @@ void DpsExcerptDoc(void *param) {
       if (s >= 0) DpsSend(s, &tag.chunks, sizeof(tag.chunks), 0);
     }
     DPS_FREE(SourceToFree);
-    return;
+    return NULL;
   }
 
   add = DpsConv(&dc_uni, (char*)uni, sizeof(*uni)*(DocSize+10), HDoc, len + 1) / sizeof(*uni);
@@ -968,7 +968,7 @@ void DpsExcerptDoc(void *param) {
   if ((os = (char *)DpsMalloc(osl * 16)) == NULL) {
     DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc); DPS_FREE(uni);
     DPS_FREE(SourceToFree);
-    return;
+    return NULL;
   }
 
   
@@ -989,7 +989,7 @@ void DpsExcerptDoc(void *param) {
     DpsVarListReplaceStr(&Doc->Sections, "body", os);
   }
   DPS_FREE(os);
-  return;
+  return NULL;
 }
 
 
