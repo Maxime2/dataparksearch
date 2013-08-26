@@ -6,14 +6,14 @@ Full featured web search engine
 ### Documentation and auxiliary files
 
 * Documentation in English: doc/index.en.html
-** as a single file: doc/single.en.html
+ * as a single file: doc/single.en.html
 * Documentation in Russian: doc/index.ru.html
-** as s single file doc/single.ru.html
+ * as s single file doc/single.ru.html
 * Auxiliary files available on [DataparkSearch download page in Gogle Code](https://code.google.com/p/dataparksearch/downloads/list)
 * You can find some packages on [DataparkSearch download page on Google Drive](https://drive.google.com/folderview?id=0B4LJSYsLtw_McTFUaU5mVW1ZRmc&usp=sharing)
 
 
-## Dicussion group
+## Discussion group
 
 Feel free to ask any question about DataparkSearch Engine in 
 [DataparkSearch group on Google Groups](https://groups.google.com/d/forum/dataparksearch)
