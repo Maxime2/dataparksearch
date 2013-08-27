@@ -2013,6 +2013,7 @@ int DpsDBSetAddr(DPS_DB *db, const char *dbaddr, int mode){
 		db->DBSQL_IN = 1;
 		db->DBSQL_LIMIT = 1;
 		db->DBSQL_GROUP = 1;
+		db->DBSQL_SUBSELECT = 1;
 	}
 #endif
 #if (HAVE_SAPDB||HAVE_ODBC)
