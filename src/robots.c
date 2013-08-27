@@ -504,8 +504,8 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 	      now = time(NULL);
 	      DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 	      diff = (size_t) (now - *(Server->last_crawled));
-	      while ((time_t)(1000 * diff) < Server->crawl_delay) {
-		to_sleep = Server->crawl_delay - diff * 1000;
+	      while ((long long)(1000 * diff) < (long long)Server->crawl_delay) {
+		to_sleep = (ssize_t)Server->crawl_delay - (ssize_t)(diff * 1000);
 		if ( (to_sleep > Indexer->Flags.MaxCrawlDelay * 1000) || (Indexer->action == DPS_TERMINATED) ) {
 		  time_t		next_index_time;
 		  char dbuf[64];
