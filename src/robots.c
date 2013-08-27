@@ -497,7 +497,8 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 
 	  if (make_pause && Indexer->Flags.cmd == DPS_IND_INDEX) {
 	    if (Server->crawl_delay > robot->crawl_delay) {
-	      size_t to_sleep, diff;
+	      ssize_t to_sleep;
+	      size_t diff;
 	      time_t now;
 
 	      now = time(NULL);
