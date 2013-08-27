@@ -89,7 +89,9 @@ static DPS_ROBOT* DeleteRobotRules(DPS_AGENT *A, DPS_ROBOTS *Robots, const char 
 	  if (A->flags & DPS_FLAG_UNOCON) {
 	    db = &A->Conf->dbl.db[url_id % A->Conf->dbl.nitems];
 #ifdef HAVE_SQL
+	    DPS_GETLOCK(A, DPS_LOCK_DB);
 	    DpsSQLAsyncQuery(db, NULL, buf);
+	    DPS_RELEASELOCK(A, DPS_LOCK_DB);
 #endif
 	  } else {
 	    db = &A->dbl.db[url_id % A->dbl.nitems];
@@ -200,7 +202,9 @@ static int AddRobotRule(DPS_AGENT *A, DPS_ROBOT *robot, int cmd, const char *pat
 	  (void)DpsDBEscStr(db, path_esc, DPS_NULL2EMPTY(path), dps_min(PATH_MAX,dps_strlen(DPS_NULL2EMPTY(path))));
 	  dps_snprintf(buf, sizeof(buf), "INSERT INTO robots(cmd,ordre,added_time,hostinfo,path)VALUES(%d,%d,%d,'%s','%s')",
 		       cmd, robot->nrules, A->now, robot->hostinfo, path_esc);
+	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
 	  DpsSQLAsyncQuery(db, NULL, buf);
+	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
 
 	}
 #ifdef WITH_PARANOIA
