@@ -709,11 +709,15 @@ static int DpsSitemapEndElement(DPS_XML_PARSER *parser, const char *name, size_t
     if (Href.url) {
       DPS_SERVER *Server = DpsServerFind(Indexer, 0 /*Server_id*/, Href.url, Doc->charset_id, NULL);
       if (Server) {
-	Href.method = DPS_METHOD_GET;
-	Href.checked = 0;
-	Href.weight = (float)DPS_ATOF(DpsVarListFindStr(&Doc->Sections, "Pop_Rank", "0.5"));
-	DpsHrefListAdd(Indexer, &Indexer->Hrefs, &Href);
-	if(Indexer->Hrefs.nhrefs > 1024) DpsStoreHrefs(Indexer);
+	int method = DpsMethod(DpsVarListFindStr(&Server->Vars, "Method", "Allow"));
+	int follow = DpsVarListFindInt(&Server->Vars, "Follow", DPS_FOLLOW_PATH);
+	if (method != DPS_METHOD_DISALLOW && method != DPS_METHOD_VISITLATER && follow != DPS_FOLLOW_NO) {
+	    Href.method = DPS_METHOD_GET;
+	    Href.checked = 0;
+	    Href.weight = (float)DPS_ATOF(DpsVarListFindStr(&Doc->Sections, "Pop_Rank", "0.5"));
+	    DpsHrefListAdd(Indexer, &Indexer->Hrefs, &Href);
+	    if(Indexer->Hrefs.nhrefs > 1024) DpsStoreHrefs(Indexer);
+	}
       }
     }
     DpsVarListFree(&Doc->Sections);
