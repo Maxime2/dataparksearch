@@ -3607,14 +3607,14 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	if(db->DBSQL_LIMIT){
 	  dps_snprintf(qbuf, qbuflen, "SELECT url.url,url.rec_id,docsize,status,hops,crc32,last_mod_time,since,pop_rank,charset_id,site_id,server_id%s%s%s FROM url%s WHERE %s %s %s %s %s LIMIT %d%s",
 		       select_referer, select_seed, (Indexer->Flags.cmd & DPS_IND_POPRANK) ? ",next_index_time" : "", db->from,
-		       nitstr,
+		       (where[0] || nitstr[0]) ? nitstr : "TRUE",
 		       (where[0] && nitstr[0]) ? "AND" : "", where, smallbuf, sortstr, url_num, updstr);
 	}else{
 	  db->res_limit=url_num;
 	  if(!qbuf[0])
 	    dps_snprintf(qbuf, qbuflen, "SELECT url.url,url.rec_id,docsize,status,hops,crc32,last_mod_time,since,pop_rank,charset_id,site_id,server_id%s%s%s FROM url%s WHERE %s %s %s %s %s %s %s",
 			 select_referer, select_seed, (Indexer->Flags.cmd & DPS_IND_POPRANK) ? ",next_index_time" : "", db->from,
-			 nitstr,
+			 (where[0] || nitstr[0]) ? nitstr : "TRUE",
 			 (where[0] && nitstr[0]) ? "AND" : "", where, smallbuf, lmtstr, sortstr, updstr);
 	}
 	if(DPS_OK!=(rc=DpsSQLQuery(db,&SQLRes, qbuf))) goto unlock;
