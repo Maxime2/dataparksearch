@@ -3434,7 +3434,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	char            nitstr[64]="";
 	size_t		i = 0, j, nrows, qbuflen, start_target;
 	size_t		url_num;
-	size_t          rec_id;
+	urlid_t         rec_id;
 	dps_uint4       nit = (dps_uint4)DpsVarListFindUnsigned(&Indexer->Conf->Vars, "PopRank_nit", 0);
 	DPS_SQLRES 	SQLRes, sr;
 	char		smallbuf[128];
@@ -3547,13 +3547,13 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	  if (Indexer->flags & DPS_FLAG_SORT_SEED) {
 	    if(db->DBSQL_LIMIT){
 	      dps_snprintf(qbuf, qbuflen, "SELECT url.seed FROM url%s WHERE %s%lu %s %s LIMIT 10", db->from, 
-		       (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "next_index_time>" : "next_index_time<=",
-			   (Indexer->Flags.cmd == DPS_IND_POPRANK) ? (unsigned long)nit : (unsigned long)Indexer->now, 
+			   (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) ? "next_index_time>" : "next_index_time<=",
+			   (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) ? (unsigned long)nit : (unsigned long)Indexer->now, 
 		       where[0] ? "AND" : "", where);
 	    } else {
 	      dps_snprintf(qbuf, qbuflen, "SELECT url.seed FROM url%s WHERE %s%lu %s %s", db->from, 
-		       (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "next_index_time>" : "next_index_time<=",
-			   (Indexer->Flags.cmd == DPS_IND_POPRANK) ? (unsigned long)nit : (unsigned long)Indexer->now, 
+			   (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) ? "next_index_time>" : "next_index_time<=",
+			   (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) ? (unsigned long)nit : (unsigned long)Indexer->now, 
 		       where[0] ? "AND" : "", where);
 	    }
 
@@ -3606,14 +3606,14 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 			
 	if(db->DBSQL_LIMIT){
 	  dps_snprintf(qbuf, qbuflen, "SELECT url.url,url.rec_id,docsize,status,hops,crc32,last_mod_time,since,pop_rank,charset_id,site_id,server_id%s%s%s FROM url%s WHERE %s %s %s %s %s LIMIT %d%s",
-		       select_referer, select_seed, (Indexer->Flags.cmd & DPS_IND_POPRANK) ? ",next_index_time" : "", db->from,
+		       select_referer, select_seed, (Indexer->Flags.cmd & DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) ? ",next_index_time" : "", db->from,
 		       (where[0] || nitstr[0]) ? nitstr : "TRUE",
 		       (where[0] && nitstr[0]) ? "AND" : "", where, smallbuf, sortstr, url_num, updstr);
 	}else{
 	  db->res_limit=url_num;
 	  if(!qbuf[0])
 	    dps_snprintf(qbuf, qbuflen, "SELECT url.url,url.rec_id,docsize,status,hops,crc32,last_mod_time,since,pop_rank,charset_id,site_id,server_id%s%s%s FROM url%s WHERE %s %s %s %s %s %s %s",
-			 select_referer, select_seed, (Indexer->Flags.cmd & DPS_IND_POPRANK) ? ",next_index_time" : "", db->from,
+			 select_referer, select_seed, (Indexer->Flags.cmd & DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) ? ",next_index_time" : "", db->from,
 			 (where[0] || nitstr[0]) ? nitstr : "TRUE",
 			 (where[0] && nitstr[0]) ? "AND" : "", where, smallbuf, lmtstr, sortstr, updstr);
 	}
@@ -3668,7 +3668,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 		DpsVarListDel(&Doc->Sections, "URL_ID");
 		DPS_FREE(dc_url);
 
-		DpsVarListReplaceInt(&Doc->Sections, "DP_ID", rec_id = DPS_ATOI(DpsSQLValue(&SQLRes,i,1)));
+		DpsVarListReplaceInt(&Doc->Sections, "DP_ID", rec_id = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes,i,1)));
 		DpsVarListReplaceInt(&Doc->Sections, "Content-Length", DPS_ATOI(DpsSQLValue(&SQLRes,i,2)));
 		DpsVarListReplaceInt(&Doc->Sections, "Status", DPS_ATOI(DpsSQLValue(&SQLRes,i,3)));
 		DpsVarListReplaceInt(&Doc->Sections, "PrevStatus", DPS_ATOI(DpsSQLValue(&SQLRes,i,3)));
