@@ -446,7 +446,7 @@ __C_LINK int __DPSCALL DpsStoreHrefs(DPS_AGENT * Indexer) {
 	/* Remember last stored URL num */
 	/* Note that it will became 0   */
 	/* after next sort in AddUrl    */
-	Indexer->Hrefs.dhrefs = Indexer->Hrefs.nhrefs;
+	Indexer->Hrefs.dhrefs = Indexer->Hrefs.nhrefs - ((Indexer->Hrefs.nhrefs > 0) ? 1 : 0);
 	
 	/* We should not free URL list with onw database */
 	/* to avoid double indexing of the same document */
