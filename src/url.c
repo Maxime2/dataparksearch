@@ -416,8 +416,8 @@ char * DpsURLNormalizePath(char * str){
 	/* Remove remove trailig "/.." */
 
 	d=str+dps_strlen(str);
-	if((d-str>2)&&(!strcmp(d-3,"/.."))){
-		d-=4;
+	if (( d - str > 2) && (!strcmp(d - 3, "/.."))) {
+	        d -= (d - str > 3) ? 4 : 3;
 		while((d>str)&&(*d!='/'))d--;
 		if(*d=='/')d[1]='\0';
 		else	dps_strcpy(str,"/");
