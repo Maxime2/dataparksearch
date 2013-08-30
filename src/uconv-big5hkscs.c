@@ -1,4 +1,5 @@
-/* Copyright (C) 2005-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2005-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -10531,6 +10532,11 @@ int dps_wc_mb_big5hkscs(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *wc,
   if(code == 0) return dps_wc_mb_cp950(conv, cs, wc, s, e);
 
   conv->icodes = 1;
+
+  if (s + 2 >= e) {
+      return DPS_CHARSET_TOOSMALL;
+  }
+  
   s[0] = (code >> 8) & 0xFF;
   s[1] = code & 0xFF;
   

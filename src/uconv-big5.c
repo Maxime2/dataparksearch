@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -5816,8 +5817,9 @@ int dps_wc_mb_big5(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *wc, unsi
   if(!(code=func_uni_big5_onechar(*wc)))
     return DPS_CHARSET_ILUNI;
   
-  if(s+2>e)
-    return DPS_CHARSET_TOOSMALL;
+  if (s + 1 >= e) {
+      return DPS_CHARSET_TOOFEW(0);
+  }
   
   s[0]=(unsigned char)(code >> 8);
   s[1]=(unsigned char)(code & 0xFF);
@@ -5877,7 +5879,7 @@ int dps_mb_wc_big5(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const uns
     return 1;
   }
   
-  if(s + 2 > end)
+  if(s + 1 >= end)
     return DPS_CHARSET_TOOFEW(0);
 
   if(!(pwc[0]=func_big5_uni_onechar((hi<<8)+s[1])))
@@ -5938,6 +5940,11 @@ int dps_wc_mb_cp950(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *wc, uns
   }
 
   conv->icodes = 1;
+
+  if (s + 1 >= e) {
+      return DPS_CHARSET_TOOFEW(0);
+  }
+
   s[0] = code >> 8;
   s[1] = code & 0xFF;
   

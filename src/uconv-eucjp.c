@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -4101,7 +4102,7 @@ static unsigned short tab_uni_jisx020854[]={
 0x2131,     0,0x216F};
 
 static int
-dps_uni_jisx0208_onechar(int code){
+dps_uni_jisx0208_onechar(dpsunicode_t code) {
     if ((code>=0x005C)&&(code<=0x005C))
       return(tab_uni_jisx02080[code-0x005C]);
     if ((code>=0x00A2)&&(code<=0x00B6))
@@ -6830,7 +6831,7 @@ static unsigned short tab_uni_jisx021244[]={
 0x6D61,0x6D62,     0,0x6D63};
 
 static int
-dps_uni_jisx0212_onechar(int code){
+dps_uni_jisx0212_onechar(dpsunicode_t code) {
     if ((code>=0x007E)&&(code<=0x007E))
       return(tab_uni_jisx02120[code-0x007E]);
     if ((code>=0x00A1)&&(code<=0x017E))
@@ -8082,7 +8083,7 @@ dps_mb_wc_euc_jp(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsig
 
   conv->icodes = conv->ocodes = 1;
   
-  if (s > s_e)
+  if (s >= s_e)
     return DPS_CHARSET_TOOFEW(0);
   
   c1=s[0];
@@ -8091,45 +8092,50 @@ dps_mb_wc_euc_jp(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsig
   if (c1 <= 0x7F)  {
     if ( (*s == '&' && ((conv->flags & DPS_RECODE_HTML_FROM)||(conv->flags & DPS_RECODE_URL_FROM)) ) || 
 	 (*s == '!' && (conv->flags & DPS_RECODE_URL_FROM)) )  {
-	  /*if ((p = strchr(s, ';')) != NULL)*/ {
+	/*if ((p = strchr(s, ';')) != NULL)*/ {
+	    if (s + 1 >= s_e)
+		return DPS_CHARSET_TOOFEW(0);
 	    if (s[1] == '#') {
-	      p = s + 2;
-	      if (s[2] == 'x' || s[2] == 'X') sscanf((const char*)s + 3, "%x;", &sw);
-	      else sscanf((const char*)s + 2, "%d;", &sw);
-	      *pwc = (dpsunicode_t)sw;
+		if (s + 2 >= s_e)
+		    return DPS_CHARSET_TOOFEW(0);
+		p = s + 2;
+		if (s[2] == 'x' || s[2] == 'X') sscanf((const char*)s + 3, "%x;", &sw);
+		else sscanf((const char*)s + 2, "%d;", &sw);
+		*pwc = (dpsunicode_t)sw;
 	    } else {
-	      p = s + 1;
-	      if (!(conv->flags & DPS_RECODE_TEXT_FROM)) {
-		for(e = (unsigned char*)s + 1 ; (e - s < DPS_MAX_SGML_LEN) && (((*e<='z')&&(*e>='a'))||((*e<='Z')&&(*e>='A'))); e++);
-		if (/*!(conv->flags & DPS_RECODE_URL_FROM) ||*/ (*e == ';')) {
-		  z = *e;
-		  *e = '\0';
-		  n = DpsSgmlToUni((const char*)s + 1, pwc);
-		  if (n == 0) *pwc = 0;
-		  else conv->ocodes = n;
-		  *e = z;
+		p = s + 1;
+		if (!(conv->flags & DPS_RECODE_TEXT_FROM)) {
+		    for(e = (unsigned char*)s + 1 ; (e - s < DPS_MAX_SGML_LEN) && (((*e<='z')&&(*e>='a'))||((*e<='Z')&&(*e>='A'))); e++)
+			if (e >= s_e) return DPS_CHARSET_TOOFEW(0);
+		    if (/*!(conv->flags & DPS_RECODE_URL_FROM) ||*/ (*e == ';')) {
+			z = *e;
+			*e = '\0';
+			n = DpsSgmlToUni((const char*)s + 1, pwc);
+			if (n == 0) *pwc = 0;
+			else conv->ocodes = n;
+			*e = z;
+		    } else *pwc = 0;
 		} else *pwc = 0;
-	      } else *pwc = 0;
 	    }
 	    if (*pwc) {
-	      for (; isalpha(*p) || isdigit(*p); p++);
-	      if (*p == ';') p++;
-	      return conv->icodes = (p - s /*+ 1*/);
+		for (; isalpha(*p) || isdigit(*p); p++);
+		if (*p == ';') p++;
+		return conv->icodes = (p - s /*+ 1*/);
 	    }
-	  }
 	}
+    }
     if ( *s == '\\' && (conv->flags & DPS_RECODE_JSON_FROM)) {
-      n = DpsJSONToUni((const char*)s + 1, pwc, &conv->icodes);
-      if (n) {
-	conv->ocodes = n;
-	return ++conv->icodes;
-      }
+	n = DpsJSONToUni((const char*)s + 1, pwc, &conv->icodes);
+	if (n) {
+	    conv->ocodes = n;
+	    return ++conv->icodes;
+	}
     }
     *pwc=c1;
     return 1;
   }
   
-  if (s + 2 > s_e)
+  if (s + 2 >= s_e)
     return DPS_CHARSET_TOOFEW(0);
     
   c2=s[1];
@@ -8198,6 +8204,7 @@ dps_mb_wc_euc_jp(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsig
   
   return DPS_CHARSET_ILSEQ;
 }
+
 
 int
 dps_wc_mb_euc_jp(DPS_CONV *conv, DPS_CHARSET *c, const dpsunicode_t *wc, unsigned char *s, unsigned char *e) {
@@ -8310,86 +8317,98 @@ int dps_mb_wc_iso2022jp(DPS_CONV *conv, DPS_CHARSET *c, dpsunicode_t *pwc, const
 
   switch(*s) {
   case 27:  /* ESC */
-    switch(s[1]) {
-    case '(':
-      switch(s[2]) {
-      case 'B': conv->istate = DPS_STATE_ASCII;
-	p = &s[3];
-	break;
-      case 'J': conv->istate = DPS_STATE_JIS0201;
-	p = &s[3];
-	break;
+      if (s + 1 >= e) return DPS_CHARSET_TOOFEW(0);
+      switch(s[1]) {
+      case '(':
+	  if (s + 2 >= e) return DPS_CHARSET_TOOFEW(0);
+	  switch(s[2]) {
+	  case 'B': conv->istate = DPS_STATE_ASCII;
+	      p = s + 3;
+	      break;
+	  case 'J': conv->istate = DPS_STATE_JIS0201;
+	      p = s + 3;
+	      break;
+	  }
+	  break;
+      case '$':
+	  if (s + 2 >= e) return DPS_CHARSET_TOOFEW(0);
+	  switch(s[2]) {
+	  case '@': conv->istate = DPS_STATE_JIS0208;
+	      p = s + 3;
+	      break;
+	  case 'B': conv->istate = DPS_STATE_JIS0208_N;
+	      p = s + 3;
+	      break;
+	  };
+	  break;
       }
-      break;
-    case '$':
-      switch(s[2]) {
-      case '@': conv->istate = DPS_STATE_JIS0208;
-	p = &s[3];
-	break;
-      case 'B': conv->istate = DPS_STATE_JIS0208_N;
-	p = &s[3];
-	break;
-      };
-      break;
-    }
   default:
-    break;
+      break;
   }
 
   conv->ocodes = 1;
+ 
+  if (p >= e) return DPS_CHARSET_TOOFEW(0);
 
   switch(conv->istate) {
   case DPS_STATE_ASCII:
-    if ( (*p == '&' && ((conv->flags & DPS_RECODE_HTML_FROM) || (conv->flags & DPS_RECODE_URL_FROM)) ) ||
-	     (*p == '!' && (conv->flags & DPS_RECODE_URL_FROM)) ) {
+      if ( (*p == '&' && ((conv->flags & DPS_RECODE_HTML_FROM) || (conv->flags & DPS_RECODE_URL_FROM)) ) ||
+	   (*p == '!' && (conv->flags & DPS_RECODE_URL_FROM)) ) {
 	  unsigned int sw;
 	  /*if ((pp = strchr(p, ';')) != NULL)*/ {
-	    if (p[1] == '#') {
-	      pp = p + 2;
-	      if (p[2] == 'x' || p[2] == 'X') sscanf((const char*)p + 3, "%x", &sw);
-	      else sscanf((const char*)p + 2, "%d", &sw);
-	      *pwc = (dpsunicode_t)sw;
-	    } else {
-	      pp = p + 1;
-	      if (!(conv->flags & DPS_RECODE_TEXT_FROM)) {
-		for(ee = (unsigned char*)p + 1 ; (ee - p < DPS_MAX_SGML_LEN) && (((*ee<='z')&&(*ee>='a'))||((*ee<='Z')&&(*ee>='A'))); ee++);
-		if (/*!(conv->flags & DPS_RECODE_URL_FROM) ||*/ (*ee == ';')) {
-		  z = *ee;
-		  *ee = '\0';
-		  n = DpsSgmlToUni((const char*)p + 1, pwc);
-		  if (n == 0) *pwc = 0;
-		  else conv->ocodes = n;
-		  *ee = z;
-		} else *pwc = 0;
-	      } else *pwc = 0;
-	    }
-	    if (*pwc) {
-	      for (; isalpha(*pp) || isdigit(*pp); pp++);
-	      if (*pp == ';') pp++;
-	      return conv->icodes = (pp - s /*+ 1*/);
-	    }
+	      
+	      if (p + 1 >= e) return DPS_CHARSET_TOOFEW(0);
+	      
+	      if (p[1] == '#') {
+		  if (p + 4 >= e) return DPS_CHARSET_TOOFEW(0);
+		  pp = p + 2;
+		  if (p[2] == 'x' || p[2] == 'X') sscanf((const char*)p + 3, "%x", &sw);
+		  else sscanf((const char*)p + 2, "%d", &sw);
+		  *pwc = (dpsunicode_t)sw;
+	      } else {
+		  if (p + 3 >= e) return DPS_CHARSET_TOOFEW(0);
+		  pp = p + 1;
+		  if (!(conv->flags & DPS_RECODE_TEXT_FROM)) {
+		      for(ee = (unsigned char*)p + 1 ; (ee - p < DPS_MAX_SGML_LEN) && (((*ee<='z')&&(*ee>='a'))||((*ee<='Z')&&(*ee>='A'))); ee++);
+		      if (/*!(conv->flags & DPS_RECODE_URL_FROM) ||*/ (*ee == ';')) {
+			  z = *ee;
+			  *ee = '\0';
+			  n = DpsSgmlToUni((const char*)p + 1, pwc);
+			  if (n == 0) *pwc = 0;
+			  else conv->ocodes = n;
+			  *ee = z;
+		      } else *pwc = 0;
+		  } else *pwc = 0;
+	      }
+	      if (*pwc) {
+		  for (; isalpha(*pp) || isdigit(*pp); pp++);
+		  if (*pp == ';') pp++;
+		  return conv->icodes = (pp - s /*+ 1*/);
+	      }
 	  }
-	}
-    if ( *p == '\\' && (conv->flags & DPS_RECODE_JSON_FROM)) {
-      n = DpsJSONToUni((const char*)p + 1, pwc, &conv->icodes);
-      if (n) {
-	conv->ocodes = n;
-	return ++conv->icodes;
       }
-    }
+      if ( *p == '\\' && (conv->flags & DPS_RECODE_JSON_FROM)) {
+	  if (p + 1 >= e) return DPS_CHARSET_TOOFEW(0);
+	  n = DpsJSONToUni((const char*)p + 1, pwc, &conv->icodes);
+	  if (n) {
+	      conv->ocodes = n;
+	      return ++conv->icodes;
+	  }
+      }
 
-    *pwc = *p;
-    return conv->icodes = (p - s) + 1;
+      *pwc = *p;
+      return conv->icodes = (p - s) + 1;
   case DPS_STATE_JIS0201:
-    *pwc = tab_jisx0201_uni[*p];
-    return conv->icodes = (p - s) + 1;
+      *pwc = tab_jisx0201_uni[*p];
+      return conv->icodes = (p - s) + 1;
   case DPS_STATE_JIS0208:
   case DPS_STATE_JIS0208_N:
-    code = *p;
-    code <<= 8;
-    code += *(p+1);
-    *pwc = dps_jisx0208_uni_onechar( code );
-    return conv->icodes = (p - s) + 2;
+      if (p + 1 >= e) return DPS_CHARSET_TOOFEW(0);
+      code = *p;
+      code <<= 8;
+      code += *(p+1);
+      *pwc = dps_jisx0208_uni_onechar( code );
+      return conv->icodes = (p - s) + 2;
   }
 
   return DPS_CHARSET_ILSEQ;
@@ -8403,11 +8422,13 @@ int dps_wc_mb_iso2022jp(DPS_CONV *conv, DPS_CHARSET *c, const dpsunicode_t *wc, 
 
   if (*wc < 0x7F) {
     if (conv->ostate != DPS_STATE_ASCII) {
-      s[0] = 27;
-      s[1] = '(';
-      s[2] = 'B';
-      conv->ocodes += 3;
-      conv->ostate = DPS_STATE_ASCII;
+	if (s + 2 >= e)
+	    return DPS_CHARSET_TOOSMALL;
+	s[0] = 27;
+	s[1] = '(';
+	s[2] = 'B';
+	conv->ocodes += 3;
+	conv->ostate = DPS_STATE_ASCII;
     }
     s[conv->ocodes - 1] = (unsigned char)*wc;
     if ((conv->flags & DPS_RECODE_HTML_TO) && (strchr(DPS_NULL2EMPTY(conv->CharsToEscape), (int)*wc) != NULL))
@@ -8420,6 +8441,8 @@ int dps_wc_mb_iso2022jp(DPS_CONV *conv, DPS_CHARSET *c, const dpsunicode_t *wc, 
   }
 
   if(conv->ostate != DPS_STATE_JIS0208_N) {
+      if (s + 2 >= e)
+	  return DPS_CHARSET_TOOSMALL;
       s[0] = 27;
       s[1] = '$';
       s[2] = 'B';
@@ -8428,8 +8451,8 @@ int dps_wc_mb_iso2022jp(DPS_CONV *conv, DPS_CHARSET *c, const dpsunicode_t *wc, 
   }
   if ((jp=dps_uni_jisx0208_onechar(*wc)))
   {
-    if (s+2>e)
-      return DPS_CHARSET_TOOSMALL;
+    if (s + conv->ocodes + 1 >= e)
+	return DPS_CHARSET_TOOSMALL;
       
     s[conv->ocodes - 1] = (unsigned char)(jp >> 8);
     s[conv->ocodes] = (unsigned char)(jp & 0xFF);

@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -38,44 +39,50 @@ int dps_mb_wc_utf8 (DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const un
   conv->icodes = conv->ocodes = 1;
 
   if (c < 0x80) {
-    if ( (*s == '&' && ((conv->flags & DPS_RECODE_HTML_FROM) || (conv->flags & DPS_RECODE_URL_FROM)) ) ||
-	 (*s == '!' && (conv->flags & DPS_RECODE_URL_FROM)) ) {
+      if ( (*s == '&' && ((conv->flags & DPS_RECODE_HTML_FROM) || (conv->flags & DPS_RECODE_URL_FROM)) ) ||
+	   (*s == '!' && (conv->flags & DPS_RECODE_URL_FROM)) ) {
       /*if ((p = strchr(s, ';')) != NULL)*/ {
-	if (s[1] == '#') {
-	  p = s + 2;
-          if (s[2] == 'x' || s[2] == 'X') sscanf((const char*)s + 3, "%x", &sw);
-	  else  sscanf((const char*)s + 2, "%d", &sw);
-	  *pwc = (dpsunicode_t)sw;
-	} else {
-	  p = s + 1;
-	  if (!(conv->flags & DPS_RECODE_TEXT_FROM)) {
-	    for(e = (unsigned char*)s + 1 ; (e - s < DPS_MAX_SGML_LEN) && (((*e<='z')&&(*e>='a'))||((*e<='Z')&&(*e>='A'))); e++);
-	    if (/*!(conv->flags & DPS_RECODE_URL_FROM) ||*/ (*e == ';')) {
-	      z = *e;
-	      *e = '\0';
-	      nn = DpsSgmlToUni((const char*)s + 1, pwc);
-	      if (nn == 0) *pwc = 0;
-	      else conv->ocodes = nn;
-	      *e = z;
-	    } else *pwc = 0;
-	  } else *pwc = 0;
-	}
-	if (*pwc) {
-	  for (; isalpha(*p) || isdigit(*p); p++);
-	  if (*p == ';') p++;
-	  return conv->icodes = (p - s /*+ 1*/);
-	}
+	      if (s + 1 >= end)
+		  return DPS_CHARSET_TOOFEW(0);
+	      if (s[1] == '#') {
+		  if (s + 2 >= end)
+		      return DPS_CHARSET_TOOFEW(0);
+		  p = s + 2;
+		  if (s[2] == 'x' || s[2] == 'X') sscanf((const char*)s + 3, "%x", &sw);
+		  else  sscanf((const char*)s + 2, "%d", &sw);
+		  *pwc = (dpsunicode_t)sw;
+	      } else {
+		  p = s + 1;
+		  if (!(conv->flags & DPS_RECODE_TEXT_FROM)) {
+		      for(e = (unsigned char*)s + 1 ; (e - s < DPS_MAX_SGML_LEN) && (((*e<='z')&&(*e>='a'))||((*e<='Z')&&(*e>='A'))); e++);
+		      if (/*!(conv->flags & DPS_RECODE_URL_FROM) ||*/ (*e == ';')) {
+			  z = *e;
+			  *e = '\0';
+			  nn = DpsSgmlToUni((const char*)s + 1, pwc);
+			  if (nn == 0) *pwc = 0;
+			  else conv->ocodes = nn;
+			  *e = z;
+		      } else *pwc = 0;
+		  } else *pwc = 0;
+	      }
+	      if (*pwc) {
+		  for (; isalpha(*p) || isdigit(*p); p++);
+		  if (*p == ';') p++;
+		  return conv->icodes = (p - s /*+ 1*/);
+	      }
+	  }
       }
-    }
-    if ( *s == '\\' && (conv->flags & DPS_RECODE_JSON_FROM)) {
-      n = DpsJSONToUni((const char*)s + 1, pwc, &conv->icodes);
-      if (n) {
-	conv->ocodes = n;
-	return ++conv->icodes;
+      if ( *s == '\\' && (conv->flags & DPS_RECODE_JSON_FROM)) {
+	  if (s + 1 >= end)
+	      return DPS_CHARSET_TOOFEW(0);
+	  n = DpsJSONToUni((const char*)s + 1, pwc, &conv->icodes);
+	  if (n) {
+	      conv->ocodes = n;
+	      return ++conv->icodes;
+	  }
       }
-    }
-    *pwc = c;
-    return 1;
+      *pwc = c;
+      return 1;
   } else if (c < 0xc2) {
     return DPS_CHARSET_ILSEQ;
   } else if ((c & 0xE0) == 0xC0) {
@@ -176,7 +183,7 @@ int dps_mb_wc_utf16le(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const 
 
   dpsunicode_t f, s;
 
-  if (r + 2 > end) return DPS_CHARSET_ILUNI;
+  if (r + 1 >= end) return DPS_CHARSET_TOOFEW(0);
   
   conv->ocodes = 1;
   f = (((dpsunicode_t)r[1]) << 8) + (dpsunicode_t)r[0];
@@ -186,7 +193,7 @@ int dps_mb_wc_utf16le(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const 
     return conv->icodes = 2;
   }
 
-  if (r + 4 > end) return DPS_CHARSET_ILUNI;
+  if (r + 3 >= end) return DPS_CHARSET_ILUNI;
   s = (r[3] << 8) + r[2];
   *pwc = ((f & 0x03FF) << 10) + 0x010000;
   if ((s & 0xFC00) != 0xDC00) return DPS_CHARSET_ILUNI;
@@ -229,7 +236,7 @@ int dps_mb_wc_utf16be(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const 
 
   dpsunicode_t f, s;
 
-  if (r + 2 > end) return DPS_CHARSET_ILUNI;
+  if (r + 1 >= end) return DPS_CHARSET_ILUNI;
   
   conv->ocodes = 1;
   f = (((dpsunicode_t)r[0]) << 8) + (dpsunicode_t)r[1];
@@ -239,7 +246,7 @@ int dps_mb_wc_utf16be(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const 
     return conv->icodes = 2;
   }
 
-  if (r + 4 > end) return DPS_CHARSET_ILUNI;
+  if (r + 3 >= end) return DPS_CHARSET_ILUNI;
   s = (r[2] << 8) + r[3];
   *pwc = ((f & 0x03FF) << 10) + 0x010000;
   if ((s & 0xFC00) != 0xDC00) return DPS_CHARSET_ILUNI;
