@@ -3416,7 +3416,7 @@ static int DpsFindOrigin(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc,DPS_DB *db){
 	if (DpsSQLNumRows(&SQLRes)) {
 		const char *o;
 		if((o = DpsSQLValue(&SQLRes, 0, 0)))
-				origin_id = DPS_ATOI(o);
+		    origin_id = (urlid_t)DPS_ATOI(o);
 	}
 	DpsSQLFree(&SQLRes);
 	DpsVarListReplaceInt(&Doc->Sections, "Origin-ID", origin_id);
@@ -3436,7 +3436,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	size_t		url_num;
 	urlid_t         rec_id;
 	dps_uint4       nit = (dps_uint4)DpsVarListFindUnsigned(&Indexer->Conf->Vars, "PopRank_nit", 0);
-	urlid_t         rit = (urlid_t)DpsVarListFindInt(&Indexer->Conf->Vars, "PopRank_rit", 0);
+	urlid_t         rit = (urlid_t)DpsVarListFindInt(&Indexer->Conf->Vars, "PopRank_rit", LONG_MIN);
 	DPS_SQLRES 	SQLRes, sr;
 	char		smallbuf[128];
 	int		rc=DPS_OK;
@@ -3598,7 +3598,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	
 
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
-	    dps_snprintf(nitstr, sizeof(nitstr), "next_index_time>%lu AND url.rec_id>%ld", (unsigned long)nit, (long)rit);
+	    dps_snprintf(nitstr, sizeof(nitstr), "next_index_time>=%lu AND url.rec_id>%ld", (unsigned long)nit, (long)rit);
 	} else if (Indexer->Flags.expire) {
 	  nitstr[0] = '\0';
 	} else {
