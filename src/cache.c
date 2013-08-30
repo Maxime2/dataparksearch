@@ -371,6 +371,9 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 	    }
 	} else {
 
+	    ssize_t res;
+	    size_t bytes_written = 0;
+
 	    dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
 	    if((log_fd = DpsOpen3(del_log_name, O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE)) == -1) {
 		dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
@@ -381,7 +384,10 @@ void DpsRotateDelLog(DPS_AGENT *A) {
   
 	    lseek(log_fd, (off_t)0, SEEK_SET);
 	    while((nbytes = read(log_fd, del_log_name, PATH_MAX)) > 0) {
-		(void)write(split_fd, del_log_name, (size_t)nbytes);
+		while ((res = write(split_fd, del_log_name + bytes_written, (size_t)nbytes - bytes_written)) > 0) {
+		    bytes_written += (size_t)res;
+		    if (bytes_written == (size_t)nbytes) break;
+		}
 	    }
 	    DpsClose(split_fd);
 	    lseek(log_fd, (off_t)0, SEEK_SET);
@@ -402,8 +408,15 @@ void DpsRotateDelLog(DPS_AGENT *A) {
     DpsWriteLock(db->del_fd);
   
     lseek(db->del_fd, (off_t)0, SEEK_SET);
-    while((nbytes = read(db->del_fd, del_log_name, PATH_MAX)) > 0) {
-      (void)write(split_fd, del_log_name, (size_t)nbytes);
+    {
+	ssize_t res;
+	size_t bytes_written = 0;
+	while((nbytes = read(db->del_fd, del_log_name, PATH_MAX)) > 0) {
+	    while ((res = write(split_fd, del_log_name + bytes_written, (size_t)nbytes - bytes_written)) > 0) {
+		bytes_written += (size_t)res;
+		if (bytes_written == (size_t)nbytes) break;
+	    }
+	}
     }
     DpsClose(split_fd);
     lseek(db->del_fd, (off_t)0, SEEK_SET);
@@ -2819,7 +2832,9 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	    }
 	    if (fd > 0) {
 	      DpsWriteLock(fd);
-	      (void)write(fd, &Item, sizeof(DPS_URLDATA));
+	      if (sizeof(DPS_URLDATA) != write(fd, &Item, sizeof(DPS_URLDATA))) {
+		  DpsLog(Indexer, DPS_LOG_ERROR, "Can't write URLData item (%s:%d)", __FILE__, __LINE__);
+	      }
 	      DpsUnLock(fd);
 	    }
 	  }

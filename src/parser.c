@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -168,13 +169,18 @@ static char *parse1(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 
 		if (pid > 0) {
 		/* Parent process */
+		    ssize_t res;
+		    size_t bytes_written = 0;
 			/* Close other pipe ends */
 			close(wr[0]);
 			close(rd[0]);
 			close(rd[1]);
 
 			/* Send string to be parsed */
-			(void)write(wr[1], Doc->Buf.content, Doc->Buf.size - gap);
+			while ((res = write(wr[1], Doc->Buf.content + bytes_written, Doc->Buf.size - gap - bytes_written)) > 0) {
+			    bytes_written += (size_t)res;
+			    if (bytes_written == Doc->Buf.size - gap) break;
+			}
 			close(wr[1]);
 
 			_exit(0);
@@ -366,13 +372,18 @@ static char *parse4(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 	}
 
 	if (pid > 0) {
-	  /* Parent process */
-	  close(wr[0]);
-	  /* Send string to be parsed */
-	  (void)write(wr[1], Doc->Buf.content, Doc->Buf.size - gap);
-	  close(wr[1]);
+	    /* Parent process */
+	    ssize_t res;
+	    size_t bytes_written = 0;
+	    close(wr[0]);
+	    /* Send string to be parsed */
+	    while ((res = write(wr[1], Doc->Buf.content + bytes_written, Doc->Buf.size - gap - bytes_written)) > 0) {
+		bytes_written += (size_t)res;
+		if (bytes_written == Doc->Buf.size - gap) break;
+	    }
+	    close(wr[1]);
 
-	  waitpid(pid, &status, 0);
+	    waitpid(pid, &status, 0);
 	} else {
 	  /* Child process */
 	  close (wr[1]);
