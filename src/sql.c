@@ -3436,7 +3436,6 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	size_t		url_num;
 	urlid_t         rec_id;
 	dps_uint4       nit = (dps_uint4)DpsVarListFindUnsigned(&Indexer->Conf->Vars, "PopRank_nit", 0);
-	urlid_t         rit = (urlid_t)DpsVarListFindInt(&Indexer->Conf->Vars, "PopRank_rit", LONG_MIN);
 	DPS_SQLRES 	SQLRes, sr;
 	char		smallbuf[128];
 	int		rc=DPS_OK;
@@ -3516,7 +3515,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	sortstr[0] = '\0';
 	smallbuf[0] = '\0';
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
-	  sprintf(sortstr, " ORDER BY url.next_index_time,url.rec_id");
+	  sprintf(sortstr, " ORDER BY url.next_index_time+ABS(url.rec_id)");
 	} else if ( (Indexer->flags & (DPS_FLAG_SORT_HOPS | DPS_FLAG_SORT_EXPIRED | DPS_FLAG_SORT_POPRANK)) 
 	     || (Indexer->flags & DPS_FLAG_SORT_SEED)  ) {
 	  int notfirst = 0;
@@ -3598,7 +3597,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	
 
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
-	    dps_snprintf(nitstr, sizeof(nitstr), "next_index_time>=%lu AND url.rec_id>%ld", (unsigned long)nit, (long)rit);
+	    dps_snprintf(nitstr, sizeof(nitstr), "next_index_time+ABS(url.rec_id)>%lu", (unsigned long)nit);
 	} else if (Indexer->Flags.expire) {
 	  nitstr[0] = '\0';
 	} else {
@@ -3696,15 +3695,14 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 		}
 	}
 	if ((Indexer->Flags.cmd & DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) && (nrows != 0)) {
-	  nit = DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, (Indexer->Flags.provide_referer) ? 13 : 12));
-	  rit = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, 1));
+	  urlid_t rit = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, 1));
+	  nit = DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, (Indexer->Flags.provide_referer) ? 13 : 12)) + rit;
 	}
 	DpsSQLFree(&SQLRes);
 	if (Indexer->flags & DPS_FLAG_FROM_STORED) DpsSQLFree(&sr);
 	
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
 	  DpsVarListReplaceUnsigned(&Indexer->Conf->Vars, "PopRank_nit", (unsigned)nit);
-	  DpsVarListReplaceInt(&Indexer->Conf->Vars, "PopRank_rit", (int)rit);
 	  /* To see what rec_id has been indexed in "ps" output on xBSD */
 	  if (DpsNeedLog(DPS_LOG_INFO)) dps_setproctitle("[%d] %s rec_id: %u, next_index_time: %u", Indexer->handle, 
 							 (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "PopRank" : "Filter", (unsigned)rec_id, (unsigned)nit);
