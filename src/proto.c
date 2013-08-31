@@ -1682,7 +1682,7 @@ int DpsGetURL(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc, const char *origurl) {
 	  /* Increment indexer's download statistics */
 	  Indexer->nbytes += Doc->Buf.size;
 	}
-	Indexer->ndocs++;
+/*	Indexer->ndocs++;  It has been moved into thread_main in main.c */
 	
 	switch(res){
 		case DPS_NET_UNKNOWN:

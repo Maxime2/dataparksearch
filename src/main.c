@@ -947,7 +947,7 @@ static void * thread_main(void *arg){
           if(res == DPS_OK || res == DPS_NOTARGET) {  /* Possible after bad startup */
 	       if (max_index_size > 0) URLSize = Indexer->nbytes;
 
-               res = DpsIndexNextURL(Indexer);
+               if (DPS_OK == (res = DpsIndexNextURL(Indexer))) Indexer->ndocs++;
 
 	       if (max_index_size > 0) {
 		 URLSize = Indexer->nbytes - URLSize;
