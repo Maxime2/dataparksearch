@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -516,13 +517,13 @@ int DpsHostLookup(DPS_AGENT *Indexer, DPS_CONN *connp) {
 		  url_cs = DpsGetCharSetByID(connp->charset_id);
 		  DpsConvInit(&url_uni, url_cs, uni_cs, Indexer->Conf->CharsToEscape, DPS_RECODE_URL);
 
-		  uni = (char*)DpsMalloc(len = (48 * dps_strlen(connp->hostname) + sizeof(dpsunicode_t)));
+		  uni = (char*)DpsMalloc(48 * (len = dps_strlen(connp->hostname) + 1));
 		  if (uni == NULL) {
 		    connp->err = DPS_NET_CANT_RESOLVE;
 		    TRACE_OUT(Indexer);
 		    return -4;
 		  }
-		  DpsConv(&url_uni, (char*)uni, len, connp->hostname, len);
+		  DpsConv(&url_uni, (char*)uni, 48 * len, connp->hostname, len);
 #ifdef WITH_IDN
 		  if ( (rc = idna_to_ascii_8z((const char*)uni, &ascii, 0)) != IDNA_SUCCESS) {
 		    DpsLog(Indexer, DPS_LOG_ERROR, "IDN: %s [%s] -> %s [UTF-8]  rc:%d", connp->hostname, url_cs->name, (char*)uni, rc);

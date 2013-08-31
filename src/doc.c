@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -323,11 +324,11 @@ int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
       url_cs = DpsGetCharSetByID(Doc->charset_id);
       DpsConvInit(&url_uni, url_cs, uni_cs, Indexer->Conf->CharsToEscape, DPS_RECODE_URL);
 
-      uni = (char*)DpsMalloc(len = (48 * dps_strlen(Doc->CurURL.hostname + 1)));
+      uni = (char*)DpsMalloc(48 * (len = dps_strlen(Doc->CurURL.hostname) + 1));
       if (uni == NULL) {
 	return DPS_ERROR;
       }
-      DpsConv(&url_uni, (char*)uni, len, Doc->CurURL.hostname, len);
+      DpsConv(&url_uni, (char*)uni, 48 * len, Doc->CurURL.hostname, len);
 #ifdef WITH_IDN
       if (idna_to_ascii_8z((const char *)uni, &ascii, 0) != IDNA_SUCCESS) {
 	DPS_FREE(uni); 

@@ -530,7 +530,7 @@ static dpsunicode_t * DpsUniStrWWL(dpsunicode_t **p, DPS_WIDEWORDLIST *wwl, dpsu
   char str[100000];
 
   DpsConvInit(&uni_lc, int_sys, k, "", DPS_RECODE_HTML);
-  DpsConv(&uni_lc, str, sizeof(str), s, sizeof(int) * (DpsUniLen(s) + 1));
+  DpsConv(&uni_lc, str, sizeof(str), s, sizeof(dpsunicode_t) * (DpsUniLen(s) + 1));
 
 #if defined HAVE_SYSLOG_H && defined WITH_SYSLOG
   syslog(LOG_ERR, " -- NoPrefixHL:%d WWL: %s", NOprefixHL, str);

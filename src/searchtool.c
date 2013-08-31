@@ -1796,8 +1796,8 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 	}
 
 	
-	llen = 14 * dps_strlen(txt) + 1;
-	ustr = (dpsunicode_t*)(DpsMalloc(sizeof(dpsunicode_t) * llen));
+	llen = dps_strlen(txt) + 1;
+	ustr = (dpsunicode_t*)(DpsMalloc(sizeof(dpsunicode_t) * 14 * llen));
 	if (ustr == NULL) {
 	        DPS_FREE(uwrd); DPS_FREE(wrd);
 #ifdef HAVE_ASPELL
@@ -1807,7 +1807,7 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 		TRACE_OUT(query);
 		return 0;
 	}
-	DpsConv(&bc_uni, (char*)ustr, sizeof(dpsunicode_t) * llen, txt, llen);
+	DpsConv(&bc_uni, (char*)ustr, sizeof(dpsunicode_t) * 14 * llen, txt, llen);
 
 	if (VQLflag) {
 	  ustr = DpsVQLparse(ustr);
@@ -1822,7 +1822,7 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 	}
 
 	/* Create copy of query, converted into LocalCharset (for DpsTrack) */
-	ltxt = (char*)DpsMalloc(llen);
+	ltxt = (char*)DpsMalloc(14 * llen);
 	if (ltxt == NULL) {
 	  DPS_FREE(uwrd); DPS_FREE(wrd); DPS_FREE(ustr);
 #ifdef HAVE_ASPELL
@@ -1832,7 +1832,7 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 	  TRACE_OUT(query);
 	  return 0;
 	}
-	DpsConv(&query->uni_lc, ltxt, llen, (char*)ustr, sizeof(dpsunicode_t) * llen /*bc_uni.obytes*/);
+	DpsConv(&query->uni_lc, ltxt, 14 * llen, (char*)ustr, sizeof(dpsunicode_t) * llen /*bc_uni.obytes*/);
 	ltxt[query->uni_lc.obytes] = '\0';
 	DpsLog(query, DPS_LOG_DEBUG, "Prepare query: %s, ltxt:%s", txt, ltxt);
 	DpsVarListReplaceStr(&query->Vars, "q", ltxt);  /* "q-lc" was here */

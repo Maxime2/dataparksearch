@@ -773,7 +773,7 @@ int DpsPrepareWords(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
       char *spelling = DpsMalloc(24 * (suggest.data_size + 2));
       DpsDSTRAppendUni(&suggest, 0);
       if (spelling != NULL) {
-	DpsConv(&Indexer->uni_lc, spelling, 24 * (suggest.data_size + 1), (char*)suggest.data, suggest.data_size * sizeof(dpsunicode_t));
+	DpsConv(&Indexer->uni_lc, spelling, 24 * (suggest.data_size + 1), (char*)suggest.data, suggest.data_size);
 	DpsVarListReplaceStr(&Doc->Sections, "spelling", spelling);
 	DPS_FREE(spelling);
       }

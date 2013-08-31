@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -123,7 +124,7 @@ int DpsUniRegComp(DPS_UNIREG_EXP *reg, const dpsunicode_t *pattern) {
 
 #ifdef DEBUG_UNIREG
 
-	DpsConv(&fromuni, sstr, 1024, (char*)pattern, 1024);
+	DpsConv(&fromuni, sstr, sizeof(sstr), (char*)pattern, DpsUniLen(pattern) * sizeof(dpsunicode_t));
 	printf(" -- pattern='%s'\n", sstr);
 #endif
 
@@ -131,9 +132,9 @@ int DpsUniRegComp(DPS_UNIREG_EXP *reg, const dpsunicode_t *pattern) {
 	while(tok){
 #ifdef DEBUG_UNIREG
 
-			DpsConv(&fromuni, sstr, 1024, (char*)tok, 1024);
-			DpsConv(&fromuni, rstr, 1024, (char*)lt, 1024);
-			printf(" -- tok:'%s' lt:'%s'\n", sstr, rstr);
+	    DpsConv(&fromuni, sstr, sizeof(sstr), (char*)tok, dps_strlen(tok));
+	    DpsConv(&fromuni, rstr, sizeof(rstr), (char*)lt, dps_strlen(lt));
+	    printf(" -- tok:'%s' lt:'%s'\n", sstr, rstr);
 #endif
 		reg->Token=(DPS_UNIREG_TOK*)DpsRealloc(reg->Token,sizeof(*reg->Token)*(reg->ntokens+1));
 		if (reg->Token == NULL) {
@@ -150,8 +151,8 @@ int DpsUniRegComp(DPS_UNIREG_EXP *reg, const dpsunicode_t *pattern) {
 	}
 #ifdef DEBUG_UNIREG
 	for (i = 0; i < reg->ntokens; i++) {
-	  DpsConv(&fromuni, sstr, 1024, (char*)reg->Token[i].str, 1024);
-	  printf(" -- str.%d:'%s'\n", i, sstr);
+	    DpsConv(&fromuni, sstr, sizeof(sstr), (char*)reg->Token[i].str, dps_strlen((char*)reg->Token[i].str));
+	    printf(" -- str.%d:'%s'\n", i, sstr);
 	}
 	printf(" -- reg:%x ntokens:%d\n", reg, reg->ntokens);
 #endif
@@ -182,8 +183,8 @@ int DpsUniRegExec(const DPS_UNIREG_EXP *reg, const dpsunicode_t *string) {
 			int inc=DPS_UNIREG_INC;
 #ifdef DEBUG_UNIREG
 
-			DpsConv(&fromuni, sstr, 1024, (char*)tstart, 1024);
-			DpsConv(&fromuni, rstr, 1024, (char*)reg->Token[i].str, 1024);
+			DpsConv(&fromuni, sstr, sizeof(sstr), (char*)tstart, dps_strlen(tstart));
+			DpsConv(&fromuni, rstr, sizeof(rstr), (char*)reg->Token[i].str, dps_strlen((char*)reg->Token[i].str));
 			printf(" -- t:%d tstart='%s'\ttok='%s'\t", i, sstr, rstr);
 #endif
 			reg->Token[i].rm_so = tstart - start;
@@ -551,7 +552,7 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 			flag="";
 		}
 
-		res = DpsConv(&touni, (char*)ustr, 8192, str, 1024);
+		res = DpsConv(&touni, (char*)ustr, 8192, str, dps_strlen(str));
 		DpsUniStrToLower(ustr);
 
 		/* Dont load words if first letter is not required */
@@ -579,7 +580,7 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 		  DpsFree(word.word);
 		  for (frm = 0; frm < forms.nwords; frm++) {
 		  
-		    DpsConv(&toutf8, lstr, 2048, ((const char*)forms.Word[frm].uword),2048);
+		      DpsConv(&toutf8, lstr, 2048, ((const char*)forms.Word[frm].uword), sizeof(forms.Word[frm].uword[0]) * DpsUniLen(forms.Word[frm].uword[0]));
 		    /*		    fprintf(stderr, " -- frm:%d - %s\n", frm, forms.Word[frm].word);*/
 		    if (aspell_speller_check(speller, lstr, -1) == 0) {
 		      aspell_speller_add_to_personal(speller, lstr, -1);

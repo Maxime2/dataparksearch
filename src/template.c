@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -279,24 +280,24 @@ size_t DpsPrintTextTemplate(DPS_AGENT *A, DPS_OUTPUTFUNCTION dps_out, void * str
 					    DPS_CHARSET *uni_cs;
 					    DPS_CONV  bc_utf8, utf8_bc;
 					    char    *uni = NULL, *q, *start, *end;
-					    size_t len = 48 * dps_strlen(value);
+					    size_t len = dps_strlen(value) + 1;
 					    int rc;
 
 					    uni_cs = DpsGetCharSet("UTF-8");
 					    DpsConvInit(&bc_utf8, A->Conf->bcs, uni_cs, A->Conf->CharsToEscape, DPS_RECODE_URL);
 					    DpsConvInit(&utf8_bc, uni_cs, A->Conf->bcs, A->Conf->CharsToEscape, DPS_RECODE_URL);
-					    if ((uni = (char*)DpsMalloc(len + 1)) != NULL) {
-					      DpsConv(&bc_utf8, (char*)uni, len, value, len);
+					    if ((uni = (char*)DpsMalloc(48 * len + 1)) != NULL) {
+					      DpsConv(&bc_utf8, (char*)uni, 48 * len, value, len);
 					      start = strstr(uni, "xn--");
 					      if (start) {
 						end = strchr(start, (int)'/');
 						if (end) *end = '\0';
 						if ( (rc = idna_to_unicode_8z8z((const char*)uni + (start - uni), &q, 0)) == IDNA_SUCCESS) {
-						  if ((idn_value = (char*)DpsRealloc(idn_value, len + 1)) != NULL) {
+						  if ((idn_value = (char*)DpsRealloc(idn_value, 48 * len + 1)) != NULL) {
 						    if (start != uni) {
 						      dps_memcpy(idn_value, uni, (start - uni) * sizeof(char));
 						    }
-						    DpsConv(&utf8_bc, (char*)idn_value + (start - uni), len, q, len);
+						    DpsConv(&utf8_bc, (char*)idn_value + (start - uni), 48 * len, q, len);
 						    if (end) {
 						      idn_value[utf8_bc.obytes] = '/';
 						      dps_strcpy(idn_value + utf8_bc.obytes + 1, end + 1);

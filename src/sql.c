@@ -703,30 +703,30 @@ static int DpsServerDB(DPS_AGENT *Indexer, DPS_SERVER *Srv, DPS_DB *db) {
       PunyURL = DpsURLInit(NULL);
       DpsURLParse(SrvURL, Srv->Match.pattern);
       if (SrvURL->hostname != NULL) {
-	uni = (char*)DpsMalloc(len = (48 * dps_strlen(SrvURL->hostname + 1)));
-	if (uni == NULL) {
-	  return DPS_ERROR;
-	}
-	DpsConv(&url_uni, (char*)uni, len, SrvURL->hostname, len);
+	  uni = (char*)DpsMalloc(48 * (len = dps_strlen(SrvURL->hostname) + 1));
+	  if (uni == NULL) {
+	      return DPS_ERROR;
+	  }
+	  DpsConv(&url_uni, (char*)uni, 48 * len, SrvURL->hostname, len);
 #ifdef WITH_IDN
-	if (idna_to_ascii_8z((const char *)uni, &ascii, 0) != IDNA_SUCCESS) {
-	  DPS_FREE(uni); 
-	  return DPS_ERROR;
-	}
+	  if (idna_to_ascii_8z((const char *)uni, &ascii, 0) != IDNA_SUCCESS) {
+	      DPS_FREE(uni); 
+	      return DPS_ERROR;
+	  }
 #else
-	ascii = (char*)DpsMalloc(len);
-	if (ascii == NULL) {
-	  DPS_FREE(uni); 
-	  return DPS_ERROR;
-			  }
-	if (idn_encodename(IDN_IDNCONV, (const char *)uni, ascii, len) != idn_success) {
-	  DPS_FREE(ascii);
-	  DPS_FREE(uni); 
-	  return DPS_ERROR;
-	}
+	  ascii = (char*)DpsMalloc(48 * len);
+	  if (ascii == NULL) {
+	      DPS_FREE(uni); 
+	      return DPS_ERROR;
+	  }
+	  if (idn_encodename(IDN_IDNCONV, (const char *)uni, ascii, len) != idn_success) {
+	      DPS_FREE(ascii);
+	      DPS_FREE(uni); 
+	      return DPS_ERROR;
+	  }
 #endif
-	PunyURL->hostname = ascii;
-	RelLink(Indexer, SrvURL, PunyURL, &Srv->Match.idn_pattern, 0);
+	  PunyURL->hostname = ascii;
+	  RelLink(Indexer, SrvURL, PunyURL, &Srv->Match.idn_pattern, 0);
       }
 /*				  DPS_FREE(ascii);  will be freed later with DpsURLFree(PunyURL) */
       DPS_FREE(uni); 
@@ -845,30 +845,30 @@ FROM %s WHERE enabled=1 AND parent=%s0%s ORDER BY ordre", name, qu, qu);
 			  PunyURL = DpsURLInit(NULL);
 			  DpsURLParse(SrvURL, Server->Match.pattern);
 			  if (SrvURL->hostname != NULL) {
-			    uni = (char*)DpsMalloc(len = (48 * dps_strlen(SrvURL->hostname + 1)));
-			    if (uni == NULL) {
-			      return DPS_ERROR;
-			    }
-			    DpsConv(&url_uni, (char*)uni, len, SrvURL->hostname, len);
+			      uni = (char*)DpsMalloc(48 * (len = dps_strlen(SrvURL->hostname) + 1));
+			      if (uni == NULL) {
+				  return DPS_ERROR;
+			      }
+			      DpsConv(&url_uni, (char*)uni, 48 * len, SrvURL->hostname, len);
 #ifdef WITH_IDN
-			    if (idna_to_ascii_8z((const char *)uni, &ascii, 0) != IDNA_SUCCESS) {
-			      DPS_FREE(uni); 
-			      return DPS_ERROR;
-			    }
+			      if (idna_to_ascii_8z((const char *)uni, &ascii, 0) != IDNA_SUCCESS) {
+				  DPS_FREE(uni); 
+				  return DPS_ERROR;
+			      }
 #else
-			    ascii = (char*)DpsMalloc(len);
-			    if (ascii == NULL) {
-			      DPS_FREE(uni); 
-			      return DPS_ERROR;
-			    }
-			    if (idn_encodename(IDN_IDNCONV, (const char *)uni, ascii, len) != idn_success) {
-			      DPS_FREE(ascii);
-			      DPS_FREE(uni); 
-			      return DPS_ERROR;
-			    }
+			      ascii = (char*)DpsMalloc(48 * len);
+			      if (ascii == NULL) {
+				  DPS_FREE(uni); 
+				  return DPS_ERROR;
+			      }
+			      if (idn_encodename(IDN_IDNCONV, (const char *)uni, ascii, len) != idn_success) {
+				  DPS_FREE(ascii);
+				  DPS_FREE(uni); 
+				  return DPS_ERROR;
+			      }
 #endif
-			    PunyURL->hostname = ascii;
-			    RelLink(Indexer, SrvURL, PunyURL, &Server->Match.idn_pattern, 0);
+			      PunyURL->hostname = ascii;
+			      RelLink(Indexer, SrvURL, PunyURL, &Server->Match.idn_pattern, 0);
 			  }
 /*				  DPS_FREE(ascii);  will be freed later with DpsURLFree(PunyURL) */
 			  DPS_FREE(uni); 

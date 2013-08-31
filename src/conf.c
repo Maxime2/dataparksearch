@@ -320,11 +320,11 @@ static int add_srv(void *Cfg, size_t ac,char **av){
 				  PunyURL = DpsURLInit(NULL);
 				  DpsURLParse(SrvURL, av[i]);
 				  if (SrvURL->hostname != NULL) {
-				    uni = (char*)DpsMalloc(len = (48 * dps_strlen(SrvURL->hostname + 1)));
+				      uni = (char*)DpsMalloc(48 * (len = dps_strlen(SrvURL->hostname) + 1));
 				    if (uni == NULL) {
 				      return DPS_ERROR;
 				    }
-				    DpsConv(&url_uni, (char*)uni, len, SrvURL->hostname, len);
+				    DpsConv(&url_uni, (char*)uni, 48 * len, SrvURL->hostname, len);
 #ifdef WITH_IDN
 				    if (idna_to_ascii_8z((const char *)uni, &ascii, 0) != IDNA_SUCCESS) {
 				      DPS_FREE(uni); 
