@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -154,7 +155,7 @@ static int DpsMySQLQuery(DPS_DB *db,DPS_SQLRES *R,const char *query){
 				R->nCols=mysql_num_fields(mysqlres);
 				R->nRows=0;
 				R->Items=NULL;
-				R->Fields=(DPS_SQLFIELD*)DpsMalloc(R->nCols*sizeof(DPS_SQLFIELD) + 1);
+				R->Fields = (DPS_SQLFIELD*)DpsMalloc((R->nCols + 1) * sizeof(DPS_SQLFIELD));
 				if (R->Fields == NULL) {
 				  mysql_free_result(mysqlres);
 				  return DPS_ERROR;
