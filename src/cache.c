@@ -355,7 +355,7 @@ void DpsRotateDelLog(DPS_AGENT *A) {
     for(log_num = 0; log_num < NFiles; log_num++) {
 
       dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X-split.log", db->log_dir, DPSSLASHSTR, log_num);
-	if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_CREAT | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
+	if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
 	    if (errno == ENOENT) { /* So, the *split.log file dowsn't exists, we move it for fast work, but there may be some collisions */
 		char old_log_name[PATH_MAX];
 		dps_snprintf(old_log_name, sizeof(old_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
