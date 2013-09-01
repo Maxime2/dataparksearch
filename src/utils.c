@@ -2588,7 +2588,7 @@ int dps_heapsort(void *base, size_t nmemb, size_t size, int (*compar)(const void
   unsigned char *cbase = (unsigned char*)base;
 
   if (nmemb < 1 || size < 1) return -1;
-  t = DpsMalloc(size + 1);
+  t = DpsMalloc(size);
   if (t == NULL) return -1;
 
   while(1) {
