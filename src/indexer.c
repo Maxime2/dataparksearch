@@ -2881,7 +2881,7 @@ int DpsIndexerEnvLoad(DPS_AGENT *Indexer, const char *fname, dps_uint8 lflags) {
 	    for (tix = DPS_MATCH_min; tix < DPS_MATCH_max; tix++) {
 	      List = &Indexer->Conf->Servers[tix];
 	      Indexer->Conf->total_srv_cnt += List->nservers;
-	      Indexer->Conf->SrvPnt =(DPS_SERVER**)DpsRealloc(Indexer->Conf->SrvPnt, Indexer->Conf->total_srv_cnt * sizeof(DPS_SERVER*)+1);
+	      Indexer->Conf->SrvPnt =(DPS_SERVER**)DpsRealloc(Indexer->Conf->SrvPnt, (Indexer->Conf->total_srv_cnt + 1) * sizeof(DPS_SERVER*));
 	      for (i = 0; i < List->nservers; i++) {
 		Indexer->Conf->SrvPnt[cpnt++] = &List->Server[i];
 	      }
