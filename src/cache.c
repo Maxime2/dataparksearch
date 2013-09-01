@@ -2632,7 +2632,7 @@ static int DpsLogdInit(DPS_AGENT *A, DPS_DB *db, const char* var_dir, size_t i, 
 
 
 	} else {
-	  if ((db->LOGD.wrd_buf = (dps_wrd_buf*)DpsXmalloc(WrdBufSize + 1)) == NULL) {
+	  if ((db->LOGD.wrd_buf = (dps_wrd_buf*)DpsXmalloc(WrdBufSize)) == NULL) {
 	    DpsLog(A, DPS_LOG_ERROR, "Out of memory, %d at %s:%d", (int)WrdBufSize, __FILE__, __LINE__);
 	    return DPS_ERROR;
 	  }
