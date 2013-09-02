@@ -347,7 +347,8 @@ static int add_srv(void *Cfg, size_t ac,char **av){
 				  }
 /*				  DPS_FREE(ascii);  will be freed later with DpsURLFree(PunyURL) */
 				  DPS_FREE(uni); 
-				  DpsURLFree(SrvURL); DpsURLFree(PunyURL);
+				  DpsURLFree(SrvURL); 
+				  DpsURLFree(PunyURL);
 				}
 #endif
 			} else
