@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -205,6 +206,8 @@ typedef struct {
 } DPS_LANGITEM;
 
 typedef struct {
+	DPS_LANGITEM	memb3[DPS_LM_HASHMASK+1];	/**< Items 3-list      */
+	DPS_LANGITEM	memb6[DPS_LM_HASHMASK+1];	/**< Items 6-list      */
 	float		expectation;			/**< Average value   */
         size_t          nbytes;                         /**< number of bytes processed */
         size_t          lang_len;
@@ -212,8 +215,6 @@ typedef struct {
 	char		*lang;				/**< Map Language    */
 	char		*charset;			/**< Map charset     */
         char            *filename;                      /**< Filename to write updates, if need */
-	DPS_LANGITEM	memb3[DPS_LM_HASHMASK+1];	/**< Items 3-list      */
-	DPS_LANGITEM	memb6[DPS_LM_HASHMASK+1];	/**< Items 6-list      */
 } DPS_LANGMAP;
 
 typedef struct {
