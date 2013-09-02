@@ -93,6 +93,7 @@ mirror.c sqldbms.c mkind.c chinese.c parsexml.c wild.c hash.c indexertool.c acro
 efence.c ef_page.c ef_print.c filence.c
 #EXTRA_libdpsearch_la_SOURCES = efence.c ef_page.c ef_print.c
 libdpsearch_la_LIBADD = libdp.la @LIBLIB@ @PTHREAD_LDADD@ 
+libdpsearch_la_LDFLAGS = @PTHREAD_LFLAGS@ -release @DPS_BASE_VERSION@
 libdpsearch_la_DEPENDENCIES = libdpcharset.la libdp.la
 
 libdpcharset_la_SOURCES = uconv.c unidata.c sgml.c unicode.c xmalloc.c \
@@ -157,14 +158,12 @@ endif
 if THREADSLESS
 
 mod_dpsearch_so_LDADD = libdpsearch_mod.la libdpcharset.la @APACHE_LIBS_SHLIB@ libdp.la 
-libdpsearch_la_CFLAGS = $(AM_CFLAGS)
-libdpsearch_la_LDFLAGS = -release @DPS_BASE_VERSION@
+libdpsearch_la_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 
 else
 
 mod_dpsearch_so_LDADD = libdpsearch.la libdpcharset.la @APACHE_LIBS_SHLIB@ libdp.la 
 libdpsearch_la_CFLAGS = @PTHREAD_CFLAGS@ -I@APACHE_INCDIR@ $(APACHE_CFLAGS) $(AM_CFLAGS)
-libdpsearch_la_LDFLAGS = @PTHREAD_LFLAGS@ -release @DPS_BASE_VERSION@
 
 endif
 
@@ -188,7 +187,6 @@ endif
 else
 
 libdpsearch_la_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
-libdpsearch_la_LDFLAGS = @PTHREAD_LFLAGS@ -release @DPS_BASE_VERSION@
 #install-exec-local:
 
 endif
