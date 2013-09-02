@@ -1297,10 +1297,11 @@ int DpsLMcmpIndex(const void * i1, const void * i2) {
      return 0;
 }
 */
-int DpsLMcmpIndex(const DPS_LANGITEM *m1, const DPS_LANGITEM *m2) {
-     if (m2->index < m1->index) return 1;
-     if (m2->index > m1->index) return -1;
-     return 0;
+int DpsLMcmpIndex(const void *v1, const void *v2) {
+    const DPS_LANGITEM *m1 = v1, *m2 = v2;
+    if (m2->index < m1->index) return 1;
+    if (m2->index > m1->index) return -1;
+    return 0;
 }
 
 

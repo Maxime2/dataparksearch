@@ -265,7 +265,7 @@ enum {
 extern int DpsLMstatcmp(const void * i1, const void * i2);
 extern int DpsLMcmpCount(const void * i1,const void * i2);
 /*extern int DpsLMcmpIndex(const void * i1,const void * i2);*/
-extern int DpsLMcmpIndex(const DPS_LANGITEM *m1, const DPS_LANGITEM *m2);
+extern int DpsLMcmpIndex(const void *v1, const void *v2);
 
 extern void  DpsBuildLangMap(DPS_LANGMAP * map, const char * text, size_t text_len, size_t max_nbytes, int StrFlag);
 extern void  DpsPrepareLangMap(DPS_LANGMAP * map);
