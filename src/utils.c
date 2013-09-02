@@ -1336,6 +1336,15 @@ __C_LINK int __DPSCALL DpsInit(int argc, char **argv, char **envp) {
      ENVP = envp;
      DpsInitTZ();
      srandom((unsigned long)time(NULL));
+#if defined (HAVE_LIBCARES)
+     {
+	 int status =  status = ares_library_init(ARES_LIB_INIT_ALL);
+	 if (status != ARES_SUCCESS) {
+	     fprintf(stderr, "ares_library_init: %s\n", ares_strerror(status));
+	     return 1;
+	 }
+     }
+#endif
 #ifdef WITH_HTTPS
      {
        time_t start_time;
