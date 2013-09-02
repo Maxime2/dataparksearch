@@ -245,7 +245,9 @@ static int cmp_Slot(const Slot *s1, const Slot *s2) {
 }
 */
 
-static volatile dps_mutex_t ef_mutex = 0;
+#if USE_DPS_MUTEX
+static dps_mutex_t ef_mutex = 0;
+#endif
 
 static void lock(void) {
 #ifdef HAVE_PTHREAD
