@@ -753,7 +753,9 @@ static int DpsSitemapParse(DPS_AGENT *Indexer, int hops, const char *s) {
   DpsLog(Indexer, DPS_LOG_INFO, "Sitemap: %s", s);
   DpsLog(Indexer, DPS_LOG_DEBUG, "Executing Sitemap parser");
 
+  DPS_GETLOCK(Indexer,DPS_LOCK_CONF);
   method = DpsFilterFind(DPS_LOG_DEBUG, &Indexer->Conf->Filters, s, reason, DPS_METHOD_GET);
+  DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);
   if (method == DPS_METHOD_DISALLOW || method == DPS_METHOD_VISITLATER) {
     return res;
   }
