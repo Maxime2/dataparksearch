@@ -706,7 +706,7 @@ extern void *DpsRealloc(void *p, size_t size);
 
 
 #define DpsSort qsort
-#define DpsPreSort dps_heapsort
+#define DpsPreSort heapsort
 
 
 #ifdef WITH_PARANOIA

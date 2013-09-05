@@ -41,7 +41,13 @@ AC_CHECK_HEADERS(fcntl.h unistd.h libutil.h \
   sys/ioctl.h sys/time.h sys/times.h sys/param.h sys/wait.h sys/mman.h \
   getopt.h syslog.h select.h sys/select.h sys/socket.h arpa/inet.h netdb.h\
   netinet/in.h netinet/in_systm.h  netinet/ip.h  netinet/tcp.h netinet/in.h\
-	arpa/nameser.h resolv.h)
+	arpa/nameser.h resolv.h bsd/stdlib.h)
+
+dnl Check if libbsd is required, e.g. on Linux
+AC_CHECK_LIB(bsd, mergesort, LIBS="$LIBS -lbsd")
+
+dnl Check for library functions
+AC_CHECK_FUNCS(mergesort heapsort)
 
 dnl Check if we are little or big endian
 AC_C_BIGENDIAN

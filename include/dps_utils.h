@@ -203,7 +203,15 @@ extern __C_LINK void __DPSCALL DpsUnLockFILE(FILE *f);
 extern FILE * dps_fopen(const char *path, const char *mode);
 extern int dps_demonize(void);
 extern void * dps_bsearch(const void *key, const void *base0, size_t nmemb0, size_t size, int (*compar)(const void *, const void *));
-extern int dps_heapsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+#if HAVE_HEAPSORT
+#if HAVE_BSD_STDLIB_H
+#include <bsd/stdlib.h>
+#else
+#include <stdlib.h>
+#endif
+#else
+extern int heapsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+#endif
 
 
 /* NULL safe atoi*/

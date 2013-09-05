@@ -2585,57 +2585,6 @@ void * dps_bsearch(const void *key, const void *base0, size_t nmemb, size_t size
 
 
 
-
-/*
- * Heapsort.
- *
-*/
-
-int dps_heapsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) {
-  size_t n = nmemb, i = (n / 2), parent, child;
-  char *t;
-  unsigned char *cbase = (unsigned char*)base;
-
-  if (nmemb < 1 || size < 1) return -1;
-  t = DpsMalloc(size);
-  if (t == NULL) return -1;
-
-  while(1) {
-    if (i > 0) {
-      i--;
-      dps_memcpy(t, cbase + i * size, size);
-    } else {
-      n--;
-      if (n == 0) {
-	DPS_FREE(t);
-	return 0;
-      }
-      dps_memcpy(t, cbase + n * size, size);
-      dps_memcpy(cbase + n * size, cbase, size);
-    }
-
-    parent = i;
-    child = (i * 2) + 1;
-
-    while(child < n) {
-      if (child + 1 < n && compar(cbase + (child + 1) * size, cbase + child * size) > 0) {
-	child ++;
-      }
-      if (compar(cbase + (child * size), t) > 0) {
-	dps_memcpy(cbase + parent * size, cbase + child * size, size);
-	parent = child;
-	child = parent * 2 + 1;
-      } else {
-	break;
-      }
-    }
-    dps_memcpy(cbase + parent * size, t, size);
-  }
-}
-
-
-
-
 #ifdef WITH_PARANOIA
 
 /* NOTE: gcc optimization should be switched off */

@@ -23,6 +23,9 @@
 #include <string.h>
 #include <strings.h>
 #include <sys/time.h>
+#if HAVE_BSD_STDLIB_H
+#include <bsd/stdlib.h>
+#endif
 
 #if (SIZEOF_VOIDP == SIZEOF_INT)
 #define DPS_PNTYPE unsigned int
@@ -375,6 +378,62 @@ void * dps_bsearch(const void *key, const void *base0, size_t nmemb, size_t size
 #endif /* DPS_USE_BSEARCH */
 
 
+
+#if defined DPS_USE_HEAPSORT || defined DPS_CONFIGURE
+
+#ifdef DPS_CONFIGURE
+#define DpsMalloc malloc
+#define DPS_FREE free
+#endif
+
+/*
+ * Heapsort.
+ *
+*/
+
+int dps_heapsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) {
+  size_t n = nmemb, i = (n / 2), parent, child;
+  char *t;
+  unsigned char *cbase = (unsigned char*)base;
+
+  if (nmemb < 1 || size < 1) return -1;
+  t = DpsMalloc(size);
+  if (t == NULL) return -1;
+
+  while(1) {
+    if (i > 0) {
+      i--;
+      dps_memcpy(t, cbase + i * size, size);
+    } else {
+      n--;
+      if (n == 0) {
+	DPS_FREE(t);
+	return 0;
+      }
+      dps_memcpy(t, cbase + n * size, size);
+      dps_memcpy(cbase + n * size, cbase, size);
+    }
+
+    parent = i;
+    child = (i * 2) + 1;
+
+    while(child < n) {
+      if (child + 1 < n && compar(cbase + (child + 1) * size, cbase + child * size) > 0) {
+	child ++;
+      }
+      if (compar(cbase + (child * size), t) > 0) {
+	dps_memcpy(cbase + parent * size, cbase + child * size, size);
+	parent = child;
+	child = parent * 2 + 1;
+      } else {
+	break;
+      }
+    }
+    dps_memcpy(cbase + parent * size, t, size);
+  }
+}
+
+#endif /* DPS_USE_HEAPSORT */
 
 
 
@@ -849,7 +908,7 @@ int main() {
     for (i = N-1; i > STARTLEN; i--) {
 	res = dps_strpbrk1(a+i, set);
  	res = dps_strpbrk1(set, a+i);
-   }
+    }
     t_dps = TimerEnd();
 
     free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
@@ -858,7 +917,7 @@ int main() {
     for (i = N-1; i > STARTLEN; i--) {
 	res = strpbrk(a+i, set);
  	res = strpbrk(set, a+i);
-   }
+    }
     t_lib = TimerEnd();
 
     fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRPBRK_UNALIGNED%s\n\n", t_dps, t_lib,
@@ -869,6 +928,43 @@ int main() {
 
 
     /* ###################################### */
+
+#if HAVE_HEAPSORT
+
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    TimerStart();
+    dps_heapsort(d, N, sizeof(*d), char_cmp);
+    for (i = N-1; i > STARTLEN; i--) {
+	dps_heapsort(a+i, N - i, sizeof(*a), char_cmp);
+    }
+    dps_heapsort(a, N, sizeof(*a), char_cmp);
+    t_dps = TimerEnd();
+
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    TimerStart();
+    heapsort(d, N, sizeof(*d), char_cmp);
+    for (i = N-1; i > STARTLEN; i--) {
+	heapsort(a+i, N - i, sizeof(*a), char_cmp);
+    }
+    heapsort(a, N, sizeof(*a), char_cmp);
+    t_lib = TimerEnd();
+
+    fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRPBRK_UNALIGNED%s\n\n", t_dps, t_lib,
+	    (t_lib < t_dps) ? "/*" : "",
+	    (t_lib < t_dps) ? "*/" : ""
+	    );
+    printf("\theapsort: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+
+#else
+
+    fprintf(cfg, "/* Platform seems has no heapsort */\n#define DPS_USE_HEAPSORT\n\n");
+    printf("\theapsort: dps (as system has no heapsort)\n");
+
+#endif /* HAVE_HEAPSORT */
+
+
+    /* ###################################### */
+    /* This must be the last check as it sorts a0 */
 
     free(d); free(a);
     char w[5] = { 1, 2, 3, 4, 5};

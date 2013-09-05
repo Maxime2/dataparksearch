@@ -13421,7 +13421,8 @@ fi
 for ac_header in sys/types.h fcntl.h unistd.h sys/cdefs.h libutil.h bsd/libutil.h \
 sys/ioctl.h sys/time.h sys/times.h sys/param.h sys/wait.h limits.h sched.h \
 syslog.h select.h sys/select.h sys/socket.h arpa/inet.h sys/un.h netdb.h sys/sysctl.h sys/mman.h sys/shm.h \
-netinet/in.h netinet/in_systm.h netinet/tcp.h arpa/nameser.h sys/ipc.h semaphore.h sys/sem.h sys/msg.h
+netinet/in.h netinet/in_systm.h netinet/tcp.h arpa/nameser.h sys/ipc.h semaphore.h sys/sem.h sys/msg.h \
+bsd/stdlib.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -13750,6 +13751,48 @@ else
 $as_echo "no" >&6; }
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for mergesort in -lbsd" >&5
+$as_echo_n "checking for mergesort in -lbsd... " >&6; }
+if ${ac_cv_lib_bsd_mergesort+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lbsd  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char mergesort ();
+int
+main ()
+{
+return mergesort ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_bsd_mergesort=yes
+else
+  ac_cv_lib_bsd_mergesort=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_bsd_mergesort" >&5
+$as_echo "$ac_cv_lib_bsd_mergesort" >&6; }
+if test "x$ac_cv_lib_bsd_mergesort" = xyes; then :
+  LIBS="$LIBS -lbsd"
+fi
+
 
 
 for ac_func in strdup strndup strstr strnlen strcasecmp strncasecmp bzero strtok_r strcasestr timegm
