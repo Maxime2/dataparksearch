@@ -77,14 +77,15 @@ size_t dps_strlen(const char *src);
 #include <string.h>
 #include "dp.inc"
 
-#define dps_memmove memmove
-#define dps_memcpy  memcpy
-#define dps_strcpy  strcpy
-#define dps_strncpy strncpy
-#define dps_strcat  strcat
-#define dps_strncat strncat
-#define dps_strlen  strlen
-#define dps_bsearch bsearch
+#define dps_memmove  memmove
+#define dps_memcpy   memcpy
+#define dps_strcpy   strcpy
+#define dps_strncpy  strncpy
+#define dps_strcat   strcat
+#define dps_strncat  strncat
+#define dps_strlen   strlen
+#define dps_bsearch  bsearch
+#define dps_heapsort heapsort
 
 #endif /* DPS_CONFIGURE */
 
