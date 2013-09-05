@@ -580,7 +580,7 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 		  DpsFree(word.word);
 		  for (frm = 0; frm < forms.nwords; frm++) {
 		  
-		      DpsConv(&toutf8, lstr, 2048, ((const char*)forms.Word[frm].uword), sizeof(forms.Word[frm].uword[0]) * DpsUniLen(forms.Word[frm].uword[0]));
+		      DpsConv(&toutf8, lstr, 2048, ((const char*)forms.Word[frm].uword), sizeof(forms.Word[frm].uword[0]) * DpsUniLen(forms.Word[frm].uword));
 		    /*		    fprintf(stderr, " -- frm:%d - %s\n", frm, forms.Word[frm].word);*/
 		    if (aspell_speller_check(speller, lstr, -1) == 0) {
 		      aspell_speller_add_to_personal(speller, lstr, -1);
