@@ -380,7 +380,7 @@ void * dps_bsearch(const void *key, const void *base0, size_t nmemb, size_t size
 
 
 
-#if defined DPS_USE_HEAPSORT || defined DPS_CONFIGURE
+#if defined DPS_USE_HEAPSORT1 || defined DPS_USE_HEAPSORT2 || defined DPS_CONFIGURE
 /*-
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
@@ -443,6 +443,7 @@ void * dps_bsearch(const void *key, const void *base0, size_t nmemb, size_t size
 	} while (--count); \
 }
 
+#if defined DPS_USE_HEAPSORT1 || defined DPS_CONFIGURE
 /*
  * Build the list into a heap, where a heap is defined such that for
  * the records K1 ... KN, Kj/2 >= Kj for 1 <= j/2 <= j <= N.
@@ -512,11 +513,11 @@ void * dps_bsearch(const void *key, const void *base0, size_t nmemb, size_t size
  * a data set that will trigger the worst case is nonexistent.  Heapsort's
  * only advantage over quicksort is that it requires little additional memory.
  */
-int
-dps_heapsort(vbase, nmemb, size, compar)
-	void *vbase;
-	size_t nmemb, size;
-	int (*compar)(const void *, const void *);
+#if defined DPS_CONFIGURE
+int dps_heapsort1(void *vbase, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) 
+#else
+int dps_heapsort(void *vbase, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) 
+#endif
 {
 	size_t cnt, i, j, l;
 	char tmp, *tmp1, *tmp2;
@@ -556,8 +557,114 @@ dps_heapsort(vbase, nmemb, size, compar)
 	free(k);
 	return (0);
 }
+#endif /* DPS_USE_HEAPSORT1 */
 
-#endif /* DPS_USE_HEAPSORT */
+
+/* 
+ * Modified version of BOTTOM-UP-HEAPSORT
+ * Ingo Wegener, BOTTOM-UP-HEAPSORT, a new variant of HEAPSORT beating, 
+ * on an average, QUICKSORT (if n is not very small), Theoretical Computer Science 118 (1993),
+ * pp. 81-98, Elsevier; n >= 16000 for median-3 version of QUICKSORT
+ * Idea of delayed reheap after moving the root to its place is from
+ * D. Levendeas1, C. Zaroliagis, Heapsort using Multiple Heaps, in Proc. 2nd Panhellenic
+ * Student Conference on Informatics -- EUREKA. – 2008. – P. 93–104. 
+ */
+#if defined DPS_USE_HEAPSORT2 || defined DPS_CONFIGURE
+#define LEAF_SEARCH(m, i, j) {						\
+	j = i;								\
+	while ((j << 1) < m) {						\
+	    j <<= 1;							\
+	    if (compar(base + j * size, base + size * (j + 1)) < 0) j++; \
+	}								\
+	if ((j << 1) == m) j = m;					\
+    }
+
+#define BOTTOM_UP_SEARCH(i, j) {				\
+	while(j > i && compar(base + i * size, base + j * size) > 0) {	\
+	    j >>= 1;						\
+	}							\
+    }
+
+#define INTERCHANGE(i, j) {						\
+	COPY(k, base + j * size, cnt, size, tmp1, tmp2);		\
+	COPY(base + j * size, base + i * size, cnt, size, tmp1, tmp2);	\
+	while (i < j) {							\
+	    j >>= 1;							\
+	    p = base + j * size;					\
+	    t = k;							\
+	    SWAP(t, p, cnt, size, tmp);					\
+	}								\
+    }
+
+#define BOTTOM_UP_REHEAP(m, i) { \
+	LEAF_SEARCH(m, i, j);	 \
+	BOTTOM_UP_SEARCH(i, j);	 \
+	INTERCHANGE(i, j);	 \
+    }
+
+#if defined DPS_CONFIGURE
+int dps_heapsort2(void *vbase, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) 
+#else
+int dps_heapsort(void *vbase, size_t nmemb, size_t size, int (*compar)(const void *, const void *)) 
+#endif
+{
+        size_t cnt, i, j, l;
+	char tmp, *tmp1, *tmp2;
+	char *base, *k, *p, *t;
+
+	if (nmemb <= 1)
+		return (0);
+
+	if (!size) {
+		errno = EINVAL;
+		return (-1);
+	}
+
+	if ((k = malloc(2 * size)) == NULL)
+		return (-1);
+
+	/*
+	 * Items are numbered from 1 to nmemb, so offset from size bytes
+	 * below the starting address.
+	 */
+	base = (char *)vbase - size;
+
+	for (l = nmemb >> 1; l > 0; l--) {
+	    i = l;
+	    BOTTOM_UP_REHEAP(nmemb, i);
+	}
+
+	/*
+	 * For each element of the heap, leave the smallest in its final slot,
+	 * then recreate the heap.
+	 */
+	while (nmemb > 1) {
+	    p = base + size;
+	    t = base + size * nmemb;
+	    SWAP(t, p, cnt, size, tmp);
+	    --nmemb;
+	    if (nmemb > 3) {
+		p = base + (l = 2) * size;
+		t = base + 3 * size;
+		if (compar(t, p) > 0) {
+		    p = t;
+		    l = 3;
+		}
+		t = base + size * nmemb;
+		SWAP(t, p, cnt, size, tmp);
+		--nmemb;
+		BOTTOM_UP_REHEAP(nmemb, l);
+	    }
+	    BOTTOM_UP_REHEAP(nmemb, 1);
+	}
+
+	free(k);
+	return (0);
+}
+#endif /* DPS_USE_HEAPSORT2 */
+
+
+#endif /* DPS_USE_HEAPSORT1 || DPS_USE_HEAPSORT2 */
 
 
 
@@ -1053,16 +1160,51 @@ int main() {
 
     /* ###################################### */
 
-#if HAVE_HEAPSORT
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    char *etalon = copyarr(a0, N + 1);
+    qsort(etalon, N, sizeof(*etalon), char_cmp);
+
+    TimerStart();
+    dps_heapsort1(d, N, sizeof(*d), char_cmp);
+    for (i = N-1; i > STARTLEN; i--) {
+	dps_heapsort1(a+i, N - i, sizeof(*a), char_cmp);
+    }
+    dps_heapsort1(a, N, sizeof(*a), char_cmp);
+    t_dps = TimerEnd();
+    if (memcmp(a, etalon, N)) {
+	printf("Oops!!!heapsort1\n");
+	fprintf(cfg, "/*\na[%d] = { // heapsort1 failed here\n", N + 1);
+	for (i = 0; i < N; i++)
+	    if (a[i] != etalon[i]) {
+		fprintf(cfg, "%d,  // %d !!!\n", a[i], etalon[i]);
+	    } else {
+		fprintf(cfg, "%d,\n", a[i]);
+	    }
+	fprintf(cfg, "0};\n*/\n");
+    }
 
     free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
     TimerStart();
-    dps_heapsort(d, N, sizeof(*d), char_cmp);
+    dps_heapsort2(d, N, sizeof(*d), char_cmp);
     for (i = N-1; i > STARTLEN; i--) {
-	dps_heapsort(a+i, N - i, sizeof(*a), char_cmp);
+	dps_heapsort2(a+i, N - i, sizeof(*a), char_cmp);
     }
-    dps_heapsort(a, N, sizeof(*a), char_cmp);
-    t_dps = TimerEnd();
+    dps_heapsort2(a, N, sizeof(*a), char_cmp);
+    t_dps2 = TimerEnd();
+    if (memcmp(a, etalon, N)) {
+	printf("Oops!!!heapsort2\n");
+	fprintf(cfg, "/*\na[%d] = { // heapsort2 failed here\n", N + 1);
+	for (i = 0; i < N; i++)
+	    if (a[i] != etalon[i]) {
+		fprintf(cfg, "%d,  // %d !!!\n", a[i], etalon[i]);
+	    } else {
+		fprintf(cfg, "%d,\n", a[i]);
+	    }
+	fprintf(cfg, "0};\n*/\n");
+    }
+
+
+#if HAVE_HEAPSORT
 
     free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
     TimerStart();
@@ -1072,17 +1214,38 @@ int main() {
     }
     heapsort(a, N, sizeof(*a), char_cmp);
     t_lib = TimerEnd();
+    if (memcmp(a, etalon, N)) {
+	printf("Oops!!!lib heapsort\n");
+	fprintf(cfg, "/*\na[%d] = { // lib heapsort failed here\n", N + 1);
+	for (i = 0; i < N; i++)
+	    if (a[i] != etalon[i]) {
+		fprintf(cfg, "%d,  // %d !!!\n", a[i], etalon[i]);
+	    } else {
+		fprintf(cfg, "%d,\n", a[i]);
+	    }
+	fprintf(cfg, "0};\n*/\n");
+    }
+#endif
 
-    fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRPBRK_UNALIGNED%s\n\n", t_dps, t_lib,
-	    (t_lib < t_dps) ? "/*" : "",
-	    (t_lib < t_dps) ? "*/" : ""
+    free(etalon);
+
+#if HAVE_HEAPSORT
+
+    fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_HEAPSORT%d%s\n\n", DPS_MIN(t_dps,t_dps2), t_lib,
+	    (t_lib < DPS_MIN(t_dps,t_dps2)) ? "/*" : "", (t_dps < t_dps2) ? 1 : 2,
+	    (t_lib < DPS_MIN(t_dps,t_dps2)) ? "*/" : ""
 	    );
-    printf("\theapsort: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+    printf("\theapsort: %s (%g vs %g vs %g)\n", 
+	   t_lib < DPS_MIN(t_dps,t_dps2) ? "lib" : ((t_dps < t_dps2) ? "dps1" : "dps2"), 
+	   t_dps, t_dps2, t_lib);
 
 #else
 
-    fprintf(cfg, "/* Platform seems has no heapsort */\n#define DPS_USE_HEAPSORT\n\n");
-    printf("\theapsort: dps (as system has no heapsort)\n");
+    fprintf(cfg, "/* dps1:%g vs. dps2:%g, system has no heapsort */\n#define DPS_USE_HEAPSORT%d\n\n", 
+	    t_dps, t_dps2,
+	    (t_dps < t_dps2) ? 1 : 2
+	    );
+    printf("\theapsort: %s (%g vs %g, no system heapsort)\n", (t_dps1 < t_dps2) ? "dps1" : "dps2", t_dps1, t_dps2);
 
 #endif /* HAVE_HEAPSORT */
 
