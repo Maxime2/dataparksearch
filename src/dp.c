@@ -566,7 +566,7 @@ int dps_heapsort(void *vbase, size_t nmemb, size_t size, int (*compar)(const voi
  * on an average, QUICKSORT (if n is not very small), Theoretical Computer Science 118 (1993),
  * pp. 81-98, Elsevier; n >= 16000 for median-3 version of QUICKSORT
  * Idea of delayed reheap after moving the root to its place is from
- * D. Levendeas1, C. Zaroliagis, Heapsort using Multiple Heaps, in Proc. 2nd Panhellenic
+ * D. Levendeas, C. Zaroliagis, Heapsort using Multiple Heaps, in Proc. 2nd Panhellenic
  * Student Conference on Informatics -- EUREKA. – 2008. – P. 93–104. 
  */
 #if defined DPS_USE_HEAPSORT2 || defined DPS_CONFIGURE
@@ -1245,7 +1245,7 @@ int main() {
 	    t_dps, t_dps2,
 	    (t_dps < t_dps2) ? 1 : 2
 	    );
-    printf("\theapsort: %s (%g vs %g, no system heapsort)\n", (t_dps1 < t_dps2) ? "dps1" : "dps2", t_dps1, t_dps2);
+    printf("\theapsort: %s (%g vs %g, no system heapsort)\n", (t_dps < t_dps2) ? "dps1" : "dps2", t_dps, t_dps2);
 
 #endif /* HAVE_HEAPSORT */
 
