@@ -14252,6 +14252,9 @@ if ${ac_cv_have_inet_net_pton_proto+:} false; then :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
+
+#define _GNU_SOURCE
+#define __USE_GNU
 #include <arpa/inet.h>
 
 _ACEOF
@@ -14281,6 +14284,9 @@ if ${ac_cv_have_pthread_setconcurrency_proto+:} false; then :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
+
+#define _GNU_SOURCE
+#define __USE_GNU
 #include <pthread.h>
 
 _ACEOF
@@ -14310,6 +14316,9 @@ if ${ac_cv_have_pthread_yield_proto+:} false; then :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
+
+#define _GNU_SOURCE
+#define __USE_GNU
 #include <pthread.h>
 
 _ACEOF
@@ -14332,6 +14341,38 @@ _ACEOF
 
         fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_tryjoin_np function prototype in pthread.h" >&5
+$as_echo_n "checking for pthread_tryjoin_np function prototype in pthread.h... " >&6; }
+if ${ac_cv_have_pthread_tryjoin_np_proto+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#define _GNU_SOURCE
+#define __USE_GNU
+#include <pthread.h>
+
+_ACEOF
+if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+  $EGREP "pthread_tryjoin_np" >/dev/null 2>&1; then :
+  ac_cv_have_pthread_tryjoin_np_proto=yes
+else
+  ac_cv_have_pthread_tryjoin_np_proto=no
+fi
+rm -f conftest*
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_pthread_tryjoin_np_proto" >&5
+$as_echo "$ac_cv_have_pthread_tryjoin_np_proto" >&6; }
+        if test $ac_cv_have_pthread_tryjoin_np_proto = yes ; then
+                ac_tr_func=HAVE_`echo pthread_tryjoin_np | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`_PROTO
+                cat >>confdefs.h <<_ACEOF
+#define $ac_tr_func 1
+_ACEOF
+
+        fi
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for thr_setconcurrency function prototype in thread.h" >&5
 $as_echo_n "checking for thr_setconcurrency function prototype in thread.h... " >&6; }
 if ${ac_cv_have_thr_setconcurrency_proto+:} false; then :
@@ -14339,6 +14380,9 @@ if ${ac_cv_have_thr_setconcurrency_proto+:} false; then :
 else
   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
+
+#define _GNU_SOURCE
+#define __USE_GNU
 #include <thread.h>
 
 _ACEOF
@@ -16429,10 +16473,9 @@ $as_echo "no" >&6; }
 $as_echo "yes, and it takes $ac_cv_gethostbyname_args arguments" >&6; }
     fi
 
-
-
 CFLAGS="$_CFLAGS"
 LIBS="$_LIBS"
+
 fi
 
 

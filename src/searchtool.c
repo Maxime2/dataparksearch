@@ -758,7 +758,26 @@ static void * DpsQsortSearchWordsBySite(void *arg) {
   }
 
 #if defined(HAVE_PTHREAD) && defined(MULTITHREADED_SORT)
+
   if (d >= THREAD_SLICE && PP.level > 0) {
+#if defined(HAVE_PTHREAD_TRYJOIN_NP_PROTO)
+      int rc = 0;
+      if (tid) {
+	  rc = pthread_tryjoin_np(tid, NULL);
+	  if (rc == 0) tid = 0;
+      }
+      if (rc == 0) {
+	  tid = 0;
+	  PP.level--;
+	  PAR = PP;
+	  if (pthread_create(&tid, NULL, &DpsQsortSearchWordsBySite, &PAR) != 0) {
+	      DpsQsortSearchWordsBySite(&PP);
+	      tid = 0;
+	  }
+      } else {
+	  DpsQsortSearchWordsBySite(&PP);
+      }
+#else
     if (tid) pthread_join(tid, NULL);
     tid = 0;
     PP.level--;
@@ -767,6 +786,7 @@ static void * DpsQsortSearchWordsBySite(void *arg) {
       DpsQsortSearchWordsBySite(&PP);
       tid = 0;
     }
+#endif
   } else 
 #endif
   {
@@ -884,7 +904,7 @@ void DpsSortSearchWordsBySite(DPS_RESULT *Res, DPS_URLCRDLIST *L, size_t num, co
     P.r = num - 1;
     P.pattern = pattern;
     P.merge = (Res->PerSite != NULL);
-    P.level = 2;
+    P.level = 3;
     DpsCmpPattern = &DpsCmpPattern_full;
     DpsCmpPattern_T = &DpsCmpPattern_full_T;
     switch(*pattern) {
@@ -1099,15 +1119,35 @@ static void * DpsQsortSearchWordsByPattern(void *arg) {
   }
 
 #if defined(HAVE_PTHREAD) && defined(MULTITHREADED_SORT)
+
   if (d >= THREAD_SLICE && PP.level > 0) {
+#if defined(HAVE_PTHREAD_TRYJOIN_NP_PROTO)
+      int rc = 0;
+      if (tid) {
+	  rc = pthread_tryjoin_np(tid, NULL);
+	  if (rc == 0) tid = 0;
+      }
+      if (rc == 0) {
+	  tid = 0;
+	  PP.level--;
+	  PAR = PP;
+	  if (pthread_create(&tid, NULL, &DpsQsortSearchWordsByPattern, &PAR) != 0) {
+	      DpsQsortSearchWordsByPattern(&PP);
+	      tid = 0;
+	  }
+      } else {
+	  DpsQsortSearchWordsByPattern(&PP);
+      }
+#else
     if (tid) pthread_join(tid, NULL);
     tid = 0;
     PP.level--;
     PAR = PP;
     if (pthread_create(&tid, NULL, &DpsQsortSearchWordsByPattern, &PAR) != 0) {
-      DpsQsortSearchWordsBySite(&PP);
+      DpsQsortSearchWordsByPattern(&PP);
       tid = 0;
     }
+#endif
   } else 
 #endif
   {
@@ -1222,7 +1262,7 @@ void DpsSortSearchWordsByPattern(DPS_RESULT *Res, DPS_URLCRDLIST *L, size_t num,
     P.l = 0;
     P.r = num - 1;
     P.merge = 0;
-    P.level = 2;
+    P.level = 3;
     P.pattern = pattern;
     DpsCmpPattern = &DpsCmpPattern_full;
     DpsCmpPattern_T = &DpsCmpPattern_full_T;
