@@ -79,6 +79,10 @@
 #undef FAST_RELEVANCE
 #undef ULTRA_RELEVANCE
 
+/* Define what method of results sorting to be used. */
+#undef HEAP_SORTING
+#undef QUICK_SORTING
+
 /* Define if you want to take hops into account for the Neo Popularity Rank calculation */
 #undef WITH_POPHOPS
 

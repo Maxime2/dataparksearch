@@ -944,10 +944,12 @@ void DpsSortSearchWordsBySite(DPS_RESULT *Res, DPS_URLCRDLIST *L, size_t num, co
       }
       break;
     }
-#if 1
+#if HEAP_SORTING
     DpsHeapSortSearchWordsBySite(&P);
-#else
+#elif QUICK_SORTING
     DpsQsortSearchWordsBySite(&P);
+#else
+#error Not Results Sorting Method defined.
 #endif
   }
 
@@ -1303,10 +1305,12 @@ void DpsSortSearchWordsByPattern(DPS_RESULT *Res, DPS_URLCRDLIST *L, size_t num,
      }
       break;
     }
-#if 1
+#if HEAP_SORTING
     DpsHeapSortSearchWordsByPattern(&P);
-#else
+#elif QUICK_SORTING
     DpsQsortSearchWordsByPattern(&P);
+#else
+#error Not Results Sorting Method defined.
 #endif
   }
 
