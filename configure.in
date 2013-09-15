@@ -1648,6 +1648,20 @@ dnl			CFLAGS="$ac_save_cflags"
 		AC_SUBST(APACHE_NOTEST_CPPFLAGS)
 		AC_SUBST(APACHE_EXTRA_CPPFLAGS)
 		AC_SUBST(APACHE_EXTRA_CFLAGS)
+		AC_MSG_CHECKING([for Apache version >=2.4])
+        	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
+		AC_TRY_COMPILE([
+#include <httpd.h>
+#include <http_request.h>],
+[
+request_rec *r;
+r->connection->client_ip[0] = 0;
+],
+		AC_DEFINE(APACHE2_4)
+		AC_MSG_RESULT([yes]),
+		AC_MSG_RESULT([no]))
+
+
 	fi
 	if test "$APACHE_VER" = "1"; then
 		APACHE_EXTRA_CFLAGS="$APACHE_CFLAGS"

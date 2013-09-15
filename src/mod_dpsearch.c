@@ -1,4 +1,5 @@
-/* Copyright (C) 2004-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2004-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
 #include "dpsearch.h"
 #include "dps_xmalloc.h"
 #include "dps_charsetutils.h"
+#include "dps_contentencoding.h"
 #include <locale.h>
 #include <strings.h>
 #include "apr_strings.h"
@@ -186,7 +188,11 @@ static int dpstoredoc_handler(request_rec *r) {
   /* This is for query tracking */
   DpsVarListReplaceStr(&Agent->Vars, "QUERY_STRING", DPS_NULL2EMPTY(r->args));
   DpsVarListReplaceStr(&Agent->Vars, "self", r->uri);
+#if APACHE2_4
+  DpsVarListReplaceStr(&Agent->Vars, "IP", r->useragent_ip);
+#else
   DpsVarListReplaceStr(&Agent->Vars, "IP", r->connection->remote_ip);
+#endif
 
   bcharset = DpsVarListFindStr(&Agent->Vars, "BrowserCharset", "iso-8859-1");
   Env->bcs = DpsGetCharSet(bcharset);
@@ -649,7 +655,11 @@ static int dpsearch_handler(request_rec *r) {
   /* This is for query tracking */
   DpsVarListReplaceStr(&Agent->Vars, "QUERY_STRING", DPS_NULL2EMPTY(r->args));
   DpsVarListReplaceStr(&Agent->Vars, "self", r->uri);
+#if APACHE2_4
+  DpsVarListReplaceStr(&Agent->Vars, "IP", r->useragent_ip);
+#else
   DpsVarListReplaceStr(&Agent->Vars, "IP", r->connection->remote_ip);
+#endif
 
   bcharset = DpsVarListFindStr(&Agent->Vars, "BrowserCharset", "iso-8859-1");
   Env->bcs = DpsGetCharSet(bcharset);
@@ -1158,7 +1168,7 @@ static int dpsearch_handler(request_rec *r) {
 #ifdef WITH_GOOGLEGRP
 		  if (site_id == prev_site_id) {
 		    DpsVarListAddStr(&Agent->Vars, "grouped", "yes");
-		    ap_rprintf(r, Agent->tmpl.GrBeg);
+		    ap_rprintf(r, "%s", Agent->tmpl.GrBeg);
 		  }
 #endif
 		}
@@ -1167,7 +1177,7 @@ static int dpsearch_handler(request_rec *r) {
 #ifdef WITH_GOOGLEGRP
 		if ((sc == 0) && (site_id == prev_site_id)) {
 		  DpsVarListDel(&Agent->Vars, "grouped");
-		  ap_rprintf(r, Agent->tmpl.GrEnd);
+		  ap_rprintf(r, "%s", Agent->tmpl.GrEnd);
 		}
 		prev_site_id = site_id;
 #endif

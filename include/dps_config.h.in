@@ -534,9 +534,11 @@
 /* libparanoia usage */
 #undef WITH_PARANOIA
 
-/* cache mode version of mod_dpsearch */
 #if defined(APACHE1) || defined(APACHE2)
+/* cache mode version of mod_dpsearch */
 #undef APACHE_CACHEONLY
+/* Apache 2.4.x or above */
+#undef APACHE2_4
 #endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */

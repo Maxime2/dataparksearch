@@ -1,4 +1,5 @@
-/* Copyright (C) 2005-2010 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2005-2012 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -37,8 +38,8 @@ extern __C_LINK void* dps_strncat(void *dst0, const void *src0, size_t length);
 extern __C_LINK size_t dps_strlen(const char *src);
 */
 
+extern char *dps_strtolower(char *str);
 extern __C_LINK int dps_tolower(int c);
-extern inline char *dps_strtolower(char *s);
 extern __C_LINK void dps_mstr(char *s, const char *src, size_t l1, size_t l2);
 
 #ifndef DPS_NULL2EMPTY

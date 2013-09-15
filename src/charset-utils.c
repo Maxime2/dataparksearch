@@ -33,7 +33,7 @@ __C_LINK int dps_tolower(int c) {
   return tolower(c);
 }
 
-inline char *dps_strtolower(char *str) {
+char *dps_strtolower(char *str) {
   register char *s = str;
   if (s != NULL) {
     while(*s) {
