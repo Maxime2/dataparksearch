@@ -1,8 +1,10 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(TODO)
+dnl
+AC_INIT([DataparkSearch Engine], [4.54-2013-09-15], [dataparksearch@googlegroups.com], [dpsearch])
+dnl AC_INIT([DataparkSearch Engine], [4.53], [dataparksearch@googlegroups.com], [dpsearch])
+AC_CONFIG_SRCDIR([TODO])
 AC_CANONICAL_SYSTEM
-AM_INIT_AUTOMAKE(dpsearch, 4.54-`date "+%Y-%m-%d"`)
-dnl AM_INIT_AUTOMAKE(dpsearch, 4.53)
+AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 AM_CONFIG_HEADER(include/dps_config.h)
 AC_PROG_MAKE_SET
@@ -51,7 +53,7 @@ dnl large file support
 AC_SYS_LARGEFILE
 AC_FUNC_FSEEKO
 
-INCLUDES=""
+AM_CPPFLAGS=""
 dnl OS specific flags and options
 case "$host" in
         *-*-irix*)
@@ -62,7 +64,7 @@ dnl            LDADD="$LDADD -lbsd"
 	*-*-freebsd*)
 	    LIBS="$LIBS -L/usr/local/lib -lc"
 	    CFLAGS="$CFLAGS -I/usr/local/include"
-	    INCLUDES="$INCLUDES -I/usr/local/include"
+	    AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
 	    ;;
         *-*-solaris*)
             LDFLAGS="$LDFLAGS -lsocket -lresolv -lnsl"
@@ -873,7 +875,7 @@ if test "$pthreads" != no; then
              ;;
         *-*-netbsd*)
             PTHREAD_CFLAGS="-I/usr/pkg/include -D_REENTRANT"
-	    INCLUDES="$INCLUDES -I/usr/pkg/include"
+	    AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/pkg/include"
             PTHREAD_LDADD="-L/usr/pkg/lib -lpthread -lsem"
             ;;
         *-*-openbsd*)
@@ -1147,7 +1149,7 @@ if test "$dmalloc" != no; then
 		DMALLOC_LFLAGS="$LIBS -L/usr/local/lib -ldmalloc"
 	fi
 	DMALLOC_INCLUDE="-I/usr/local/include"
-	INCLUDES="$INCLUDES -I/usr/local/include"
+	AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
 	AC_MSG_RESULT(yes)
 else
 	AC_MSG_RESULT([no])
@@ -1165,11 +1167,11 @@ if test "$boehmgc" != no; then
 	AC_DEFINE(BOEHMGC)
 	if test "$boehmgc" != yes; then
 		BOEHMGC_INCLUDE="-I$boehmgc/include"
-	        INCLUDES="$INCLUDES -I$boehmgc/include"
+	        AM_CPPFLAGS="$AM_CPPFLAGS -I$boehmgc/include"
 		BOEHMGC_LFLAGS="-L$boehmgc/lib -lgc"
 	else
 		BOEHMGC_INCLUDE="-I/usr/local/include"
-	        INCLUDES="$INCLUDES -I/usr/local/include"
+	        AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
 		BOEHMGC_LFLAGS="-L/usr/local/lib -lgc"
 	fi
 	AC_MSG_RESULT(yes)
@@ -1235,7 +1237,7 @@ if test "$chasen" != no; then
 	CFLAGS_SAVE="$CFLAGS"
 	LIBS="$LIBS -L/usr/local/lib -lchasen"
 	CFLAGS="$CFLAGS -I/usr/local/include"
-	INCLUDES="$INCLUDES -I/usr/local/include"
+	AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
 
 AC_TRY_LINK([#include <stdio.h>
 #include <chasen.h>
@@ -1292,7 +1294,7 @@ AC_TRY_LINK([#include <stdio.h>
 	ADDCHARSETS="japanese"
 	MECAB_LFLAGS="-L/usr/local/lib -lmecab -lstdc++"
 	MECAB_INCLUDE="-I/usr/local/include"
-	INCLUDES="$INCLUDES -I/usr/local/include"
+	AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
 	AC_MSG_RESULT(yes),
 	AC_MSG_RESULT(no))
 
@@ -1378,7 +1380,7 @@ else
   CFLAGS="$CFLAGS -I$zlib/include"
   LIBS="$LIBS -L$zlib/lib -lz"
   AC_CHECK_LIB(z,inflate,AC_DEFINE(HAVE_ZLIB),AC_MSG_ERROR([Unable to find working zlib library under $zlib]))
-  INCLUDES="$INCLUDES -I$zlib/include"
+  AM_CPPFLAGS="$AM_CPPFLAGS -I$zlib/include"
 fi
 
 dnl aspell related stuff
@@ -1402,7 +1404,7 @@ elif test "$aspell" = "yes" ; then
     MY_DIRS="/usr/local/include /usr/include /opt/local/include /opt/include"
     for DIR in $MY_DIRS; do
        	if test -f $DIR/aspell.h; then
-		INCLUDES="$INCLUDES -I$DIR"
+		AM_CPPFLAGS="$AM_CPPFLAGS -I$DIR"
 		aspell=yes
 		break;
 	fi
@@ -1451,7 +1453,7 @@ else
 		;;
   esac
   AC_CHECK_LIB(aspell,new_aspell_config,AC_DEFINE(HAVE_ASPELL),AC_MSG_ERROR([Unable to find working aspell library under $aspell or stdc++ library]))
-  INCLUDES="$INCLUDES -I$aspell/include"
+  AM_CPPFLAGS="$AM_CPPFLAGS -I$aspell/include"
 fi
 
 
@@ -1831,11 +1833,11 @@ AC_ARG_ENABLE(idn,
 			esac
 			CFLAGS="$CFLAGS $IDN_CFLAGS"
 			LIBS="$LIBS $IDN_LIBS"
-			INCLUDES="$INCLUDES $IDN_INCLUDES"
+			AM_CPPFLAGS="$AM_CPPFLAGS $IDN_INCLUDES"
 		else
 			if test -f $enableval/include/idn-int.h; then
 				CFLAGS="$CFLAGS -I$withval/include"
-				INCLUDES="$INCLUDES -I$withval/include"
+				AM_CPPFLAGS="$AM_CPPFLAGS -I$withval/include"
 			else
 				AC_MSG_RESULT(no)
 				AC_MSG_ERROR(Invalid GNU libidn directory - unable to find idn-int.h under $enableval)
@@ -2821,7 +2823,7 @@ fi
 AC_SUBST(CFLAGS)
 AC_SUBST(LFLAGS)
 AC_SUBST(LDFLAGS)
-AC_SUBST(INCLUDES)
+AC_SUBST(AM_CPPFLAGS)
 AC_SUBST(db_PROGS)
 AC_DEFINE_UNQUOTED(DPS_DBTYPE,"$DBTYPE")
 AC_SUBST(DBTYPE)

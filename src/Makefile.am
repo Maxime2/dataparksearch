@@ -171,14 +171,14 @@ endif
 if APACHE2
 
 mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_DEPENDENCIES) 
-	$(APXS) -c -o $@ $(INCLUDES) -Wc,"$(mod_dpsearch_so_CFLAGS)" -DAPACHE@APACHE_VER@ \
+	$(APXS) -c -o $@ $(AM_CPPFLAGS) -Wc,"$(mod_dpsearch_so_CFLAGS)" -DAPACHE@APACHE_VER@ \
 	     -DDPS_CONF_DIR=\\\"@sysconfdir@\\\" -DDPS_VAR_DIR=\\\"$(localstatedir)\\\" \
 	     $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_LDFLAGS) $(mod_dpsearch_so_LDADD); 
 
 else
 
 mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_DEPENDENCIES) 
-	$(LIBTOOL) --tag=CC --mode=link "$(APXS) -Wc,\"$(mod_dpsearch_so_CFLAGS)\"" -c -o $@ $(INCLUDES) -DAPACHE@APACHE_VER@ \
+	$(LIBTOOL) --tag=CC --mode=link "$(APXS) -Wc,\"$(mod_dpsearch_so_CFLAGS)\"" -c -o $@ $(AM_CPPFLAGS) -DAPACHE@APACHE_VER@ \
 	     -DDPS_CONF_DIR=\\\"@sysconfdir@\\\" -DDPS_VAR_DIR=\\\"$(localstatedir)\\\" \
 	     $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_LDFLAGS) $(mod_dpsearch_so_LDADD); 
 
@@ -226,7 +226,7 @@ gcov-gen:
 gcov-clean:
 	list='${gcov_FILES}'; for p in $$list; do rm -f $$p.gcov; done
 
-INCLUDES = -I$(srcdir)/../include @INCLUDES@ \
+AM_CPPFLAGS = -I$(srcdir)/../include @AM_CPPFLAGS@ \
 @VIRT_INCLUDE@ \
 @SOLID_INCLUDE@ \
 @UNIXODBC_INCLUDE@ \
@@ -277,10 +277,10 @@ LDADD = @LDADD@ libdp.la
 lint_FILES = ${libdpsearch_la_SOURCES} ${indexer_SOURCES}
 
 lint-gen:
-	list='${lint_FILES}'; for p in $$list; do splint +posixlib +trytorecover -mustfreefresh ${INCLUDES} $$p; done
+	list='${lint_FILES}'; for p in $$list; do splint +posixlib +trytorecover -mustfreefresh ${AM_CPPFLAGS} $$p; done
 
 lint-clean:
 	list='${lint_FILES}'; for p in $$list; do rm -f $$p.ln; done
 
 .c.splint:
-	splint +posixlib -mustfreefresh ${INCLUDES} $< 
+	splint +posixlib -mustfreefresh ${AM_CPPFLAGS} $< 
