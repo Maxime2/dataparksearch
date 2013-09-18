@@ -165,31 +165,30 @@ am_libdpsearch_la_OBJECTS = libdpsearch_la-indexer.lo \
 	libdpsearch_la-robots.lo libdpsearch_la-hrefs.lo \
 	libdpsearch_la-mutex.lo libdpsearch_la-conf.lo \
 	libdpsearch_la-utils.lo libdpsearch_la-cookies.lo \
-	libdpsearch_la-parsedate.lo libdpsearch_la-ftp.lo \
-	libdpsearch_la-socket.lo libdpsearch_la-host.lo \
-	libdpsearch_la-http.lo libdpsearch_la-id3.lo \
-	libdpsearch_la-signals.lo libdpsearch_la-cache.lo \
-	libdpsearch_la-boolean.lo libdpsearch_la-searchtool.lo \
-	libdpsearch_la-searchcache.lo libdpsearch_la-server.lo \
-	libdpsearch_la-alias.lo libdpsearch_la-env.lo \
-	libdpsearch_la-agent.lo libdpsearch_la-word.lo \
-	libdpsearch_la-parsehtml.lo libdpsearch_la-stopwords.lo \
-	libdpsearch_la-execget.lo libdpsearch_la-crossword.lo \
-	libdpsearch_la-doc.lo libdpsearch_la-contentencoding.lo \
-	libdpsearch_la-vars.lo libdpsearch_la-db.lo \
-	libdpsearch_la-sdp.lo libdpsearch_la-textlist.lo \
-	libdpsearch_la-dps_image.lo libdpsearch_la-result.lo \
-	libdpsearch_la-synonym.lo libdpsearch_la-match.lo \
-	libdpsearch_la-store.lo libdpsearch_la-template.lo \
-	libdpsearch_la-guesser.lo libdpsearch_la-base.lo \
-	libdpsearch_la-carry.lo libdpsearch_la-mirror.lo \
-	libdpsearch_la-sqldbms.lo libdpsearch_la-mkind.lo \
-	libdpsearch_la-chinese.lo libdpsearch_la-parsexml.lo \
-	libdpsearch_la-wild.lo libdpsearch_la-hash.lo \
-	libdpsearch_la-indexertool.lo libdpsearch_la-acronym.lo \
-	libdpsearch_la-sea.lo libdpsearch_la-efence.lo \
-	libdpsearch_la-ef_page.lo libdpsearch_la-ef_print.lo \
-	libdpsearch_la-filence.lo
+	libdpsearch_la-ftp.lo libdpsearch_la-socket.lo \
+	libdpsearch_la-host.lo libdpsearch_la-http.lo \
+	libdpsearch_la-id3.lo libdpsearch_la-signals.lo \
+	libdpsearch_la-cache.lo libdpsearch_la-boolean.lo \
+	libdpsearch_la-searchtool.lo libdpsearch_la-searchcache.lo \
+	libdpsearch_la-server.lo libdpsearch_la-alias.lo \
+	libdpsearch_la-env.lo libdpsearch_la-agent.lo \
+	libdpsearch_la-word.lo libdpsearch_la-parsehtml.lo \
+	libdpsearch_la-stopwords.lo libdpsearch_la-execget.lo \
+	libdpsearch_la-crossword.lo libdpsearch_la-doc.lo \
+	libdpsearch_la-contentencoding.lo libdpsearch_la-vars.lo \
+	libdpsearch_la-db.lo libdpsearch_la-sdp.lo \
+	libdpsearch_la-textlist.lo libdpsearch_la-dps_image.lo \
+	libdpsearch_la-result.lo libdpsearch_la-synonym.lo \
+	libdpsearch_la-match.lo libdpsearch_la-store.lo \
+	libdpsearch_la-template.lo libdpsearch_la-guesser.lo \
+	libdpsearch_la-base.lo libdpsearch_la-carry.lo \
+	libdpsearch_la-mirror.lo libdpsearch_la-sqldbms.lo \
+	libdpsearch_la-mkind.lo libdpsearch_la-chinese.lo \
+	libdpsearch_la-parsexml.lo libdpsearch_la-wild.lo \
+	libdpsearch_la-hash.lo libdpsearch_la-indexertool.lo \
+	libdpsearch_la-acronym.lo libdpsearch_la-sea.lo \
+	libdpsearch_la-efence.lo libdpsearch_la-ef_page.lo \
+	libdpsearch_la-ef_print.lo libdpsearch_la-filence.lo
 libdpsearch_la_OBJECTS = $(am_libdpsearch_la_OBJECTS)
 libdpsearch_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -197,14 +196,14 @@ libdpsearch_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(LDFLAGS) -o $@
 am__libdpsearch_mod_la_SOURCES_DIST = indexer.c url.c parser.c sql.c \
 	spell.c log.c proto.c robots.c hrefs.c mutex.c conf.c utils.c \
-	cookies.c parsedate.c ftp.c socket.c host.c http.c id3.c \
-	signals.c cache.c boolean.c searchtool.c searchcache.c \
-	server.c alias.c env.c agent.c word.c parsehtml.c stopwords.c \
-	execget.c crossword.c doc.c contentencoding.c vars.c db.c \
-	sdp.c textlist.c dps_image.c result.c synonym.c match.c \
-	store.c template.c guesser.c base.c mirror.c sqldbms.c mkind.c \
-	chinese.c parsexml.c wild.c hash.c indexertool.c acronym.c \
-	sea.c efence.c ef_page.c ef_print.c filence.c
+	cookies.c ftp.c socket.c host.c http.c id3.c signals.c cache.c \
+	boolean.c searchtool.c searchcache.c server.c alias.c env.c \
+	agent.c word.c parsehtml.c stopwords.c execget.c crossword.c \
+	doc.c contentencoding.c vars.c db.c sdp.c textlist.c \
+	dps_image.c result.c synonym.c match.c store.c template.c \
+	guesser.c base.c mirror.c sqldbms.c mkind.c chinese.c \
+	parsexml.c wild.c hash.c indexertool.c acronym.c sea.c \
+	efence.c ef_page.c ef_print.c filence.c
 @THREADSLESS_TRUE@am_libdpsearch_mod_la_OBJECTS =  \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-indexer.lo \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-url.lo \
@@ -219,7 +218,6 @@ am__libdpsearch_mod_la_SOURCES_DIST = indexer.c url.c parser.c sql.c \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-conf.lo \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-utils.lo \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-cookies.lo \
-@THREADSLESS_TRUE@	libdpsearch_mod_la-parsedate.lo \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-ftp.lo \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-socket.lo \
 @THREADSLESS_TRUE@	libdpsearch_mod_la-host.lo \
@@ -784,7 +782,7 @@ libdp_la_SOURCES = dp.c
 libdp_la_LDFLAGS = -release @DPS_BASE_VERSION@
 libdpsearch_la_SOURCES = indexer.c url.c parser.c sql.c spell.c \
 log.c proto.c robots.c hrefs.c mutex.c conf.c utils.c cookies.c \
-parsedate.c ftp.c socket.c host.c http.c id3.c signals.c \
+ftp.c socket.c host.c http.c id3.c signals.c \
 cache.c boolean.c searchtool.c searchcache.c server.c alias.c env.c \
 agent.c word.c parsehtml.c stopwords.c execget.c crossword.c \
 doc.c contentencoding.c vars.c db.c sdp.c textlist.c dps_image.c \
@@ -805,7 +803,7 @@ libdpcharset_la_LDFLAGS = -release @DPS_BASE_VERSION@
 libdpcharset_la_DEPENDENCIES = libdp.la
 @THREADSLESS_TRUE@libdpsearch_mod_la_SOURCES = indexer.c url.c parser.c sql.c spell.c \
 @THREADSLESS_TRUE@log.c proto.c robots.c hrefs.c mutex.c conf.c utils.c cookies.c \
-@THREADSLESS_TRUE@parsedate.c ftp.c socket.c host.c http.c id3.c signals.c \
+@THREADSLESS_TRUE@ftp.c socket.c host.c http.c id3.c signals.c \
 @THREADSLESS_TRUE@cache.c boolean.c searchtool.c searchcache.c server.c alias.c env.c \
 @THREADSLESS_TRUE@agent.c word.c parsehtml.c stopwords.c execget.c crossword.c \
 @THREADSLESS_TRUE@doc.c contentencoding.c vars.c db.c sdp.c textlist.c dps_image.c \
@@ -1128,7 +1126,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-mirror.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-mkind.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-mutex.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-parsedate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-parsehtml.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_la-parsexml.Plo@am__quote@
@@ -1189,7 +1186,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-mirror.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-mkind.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-mutex.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-parsedate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-parsehtml.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libdpsearch_mod_la-parsexml.Plo@am__quote@
@@ -1352,13 +1348,6 @@ libdpsearch_la-cookies.lo: cookies.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cookies.c' object='libdpsearch_la-cookies.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_la_CFLAGS) $(CFLAGS) -c -o libdpsearch_la-cookies.lo `test -f 'cookies.c' || echo '$(srcdir)/'`cookies.c
-
-libdpsearch_la-parsedate.lo: parsedate.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_la_CFLAGS) $(CFLAGS) -MT libdpsearch_la-parsedate.lo -MD -MP -MF $(DEPDIR)/libdpsearch_la-parsedate.Tpo -c -o libdpsearch_la-parsedate.lo `test -f 'parsedate.c' || echo '$(srcdir)/'`parsedate.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libdpsearch_la-parsedate.Tpo $(DEPDIR)/libdpsearch_la-parsedate.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='parsedate.c' object='libdpsearch_la-parsedate.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_la_CFLAGS) $(CFLAGS) -c -o libdpsearch_la-parsedate.lo `test -f 'parsedate.c' || echo '$(srcdir)/'`parsedate.c
 
 libdpsearch_la-ftp.lo: ftp.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_la_CFLAGS) $(CFLAGS) -MT libdpsearch_la-ftp.lo -MD -MP -MF $(DEPDIR)/libdpsearch_la-ftp.Tpo -c -o libdpsearch_la-ftp.lo `test -f 'ftp.c' || echo '$(srcdir)/'`ftp.c
@@ -1786,13 +1775,6 @@ libdpsearch_mod_la-cookies.lo: cookies.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cookies.c' object='libdpsearch_mod_la-cookies.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_mod_la_CFLAGS) $(CFLAGS) -c -o libdpsearch_mod_la-cookies.lo `test -f 'cookies.c' || echo '$(srcdir)/'`cookies.c
-
-libdpsearch_mod_la-parsedate.lo: parsedate.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_mod_la_CFLAGS) $(CFLAGS) -MT libdpsearch_mod_la-parsedate.lo -MD -MP -MF $(DEPDIR)/libdpsearch_mod_la-parsedate.Tpo -c -o libdpsearch_mod_la-parsedate.lo `test -f 'parsedate.c' || echo '$(srcdir)/'`parsedate.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libdpsearch_mod_la-parsedate.Tpo $(DEPDIR)/libdpsearch_mod_la-parsedate.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='parsedate.c' object='libdpsearch_mod_la-parsedate.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_mod_la_CFLAGS) $(CFLAGS) -c -o libdpsearch_mod_la-parsedate.lo `test -f 'parsedate.c' || echo '$(srcdir)/'`parsedate.c
 
 libdpsearch_mod_la-ftp.lo: ftp.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libdpsearch_mod_la_CFLAGS) $(CFLAGS) -MT libdpsearch_mod_la-ftp.lo -MD -MP -MF $(DEPDIR)/libdpsearch_mod_la-ftp.Tpo -c -o libdpsearch_mod_la-ftp.lo `test -f 'ftp.c' || echo '$(srcdir)/'`ftp.c

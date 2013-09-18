@@ -59,7 +59,6 @@ dps_parsexml.h \
 dps_wild.h \
 dps_hash.h \
 dps_crossword.h \
-dps_parsedate.h \
 dps_sqldbms.h \
 dps_base.h \
 dps_image.h \

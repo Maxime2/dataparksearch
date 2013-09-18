@@ -84,7 +84,7 @@ libdp_la_LDFLAGS = -release @DPS_BASE_VERSION@
 
 libdpsearch_la_SOURCES = indexer.c url.c parser.c sql.c spell.c \
 log.c proto.c robots.c hrefs.c mutex.c conf.c utils.c cookies.c \
-parsedate.c ftp.c socket.c host.c http.c id3.c signals.c \
+ftp.c socket.c host.c http.c id3.c signals.c \
 cache.c boolean.c searchtool.c searchcache.c server.c alias.c env.c \
 agent.c word.c parsehtml.c stopwords.c execget.c crossword.c \
 doc.c contentencoding.c vars.c db.c sdp.c textlist.c dps_image.c \
@@ -125,7 +125,7 @@ timezones.inc: timezones.lst
 if THREADSLESS
 libdpsearch_mod_la_SOURCES = indexer.c url.c parser.c sql.c spell.c \
 log.c proto.c robots.c hrefs.c mutex.c conf.c utils.c cookies.c \
-parsedate.c ftp.c socket.c host.c http.c id3.c signals.c \
+ftp.c socket.c host.c http.c id3.c signals.c \
 cache.c boolean.c searchtool.c searchcache.c server.c alias.c env.c \
 agent.c word.c parsehtml.c stopwords.c execget.c crossword.c \
 doc.c contentencoding.c vars.c db.c sdp.c textlist.c dps_image.c \
