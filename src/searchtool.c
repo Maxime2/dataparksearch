@@ -2920,8 +2920,8 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
 
   wordnum = DPS_WRDNUM(Crd[0].coord);
   wordsec = DPS_WRDSEC_N(Crd[0].coord, nsections);
-  wordorder = Res->WWList.Word[wordnum].order_inquery;
-  prev_wordpos[wordorder] = wordpos = DPS_WRDPOS(Crd[0].coord);
+  prev_wordorder = wordorder = Res->WWList.Word[wordnum].order_inquery;
+  prev_wordpos[prev_wordorder] = wordpos = DPS_WRDPOS(Crd[0].coord);
   if (wordorder == 0) {
     cur_order = 0; cur_sec = wordsec;
     if (Res->WWList.Word[wordnum].origin == DPS_WORD_ORIGIN_QUERY) cur_exact = 1; else cur_exact = 0;
