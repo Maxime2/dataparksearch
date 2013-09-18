@@ -320,7 +320,7 @@ static int DpsCmpPattern_RPD_T(DPS_URLCRDLIST *L, size_t i,
 }
 
 static int DpsCmpPattern_IRPD(DPS_URLCRDLIST *L, size_t i, size_t j, const char *pattern) {
-  register double m1 = L->Data[i].pop_rank, m2 = L->Data[j].pop_rank;
+  double m1 = L->Data[i].pop_rank, m2 = L->Data[j].pop_rank;
   m1 *= (double)L->Coords[i].coord; m2 *= (double)L->Coords[j].coord;
   if (m1 > m2) return -1;
   if (m1 < m2) return 1;
@@ -344,7 +344,7 @@ static int DpsCmpPattern_IRPD_T(DPS_URLCRDLIST *L, size_t i,
 				DPS_URLTRACK    *Track,
 #endif
 				const char *pattern) {
-  register double m1 = L->Data[i].pop_rank, m2 = Data->pop_rank;
+  double m1 = L->Data[i].pop_rank, m2 = Data->pop_rank;
   m1 *= (double)L->Coords[i].coord; m2 *= (double)Coords->coord;
   if (m1 > m2) return -1;
   if (m1 < m2) return 1;
@@ -358,6 +358,7 @@ static int DpsCmpPattern_IRPD_T(DPS_URLCRDLIST *L, size_t i,
 }
 
 static inline int DpsCmpPattern_full(DPS_URLCRDLIST *L, size_t i, size_t j, const char *pattern) {
+    double m1, m2;
   
   for(; *pattern != '\0'; pattern++) {
     switch(*pattern) {
@@ -394,37 +395,29 @@ static inline int DpsCmpPattern_full(DPS_URLCRDLIST *L, size_t i, size_t j, cons
       if (L->Data[i].last_mod_time < L->Data[j].last_mod_time) return -1;
       break;
     case 'I':
-      {
-	register double m1 = L->Data[i].pop_rank, m2 = L->Data[j].pop_rank;
+    	m1 = L->Data[i].pop_rank; m2 = L->Data[j].pop_rank;
 	m1 *= (double)L->Coords[i].coord; m2 *= (double)L->Coords[j].coord;
 	if (m1 > m2) return -1;
 	if (m1 < m2) return 1;
-      }
-	break;
+        break;
     case 'i':
-      {
-	register double m1 = L->Data[i].pop_rank, m2 = L->Data[j].pop_rank;
+    	m1 = L->Data[i].pop_rank; m2 = L->Data[j].pop_rank;
 	m1 *= (double)L->Coords[i].coord; m2 *= (double)L->Coords[j].coord;
 	if (m1 > m2) return 1;
 	if (m1 < m2) return -1;
-      }
-	break;
+        break;
     case 'A':
-      {
-	register double m1 = L->Data[i].pop_rank * 1000.0, m2 = L->Data[j].pop_rank * 1000.0;
+    	m1 = L->Data[i].pop_rank * 1000.0; m2 = L->Data[j].pop_rank * 1000.0;
 	m1 += (double)L->Coords[i].coord; m2 += (double)L->Coords[j].coord;
 	if (m1 > m2) return -1;
 	if (m1 < m2) return 1;
-      }
-	break;
+        break;
     case 'a':
-      {
-	register double m1 = L->Data[i].pop_rank * 1000.0, m2 = L->Data[j].pop_rank * 1000.0;
+    	m1 = L->Data[i].pop_rank * 1000.0, m2 = L->Data[j].pop_rank * 1000.0;
 	m1 += (double)L->Coords[i].coord; m2 += (double)L->Coords[j].coord;
 	if (m1 > m2) return 1;
 	if (m1 < m2) return -1;
-      }
-	break;
+        break;
     }
   }
   return 0;
@@ -441,6 +434,7 @@ static inline int DpsCmpPattern_full_T(DPS_URLCRDLIST *L, size_t i,
 				       DPS_URLTRACK    *Track,
 #endif
 				       const char *pattern) {
+    double m1, m2;
   
   for(; *pattern != '\0'; pattern++) {
     switch(*pattern) {
@@ -477,37 +471,29 @@ static inline int DpsCmpPattern_full_T(DPS_URLCRDLIST *L, size_t i,
       if (L->Data[i].last_mod_time < Data->last_mod_time) return -1;
       break;
     case 'I':
-      {
-	register double m1 = L->Data[i].pop_rank, m2 = Data->pop_rank;
+      	m1 = L->Data[i].pop_rank; m2 = Data->pop_rank;
 	m1 *= (double)L->Coords[i].coord; m2 *= (double)Coords->coord;
 	if (m1 > m2) return -1;
 	if (m1 < m2) return 1;
-      }
-	break;
+      	break;
     case 'i':
-      {
-	register double m1 = L->Data[i].pop_rank, m2 = Data->pop_rank;
+	m1 = L->Data[i].pop_rank; m2 = Data->pop_rank;
 	m1 *= (double)L->Coords[i].coord; m2 *= (double)Coords->coord;
 	if (m1 > m2) return 1;
 	if (m1 < m2) return -1;
-      }
-	break;
+      	break;
     case 'A':
-      {
-	register double m1 = L->Data[i].pop_rank * 1000.0, m2 = Data->pop_rank * 1000.0;
+	m1 = L->Data[i].pop_rank * 1000.0, m2 = Data->pop_rank * 1000.0;
 	m1 += (double)L->Coords[i].coord; m2 += (double)Coords->coord;
 	if (m1 > m2) return -1;
 	if (m1 < m2) return 1;
-      }
-	break;
+      	break;
     case 'a':
-      {
-	register double m1 = L->Data[i].pop_rank * 1000.0, m2 = Data->pop_rank * 1000.0;
+	m1 = L->Data[i].pop_rank * 1000.0, m2 = Data->pop_rank * 1000.0;
 	m1 += (double)L->Coords[i].coord; m2 += (double)Coords->coord;
 	if (m1 > m2) return 1;
 	if (m1 < m2) return -1;
-      }
-	break;
+      	break;
     }
   }
   return 0;
@@ -650,9 +636,10 @@ static size_t DpsPartitionSearchWordsBySite(DPS_RESULT *Res, DPS_URLCRDLIST *L, 
   SWAP_BY_SITE(m,r);
   j = p;
   { 
-    register int u = 1;
+    int u = 1;
+    int rc;
     for (i = p; i < r; i++) {
-      register int rc = DpsCmpSiteid(L, i, r, pattern);
+      rc = DpsCmpSiteid(L, i, r, pattern);
       if ( rc < 0 || ((rc == 0) && u) ) {
 	SWAP_BY_SITE(i,j);
 	j++;
@@ -696,8 +683,13 @@ static void * DpsQsortSearchWordsBySite(void *arg) {
 #ifdef WITH_REL_TRACK
   DPS_URLTRACK Trk;
 #endif
+  DPS_RESULT *Res;
+  DPS_URLCRDLIST *L;
+  size_t i, j;
   size_t l, r, q, d;
   size_t PerS;
+  int rc, merge;
+  size_t iMin;
 #if defined(HAVE_PTHREAD) && defined(MULTITHREADED_SORT)
   DPS_SORT_PARAM PAR;
   pthread_t tid = 0;
@@ -713,9 +705,8 @@ static void * DpsQsortSearchWordsBySite(void *arg) {
   }
   d = r - l;
   if (d <= MIN_SLICE) {
-    register size_t i, j;
-    DPS_RESULT *Res = P->Res;
-    DPS_URLCRDLIST *L = P->L;
+    Res = P->Res;
+    L = P->L;
 
 #if 0
     for (j = l + 1; j <= r; j++) {
@@ -725,8 +716,7 @@ static void * DpsQsortSearchWordsBySite(void *arg) {
       }
     }
 #else
-    register size_t iMin;
-    int merge = P->merge;
+    merge = P->merge;
 
     for (i = l; i < r; i++) {
       iMin = i;
@@ -761,7 +751,7 @@ static void * DpsQsortSearchWordsBySite(void *arg) {
 
   if (d >= THREAD_SLICE && PP.level > 0) {
 #if defined(HAVE_PTHREAD_TRYJOIN_NP_PROTO)
-      int rc = 0;
+      rc = 0;
       if (tid) {
 	  rc = pthread_tryjoin_np(tid, NULL);
 	  if (rc == 0) tid = 0;
@@ -1000,6 +990,7 @@ static size_t DpsPartitionSearchWordsByPattern(DPS_RESULT *Res, DPS_URLCRDLIST *
 #ifdef WITH_REL_TRACK
   DPS_URLTRACK Trk;
 #endif
+  int u, rc;
 
   pm = (p + r) / 2;
   pl = p;
@@ -1015,17 +1006,17 @@ static size_t DpsPartitionSearchWordsByPattern(DPS_RESULT *Res, DPS_URLCRDLIST *
 #if 0
   SWAP_BY_PATTERN(m,r);
   j = p;
-  {
-    register int u = ((j - p) < (r - j));
-    for (i = p; i < r; i++) {
-      register int rc = DpsCmpPattern(L, i, r, pattern);
+  
+  u = ((j - p) < (r - j));
+  for (i = p; i < r; i++) {
+      rc = DpsCmpPattern(L, i, r, pattern);
       if ( rc < 0 || ((rc == 0) && u) ) {
-	SWAP_BY_PATTERN(i,j);
-	j++;
-	u = ((j - p) < (r - j));
+	  SWAP_BY_PATTERN(i,j);
+	  j++;
+	  u = ((j - p) < (r - j));
       }
-    }
   }
+  
   SWAP_BY_PATTERN(r,j);
 #else
 
@@ -1056,10 +1047,15 @@ static size_t DpsPartitionSearchWordsByPattern(DPS_RESULT *Res, DPS_URLCRDLIST *
 static void * DpsQsortSearchWordsByPattern(void *arg) {
   DPS_SORT_PARAM PP;
   DPS_SORT_PARAM *P = (DPS_SORT_PARAM*)arg;
+  size_t i, j;
   size_t l, r, c, d;
   size_t Cnt = 1;
+  size_t iMin;
+  int rc;
   DPS_URL_CRD_DB Crd;
   DPS_URLDATA Dat;
+  DPS_RESULT *Res;
+  DPS_URLCRDLIST *L;
 #ifdef WITH_REL_TRACK
   DPS_URLTRACK Trk;
 #endif
@@ -1078,9 +1074,8 @@ static void * DpsQsortSearchWordsByPattern(void *arg) {
   }
   d = r - l;
   if (d <= MIN_SLICE) {
-    register size_t i, j;
-    DPS_RESULT *Res = P->Res;
-    DPS_URLCRDLIST *L = P->L;
+    Res = P->Res;
+    L = P->L;
 
 #if 0
     for (j = l + 1; j <= r; j++) {
@@ -1089,7 +1084,6 @@ static void * DpsQsortSearchWordsByPattern(void *arg) {
       }
     }
 #else
-    register size_t iMin;
 
     for (i = l; i < r; i++) {
       iMin = i;
@@ -1124,7 +1118,7 @@ static void * DpsQsortSearchWordsByPattern(void *arg) {
 
   if (d >= THREAD_SLICE && PP.level > 0) {
 #if defined(HAVE_PTHREAD_TRYJOIN_NP_PROTO)
-      int rc = 0;
+      rc = 0;
       if (tid) {
 	  rc = pthread_tryjoin_np(tid, NULL);
 	  if (rc == 0) tid = 0;
@@ -1325,6 +1319,9 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
   DPS_ACRONYM *first, *last;
   int Origin = OWord->origin;
   size_t ORDER_ADD = state->order;
+  size_t frm;
+  size_t z;
+  int i;
 #if 0 && defined HAVE_ASPELL
   AspellCanHaveError *ret;
   AspellSpeller *speller = NULL;
@@ -1341,7 +1338,6 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
       DpsLog(query, DPS_LOG_ERROR, "aspell error: %s", aspell_error_message(ret));
       delete_aspell_can_have_error(ret);
     } else {
-      register int i;
       speller = to_aspell_speller(ret);
       if (aspell_speller_check(speller, (const char *)OWord->uword, -1) == 0) {
 	lcsword = (char*)DpsMalloc(12*query->WordParam.max_word_len);
@@ -1383,7 +1379,6 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
 #endif
 
   if(state->sp && !(Origin & DPS_WORD_ORIGIN_SPELL) && (forms = DpsAllForms(query, OWord)) ) {
-    size_t frm;
 
     for(frm = 0; frm < forms->nwords; frm++) {
       if (DpsUniStrCmp(OWord->uword, forms->Word[frm].uword) == 0) continue;
@@ -1415,7 +1410,7 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
 	      return DPS_ERROR;
 	    }
 	  }
-	  { register size_t z;
+	  { 
 	    for (z = 0; z < first->unroll.nwords; z++) {
 	      if (z) {
 		ORDER_ADD++;
@@ -1526,7 +1521,6 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
       OWord->origin = DPS_WORD_ORIGIN_ACCENT;
 
       if(state->sp && (forms = DpsAllForms(query, OWord))) {
-	size_t frm;
 
 	for(frm = 0; frm < forms->nwords; frm++) {
 	  DpsConv(&query->uni_lc, OWord->word, 12 * query->WordParam.max_word_len,
@@ -1570,7 +1564,6 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
       OWord->origin = DPS_WORD_ORIGIN_ACCENT;
 
       if(state->sp && (forms = DpsAllForms(query, OWord))) {
-	size_t frm;
 
 	for(frm = 0; frm < forms->nwords; frm++) {
 	  DpsConv(&query->uni_lc, OWord->word, 12 * query->WordParam.max_word_len,
@@ -1597,7 +1590,7 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
 
 
 int dps_need2segment(dpsunicode_t *uwrd) {
-  register dpsunicode_t u;
+  dpsunicode_t u;
   for(; (u = *uwrd); uwrd++) {
     if (u >= 0xE01 && u <= 0xE5B) return 1; /* THAI */
     if (u == 0x321D || u == 0x321E || u == 0x327C || u == 0x327D || u == 0x327F) return 1; /* KOREAN */
@@ -1658,7 +1651,7 @@ static dpsunicode_t * DpsVQLparse(dpsunicode_t *query) {
   int cmd_stack[1024];
   int p_cmd = -1, cur_cmd = 0, n;
   DPS_DSTR Q;
-  register dpsunicode_t *s = query;
+  dpsunicode_t *s = query;
 
   DpsDSTRInit(&Q, 4096);
   while(*s) {
@@ -1741,6 +1734,7 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 	size_t i, wlen, llen, seg_wlen;
 	char *wrd, *clex;
 	dpsunicode_t *uwrd;
+	int ii;
 #if defined HAVE_ASPELL
 	int toadd = 0;
 	AspellCanHaveError *ret;
@@ -2096,7 +2090,6 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 		if (use_aspellext && seg_have_bukva_forte && seg_wlen > 2 && query->naspell < DPS_DEFAULT_MAX_ASPELL
 		    && (DpsUniStrChr(uwrd, (dpsunicode_t) '&') == NULL)  /* aspell trap workaround */
 		    ) {
-		  register int ii;
 		  toadd = 1;
 		  DpsConv(&query->uni_utf, wrd, query->WordParam.max_word_len * 12, (char*)uwrd, sizeof(uwrd[0])*(seg_wlen+1));
 		  ii = aspell_speller_check(speller, (const char *)wrd, (int)(tlen = dps_strlen(wrd)) + 1);
@@ -2253,7 +2246,8 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 		    char	 *alias = NULL;
 		    dpsunicode_t *ualias = NULL;
 		    int          cascade;
-
+		    size_t z;
+		    size_t nphrasecmd;
 
 
 		    if (/*!(state.nphrasecmd & 1)&&-*/(first = DpsAcronymListFind(&query->Conf->Acronyms, &OWord, &last)) != NULL) {
@@ -2274,7 +2268,7 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 			    DPS_PREPARE_RETURN(0);
 			  }
 			}
-			{ register size_t z;
+			{ 
 			  for (z = 0; z < first->unroll.nwords; z++) {
 			    if (z) {
 			      state.order++;
@@ -2302,15 +2296,15 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 			    OWord.uword = first->unroll.Word[z].uword;
 			    OWord.ulen = DpsUniLen(first->unroll.Word[z].uword);
 			    OWord.origin = DPS_WORD_ORIGIN_ACRONYM;
-			    { size_t nphrasecmd = state.nphrasecmd;
-			      state.nphrasecmd = 1/*(first->unroll.nwords > 1) ? 1 : 0*/;
-			      state.have_bukva_forte = 0;
-			      if (DPS_OK != DpsExpandWord(query, Res, &OWord, &state)) {
+			    nphrasecmd = state.nphrasecmd;
+			    state.nphrasecmd = 1/*(first->unroll.nwords > 1) ? 1 : 0*/;
+			    state.have_bukva_forte = 0;
+			    if (DPS_OK != DpsExpandWord(query, Res, &OWord, &state)) {
 				DPS_FREE(uwrddup);
 				DPS_PREPARE_RETURN(0);
-			      }
-			      state.nphrasecmd = nphrasecmd;
 			    }
+			    state.nphrasecmd = nphrasecmd;
+			    
 
 
 			    state.cmd = DPS_STACK_RIGHT;
@@ -2378,16 +2372,16 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 			    OWord.uword = ualias;
 			    OWord.ulen = DpsUniLen(ualias);
 			    OWord.origin = DPS_WORD_ORIGIN_ACRONYM;
-			    { size_t nphrasecmd = state.nphrasecmd;
-			      state.nphrasecmd = 1;
-			      state.have_bukva_forte = 0;
-			      if (DPS_OK != DpsExpandWord(query, Res, &OWord, &state)) {
+			    nphrasecmd = state.nphrasecmd;
+			    state.nphrasecmd = 1;
+			    state.have_bukva_forte = 0;
+			    if (DPS_OK != DpsExpandWord(query, Res, &OWord, &state)) {
 				DPS_FREE(uwrddup);
 				DPS_FREE(alias); DPS_FREE(ualias);
 				DPS_PREPARE_RETURN(0);
-			      }
-			      state.nphrasecmd = nphrasecmd;
 			    }
+			    state.nphrasecmd = nphrasecmd;
+			    
 
 		      } else break;
 		      if (Alias->last) break;
@@ -2572,16 +2566,16 @@ static inline dps_uint4 DpsCalcCosineWeightFull(dps_uint4 *R, double x, double x
 						, double *D_y
 #endif
 						) {
-  register double y;
-  register double y_phrase, y_exact, y_origin;
+  double y;
+  double y_phrase, y_exact, y_origin;
 #ifdef WITH_REL_WRDCOUNT
-  register double y_wrdcount, y_count;
+  double y_wrdcount, y_count;
 #endif
 #ifdef WITH_REL_POSITION
-  register double y_position, y_firstpos;
+  double y_position, y_firstpos;
 #endif
 #ifdef WITH_REL_DISTANCE
-  register double y_distance;
+  double y_distance;
 #endif
 
   if (D[DPS_N_PHRASE] == 0) y_phrase = 10000; else y_phrase = 100 / D[DPS_N_PHRASE];
@@ -2660,9 +2654,9 @@ static inline dps_uint4 DpsCalcCosineWeightFast(dps_uint4 *R, double x, dps_uint
 						, double *D_y, double *D_xy
 #endif
 						) {
-  register double y = 0.0;
-  register size_t i;
-  register double xy = 0.0;
+  double y = 0.0;
+  double xy = 0.0;
+  size_t i;
 
   for (i = 0; i < nw; i++) {
     xy += DpsBitsCount(R[DPS_N_ADD + i] ^ D[DPS_N_ADD + i]);
@@ -2731,7 +2725,7 @@ static inline dps_uint4 DpsCalcCosineWeightUltra(dps_uint4 *R, double x, double 
 						 , double *D_y
 #endif
 						 ) {
-  register double y = 1.0;
+  double y = 1.0;
 
 #ifdef WITH_REL_WRDCOUNT
 #if 1
@@ -2857,8 +2851,16 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
   int wf[256];
   double Rbc;
   dps_uint4 *R, *D;
-  register double xy_wf;
-  register int nsec;
+  double xy_wf;
+  int nsec;
+  size_t nwordpos;
+  int w_origin;
+  dps_uint4 a;
+  size_t xy;
+#ifdef WITH_REL_WRDCOUNT
+  size_t tt, sum;
+  size_t median;
+#endif
 
   TRACE_IN(query, "DpsGroupByURLFull");
 
@@ -2952,14 +2954,14 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
 
   for(i = 1; i < Res->CoordList.ncoords; i++) {
     /* Group by url_id */
-    { register size_t nwordpos = DPS_WRDPOS(Crd[i].coord);
-      if (wordpos != nwordpos) {
+    nwordpos = DPS_WRDPOS(Crd[i].coord);
+    if (wordpos != nwordpos) {
 	prev_wordpos[wordorder] = wordpos;
 	prev_wordnum = wordnum;
 	prev_wordorder = wordorder;
 	wordpos = nwordpos;
-      }
     }
+    
     wordnum = DPS_WRDNUM(Crd[i].coord);
     wordsec = DPS_WRDSEC_N(Crd[i].coord, nsections);
     wordorder = Res->WWList.Word[wordnum].order_inquery;
@@ -2969,8 +2971,8 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
 
     if(Crd[j].url_id == Crd[i].url_id) {
       /* Same document */
-      register int w_origin = Res->WWList.Word[wordnum].origin;
-      register dps_uint4 a = DpsOriginWeightFull(w_origin);
+      w_origin = Res->WWList.Word[wordnum].origin;
+      a = DpsOriginWeightFull(w_origin);
       xy_o[wordorder] |= a;
       if (D[DPS_N_ADD + wordsec] == 0) nsec += wf[wordsec];
       D[DPS_N_ADD + wordsec]++;
@@ -3016,50 +3018,49 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
 #endif
 #endif
 
-      { 
-	register size_t xy = 0;
+      xy = 0;
 #ifdef WITH_REL_WRDCOUNT
-	register size_t tt, sum = 0;
-	register size_t median = phr_n / n_order_inquery;
+      sum = 0;
+      median = phr_n / n_order_inquery;
 #endif
-	for (tt = 0; tt <= Res->max_order_inquery; tt++) {
+      for (tt = 0; tt <= Res->max_order_inquery; tt++) {
 	  xy += xy_o[tt];
 #ifdef WITH_REL_WRDCOUNT
 	  if (Res->items[tt].order_origin & DPS_WORD_ORIGIN_STOP) continue;
 	  sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
 #endif
-	}
-	D[DPS_N_ORIGIN] = tt;
-	for (tt++; tt < Res->max_order_inquery + DPS_WORD_ORIGIN_MAX; tt++) {
+      }
+      D[DPS_N_ORIGIN] = tt;
+      for (tt++; tt < Res->max_order_inquery + DPS_WORD_ORIGIN_MAX; tt++) {
 	  if (count[D[DPS_N_ORIGIN]] < count[tt]) D[DPS_N_ORIGIN] = tt;
-	}
-	D[DPS_N_ORIGIN] -= Res->max_order_inquery;
+      }
+      D[DPS_N_ORIGIN] -= Res->max_order_inquery;
 /*	xy /= Res->max_order_inquery + 1;*/
 #ifdef WITH_REL_WRDCOUNT
-	D[DPS_N_WRDCOUNT] = phr_n;
-	D[DPS_N_COUNT] = (dps_uint4)((((long)sum) * DPS_BEST_WRD_CNT) / n_order_inquery / ++median);
+      D[DPS_N_WRDCOUNT] = phr_n;
+      D[DPS_N_COUNT] = (dps_uint4)((((long)sum) * DPS_BEST_WRD_CNT) / n_order_inquery / ++median);
       
 #ifdef WITH_REL_TRACK
-	Track[j].D_wrdcount = phr_n;
-	Track[j].D_n_count = D[DPS_N_COUNT];
-	Track[j].D_n_origin = D[DPS_N_ORIGIN];
+      Track[j].D_wrdcount = phr_n;
+      Track[j].D_n_count = D[DPS_N_COUNT];
+      Track[j].D_n_origin = D[DPS_N_ORIGIN];
 #endif
 #endif
-	Crd[j].coord = DpsCalcCosineWeightFull(
-					       R, 
-					       Rbc, 
-					       (double)1.0 * xy * nsec , 
-					       D, 
-					       phr_n
+      Crd[j].coord = DpsCalcCosineWeightFull(
+	  R, 
+	  Rbc, 
+	  (double)1.0 * xy * nsec , 
+	  D, 
+	  phr_n
 #ifdef WITH_REL_TRACK
-					       , &Track[j].y
+	  , &Track[j].y
 #endif
-					       );
+	  );
 #ifdef WITH_REL_TRACK
-	Track[j].x = Rbc;
-	Track[j].xy = xy * nsec * phr_n / (phr_n + 1);
+      Track[j].x = Rbc;
+      Track[j].xy = xy * nsec * phr_n / (phr_n + 1);
 #endif
-      }
+      
       j++;
 
       Crd[j] = Crd[i];
@@ -3077,13 +3078,13 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
 #endif
 #endif
       prev_wordpos[wordorder] = wordpos;
-      { register int w_origin = Res->WWList.Word[wordnum].origin;
-	count[wordorder] = count[Res->max_order_inquery + DpsOriginIndex(w_origin)] = 1;
-	if (wordorder == 0) {
+      w_origin = Res->WWList.Word[wordnum].origin;
+      count[wordorder] = count[Res->max_order_inquery + DpsOriginIndex(w_origin)] = 1;
+      if (wordorder == 0) {
 	  cur_order = 0; cur_sec = wordsec; cur_exact = (w_origin == DPS_WORD_ORIGIN_QUERY);
-	} else cur_order = (size_t)-1; 
-	xy_o[wordorder] = DpsOriginWeightFull(w_origin);
-      }
+      } else cur_order = (size_t)-1; 
+      xy_o[wordorder] = DpsOriginWeightFull(w_origin);
+      
       nsec = wf[wordsec]; D[DPS_N_ADD + wordsec] = 1;
     }
   }
@@ -3102,49 +3103,49 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
 #endif
 #endif
 
-  { 
-    register size_t xy = 0;
+   
+  xy = 0;
 #ifdef WITH_REL_WRDCOUNT
-    register size_t tt, sum = 0;
-    register size_t median = phr_n / n_order_inquery;
+  sum = 0;
+  median = phr_n / n_order_inquery;
 #endif
-    for (tt = 0; tt <= Res->max_order_inquery; tt++) {
+  for (tt = 0; tt <= Res->max_order_inquery; tt++) {
       xy += xy_o[tt];
 #ifdef WITH_REL_WRDCOUNT
       if (Res->items[tt].order_origin & DPS_WORD_ORIGIN_STOP) continue;
       sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
 #endif
-    }
-    D[DPS_N_ORIGIN] = tt;
-    for (tt++; tt < Res->max_order_inquery + DPS_WORD_ORIGIN_MAX; tt++) {
+  }
+  D[DPS_N_ORIGIN] = tt;
+  for (tt++; tt < Res->max_order_inquery + DPS_WORD_ORIGIN_MAX; tt++) {
       if (count[D[DPS_N_ORIGIN]] < count[tt]) D[DPS_N_ORIGIN] = tt;
-    }
-    D[DPS_N_ORIGIN] -= Res->max_order_inquery;
-    /*    xy /= Res->max_order_inquery + 1;*/
+  }
+  D[DPS_N_ORIGIN] -= Res->max_order_inquery;
+  /*    xy /= Res->max_order_inquery + 1;*/
 #ifdef WITH_REL_WRDCOUNT
-    D[DPS_N_WRDCOUNT] = phr_n;
-    D[DPS_N_COUNT] = (dps_uint4)((((long)sum) * DPS_BEST_WRD_CNT) / n_order_inquery / ++median);
+  D[DPS_N_WRDCOUNT] = phr_n;
+  D[DPS_N_COUNT] = (dps_uint4)((((long)sum) * DPS_BEST_WRD_CNT) / n_order_inquery / ++median);
   
 #ifdef WITH_REL_TRACK
-    Track[j].D_wrdcount = phr_n;
-    Track[j].D_n_count = D[DPS_N_COUNT];
-    Track[j].D_n_origin = D[DPS_N_ORIGIN];
+  Track[j].D_wrdcount = phr_n;
+  Track[j].D_n_count = D[DPS_N_COUNT];
+  Track[j].D_n_origin = D[DPS_N_ORIGIN];
 #endif
 #endif
 	
-    Res->CoordList.ncoords = j + 1;
+  Res->CoordList.ncoords = j + 1;
 	
-    Crd[j].coord = DpsCalcCosineWeightFull(R, Rbc, (double)1.0 * xy * nsec, D, phr_n
+  Crd[j].coord = DpsCalcCosineWeightFull(R, Rbc, (double)1.0 * xy * nsec, D, phr_n
 #ifdef WITH_REL_TRACK
-					   , &Track[j].y
+					 , &Track[j].y
 #endif
-					   );
+      );
 #ifdef WITH_REL_TRACK
-    Track[j].x = Rbc;
-    Track[j].xy = xy * nsec * (phr_n - 1) / phr_n;
-    Res->CoordList.Track = (DPS_URLTRACK*)DpsRealloc(Res->CoordList.Track, Res->CoordList.ncoords * sizeof(*Res->CoordList.Track));
+  Track[j].x = Rbc;
+  Track[j].xy = xy * nsec * (phr_n - 1) / phr_n;
+  Res->CoordList.Track = (DPS_URLTRACK*)DpsRealloc(Res->CoordList.Track, Res->CoordList.ncoords * sizeof(*Res->CoordList.Track));
 #endif
-  }
+  
   DPS_FREE(D);
   DPS_FREE(R);
   DPS_FREE(count);
@@ -3166,6 +3167,8 @@ static void DpsGroupByURLFast(DPS_AGENT *query, DPS_RESULT *Res) {
   int wf[256];
   dps_uint4 *R, *D;
   double Rbc;
+  size_t tt, sum;
+  size_t median;
 
   TRACE_IN(query, "DpsGroupByURLFast");
 
@@ -3290,15 +3293,15 @@ static void DpsGroupByURLFast(DPS_AGENT *query, DPS_RESULT *Res) {
 #ifdef WITH_REL_WRDCOUNT
       D[DPS_N_WRDCOUNT] = phr_n;
 
-      { register size_t tt, sum = 0;
-	register size_t median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1));
-	for (tt = 0; tt <= Res->max_order_inquery; tt++) {
+      sum = 0;
+      median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1));
+      for (tt = 0; tt <= Res->max_order_inquery; tt++) {
 	  if (count[tt])
-	    sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
+	      sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
 	  else sum += 2000;
-	}
-	D[DPS_N_COUNT] = (dps_uint4)sum;
       }
+      D[DPS_N_COUNT] = (dps_uint4)sum;
+      
 #ifdef WITH_REL_TRACK
       Track[j].D_wrdcount = phr_n;
       Track[j].D_n_count = D[DPS_N_COUNT];
@@ -3351,15 +3354,15 @@ static void DpsGroupByURLFast(DPS_AGENT *query, DPS_RESULT *Res) {
 #ifdef WITH_REL_WRDCOUNT
   D[DPS_N_WRDCOUNT] = phr_n;
 
-  { register size_t tt, sum = 0;
-    register size_t median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1));
-    for (tt = 0; tt <= Res->max_order_inquery; tt++) {
+  sum = 0;
+  median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1));
+  for (tt = 0; tt <= Res->max_order_inquery; tt++) {
       if (count[tt])
-	sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
+	  sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
       else sum += 2000;
-    }
-    D[DPS_N_COUNT] = (dps_uint4)sum;
   }
+  D[DPS_N_COUNT] = (dps_uint4)sum;
+  
 #ifdef WITH_REL_TRACK
   Track[j].D_wrdcount = phr_n;
   Track[j].D_n_count = D[DPS_N_COUNT];
@@ -3397,10 +3400,12 @@ static void DpsGroupByURLUltra(DPS_AGENT *query, DPS_RESULT *Res) {
   DPS_URLTRACK *Track;
 #endif
   size_t nsections = (size_t)DpsVarListFindInt(&query->Vars, "NumSections", 255) + 1;
-  int wf[256], xy_w;
+  int wf[256];
+  int xy_w;
   dps_uint4 *R, *D;
   double Rbc;
-  register double xy, WFsections = 0.0;
+  double xy, WFsections;
+  size_t tt, cc, median, sum;
 
   TRACE_IN(query, "DpsGroupByURLUltra");
   
@@ -3434,9 +3439,8 @@ static void DpsGroupByURLUltra(DPS_AGENT *query, DPS_RESULT *Res) {
     TRACE_OUT(query);
     return;
   }
-  { register size_t tt;
-    for (tt = 1; tt < nsections; tt++) WFsections += wf[tt];
-  }
+  WFsections = 0.0;
+  for (tt = 1; tt < nsections; tt++) WFsections += wf[tt];
 
 #ifdef WITH_REL_DISTANCE
   R[DPS_N_DISTANCE] = DPS_AVG_DISTANCE;
@@ -3532,37 +3536,37 @@ static void DpsGroupByURLUltra(DPS_AGENT *query, DPS_RESULT *Res) {
       D[DPS_N_WRDCOUNT] = 0/*phr_n*/;
 #endif
 
-      { register size_t tt, cc = 0;
+      cc = 0;
 #ifdef WITH_REL_WRDCOUNT
-	register size_t median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1)), sum = 0;
+      median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1)), sum = 0;
 #endif
-	for (tt = 0; tt <= Res->max_order_inquery; tt++) {
+      for (tt = 0; tt <= Res->max_order_inquery; tt++) {
 	  if (count[tt]) cc += D[DPS_N_ADD + nsections + tt] / count[tt];
 #ifdef WITH_REL_WRDCOUNT
 	  if (count[tt])
-	    sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
+	      sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
 	  else sum += 2000;
 	  D[DPS_N_WRDCOUNT] += ((count[tt] > DPS_BEST_WRD_CNT) ? (count[tt] - DPS_BEST_WRD_CNT) : (DPS_BEST_WRD_CNT - count[tt]));
 #endif
-	}
+      }
 #ifdef WITH_REL_WRDCOUNT
-	D[DPS_N_COUNT] = (dps_uint4)sum;
+      D[DPS_N_COUNT] = (dps_uint4)sum;
 #ifdef WITH_REL_TRACK
       Track[j].D_wrdcount = phr_n;
       Track[j].D_n_count = D[DPS_N_COUNT];
 #endif
 #endif
-	xy *= cc;
-	xy /= (Res->max_order_inquery + 1) * DpsOriginWeightUltra(DPS_WORD_ORIGIN_QUERY);
-      }
+      xy *= cc;
+      xy /= (Res->max_order_inquery + 1) * DpsOriginWeightUltra(DPS_WORD_ORIGIN_QUERY);
+      
 
 /*	    fprintf(stderr, "** URL_ID: %d [phr_n:%d]\n", Crd[j].url_id, phr_n);*/
 
-      { register size_t tt, cc = 1;
-	for (tt = 1; tt < nsections; tt++) if (D[DPS_N_ADD + tt]) cc += wf[tt];
-	xy *= cc;
-	xy /= WFsections;
-      }
+      cc = 1;
+      for (tt = 1; tt < nsections; tt++) if (D[DPS_N_ADD + tt]) cc += wf[tt];
+      xy *= cc;
+      xy /= WFsections;
+      
 
       Crd[j].coord = DpsCalcCosineWeightUltra(R, Rbc, xy, D, nsections, phr_n
 #ifdef WITH_REL_TRACK
@@ -3618,37 +3622,38 @@ static void DpsGroupByURLUltra(DPS_AGENT *query, DPS_RESULT *Res) {
   xy *= xy_w;
   xy /= DpsOriginWeightUltra(DPS_WORD_ORIGIN_COMMON);
 
-  { register size_t tt, cc = 0;
+  cc = 0;
 #ifdef WITH_REL_WRDCOUNT
-    register size_t median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1)), sum = 0;
+  median = (size_t)(((double)phr_n) / (Res->max_order_inquery + 1));
+  sum = 0;
 #endif
-    for (tt = 0; tt <= Res->max_order_inquery; tt++) {
+  for (tt = 0; tt <= Res->max_order_inquery; tt++) {
       if (count[tt]) cc += D[DPS_N_ADD + nsections + tt] / count[tt];
 #ifdef WITH_REL_WRDCOUNT
       if (count[tt])
-	sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
+	  sum += ((count[tt] > median) ? (count[tt] - median) : (median - count[tt]));
       else sum += 2000;
 #endif
-    }
-#ifdef WITH_REL_WRDCOUNT
-    D[DPS_N_COUNT] = (dps_uint4)sum;
-#ifdef WITH_REL_TRACK
-    Track[j].D_wrdcount = phr_n;
-    Track[j].D_n_count = D[DPS_N_COUNT];
-#endif
-#endif
-    xy *= cc;
-    xy /= ((Res->max_order_inquery + 1) * DpsOriginWeightUltra(DPS_WORD_ORIGIN_QUERY));
   }
+#ifdef WITH_REL_WRDCOUNT
+  D[DPS_N_COUNT] = (dps_uint4)sum;
+#ifdef WITH_REL_TRACK
+  Track[j].D_wrdcount = phr_n;
+  Track[j].D_n_count = D[DPS_N_COUNT];
+#endif
+#endif
+  xy *= cc;
+  xy /= ((Res->max_order_inquery + 1) * DpsOriginWeightUltra(DPS_WORD_ORIGIN_QUERY));
+  
 	
   Res->CoordList.ncoords = j + 1;
 /*	fprintf(stderr, "** URL_ID: %d [phr_n:%d]\n", Crd[j].url_id, phr_n);*/
 	
-  { register size_t tt, cc = 1;
-    for (tt = 1; tt < nsections; tt++) if (D[DPS_N_ADD + tt]) cc += wf[tt];
-    xy *= cc;
-    xy /= WFsections;
-  }
+  cc = 1;
+  for (tt = 1; tt < nsections; tt++) if (D[DPS_N_ADD + tt]) cc += wf[tt];
+  xy *= cc;
+  xy /= WFsections;
+  
 
   Crd[j].coord = DpsCalcCosineWeightUltra(R, Rbc, xy, D, nsections, phr_n
 #ifdef WITH_REL_TRACK
@@ -3697,16 +3702,16 @@ void DpsGroupByURL(DPS_AGENT *query, DPS_RESULT *Res) {
 }
 
 void DpsGroupBySite(DPS_AGENT *query, DPS_RESULT *Res){	
-	register size_t	i, j = 0, cnt = 1; 
-	register urlid_t Doc_site;
+	size_t	i, j = 0, cnt = 1; 
+	urlid_t Doc_site;
 	DPS_URL_CRD_DB *Crd = Res->CoordList.Coords;
 	DPS_URLDATA *Dat = Res->CoordList.Data;
 #ifdef WITH_REL_TRACK
 	DPS_URLTRACK *Trk = Res->CoordList.Track;
 #endif
-	register int merge = 1;
+	int merge = 1;
 #ifdef WITH_GOOGLEGRP
-	register int second = query->Flags.PagesInGroup;
+	int second = query->Flags.PagesInGroup;
 #endif
 	
 	if(!Res->CoordList.ncoords) return;
@@ -4174,7 +4179,7 @@ int DpsCatFromTextBuf(DPS_CATEGORY *C, char *textbuf) {
 
 
 static size_t DpsUniSpaceCnt(dpsunicode_t *s) {
-  register size_t c = 0;
+  size_t c = 0;
   while(*++s) {
     switch(*s) {
     case 0x0009:
@@ -4402,26 +4407,26 @@ void DpsParseQStringUnescaped(DPS_VARLIST *vars, const char *qstring){
 }
 
 size_t DpsRemoveNullSections(DPS_URL_CRD *words, size_t n, int *wf) {
-  register size_t i, j = 0;
+  size_t i, j = 0;
   for (i = 0; i < n; i++) {
-    register int s = DPS_WRDSEC(words[i].coord);
+    int s = DPS_WRDSEC(words[i].coord);
     if (s == 0 || wf[s] > 0) words[j++] = words[i]; /* zero section number means it's came from a limit */
   }
   return j;
 }
 
 size_t DpsRemoveNullSectionsDB(DPS_URL_CRD_DB *words, size_t n, int *wf, int secno) {
-  register size_t i, j = 0;
+  size_t i, j = 0;
+  int s;
   if (secno == 0) {
-    for (i = 0; i < n; i++) {
-      if (wf[DPS_WRDSEC(words[i].coord)] > 0) words[j++] = words[i];
-    }
+      for (i = 0; i < n; i++) {
+	  if (wf[DPS_WRDSEC(words[i].coord)] > 0) words[j++] = words[i];
+      }
   } else {
-    register int s; 
-    for (i = 0; i < n; i++) {
-      s = DPS_WRDSEC(words[i].coord);
-      if ((s == secno) && (wf[s] > 0)) words[j++] = words[i];
-    }
+      for (i = 0; i < n; i++) {
+	  s = DPS_WRDSEC(words[i].coord);
+	  if ((s == secno) && (wf[s] > 0)) words[j++] = words[i];
+      }
   }
   return j;
 }
