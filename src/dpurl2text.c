@@ -240,7 +240,7 @@ static int DpsPrintSections(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
 #endif				
 
   if (Indexer->Flags.LongestTextItems > 0) {
-    DPS_TEXTITEM **items = (DPS_TEXTITEM**)DpsMalloc((tlist->nitems + 1) * sizeof(DPS_TEXTITEM));
+    DPS_TEXTITEM **items = (DPS_TEXTITEM**)DpsMalloc((tlist->nitems + 1) * sizeof(DPS_TEXTITEM*));
     if (items != NULL) {
       for(i = 0; i < tlist->nitems; i++) items[i] = &tlist->Items[i];
       DpsSort(items, tlist->nitems, sizeof(DPS_TEXTITEM*), (qsort_cmp) dps_itemptr_cmp);
