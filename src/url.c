@@ -505,17 +505,26 @@ char * DpsURLNormalizePath(char * str){
 	    || !strcasecmp(DPS_NULL2EMPTY(schema), "feed")
 	    ) {
 	        *str = (char*)DpsMalloc(dps_strlen(DPS_NULL2EMPTY(schema)) + dps_strlen(DPS_NULL2EMPTY(newURL->specific)) + 4);
-		if (*str == NULL) return;
+		if (*str == NULL) {
+		    DPS_FREE(pathfile);
+		    return;
+		}
 /*		sprintf(*str, "%s:%s", DPS_NULL2EMPTY(schema), DPS_NULL2EMPTY(newURL->specific));*/
 		dps_strcpy(*str, DPS_NULL2EMPTY(schema)); dps_strcat(*str, ":"); dps_strcat(*str, DPS_NULL2EMPTY(newURL->specific));
 	} else if(/*!strcasecmp(DPS_NULL2EMPTY(schema), "file") ||*/ !strcasecmp(DPS_NULL2EMPTY(schema), "htdb")) {
 	        *str = (char*)DpsMalloc(dps_strlen(DPS_NULL2EMPTY(schema)) + dps_strlen(pathfile) + 4);
-		if (*str == NULL) return;
+		if (*str == NULL) {
+		    DPS_FREE(pathfile);
+		    return;
+		}
 /*		sprintf(*str, "%s:%s", DPS_NULL2EMPTY(schema), pathfile);*/
 		dps_strcpy(*str, DPS_NULL2EMPTY(schema)); dps_strcat(*str, ":"); dps_strcat(*str, pathfile);
 	}else{
 	  *str = (char*)DpsMalloc(dps_strlen(DPS_NULL2EMPTY(schema)) + dps_strlen(pathfile) + dps_strlen(DPS_NULL2EMPTY(hostname)) + dps_strlen(DPS_NULL2EMPTY(auth)) + 8);
-	  if (*str == NULL) return;
+	  if (*str == NULL) {
+	      DPS_FREE(pathfile);
+	      return;
+	  }
 /*		sprintf(*str, "%s://%s%s", DPS_NULL2EMPTY(schema), DPS_NULL2EMPTY(hostinfo), pathfile);*/
 	  dps_strcpy(*str, DPS_NULL2EMPTY(schema)); dps_strcat(*str, "://"); 
 	  if (auth) {
