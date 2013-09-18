@@ -6407,22 +6407,11 @@ int DpsLimitCategorySQL(DPS_AGENT *A, DPS_UINT8URLIDLIST *L, const char *field, 
 
 int DpsLimitLinkSQL(DPS_AGENT *A, DPS_UINT4URLIDLIST *L, const char *field, int type, DPS_DB *db) {
 	char		*qbuf;
-#if 0
-	char            *var_dir = (db->vardir) ? db->vardir : DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
-#endif
 	size_t		i, nrows, qbuflen, ncats;
 	DPS_SQLRES	SQLres;
 	int		rc = DPS_OK, fd;
 	const char      *val0, *val1;
 
-#if 0
-	dps_snprintf(L->shm_name, PATH_MAX, "%s%sLINK.%d", var_dir, DPSSLASHSTR, A->handle);
-	if ((fd = DpsOpen3(L->shm_name, O_RDWR | O_CREAT, (mode_t)0644)) < 0) {
-	  dps_strerror(A, DPS_LOG_ERROR, "%s open failed", L->shm_name);
-	  return DPS_ERROR;
-	}
-#endif
-	DpsClose(fd);
 	if ((qbuf = (char*)DpsMalloc(qbuflen = 8192)) == NULL) {
 		return DPS_ERROR;
 	}
@@ -6444,35 +6433,7 @@ int DpsLimitLinkSQL(DPS_AGENT *A, DPS_UINT4URLIDLIST *L, const char *field, int 
 
 	nrows = DpsSQLNumRows(&SQLres);
 	
-#if 0 /* defined(HAVE_SHAREDMEM_POSIX) */
-	if ((fd = shm_open(L->shm_name, O_RDWR | O_CREAT, (mode_t)0644)) < 0) {
-	  dps_snprintf(L->shm_name, PATH_MAX, "%sLINK.%d", DPSSLASHSTR, A->handle);
-	  if ((fd = shm_open(L->shm_name, O_RDWR | O_CREAT, (mode_t)0644)) < 0) {
-	    dps_strerror(A, DPS_LOG_ERROR, "shm_open (%s) error", L->shm_name);
-	    return DPS_ERROR;
-	  }
-	}
-	if (( L->Item = (DPS_UINT4URLID*)
-		 mmap( NULL, (nrows + 1) * sizeof(DPS_UINT4URLID), PROT_READ | PROT_WRITE, MAP_SHARED, fd, (off_t)0)) == NULL) {
-	  dps_strerror(A, DPS_LOG_ERROR, "mmap:");
-	  return DPS_ERROR;
-	}
-	ftruncate(fd, (off_t) (nrows + 1) * sizeof(DPS_UINT4URLID));
-	close(fd);
-	L->mapped = 1;
-#elif 0 /* defined(HAVE_SHAREDMEM_SYSV) */
-	if ((fd = shmget(ftok(L->shm_name, 0), (nrows+1)*sizeof(DPS_UINT4URLID), IPC_CREAT|SHM_R|SHM_W|(SHM_R>>3)|(SHM_R>>6) )) < 0) {
-	  dps_strerror(A, DPS_LOG_ERROR, "shmget (%s)", L->shm_name);
-	  return DPS_ERROR;
-	}
-	if ((L->Item = (DPS_UINT4URLID*)shmat( fd, NULL, 0)) == (void*)-1) {
-	  dps_strerror(A, DPS_LOG_ERROR, "shmat:");
-	  return DPS_ERROR;
-	}
-	L->mapped = 1;
-#else
 	L->Item = (DPS_UINT4URLID*)DpsRealloc(L->Item, (nrows + 1) * sizeof(DPS_UINT4URLID));
-#endif
 	if(L->Item == NULL) {
 	  dps_strerror(A, DPS_LOG_ERROR, "Error alloc %d bytes", (nrows + 1) * sizeof(DPS_UINT4URLID) );
 	  db->errcode = 1;
