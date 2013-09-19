@@ -302,6 +302,7 @@ CreateDocGaps(unsigned *a, unsigned *nn, double Pr)
   }
   N= n*Pr + 0.5;
   if (N<n) N=n;
+  if (N<1) N=1;
   *nn= *nn - n;
   newn= n;
     

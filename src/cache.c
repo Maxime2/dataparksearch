@@ -1213,6 +1213,7 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_nam
 	Agent->limits[Agent->nlimits].file_name[PATH_MAX-1] = '\0';
 	switch(type){
 		case DPS_LIMTYPE_NESTED: DpsDecodeHex8Str(str, &hi, &lo, &f_hi, &f_lo); break;
+		default:
 		case DPS_LIMTYPE_TIME: f_hi = hi = 0; f_lo = lo = 0; break;
 		case DPS_LIMTYPE_LINEAR_INT: hi = atoi(str); lo=0; f_hi = hi; f_lo = lo; break;
 		case DPS_LIMTYPE_LINEAR_CRC: hi = DpsStrHash32(str); lo = 0; f_hi = hi; f_lo = 0; break;
