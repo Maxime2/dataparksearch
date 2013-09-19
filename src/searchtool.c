@@ -4075,7 +4075,7 @@ int DpsConvert(DPS_ENV *Conf, DPS_VARLIST *Env_Vars, DPS_RESULT *Res, DPS_CHARSE
 	        len = dps_strlen(Var->val);
 		newtxt = (char*)DpsMalloc(len * 12 + 1);
 		newval = (char*)DpsMalloc(len * 12 + 1);
-		if (newtxt == NULL || newval == NULL) { DPS_FREE(newtxt); return DPS_ERROR; }
+		if (newtxt == NULL || newval == NULL) { DPS_FREE(newtxt); DPS_FREE(newval); return DPS_ERROR; }
 
 /*		if (db->DBDriver != DPS_DB_SEARCHD)*/  /* FIXME: need unification in charset from different DPS_DB */
 		  DpsConv(&lc_bc, newval, len * 12 + 1, Var->val, len + 1);

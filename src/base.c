@@ -646,6 +646,7 @@ __C_LINK void * __DPSCALL DpsBaseARead(DPS_BASE_PARAM *P, size_t *len) {
       if (read(P->Sfd, CDoc, P->Item.size) != (ssize_t)P->Item.size) {
 	DpsLog(P->A, DPS_LOG_ERROR, "[%s/%s] %d read error, rec_id: %x, deleting... -- %d",  P->subdir, P->basename, P->Item.size, P->rec_id, __LINE__);
 	DpsBaseDelete(P);
+	DPS_FREE(buf);
 	DPS_FREE(CDoc);
 	return NULL;
       }

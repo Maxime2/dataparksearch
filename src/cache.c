@@ -1349,7 +1349,7 @@ urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size
 	return(data);
 
 err1:
-	/*if (ind)*/ DPS_FREE(ind);
+	DPS_FREE(ind);
 	TRACE_OUT(Agent);
 	return(NULL);
 err2:
@@ -1361,6 +1361,7 @@ err2:
 	}
 	data[0] = 0;
 	*size = 1;
+	DPS_FREE(ind);
 	TRACE_OUT(Agent);
 	return(data);
 

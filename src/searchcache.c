@@ -342,7 +342,7 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 	}
 #endif
 	if (wrd == NULL || dat == NULL) {
-	  DPS_FREE(wrd);
+	  DPS_FREE(wrd); DPS_FREE(dat);
 	  DpsClose(fd);
 	  return DPS_ERROR;
 	}
@@ -353,22 +353,26 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 	}
 #endif
 	if(-1==(bytes=read(fd, wrd, Res->total_found/* page_size*/ * sizeof(*wrd) ))){
+	  	DPS_FREE(wrd); DPS_FREE(dat);
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
 	Res->CoordList.ncoords = (size_t)bytes / sizeof(*wrd);
 	if(-1==(bytes=read(fd, dat, Res->total_found/* page_size*/ * sizeof(*dat) ))){
+	  	DPS_FREE(wrd); DPS_FREE(dat);
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
 #ifdef WITH_REL_TRACK
 	if(-1==(bytes=read(fd, trk, Res->total_found/* page_size*/ * sizeof(*trk) ))){
+	  	DPS_FREE(wrd); DPS_FREE(dat); DPS_FREE(trk);
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
 #endif
 
 	if( (-1 == read(fd, &topcount, sizeof(topcount))) ){
+	  	DPS_FREE(wrd); DPS_FREE(dat);
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
@@ -380,6 +384,7 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 	    return DPS_ERROR;
 	  }
 	  if(-1 == (bytes=read(fd, Res->PerSite, topcount * sizeof(size_t) ))){
+	  	DPS_FREE(wrd); DPS_FREE(dat);
 		DpsClose(fd);
 		return DPS_ERROR;
 	  }

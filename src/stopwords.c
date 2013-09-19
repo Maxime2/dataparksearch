@@ -178,7 +178,10 @@ __C_LINK int __DPSCALL DpsStopListLoad(DPS_ENV * Conf, const char *filename) {
 	}
 	DpsClose(fd);
 
-	if ((uwrd = (dpsunicode_t*)DpsMalloc(sizeof(dpsunicode_t) * (Conf->WordParam.max_word_len + 128))) == NULL) return DPS_ERROR;
+	if ((uwrd = (dpsunicode_t*)DpsMalloc(sizeof(dpsunicode_t) * (Conf->WordParam.max_word_len + 128))) == NULL) {
+	  DPS_FREE(data);
+	  return DPS_ERROR;
+	}
 
 	bzero((void*)&stopword, sizeof(stopword));
 
@@ -259,6 +262,10 @@ __C_LINK int __DPSCALL DpsStopListLoad(DPS_ENV * Conf, const char *filename) {
 			
 			    if(DPS_OK != DpsUniMatchListAdd(NULL, &Conf->StopWords.StopMatch, &M, err, sizeof(err), 0)) {
 				dps_snprintf(Conf->errstr, sizeof(Conf->errstr) - 1, "%s", err);
+				DPS_FREE(charset);
+				DPS_FREE(stopword.lang);
+				DPS_FREE(uwrd);
+				DPS_FREE(data);
 				return DPS_ERROR;
 			    }
 			    DPS_FREE(nfc);
