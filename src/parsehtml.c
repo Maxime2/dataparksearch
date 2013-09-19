@@ -222,7 +222,7 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
     tok = DpsUniGetToken(dword, &lt, &dw_have_bukva_forte, !strict); 
     if (tok) {
       tlen = (size_t)(lt - tok);
-      if (tlen + 1 > nlen) {
+      if (tlen + 1 > nlen || nword == NULL) {
 	nword = (dpsunicode_t*)DpsRealloc(nword, (tlen + 1) * sizeof(dpsunicode_t));
 	nlen = tlen;
       }
@@ -351,7 +351,7 @@ int DpsPrepareItem(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM *Item, dp
 
 	*indexed_size += tlen;
 				
-	if (tlen > uwordlen) {
+	if (tlen > uwordlen || uword == NULL) {
 	  uwordlen = tlen;
 	  if ((uword = (dpsunicode_t*)DpsRealloc(uword, 2 * (uwordlen + 1) * sizeof(dpsunicode_t))) == NULL) { 
 	    TRACE_OUT(Indexer);

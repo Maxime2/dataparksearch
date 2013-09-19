@@ -903,7 +903,7 @@ static int DpsNNTPGet(DPS_AGENT * Indexer,DPS_DOCUMENT *Doc){
 		/* Let's    redirect to the same */
 		/* URL without slashes           */
 		char *s;
-		dps_strncpy(grp,Doc->CurURL.path,sizeof(grp)-1);
+		dps_strncpy(grp, DPS_NULL2EMPTY(Doc->CurURL.path), sizeof(grp)-1);
 		DPS_TERM(grp);
 		/* Remove trailing slash */
 		if((s=strrchr(grp+1,'/')))*s='\0';
@@ -917,7 +917,7 @@ static int DpsNNTPGet(DPS_AGENT * Indexer,DPS_DOCUMENT *Doc){
 	
 	
 	/* Second bad case, make redirect */
-	if(!strcasecmp(Doc->CurURL.schema,"nntp") && !strcmp(Doc->CurURL.path,"/") && Doc->CurURL.filename != NULL) {
+	if(!strcasecmp(DPS_NULL2EMPTY(Doc->CurURL.schema),"nntp") && !strcmp(DPS_NULL2EMPTY(Doc->CurURL.path),"/") && Doc->CurURL.filename != NULL) {
 		/* nntp://news.server.com/something        */
 		/* This is wrong URL, assume that          */
 		/* "something" is a group name, redirect   */
@@ -1327,7 +1327,7 @@ static int DpsNNTPGet(DPS_AGENT * Indexer,DPS_DOCUMENT *Doc){
 		dps_closesocket(fd);
 	}
 	/* Return length of buffer */
-	Doc->Buf.size=dps_strlen(Doc->Buf.buf);
+	Doc->Buf.size = dps_strlen(DPS_NULL2EMPTY(Doc->Buf.buf));
 	return(0);
 }
 
