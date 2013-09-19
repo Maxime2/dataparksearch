@@ -1002,7 +1002,7 @@ static int ParseVariable(DPS_AGENT *Agent, DPS_ENV *Env, DPS_VARLIST *vars, char
 			arg = NULL;
 			if((tok = dps_strtok_r(str, " \t\r\n", &lt, NULL)))
 			  arg = dps_strtok_r(NULL, " \t\r\n", &lt, NULL);
-			if((sc = strchr(arg, ':'))) {
+			if((sc = strchr(DPS_NULL2EMPTY(arg), ':'))) {
 				*sc='\0'; sc++;
 				nm = (char*)DpsMalloc(dps_strlen(arg) + 8);
 				if (nm == NULL) { DPS_FREE(cmd); return DPS_ERROR; }
