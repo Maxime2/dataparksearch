@@ -1872,7 +1872,7 @@ static void dps_read_word(void *param) {
 
   if (Cfg->pmerg[0]->db_pbegin != NULL) {
     Cfg->pmerg[0]->count = num = RemoveOldCrds(Cfg->pmerg[0]->db_pcur, orig_size / sizeof(DPS_URL_CRD), Cfg->del_buf, Cfg->del_count);
-    Cfg->pmerg[0]->pcur = Cfg->pmerg[0]->pchecked = Cfg->pmerg[0]->pbegin = (DPS_URL_CRD_DB*)DpsMalloc(num * sizeof(DPS_URL_CRD_DB));
+    Cfg->pmerg[0]->pcur = Cfg->pmerg[0]->pchecked = Cfg->pmerg[0]->pbegin = (DPS_URL_CRD_DB*)DpsMalloc((num + 1) * sizeof(DPS_URL_CRD_DB));
     if (Cfg->pmerg[0]->pbegin != NULL) {
 
       if (Cfg->flag_null_wf) {
