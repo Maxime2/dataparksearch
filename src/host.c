@@ -454,7 +454,7 @@ int DpsHostLookup(DPS_AGENT *Indexer, DPS_CONN *connp) {
 	DPS_HOST_ADDR  *Host;
 	DPS_HOSTLIST *List = &Indexer->Hosts;
 	char   *ascii = NULL;
-	int rc;
+	int rc = DPS_OK;
 	size_t i;
 #if (defined(WITH_IDN) || defined(WITH_IDNKIT)) && !defined(APACHE1) && !defined(APACHE2)
 	DPS_CHARSET *url_cs, *uni_cs;

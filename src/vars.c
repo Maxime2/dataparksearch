@@ -261,7 +261,7 @@ static int DpsVarListReplaceNamed(DPS_VARLIST *Lst, DPS_VAR *S, const char *name
 }
 
 static int DpsVarListInsNamed(DPS_VARLIST *Lst, DPS_VAR *S, const char *name) {
-	int	rc;
+	int	rc = DPS_OK;
 	DPS_VAR	*v = DpsVarListFind(Lst, S->name);
 	if (!v){
 	  rc = DpsVarListAddNamed(Lst, S, name);
