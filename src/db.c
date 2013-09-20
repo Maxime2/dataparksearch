@@ -2493,7 +2493,7 @@ size_t DpsDBListAdd(DPS_DBLIST *List, const char * addr, int mode) {
 	  }
 	}
 	List->db = (DPS_DB**)DpsRealloc(List->db, (List->nitems+1)*sizeof(DPS_DB*));
-	if (db == NULL) {
+	if (List->db == NULL) {
 	  List->nitems = 0;
 #ifdef WITH_PARANOIA
 	  DpsViolationExit(-1, paran);
