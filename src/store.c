@@ -78,163 +78,164 @@
 
 #ifdef HAVE_ZLIB
 static int DoStore(DPS_AGENT *Agent, urlid_t rec_id, Byte *Doc, size_t DocSize, const char *Client) {
-  z_stream zstream;
-  DPS_BASE_PARAM P;
-  int rc = DPS_OK;
-  Byte *CDoc = NULL;
-  size_t dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
-  DPS_DB *db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[dbnum] : &Agent->dbl.db[dbnum];
+    z_stream zstream;
+    DPS_BASE_PARAM P;
+    int rc = DPS_OK;
+    Byte *CDoc = NULL;
+    size_t dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
+    DPS_DB *db = DPS_DBL_DB(Agent, dbnum);
 
-  bzero(&zstream, sizeof(zstream));
+    bzero(&zstream, sizeof(zstream));
 
-            zstream.zalloc = Z_NULL;
-            zstream.zfree = Z_NULL;
-            zstream.opaque = Z_NULL;
+    zstream.zalloc = Z_NULL;
+    zstream.zfree = Z_NULL;
+    zstream.opaque = Z_NULL;
           
-            if (deflateInit2(&zstream, 9, Z_DEFLATED, 15, 9, Z_DEFAULT_STRATEGY) == Z_OK) {
+    if (deflateInit2(&zstream, 9, Z_DEFLATED, 15, 9, Z_DEFAULT_STRATEGY) == Z_OK) {
           
-	      zstream.next_in = Doc;
-              zstream.avail_in = (uInt)DocSize;
-              zstream.avail_out = (uInt)(2 * DocSize + 128 /*sizeof(gz_header) */);
-              CDoc = zstream.next_out = (Byte *) DpsMalloc(2 * DocSize + 128 /*sizeof(gz_header) + 1*/);
-              if (zstream.next_out == NULL) {
-		deflateEnd(&zstream);
-                return DPS_ERROR;
-              }
-              deflate(&zstream, Z_FINISH);
-              deflateEnd(&zstream);
+	zstream.next_in = Doc;
+	zstream.avail_in = (uInt)DocSize;
+	zstream.avail_out = (uInt)(2 * DocSize + 128 /*sizeof(gz_header) */);
+	CDoc = zstream.next_out = (Byte *) DpsMalloc(2 * DocSize + 128 /*sizeof(gz_header) + 1*/);
+	if (zstream.next_out == NULL) {
+	    deflateEnd(&zstream);
+	    return DPS_ERROR;
+	}
+	deflate(&zstream, Z_FINISH);
+	deflateEnd(&zstream);
 
 
 /* store operations */
 
-              bzero(&P, sizeof(P));
-              P.subdir = "store";
-              P.basename = "doc";
-              P.indname = "doc";
-              P.rec_id = rec_id;
-	      P.mode = DPS_WRITE_LOCK;
-	      P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
-	      P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
-	      P.A = Agent;
-	      if (DpsBaseWrite(&P, CDoc, zstream.total_out) != DPS_OK) {
-		dps_strerror(Agent, DPS_LOG_ERROR, "store/doc write error");
-		rc = DPS_ERROR;
-              }
+	bzero(&P, sizeof(P));
+	P.subdir = "store";
+	P.basename = "doc";
+	P.indname = "doc";
+	P.rec_id = rec_id;
+	P.mode = DPS_WRITE_LOCK;
+	P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
+	P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
+	P.A = Agent;
+	if (DpsBaseWrite(&P, CDoc, zstream.total_out) != DPS_OK) {
+	    dps_strerror(Agent, DPS_LOG_ERROR, "store/doc write error");
+	    rc = DPS_ERROR;
+	}
 
-	      DPS_FREE(CDoc);
-	      DpsBaseClose(&P);
+	DPS_FREE(CDoc);
+	DpsBaseClose(&P);
 
-	      if (rc == DPS_OK) DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Stored rec_id: %x Size: %d Ratio: %5.2f%%", Client,
-				       rec_id, DocSize, 100.0 * zstream.total_out / DocSize);
+	if (rc == DPS_OK) DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Stored rec_id: %x Size: %d Ratio: %5.2f%%", Client,
+				 rec_id, DocSize, 100.0 * zstream.total_out / DocSize);
 
-	      if (Agent->Flags.OptimizeAtUpdate) {
-		  DpsBaseOptimize(&P, (((int)rec_id) >> DPS_BASE_BITS) & DPS_BASE_MASK);
-	      }
+	if (Agent->Flags.OptimizeAtUpdate) {
+	    DpsBaseOptimize(&P, (((int)rec_id) >> DPS_BASE_BITS) & DPS_BASE_MASK);
+	}
 
-	      return rc;
+	return rc;
 /* /store operations */
-	    }
-	    return DPS_ERROR;
+    }
+    return DPS_ERROR;
 }
 
 
 static int GetStore(DPS_AGENT *Agent, DPS_DOCUMENT *Doc, urlid_t rec_id, size_t dbnum, const char *Client) {
-  Byte *CDoc = NULL;
-  z_stream zstream;
-  DPS_BASE_PARAM P;
-  DPS_DB *db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[dbnum] : &Agent->dbl.db[dbnum];
+    Byte *CDoc = NULL;
+    z_stream zstream;
+    DPS_BASE_PARAM P;
+    DPS_DB *db = DPS_DBL_DB(Agent, dbnum);
 
-            DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieve rec_id: %x", Client, rec_id);
-            bzero(&P, sizeof(P));
-            P.subdir = "store";
-            P.basename = "doc";
-            P.indname = "doc";
-            P.rec_id = rec_id;
-	    P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
-	    P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
-	    P.A = Agent;
-            if (DpsBaseOpen(&P, DPS_READ_LOCK) != DPS_OK) {
-                Doc->Buf.size = 0;
-		DpsBaseClose(&P);
-		return DPS_ERROR;
-            }
+    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieve rec_id: %x", Client, rec_id);
+    bzero(&P, sizeof(P));
+    P.subdir = "store";
+    P.basename = "doc";
+    P.indname = "doc";
+    P.rec_id = rec_id;
+    P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
+    P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
+    P.A = Agent;
+    if (DpsBaseOpen(&P, DPS_READ_LOCK) != DPS_OK) {
+	Doc->Buf.size = 0;
+	DpsBaseClose(&P);
+	return DPS_ERROR;
+    }
             
-            if (P.Item.rec_id == rec_id) {
-              if (lseek(P.Sfd, (off_t)P.Item.offset, SEEK_SET) == (off_t)-1) {
-		DpsBaseClose(&P);
-		return DPS_ERROR;
-              }
-              if ((zstream.avail_in = (uInt)(Doc->Buf.size = P.Item.size)) != 0) {
-		  zstream.avail_out = (uInt)(1 + ((P.Item.orig_size != 0) ? P.Item.orig_size : DPS_MAXDOCSIZE));
-		CDoc = zstream.next_in = (Byte *) DpsMalloc(Doc->Buf.size + 1);
-		Doc->Buf.buf = (char *) DpsRealloc(Doc->Buf.buf, zstream.avail_out + 1);
-		zstream.next_out = (Byte *) Doc->Buf.buf;
-		if (CDoc == NULL || Doc->Buf.buf == NULL) {
-		  Doc->Buf.size = 0;
-		  DpsBaseClose(&P);
-		  DPS_FREE(CDoc);
-		  return DPS_ERROR;
-		}
-		zstream.zalloc = Z_NULL;
-		zstream.zfree = Z_NULL;
-		zstream.opaque = Z_NULL;
-		if (read(P.Sfd, CDoc, Doc->Buf.size) != (ssize_t)Doc->Buf.size) {
-		  Doc->Buf.size = 0;
-		  DpsBaseClose(&P);
-		  DPS_FREE(CDoc);
-		  return DPS_ERROR;
-		}
-		if (Z_OK != inflateInit2(&zstream, 15)) {
-		  Doc->Buf.size = 0;
-		  DpsBaseClose(&P);
-		  DPS_FREE(CDoc);
-		  inflateEnd(&zstream);
-		  return DPS_ERROR;
-		}
-		inflate(&zstream, Z_FINISH);
-		inflateEnd(&zstream);
-		Doc->Buf.size = zstream.total_out;
-		Doc->Buf.buf[Doc->Buf.size] = '\0';
-		Doc->Buf.content = Doc->Buf.buf;
-
-		DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieved rec_id: %x Size: %d Ratio: %5.2f%%", Client,
-		       rec_id, Doc->Buf.size, 100.0 * zstream.total_in / Doc->Buf.size);
-	      } else {
-		DpsLog(Agent, DPS_LOG_DEBUG, "[%s] Zero size of rec_id: %x\n", Client, rec_id);
-	      }
-              
-            } else {
-	      DPS_FREE(Doc->Buf.buf);
-	      Doc->Buf.size = 0;
-              DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Not found rec_id: %x, StoredFiles: %d[x%x], VarDir: %s\n", 
-		     Client, rec_id, P.NFiles, P.NFiles, P.vardir);
-            }
-
+    if (P.Item.rec_id == rec_id) {
+	if (lseek(P.Sfd, (off_t)P.Item.offset, SEEK_SET) == (off_t)-1) {
 	    DpsBaseClose(&P);
-	    DPS_FREE(CDoc);
-	    return DPS_OK;
+	    return DPS_ERROR;
+	}
+	if ((zstream.avail_in = (uInt)(Doc->Buf.size = P.Item.size)) != 0) {
+	    zstream.avail_out = (uInt)(1 + ((P.Item.orig_size != 0) ? P.Item.orig_size : DPS_MAXDOCSIZE));
+	    CDoc = zstream.next_in = (Byte *) DpsMalloc(Doc->Buf.size + 1);
+	    Doc->Buf.buf = (char *) DpsRealloc(Doc->Buf.buf, zstream.avail_out + 1);
+	    zstream.next_out = (Byte *) Doc->Buf.buf;
+	    if (CDoc == NULL || Doc->Buf.buf == NULL) {
+		Doc->Buf.size = 0;
+		DpsBaseClose(&P);
+		DPS_FREE(CDoc);
+		return DPS_ERROR;
+	    }
+	    zstream.zalloc = Z_NULL;
+	    zstream.zfree = Z_NULL;
+	    zstream.opaque = Z_NULL;
+	    if (read(P.Sfd, CDoc, Doc->Buf.size) != (ssize_t)Doc->Buf.size) {
+		Doc->Buf.size = 0;
+		DpsBaseClose(&P);
+		DPS_FREE(CDoc);
+		return DPS_ERROR;
+	    }
+	    if (Z_OK != inflateInit2(&zstream, 15)) {
+		Doc->Buf.size = 0;
+		DpsBaseClose(&P);
+		DPS_FREE(CDoc);
+		inflateEnd(&zstream);
+		return DPS_ERROR;
+	    }
+	    inflate(&zstream, Z_FINISH);
+	    inflateEnd(&zstream);
+	    Doc->Buf.size = zstream.total_out;
+	    Doc->Buf.buf[Doc->Buf.size] = '\0';
+	    Doc->Buf.content = Doc->Buf.buf;
+
+	    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieved rec_id: %x Size: %d Ratio: %5.2f%%", Client,
+		   rec_id, Doc->Buf.size, 100.0 * zstream.total_in / Doc->Buf.size);
+	} else {
+	    DpsLog(Agent, DPS_LOG_DEBUG, "[%s] Zero size of rec_id: %x\n", Client, rec_id);
+	}
+              
+    } else {
+	DPS_FREE(Doc->Buf.buf);
+	Doc->Buf.size = 0;
+	DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Not found rec_id: %x, StoredFiles: %d[x%x], VarDir: %s\n", 
+	       Client, rec_id, P.NFiles, P.NFiles, P.vardir);
+    }
+
+    DpsBaseClose(&P);
+    DPS_FREE(CDoc);
+    return DPS_OK;
 }
 
-static int DpsStoreDeleteRec(DPS_AGENT *Agent, int sd, urlid_t rec_id) {
-  size_t DocSize = 0, dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
-  DPS_BASE_PARAM P;
-  DPS_DB *db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[dbnum] : &Agent->dbl.db[dbnum];
 
-  bzero(&P, sizeof(P));
-  P.subdir = "store";
-  P.basename = "doc";
-  P.indname = "doc";
-  P.rec_id = rec_id;
-  P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
-  P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
-  P.A = Agent;
-  if (DpsBaseDelete(&P) != DPS_OK) {
-    if (sd > 0) DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+static int DpsStoreDeleteRec(DPS_AGENT *Agent, int sd, urlid_t rec_id) {
+    size_t DocSize = 0, dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
+    DPS_BASE_PARAM P;
+    DPS_DB *db = DPS_DBL_DB(Agent, dbnum);
+
+    bzero(&P, sizeof(P));
+    P.subdir = "store";
+    P.basename = "doc";
+    P.indname = "doc";
+    P.rec_id = rec_id;
+    P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
+    P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
+    P.A = Agent;
+    if (DpsBaseDelete(&P) != DPS_OK) {
+	if (sd > 0) DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+	DpsBaseClose(&P);
+	return DPS_ERROR;
+    }
     DpsBaseClose(&P);
-    return DPS_ERROR;
-  }
-  DpsBaseClose(&P);
-  return DPS_OK;
+    return DPS_OK;
 }
 
 #endif
@@ -299,7 +300,7 @@ __C_LINK int __DPSCALL DpsUnStoreDoc(DPS_AGENT *Agent, DPS_DOCUMENT *Doc, const 
 
   for (i = 0; i < ndb; i++) {
     dbnum = (i + s_dbnum) % ndb;
-    db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[dbnum] : &Agent->dbl.db[dbnum];
+    db = DPS_DBL_DB(Agent, dbnum);
     if (label != NULL && db->label == NULL) continue;
     if (label == NULL && db->label != NULL) continue;
     if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
@@ -419,13 +420,13 @@ __C_LINK int __DPSCALL DpsStoreCheckUp(DPS_AGENT *Agent, int level) {
   const char *helloC = "C\0";
   const char *helloO = "O\0";
   int s, f = 1;
-  size_t i, dbfrom = 0, dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
+  size_t i, dbfrom = 0, dbto = DPS_DBL_TO(Agent);
 
   for (i = dbfrom; i < dbto; i++) {
     if ((Agent->Demons.nitems == 0) || ((s = Agent->Demons.Demon[i].stored_sd) <= 0)) {
       if ((level == 1) && (Agent->Flags.do_store)) {
 	DPS_BASE_PARAM P;
-	DPS_DB *db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[i] : &Agent->dbl.db[i];
+	DPS_DB *db = DPS_DBL_DB(Agent, i);
 	bzero(&P, sizeof(P));
 	P.subdir = "store";
 	P.basename = "doc";
@@ -1499,26 +1500,26 @@ int DpsStoreDelete(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
 
 
 int DpsStoredOptimize(DPS_AGENT *Agent, int ns, const char *Client) {
-  unsigned int NFiles = DpsVarListFindInt(&Agent->Vars, "StoredFiles", 0x100);
-  DPS_BASE_PARAM P;
-  size_t i, dbfrom = 0, dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
-  DPS_DB *db;
+    unsigned int NFiles = DpsVarListFindInt(&Agent->Vars, "StoredFiles", 0x100);
+    DPS_BASE_PARAM P;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(Agent);
+    DPS_DB *db;
 
-  for (i = dbfrom; i < dbto; i++) {
-    db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[i] : &Agent->dbl.db[i];
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(Agent, i);
 
-    bzero(&P, sizeof(P));
-    P.subdir = "store";
-    P.basename = "doc";
-    P.indname = "doc";
-    P.mode = DPS_WRITE_LOCK;
-    P.NFiles = (db->StoredFiles) ? db->StoredFiles : NFiles;
-    P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
-    P.A = Agent;
-    DpsBaseOptimize(&P, -1);
-    DpsBaseClose(&P);
-  }
-  return DPS_OK;
+	bzero(&P, sizeof(P));
+	P.subdir = "store";
+	P.basename = "doc";
+	P.indname = "doc";
+	P.mode = DPS_WRITE_LOCK;
+	P.NFiles = (db->StoredFiles) ? db->StoredFiles : NFiles;
+	P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
+	P.A = Agent;
+	DpsBaseOptimize(&P, -1);
+	DpsBaseClose(&P);
+    }
+    return DPS_OK;
 }
 
 
@@ -1535,7 +1536,7 @@ int DpsStoredCheck(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
     char req[256];
     DPS_SQLRES   SQLRes;
     int res, notfound, recs, u = 1;
-    size_t z, dbfrom = 0, dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
+    size_t z, dbfrom = 0, dbto = DPS_DBL_TO(Agent);
     DPS_DB  *db;
     unsigned long offset = 0;
     size_t nitems;
@@ -1561,7 +1562,7 @@ int DpsStoredCheck(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
     DpsLog(Agent, DPS_LOG_EXTRA, "update storedchk table(s)");
 
     for (z = dbfrom; z < dbto; z++) {
-	db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[z] : &Agent->dbl.db[z];
+	db = DPS_DBL_DB(Agent, z);
     
 	if(DPS_OK != (res = DpsSQLAsyncQuery(db, NULL, "DELETE FROM storedchk"))) {
 	    DpsDocFree(Doc); DPS_FREE(todel); return res;
@@ -1652,7 +1653,7 @@ int DpsStoredCheck(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
 
 		    notfound = 1;
 		    for (z = dbfrom; notfound && (z < dbto); z++) {
-			db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[z] : &Agent->dbl.db[z];
+			db = DPS_DBL_DB(Agent, z);
 
 			dps_snprintf(req, sizeof(req), "SELECT rec_id FROM storedchk WHERE url_id=%d", P.Item.rec_id);
 			if(DPS_OK != (res = DpsSQLQuery(db, &SQLRes, req))) {
@@ -1707,156 +1708,157 @@ int DpsStoredCheck(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
     return DPS_OK;
 }
 
-int DpsStoreFind(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
-  urlid_t rec_id;
-  size_t DocSize = 0, dbnum;
-  DPS_BASE_PARAM P;
-  int found = 0;
-  DPS_DB *db;
 
-  if (DpsRecvall(ns, &rec_id, sizeof(rec_id), 360) < 0) {
-    return DPS_ERROR;
-  }
-  dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
-  db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[dbnum] : &Agent->dbl.db[dbnum];
-  bzero(&P, sizeof(P));
-  P.subdir = "store";
-  P.basename = "doc";
-  P.indname = "doc";
-  P.mode = DPS_READ_LOCK;
-  P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
-  P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
-  P.A = Agent;
-  while (rec_id != 0) {
-    P.rec_id = rec_id;
-    if (DpsBaseSeek(&P, DPS_READ_LOCK) != DPS_OK) {
-      DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-      DpsBaseClose(&P);
-      return DPS_ERROR;
-    }
-    if (P.Item.rec_id == rec_id) {
-      found = 1;
-      DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Found rec_id: %x", Client, rec_id);
-    } else {
-      found = 0;
-      DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Not found rec_id: %x", Client, rec_id);
-    }
-    DpsSend(sd, &found, sizeof(found), 0);
+int DpsStoreFind(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
+    urlid_t rec_id;
+    size_t DocSize = 0, dbnum;
+    DPS_BASE_PARAM P;
+    int found = 0;
+    DPS_DB *db;
 
     if (DpsRecvall(ns, &rec_id, sizeof(rec_id), 360) < 0) {
-      DpsBaseClose(&P);
-      return DPS_ERROR;
+	return DPS_ERROR;
     }
-  }
-  DpsBaseClose(&P);
-  return DPS_OK;
+    dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
+    db = DPS_DBL_DB(Agent, dbnum);
+    bzero(&P, sizeof(P));
+    P.subdir = "store";
+    P.basename = "doc";
+    P.indname = "doc";
+    P.mode = DPS_READ_LOCK;
+    P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
+    P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
+    P.A = Agent;
+    while (rec_id != 0) {
+	P.rec_id = rec_id;
+	if (DpsBaseSeek(&P, DPS_READ_LOCK) != DPS_OK) {
+	    DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+	    DpsBaseClose(&P);
+	    return DPS_ERROR;
+	}
+	if (P.Item.rec_id == rec_id) {
+	    found = 1;
+	    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Found rec_id: %x", Client, rec_id);
+	} else {
+	    found = 0;
+	    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Not found rec_id: %x", Client, rec_id);
+	}
+	DpsSend(sd, &found, sizeof(found), 0);
+
+	if (DpsRecvall(ns, &rec_id, sizeof(rec_id), 360) < 0) {
+	    DpsBaseClose(&P);
+	    return DPS_ERROR;
+	}
+    }
+    DpsBaseClose(&P);
+    return DPS_OK;
 }
 
 int DpsStoreGetByChunks(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
 
 #ifdef HAVE_ZLIB
-  urlid_t rec_id;
-  size_t DocSize = 0, dbnum;
-  Byte *Doc = NULL, *CDoc = NULL;
-  z_stream zstream;
-  DPS_BASE_PARAM P;
-  DPS_DB *db;
-  int chunk, i, rc; size_t OldOut;
-
-  if (DpsRecvall(ns, &rec_id, sizeof(rec_id), 360) < 0) {
-    return DPS_ERROR;
-  }
+    urlid_t rec_id;
+    size_t DocSize = 0, dbnum;
+    Byte *Doc = NULL, *CDoc = NULL;
+    z_stream zstream;
+    DPS_BASE_PARAM P;
+    DPS_DB *db;
+    int chunk, i, rc; size_t OldOut;
+    
+    if (DpsRecvall(ns, &rec_id, sizeof(rec_id), 360) < 0) {
+	return DPS_ERROR;
+    }
             
-  DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieve by chunks: rec_id: %x", Client, rec_id);
+    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieve by chunks: rec_id: %x", Client, rec_id);
 
-  dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
-  db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[dbnum] : &Agent->dbl.db[dbnum];
-  bzero(&P, sizeof(P));
-  P.subdir = "store";
-  P.basename = "doc";
-  P.indname = "doc";
-  P.rec_id = rec_id;
-  P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
-  P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
-  P.A = Agent;
-  if (DpsBaseOpen(&P, DPS_READ_LOCK) != DPS_OK) {
-    DpsLog(Agent, DPS_LOG_ERROR, "[%s] DpsBaseOpen error: rec_id: %x", Client, P.rec_id);
-    DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-    DpsBaseClose(&P);
-    ABORT(DPS_ERROR);
-  }
-
-  if (P.Item.rec_id == rec_id) {
-    if (lseek(P.Sfd, (off_t)P.Item.offset, SEEK_SET) == (off_t)-1) {
-      DocSize = 0;
-      DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-      DpsLog(Agent, DPS_LOG_ERROR, "[%s] '%s' lseek [%x] error at %s:{%d}", Client, P.Sfilename, P.Item.offset, __FILE__, __LINE__);
-      ABORT(DPS_ERROR);
-    }
-    zstream.avail_in = DocSize = P.Item.size;
-    zstream.avail_out = 0;
-    zstream.zalloc = Z_NULL;
-    zstream.zfree = Z_NULL;
-    zstream.opaque = Z_NULL;
-    CDoc = zstream.next_in = (DocSize) ? (Byte *) DpsXmalloc(DocSize + 1) : NULL;
-    Doc = zstream.next_out = (Byte *) DpsXmalloc(DPS_MAXDOCSIZE + 1);
-    if (CDoc == NULL || Doc == NULL) {
-      DocSize = 0;
-      DpsSend(sd, &DocSize, sizeof(DocSize), 0);
-      DpsLog(Agent, DPS_LOG_ERROR, "[%s] alloc error at %s {%d}", Client, __FILE__, __LINE__);
-      ABORT(DPS_ERROR);
+    dbnum = ((size_t)rec_id) % ((Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems);
+    db = DPS_DBL_DB(Agent, dbnum);
+    bzero(&P, sizeof(P));
+    P.subdir = "store";
+    P.basename = "doc";
+    P.indname = "doc";
+    P.rec_id = rec_id;
+    P.NFiles = (db->StoredFiles) ? db->StoredFiles : DpsVarListFindUnsigned(&Agent->Vars, "StoredFiles", 0x100);
+    P.vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
+    P.A = Agent;
+    if (DpsBaseOpen(&P, DPS_READ_LOCK) != DPS_OK) {
+	DpsLog(Agent, DPS_LOG_ERROR, "[%s] DpsBaseOpen error: rec_id: %x", Client, P.rec_id);
+	DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+	DpsBaseClose(&P);
+	ABORT(DPS_ERROR);
     }
 
-    if ((read(P.Sfd, CDoc, DocSize) != (ssize_t)DocSize) || (inflateInit2(&zstream, 15) != Z_OK)) {
-      DocSize = 0;
-      DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-      DpsLog(Agent, DPS_LOG_ERROR, "[%s] read or inflate error at %s:{%d}", Client, __FILE__, __LINE__);
-      ABORT(DPS_ERROR);
-    }
+    if (P.Item.rec_id == rec_id) {
+	if (lseek(P.Sfd, (off_t)P.Item.offset, SEEK_SET) == (off_t)-1) {
+	    DocSize = 0;
+	    DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+	    DpsLog(Agent, DPS_LOG_ERROR, "[%s] '%s' lseek [%x] error at %s:{%d}", Client, P.Sfilename, P.Item.offset, __FILE__, __LINE__);
+	    ABORT(DPS_ERROR);
+	}
+	zstream.avail_in = DocSize = P.Item.size;
+	zstream.avail_out = 0;
+	zstream.zalloc = Z_NULL;
+	zstream.zfree = Z_NULL;
+	zstream.opaque = Z_NULL;
+	CDoc = zstream.next_in = (DocSize) ? (Byte *) DpsXmalloc(DocSize + 1) : NULL;
+	Doc = zstream.next_out = (Byte *) DpsXmalloc(DPS_MAXDOCSIZE + 1);
+	if (CDoc == NULL || Doc == NULL) {
+	    DocSize = 0;
+	    DpsSend(sd, &DocSize, sizeof(DocSize), 0);
+	    DpsLog(Agent, DPS_LOG_ERROR, "[%s] alloc error at %s {%d}", Client, __FILE__, __LINE__);
+	    ABORT(DPS_ERROR);
+	}
 
-    OldOut = 0;
-    DocSize = 1;
-    DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-    for(i = 1; 1; i++) {
-      if (DpsRecvall(ns, &chunk, sizeof(chunk), 360) < 0) {
+	if ((read(P.Sfd, CDoc, DocSize) != (ssize_t)DocSize) || (inflateInit2(&zstream, 15) != Z_OK)) {
+	    DocSize = 0;
+	    DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+	    DpsLog(Agent, DPS_LOG_ERROR, "[%s] read or inflate error at %s:{%d}", Client, __FILE__, __LINE__);
+	    ABORT(DPS_ERROR);
+	}
+
+	OldOut = 0;
+	DocSize = 1;
+	DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+	for(i = 1; 1; i++) {
+	    if (DpsRecvall(ns, &chunk, sizeof(chunk), 360) < 0) {
+		DocSize = 0;
+		DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
+		inflateEnd(&zstream);
+		ABORT(DPS_ERROR);
+	    }
+	    if (chunk == 0) break;
+	    zstream.avail_out = DPS_DOCHUNKSIZE;
+	    rc = inflate(&zstream, Z_SYNC_FLUSH);
+	    if (Z_OK != rc) {
+		DocSize = 0;
+		DpsSend(sd, &DocSize, sizeof(DocSize), 0);
+		if (rc == Z_STREAM_END) break;
+		DpsLog(Agent, DPS_LOG_ERROR, "[%s] inflate error at %s:{%d}", Client, __FILE__, __LINE__);
+		ABORT(DPS_ERROR);
+	    }
+                    
+	    DocSize = zstream.total_out - OldOut;
+	    DpsSend(sd, &DocSize, sizeof(DocSize), 0);
+	    DpsSend(sd, &Doc[OldOut], DocSize, 0);
+	    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] rec_id: %x Chunk %i [%d bytes] sent", Client, rec_id, chunk, DocSize);
+	    OldOut = zstream.total_out;
+	    if (DocSize == 0) break;
+	}
+	DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieved by chunks rec_id: %x Size: %d Ratio: %5.2f%%", Client,
+	       rec_id, zstream.total_out, (100.0 * zstream.total_in) / ((zstream.total_out > 0) ? zstream.total_out : 1));
+	inflateEnd(&zstream);
+
+    } else {
 	DocSize = 0;
 	DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-	inflateEnd(&zstream);
-	ABORT(DPS_ERROR);
-      }
-      if (chunk == 0) break;
-      zstream.avail_out = DPS_DOCHUNKSIZE;
-      rc = inflate(&zstream, Z_SYNC_FLUSH);
-      if (Z_OK != rc) {
-	DocSize = 0;
-	DpsSend(sd, &DocSize, sizeof(DocSize), 0);
-	if (rc == Z_STREAM_END) break;
-	DpsLog(Agent, DPS_LOG_ERROR, "[%s] inflate error at %s:{%d}", Client, __FILE__, __LINE__);
-	ABORT(DPS_ERROR);
-      }
-                    
-      DocSize = zstream.total_out - OldOut;
-      DpsSend(sd, &DocSize, sizeof(DocSize), 0);
-      DpsSend(sd, &Doc[OldOut], DocSize, 0);
-      DpsLog(Agent, DPS_LOG_EXTRA, "[%s] rec_id: %x Chunk %i [%d bytes] sent", Client, rec_id, chunk, DocSize);
-      OldOut = zstream.total_out;
-      if (DocSize == 0) break;
+	DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Not found rec_id: %x", Client, rec_id);
+	ABORT(DPS_OK);
     }
-    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Retrieved by chunks rec_id: %x Size: %d Ratio: %5.2f%%", Client,
-	   rec_id, zstream.total_out, (100.0 * zstream.total_in) / ((zstream.total_out > 0) ? zstream.total_out : 1));
-    inflateEnd(&zstream);
-
-  } else {
-    DocSize = 0;
-    DpsSend(sd, &DocSize, sizeof(DocSize), 0); 
-    DpsLog(Agent, DPS_LOG_EXTRA, "[%s] Not found rec_id: %x", Client, rec_id);
     ABORT(DPS_OK);
-  }
-  ABORT(DPS_OK);
 
 /**********************/
 #else
-  return DPS_ERROR;
+    return DPS_ERROR;
 #endif
 
 }

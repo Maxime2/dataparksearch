@@ -3369,7 +3369,7 @@ __C_LINK int __DPSCALL DpsSQLMonitor(DPS_AGENT *A, DPS_ENV *Env, DPS_SQLMON_PARA
                }
                else{
                     DPS_SQLRES sqlres;
-                    DPS_DB *db = (A->flags & DPS_FLAG_UNOCON) ? &Env->dbl.db[Env->dbl.currdbnum] : &A->dbl.db[A->dbl.currdbnum];
+                    DPS_DB *db = (A->flags & DPS_FLAG_UNOCON) ? Env->dbl.db[Env->dbl.currdbnum] : A->dbl.db[A->dbl.currdbnum];
                     prm->nqueries++;
 		    DpsSQLResInit(&sqlres);
 		    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);

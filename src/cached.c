@@ -339,7 +339,7 @@ static int client_action(DPS_AGENT *Agent, DPS_LOGD_CL * client){
 	  dbto =  Agent->Conf->dbl.nitems;
 	  DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 	  for (i = 0; i < dbto; i++) {
-	    db = &Agent->Conf->dbl.db[i];
+	    db = Agent->Conf->dbl.db[i];
 	    DpsURLDataWrite(Agent, db);
 	  }
 	  in_flush--;
@@ -357,7 +357,7 @@ static int client_action(DPS_AGENT *Agent, DPS_LOGD_CL * client){
 /*	  DpsLog(Agent, DPS_LOG_EXTRA, "DPS_LOGD_CMD_WORD: %d  nwords:%d", client->cmd.url_id, client->cmd.nwords);*/
 	  DPS_GETLOCK(Agent, DPS_LOCK_CONF);
 	  dbnum = client->cmd.url_id % Agent->Conf->dbl.nitems;
-	  db = &Agent->Conf->dbl.db[dbnum];
+	  db = Agent->Conf->dbl.db[dbnum];
 	  DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 	  rc = DpsLogdStoreDoc(Agent, client->cmd, client->wrd, db);
 	  if(rc != DPS_OK) {
@@ -524,7 +524,7 @@ static void * thread_flush_limits(void *arg) {
   dbto =  Indexer->Conf->dbl.nitems;
   DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
   for (i = 0; i < dbto; i++) {
-    db = &Indexer->Conf->dbl.db[i];
+    db = Indexer->Conf->dbl.db[i];
     DpsURLDataWrite(Indexer, db);
   }
   DpsFlushAllBufs(Indexer, 1); /* Rotate del logs */

@@ -192,7 +192,7 @@ static int CreateOrDrop(DPS_AGENT *A, enum dps_indcmd cmd) {
   
   for (dn = 0; dn < L->nitems; dn++) {
     FILE *infile;
-    DPS_DB *db= &L->db[dn];
+    DPS_DB *db= L->db[dn];
     dps_snprintf(fname,sizeof(fname),"%s%s%s%s%s.%s.sql",
       sdir,DPSSLASHSTR, DpsDBTypeToStr(db->DBType),DPSSLASHSTR,
       DpsIndCmdStr(cmd),DpsDBModeToStr(db->DBMode));
@@ -1164,9 +1164,9 @@ static int DpsClear(DPS_AGENT *A, const char *url_fname)
           size_t i;
           printf("You are going to delete content from database(s):\n");
 	  if (A->flags & DPS_FLAG_UNOCON) {
-	    for (i = 0; i < A->Conf->dbl.nitems; i++) printf("%s\n", A->Conf->dbl.db[i].DBADDR);
+	    for (i = 0; i < A->Conf->dbl.nitems; i++) printf("%s\n", A->Conf->dbl.db[i]->DBADDR);
 	  } else {
-	    for (i = 0; i < A->dbl.nitems; i++) printf("%s\n", A->dbl.db[i].DBADDR);
+	    for (i = 0; i < A->dbl.nitems; i++) printf("%s\n", A->dbl.db[i]->DBADDR);
 	  }
           clear_confirmed=DpsConfirm("Are you sure?(YES/no)");
      }
@@ -1628,9 +1628,9 @@ int main(int argc, char **argv, char **envp) {
 		size_t i;
 		printf("You are going to convern content from database(s):\n");
 		if (Main.flags & DPS_FLAG_UNOCON) {
-		  for (i = 0; i < Main.Conf->dbl.nitems; i++) printf("%s\n", Main.Conf->dbl.db[i].DBADDR);
+		  for (i = 0; i < Main.Conf->dbl.nitems; i++) printf("%s\n", Main.Conf->dbl.db[i]->DBADDR);
 		} else {
-		  for (i = 0; i < Main.dbl.nitems; i++) printf("%s\n", Main.dbl.db[i].DBADDR);
+		  for (i = 0; i < Main.dbl.nitems; i++) printf("%s\n", Main.dbl.db[i]->DBADDR);
 		}
 		clear_confirmed = DpsConfirm("Are you sure?(YES/no)");
 	      }

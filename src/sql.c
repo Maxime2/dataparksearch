@@ -939,11 +939,11 @@ static int DpsLoadCategoryTable(DPS_AGENT *Indexer, DPS_DB *catdb) {
 	DpsSQLResInit(&SRes);
 
 	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
-	dbto =  (Indexer->flags & DPS_FLAG_UNOCON) ? Indexer->Conf->dbl.nitems : Indexer->dbl.nitems;
+	dbto =  DPS_DBL_TO(Indexer);
 	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
 
 	for (d = dbfrom; d < dbto; d++) {
-	    db = (Indexer->flags & DPS_FLAG_UNOCON) ? &Indexer->Conf->dbl.db[d] : &Indexer->dbl.db[d];
+	    db = DPS_DBL_DB(Indexer, d);
 	    if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB); 
 
 

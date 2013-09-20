@@ -1,4 +1,5 @@
-/* Copyright (C) 2006-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2006-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,10 +48,10 @@ int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, con
   if (Indexer->flags & DPS_FLAG_UNOCON) {
     if (Indexer->Conf->dbl.nitems == 0) return DPS_OK;
     DPS_GETLOCK(Indexer, DPS_LOCK_DB);
-    db = &Indexer->Conf->dbl.db[url_id % Indexer->Conf->dbl.nitems];
+    db = Indexer->Conf->dbl.db[url_id % Indexer->Conf->dbl.nitems];
   } else {
     if (Indexer->dbl.nitems == 0) return DPS_OK;
-    db = &Indexer->dbl.db[url_id % Indexer->dbl.nitems];
+    db = Indexer->dbl.db[url_id % Indexer->dbl.nitems];
   }
   (void)DpsDBEscStr(db, path_esc, DPS_NULL2EMPTY(path), dps_min(PATH_MAX,dps_strlen(DPS_NULL2EMPTY(path))));
 
@@ -124,32 +125,33 @@ void DpsCookiesFree(DPS_COOKIES *Cookies) {
    Cookies->ncookies = 0;
 }
 
+
 void DpsCookiesClean(DPS_AGENT *A) {
-	char buf[256];
-	DPS_DB	*db;
-	size_t i, dbfrom = 0, dbto;
-	int res;
+    char buf[256];
+    DPS_DB	*db;
+    size_t i, dbfrom = 0, dbto;
+    int res;
 
-	if (A->Flags.robots_period == 0) return;
+    if (A->Flags.robots_period == 0) return;
 
-	dps_snprintf(buf, sizeof(buf), "DELETE FROM cookies WHERE expires < %d", A->now);
+    dps_snprintf(buf, sizeof(buf), "DELETE FROM cookies WHERE expires < %d", A->now);
 
-	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_CONF);
-	dbto = (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
+    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(A);
+    if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
 #ifdef HAVE_SQL
-	  res = DpsSQLAsyncQuery(db, NULL, buf);
+	res = DpsSQLAsyncQuery(db, NULL, buf);
 #endif
-	  if(res != DPS_OK){
-		DpsLog(A, DPS_LOG_ERROR, db->errstr);
-	  }
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-	  if (res != DPS_OK) break;
+	if (res != DPS_OK) {
+	    DpsLog(A, DPS_LOG_ERROR, db->errstr);
 	}
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	if (res != DPS_OK) break;
+    }
 }
 
 
@@ -192,9 +194,9 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
       dps_snprintf(buf, sizeof(buf), "SELECT name,value,path,secure FROM cookies WHERE domain='%s'", hostinfo);
       if (Indexer->flags & DPS_FLAG_UNOCON) {
 	DPS_GETLOCK(Indexer, DPS_LOCK_DB);
-	db = &Indexer->Conf->dbl.db[url_id % Indexer->Conf->dbl.nitems];
+	db = Indexer->Conf->dbl.db[url_id % Indexer->Conf->dbl.nitems];
       } else {
-	db = &Indexer->dbl.db[url_id % Indexer->dbl.nitems];
+	db = Indexer->dbl.db[url_id % Indexer->dbl.nitems];
       }
       if(DPS_OK == (rc = DpsSQLQuery(db, &Res, buf))) {
 	rows = DpsSQLNumRows(&Res);

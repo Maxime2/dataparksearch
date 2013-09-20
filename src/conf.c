@@ -1201,7 +1201,7 @@ static int add_srv_db(void *Cfg, size_t ac, char **av) {
 
 	DpsDBListInit(&dbl);
 	DpsDBListAdd(&dbl, dbaddr, DPS_OPEN_MODE_READ);
-	db = &dbl.db[0];
+	db = dbl.db[0];
 		
 #ifdef HAVE_SQL
 	res = DpsSrvActionSQL(Indexer, C->Srv, cmd, db);
@@ -1320,7 +1320,7 @@ static int add_srv_table(void *Cfg, size_t ac,char **av){
 	
 	DpsDBListInit(&dbl);
 	DpsDBListAdd(&dbl, av[1], DPS_OPEN_MODE_READ);
-	db = &dbl.db[0];
+	db = dbl.db[0];
 
 #ifdef HAVE_SQL
 	res = DpsSrvActionSQL(C->Indexer, NULL, DPS_SRV_ACTION_TABLE, db);
@@ -1355,7 +1355,7 @@ static int add_cat_table(void *Cfg, size_t ac, char **av) {
 	
 	DpsDBListInit(&dbl);
 	DpsDBListAdd(&dbl, av[1], DPS_OPEN_MODE_READ);
-	db = &dbl.db[0];
+	db = dbl.db[0];
 
 #ifdef HAVE_SQL
 	res = DpsSrvActionSQL(C->Indexer, NULL, DPS_SRV_ACTION_CATTABLE, db);

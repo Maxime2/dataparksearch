@@ -259,26 +259,26 @@ __C_LINK int __DPSCALL DpsLimit4(DPS_AGENT *A, DPS_UINT4URLIDLIST *L,const char 
 
 
 __C_LINK int __DPSCALL DpsClearDatabase(DPS_AGENT *A) {
-	int	res=DPS_ERROR;
-	DPS_DB	*db;
-	size_t i, dbto;
+    int	res = DPS_ERROR;
+    DPS_DB	*db;
+    size_t i, dbto;
 
-	TRACE_IN(A, "DpsClearDatabase");
+    TRACE_IN(A, "DpsClearDatabase");
 
-	dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-	for (i = 0; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
+    dbto = DPS_DBL_TO(A);
+    for (i = 0; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
 #ifdef HAVE_SQL
-	  res = DpsClearDBSQL(A, db);
-	  DPS_FREE(db->where);          /* clear db->where for next parameters */
+	res = DpsClearDBSQL(A, db);
+	DPS_FREE(db->where);          /* clear db->where for next parameters */
 #endif
-	  if (res != DPS_OK) break;
-	}
-	if(res!=DPS_OK){
-		dps_strcpy(A->Conf->errstr,db->errstr);
-	}
-	TRACE_OUT(A);
-	return res;
+	if (res != DPS_OK) break;
+    }
+    if (res != DPS_OK) {
+	dps_strcpy(A->Conf->errstr, db->errstr);
+    }
+    TRACE_OUT(A);
+    return res;
 }
 
 
@@ -321,9 +321,9 @@ int DpsExecActions(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, char action) {
       if (Alias->dbaddr != NULL) {
 	DpsDBListInit(&dbl);
 	DpsDBListAdd(&dbl, Alias->dbaddr, DPS_OPEN_MODE_READ);
-	db = &dbl.db[0];
+	db = dbl.db[0];
       } else {
-	db = (Indexer->flags & DPS_FLAG_UNOCON) ? &Indexer->Conf->dbl.db[0] :  &Indexer->dbl.db[0];
+	db = (Indexer->flags & DPS_FLAG_UNOCON) ? Indexer->Conf->dbl.db[0] :  Indexer->dbl.db[0];
       }
 
       notdone = 1;
@@ -867,7 +867,7 @@ __C_LINK int __DPSCALL DpsURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd) {
 #endif
 	
 	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
+	    db = DPS_DBL_DB(A, i);
 
 /*#ifdef WITH_TRACE
 		  fprintf(A->TR, "[%d] URLAction: db->DBDriver %d\n", A->handle, db->DBDriver);
@@ -933,134 +933,137 @@ __C_LINK int __DPSCALL DpsURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd) {
 
 
 __C_LINK int __DPSCALL DpsTargets(DPS_AGENT *A) {
-	int	res=DPS_ERROR;
-	DPS_DB	*db;
-	size_t i, dbfrom = 0, dbto;
+    int	res = DPS_ERROR;
+    DPS_DB	*db;
+    size_t i, dbfrom = 0, dbto;
 
-	TRACE_IN(A, "DpsTargets");
+    TRACE_IN(A, "DpsTargets");
 
 /*	DPS_GETLOCK(A, DPS_LOCK_CONF);*/
-	dbto = (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems ;
-	DpsResultFree(&A->Conf->Targets);
+    dbto = DPS_DBL_TO(A);
+    DpsResultFree(&A->Conf->Targets);
 /*	DPS_RELEASELOCK(A, DPS_LOCK_CONF);*/
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
 #ifdef HAVE_SQL
-	  res = DpsTargetsSQL(A, db);
+	res = DpsTargetsSQL(A, db);
 #endif
-	  if(res != DPS_OK){
-		DpsLog(A, DPS_LOG_ERROR, db->errstr);
-	  }
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-	  if (res != DPS_OK) break;
+	if (res != DPS_OK) {
+	    DpsLog(A, DPS_LOG_ERROR, db->errstr);
 	}
-	TRACE_OUT(A);
-	return res;
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	if (res != DPS_OK) break;
+    }
+    TRACE_OUT(A);
+    return res;
 }
+
 
 __C_LINK int __DPSCALL DpsResAction(DPS_AGENT *A, DPS_RESULT *R, int cmd){
-	int	res=DPS_ERROR;
-	DPS_DB	*db;
-	size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-	const char      *label = DpsVarListFindStr(&A->Vars, "label", NULL);
+    int	res = DPS_ERROR;
+    DPS_DB	*db;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
+    const char      *label = DpsVarListFindStr(&A->Vars, "label", NULL);
 
-	TRACE_IN(A, "DpsResAction");
+    TRACE_IN(A, "DpsResAction");
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (label != NULL && db->label == NULL) continue;
-	  if (label == NULL && db->label != NULL) continue;
-	  if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if (label != NULL && db->label == NULL) continue;
+	if (label == NULL && db->label != NULL) continue;
+	if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
 
-	  if (db->DBMode == DPS_DBMODE_CACHE)
+	if (db->DBMode == DPS_DBMODE_CACHE)
 	    res = DpsResActionCache(A, R, cmd, db, i);
 #ifdef HAVE_SQL
-	  if ((db->DBType != DPS_DB_CACHE) && A->Flags.URLInfoSQL)
+	if ((db->DBType != DPS_DB_CACHE) && A->Flags.URLInfoSQL)
 	    res = DpsResActionSQL(A, R, cmd, db, i);
 #endif
-	  if(res != DPS_OK){
-		DpsLog(A, DPS_LOG_ERROR, db->errstr);
-	  }
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-	  if (res != DPS_OK) break;
+	if (res != DPS_OK) {
+	    DpsLog(A, DPS_LOG_ERROR, db->errstr);
 	}
-	TRACE_OUT(A);
-	return res;
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	if (res != DPS_OK) break;
+    }
+    TRACE_OUT(A);
+    return res;
 }
 
 
-__C_LINK int __DPSCALL DpsCatAction(DPS_AGENT *A, DPS_CATEGORY *C, int cmd){
-	DPS_DB	*db;
-	int	res=DPS_ERROR;
-	size_t i, dbfrom = 0, dbto;
+__C_LINK int __DPSCALL DpsCatAction(DPS_AGENT *A, DPS_CATEGORY *C, int cmd) {
+    DPS_DB	*db;
+    int	res = DPS_ERROR;
+    size_t i, dbfrom = 0, dbto;
 
-	TRACE_IN(A, "DpsCatAction");
+    TRACE_IN(A, "DpsCatAction");
 
-	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_CONF);
-	dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
+    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(A);
+    if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
-	  switch(db->DBDriver) {
-	  case DPS_DB_SEARCHD:
-	        res = DpsSearchdCatAction(A, C, cmd, db);
-		break;
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+	switch(db->DBDriver) {
+	case DPS_DB_SEARCHD:
+	    res = DpsSearchdCatAction(A, C, cmd, db);
+	    break;
 #ifdef HAVE_SQL
-	  default:
+	default:
 	    if (db->DBType != DPS_DB_CACHE)
-	      res = DpsCatActionSQL(A, C, cmd, db);
+		res = DpsCatActionSQL(A, C, cmd, db);
 #endif
-	  }
-	  if(res != DPS_OK){
-		DpsLog(A, DPS_LOG_ERROR, db->errstr);
-	  }
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-	  if (res != DPS_OK) break;
 	}
-	TRACE_OUT(A);
-	return res;
+	if (res != DPS_OK) {
+		DpsLog(A, DPS_LOG_ERROR, db->errstr);
+	}
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	if (res != DPS_OK) break;
+    }
+    TRACE_OUT(A);
+    return res;
 }
+
 
 __C_LINK int __DPSCALL DpsSrvAction(DPS_AGENT *A, DPS_SERVER *S, int cmd) {
-	DPS_DB	*db;
-	int	res = DPS_OK;
-	size_t i, dbfrom = 0, dbto;
+    DPS_DB	*db;
+    int	res = DPS_OK;
+    size_t i, dbfrom = 0, dbto;
 
-	TRACE_IN(A, "DpsSrvAction");
+    TRACE_IN(A, "DpsSrvAction");
 
-	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_CONF);
-	dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
+    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(A);
+    if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_CONF);
 
-	dps_strcpy(A->Conf->errstr, "An error in DpsSRVAction (does appropriate storage support compiled in?)");
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
+    dps_strcpy(A->Conf->errstr, "An error in DpsSRVAction (does appropriate storage support compiled in?)");
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
 
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB); 
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB); 
 #ifdef HAVE_SQL
-	  if (db->DBType != DPS_DB_CACHE)
+	if (db->DBType != DPS_DB_CACHE)
 	    res = DpsSrvActionSQL(A, S, cmd, db);
 #endif
-	  if(res != DPS_OK){
-		DpsLog(A, DPS_LOG_ERROR, db->errstr);
-	  }
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-	  if (res != DPS_OK) break;
+	if (res != DPS_OK) {
+	    DpsLog(A, DPS_LOG_ERROR, db->errstr);
 	}
-	TRACE_OUT(A);
-	return res;
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	if (res != DPS_OK) break;
+    }
+    TRACE_OUT(A);
+    return res;
 }
+
 
 int DpsFindWords(DPS_AGENT *A, DPS_RESULT *Res) {
 	const char      *cache_mode  = DpsVarListFindStr(&A->Vars, "Cache", "no");
 	const char      *label = DpsVarListFindStr(&A->Vars, "label", NULL);
 	DPS_DB		*db;
-	size_t          i, nitems =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
+	size_t          i, nitems =  DPS_DBL_TO(A);
 	size_t          dbfrom = nitems, dbto = 0;
 	int             res = DPS_OK;
 	size_t	        nwrd = 0;
@@ -1089,25 +1092,25 @@ int DpsFindWords(DPS_AGENT *A, DPS_RESULT *Res) {
 		/* Get groupped by url_id words array */
 	
 	  for (i = 0; i < nitems; i++) {
-	    db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	    if (label != NULL && db->label == NULL) continue;
-	    if (label == NULL && db->label != NULL) continue;
-	    if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	    if (i < dbfrom) dbfrom = i;
-	    if (i > dbto) dbto = i;
-	    DpsLog(A, DPS_LOG_DEBUG, "DpsFind for %s", db->DBADDR);
-	    switch(db->DBDriver){
-		case DPS_DB_SEARCHD:
+	      db = DPS_DBL_DB(A, i);
+	      if (label != NULL && db->label == NULL) continue;
+	      if (label == NULL && db->label != NULL) continue;
+	      if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	      if (i < dbfrom) dbfrom = i;
+	      if (i > dbto) dbto = i;
+	      DpsLog(A, DPS_LOG_DEBUG, "DpsFind for %s", db->DBADDR);
+	      switch(db->DBDriver){
+	      case DPS_DB_SEARCHD:
 		  res = DpsFindWordsSearchd(A, Res, db);
 		  break;
-	        default:
+	      default:
 		  res = DPS_OK;
 #ifdef HAVE_SQL
 		  DPS_FREE(db->where)
 #endif
-		  ;
-	    }
-	    if (DPS_OK != res) DpsLog(A, DPS_LOG_ERROR, "FindWordsSearchd err: %s", A->Conf->errstr); 
+		      ;
+	      }
+	      if (DPS_OK != res) DpsLog(A, DPS_LOG_ERROR, "FindWordsSearchd err: %s", A->Conf->errstr); 
 	  }
 	  dbto++;
 	  if (A->flags & DPS_FLAG_UNOCON) {
@@ -1116,69 +1119,69 @@ int DpsFindWords(DPS_AGENT *A, DPS_RESULT *Res) {
 	  } else {
 	  }
 	  for (i = dbfrom; i < dbto; i++) {
-	    db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	    if (label != NULL && db->label == NULL) continue;
-	    if (label == NULL && db->label != NULL) continue;
-	    if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	    DpsLog(A, DPS_LOG_DEBUG, "DpsGetWords for %s", db->DBADDR);
-	    Res->CoordList.Coords = NULL;
-	    Res->CoordList.Data = NULL;
-	    Res->PerSite = NULL;
+	      db = DPS_DBL_DB(A, i);
+	      if (label != NULL && db->label == NULL) continue;
+	      if (label == NULL && db->label != NULL) continue;
+	      if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	      DpsLog(A, DPS_LOG_DEBUG, "DpsGetWords for %s", db->DBADDR);
+	      Res->CoordList.Coords = NULL;
+	      Res->CoordList.Data = NULL;
+	      Res->PerSite = NULL;
 #ifdef WITH_REL_TRACK
-	    Res->CoordList.Track = NULL;
+	      Res->CoordList.Track = NULL;
 #endif
-	    Res->CoordList.ncoords = 0;
-	    Res->total_found = 0;
-	    switch(db->DBDriver){
-		case DPS_DB_SEARCHD:
+	      Res->CoordList.ncoords = 0;
+	      Res->total_found = 0;
+	      switch(db->DBDriver){
+	      case DPS_DB_SEARCHD:
 		  res = DpsSearchdGetWordResponse(A, Res, db);
 		  Res->offset = (nitems == 1) ? 0 : 1;
 		  break;
-		default:
+	      default:
 		  if (db->DBMode == DPS_DBMODE_CACHE) {
-		    res = DpsFindWordsCache(A, Res, db);
+		      res = DpsFindWordsCache(A, Res, db);
 		  } else {
 #ifdef HAVE_SQL
-		    res = DpsFindWordsSQL(A, Res, db);
+		      res = DpsFindWordsSQL(A, Res, db);
 #else
-		    res = DPS_OK;
+		      res = DPS_OK;
 #endif
 		  }
 		  Res->offset = 1;
 		  break;
-	    }
-	    if (DPS_OK != res) DpsLog(A, DPS_LOG_ERROR, "2FindWordsSearchd err: %s", A->Conf->errstr); 
-	    wrdX[i] = Res->CoordList.Coords;
-	    udtX[i] = Res->CoordList.Data;
+	      }
+	      if (DPS_OK != res) DpsLog(A, DPS_LOG_ERROR, "2FindWordsSearchd err: %s", A->Conf->errstr); 
+	      wrdX[i] = Res->CoordList.Coords;
+	      udtX[i] = Res->CoordList.Data;
 #ifdef WITH_REL_TRACK
-	    trkX[i] = Res->CoordList.Track;
+	      trkX[i] = Res->CoordList.Track;
 #endif
-	    nwrdX[i] = (Res->offset || !Res->num_rows) ? Res->total_found : Res->num_rows;
+	      nwrdX[i] = (Res->offset || !Res->num_rows) ? Res->total_found : Res->num_rows;
 #ifdef NEWMERGE
-	    iwrdX[i] = 0;
-	    if (label != NULL && db->label == NULL) nwrdX[i] = 0;
-	    else if (label == NULL && db->label != NULL) nwrdX[i] = 0;
-	    else if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) nwrdX[i] = 0;
+	      iwrdX[i] = 0;
+	      if (label != NULL && db->label == NULL) nwrdX[i] = 0;
+	      else if (label == NULL && db->label != NULL) nwrdX[i] = 0;
+	      else if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) nwrdX[i] = 0;
 	    
 #endif
 /*	    nwrd += (Res->offset || !Res->num_rows) ? Res->total_found : Res->num_rows;*/
-	    nwrd += nwrdX[i];
+	      nwrd += nwrdX[i];
 
-	    total_found += Res->total_found;
-	    grand_total += Res->grand_total;
-	    if ((PerSite[i] = Res->PerSite) == NULL) {
-	      if (nwrdX[i]) {
-		PerSite[i] = (size_t*)DpsXmalloc(sizeof(size_t) * nwrdX[i]);
-		if (PerSite[i] == NULL) {
-		  while(i > 0) {
-		    DPS_FREE(PerSite[i - 1]);
-		    i--;
+	      total_found += Res->total_found;
+	      grand_total += Res->grand_total;
+	      if ((PerSite[i] = Res->PerSite) == NULL) {
+		  if (nwrdX[i]) {
+		      PerSite[i] = (size_t*)DpsXmalloc(sizeof(size_t) * nwrdX[i]);
+		      if (PerSite[i] == NULL) {
+			  while(i > 0) {
+			      DPS_FREE(PerSite[i - 1]);
+			      i--;
+			  }
+			  TRACE_OUT(A);
+			  return DPS_ERROR;
+		      }
 		  }
-		  TRACE_OUT(A);
-		  return DPS_ERROR;
-		}
 	      }
-	    }
 	  }
 
 	  if (nwrd > 0) {
@@ -1261,57 +1264,57 @@ int DpsFindWords(DPS_AGENT *A, DPS_RESULT *Res) {
 
 #else
 	    for (i = dbfrom; i < dbto; i++) {
-	      db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	      if (label != NULL && db->label == NULL) continue;
-	      if (label == NULL && db->label != NULL) continue;
-	      if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+		db = DPS_DBL_DB(A, i);
+		if (label != NULL && db->label == NULL) continue;
+		if (label == NULL && db->label != NULL) continue;
+		if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
 		if(wrdX[i]){
-		        if (A->flags & DPS_FLAG_UNOCON) A->Conf->dbl.cnt_db++; else A->dbl.cnt_db++;
+		    if (A->flags & DPS_FLAG_UNOCON) A->Conf->dbl.cnt_db++; else A->dbl.cnt_db++;
 /*			size_t j;*/
 			/* Set machine number */
 /*			for(j=0;j<nwrdX[i];j++){
 				wrdX[i][j].coord = (wrdX[i][j].coord << 8) + (i & 255);
 			}*/
 
-			dps_memcpy(curwrd, wrdX[i], sizeof(*curwrd)*nwrdX[i]); /* was: dps_memmove */
+		    dps_memcpy(curwrd, wrdX[i], sizeof(*curwrd)*nwrdX[i]); /* was: dps_memmove */
 #ifdef WITH_MULTIDBADDR
-			if (db->DBDriver == DPS_DB_SEARCHD && nwrdX[i] > 0 ) {
-			  register size_t length = nwrdX[i];
-			  register size_t n = (nwrdX[i] + 7) / 8;
-			  switch(length % 8) {
-			  case 0: do { curwrd->dbnum = i; curwrd++;
-			  case 7:      curwrd->dbnum = i; curwrd++;
-			  case 6:      curwrd->dbnum = i; curwrd++;
-			  case 5:      curwrd->dbnum = i; curwrd++;
-			  case 4:      curwrd->dbnum = i; curwrd++;
-			  case 3:      curwrd->dbnum = i; curwrd++;
-			  case 2:      curwrd->dbnum = i; curwrd++;
-			  case 1:      curwrd->dbnum = i; curwrd++;
+		    if (db->DBDriver == DPS_DB_SEARCHD && nwrdX[i] > 0 ) {
+			size_t length = nwrdX[i];
+			size_t n = (nwrdX[i] + 7) / 8;
+			switch(length % 8) {
+			case 0: do { curwrd->dbnum = i; curwrd++;
+			    case 7:      curwrd->dbnum = i; curwrd++;
+			    case 6:      curwrd->dbnum = i; curwrd++;
+			    case 5:      curwrd->dbnum = i; curwrd++;
+			    case 4:      curwrd->dbnum = i; curwrd++;
+			    case 3:      curwrd->dbnum = i; curwrd++;
+			    case 2:      curwrd->dbnum = i; curwrd++;
+			    case 1:      curwrd->dbnum = i; curwrd++;
 			    } while (--n > 0);
-			  }
-			} else curwrd += nwrdX[i];
+			}
+		    } else curwrd += nwrdX[i];
 #else
-			curwrd+=nwrdX[i];
+		    curwrd+=nwrdX[i];
 #endif
-			DPS_FREE(wrdX[i]);
-			dps_memcpy(curpersite, PerSite[i], sizeof(size_t) * nwrdX[i]); /* was: dps_memmove */
-			curpersite += nwrdX[i];
-			DPS_FREE(PerSite[i]);
-			if (udtX[i] != NULL) {
-			  dps_memcpy(curudt, udtX[i], sizeof(*curudt) * nwrdX[i]); /* was: dps_memmove */
-			} else {
-			  bzero(curudt, sizeof(*curudt) * nwrdX[i]);
-			}
-			curudt += nwrdX[i];
-			DPS_FREE(udtX[i]);
+		    DPS_FREE(wrdX[i]);
+		    dps_memcpy(curpersite, PerSite[i], sizeof(size_t) * nwrdX[i]); /* was: dps_memmove */
+		    curpersite += nwrdX[i];
+		    DPS_FREE(PerSite[i]);
+		    if (udtX[i] != NULL) {
+			dps_memcpy(curudt, udtX[i], sizeof(*curudt) * nwrdX[i]); /* was: dps_memmove */
+		    } else {
+			bzero(curudt, sizeof(*curudt) * nwrdX[i]);
+		    }
+		    curudt += nwrdX[i];
+		    DPS_FREE(udtX[i]);
 #ifdef WITH_REL_TRACK
-			if (trkX[i] != NULL) {
-			  dps_memcpy(curtrk, trkX[i], sizeof(*curtrk) * nwrdX[i]); /* was: dps_memmove */
-			} else {
-			  bzero(curtrk, sizeof(*curtrk) * nwrdX[i]);
-			}
-			curtrk += nwrdX[i];
-			DPS_FREE(trkX[i]);
+		    if (trkX[i] != NULL) {
+			dps_memcpy(curtrk, trkX[i], sizeof(*curtrk) * nwrdX[i]); /* was: dps_memmove */
+		    } else {
+			bzero(curtrk, sizeof(*curtrk) * nwrdX[i]);
+		    }
+		    curtrk += nwrdX[i];
+		    DPS_FREE(trkX[i]);
 #endif
 		}
 	    }
@@ -1488,7 +1491,7 @@ DPS_RESULT * __DPSCALL DpsFind(DPS_AGENT *A) {
 	DPS_EXCERPT_CFG Cfg;
 	int		res;
 	unsigned long	ticks=DpsStartTimer(), ticks_;
-	size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems, num;
+	size_t i, num, dbfrom = 0, dbto = DPS_DBL_TO(A);
 	int		page_number;
 	int		page_size;
 	size_t          ExcerptSize = (size_t)DpsVarListFindInt(&A->Vars, "ExcerptSize", 256);
@@ -1518,17 +1521,17 @@ DPS_RESULT * __DPSCALL DpsFind(DPS_AGENT *A) {
 	}
 
 	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (label != NULL && db->label == NULL) continue;
-	  if (label == NULL && db->label != NULL) continue;
-	  if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	  switch(db->DBType) {
-		case DPS_DB_SEARCHD:
-		  res = DpsSearchdConnect(A, db);
-		  break;
-		default:
-			break;
-	  }
+	    db = DPS_DBL_DB(A, i);
+	    if (label != NULL && db->label == NULL) continue;
+	    if (label == NULL && db->label != NULL) continue;
+	    if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	    switch(db->DBType) {
+	    case DPS_DB_SEARCHD:
+		res = DpsSearchdConnect(A, db);
+		break;
+	    default:
+		break;
+	    }
 	}
 
 	if (res != DPS_OK) {
@@ -1598,24 +1601,24 @@ DPS_RESULT * __DPSCALL DpsFind(DPS_AGENT *A) {
 	}
 	
 	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (label != NULL && db->label == NULL) continue;
-	  if (label == NULL && db->label != NULL) continue;
-	  if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	  switch(db->DBDriver){
-		case DPS_DB_SEARCHD:
-		  res = DpsResAddDocInfoSearchd(A, db, Res, i);
-		  break;
-		default:
-		  if (db->DBMode == DPS_DBMODE_CACHE) {
+	    db = DPS_DBL_DB(A, i);
+	    if (label != NULL && db->label == NULL) continue;
+	    if (label == NULL && db->label != NULL) continue;
+	    if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	    switch(db->DBDriver){
+	    case DPS_DB_SEARCHD:
+		res = DpsResAddDocInfoSearchd(A, db, Res, i);
+		break;
+	    default:
+		if (db->DBMode == DPS_DBMODE_CACHE) {
 		    res = DpsResAddDocInfoCache(A, db, Res, i);
-		  }
+		}
 #ifdef HAVE_SQL
-		  if (db->DBType != DPS_DB_CACHE)
+		if (db->DBType != DPS_DB_CACHE)
 		    res = DpsResAddDocInfoSQL(A, db, Res, i);
-			break;
+		break;
 #endif
-	  }
+	    }
 	}
 
 	num = Res->num_rows;
@@ -1747,17 +1750,17 @@ DPS_RESULT * __DPSCALL DpsFind(DPS_AGENT *A) {
 	DpsLog(A,DPS_LOG_DEBUG,"Done  DpsFind %.3f", (float)ticks/1000);
 
 	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (label != NULL && db->label == NULL) continue;
-	  if (label == NULL && db->label != NULL) continue;
-	  if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	  switch(db->DBType) {
-		case DPS_DB_SEARCHD:
-		  DpsSearchdClose(db);
-		  break;
-		default:
-			break;
-	  }
+	    db = DPS_DBL_DB(A, i);
+	    if (label != NULL && db->label == NULL) continue;
+	    if (label == NULL && db->label != NULL) continue;
+	    if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	    switch(db->DBType) {
+	    case DPS_DB_SEARCHD:
+		DpsSearchdClose(db);
+		break;
+	    default:
+		break;
+	    }
 	}
 
 	if(res!=DPS_OK){
@@ -2212,30 +2215,31 @@ int DpsDBSetAddr(DPS_DB *db, const char *dbaddr, int mode){
 }
 
 
-__C_LINK int __DPSCALL DpsStatAction(DPS_AGENT *A, DPS_STATLIST *S){
-	DPS_DB	*db;
-	int	res=DPS_ERROR;
-	size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
+__C_LINK int __DPSCALL DpsStatAction(DPS_AGENT *A, DPS_STATLIST *S) {
+    DPS_DB *db;
+    int	res = DPS_ERROR;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
 	
-	TRACE_IN(A, "DpsStatAction");
+    TRACE_IN(A, "DpsStatAction");
 
-	bzero((void*)S, sizeof(S[0]));
+    bzero((void*)S, sizeof(S[0]));
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
 /*	  if(db->DBDriver == DPS_DB_CACHE)
 		res = DpsStatActionCache(A, S, db); */ /* FIXME: usr this after it implementation */
 #ifdef HAVE_SQL
-	  res = DpsStatActionSQL(A, S, db);
+	res = DpsStatActionSQL(A, S, db);
 #endif
-	  if (res != DPS_OK) break;
-	}
-	if(res!=DPS_OK){
-		dps_strcpy(A->Conf->errstr, db->errstr);
-	}
-	TRACE_OUT(A);
-	return res;
+	if (res != DPS_OK) break;
+    }
+    if (res != DPS_OK) {
+	dps_strcpy(A->Conf->errstr, db->errstr);
+    }
+    TRACE_OUT(A);
+    return res;
 }
+
 
 unsigned int DpsGetCategoryId(DPS_ENV *Conf, char *category) {
 	DPS_DB	*db;
@@ -2243,7 +2247,7 @@ unsigned int DpsGetCategoryId(DPS_ENV *Conf, char *category) {
 	size_t i, dbfrom = 0, dbto =  Conf->dbl.nitems;
 
 	for (i = dbfrom; i < dbto; i++) {
-	  db = &Conf->dbl.db[i];
+	  db = Conf->dbl.db[i];
 #ifdef HAVE_SQL
 	  rc = DpsGetCategoryIdSQL(Conf, category, db);
 	  if (rc != 0) return rc;
@@ -2254,105 +2258,105 @@ unsigned int DpsGetCategoryId(DPS_ENV *Conf, char *category) {
 
 
 int DpsTrack(DPS_AGENT *query, DPS_RESULT *Res) {
-  int rc = DPS_OK;
-  size_t i, dbfrom = 0, dbto =  (query->flags & DPS_FLAG_UNOCON) ? query->Conf->dbl.nitems : query->dbl.nitems; 
-  DPS_DB *db;
+    int rc = DPS_OK;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(query);
+    DPS_DB *db;
 
-  TRACE_IN(query, "DpsTrack");
+    TRACE_IN(query, "DpsTrack");
 
-  for (i = dbfrom; i < dbto; i++) {
-    db = (query->flags & DPS_FLAG_UNOCON) ? &query->Conf->dbl.db[i] : &query->dbl.db[i];
-    if(db->TrackQuery) {
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(query, i);
+	if(db->TrackQuery) {
 #ifdef HAVE_SQL
-      rc = DpsTrackSQL(query, Res, db);
+	    rc = DpsTrackSQL(query, Res, db);
 #endif
+	}
     }
-  }
-  TRACE_OUT(query);
-  return rc;
+    TRACE_OUT(query);
+    return rc;
 }
 
 
 int DpsTrackSearchd(DPS_AGENT * query, DPS_RESULT *Res) {
-  DPS_DB *db;
-  size_t i, dbfrom = 0, dbto =  (query->flags & DPS_FLAG_UNOCON) ? query->Conf->dbl.nitems : query->dbl.nitems; 
-  int rc = DPS_OK;
-  int fd, qtime;
-  const char	*words = DpsVarListFindStr(&query->Vars, "q", ""); /* "q-lc" was here */
-  const char      *IP = DpsVarListFindStr(&query->Vars, "IP", "localhost");
-  size_t r, escaped_len, qbuf_len;
-  char		*qbuf, *text_escaped, *z;
-  char fullname[PATH_MAX]="";
+    DPS_DB *db;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(query);
+    int rc = DPS_OK;
+    int fd, qtime;
+    const char	*words = DpsVarListFindStr(&query->Vars, "q", ""); /* "q-lc" was here */
+    const char      *IP = DpsVarListFindStr(&query->Vars, "IP", "localhost");
+    size_t r, escaped_len, qbuf_len;
+    char		*qbuf, *text_escaped, *z;
+    char fullname[PATH_MAX]="";
 
 #ifdef HAVE_SQL
 
-  TRACE_IN(query, "DpsTrackSearchd");
+    TRACE_IN(query, "DpsTrackSearchd");
 
-  if (*words == '\0') {
-    TRACE_OUT(query);
-    return DPS_OK; /* do not store empty queries */
-  }
-
-  escaped_len = 4 * dps_strlen(words) + 1;
-  qbuf_len = escaped_len + 4096;
-
-  if ((qbuf = (char*)DpsMalloc(qbuf_len)) == NULL) {
-    TRACE_OUT(query);
-    return DPS_ERROR;
-  }
-  if ((text_escaped = (char*)DpsMalloc(escaped_len + 1)) == NULL) { 
-    DPS_FREE(qbuf); 
-    TRACE_OUT(query);
-    return DPS_ERROR; 
-  }
-
-  memset( qbuf, 0x20, sizeof( long ));
-	
-  for (i = dbfrom; (i < dbto); i++) {
-    db = (query->flags & DPS_FLAG_UNOCON) ? &query->Conf->dbl.db[i] : &query->dbl.db[i];
-    if(db->TrackQuery) {
-      const char      *vardir = (db->vardir != NULL) ? db->vardir : DpsVarListFindStr(&query->Vars, "VarDir", DPS_VAR_DIR);
-
-      dps_snprintf(fullname, sizeof(fullname), "%s%strack.%d.%d.%d", vardir, DPSSLASHSTR, query->handle, i, time(NULL));
-      if ((fd = open(fullname, O_WRONLY | O_CREAT | DPS_BINARY, DPS_IWRITE)) <= 0) {
-	char errstr[1024];
-	dps_strerror(query, DPS_LOG_ERROR, "DpsTrackSearchd: couldn't open track file (%s) for writing", fullname);
-	DpsLog(query, DPS_LOG_ERROR, errstr );
-	return DPS_ERROR;
-      }
-
-      /* Escape text to track it  */
-      (void)DpsDBEscStr(db, text_escaped, words, dps_strlen(words));
-
-      dps_snprintf(qbuf + sizeof(long), qbuf_len - sizeof(long), "%s\2%s\2%d\2%d\2%d",
-		   IP, text_escaped, qtime = (int)time(NULL), Res->total_found, Res->work_time
-		   );
-	
-      r = (size_t)'q';
-      for (i = 0; i < query->Vars.Root[r].nvars; i++) {
-	DPS_VAR *Var = &query->Vars.Root[r].Var[i];
-	if (strncasecmp(Var->name, "query.",6)==0 && strcasecmp(Var->name, "query.q") && strcasecmp(Var->name, "query.BrowserCharset")
-	    && strcasecmp(Var->name, "query.g-lc") && strncasecmp(Var->name, "query.Excerpt", 13) 
-	    && strcasecmp(Var->name, "query.IP") && strcasecmp(Var->name, "query.DateFormat") && Var->val != NULL && *Var->val != '\0') {
-	  
-	  z = DPS_STREND(qbuf + sizeof(long));
-	  dps_snprintf(z, qbuf_len - (z - qbuf), "\2%s\2%s", &Var->name[6], Var->val);
-	}
-      }
-
-      if (write(fd, qbuf,  sizeof(long) + dps_strlen(qbuf + sizeof(long))) < (ssize_t)(sizeof(long) + dps_strlen(qbuf + sizeof(long)))) {
-	rc = DPS_ERROR;
-	DpsLog(query, DPS_LOG_ERROR, "DpsTrackSearchd: couldn't write to file %s [%s:%d]", fullname, __FILE__, __LINE__ );
-      } else rc = DPS_OK;
-
-      DpsLog(query, DPS_LOG_DEBUG, "DpsTrackSearchd: qbuf[%d]: %s", dps_strlen(qbuf), qbuf );
-
-      close(fd);
+    if (*words == '\0') {
+	TRACE_OUT(query);
+	return DPS_OK; /* do not store empty queries */
     }
-  }
-  DPS_FREE(text_escaped);
-  DPS_FREE(qbuf);
-  TRACE_OUT(query);
+
+    escaped_len = 4 * dps_strlen(words) + 1;
+    qbuf_len = escaped_len + 4096;
+
+    if ((qbuf = (char*)DpsMalloc(qbuf_len)) == NULL) {
+	TRACE_OUT(query);
+	return DPS_ERROR;
+    }
+    if ((text_escaped = (char*)DpsMalloc(escaped_len + 1)) == NULL) { 
+	DPS_FREE(qbuf); 
+	TRACE_OUT(query);
+	return DPS_ERROR; 
+    }
+
+    memset( qbuf, 0x20, sizeof( long ));
+	
+    for (i = dbfrom; (i < dbto); i++) {
+	db = DPS_DBL_DB(query, i);
+	if(db->TrackQuery) {
+	    const char      *vardir = (db->vardir != NULL) ? db->vardir : DpsVarListFindStr(&query->Vars, "VarDir", DPS_VAR_DIR);
+
+	    dps_snprintf(fullname, sizeof(fullname), "%s%strack.%d.%d.%d", vardir, DPSSLASHSTR, query->handle, i, time(NULL));
+	    if ((fd = open(fullname, O_WRONLY | O_CREAT | DPS_BINARY, DPS_IWRITE)) <= 0) {
+		char errstr[1024];
+		dps_strerror(query, DPS_LOG_ERROR, "DpsTrackSearchd: couldn't open track file (%s) for writing", fullname);
+		DpsLog(query, DPS_LOG_ERROR, errstr );
+		return DPS_ERROR;
+	    }
+
+	    /* Escape text to track it  */
+	    (void)DpsDBEscStr(db, text_escaped, words, dps_strlen(words));
+
+	    dps_snprintf(qbuf + sizeof(long), qbuf_len - sizeof(long), "%s\2%s\2%d\2%d\2%d",
+			 IP, text_escaped, qtime = (int)time(NULL), Res->total_found, Res->work_time
+		);
+	
+	    r = (size_t)'q';
+	    for (i = 0; i < query->Vars.Root[r].nvars; i++) {
+		DPS_VAR *Var = &query->Vars.Root[r].Var[i];
+		if (strncasecmp(Var->name, "query.",6)==0 && strcasecmp(Var->name, "query.q") && strcasecmp(Var->name, "query.BrowserCharset")
+		    && strcasecmp(Var->name, "query.g-lc") && strncasecmp(Var->name, "query.Excerpt", 13) 
+		    && strcasecmp(Var->name, "query.IP") && strcasecmp(Var->name, "query.DateFormat") && Var->val != NULL && *Var->val != '\0') {
+	  
+		    z = DPS_STREND(qbuf + sizeof(long));
+		    dps_snprintf(z, qbuf_len - (z - qbuf), "\2%s\2%s", &Var->name[6], Var->val);
+		}
+	    }
+
+	    if (write(fd, qbuf,  sizeof(long) + dps_strlen(qbuf + sizeof(long))) < (ssize_t)(sizeof(long) + dps_strlen(qbuf + sizeof(long)))) {
+		rc = DPS_ERROR;
+		DpsLog(query, DPS_LOG_ERROR, "DpsTrackSearchd: couldn't write to file %s [%s:%d]", fullname, __FILE__, __LINE__ );
+	    } else rc = DPS_OK;
+
+	    DpsLog(query, DPS_LOG_DEBUG, "DpsTrackSearchd: qbuf[%d]: %s", dps_strlen(qbuf), qbuf );
+
+	    close(fd);
+	}
+    }
+    DPS_FREE(text_escaped);
+    DPS_FREE(qbuf);
+    TRACE_OUT(query);
 #endif /*HAVE_SQL*/
   return rc;
 }
@@ -2361,104 +2365,104 @@ int DpsTrackSearchd(DPS_AGENT * query, DPS_RESULT *Res) {
 
 
 DPS_RESULT * DpsCloneList(DPS_AGENT * Indexer, DPS_VARLIST *Env_Vars, DPS_DOCUMENT *Doc) {
-	size_t i, dbfrom = 0, dbto =  (Indexer->flags & DPS_FLAG_UNOCON) ? Indexer->Conf->dbl.nitems : Indexer->dbl.nitems;
-	const char      *label = DpsVarListFindStr(&Indexer->Vars, "label", NULL);
-	DPS_DB		*db;
-	DPS_RESULT	*Res;
-	int		rc = DPS_OK;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(Indexer);
+    const char      *label = DpsVarListFindStr(&Indexer->Vars, "label", NULL);
+    DPS_DB		*db;
+    DPS_RESULT	*Res;
+    int		rc = DPS_OK;
 
-	TRACE_IN(Indexer, "DpsCloneList");
+    TRACE_IN(Indexer, "DpsCloneList");
 
-	Res = DpsResultInit(NULL);
-	if (Res == NULL) {
-	  TRACE_OUT(Indexer);
-	  return NULL;
-	}
-
-	for (i = dbfrom; i < dbto; i++) {
-	    db = (Indexer->flags & DPS_FLAG_UNOCON) ? &Indexer->Conf->dbl.db[i] : &Indexer->dbl.db[i];
-	    if (label != NULL && db->label == NULL) continue;
-	    if (label == NULL && db->label != NULL) continue;
-	    if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
-	    switch(db->DBDriver) {
-	    case DPS_DB_SEARCHD:
-		  rc = DpsCloneListSearchd(Indexer, Doc, Res, db);
-			break;
-#ifdef HAVE_SQL
-	    default:
-	      if (db->DBType != DPS_DB_CACHE)
-		rc = DpsCloneListSQL(Indexer, Env_Vars, Doc, Res, db);
-	      break;
-#endif
-	    }
-	    if (rc != DPS_OK) break;
-	}
-	if (Res->num_rows > 0) {
-	    TRACE_OUT(Indexer);
-	    return Res;
-	}
-	DpsResultFree(Res);
+    Res = DpsResultInit(NULL);
+    if (Res == NULL) {
 	TRACE_OUT(Indexer);
 	return NULL;
+    }
+
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(Indexer, i);
+	if (label != NULL && db->label == NULL) continue;
+	if (label == NULL && db->label != NULL) continue;
+	if (label != NULL && db->label != NULL && strcasecmp(db->label, label)) continue;
+	switch (db->DBDriver) {
+	case DPS_DB_SEARCHD:
+	    rc = DpsCloneListSearchd(Indexer, Doc, Res, db);
+	    break;
+#ifdef HAVE_SQL
+	default:
+	    if (db->DBType != DPS_DB_CACHE)
+		rc = DpsCloneListSQL(Indexer, Env_Vars, Doc, Res, db);
+	    break;
+#endif
+	}
+	if (rc != DPS_OK) break;
+    }
+    if (Res->num_rows > 0) {
+	TRACE_OUT(Indexer);
+	return Res;
+    }
+    DpsResultFree(Res);
+    TRACE_OUT(Indexer);
+    return NULL;
 }
 
 
 int DpsCheckUrlid(DPS_AGENT *Agent, urlid_t id) {
-	size_t i, dbfrom = 0, dbto;
-	DPS_DB		*db;
-	int		rc = 0;
+    size_t i, dbfrom = 0, dbto;
+    DPS_DB		*db;
+    int		rc = 0;
 
-	TRACE_IN(Agent, "DpsCheckUrlid");
+    TRACE_IN(Agent, "DpsCheckUrlid");
+    
+    if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(Agent);
+    if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 
-	if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);
-	dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
-	if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
-
-	for (i = dbfrom; i < dbto; i++) {
-	    db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[i] :  &Agent->dbl.db[i];
-	    if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB); 
-	    switch(db->DBDriver) {
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(Agent, i);
+	if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB); 
+	switch (db->DBDriver) {
 #ifdef HAVE_SQL
-	    default:
-	      rc = DpsCheckUrlidSQL(Agent, db, id);
-	      break;
+	default:
+	    rc = DpsCheckUrlidSQL(Agent, db, id);
+	    break;
 #endif
-	    }
-	    if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
-	    if (rc != DPS_OK) break;
 	}
-	TRACE_OUT(Agent);
-	return rc;
+	if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
+	if (rc != DPS_OK) break;
+    }
+    TRACE_OUT(Agent);
+    return rc;
 }
 
 
 int DpsCheckReferrer(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
-	size_t i, dbfrom = 0, dbto;
-	DPS_DB		*db;
-	int		rc = DPS_ERROR;
-	urlid_t id = (urlid_t)DpsVarListFindInt(&Doc->Sections, "DP_ID", 0);
+    size_t i, dbfrom = 0, dbto;
+    DPS_DB		*db;
+    int		rc = DPS_ERROR;
+    urlid_t id = (urlid_t)DpsVarListFindInt(&Doc->Sections, "DP_ID", 0);
 
-	TRACE_IN(Agent, "DpsCheckReferrer");
+    TRACE_IN(Agent, "DpsCheckReferrer");
 
-	if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);
-	dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
-	if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+    if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(Agent);
+    if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 
-	for (i = dbfrom; i < dbto; i++) {
-	    db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[i] :  &Agent->dbl.db[i];
-	    if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB); 
-	    switch(db->DBDriver) {
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(Agent, i);
+	if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB); 
+	switch (db->DBDriver) {
 #ifdef HAVE_SQL
-	    default:
-	      rc = DpsCheckReferrerSQL(Agent, db, id);
-	      break;
+	default:
+	    rc = DpsCheckReferrerSQL(Agent, db, id);
+	    break;
 #endif
-	    }
-	    if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
-	    if (rc == DPS_OK) break;
 	}
-	TRACE_OUT(Agent);
-	return rc;
+	if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
+	if (rc == DPS_OK) break;
+    }
+    TRACE_OUT(Agent);
+    return rc;
 }
 
 
@@ -2478,14 +2482,14 @@ size_t DpsDBListAdd(DPS_DBLIST *List, const char * addr, int mode) {
 	void * paran = DpsViolationEnter(paran);
 #endif
 	for (i = 0; i < List->nitems; i++) {
-	  if (strcasecmp(List->db[i].DBADDR, addr) == 0) {
+	  if (strcasecmp(List->db[i]->DBADDR, addr) == 0) {
 #ifdef WITH_PARANOIA
 	    DpsViolationExit(-1, paran);
 #endif
 	    return DPS_OK;
 	  }
 	}
-	db=List->db=(DPS_DB*)DpsRealloc(List->db,(List->nitems+1)*sizeof(DPS_DB));
+	List->db = (DPS_DB**)DpsRealloc(List->db, (List->nitems+1)*sizeof(DPS_DB*));
 	if (db == NULL) {
 	  List->nitems = 0;
 #ifdef WITH_PARANOIA
@@ -2493,8 +2497,7 @@ size_t DpsDBListAdd(DPS_DBLIST *List, const char * addr, int mode) {
 #endif
 	  return DPS_ERROR;
 	}
-	db+=List->nitems;
-	if (DpsDBInit(db) != NULL) res = DpsDBSetAddr(db, addr, mode);
+	if ((db = List->db[List->nitems] = DpsDBInit(NULL)) != NULL) res = DpsDBSetAddr(db, addr, mode);
 	else res = DPS_ERROR;
 	if (res == DPS_OK) {
 	  db->dbnum = List->nitems;
@@ -2508,10 +2511,10 @@ size_t DpsDBListAdd(DPS_DBLIST *List, const char * addr, int mode) {
 
 void DpsDBListFree(DPS_DBLIST *List){
 	size_t	i;
-	DPS_DB	*db=List->db;
+	DPS_DB	**db = List->db;
 	
 	for(i = 0; i < List->nitems; i++){
-		DpsDBFree(&db[i]);
+		DpsDBFree(db[i]);
 	}
 	DPS_FREE(List->db);
 	DpsDBListInit(List);
@@ -2521,64 +2524,66 @@ void DpsDBListFree(DPS_DBLIST *List){
 /**************************************************/
 
 int DpsURLDataPreload(DPS_AGENT *Agent) {
-	size_t i, dbfrom = 0, dbto;
-	DPS_DB		*db;
-	int		rc = 0;
+    size_t i, dbfrom = 0, dbto;
+    DPS_DB		*db;
+    int		rc = 0;
 
-	TRACE_IN(Agent, "DpsURLDataPreload");
+    TRACE_IN(Agent, "DpsURLDataPreload");
 
-	if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);
-	dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
-	if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+    if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(Agent);
+    if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 
-	for (i = dbfrom; i < dbto; i++) {
-	    db = (Agent->Conf->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[i] : &Agent->dbl.db[i];
-	    if (Agent->Conf->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB);
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(Agent, i);
+	if (Agent->Conf->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB);
 
-	    if (db->DBMode == DPS_DBMODE_CACHE) {
-	      rc = DpsURLDataPreloadCache(Agent, db);
-	    } else {
+	if (db->DBMode == DPS_DBMODE_CACHE) {
+	    rc = DpsURLDataPreloadCache(Agent, db);
+	} else {
 #ifdef HAVE_SQL
-	      rc = DpsURLDataPreloadSQL(Agent, db);
+	    rc = DpsURLDataPreloadSQL(Agent, db);
 #endif
-	    }
-	    if (Agent->Conf->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
-	    if (rc != DPS_OK) break;
 	}
-	TRACE_OUT(Agent);
-	return rc;
+	if (Agent->Conf->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
+	if (rc != DPS_OK) break;
+    }
+    TRACE_OUT(Agent);
+    return rc;
 }
 
+
 int DpsURLDataDePreload(DPS_AGENT *Agent) {
-	DPS_DB		*db;
-	DPS_URLDATA_FILE *DF;
-	int		rc = 0, filenum, NFiles;
-	size_t i, dbfrom = 0, dbto;
+    DPS_DB		*db;
+    DPS_URLDATA_FILE *DF;
+    int		rc = 0, filenum, NFiles;
+    size_t i, dbfrom = 0, dbto;
 
-	TRACE_IN(Agent, "DpsURLDataPreload");
+    TRACE_IN(Agent, "DpsURLDataPreload");
 
-	DPS_GETLOCK(Agent, DPS_LOCK_CONF);
-	if (Agent->Conf->Flags.PreloadURLData) {
+    DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+    if (Agent->Conf->Flags.PreloadURLData) {
 
 /*	  if (Agent->Conf->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_CONF);*/
-	  dbto =  (Agent->Conf->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
+	dbto = DPS_DBL_TO(Agent);
 /*	  if (Agent->Conf->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);*/
 
-	  for (i = dbfrom; i < dbto; i++) {
+	for (i = dbfrom; i < dbto; i++) {
 
-	    db = (Agent->Conf->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[i] : &Agent->dbl.db[i];
+	    db = DPS_DBL_DB(Agent, i);
 	    NFiles = (db->URLDataFiles) ? db->URLDataFiles : DpsVarListFindUnsigned(&Agent->Conf->Vars, "URLDataFiles", 0x300);
 	    DF = Agent->Conf->URLDataFile[db->dbnum];
 	    for (filenum = 0 ; filenum < NFiles; filenum++) DPS_FREE(DF[filenum].URLData);
 
 	    DPS_FREE(Agent->Conf->URLDataFile[i]);
-	  }
-	  DPS_FREE(Agent->Conf->URLDataFile);
 	}
-	DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
-	TRACE_OUT(Agent);
-	return rc;
+	DPS_FREE(Agent->Conf->URLDataFile);
+    }
+    DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+    TRACE_OUT(Agent);
+    return rc;
 }
+
 
 int DpsURLDataLoad(DPS_AGENT *Indexer, DPS_RESULT *R, DPS_DB *db) {
   DPS_URLDATA *Dat, *D = NULL, K, *F;

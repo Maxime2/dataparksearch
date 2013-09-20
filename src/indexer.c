@@ -1053,12 +1053,12 @@ static int DpsSQLSections(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
       buf[0] = '\0';
       DpsPrintTextTemplate(Indexer, NULL, NULL, buf, buf_len, &t, Alias->arg);
       if (Alias->dbaddr != NULL) {
-	DpsDBListInit(&dbl);
-	DpsDBListAdd(&dbl, Alias->dbaddr, DPS_OPEN_MODE_READ);
-	db = &dbl.db[0];
+	  DpsDBListInit(&dbl);
+	  DpsDBListAdd(&dbl, Alias->dbaddr, DPS_OPEN_MODE_READ);
+	  db = dbl.db[0];
       } else {
-	db = (Indexer->flags & DPS_FLAG_UNOCON) ? &Indexer->Conf->dbl.db[0] :  &Indexer->dbl.db[0];
-	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
+	  db = DPS_DBL_DB(Indexer, 0);
+	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
       }
       if (DPS_OK != DpsSQLQuery(db, &SQLres, buf)) DpsLog(Indexer, DPS_ERROR, "SectionSQL error");
       for (i = 0; i < DpsSQLNumRows(&SQLres); i++) {

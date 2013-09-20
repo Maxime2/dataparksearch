@@ -152,17 +152,18 @@ void DpsEnvFree(DPS_ENV * Env){
 	if(Env->freeme)DPS_FREE(Env);
 }
 
-char * DpsEnvErrMsg(DPS_ENV * Conf) {
-  size_t	i;
-  DPS_DB *db;
 
-  for(i = 0; i<Conf->dbl.nitems; i++){
-    db = &Conf->dbl.db[i];
-    if (db->errcode) {
-      char *oe = (char*)DpsStrdup(Conf->errstr);
-      dps_snprintf(Conf->errstr, 2048, "DB err: %s - %s", db->errstr, oe);
-      DPS_FREE(oe);
+char * DpsEnvErrMsg(DPS_ENV * Conf) {
+    size_t	i;
+    DPS_DB *db;
+    
+    for(i = 0; i<Conf->dbl.nitems; i++){
+	db = Conf->dbl.db[i];
+	if (db->errcode) {
+	    char *oe = (char*)DpsStrdup(Conf->errstr);
+	    dps_snprintf(Conf->errstr, 2048, "DB err: %s - %s", db->errstr, oe);
+	    DPS_FREE(oe);
+	}
     }
-  }
-  return(Conf->errstr);
+    return(Conf->errstr);
 }

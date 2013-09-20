@@ -991,7 +991,7 @@ typedef struct {
         size_t          cnt_db;
         size_t          dbfrom;
         size_t          dbto;
-	DPS_DB		*db;
+	DPS_DB		**db;
 } DPS_DBLIST;
 
 
@@ -1575,5 +1575,7 @@ extern unsigned int milliseconds; /* To sleep between documents    */
 extern int log2stderr;
 
 
+#define DPS_DBL_DB(A, i) ((A)->flags & DPS_FLAG_UNOCON) ? (A)->Conf->dbl.db[i] : (A)->dbl.db[i]
+#define DPS_DBL_TO(A) ((A)->flags & DPS_FLAG_UNOCON) ? (A)->Conf->dbl.nitems : (A)->dbl.nitems
 
 #endif /* _DPS_COMMON_H */

@@ -223,70 +223,70 @@ static int DpsCmp_urlid_t(const urlid_t *s1, const urlid_t *s2) {
 static int DpsLogdInit(DPS_AGENT *Agent, DPS_DB *db, const char* var_dir, size_t i, int shared);
 
 int DpsOpenCache(DPS_AGENT *A, int shared) {
-	DPS_DB		*db;
-	const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
-	size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
+    DPS_DB		*db;
+    const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
 
-	DpsLog(A, DPS_LOG_DEBUG, "DpsOpenCache:");
+    DpsLog(A, DPS_LOG_DEBUG, "DpsOpenCache:");
 
-	if (A->Demons.Demon == NULL) {
-	  A->Demons.nitems = (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-	  A->Demons.Demon = (DPS_DEMONCONN*)DpsXmalloc(A->Demons.nitems * sizeof(DPS_DEMONCONN) + 1);
-	  if(A->Demons.Demon == NULL) {
+    if (A->Demons.Demon == NULL) {
+	A->Demons.nitems = (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
+	A->Demons.Demon = (DPS_DEMONCONN*)DpsXmalloc(A->Demons.nitems * sizeof(DPS_DEMONCONN) + 1);
+	if(A->Demons.Demon == NULL) {
 	    DpsLog(A, DPS_LOG_ERROR, "CacheD can't alloc at %s:%d", __FILE__, __LINE__);
 	    return DPS_ERROR;
-	  }
 	}
+    }
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if(db->DBMode != DPS_DBMODE_CACHE) continue;
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if(db->DBMode != DPS_DBMODE_CACHE) continue;
 
-	  DpsLog(A, DPS_LOG_DEBUG, "i:%d  cached_sd:%d  sin_port:%d", i, A->Demons.Demon[i].cached_sd, db->cached_addr.sin_port);
+	DpsLog(A, DPS_LOG_DEBUG, "i:%d  cached_sd:%d  sin_port:%d", i, A->Demons.Demon[i].cached_sd, db->cached_addr.sin_port);
 	
-	  if(A->Demons.Demon[i].cached_sd == 0) {
+	if(A->Demons.Demon[i].cached_sd == 0) {
 	    if (db->cached_addr.sin_port != 0) {
-	      char port_str[16];
-	      struct sockaddr_in dps_addr;
-	      unsigned char *p = (unsigned char*)&dps_addr.sin_port;
-	      unsigned int ip[2];
+		char port_str[16];
+		struct sockaddr_in dps_addr;
+		unsigned char *p = (unsigned char*)&dps_addr.sin_port;
+		unsigned int ip[2];
       
-	      if((A->Demons.Demon[i].cached_sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-		dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR socket_sd");
-		return DPS_ERROR;
-	      }
+		if((A->Demons.Demon[i].cached_sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+		    dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR socket_sd");
+		    return DPS_ERROR;
+		}
   
-	      if((A->Demons.Demon[i].cached_rv = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-		dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR socket_rv");
-		return DPS_ERROR;
-	      }
+		if((A->Demons.Demon[i].cached_rv = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+		    dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR socket_rv");
+		    return DPS_ERROR;
+		}
 
-	      DpsSockOpt(A, A->Demons.Demon[i].cached_sd);
-	      DpsSockOpt(A, A->Demons.Demon[i].cached_rv);
+		DpsSockOpt(A, A->Demons.Demon[i].cached_sd);
+		DpsSockOpt(A, A->Demons.Demon[i].cached_rv);
   
-	      if(connect(A->Demons.Demon[i].cached_sd, (struct sockaddr *)&db->cached_addr, sizeof(db->cached_addr)) == -1) {
-		dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR connect to %s", inet_ntoa(db->cached_addr.sin_addr));
-		return DPS_ERROR;
-	      }
+		if(connect(A->Demons.Demon[i].cached_sd, (struct sockaddr *)&db->cached_addr, sizeof(db->cached_addr)) == -1) {
+		    dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR connect to %s", inet_ntoa(db->cached_addr.sin_addr));
+		    return DPS_ERROR;
+		}
 
-	      /* revert connection */
+		/* revert connection */
 
-	      if (sizeof(port_str) != DpsRecvall(A->Demons.Demon[i].cached_sd, port_str, sizeof(port_str), 360)) {
-		dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR receiving port data");
-		return DPS_ERROR;
-	      }
-	      dps_addr = db->cached_addr;
-	      dps_addr.sin_port = 0;
-	      sscanf(port_str, "%u,%u", ip, ip + 1);
-	      p[0] = (unsigned char)(ip[0] & 255);
-	      p[1] = (unsigned char)(ip[1] & 255);
+		if (sizeof(port_str) != DpsRecvall(A->Demons.Demon[i].cached_sd, port_str, sizeof(port_str), 360)) {
+		    dps_strerror(A, DPS_LOG_ERROR, "CacheD ERR receiving port data");
+		    return DPS_ERROR;
+		}
+		dps_addr = db->cached_addr;
+		dps_addr.sin_port = 0;
+		sscanf(port_str, "%u,%u", ip, ip + 1);
+		p[0] = (unsigned char)(ip[0] & 255);
+		p[1] = (unsigned char)(ip[1] & 255);
 
-	      DpsLog(A, DPS_LOG_DEBUG, "[%s] PORT: %s, decimal:%d", inet_ntoa(db->cached_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));
-
-	      if(connect(A->Demons.Demon[i].cached_rv, (struct sockaddr *)&dps_addr, sizeof(dps_addr)) == -1) {
-		dps_strerror(A, DPS_LOG_ERROR, "Cached ERR revert connect to %s:%d", inet_ntoa(dps_addr.sin_addr), ntohs(dps_addr.sin_port));
-		return DPS_ERROR;
-	      }
+		DpsLog(A, DPS_LOG_DEBUG, "[%s] PORT: %s, decimal:%d", inet_ntoa(db->cached_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));
+		
+		if(connect(A->Demons.Demon[i].cached_rv, (struct sockaddr *)&dps_addr, sizeof(dps_addr)) == -1) {
+		    dps_strerror(A, DPS_LOG_ERROR, "Cached ERR revert connect to %s:%d", inet_ntoa(dps_addr.sin_addr), ntohs(dps_addr.sin_port));
+		    return DPS_ERROR;
+		}
 
 /********************/
 /************************/
@@ -300,131 +300,132 @@ int DpsOpenCache(DPS_AGENT *A, int shared) {
 		}
 		if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
 	    }
-	  }
-	  DpsLog(A, DPS_LOG_DEBUG, "wrd_buf: %x", db->LOGD.wrd_buf);
 	}
-	DpsLog(A, DPS_LOG_DEBUG, "Done.");
+	DpsLog(A, DPS_LOG_DEBUG, "wrd_buf: %x", db->LOGD.wrd_buf);
+    }
+    DpsLog(A, DPS_LOG_DEBUG, "Done.");
 
-	return(DPS_OK);
+    return(DPS_OK);
 }
+
 
 static int DpsLogdCloseLogs(DPS_AGENT *Agent);
 
 int DpsCloseCache(DPS_AGENT *A, int shared, int last) {
-  DPS_DB *db;
-  const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
-  size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-  int res;
+    DPS_DB *db;
+    const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
+    int res;
 
-  TRACE_IN(A, "DpsCloseCache");
-  res = DpsLogdCloseLogs(A);
+    TRACE_IN(A, "DpsCloseCache");
+    res = DpsLogdCloseLogs(A);
 
-  for (i = dbfrom; i < dbto; i++) {
-      db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-      if(db->DBMode!=DPS_DBMODE_CACHE) continue;
-      if(db->logd_fd > 0) {
-	  dps_closesocket(db->logd_fd);
-	  res =  DPS_OK;
-      } else if (last || !(A->flags & DPS_FLAG_UNOCON)) {
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
-	  res = DpsLogdClose(A, db, (db->vardir) ? db->vardir : vardir, i, shared);
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-      }
-      if (res != DPS_OK) break;
-  }
-  TRACE_OUT(A);
-  return res;
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if (db->DBMode != DPS_DBMODE_CACHE) continue;
+	if (db->logd_fd > 0) {
+	    dps_closesocket(db->logd_fd);
+	    res =  DPS_OK;
+	} else if (last || !(A->flags & DPS_FLAG_UNOCON)) {
+	    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+	    res = DpsLogdClose(A, db, (db->vardir) ? db->vardir : vardir, i, shared);
+	    if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	}
+	if (res != DPS_OK) break;
+    }
+    TRACE_OUT(A);
+    return res;
 }
 
 
 void DpsRotateDelLog(DPS_AGENT *A) {
-  DPS_DB *db;
-  char del_log_name[PATH_MAX];
-  int split_fd, nbytes, log_fd;
-  size_t i, dbfrom = 0, dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
-  size_t NFiles, log_num;
+    DPS_DB *db;
+    char del_log_name[PATH_MAX];
+    int split_fd, nbytes, log_fd;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
+    size_t NFiles, log_num;
 
-  TRACE_IN(A, "DpsRotateDelLog");
+    TRACE_IN(A, "DpsRotateDelLog");
 
-  for (i = dbfrom; i < dbto; i++) {
-    db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-    if(db->DBMode != DPS_DBMODE_CACHE) continue;
-    if (db->del_fd <= 0) continue;
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if(db->DBMode != DPS_DBMODE_CACHE) continue;
+	if (db->del_fd <= 0) continue;
 
-    NFiles = (db->WrdFiles > 0) ? (int)db->WrdFiles : DpsVarListFindInt(&A->Vars, "WrdFiles", 0x300);
-    for(log_num = 0; log_num < NFiles; log_num++) {
+	NFiles = (db->WrdFiles > 0) ? (int)db->WrdFiles : DpsVarListFindInt(&A->Vars, "WrdFiles", 0x300);
+	for(log_num = 0; log_num < NFiles; log_num++) {
 
-      dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X-split.log", db->log_dir, DPSSLASHSTR, log_num);
-	if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
-	    if (errno == ENOENT) { /* So, the *split.log file dowsn't exists, we move it for fast work, but there may be some collisions */
-		char old_log_name[PATH_MAX];
-		dps_snprintf(old_log_name, sizeof(old_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
-		if (-1 == rename(old_log_name, del_log_name)) {
-		    if (errno != ENOENT) {
-			dps_strerror(A, DPS_LOG_ERROR, "Can't rename '%s' into '%s'", old_log_name, del_log_name);
-			return;
+	    dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X-split.log", db->log_dir, DPSSLASHSTR, log_num);
+	    if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
+		if (errno == ENOENT) { /* So, the *split.log file dowsn't exists, we move it for fast work, but there may be some collisions */
+		    char old_log_name[PATH_MAX];
+		    dps_snprintf(old_log_name, sizeof(old_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
+		    if (-1 == rename(old_log_name, del_log_name)) {
+			if (errno != ENOENT) {
+			    dps_strerror(A, DPS_LOG_ERROR, "Can't rename '%s' into '%s'", old_log_name, del_log_name);
+			    return;
+			}
 		    }
+		} else {
+		    dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+		    return;
 		}
 	    } else {
-		dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
-		return;
-	    }
-	} else {
 
+		ssize_t res;
+		size_t bytes_written = 0;
+
+		dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
+		if((log_fd = DpsOpen3(del_log_name, O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE)) == -1) {
+		    dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+		    return;
+		}
+
+		DpsWriteLock(log_fd);
+  
+		lseek(log_fd, (off_t)0, SEEK_SET);
+		while((nbytes = read(log_fd, del_log_name, PATH_MAX)) > 0) {
+		    while ((res = write(split_fd, del_log_name + bytes_written, (size_t)nbytes - bytes_written)) > 0) {
+			bytes_written += (size_t)res;
+			if (bytes_written == (size_t)nbytes) break;
+		    }
+		}
+		DpsClose(split_fd);
+		lseek(log_fd, (off_t)0, SEEK_SET);
+		(void)ftruncate(log_fd, (off_t)0);
+  
+		DpsUnLock(log_fd);
+		DpsClose(log_fd);
+	    }
+	}
+
+	dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%s", db->log_dir, DPSSLASHSTR, "del-split.log");
+
+	if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_CREAT | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
+	    dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+	    return;
+	}
+	
+	DpsWriteLock(db->del_fd);
+  
+	lseek(db->del_fd, (off_t)0, SEEK_SET);
+	{
 	    ssize_t res;
 	    size_t bytes_written = 0;
-
-	    dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
-	    if((log_fd = DpsOpen3(del_log_name, O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE)) == -1) {
-		dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
-		return;
-	    }
-
-	    DpsWriteLock(log_fd);
-  
-	    lseek(log_fd, (off_t)0, SEEK_SET);
-	    while((nbytes = read(log_fd, del_log_name, PATH_MAX)) > 0) {
+	    while((nbytes = read(db->del_fd, del_log_name, PATH_MAX)) > 0) {
 		while ((res = write(split_fd, del_log_name + bytes_written, (size_t)nbytes - bytes_written)) > 0) {
 		    bytes_written += (size_t)res;
 		    if (bytes_written == (size_t)nbytes) break;
 		}
 	    }
-	    DpsClose(split_fd);
-	    lseek(log_fd, (off_t)0, SEEK_SET);
-	    (void)ftruncate(log_fd, (off_t)0);
-  
-	    DpsUnLock(log_fd);
-	    DpsClose(log_fd);
 	}
-    }
-
-    dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%s", db->log_dir, DPSSLASHSTR, "del-split.log");
-
-    if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_CREAT | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
-      dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
-      return;
-    }
-
-    DpsWriteLock(db->del_fd);
+	DpsClose(split_fd);
+	lseek(db->del_fd, (off_t)0, SEEK_SET);
+	(void)ftruncate(db->del_fd, (off_t)0);
   
-    lseek(db->del_fd, (off_t)0, SEEK_SET);
-    {
-	ssize_t res;
-	size_t bytes_written = 0;
-	while((nbytes = read(db->del_fd, del_log_name, PATH_MAX)) > 0) {
-	    while ((res = write(split_fd, del_log_name + bytes_written, (size_t)nbytes - bytes_written)) > 0) {
-		bytes_written += (size_t)res;
-		if (bytes_written == (size_t)nbytes) break;
-	    }
-	}
+	DpsUnLock(db->del_fd);
     }
-    DpsClose(split_fd);
-    lseek(db->del_fd, (off_t)0, SEEK_SET);
-    (void)ftruncate(db->del_fd, (off_t)0);
-  
-    DpsUnLock(db->del_fd);
-  }
-  TRACE_OUT(A);
+    TRACE_OUT(A);
 }
 
 
@@ -2389,103 +2390,103 @@ int DpsLogdSaveBuf(DPS_AGENT *Indexer, DPS_ENV * Env, size_t log_num) { /* Shoul
 #endif
 
   vardir = DpsVarListFindStr(&Indexer->Vars, "VarDir", DPS_VAR_DIR);
-  dbto =  (Indexer->flags & DPS_FLAG_UNOCON) ? Indexer->Conf->dbl.nitems : Indexer->dbl.nitems;
+  dbto = DPS_DBL_TO(Indexer);
 
   for (z = dbfrom; z < dbto; z++) {
-    db = (Indexer->flags & DPS_FLAG_UNOCON) ? &Indexer->Conf->dbl.db[z] : &Indexer->dbl.db[z];
-    if (db->DBMode != DPS_DBMODE_CACHE) continue;
-    P.vardir = (db->vardir) ? db->vardir : vardir;
-    P.NFiles = (db->WrdFiles > 0) ? (int)db->WrdFiles : DpsVarListFindInt(&Indexer->Vars, "WrdFiles", 0x300);
+      db = DPS_DBL_DB(Indexer, z);
+      if (db->DBMode != DPS_DBMODE_CACHE) continue;
+      P.vardir = (db->vardir) ? db->vardir : vardir;
+      P.NFiles = (db->WrdFiles > 0) ? (int)db->WrdFiles : DpsVarListFindInt(&Indexer->Vars, "WrdFiles", 0x300);
 
 /*    DPS_GETLOCK(Indexer, DPS_LOCK_CACHED);*/
-    logd = &db->LOGD;
+      logd = &db->LOGD;
 
-    if (Env->logs_only) {
-      char   fname[PATH_MAX];
-      int    fd;
-      size_t nbytes = logd->wrd_buf[log_num].nrec * sizeof(DPS_LOGWORD);
+      if (Env->logs_only) {
+	  char   fname[PATH_MAX];
+	  int    fd;
+	  size_t nbytes = logd->wrd_buf[log_num].nrec * sizeof(DPS_LOGWORD);
 
-      if (nbytes > 0) {
-	dps_snprintf(fname, sizeof(fname), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
+	  if (nbytes > 0) {
+	      dps_snprintf(fname, sizeof(fname), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
 	
 /*	DPS_GETLOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
-	if((fd = DpsOpen3(fname, open_flags, open_perm)) != -1) {
-	  nbytes = logd->wrd_buf[log_num].nrec * sizeof(DPS_LOGWORD);
-	  DpsWriteLock(fd);
-	  if(nbytes != (size_t)write(fd, logd->wrd_buf[log_num].data,nbytes)){
-	    dps_strerror(Indexer, DPS_LOG_ERROR, "Can't write %d nbytes to '%s'", nbytes, fname);
-	    DpsUnLock(fd);
-	    DpsClose(fd);
-	    DpsBaseClose(&P);
+	      if ((fd = DpsOpen3(fname, open_flags, open_perm)) != -1) {
+		  nbytes = logd->wrd_buf[log_num].nrec * sizeof(DPS_LOGWORD);
+		  DpsWriteLock(fd);
+		  if(nbytes != (size_t)write(fd, logd->wrd_buf[log_num].data,nbytes)){
+		      dps_strerror(Indexer, DPS_LOG_ERROR, "Can't write %d nbytes to '%s'", nbytes, fname);
+		      DpsUnLock(fd);
+		      DpsClose(fd);
+		      DpsBaseClose(&P);
 /*	    DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
 /*	    DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED);*/
-	    TRACE_OUT(Indexer);
-	    return DPS_ERROR;
-	  }
-	  DpsUnLock(fd);
-	  DpsClose(fd);
+		      TRACE_OUT(Indexer);
+		      return DPS_ERROR;
+		  }
+		  DpsUnLock(fd);
+		  DpsClose(fd);
 /*	  DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
-	  logd->wrd_buf[log_num].nrec = 0;
-	}else{
-	  dps_strerror(Indexer, DPS_LOG_ERROR, "Can't open '%s'", fname);
-	  DpsBaseClose(&P);
+		  logd->wrd_buf[log_num].nrec = 0;
+	      } else {
+		  dps_strerror(Indexer, DPS_LOG_ERROR, "Can't open '%s'", fname);
+		  DpsBaseClose(&P);
 /*	  DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
 /*	  DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED);*/
-	  TRACE_OUT(Indexer);
-	  return DPS_ERROR;
-	}
-      }
-      DpsWriteLock(db->del_fd);
-      if (logd->wrd_buf[log_num].ndel) 
-	lseek(db->del_fd, (off_t)0, SEEK_END);
-	if((ssize_t)(logd->wrd_buf[log_num].ndel * sizeof(DPS_LOGDEL)) != 
-	   write(db->del_fd, logd->wrd_buf[log_num].del_buf, logd->wrd_buf[log_num].ndel * sizeof(DPS_LOGDEL))) {
-	  dps_strerror(Indexer, DPS_LOG_ERROR, "Can't write to del.log");
-	  db->errcode = 1;
-	  DpsUnLock(db->del_fd);
-	  DpsBaseClose(&P);
+		  TRACE_OUT(Indexer);
+		  return DPS_ERROR;
+	      }
+	  }
+	  DpsWriteLock(db->del_fd);
+	  if (logd->wrd_buf[log_num].ndel) 
+	      lseek(db->del_fd, (off_t)0, SEEK_END);
+	  if((ssize_t)(logd->wrd_buf[log_num].ndel * sizeof(DPS_LOGDEL)) != 
+	     write(db->del_fd, logd->wrd_buf[log_num].del_buf, logd->wrd_buf[log_num].ndel * sizeof(DPS_LOGDEL))) {
+	      dps_strerror(Indexer, DPS_LOG_ERROR, "Can't write to del.log");
+	      db->errcode = 1;
+	      DpsUnLock(db->del_fd);
+	      DpsBaseClose(&P);
 /*	  DPS_RELEASELOCK(Agent, DPS_LOCK_CACHED);*/
-	  TRACE_OUT(Indexer);
-	  return DPS_ERROR;
-	}
-      logd->wrd_buf[log_num].ndel = 0;
-      DpsUnLock(db->del_fd);
+	      TRACE_OUT(Indexer);
+	      return DPS_ERROR;
+	  }
+	  logd->wrd_buf[log_num].ndel = 0;
+	  DpsUnLock(db->del_fd);
       
 /*      DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED);*/
-      continue;
-    }
+	  continue;
+      }
 
 /*    if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
     /* Open del log file */
-    del_buf = logd->wrd_buf[log_num].del_buf;
-    del_count = logd->wrd_buf[log_num].ndel;
+      del_buf = logd->wrd_buf[log_num].del_buf;
+      del_count = logd->wrd_buf[log_num].ndel;
 
     /* Remove duplicates URLs in DEL log     */
     /* Keep only oldest records for each URL */
-    if (del_count > 1) {
-      DpsSort(del_buf, (size_t)del_count, sizeof(DPS_LOGDEL), DpsCmpurldellog);
-      del_count = DpsRemoveDelLogDups(del_buf, del_count);
-    }
+      if (del_count > 1) {
+	  DpsSort(del_buf, (size_t)del_count, sizeof(DPS_LOGDEL), DpsCmpurldellog);
+	  del_count = DpsRemoveDelLogDups(del_buf, del_count);
+      }
 
     /* Allocate buffer for log */
-    log_buf = logd->wrd_buf[log_num].data;
-    n = logd->wrd_buf[log_num].nrec;
-    if (n > 1) DpsSort(log_buf, n, sizeof(DPS_LOGWORD), (qsort_cmp)DpsCmplog);
-    n = DpsRemoveOldWords(log_buf, n, del_buf, del_count);
-    if (n > 1) DpsSort(log_buf, n, sizeof(DPS_LOGWORD), (qsort_cmp)DpsCmplog_wrd);
+      log_buf = logd->wrd_buf[log_num].data;
+      n = logd->wrd_buf[log_num].nrec;
+      if (n > 1) DpsSort(log_buf, n, sizeof(DPS_LOGWORD), (qsort_cmp)DpsCmplog);
+      n = DpsRemoveOldWords(log_buf, n, del_buf, del_count);
+      if (n > 1) DpsSort(log_buf, n, sizeof(DPS_LOGWORD), (qsort_cmp)DpsCmplog_wrd);
 
 /*    if (!(Indexer->flags & DPS_FLAG_UNOCON)) DPS_GETLOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
-    if (n || del_count) res = DpsProcessBuf(Indexer, &P, log_num, log_buf, n, del_buf, del_count);
+      if (n || del_count) res = DpsProcessBuf(Indexer, &P, log_num, log_buf, n, del_buf, del_count);
 
-    logd->wrd_buf[log_num].nrec = 0;
-    logd->wrd_buf[log_num].ndel = 0;
+      logd->wrd_buf[log_num].nrec = 0;
+      logd->wrd_buf[log_num].ndel = 0;
 /*    DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED);*/
 
-    if (Indexer->Flags.OptimizeAtUpdate && (res == DPS_OK) && (n > 0)) {
-      res = DpsBaseOptimize(&P, (int)log_num);    /* disk space save strategy: optimize after every update, 
+      if (Indexer->Flags.OptimizeAtUpdate && (res == DPS_OK) && (n > 0)) {
+	  res = DpsBaseOptimize(&P, (int)log_num);    /* disk space save strategy: optimize after every update, 
 							but this slow down indexing. */
-    }
-    DpsBaseClose(&P);
+      }
+      DpsBaseClose(&P);
 /*    DPS_RELEASELOCK(Indexer, DPS_LOCK_CACHED_N(log_num));*/
   }
   
@@ -2494,79 +2495,79 @@ int DpsLogdSaveBuf(DPS_AGENT *Indexer, DPS_ENV * Env, size_t log_num) { /* Shoul
 }
 
 
-
-
 int DpsLogdSaveAllBufs(DPS_AGENT *Agent) {
-  DPS_DB *db;
-  DPS_ENV *Env = Agent->Conf;
-	size_t i;
-	size_t j, dbfrom = 0, dbto, pi, shift;
-	int res = DPS_OK, u;
-	size_t NWrdFiles = (size_t)DpsVarListFindInt(&Env->Vars, "WrdFiles", 0x300);
+    DPS_DB *db;
+    DPS_ENV *Env = Agent->Conf;
+    size_t i;
+    size_t j, dbfrom = 0, dbto, pi, shift;
+    int res = DPS_OK, u;
+    size_t NWrdFiles = (size_t)DpsVarListFindInt(&Env->Vars, "WrdFiles", 0x300);
 
-	TRACE_IN(Agent, "DpsLogdSaveAllBufs");
+    TRACE_IN(Agent, "DpsLogdSaveAllBufs");
 
-	DPS_GETLOCK(Agent, DPS_LOCK_CONF);
-	dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
-	DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+    DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(Agent);
+    DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 	
-	for (j = dbfrom; j < dbto; j++) {
-	  DPS_GETLOCK(Agent, DPS_LOCK_CONF);
-	  db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[j] : &Agent->dbl.db[j];
-	  DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+    for (j = dbfrom; j < dbto; j++) {
+	DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+	db = DPS_DBL_DB(Agent, j);
+	DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
 /*	  if (Agent->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Agent, DPS_LOCK_DB);*/
 
 /**	  DPS_GETLOCK(Agent, DPS_LOCK_CACHED);**/
-	  u = (db->LOGD.wrd_buf == NULL);
+	u = (db->LOGD.wrd_buf == NULL);
 /**	  DPS_RELEASELOCK(Agent, DPS_LOCK_CACHED);**/
-	  if (u) continue;
-	  shift = (Agent->handle * 321) % ((db->WrdFiles) ? db->WrdFiles : NWrdFiles);
-	  for(i = 0; i < ((db->WrdFiles) ? db->WrdFiles : NWrdFiles); i++) {
+	if (u) continue;
+	shift = (Agent->handle * 321) % ((db->WrdFiles) ? db->WrdFiles : NWrdFiles);
+	for(i = 0; i < ((db->WrdFiles) ? db->WrdFiles : NWrdFiles); i++) {
 	    pi = (shift + i) % ((db->WrdFiles) ? db->WrdFiles : NWrdFiles);
 	    DPS_GETLOCK(Agent, DPS_LOCK_CACHED_N(pi));
 	    u = (db->LOGD.wrd_buf[pi].nrec || db->LOGD.wrd_buf[pi].ndel);
 	    if (u) {
-	      res = DpsLogdSaveBuf(Agent, Env, pi);
+		res = DpsLogdSaveBuf(Agent, Env, pi);
 	    }
 	    DPS_RELEASELOCK(Agent, DPS_LOCK_CACHED_N(pi));
 	    if (res != DPS_OK) break;
 /*	    DPSSLEEP(0);*/
-	  }
-	  db->LOGD.cur_del_buf = 0;
-/*	  if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);*/
-	  if (res != DPS_OK) break;
 	}
-	TRACE_OUT(Agent);
-	return res;
+	db->LOGD.cur_del_buf = 0;
+/*	  if (Agent->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Agent, DPS_LOCK_DB);*/
+	if (res != DPS_OK) break;
+    }
+    TRACE_OUT(Agent);
+    return res;
 }
+
 
 static int DpsLogdCloseLogs(DPS_AGENT *Agent) {
-  DPS_ENV *Env = Agent->Conf;
-  size_t j, dbfrom = 0, dbto;
-  DPS_DB *db;
-  int res;
+    DPS_ENV *Env = Agent->Conf;
+    size_t j, dbfrom = 0, dbto;
+    DPS_DB *db;
+    int res;
 
-  TRACE_IN(Agent, "DpsLogdCloseLogs");
+    TRACE_IN(Agent, "DpsLogdCloseLogs");
 
-  res = DpsLogdSaveAllBufs(Agent);
+    res = DpsLogdSaveAllBufs(Agent);
 
-  dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
+    dbto = DPS_DBL_TO(Agent);
 
-  for (j = dbfrom; j < dbto; j++) {
-    db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[j] : &Agent->dbl.db[j];
-    if (Env->logs_only) {
-	if(db->del_fd){ DpsClose(db->del_fd); db->del_fd = 0; }
-	if(db->cat_fd){ DpsClose(db->cat_fd); db->cat_fd = 0; }
-	if(db->tag_fd){ DpsClose(db->tag_fd); db->tag_fd = 0; }
-	if(db->time_fd){ DpsClose(db->time_fd); db->time_fd = 0; }
-	if(db->lang_fd){ DpsClose(db->lang_fd); db->lang_fd = 0; }
-	if(db->ctype_fd){ DpsClose(db->ctype_fd); db->ctype_fd = 0; }
-	if(db->site_fd){ DpsClose(db->site_fd); db->site_fd = 0; }
+    for (j = dbfrom; j < dbto; j++) {
+	db = DPS_DBL_DB(Agent, j);
+	if (Env->logs_only) {
+	    if(db->del_fd){ DpsClose(db->del_fd); db->del_fd = 0; }
+	    if(db->cat_fd){ DpsClose(db->cat_fd); db->cat_fd = 0; }
+	    if(db->tag_fd){ DpsClose(db->tag_fd); db->tag_fd = 0; }
+	    if(db->time_fd){ DpsClose(db->time_fd); db->time_fd = 0; }
+	    if(db->lang_fd){ DpsClose(db->lang_fd); db->lang_fd = 0; }
+	    if(db->ctype_fd){ DpsClose(db->ctype_fd); db->ctype_fd = 0; }
+	    if(db->site_fd){ DpsClose(db->site_fd); db->site_fd = 0; }
+	}
     }
-  }
-  TRACE_OUT(Agent);
-  return res;
+    TRACE_OUT(Agent);
+    return res;
 }
+
 
 static int DpsLogdInit(DPS_AGENT *A, DPS_DB *db, const char* var_dir, size_t i, int shared) {
         char shm_name[PATH_MAX];
@@ -2942,29 +2943,42 @@ int DpsURLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 }
 
 
-
 void DpsFlushAllBufs(DPS_AGENT *Agent, int rotate_logs) {
-  char time_pid[128];
-  DPS_DB *db;
-  size_t i, dbfrom = 0, dbto =  (Agent->flags & DPS_FLAG_UNOCON) ? Agent->Conf->dbl.nitems : Agent->dbl.nitems;
-  time_t t = time(NULL);
+    char time_pid[128];
+    DPS_DB *db;
+    size_t i, dbfrom = 0, dbto = DPS_DBL_TO(Agent);
+    time_t t = time(NULL);
 #ifdef HAVE_PTHREAD
-  struct tm l_tim;
-  struct tm *tim = localtime_r(&t, &l_tim);
+    struct tm l_tim;
+    struct tm *tim = localtime_r(&t, &l_tim);
 #else
-  struct tm *tim = localtime(&t);
+    struct tm *tim = localtime(&t);
 #endif
 
-  strftime(time_pid, sizeof(time_pid), "%a %d %H:%M:%S", tim);
-  t = dps_strlen(time_pid);
-  dps_snprintf(time_pid + t, sizeof(time_pid) - t, " [%d]", (int)getpid());
-  DpsLog(Agent, DPS_LOG_INFO, "%s Flushing all buffers... ", time_pid);
+    strftime(time_pid, sizeof(time_pid), "%a %d %H:%M:%S", tim);
+    t = dps_strlen(time_pid);
+    dps_snprintf(time_pid + t, sizeof(time_pid) - t, " [%d]", (int)getpid());
+    DpsLog(Agent, DPS_LOG_INFO, "%s Flushing all buffers... ", time_pid);
 
-  if(DPS_OK != DpsLogdSaveAllBufs(Agent)) {
-    for (i = dbfrom; i < dbto; i++) {
-      DPS_GETLOCK(Agent, DPS_LOCK_DB);
-      db = &Agent->Conf->dbl.db[i];
-      if (db->errcode) {
+    if (DPS_OK != DpsLogdSaveAllBufs(Agent)) {
+	for (i = dbfrom; i < dbto; i++) {
+	    DPS_GETLOCK(Agent, DPS_LOCK_DB);
+//	    db = &Agent->Conf->dbl.db[i];
+	    db = DPS_DBL_DB(Agent,i);
+	    if (db->errcode) {
+		t = time(NULL);
+#ifdef HAVE_PTHREAD
+		tim = localtime_r(&t, &l_tim);
+#else
+		tim = localtime(&t);
+#endif
+		strftime(time_pid, sizeof(time_pid), "%a %d %H:%M:%S", tim);
+		t = dps_strlen(time_pid);
+		dps_snprintf(time_pid + t, sizeof(time_pid) - t, " [%d]", (int)getpid());
+		DpsLog(Agent, DPS_LOG_ERROR, "%s Error: %s", time_pid, db->errstr);
+	    }
+	    DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
+	}
 	t = time(NULL);
 #ifdef HAVE_PTHREAD
 	tim = localtime_r(&t, &l_tim);
@@ -2974,24 +2988,10 @@ void DpsFlushAllBufs(DPS_AGENT *Agent, int rotate_logs) {
 	strftime(time_pid, sizeof(time_pid), "%a %d %H:%M:%S", tim);
 	t = dps_strlen(time_pid);
 	dps_snprintf(time_pid + t, sizeof(time_pid) - t, " [%d]", (int)getpid());
-	DpsLog(Agent, DPS_LOG_ERROR, "%s Error: %s", time_pid, db->errstr);
-      }
-      DPS_RELEASELOCK(Agent, DPS_LOCK_DB);
+	DpsLog(Agent, DPS_LOG_ERROR, "%s Shutdown", time_pid);
     }
-    t = time(NULL);
-#ifdef HAVE_PTHREAD
-    tim = localtime_r(&t, &l_tim);
-#else
-    tim = localtime(&t);
-#endif
-    strftime(time_pid, sizeof(time_pid), "%a %d %H:%M:%S", tim);
-    t = dps_strlen(time_pid);
-    dps_snprintf(time_pid + t, sizeof(time_pid) - t, " [%d]", (int)getpid());
-    DpsLog(Agent, DPS_LOG_ERROR, "%s Shutdown", time_pid);
-  }
-  if (Agent->Conf->logs_only && rotate_logs) DpsRotateDelLog(Agent);
-  DpsLog(Agent, DPS_LOG_INFO, "Done");
-
+    if (Agent->Conf->logs_only && rotate_logs) DpsRotateDelLog(Agent);
+    DpsLog(Agent, DPS_LOG_INFO, "Done");
 }
 
 
@@ -3533,82 +3533,82 @@ static int DpsLogdCachedCheck(DPS_AGENT *A, DPS_DB *db, int level) {
 }
 
 int DpsCachedCheck(DPS_AGENT *A, int level) {
-	size_t i, dbfrom = 0, dbto;
-	DPS_DB	*db;
-	int sent, cached_sd, cached_rv;
-	ssize_t recvt;
-	char reply;
-	DPS_LOGD_CMD cmd;
-	DPS_BASE_PARAM I;
+    size_t i, dbfrom = 0, dbto;
+    DPS_DB	*db;
+    int sent, cached_sd, cached_rv;
+    ssize_t recvt;
+    char reply;
+    DPS_LOGD_CMD cmd;
+    DPS_BASE_PARAM I;
 
-	TRACE_IN(A, "DpsCached");
-
-	bzero(&I, sizeof(I));
-	I.subdir = DPS_URLDIR;
-	I.basename = "info";
-	I.indname = "info";
-	I.mode = DPS_WRITE_LOCK;
-	I.vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
-	I.A = A;
+    TRACE_IN(A, "DpsCached");
+    
+    bzero(&I, sizeof(I));
+    I.subdir = DPS_URLDIR;
+    I.basename = "info";
+    I.indname = "info";
+    I.mode = DPS_WRITE_LOCK;
+    I.vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
+    I.A = A;
 #ifdef HAVE_ZLIB
-	I.zlib_method = Z_DEFLATED;
-	I.zlib_level = 9;
-	I.zlib_windowBits = DPS_BASE_INFO_WINDOWBITS;
-	I.zlib_memLevel = 9;
-	I.zlib_strategy = DPS_BASE_INFO_STRATEGY;
+    I.zlib_method = Z_DEFLATED;
+    I.zlib_level = 9;
+    I.zlib_windowBits = DPS_BASE_INFO_WINDOWBITS;
+    I.zlib_memLevel = 9;
+    I.zlib_strategy = DPS_BASE_INFO_STRATEGY;
 #endif
+    DPS_GETLOCK(A, DPS_LOCK_CONF);
+    dbto = DPS_DBL_TO(A);
+    DPS_RELEASELOCK(A, DPS_LOCK_CONF);
+    I.NFiles = DpsVarListFindInt(&A->Vars, "URLDataFiles", 0x300);
+
+    for (i = dbfrom; i < dbto; i++) {
 	DPS_GETLOCK(A, DPS_LOCK_CONF);
-	dbto =  (A->flags & DPS_FLAG_UNOCON) ? A->Conf->dbl.nitems : A->dbl.nitems;
+	db = DPS_DBL_DB(A, i);
 	DPS_RELEASELOCK(A, DPS_LOCK_CONF);
-	I.NFiles = DpsVarListFindInt(&A->Vars, "URLDataFiles", 0x300);
-
-	for (i = dbfrom; i < dbto; i++) {
-	  DPS_GETLOCK(A, DPS_LOCK_CONF);
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  DPS_RELEASELOCK(A, DPS_LOCK_CONF);
-	  if (db->DBMode != DPS_DBMODE_CACHE) {
+	if (db->DBMode != DPS_DBMODE_CACHE) {
 	    continue;
-	  }
+	}
 
-	  cmd.nwords = 0;
-	  cmd.stamp = A->now;
-	  cmd.url_id = level;
-	  cmd.cmd = DPS_LOGD_CMD_CHECK;
+	cmd.nwords = 0;
+	cmd.stamp = A->now;
+	cmd.url_id = level;
+	cmd.cmd = DPS_LOGD_CMD_CHECK;
 
-	  cached_sd = A->Demons.nitems ? A->Demons.Demon[db->dbnum].cached_sd : 0;
-	  cached_rv = A->Demons.nitems ? A->Demons.Demon[db->dbnum].cached_rv : 0;
+	cached_sd = A->Demons.nitems ? A->Demons.Demon[db->dbnum].cached_sd : 0;
+	cached_rv = A->Demons.nitems ? A->Demons.Demon[db->dbnum].cached_rv : 0;
 
-	  if(0/*cached_sd*/) {
-		sent = DpsSend(cached_sd, &cmd, sizeof(cmd), 0);
-		if(sent!=sizeof(cmd)){
-			dps_strerror(A, DPS_LOG_ERROR, "[%s:%d] Can't write to cached", __FILE__, __LINE__);
-			TRACE_OUT(A);
-			return(DPS_ERROR);
+	if(0/*cached_sd*/) {
+	    sent = DpsSend(cached_sd, &cmd, sizeof(cmd), 0);
+	    if(sent!=sizeof(cmd)){
+		dps_strerror(A, DPS_LOG_ERROR, "[%s:%d] Can't write to cached", __FILE__, __LINE__);
+		TRACE_OUT(A);
+		return(DPS_ERROR);
+	    }
+	    while ((recvt = DpsRecvall(cached_rv, &reply, sizeof(char), WAIT_TIME)) != 1) {
+		if (recvt <= 0) {
+		    dps_strerror(A, DPS_LOG_ERROR, "Can't receive from cached [%s:%d]: %d",__FILE__,__LINE__, recvt);
+		    TRACE_OUT(A);
+		    return(DPS_ERROR);
 		}
-		while ((recvt = DpsRecvall(cached_rv, &reply, sizeof(char), WAIT_TIME)) != 1) {
-		  if (recvt <= 0) {
-			dps_strerror(A, DPS_LOG_ERROR, "Can't receive from cached [%s:%d]: %d",__FILE__,__LINE__, recvt);
-			TRACE_OUT(A);
-			return(DPS_ERROR);
-		  }
-		  DPSSLEEP(0);
-		}
-		if (reply != 'O') {
-			DpsLog(A, DPS_LOG_ERROR, "Incorrect reply received from cached %s:%d", __FILE__, __LINE__);
-			TRACE_OUT(A);
-			return DPS_ERROR;
-		}
-	  } else {
+		DPSSLEEP(0);
+	    }
+	    if (reply != 'O') {
+		DpsLog(A, DPS_LOG_ERROR, "Incorrect reply received from cached %s:%d", __FILE__, __LINE__);
+		TRACE_OUT(A);
+		return DPS_ERROR;
+	    }
+	} else {
 	    DpsLogdCachedCheck(A, db, level);
 
 	    if (level > 1) DpsBaseCheckup(&I, DpsCheckUrlid);
 	    DpsBaseOptimize(&I, -1);
 	    DpsBaseClose(&I);
 
-	  }
 	}
-	TRACE_OUT(A);
-	return DPS_OK;
+    }
+    TRACE_OUT(A);
+    return DPS_OK;
 }
 
 /* convert from 4.23 to 4.24 */

@@ -73,46 +73,47 @@ DPS_ROBOT* DpsRobotFind(DPS_ROBOTS *Robots,const char *hostinfo){
 	return r;
 }
 
+
 static DPS_ROBOT* DeleteRobotRules(DPS_AGENT *A, DPS_ROBOTS *Robots, const char *hostinfo) {
-	DPS_ROBOT *robot;
-	size_t i;
+    DPS_ROBOT *robot;
+    size_t i;
 #ifdef WITH_PARANOIA
-	void *paran = DpsViolationEnter(paran);
+    void *paran = DpsViolationEnter(paran);
 #endif
 	
-	if((robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(hostinfo))) != NULL) {
-	  char buf[2*PATH_MAX];
-	  DPS_DB *db;
-	  dpshash32_t url_id = DpsStrHash32(DPS_NULL2EMPTY(hostinfo));
-	  dps_snprintf(buf, sizeof(buf), "DELETE FROM robots WHERE hostinfo='%s'", DPS_NULL2EMPTY(hostinfo));
+    if((robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(hostinfo))) != NULL) {
+	char buf[2*PATH_MAX];
+	DPS_DB *db;
+	dpshash32_t url_id = DpsStrHash32(DPS_NULL2EMPTY(hostinfo));
+	dps_snprintf(buf, sizeof(buf), "DELETE FROM robots WHERE hostinfo='%s'", DPS_NULL2EMPTY(hostinfo));
 		      
-	  if (A->flags & DPS_FLAG_UNOCON) {
-	    db = &A->Conf->dbl.db[url_id % A->Conf->dbl.nitems];
+	if (A->flags & DPS_FLAG_UNOCON) {
+	    db = A->Conf->dbl.db[url_id % A->Conf->dbl.nitems];
 #ifdef HAVE_SQL
 	    DPS_GETLOCK(A, DPS_LOCK_DB);
 	    DpsSQLAsyncQuery(db, NULL, buf);
 	    DPS_RELEASELOCK(A, DPS_LOCK_DB);
 #endif
-	  } else {
-	    db = &A->dbl.db[url_id % A->dbl.nitems];
+	} else {
+	    db = A->dbl.db[url_id % A->dbl.nitems];
 #ifdef HAVE_SQL
 	    DpsSQLAsyncQuery(db, NULL, buf);
 #endif
-	  }
-		for(i=0;i<robot->nrules;i++){
-			DPS_FREE(robot->Rule[i].path);
-		}
-		robot->nrules=0;
-		DPS_FREE(robot->Rule);
-#ifdef WITH_PARANOIA
-		DpsViolationExit(A->handle, paran);
-#endif
-		return robot;
 	}
+	for (i = 0; i < robot->nrules; i++) {
+	    DPS_FREE(robot->Rule[i].path);
+	}
+	robot->nrules = 0;
+	DPS_FREE(robot->Rule);
 #ifdef WITH_PARANOIA
 	DpsViolationExit(A->handle, paran);
 #endif
-	return NULL;
+	return robot;
+    }
+#ifdef WITH_PARANOIA
+    DpsViolationExit(A->handle, paran);
+#endif
+    return NULL;
 }
 
 static DPS_ROBOT* DpsRobotAddEmpty(DPS_AGENT *A, DPS_ROBOTS *Robots, const char *hostinfo, DPS_ROBOT_CRAWL *last_crawled) {
@@ -162,58 +163,59 @@ static DPS_ROBOT* DpsRobotAddEmpty(DPS_AGENT *A, DPS_ROBOTS *Robots, const char 
 
 static int AddRobotRule(DPS_AGENT *A, DPS_ROBOT *robot, int cmd, const char *path, int insert_flag) {
 #ifdef HAVE_SQL
-  DPS_DB *db;
-  dpshash32_t url_id;
+    DPS_DB *db;
+    dpshash32_t url_id;
 #ifdef WITH_PARANOIA
-        void *paran = DpsViolationEnter(paran);
+    void *paran = DpsViolationEnter(paran);
 #endif
 
-	if (cmd == DPS_METHOD_CRAWLDELAY) {
-	  robot->crawl_delay = (size_t)(1000 * DPS_ATOF(path));
-	} 
-	{
+    if (cmd == DPS_METHOD_CRAWLDELAY) {
+	robot->crawl_delay = (size_t)(1000 * DPS_ATOF(path));
+    } 
+    {
 
-	  robot->Rule = (DPS_ROBOT_RULE*)DpsRealloc(robot->Rule, (robot->nrules + 1) * sizeof(DPS_ROBOT_RULE));
-	  if(robot->Rule==NULL) {
+	robot->Rule = (DPS_ROBOT_RULE*)DpsRealloc(robot->Rule, (robot->nrules + 1) * sizeof(DPS_ROBOT_RULE));
+	if (robot->Rule == NULL) {
 	    robot->nrules = 0;
 #ifdef WITH_PARANOIA
 	    DpsViolationExit(A->handle, paran);
 #endif
 	    return DPS_ERROR;
-	  }
+	}
 	
-	  robot->Rule[robot->nrules].cmd = cmd;
-	  robot->Rule[robot->nrules].path = (char*)DpsStrdup(DPS_NULL2EMPTY(path));
-	  robot->Rule[robot->nrules].len = dps_strlen(robot->Rule[robot->nrules].path);
-	  robot->nrules++;
+	robot->Rule[robot->nrules].cmd = cmd;
+	robot->Rule[robot->nrules].path = (char*)DpsStrdup(DPS_NULL2EMPTY(path));
+	robot->Rule[robot->nrules].len = dps_strlen(robot->Rule[robot->nrules].path);
+	robot->nrules++;
+    }
+
+    if (insert_flag) {
+	char buf[2*PATH_MAX+128];
+	char path_esc[2*PATH_MAX+1];
+	url_id = DpsStrHash32(robot->hostinfo);
+
+	if (A->flags & DPS_FLAG_UNOCON) {
+	    db = A->Conf->dbl.db[url_id % A->Conf->dbl.nitems];
+	} else {
+	    db = A->dbl.db[url_id % A->dbl.nitems];
 	}
 
-	if (insert_flag) {
-	  char buf[2*PATH_MAX+128];
-	  char path_esc[2*PATH_MAX+1];
-	  url_id = DpsStrHash32(robot->hostinfo);
+	(void)DpsDBEscStr(db, path_esc, DPS_NULL2EMPTY(path), dps_min(PATH_MAX,dps_strlen(DPS_NULL2EMPTY(path))));
+	dps_snprintf(buf, sizeof(buf), "INSERT INTO robots(cmd,ordre,added_time,hostinfo,path)VALUES(%d,%d,%d,'%s','%s')",
+		     cmd, robot->nrules, A->now, robot->hostinfo, path_esc);
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+	DpsSQLAsyncQuery(db, NULL, buf);
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
 
-	  if (A->flags & DPS_FLAG_UNOCON) {
-	    db = &A->Conf->dbl.db[url_id % A->Conf->dbl.nitems];
-	  } else {
-	    db = &A->dbl.db[url_id % A->dbl.nitems];
-	  }
-
-	  (void)DpsDBEscStr(db, path_esc, DPS_NULL2EMPTY(path), dps_min(PATH_MAX,dps_strlen(DPS_NULL2EMPTY(path))));
-	  dps_snprintf(buf, sizeof(buf), "INSERT INTO robots(cmd,ordre,added_time,hostinfo,path)VALUES(%d,%d,%d,'%s','%s')",
-		       cmd, robot->nrules, A->now, robot->hostinfo, path_esc);
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
-	  DpsSQLAsyncQuery(db, NULL, buf);
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-
-	}
+    }
 #ifdef WITH_PARANOIA
-	DpsViolationExit(A->handle, paran);
+    DpsViolationExit(A->handle, paran);
 #endif
 
 #endif /*HAVE_SQL*/
-	return DPS_OK;
+    return DPS_OK;
 }
+
 
 int DpsRobotListFree(DPS_AGENT *A, DPS_ROBOTS *Robots){
 	size_t i,j; 
@@ -253,151 +255,151 @@ static DPS_ROBOT_RULE DpsRobotErrRule = {DPS_METHOD_VISITLATER, "", 0};
 static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server, 
 				DPS_DOCUMENT *Doc, DPS_URL *URL, char *rurl, size_t rurlen) {
     DPS_ROBOTS *Robots;
-	DPS_ROBOT *robot = NULL, *rI = NULL;
+    DPS_ROBOT *robot = NULL, *rI = NULL;
 #ifdef HAVE_SQL
-	DPS_SERVER	*rServer;
-	DPS_DOCUMENT	*rDoc;
-       	int           status, result;
+    DPS_SERVER	*rServer;
+    DPS_DOCUMENT	*rDoc;
+    int           status, result;
 #ifdef WITH_PARANOIA
-	void *paran = DpsViolationEnter(paran);
+    void *paran = DpsViolationEnter(paran);
 #endif
-	TRACE_IN(Indexer, "DpsRobotClone");
+    TRACE_IN(Indexer, "DpsRobotClone");
 
-	DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
-	Robots = &Indexer->Conf->Robots;
-	robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
-	if (robot == NULL && Robots->nrobots == DPS_ROBOTS_CACHE_SIZE) {
-	  DpsRobotListFree(Indexer, Robots);
+    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+    Robots = &Indexer->Conf->Robots;
+    robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
+    if (robot == NULL && Robots->nrobots == DPS_ROBOTS_CACHE_SIZE) {
+	DpsRobotListFree(Indexer, Robots);
+    }
+
+    if (robot == NULL) {
+	char buf[2*PATH_MAX];
+	dpshash32_t url_id = DpsStrHash32(URL->hostinfo);
+	DPS_DB *db;
+	DPS_SQLRES Res;
+	size_t i, rows;
+	int rc, cmd;
+
+	DpsSQLResInit(&Res);
+	dps_snprintf(buf, sizeof(buf), "SELECT cmd,path FROM robots WHERE hostinfo='%s' ORDER BY ordre", URL->hostinfo);
+	if (Indexer->flags & DPS_FLAG_UNOCON) {
+	    db = Indexer->Conf->dbl.db[url_id % Indexer->Conf->dbl.nitems];
+	} else {
+	    db = Indexer->dbl.db[url_id % Indexer->dbl.nitems];
 	}
-
-	if (robot == NULL) {
-	  char buf[2*PATH_MAX];
-	  dpshash32_t url_id = DpsStrHash32(URL->hostinfo);
-	  DPS_DB *db;
-	  DPS_SQLRES Res;
-	  size_t i, rows;
-	  int rc, cmd;
-
-	  DpsSQLResInit(&Res);
-	  dps_snprintf(buf, sizeof(buf), "SELECT cmd,path FROM robots WHERE hostinfo='%s' ORDER BY ordre", URL->hostinfo);
-	  if (Indexer->flags & DPS_FLAG_UNOCON) {
-	    db = &Indexer->Conf->dbl.db[url_id % Indexer->Conf->dbl.nitems];
-	  } else {
-	    db = &Indexer->dbl.db[url_id % Indexer->dbl.nitems];
-	  }
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
-	  if(DPS_OK == (rc = DpsSQLQuery(db, &Res, buf))) {
+	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
+	if(DPS_OK == (rc = DpsSQLQuery(db, &Res, buf))) {
 	    rows = DpsSQLNumRows(&Res);
 	    if (rows > 0) {
-	      robot = DpsRobotAddEmpty(Indexer, Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
-	      if (robot != NULL) {
-		  for(i = 0; i < rows; i++) {
-		      cmd = atoi(DpsSQLValue(&Res,i,0));
-		      if (cmd != DPS_METHOD_UNKNOWN)
-			  AddRobotRule(Indexer, robot, cmd, DpsSQLValue(&Res,i,1), 0);
-		  }
-	      }
+		robot = DpsRobotAddEmpty(Indexer, Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
+		if (robot != NULL) {
+		    for(i = 0; i < rows; i++) {
+			cmd = atoi(DpsSQLValue(&Res,i,0));
+			if (cmd != DPS_METHOD_UNKNOWN)
+			    AddRobotRule(Indexer, robot, cmd, DpsSQLValue(&Res,i,1), 0);
+		    }
+		}
 	    }
-	  }
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
-	  DpsSQLFree(&Res);
 	}
+	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
+	DpsSQLFree(&Res);
+    }
 
-	if (robot == NULL) {
+    if (robot == NULL) {
   
-	  DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+	DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 
-	  rDoc = DpsDocInit(NULL);
-	  DpsSpiderParamInit(&rDoc->Spider);
-	  rDoc->Buf.max_size = (size_t)DpsVarListFindInt(&Indexer->Vars, "MaxDocSize", DPS_MAXDOCSIZE);
-	  rDoc->Buf.allocated_size = DPS_NET_BUF_SIZE;
-	  if ((rDoc->Buf.buf = (char*)DpsMalloc(rDoc->Buf.allocated_size + 1)) == NULL) {
+	rDoc = DpsDocInit(NULL);
+	DpsSpiderParamInit(&rDoc->Spider);
+	rDoc->Buf.max_size = (size_t)DpsVarListFindInt(&Indexer->Vars, "MaxDocSize", DPS_MAXDOCSIZE);
+	rDoc->Buf.allocated_size = DPS_NET_BUF_SIZE;
+	if ((rDoc->Buf.buf = (char*)DpsMalloc(rDoc->Buf.allocated_size + 1)) == NULL) {
 	    DpsDocFree(rDoc);
 	    TRACE_OUT(Indexer);
 #ifdef WITH_PARANOIA
 	    DpsViolationExit(Indexer->handle, paran);
 #endif
 	    return NULL;
-	  }
-	  rDoc->Buf.buf[0]='\0';
-	  rDoc->subdoc = Indexer->Flags.SubDocLevel + 1;
+	}
+	rDoc->Buf.buf[0]='\0';
+	rDoc->subdoc = Indexer->Flags.SubDocLevel + 1;
 
-	  dps_snprintf(rurl, rurlen, "%s://%s/robots.txt", DPS_NULL2EMPTY(URL->schema), DPS_NULL2EMPTY(URL->hostinfo));
-	  DpsVarListAddStr(&rDoc->Sections, "URL", rurl);
-	  DpsURLParse(&rDoc->CurURL, rurl);
-	  DpsLog(Indexer, DPS_LOG_INFO, "ROBOTS: %s", rurl);
+	dps_snprintf(rurl, rurlen, "%s://%s/robots.txt", DPS_NULL2EMPTY(URL->schema), DPS_NULL2EMPTY(URL->hostinfo));
+	DpsVarListAddStr(&rDoc->Sections, "URL", rurl);
+	DpsURLParse(&rDoc->CurURL, rurl);
+	DpsLog(Indexer, DPS_LOG_INFO, "ROBOTS: %s", rurl);
 
-	  if (Server != NULL) rServer = Server;
-	  else rServer = DpsServerFind(Indexer, (urlid_t)DpsVarListFindInt(&Doc->Sections, "Server_id", 0), rurl, URL->charset_id, NULL);
+	if (Server != NULL) rServer = Server;
+	else rServer = DpsServerFind(Indexer, (urlid_t)DpsVarListFindInt(&Doc->Sections, "Server_id", 0), rurl, URL->charset_id, NULL);
 
-	  if (Doc != NULL) {
+	if (Doc != NULL) {
 	    DpsVarListReplaceLst(&rDoc->RequestHeaders, &Doc->RequestHeaders, NULL, "*"); 
-	  } else {
+	} else {
 	    DpsDocAddDocExtraHeaders(Indexer, rDoc);
 	    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
-	  }
+	}
 
-	  if (rServer != NULL) {
+	if (rServer != NULL) {
 	    DpsVarListReplaceLst(&rDoc->Sections, &rServer->Vars, NULL, "*");
 	    DpsDocAddServExtraHeaders(rServer, rDoc);
 	    DpsVarList2Doc(rDoc, rServer);
-	  } else {
+	} else {
 	    DpsSpiderParamInit(&rDoc->Spider);
-	  }
-	  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "ROBOTS.Request");
+	}
+	DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "ROBOTS.Request");
 
-	  if (Doc == NULL || Indexer->Flags.cmd == DPS_IND_FILTER) {
+	if (Doc == NULL || Indexer->Flags.cmd == DPS_IND_FILTER) {
 	    DpsDocLookupConn(Indexer, rDoc);
-	  } else {
+	} else {
 	    DPS_FREE(rDoc->connp.connp);
 	    rDoc->connp = Doc->connp;
-	  }
-	  result = DpsGetURL(Indexer, rDoc, NULL);
+	}
+	result = DpsGetURL(Indexer, rDoc, NULL);
 /*	  DpsParseHTTPResponse(Indexer, rDoc);*/
-	  DpsDocProcessResponseHeaders(Indexer, rDoc);
-	  DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "ROBOTS.Response");
+	DpsDocProcessResponseHeaders(Indexer, rDoc);
+	DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "ROBOTS.Response");
 
-	  DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
-	  robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
+	DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+	robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	  
-	  if (robot == NULL) {
+	if (robot == NULL) {
 	    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	    if ((status = DpsVarListFindInt(&rDoc->Sections, "Status", 0)) == DPS_HTTP_STATUS_OK) {
-	      const char	*ce = DpsVarListFindStr(&rDoc->Sections, "Content-Encoding", "");
+		const char	*ce = DpsVarListFindStr(&rDoc->Sections, "Content-Encoding", "");
 #ifdef HAVE_ZLIB
-	      if(!strcasecmp(ce, "gzip") || !strcasecmp(ce, "x-gzip")){
-		DPS_THREADINFO(Indexer,"UnGzip", rurl);
-		DpsUnGzip(Indexer, rDoc);
-		DpsVarListReplaceInt(&rDoc->Sections, "Content-Length", rDoc->Buf.buf - rDoc->Buf.content + (int)rDoc->Buf.size);
-	      } else if(!strcasecmp(ce, "deflate")) {
-		DPS_THREADINFO(Indexer,"Inflate",rurl);
-		DpsInflate(Indexer, rDoc);
-		DpsVarListReplaceInt(&rDoc->Sections, "Content-Length", rDoc->Buf.buf - rDoc->Buf.content + (int)rDoc->Buf.size);
-	      }else if(!strcasecmp(ce, "compress") || !strcasecmp(ce, "x-compress")) {
-		DPS_THREADINFO(Indexer,"Uncompress",rurl);
-		DpsUncompress(Indexer, rDoc);
-		DpsVarListReplaceInt(&rDoc->Sections, "Content-Length", rDoc->Buf.buf - rDoc->Buf.content + (int)rDoc->Buf.size);
-	      }else
+		if(!strcasecmp(ce, "gzip") || !strcasecmp(ce, "x-gzip")){
+		    DPS_THREADINFO(Indexer,"UnGzip", rurl);
+		    DpsUnGzip(Indexer, rDoc);
+		    DpsVarListReplaceInt(&rDoc->Sections, "Content-Length", rDoc->Buf.buf - rDoc->Buf.content + (int)rDoc->Buf.size);
+		} else if(!strcasecmp(ce, "deflate")) {
+		    DPS_THREADINFO(Indexer,"Inflate",rurl);
+		    DpsInflate(Indexer, rDoc);
+		    DpsVarListReplaceInt(&rDoc->Sections, "Content-Length", rDoc->Buf.buf - rDoc->Buf.content + (int)rDoc->Buf.size);
+		} else if(!strcasecmp(ce, "compress") || !strcasecmp(ce, "x-compress")) {
+		    DPS_THREADINFO(Indexer,"Uncompress",rurl);
+		    DpsUncompress(Indexer, rDoc);
+		    DpsVarListReplaceInt(&rDoc->Sections, "Content-Length", rDoc->Buf.buf - rDoc->Buf.content + (int)rDoc->Buf.size);
+		}else
 #endif
-	      if(!strcasecmp(ce, "identity") || !strcasecmp(ce, "")) {
+		    if(!strcasecmp(ce, "identity") || !strcasecmp(ce, "")) {
 		/* Nothing to do*/
-	      }else{
-		DpsLog(Indexer,DPS_LOG_ERROR,"Unsupported Content-Encoding");
+		    }else{
+			DpsLog(Indexer,DPS_LOG_ERROR,"Unsupported Content-Encoding");
 /*	          DpsVarListReplaceInt(&rDoc->Sections, "Status", status = DPS_HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE);*/
-	      }
-	      if (status == DPS_HTTP_STATUS_OK) {
-		  result = DpsRobotParse(Indexer, rServer, rDoc->Buf.content, (char*)DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), 
-					 (Doc) ? DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1 : 0);
-		  DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
-	      } else {
-		  DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
-		  robot = DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), NULL);
-		  if (robot != NULL) {
-		      if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
-			  DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
-		      }
-		  }
-	      }
+		    }
+		if (status == DPS_HTTP_STATUS_OK) {
+		    result = DpsRobotParse(Indexer, rServer, rDoc->Buf.content, (char*)DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), 
+					   (Doc) ? DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1 : 0);
+		    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+		} else {
+		    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
+		    robot = DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), NULL);
+		    if (robot != NULL) {
+			if(AddRobotRule(Indexer, robot, DPS_METHOD_UNKNOWN, "/", 1)) {
+			    DpsLog(Indexer, DPS_LOG_ERROR, "AddRobotRule error: no memory ?");
+			}
+		    }
+		}
 	    } else {
 		DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 		robot = DpsRobotAddEmpty(Indexer, &Indexer->Conf->Robots, DPS_NULL2EMPTY(URL->hostinfo), NULL);
@@ -410,33 +412,33 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	    if (robot == NULL) {
 		robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	    }
-	  }
-	  if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));
-	  DpsDocFree(rDoc);
-	  
 	}
+	if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));
+	DpsDocFree(rDoc);
+	  
+    }
 
-	if (robot != NULL) {
-	  rI = DeleteRobotRules(Indexer, &Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo));
-	  if (rI == NULL) rI = DpsRobotAddEmpty(Indexer, &Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo), robot->last_crawled);
-	  if (rI != NULL) {
-	    register size_t j;
+    if (robot != NULL) {
+	rI = DeleteRobotRules(Indexer, &Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo));
+	if (rI == NULL) rI = DpsRobotAddEmpty(Indexer, &Indexer->Robots, DPS_NULL2EMPTY(URL->hostinfo), robot->last_crawled);
+	if (rI != NULL) {
+	    size_t j;
 	    rI->crawl_delay = robot->crawl_delay;
 	    for(j = 0; j < robot->nrules; j++) {
-	      if (robot->Rule[j].cmd != DPS_METHOD_UNKNOWN)
-		AddRobotRule(Indexer, rI, robot->Rule[j].cmd, robot->Rule[j].path, 0);
+		if (robot->Rule[j].cmd != DPS_METHOD_UNKNOWN)
+		    AddRobotRule(Indexer, rI, robot->Rule[j].cmd, robot->Rule[j].path, 0);
 	    }
-	  }
 	}
+    }
 
-	DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
-	TRACE_OUT(Indexer);
+    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
+    TRACE_OUT(Indexer);
 #ifdef WITH_PARANOIA
-	DpsViolationExit(Indexer->handle, paran);
+    DpsViolationExit(Indexer->handle, paran);
 #endif
 
 #endif /*HAVE_SQL*/
-	return rI;
+    return rI;
 }
 
 
@@ -633,33 +635,33 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 
 
 void DpsRobotClean(DPS_AGENT *A) {
-	char buf[256];
-	DPS_DB	*db;
-	size_t i, dbfrom = 0, dbto;
-	int res;
+    char buf[256];
+    DPS_DB	*db;
+    size_t i, dbfrom = 0, dbto;
+    int res;
 
-	if (A->Flags.robots_period == 0) return;
+    if (A->Flags.robots_period == 0) return;
 
-	dps_snprintf(buf, sizeof(buf), "DELETE FROM robots WHERE added_time < %d", A->now - A->Flags.robots_period);
+    dps_snprintf(buf, sizeof(buf), "DELETE FROM robots WHERE added_time < %d", A->now - A->Flags.robots_period);
 
-	if (A->flags & DPS_FLAG_UNOCON) {
-	  DPS_GETLOCK(A, DPS_LOCK_CONF);
-	  dbto =  A->Conf->dbl.nitems;
-	  DPS_RELEASELOCK(A, DPS_LOCK_CONF);
-	} else dbto = A->dbl.nitems;
+    if (A->flags & DPS_FLAG_UNOCON) {
+	DPS_GETLOCK(A, DPS_LOCK_CONF);
+	dbto =  A->Conf->dbl.nitems;
+	DPS_RELEASELOCK(A, DPS_LOCK_CONF);
+    } else dbto = A->dbl.nitems;
 
-	for (i = dbfrom; i < dbto; i++) {
-	  db = (A->flags & DPS_FLAG_UNOCON) ? &A->Conf->dbl.db[i] : &A->dbl.db[i];
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
+    for (i = dbfrom; i < dbto; i++) {
+	db = DPS_DBL_DB(A, i);
+	if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
 #ifdef HAVE_SQL
-	  res = DpsSQLAsyncQuery(db, NULL, buf);
+	res = DpsSQLAsyncQuery(db, NULL, buf);
 #endif
-	  if(res != DPS_OK){
-		DpsLog(A, DPS_LOG_ERROR, db->errstr);
-	  }
-	  if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
-	  if (res != DPS_OK) break;
+	if (res != DPS_OK) {
+	    DpsLog(A, DPS_LOG_ERROR, db->errstr);
 	}
+	if (A->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(A, DPS_LOCK_DB);
+	if (res != DPS_OK) break;
+    }
 }
 
 

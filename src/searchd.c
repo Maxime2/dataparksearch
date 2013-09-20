@@ -1519,7 +1519,7 @@ static void SearchdTrack(DPS_AGENT *Agent) {
   dps_setproctitle("Query Tracker");
 
   for (i = dbfrom; i < dbto; i++) {
-    db = &DBL->db[i];
+    db = DBL->db[i];
     db->connected = 0;
   }
 
@@ -1551,8 +1551,8 @@ static void SearchdTrack(DPS_AGENT *Agent) {
     trdone = 0;
 
     for (i = dbfrom; (i < dbto); i++) {
-      db = &DBL->db[i];
-      tr_db = (TrackDBAddr!=NULL) ? &TrL->db[0] : db;
+      db = DBL->db[i];
+      tr_db = (TrackDBAddr!=NULL) ? TrL->db[0] : db;
       
 /*      fprintf(stderr, " -- %d TrackDBAddr:%s  TrackQuery:%d\n", i, DPS_NULL2EMPTY(TrackDBAddr), db->TrackQuery);*/
 

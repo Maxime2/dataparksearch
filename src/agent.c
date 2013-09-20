@@ -66,7 +66,7 @@ __C_LINK int DpsAgentStoredConnect(DPS_AGENT *Indexer) {
   }
 
   for (i = 0; i < Env->dbl.nitems; i++) {
-    if (Env->dbl.db[i].stored_addr.sin_port != 0 && Indexer->Demons.Demon[i].stored_sd == 0) {
+    if (Env->dbl.db[i]->stored_addr.sin_port != 0 && Indexer->Demons.Demon[i].stored_sd == 0) {
       if((Indexer->Demons.Demon[i].stored_sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 	dps_strerror(Indexer, DPS_LOG_ERROR, "StoreD ERR socket_sd");
 	return DPS_ERROR;
@@ -79,10 +79,10 @@ __C_LINK int DpsAgentStoredConnect(DPS_AGENT *Indexer) {
       DpsSockOpt(Indexer, Indexer->Demons.Demon[i].stored_sd);
       DpsSockOpt(Indexer, Indexer->Demons.Demon[i].stored_rv);
 
-      if(connect(Indexer->Demons.Demon[i].stored_sd, (struct sockaddr *)&Env->dbl.db[i].stored_addr, 
-		 sizeof(Env->dbl.db[i].stored_addr)) == -1) {
+      if(connect(Indexer->Demons.Demon[i].stored_sd, (struct sockaddr *)&Env->dbl.db[i]->stored_addr, 
+		 sizeof(Env->dbl.db[i]->stored_addr)) == -1) {
 	dps_strerror(Indexer, DPS_LOG_ERROR, "StoreD ERR connect");
-	DpsLog(Indexer, DPS_LOG_ERROR, "StoreD ERR connect to %s", inet_ntoa(Env->dbl.db[i].stored_addr.sin_addr));
+	DpsLog(Indexer, DPS_LOG_ERROR, "StoreD ERR connect to %s", inet_ntoa(Env->dbl.db[i]->stored_addr.sin_addr));
 	return DPS_ERROR;
       }
 
@@ -92,14 +92,14 @@ __C_LINK int DpsAgentStoredConnect(DPS_AGENT *Indexer) {
 	dps_strerror(Indexer, DPS_LOG_ERROR, "StoreD ERR receiving port data");
 	return DPS_ERROR;
       }
-      dps_addr = Env->dbl.db[i].stored_addr;
+      dps_addr = Env->dbl.db[i]->stored_addr;
       dps_addr.sin_port = 0;
       sscanf(port_str, "%d,%d", ip, ip + 1);
       p[0] = (unsigned char)(ip[0] & 255);
       p[1] = (unsigned char)(ip[1] & 255);
 
       DpsLog(Indexer, DPS_LOG_EXTRA, "Stored @ [%s] PORT: %s, decimal:%d", 
-	     inet_ntoa(Env->dbl.db[i].stored_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));
+	     inet_ntoa(Env->dbl.db[i]->stored_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));
 
       if(connect(Indexer->Demons.Demon[i].stored_rv, (struct sockaddr *)&dps_addr, sizeof(dps_addr)) == -1) {
 	dps_strerror(Indexer, DPS_LOG_ERROR, "StoreD ERR revert connect");
@@ -122,7 +122,7 @@ DPS_DBLIST * DpsAgentDBLSet(DPS_AGENT *result, DPS_ENV *Env) {
   } else {
     DBL = &result->dbl;
     for (i = 0 ; i < Env->dbl.nitems; i++) {
-      if (DPS_OK != DpsDBListAdd(DBL, Env->dbl.db[i].DBADDR, Env->dbl.db[i].open_mode)) {
+      if (DPS_OK != DpsDBListAdd(DBL, Env->dbl.db[i]->DBADDR, Env->dbl.db[i]->open_mode)) {
 	DBL = NULL;
 	break;
       }
@@ -195,7 +195,7 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 	  }
 	  for (i = 0; i < DBL->nitems; i++) {
 
-	    if (DBL->db[i].stored_addr.sin_port != 0) {
+	    if (DBL->db[i]->stored_addr.sin_port != 0) {
 	      if((result->Demons.Demon[i].stored_sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		dps_strerror(NULL, DPS_LOG_ERROR, "StoreD ERR socket");
 		DpsAgentFree(result);
@@ -210,10 +210,10 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 	      DpsSockOpt(NULL, result->Demons.Demon[i].stored_sd);
 	      DpsSockOpt(NULL, result->Demons.Demon[i].stored_rv);
 
-	      if(connect(result->Demons.Demon[i].stored_sd, (struct sockaddr *)&DBL->db[i].stored_addr, 
-			 sizeof(DBL->db[i].stored_addr)) == -1) {
+	      if(connect(result->Demons.Demon[i].stored_sd, (struct sockaddr *)&DBL->db[i]->stored_addr, 
+			 sizeof(DBL->db[i]->stored_addr)) == -1) {
 		dps_strerror(NULL, DPS_LOG_ERROR, "StoreD ERR connect");
-		fprintf(stderr, "StoreD ERR connect to %s\n", inet_ntoa(DBL->db[i].stored_addr.sin_addr));
+		fprintf(stderr, "StoreD ERR connect to %s\n", inet_ntoa(DBL->db[i]->stored_addr.sin_addr));
 		DpsAgentFree(result);
 		return NULL;
 	      }
@@ -224,14 +224,14 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 		DpsAgentFree(result);
 		return NULL;
 	      }
-	      dps_addr = Env->dbl.db[i].stored_addr;
+	      dps_addr = Env->dbl.db[i]->stored_addr;
 	      dps_addr.sin_port = 0;
 	      sscanf(port_str, "%d,%d", ip, ip + 1);
 	      p[0] = (unsigned char)(ip[0] & 255);
 	      p[1] = (unsigned char)(ip[1] & 255);
 
 /*	      fprintf(stderr, "[%s] PORT: %s, decimal:%d\n", 
-		      inet_ntoa(Env->dbl.db[i].stored_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));*/
+		      inet_ntoa(Env->dbl.db[i]->stored_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));*/
 
 	      if(connect(result->Demons.Demon[i].stored_rv, (struct sockaddr *)&dps_addr, sizeof(dps_addr)) == -1) {
 		dps_strerror(NULL, DPS_LOG_ERROR, "StoreD ERR revert connect to %s:%d", inet_ntoa(dps_addr.sin_addr), ntohs(dps_addr.sin_port));
@@ -243,7 +243,7 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 
 	    }
 
-	    if (DBL->db[i].cached_addr.sin_port != 0) {
+	    if (DBL->db[i]->cached_addr.sin_port != 0) {
 	      
 	      if((result->Demons.Demon[i].cached_sd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
 		dps_strerror(NULL, DPS_LOG_ERROR, "CacheD ERR socket_sd");
@@ -261,13 +261,13 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 	      DpsSockOpt(NULL, result->Demons.Demon[i].cached_rv);
 
 	      for (z = 0; z < 5; z++) {
-		if(connect(result->Demons.Demon[i].cached_sd, (struct sockaddr *)&DBL->db[i].cached_addr, 
-			   sizeof(DBL->db[i].cached_addr)) == 0) {
+		if(connect(result->Demons.Demon[i].cached_sd, (struct sockaddr *)&DBL->db[i]->cached_addr, 
+			   sizeof(DBL->db[i]->cached_addr)) == 0) {
 		  break;
 		}
 	      }
 	      if (z == 5) {
-		dps_strerror(NULL, DPS_LOG_ERROR, "CacheD ERR connect to %s", inet_ntoa(DBL->db[i].cached_addr.sin_addr));
+		dps_strerror(NULL, DPS_LOG_ERROR, "CacheD ERR connect to %s", inet_ntoa(DBL->db[i]->cached_addr.sin_addr));
 		DpsAgentFree(result);
 		return NULL;
 	      }
@@ -281,14 +281,14 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 		DpsAgentFree(result);
 		return NULL;
 	      }
-	      dps_addr = Env->dbl.db[i].cached_addr;
+	      dps_addr = Env->dbl.db[i]->cached_addr;
 	      dps_addr.sin_port = 0;
 	      sscanf(port_str, "%d,%d", ip, ip + 1);
 	      p[0] = (unsigned char)(ip[0] & 255);
 	      p[1] = (unsigned char)(ip[1] & 255);
 
 /*	      fprintf(stderr, "[%s] PORT: %s, decimal:%d\n", 
-		      inet_ntoa(Env->dbl.db[i].cached_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));*/
+		      inet_ntoa(Env->dbl.db[i]->cached_addr.sin_addr), port_str, ntohs(dps_addr.sin_port));*/
 
 	      if(connect(result->Demons.Demon[i].cached_rv, (struct sockaddr *)&dps_addr, sizeof(dps_addr)) == -1) {
 		dps_strerror(NULL, DPS_LOG_ERROR, "CacheD ERR revert connect to %s:%d", inet_ntoa(dps_addr.sin_addr), ntohs(dps_addr.sin_port));
