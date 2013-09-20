@@ -934,7 +934,9 @@ static int do_client(DPS_AGENT *Agent, int client){
 					size_t		nsec, r;
 					DPS_DOCUMENT	*D=&Res->Doc[i];
 #if defined(HAVE_PTHREAD)
-					if (pthread_join(threads[i], NULL) != 0) {
+					if (threads != NULL && Cfg != NULL) {
+					    if (pthread_join(threads[i], NULL) != 0) {
+					    }
 					}
 #else
 					char		*al;

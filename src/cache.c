@@ -1235,11 +1235,11 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_nam
 
 urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size) {
 	char	fname[PATH_MAX];
-	int	ind_fd,dat_fd;
-	DPS_UINT8_POS_LEN *ind=NULL;
+	int	ind_fd, dat_fd;
+	DPS_UINT8_POS_LEN *ind = NULL;
 	struct	stat sb;
 	size_t	num;
-	urlid_t	*data;
+	urlid_t	*data = NULL;
 	size_t	start = (size_t)-1, stop = (size_t)-1, len;
 	dps_uint4   hi = Agent->limits[lnum].hi, lo = Agent->limits[lnum].lo, 
 	  f_hi = Agent->limits[lnum].f_hi, f_lo = Agent->limits[lnum].f_lo;
@@ -1372,10 +1372,10 @@ err2:
 urlid_t* LoadLinearLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 val, size_t *size) {
 	char	fname[PATH_MAX];
 	int	ind_fd,dat_fd;
-	DPS_UINT4_POS_LEN key,*found,*ind=NULL;
+	DPS_UINT4_POS_LEN key, *found, *ind = NULL;
 	struct	stat sb;
 	size_t	num;
-	urlid_t	*data;
+	urlid_t	*data = NULL;
 	const char	*vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
 	
 	TRACE_IN(Agent, "LoadLinearLimit");
@@ -1457,10 +1457,10 @@ err1:
 urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 from, dps_uint4 to, size_t *size) {
 	char	fname[PATH_MAX];
 	int	ind_fd,dat_fd;
-	DPS_UINT4_POS_LEN *found1,*found2,*ind=NULL;
+	DPS_UINT4_POS_LEN *found1, *found2, *ind = NULL;
 	struct	stat sb;
 	size_t	num,len;
-	urlid_t	*data;
+	urlid_t	*data = NULL;
 	const char *dt = DpsVarListFindStr(&Agent->Vars, "dt", "");
 	dps_uint4 dp = 1;
 	struct tm tm;
@@ -1534,15 +1534,15 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	if(!from){
 		found1=&ind[0];
 	}else{
-		dps_uint4 l=0,r=num,m;
+		dps_uint4 l = 0, r = num - 1, m;
 
 		while(l<r){
 			m=(l+r)/2;
 			if(ind[m].val<from) l=m+1;
 			else r=m;
 		}
-		if(r == num && ind[r].val != from) found1 = NULL;
-		else found1=&ind[r];
+		if(r == num - 1 && ind[r].val != from) found1 = NULL;
+		else found1 = &ind[r];
 	}	
 	if(!to){
 		found2=&ind[num-1];
