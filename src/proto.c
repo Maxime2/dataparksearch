@@ -1537,7 +1537,10 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 						 dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.query_string)) + 1));
 	char            *eurl = (char*)DpsMalloc(3 * i);
 
-	if (url == NULL || eurl == NULL) return DPS_ERROR;
+	if (url == NULL || eurl == NULL) {
+	    DPS_FREE(url); DPS_FREE(eurl);
+	    return DPS_ERROR;
+	}
 
 /*	sprintf(url, "%s%s%s", DPS_NULL2EMPTY(Doc->CurURL.path), DPS_NULL2EMPTY(Doc->CurURL.filename),
 		DPS_NULL2EMPTY(Doc->CurURL.query_string)); */

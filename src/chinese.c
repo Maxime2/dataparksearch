@@ -518,7 +518,8 @@ dpsunicode_t *DpsSegmentByFreq(DPS_CHINALIST *List, dpsunicode_t *line) {
 	DpsUniStrCat(out, segmented_sentence);
 	DPS_FREE(segmented_sentence);
       } else {
-	  DPS_FREE(mid); return NULL;
+	  DPS_FREE(mid); DPS_FREE(out);
+	  return NULL;
       }
     }
     *last = part;

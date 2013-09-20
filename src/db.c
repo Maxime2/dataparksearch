@@ -2322,6 +2322,9 @@ int DpsTrackSearchd(DPS_AGENT * query, DPS_RESULT *Res) {
 		char errstr[1024];
 		dps_strerror(query, DPS_LOG_ERROR, "DpsTrackSearchd: couldn't open track file (%s) for writing", fullname);
 		DpsLog(query, DPS_LOG_ERROR, errstr );
+		DPS_FREE(text_escaped);
+		DPS_FREE(qbuf);
+		TRACE_OUT(query);
 		return DPS_ERROR;
 	    }
 

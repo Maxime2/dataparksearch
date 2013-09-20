@@ -1309,8 +1309,10 @@ static int DpsServerTableGetId(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DB *d
 	  rec_id = DpsStrHash32(DPS_NULL2EMPTY(Server->Match.pattern));
 	  while(done) {
 	    dps_snprintf(buf, len, "SELECT rec_id, url FROM server WHERE rec_id=%s%i%s", qu, rec_id, qu);
-	    if (DPS_OK != (res = DpsSQLQuery(db, &SQLRes, buf)))
-	      return res;
+	    if (DPS_OK != (res = DpsSQLQuery(db, &SQLRes, buf))) {
+		DPS_FREE(buf); DPS_FREE(arg);
+		return res;
+	    }
 	    
 	    if (DpsSQLNumRows(&SQLRes) && (strcmp(DPS_NULL2EMPTY(Server->Match.pattern),DpsSQLValue(&SQLRes, 0, 1)) != 0)) {
 	      rec_id++;
@@ -2358,9 +2360,10 @@ static int DpsAddURL(DPS_AGENT *Indexer, DPS_DOCUMENT * Doc, DPS_DB *db) {
 
 	    switch(db->DBType){
 	    case DPS_DB_MSQL:
-	      /* miniSQL has _seq as autoincrement value */
-	      if(DPS_OK!=(rc=DpsSQLQuery(db,&SQLRes,"SELECT _seq FROM url")))
-		return rc;
+		/* miniSQL has _seq as autoincrement value */
+		if (DPS_OK != (rc = DpsSQLQuery(db,&SQLRes,"SELECT _seq FROM url"))) {
+		    DPS_FREE(qbuf); return rc;
+		}
 	      next_url_id = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes,0,0));
 	      DpsSQLFree(&SQLRes);
 	      dps_snprintf(qbuf, 4 * len + 512, "INSERT INTO url (url,referrer,hops,rec_id,crc32,next_index_time,status,seed,bad_since_time,site_id,server_id,docsize,last_mod_time,shows,pop_rank,since,charset_id) VALUES ('%s',%i,%d,%i,0,%d,0,%d,%d,%i,%i,%i,%li,0,%s,%d,%d)",

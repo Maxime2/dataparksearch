@@ -957,12 +957,14 @@ __C_LINK int __DPSCALL DpsLoadLangMapFile(DPS_LANGMAPLIST *L, const char * filen
                char * charset, * lasttok;
                DPS_FREE(Ccharset);
                if((charset = dps_strtok_r(str + 8, " \t\n\r", &lasttok, NULL))){
-                       const char *canon = DpsCharsetCanonicalName(charset);
+		   const char *canon = DpsCharsetCanonicalName(charset);
                     if (canon) {
-                      Ccharset = (char*)DpsStrdup(canon);
+			Ccharset = (char*)DpsStrdup(canon);
                     } else {
-                      fprintf(stderr, "Charset: %s in %s not supported\n", charset, filename);
-                      return DPS_ERROR;
+			fprintf(stderr, "Charset: %s in %s not supported\n", charset, filename);
+			DPS_FREE(data);
+			DpsClose(fd);
+			return DPS_ERROR;
                     }
                }
           }else
@@ -985,15 +987,21 @@ __C_LINK int __DPSCALL DpsLoadLangMapFile(DPS_LANGMAPLIST *L, const char * filen
                if(!(s = strchr(str, HT_INT))) goto loop_continue;
                if(Clanguage == NULL) {
                  fprintf(stderr, "No language definition in LangMapFile '%s'\n", filename);
+		 DPS_FREE(data);
+		 DpsClose(fd);
                  return DPS_ERROR;
                }
 
                if(Ccharset == NULL) {
                  fprintf(stderr, "No charset definition in LangMapFile '%s'\n", filename);
+		 DPS_FREE(data);
+		 DpsClose(fd);
                  return DPS_ERROR;
                }
                if(!(cs = DpsGetCharSet(Ccharset))) {
                  fprintf(stderr, "Unknown charset '%s' in LangMapFile '%s'\n", Ccharset, filename);
+		 DPS_FREE(data);
+		 DpsClose(fd);
                  return DPS_ERROR;
                }
                if (Cmap == NULL) {
@@ -1001,7 +1009,11 @@ __C_LINK int __DPSCALL DpsLoadLangMapFile(DPS_LANGMAPLIST *L, const char * filen
 		 DpsPreSort(Cmap->memb3, DPS_LM_HASHMASK + 1, sizeof(DPS_LANGITEM), (qsort_cmp)DpsLMcmpIndex);
 		 DpsPreSort(Cmap->memb6, DPS_LM_HASHMASK + 1, sizeof(DPS_LANGITEM), (qsort_cmp)DpsLMcmpIndex);
 	       }
-               if (Cmap == NULL) return DPS_ERROR;
+               if (Cmap == NULL) {
+		   DPS_FREE(data);
+		   DpsClose(fd);
+		   return DPS_ERROR;
+	       }
                *s='\0';
 
                if(((count = DPS_ATOI(s+1))==0) || (*str=='\0')/*||(dps_strlen(str)>DPS_LM_MAXGRAM)*/)

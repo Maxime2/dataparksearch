@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -333,6 +334,11 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 	
 	wrd = (DPS_URL_CRD_DB*)DpsMalloc((Res->total_found + 1) * sizeof(*wrd));
 	dat = (DPS_URLDATA*)DpsMalloc((Res->total_found + 1) * sizeof(*dat));
+	if (wrd == NULL || dat == NULL) {
+	    DPS_FREE(wrd); DPS_FREE(dat);
+	    DpsClose(fd);
+	    return DPS_ERROR;
+	}
 #ifdef WITH_REL_TRACK
 	trk = (DPS_URLTRACK*)DpsMalloc((Res->total_found + 1) * sizeof(*trk));
 	if (trk == NULL) {
@@ -341,11 +347,6 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 	  return DPS_ERROR;
 	}
 #endif
-	if (wrd == NULL || dat == NULL) {
-	  DPS_FREE(wrd); DPS_FREE(dat);
-	  DpsClose(fd);
-	  return DPS_ERROR;
-	}
 #if 0	
 	if(-1==lseek(fd,(off_t)0/*(page_number*page_size*sizeof(*wrd))*/,SEEK_CUR)){
 		DpsClose(fd);
@@ -354,12 +355,18 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 #endif
 	if(-1==(bytes=read(fd, wrd, Res->total_found/* page_size*/ * sizeof(*wrd) ))){
 	  	DPS_FREE(wrd); DPS_FREE(dat);
+#ifdef WITH_REL_TRACK
+		DPS_FREE(trk);
+#endif
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
 	Res->CoordList.ncoords = (size_t)bytes / sizeof(*wrd);
 	if(-1==(bytes=read(fd, dat, Res->total_found/* page_size*/ * sizeof(*dat) ))){
 	  	DPS_FREE(wrd); DPS_FREE(dat);
+#ifdef WITH_REL_TRACK
+		DPS_FREE(trk);
+#endif
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
@@ -373,21 +380,30 @@ int __DPSCALL DpsSearchCacheFind(DPS_AGENT * Agent, DPS_RESULT *Res) {
 
 	if( (-1 == read(fd, &topcount, sizeof(topcount))) ){
 	  	DPS_FREE(wrd); DPS_FREE(dat);
+#ifdef WITH_REL_TRACK
+		DPS_FREE(trk);
+#endif
 		DpsClose(fd);
 		return DPS_ERROR;
 	}
 	if (topcount) {
-	  Res->PerSite = (size_t*)DpsMalloc((Res->total_found + 1) * sizeof(size_t));
-	  if (Res->PerSite == NULL) {
-	    DPS_FREE(wrd); DPS_FREE(dat);
-	    DpsClose(fd);
-	    return DPS_ERROR;
-	  }
-	  if(-1 == (bytes=read(fd, Res->PerSite, topcount * sizeof(size_t) ))){
-	  	DPS_FREE(wrd); DPS_FREE(dat);
+	    Res->PerSite = (size_t*)DpsMalloc((Res->total_found + 1) * sizeof(size_t));
+	    if (Res->PerSite == NULL) {
+		DPS_FREE(wrd); DPS_FREE(dat);
+#ifdef WITH_REL_TRACK
+		DPS_FREE(trk);
+#endif
 		DpsClose(fd);
 		return DPS_ERROR;
-	  }
+	    }
+	    if(-1 == (bytes=read(fd, Res->PerSite, topcount * sizeof(size_t) ))){
+	  	DPS_FREE(wrd); DPS_FREE(dat);
+#ifdef WITH_REL_TRACK
+		DPS_FREE(trk);
+#endif
+		DpsClose(fd);
+		return DPS_ERROR;
+	    }
 	}
 
 	DpsClose(fd);

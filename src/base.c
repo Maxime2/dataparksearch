@@ -1122,7 +1122,8 @@ extern __C_LINK int __DPSCALL DpsBaseRelocate(DPS_AGENT *Agent, int base_type) {
     break;
     
   default:
-    return DPS_OK;
+      DPS_FREE(todel);
+      return DPS_OK;
   }
 
   for (base = 0; base < O.NFiles; base++) {

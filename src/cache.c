@@ -1351,6 +1351,7 @@ urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size
 
 err1:
 	DPS_FREE(ind);
+	DPS_FREE(data);
 	TRACE_OUT(Agent);
 	return(NULL);
 err2:
@@ -1440,12 +1441,13 @@ urlid_t* LoadLinearLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uin
 
 	DPS_FREE(ind);
 	TRACE_OUT(Agent);
-	return(data);
+	return data;
 
 err1:
 	DPS_FREE(ind);
+	DPS_FREE(data);
 	TRACE_OUT(Agent);
-	return(NULL);
+	return NULL;
 }
 
 #ifndef HAVE_TIMEGM
@@ -1565,6 +1567,7 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	  }
 	  data[0] = 0;
 	  *size = 1;
+	  DPS_FREE(ind);
 	  TRACE_OUT(Agent);
 	  return data;
 	}
@@ -1610,7 +1613,8 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	return(data);
 
 err1:
-	if (ind) DPS_FREE(ind);
+	DPS_FREE(ind);
+	DPS_FREE(data);
 	TRACE_OUT(Agent);
 	return(NULL);
 }
