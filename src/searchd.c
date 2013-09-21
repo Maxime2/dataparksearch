@@ -1454,6 +1454,9 @@ static int client_main(DPS_ENV *Env, size_t handle) {
 	DpsAgentFree(Agent);
 	exit(1);
       }
+    } else {
+      DpsAcceptMutexUnlock(Agent);
+      continue;
     }
     DpsAcceptMutexUnlock(Agent);
     DpsLog(Agent, DPS_LOG_EXTRA, "Connect %s", inet_ntoa(client_addr.sin_addr));

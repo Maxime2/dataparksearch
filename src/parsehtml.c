@@ -471,7 +471,7 @@ int DpsPrepareWords(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
   DPS_DSTR        exrpt;
 #ifdef HAVE_ASPELL
   AspellCanHaveError *ret;
-  AspellSpeller *speller;
+  AspellSpeller *speller = NULL;
   int have_speller = 0;
   DPS_DSTR suggest;
 #endif

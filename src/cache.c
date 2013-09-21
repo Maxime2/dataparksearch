@@ -1338,7 +1338,6 @@ urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size
 	  }
 	  if ((stop > start) && ((len / sizeof(*data)) > 1)) DpsSort(data, len / sizeof(*data), sizeof(urlid_t), (qsort_cmp)cmp_urlid_t);
 	} else {
-	  DpsClose(dat_fd);
 	  goto err2;
 	}
 
@@ -1457,7 +1456,7 @@ err1:
 urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 from, dps_uint4 to, size_t *size) {
 	char	fname[PATH_MAX];
 	int	ind_fd,dat_fd;
-	DPS_UINT4_POS_LEN *found1, *found2, *ind = NULL;
+	DPS_UINT4_POS_LEN *found1 = NULL, *found2 = NULL, *ind = NULL;
 	struct	stat sb;
 	size_t	num,len;
 	urlid_t	*data = NULL;
@@ -1532,32 +1531,32 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	num = (size_t)(sb.st_size/sizeof(DPS_UINT4_POS_LEN));
 
 	if(!from){
-		found1=&ind[0];
+	    found1 = (num > 0) ? &ind[0] : NULL;
 	}else{
-		dps_uint4 l = 0, r = num - 1, m;
+		dps_uint4 l = 0, r = num, m;
 
-		while(l<r){
-			m=(l+r)/2;
-			if(ind[m].val<from) l=m+1;
-			else r=m;
+		while (l < r) {
+			m = (l + r) / 2;
+			if (ind[m].val < from) l = m + 1;
+			else r = m;
 		}
-		if(r == num - 1 && ind[r].val != from) found1 = NULL;
+		if(r == num && ind[r - 1].val != from) found1 = NULL;
 		else found1 = &ind[r];
 	}	
 	if(!to){
-		found2=&ind[num-1];
+	    found2 = (num > 0) ? &ind[num-1] : NULL;
 	}else{
-		dps_uint4 l=0,r=num,m;
+		dps_uint4 l = 0, r = num, m;
 
-		while(l<r){
-			m=(l+r)/2;
-			if(ind[m].val<to) l=m+1;
-			else r=m;
+		while (l < r) {
+			m = (l + r) / 2;
+			if (ind[m].val < to) l = m + 1;
+			else r = m;
 		}
-		if(r==num) found2=&ind[num-1];
-		else if(ind[r].val==to) found2=&ind[r];
-		else if(l>0) found2=&ind[l-1];
-		else found2=NULL;
+		if (r == num) found2 = (num > 1) ? &ind[num - 1] : NULL;
+		else if (ind[r].val == to) found2 = &ind[r];
+		else if (l > 0) found2 = &ind[l-1];
+		else found2 = NULL;
 	}	
 	if(!found1||!found2) {
 	  data = (urlid_t*)DpsMalloc(sizeof(*data) + 1);

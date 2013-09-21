@@ -260,7 +260,7 @@ __C_LINK int __DPSCALL DpsLimit4(DPS_AGENT *A, DPS_UINT4URLIDLIST *L,const char 
 
 __C_LINK int __DPSCALL DpsClearDatabase(DPS_AGENT *A) {
     int	res = DPS_ERROR;
-    DPS_DB	*db;
+    DPS_DB *db = NULL;
     size_t i, dbto;
 
     TRACE_IN(A, "DpsClearDatabase");
@@ -274,7 +274,7 @@ __C_LINK int __DPSCALL DpsClearDatabase(DPS_AGENT *A) {
 #endif
 	if (res != DPS_OK) break;
     }
-    if (res != DPS_OK) {
+    if (res != DPS_OK && db != NULL) {
 	dps_strcpy(A->Conf->errstr, db->errstr);
     }
     TRACE_OUT(A);
@@ -2216,7 +2216,7 @@ int DpsDBSetAddr(DPS_DB *db, const char *dbaddr, int mode){
 
 
 __C_LINK int __DPSCALL DpsStatAction(DPS_AGENT *A, DPS_STATLIST *S) {
-    DPS_DB *db;
+    DPS_DB *db = NULL;
     int	res = DPS_ERROR;
     size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
 	
@@ -2233,7 +2233,7 @@ __C_LINK int __DPSCALL DpsStatAction(DPS_AGENT *A, DPS_STATLIST *S) {
 #endif
 	if (res != DPS_OK) break;
     }
-    if (res != DPS_OK) {
+    if (res != DPS_OK && db != NULL) {
 	dps_strcpy(A->Conf->errstr, db->errstr);
     }
     TRACE_OUT(A);

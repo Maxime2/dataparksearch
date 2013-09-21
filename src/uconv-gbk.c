@@ -7662,7 +7662,7 @@ int dps_wc_mb_gb18030(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *wc, u
 int dps_mb_wc_gb18030(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsigned char *s, const unsigned char *end) {
   int hi, ret;
   const unsigned char *p;
-  unsigned char *e, z;
+  unsigned char *e = end, z;
   int n;
   
   hi=s[0];
