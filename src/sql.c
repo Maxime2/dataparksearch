@@ -2580,6 +2580,18 @@ static int DpsAddLink(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DB *db) {
 	DPS_CONV        dc_lc;
 	urlid_t k;
 
+	doccs = DpsGetCharSetByID(Doc->charset_id);
+	if(!doccs) doccs = DpsGetCharSet("iso-8859-1");
+	if (doccs == NULL) {
+	    DpsLog(Indexer, DPS_LOG_ERROR, "Document charset is undefined (or unknown)");
+	}
+	loccs = Doc->lcs;
+	if(!loccs) loccs = Indexer->Conf->lcs;
+	if(!loccs) loccs = DpsGetCharSet("iso-8859-1");
+	if (loccs == NULL) {
+	    DpsLog(Indexer, DPS_LOG_ERROR, "Local charset is undefined (or unknown)");
+	}
+
 	DpsSQLResInit(&SQLRes);
 
 	url = DpsVarListFindStr(&Doc->Sections,"URL","");
@@ -2592,12 +2604,6 @@ static int DpsAddLink(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DB *db) {
 	}
 
 	if (e_url == NULL) {
-
-	  doccs = DpsGetCharSetByID(Doc->charset_id);
-	  if(!doccs) doccs = DpsGetCharSet("iso-8859-1");
-	  loccs = Doc->lcs;
-	  if(!loccs) loccs = Indexer->Conf->lcs;
-	  if(!loccs) loccs = DpsGetCharSet("iso-8859-1");
 
 	  e_url = (char*)DpsMalloc(24 * len + 1);
 	  if (e_url == NULL) { DPS_FREE(qbuf); return DPS_ERROR; }
