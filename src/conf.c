@@ -2206,6 +2206,7 @@ static int EnvLoad(DPS_CFG *Cfg,const char *cname){
 			  str0size += 4096 + str1len;
 			  if ((str0 = (char*)DpsRealloc(str0, str0size)) == NULL) {
 			    sprintf(Cfg->Indexer->Conf->errstr, "Can't realloc %zu bytes at '%s': %d", str0size, __FILE__, __LINE__);
+			    DPS_FREE(data);
 #ifdef WITH_PARANOIA
 			    DpsViolationExit(-1, paran);
 #endif

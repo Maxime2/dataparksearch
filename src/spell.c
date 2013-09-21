@@ -926,17 +926,19 @@ __C_LINK int __DPSCALL DpsImportAffixes(DPS_ENV * Conf,const char *lang, const c
 
   affix_charset = DpsGetCharSet(charset);
   if (affix_charset == NULL) {
+      DPS_FREE(data);
 #ifdef WITH_PARANOIA
-    DpsViolationExit(-1, paran);
+      DpsViolationExit(-1, paran);
 #endif
-    return 1;
+      return 1;
   }
   sys_int = DpsGetCharSet("sys-int");
   if (sys_int == NULL) {
+      DPS_FREE(data);
 #ifdef WITH_PARANOIA
-    DpsViolationExit(-1, paran);
+      DpsViolationExit(-1, paran);
 #endif
-    return 1;
+      return 1;
   }
 	    
   DpsConvInit(&touni, affix_charset, sys_int, Conf->CharsToEscape, 0);

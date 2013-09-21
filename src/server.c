@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -193,6 +194,7 @@ __C_LINK int __DPSCALL DpsServerAdd(DPS_AGENT *A, DPS_SERVER *srv){
 	    if (List->Server == NULL) {
 	      DpsLog(A, DPS_LOG_ERROR, "Can't realloc %d bytes at "__FILE__":%d", List->mservers * sizeof(DPS_SERVER), __LINE__);
 	      List->nservers = List->mservers = 0;
+	      DPS_FREE(urlstr);
 #ifdef WITH_PARANOIA
 	      DpsViolationExit(A->handle, paran);
 #endif
