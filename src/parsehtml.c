@@ -1509,15 +1509,20 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 					tag->index=0;
 					Doc->Spider.follow = DPS_FOLLOW_NO;
 					Doc->Spider.index = 0;
+					Doc->method = DPS_METHOD_DISALLOW;
 					if (DpsNeedLog(DPS_LOG_DEBUG)) {
 					  DpsVarListReplaceInt(&Doc->Sections, "Index", 0);
 					  DpsVarListReplaceInt(&Doc->Sections, "Follow", DPS_FOLLOW_NO);
+					  DpsLog(Indexer, DPS_LOG_DEBUG, "Disallow by meta.robots");
 					}
 				}else if(!strcasecmp(rtok,"NOINDEX")) {
 					tag->index=0;
 					Doc->Spider.index = 0;
 					Doc->method = DPS_METHOD_DISALLOW;
-					if (DpsNeedLog(DPS_LOG_DEBUG)) DpsVarListReplaceInt(&Doc->Sections, "Index", 0);
+					if (DpsNeedLog(DPS_LOG_DEBUG)) {
+					    DpsVarListReplaceInt(&Doc->Sections, "Index", 0);
+					    DpsLog(Indexer, DPS_LOG_DEBUG, "Disallow by meta.robots");
+					}
 				}else if(!strcasecmp(rtok,"NOFOLLOW")) {
 					tag->follow=DPS_FOLLOW_NO;
 					Doc->Spider.follow = DPS_FOLLOW_NO;
@@ -1589,7 +1594,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 		DPS_FREE(href);
 	}
 
-	if((href || data_expanded_url || data_ultimate_url) && visible && (tag->follow != DPS_FOLLOW_NO) && !(Indexer->Flags.SkipHrefIn & DpsHrefFrom(name)) ) {
+	if((href || data_expanded_url || data_ultimate_url) && visible && (Doc->Spider.follow != DPS_FOLLOW_NO) && (tag->follow != DPS_FOLLOW_NO) && !(Indexer->Flags.SkipHrefIn & DpsHrefFrom(name)) ) {
 		DPS_HREF	Href;
 		char *url_pointer = data_ultimate_url;
 		
