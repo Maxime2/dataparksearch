@@ -263,195 +263,196 @@ int DpsChineseListLoad(DPS_AGENT *Agent, DPS_CHINALIST *List, const char *charse
      return DPS_OK;
 }
 
+
 static dpsunicode_t *DpsSegmentProcess(DPS_CHINALIST *List, dpsunicode_t *line) {
-  int top, nextid, *position, *next, len, maxid, i, current, father, needinsert, iindex;
-  unsigned int h;
-  double *value, p;
-  dpsunicode_t **result;
-  dpsunicode_t *otv, space[] = {32, 0};
-  DPS_CHINAWORD *chinaword, chiw;
+    int top, nextid, *position, *next, len, maxid, i, current, father, needinsert, iindex;
+    unsigned int h;
+    double *value, p;
+    dpsunicode_t **result;
+    dpsunicode_t *otv, space[] = {32, 0};
+    DPS_CHINAWORD *chinaword, chiw;
 
-  if (/*(line[0] >= 0x80) &&*/ (List->hash != NULL)) {
+    if (/*(line[0] >= 0x80) &&*/ (List->hash != NULL)) {
 
-    len = DpsUniLen(line);
-    maxid = 2 * len + 1;
-    position = (int*)DpsMalloc(maxid * sizeof(int));
-    if (position == NULL) return NULL;
-    next = (int*)DpsMalloc(maxid * sizeof(int));
-    if (next == NULL) {
-      DPS_FREE(position);
-      return NULL;
-    }
-    value = (double*)DpsMalloc(maxid * sizeof(double));
-    if (value == NULL) {
-      DPS_FREE(position); DPS_FREE(next);
-      return NULL;
-    }
-    result = (dpsunicode_t **)DpsMalloc(maxid * sizeof(dpsunicode_t *));
-    if (result == NULL) {
-      DPS_FREE(position); DPS_FREE(next); DPS_FREE(value);
-      return NULL;
-    }
+	len = DpsUniLen(line);
+	maxid = 2 * len + 1;
+	position = (int*)DpsMalloc(maxid * sizeof(int));
+	if (position == NULL) return NULL;
+	next = (int*)DpsMalloc(maxid * sizeof(int));
+	if (next == NULL) {
+	    DPS_FREE(position);
+	    return NULL;
+	}
+	value = (double*)DpsMalloc(maxid * sizeof(double));
+	if (value == NULL) {
+	    DPS_FREE(position); DPS_FREE(next);
+	    return NULL;
+	}
+	result = (dpsunicode_t **)DpsMalloc(maxid * sizeof(dpsunicode_t *));
+	if (result == NULL) {
+	    DPS_FREE(position); DPS_FREE(next); DPS_FREE(value);
+	    return NULL;
+	}
     
-    top = 0;
-/*    value[0] = 1;*/
-    value[0] = 1.0 * List->total * len; 
-    position[0] = 0;
-    next[0] = -1;
-    result[0] = (dpsunicode_t*)DpsUniDup(&space[1]);
-    nextid = 1;
+	top = 0;
+	value[0] = 1.0 * List->total * len; 
+	position[0] = 0;
+	next[0] = -1;
+	result[0] = (dpsunicode_t*)DpsUniDup(&space[1]);
+	nextid = 1;
 
 /*    fprintf(stderr, "SegmentProcess start: len -- %d\n", len);*/
 
-    while ((top != -1) && (!((position[top] >= len) && (next[top] == -1)))) {
+	while ((top != -1) && (!((position[top] >= len) && (next[top] == -1)))) {
 
 /*      fprintf(stderr, "top: %d  position: %d (len: %d)  next:%d\n", top, position[top], len, next[top]);*/
 
 
 /*   # find the first open path */
-      current = top;
-      father = top;
-      while ((current != -1) && (position[current] >= len)) {
-	father = current;
-	current = next[current];
-      }
+	    current = top;
+	    father = top;
+	    while ((current != -1) && (position[current] >= len)) {
+		father = current;
+		current = next[current];
+	    }
 /*   # remove this path */
-      if (current == top) {
-	top = next[top];
-      } else {
-	next[father] = next[current];
-      }
+	    if (current == top) {
+		top = next[top];
+	    } else {
+		next[father] = next[current];
+	    }
 
-      if (current == -1) {
+	    if (current == -1) {
 /*       # no open path, finished, take the first path */
-	next[top] = -1;
-      } else {
-	otv = &line[position[current]];
-	h = (unsigned int)(otv[0] & 0xffff);
+		next[top] = -1;
+	    } else {
+		otv = &line[position[current]];
+		h = (unsigned int)(otv[0] & 0xffff);
 
 /*       # if the first character doesn't have word phrase in the dict.*/
-	if (List->hash[h] == 0) {
-	  List->hash[h] = 1 /*2*/;
-	}
+		if (List->hash[h] == 0) {
+		    List->hash[h] = 1 /*2*/;
+		}
 
-	i = List->hash[h];
-	if (i + position[current] > len) {
-	  i = len - position[current];
-	}
+		i = List->hash[h];
+		if (i + position[current] > len) {
+		    i = len - position[current];
+		}
 	/*i = i + 1*/ /*2*/;
-	otv = NULL;
-	for (; i > 0; i-- /*2*/) {
+		otv = NULL;
+		for (; i > 0; i-- /*2*/) {
 	  /*i = i - 1*/ /*2*/;
-	  DPS_FREE(otv);
-	  otv = DpsUniNDup(&line[position[current]], (size_t)i);
-	  chinaword = DpsChineseListFind(List, otv);
+		    DPS_FREE(otv);
+		    otv = DpsUniNDup(&line[position[current]], (size_t)i);
+		    chinaword = DpsChineseListFind(List, otv);
 
-	  if (i == 1 /*2*/ && chinaword == NULL) {
-	    DPS_FREE(otv);
-	    otv = DpsUniNDup(&line[position[current]], 1/*2*/);
-	    chiw.word = otv;
-	    chiw.freq = 1;
-	    DpsChineseListAdd(List, chinaword = &chiw);
+		    if (i == 1 /*2*/ && chinaword == NULL) {
+			DPS_FREE(otv);
+			otv = DpsUniNDup(&line[position[current]], 1/*2*/);
+			chiw.word = otv;
+			chiw.freq = 1;
+			DpsChineseListAdd(List, chinaword = &chiw);
 /*	    DpsChineseListSort(List);*/
-	    /*i = 1*//*2*//*;*/
-	  }
-
-	  if ((chinaword != NULL) && chinaword->freq) {
+			/*i = 1*//*2*//*;*/
+		    }
+		    
+		    if ((chinaword != NULL) && chinaword->freq) {
 /*       # pronode()   */
 /*	  value[nextid] = value[current] * chinaword->freq / List->total;*/
-	    p = (double)chinaword->freq / List->total;
-	    value[nextid] = value[current] / (-1.0 * log(p) / log(10.0));
-	    position[nextid] = position[current] + i;
-	    h = DpsUniLen(result[current]) + DpsUniLen(otv) + 2;
-	    result[nextid] = (dpsunicode_t*)DpsXmalloc((size_t)h * sizeof(dpsunicode_t));
-	    if (result[nextid] == NULL) {
-	      DPS_FREE(position); DPS_FREE(next); DPS_FREE(value); DPS_FREE(result);
-	      return NULL;
-	    }
-	    DpsUniStrCpy(result[nextid], result[current]);
-	    DpsUniStrCat(result[nextid], space);
-	    DpsUniStrCat(result[nextid], otv);
+			p = (double)chinaword->freq / List->total;
+			value[nextid] = value[current] / (-1.0 * log(p) / log(10.0));
+			position[nextid] = position[current] + i;
+			h = DpsUniLen(result[current]) + DpsUniLen(otv) + 2;
+			result[nextid] = (dpsunicode_t*)DpsXmalloc((size_t)h * sizeof(dpsunicode_t));
+			if (result[nextid] == NULL) {
+			    DPS_FREE(position); DPS_FREE(next); DPS_FREE(value); DPS_FREE(result);
+			    return NULL;
+			}
+			DpsUniStrCpy(result[nextid], result[current]);
+			DpsUniStrCat(result[nextid], space);
+			DpsUniStrCat(result[nextid], otv);
 /*
     # check to see whether there is duplicated path
     # if there is a duplicate path, remove the small value path
 */
-	    needinsert = 1;
-	    iindex = top;
-	    father = top;
-	    while (iindex != -1) {
-	      if (position[iindex] == position[nextid]) {
-		if (0.85 * value[iindex] >= value[nextid]) {
-		  needinsert = 0;
-		} else {
-		  if (top == iindex) {
-		    next[nextid] = next[iindex];
-		    top = nextid;
-		    needinsert = 0;
+			needinsert = 1;
+			iindex = top;
+			father = top;
+			while (iindex != -1) {
+			    if (position[iindex] == position[nextid]) {
+				if (0.85 * value[iindex] >= value[nextid]) {
+				    needinsert = 0;
+				} else {
+				    if (top == iindex) {
+					next[nextid] = next[iindex];
+					top = nextid;
+					needinsert = 0;
     /*          } else {
 	          next[nextid] = next[father];*/ /*  next[father] = next[nextid];*/
-		  }
-		}
-		iindex = -1;
-	      } else {
-		father = iindex;
-		iindex = next[iindex];
-	      }
-	    }
+				    }
+				}
+				iindex = -1;
+			    } else {
+				father = iindex;
+				iindex = next[iindex];
+			    }
+			}
 /*    # insert the new path into the list */
 /*	    fprintf(stderr, "current:%d  position:%d  i:%d  value[current]:%.12lf  nextid:%d  value[nextid]:%.12lf\n", 
 		    current, position[current], i, value[current], nextid, value[nextid]);*/
-	    if (needinsert == 1) {
-	      while ((iindex != -1) && (value[iindex] > value[nextid])) {
-		father = iindex;
-		iindex = next[iindex];
-	      }
-	      if (top == iindex) {
-		next[nextid] = top;
-		top = nextid;
-	      } else {
-		next[father] = nextid;
-		next[nextid] = iindex;
-	      }
+			if (needinsert == 1) {
+			    while ((iindex != -1) && (value[iindex] > value[nextid])) {
+				father = iindex;
+				iindex = next[iindex];
+			    }
+			    if (top == iindex) {
+				next[nextid] = top;
+				top = nextid;
+			    } else {
+				next[father] = nextid;
+				next[nextid] = iindex;
+			    }
+			}
+			nextid++;
+			if (nextid >= maxid) {
+			    maxid +=128;
+			    position = (int*)DpsRealloc(position, maxid * sizeof(int));
+			    next = (int*)DpsRealloc(next, maxid * sizeof(int));
+			    value = (double*)DpsRealloc(value, maxid * sizeof(double));
+			    result = (dpsunicode_t **)DpsRealloc(result, maxid * sizeof(dpsunicode_t *));
+			    if (position == NULL || next == NULL || value == NULL || result == NULL) {
+				DPS_FREE(position); DPS_FREE(next); DPS_FREE(value);
+				if (result != NULL) {
+				    for (i = 0; i < nextid; i++) {
+					if (i != top) DPS_FREE(result[i]);
+				    }
+				    DPS_FREE(result);
+				}
+				return NULL;
+			    }
+			}
+		    }
+
+		} /*while ((i >= 1) && ( chinaword == NULL));*/
+
+
+		DPS_FREE(otv);
 	    }
-	    nextid++;
-	    if (nextid >= maxid) {
-	      maxid +=128;
-	      position = (int*)DpsRealloc(position, maxid * sizeof(int));
-	      next = (int*)DpsRealloc(next, maxid * sizeof(int));
-	      value = (double*)DpsRealloc(value, maxid * sizeof(double));
-	      result = (dpsunicode_t **)DpsRealloc(result, maxid * sizeof(dpsunicode_t *));
-	      if (position == NULL || next == NULL || value == NULL || result == NULL) {
-		DPS_FREE(position); DPS_FREE(next); DPS_FREE(value);
-		if (result != NULL) {
-		  for (i = 0; i < nextid; i++) {
-		    if (i != top) DPS_FREE(result[i]);
-		  }
-		  DPS_FREE(result);
-		}
-		return NULL;
-	      }
-	    }
-	  }
+	}
 
-	} /*while ((i >= 1) && ( chinaword == NULL));*/
-
-
-	DPS_FREE(otv);
-      }
+	DPS_FREE(position); DPS_FREE(next);
+	for (i = 0; i < nextid; i++) {
+	    if (i != top) DPS_FREE(result[i]);
+	}
+	otv = (top != -1) ? result[top] : NULL;
+	DPS_FREE(value); DPS_FREE(result);
+	return otv;
+	
+    } else {
+	return (dpsunicode_t*)DpsUniDup(line);
     }
-
-    DPS_FREE(position); DPS_FREE(next);
-    for (i = 0; i < nextid; i++) {
-      if (i != top) DPS_FREE(result[i]);
-    }
-    otv = result[top];
-    DPS_FREE(value); DPS_FREE(result);
-    return otv;
-
-  } else {
-    return (dpsunicode_t*)DpsUniDup(line);
-  }
 }
+
 
 dpsunicode_t *DpsSegmentByFreq(DPS_CHINALIST *List, dpsunicode_t *line) {
   dpsunicode_t *out, *mid, *last, *sentence, *segmented_sentence, part;
