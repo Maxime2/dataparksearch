@@ -2584,12 +2584,14 @@ static int DpsAddLink(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DB *db) {
 	if(!doccs) doccs = DpsGetCharSet("iso-8859-1");
 	if (doccs == NULL) {
 	    DpsLog(Indexer, DPS_LOG_ERROR, "Document charset is undefined (or unknown)");
+	    return DPS_ERROR;
 	}
 	loccs = Doc->lcs;
 	if(!loccs) loccs = Indexer->Conf->lcs;
 	if(!loccs) loccs = DpsGetCharSet("iso-8859-1");
 	if (loccs == NULL) {
 	    DpsLog(Indexer, DPS_LOG_ERROR, "Local charset is undefined (or unknown)");
+	    return DPS_ERROR;
 	}
 
 	DpsSQLResInit(&SQLRes);

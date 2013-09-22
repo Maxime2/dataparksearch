@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2010 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -54,13 +55,15 @@ void __DPSCALL DpsResultFree(DPS_RESULT *Res) {
 	size_t i;
 	
 	if(!Res)return;
-	for (i = 0; i < /*DPS_MAXSTACK*/ Res->mitems; i++) {
-	  DPS_FREE(Res->items[i].word);
-	  DPS_FREE(Res->items[i].uword);
-	  DPS_FREE(Res->items[i].db_pbegin);
-	  DPS_FREE(Res->items[i].pbegin);
+	if (Res->items != NULL) {
+	    for (i = 0; i < /*DPS_MAXSTACK*/ Res->mitems; i++) {
+		DPS_FREE(Res->items[i].word);
+		DPS_FREE(Res->items[i].uword);
+		DPS_FREE(Res->items[i].db_pbegin);
+		DPS_FREE(Res->items[i].pbegin);
+	    }
+	    DPS_FREE(Res->items);
 	}
-	DPS_FREE(Res->items);
 	DPS_FREE(Res->PerSite);
 	DPS_FREE(Res->CoordList.Coords);
 	DPS_FREE(Res->CoordList.Data);
