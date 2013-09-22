@@ -1574,7 +1574,7 @@ int  DpsGuessCharSet(DPS_AGENT *Indexer, DPS_DOCUMENT * Doc, DPS_LANGMAPLIST *Li
 	     if(mapstat[i].map->lang && *lang == '\0'/* && (*charset == '\0' || (!strcasecmp(mapstat[i].map->charset, charset)))*/ ){
 		 DpsVarListReplaceStr(&Doc->Sections, "Content-Language", lang = mapstat[i].map->lang);
 	     }
-	     if (mapstat[i].map->charset && *charset == '\0' && (!strcmp(lang, mapstat[i].map->lang)) ) {
+	     if (mapstat[i].map->lang && mapstat[i].map->charset && *charset == '\0' && (!strcmp(lang, mapstat[i].map->lang)) ) {
 		 DpsVarListReplaceStr(&Doc->Sections, "Charset", charset = mapstat[i].map->charset);
 	     }
           

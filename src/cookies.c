@@ -57,7 +57,7 @@ int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, con
 
   for (i = 0; i < Cookies->ncookies; i++) {
     Coo = &Cookies->Cookie[i];
-    if (!strcasecmp(Coo->domain, domain) && !strcasecmp(Coo->path, path) && !strcasecmp(Coo->name, name) && (Coo->secure == secure) ) {
+    if (!strcasecmp(Coo->domain, domain) && !strcasecmp(Coo->path, DPS_NULL2EMPTY(path)) && !strcasecmp(Coo->name, name) && (Coo->secure == secure) ) {
       DPS_FREE(Coo->value);
       Coo->value = DpsStrdup(value);
 /*      Coo->expires = expires;*/

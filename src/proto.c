@@ -959,7 +959,7 @@ static int DpsNNTPGet(DPS_AGENT * Indexer,DPS_DOCUMENT *Doc){
 			inscmd(cmd,&ncmd,DPS_NNTP_GROUP);
 		}
 	}else
-	if(!strcasecmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "nntp") && strcmp(DPS_NULL2EMPTY(Doc->CurURL.path), "/")) {
+	if(Doc->CurURL.path != NULL && !strcasecmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "nntp") && strcmp(Doc->CurURL.path, "/")) {
 		/* There are two possible cases:         */
 		/*   nntp://news.server.com/group/       */
 		/*   nntp://news.server.com/group/msg    */

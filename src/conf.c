@@ -1261,7 +1261,7 @@ static int add_srv_file(void *Cfg, size_t ac, char **av) {
 	for(i = p = 1; i < ac; i++) {
 	  if (DPS_FOLLOW_UNKNOWN != DpsFollowType(av[i])) newav[p++] = av[i];
 	  else if (DPS_METHOD_UNKNOWN != DpsMethod(av[i])) newav[p++] = av[i];
-	  else if (!strcasecmp(av[i], "nocase") || !strcasecmp(av[i], "case") || !strcasecmp(av[i], "match") || !strcasecmp(av[i], "nomatch")
+	  else if (av[i] == NULL || !strcasecmp(av[i], "nocase") || !strcasecmp(av[i], "case") || !strcasecmp(av[i], "match") || !strcasecmp(av[i], "nomatch")
 		   || !strcasecmp(av[i], "string") || !strcasecmp(av[i], "regex") || !strcasecmp(av[i], "page")) {
 	    newav[p++] = av[i];
 	  } else {

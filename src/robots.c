@@ -274,7 +274,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 
     if (robot == NULL) {
 	char buf[2*PATH_MAX];
-	dpshash32_t url_id = DpsStrHash32(URL->hostinfo);
+	dpshash32_t url_id = DpsStrHash32(DPS_NULL2EMPTY(URL->hostinfo));
 	DPS_DB *db;
 	DPS_SQLRES Res;
 	size_t i, rows;
