@@ -679,7 +679,7 @@ static DPS_SPELL ** DpsFindWord(DPS_AGENT * Indexer, const dpsunicode_t *p_word,
     i = (int)(*word) & 255;
     for(li = li_from; li < li_to; li++) {
       l = SpellList->SpellTree[li].Left[i];
-      r = SpellList->SpellTree[li].Right[i];
+      r = c = SpellList->SpellTree[li].Right[i];
       if (l == -1) continue;
       while(l<=r){
 	c = l + ((r - l) >> 1);

@@ -773,7 +773,7 @@ static void * thread_main(void *arg){
      int i_sleep=0;
      int notfound = 0;
      int notarget = 0;
-     int URLSize;
+     int URLSize = 0;
      time_t now;
 #if defined MALLOC_STATS
      int tick = 0;

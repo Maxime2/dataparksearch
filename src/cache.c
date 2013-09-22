@@ -1525,6 +1525,9 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	    DpsClose(ind_fd);
 	    goto err1;
 	  }
+	} else {
+	    DpsClose(ind_fd);
+	    goto err1;
 	}
 	DpsClose(ind_fd);
 
@@ -2759,7 +2762,7 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	FF = (int*)DpsXmalloc(NFiles * sizeof(int));
 	if (FF == NULL) { TRACE_OUT(Indexer); return DPS_ERROR;}
 
-	if (db->DBType != DPS_DB_CACHE) {
+/*	if (db->DBType != DPS_DB_CACHE) {*/
 	  dps_snprintf(str, sizeof(str), "SELECT MIN(weight), MAX(weight) FROM server WHERE command='S'");
 	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
 	  rc = DpsSQLQuery(db, &SQLres, str);
@@ -2787,7 +2790,7 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	  max_shows = DPS_ATOI(DpsSQLValue(&SQLres, 0, 0)) + 1;
 	  rec_id = DPS_ATOI(DpsSQLValue(&SQLres, 0, 1));
 	  DpsSQLFree(&SQLres);
-	}
+/*	}*/
 
 	while(u) {
 	  if (use_showcnt) {

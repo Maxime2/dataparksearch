@@ -2903,6 +2903,7 @@ static int DpsMarkForReindex(DPS_AGENT *Indexer,DPS_DB *db){
 	      DPS_FREE(ubuf);
 	      return rc;
 	    }
+	    rec_id = DPS_ATOI(DpsSQLValue(&SQLRes, 0, 0));
 	  } else { /* DBSQL_LIMIT */
 
 	    dps_snprintf(qbuf, sizeof(qbuf), "SELECT MIN(rec_id),COUNT(*) FROM url WHERE rec_id>%d", rec_id);

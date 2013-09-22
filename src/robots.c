@@ -692,7 +692,7 @@ static int DpsSitemapEndElement(DPS_XML_PARSER *parser, const char *name, size_t
   XML_PARSER_DATA *D = parser->user_data;
   size_t i = l;
   char *p;
-  int rc;
+  int rc = DPS_OK;
 
   if (strcasestr(D->secpath, "sitemap.") != NULL && !strcasecmp(D->sec, "loc")) {
     DPS_AGENT *Indexer = D->Indexer;

@@ -94,7 +94,7 @@ static int Text (DPS_XML_PARSER *parser, const char *s, size_t len) {
   DPS_DOCUMENT *Doc = D->Doc;
   DPS_TEXTITEM  Item;
   DPS_VAR    *Sec;
-  size_t slen;
+  size_t slen = (D->secpath != NULL) ? dps_strlen(D->secpath) : 0;
 
 /*  if (D->sec == NULL) return DPS_XML_OK;*/
   bzero((void*)&Item, sizeof(Item));
@@ -141,11 +141,11 @@ static int Text (DPS_XML_PARSER *parser, const char *s, size_t len) {
   DpsFree(Item.str);
 
   if ((Doc->Spider.follow != DPS_FOLLOW_NO) && D->secpath &&
-      (slen = dps_strlen(D->secpath)) >= 4 &&
+      slen >= 4 &&
       (!strncasecmp(&D->secpath[slen - 5], ".href", 5) ||
        !strncasecmp(&D->secpath[slen - 5], ".link", 5) ||
        !strncasecmp(&D->secpath[slen - 4], ".url", 4)
-       )
+	  )
       ) {
 
     DPS_HREF	Href;

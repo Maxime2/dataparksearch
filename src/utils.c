@@ -1052,12 +1052,13 @@ time_t DpsHttpDate2Time_t(const char *date){
       ds.tm_mon = mon;
     }
 
-    if ((ds.tm_mday == 31) && (mon == 3 || mon == 5 || mon == 8 || mon == 10))
-      return BAD_DATE;
+    if ((ds.tm_mday == 31) 
+	&& (ds.tm_mon == 3 || ds.tm_mon == 5 || ds.tm_mon == 8 || ds.tm_mon == 10))
+	return BAD_DATE;
 
     /* February gets special check for leapyear */
 
-    if ((mon == 1) &&
+    if ((ds.tm_mon == 1) &&
 	((ds.tm_mday > 29)
 	 || ((ds.tm_mday == 29)
 	     && ((ds.tm_year & 3)
