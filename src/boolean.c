@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -939,7 +940,7 @@ int DpsCalcBoolItems(DPS_AGENT *query, DPS_RESULT *Res) {
     if (items[i].cmd != DPS_STACK_WORD) continue;
     if ((items[i].pbegin == NULL) && ((items[i].origin & DPS_WORD_ORIGIN_STOP) == 0)) {
       for(j = 0; j < i; j++) 
-	if (items[j].crcword == items[i].crcword && (items[j].secno == 0 || items[j].secno == items[i].secno)) break;
+	  if (items[j].crcword == items[i].crcword && (items[j].pbegin != NULL) && (items[j].secno == 0 || items[j].secno == items[i].secno)) break;
       if (j < i) {
 	items[i].count = items[j].count;
 	items[i].pbegin = (DPS_URL_CRD_DB*)DpsMalloc((items[j].count + 1) * sizeof(DPS_URL_CRD_DB));
