@@ -5997,9 +5997,9 @@ static char *BuildLimitQuery(DPS_DB *db, const char * field) {
 /*  } else if(strstr(":tag:", smallbuf) != NULL) {
     dps_snprintf(qbuf, 2048, "SELECT s.%s,u.rec_id,u.status FROM server s, url u WHERE s.rec_id=u.server_id AND u.status>0 AND", field);*/
   } else if(strstr(":link:", smallbuf) != NULL) {
-    dps_snprintf(qbuf, 2048, "SELECT l.ot,u.rec_id,u.status FROM links l, url u WHERE l.k=u.rec_id AND u.status>0 AND", field);
+    dps_snprintf(qbuf, 2048, "SELECT l.ot,l.k,200 FROM links l WHERE TRUE AND", field);
   } else {
-    dps_snprintf(qbuf, 2048, "SELECT i.sval,u.rec_id,u.status FROM url u,urlinfo i WHERE u.rec_id=i.url_id AND i.sname=LOWER('%s') AND u.status>0 AND", field);
+    dps_snprintf(qbuf, 2048, "SELECT i.sval,i.url_id,200 FROM urlinfo i WHERE i.sname=LOWER('%s') AND", field);
   }
   return (char*)DpsStrdup(qbuf);
 }
