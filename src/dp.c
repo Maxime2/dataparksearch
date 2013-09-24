@@ -620,7 +620,7 @@ int dps_heapsort(void *vbase, size_t nmemb, size_t size, int (*compar)(const voi
 		return (-1);
 	}
 
-	if ((k = malloc(2 * size)) == NULL)
+	if ((k = malloc(size)) == NULL)
 		return (-1);
 
 	/*
