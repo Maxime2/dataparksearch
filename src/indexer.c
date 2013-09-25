@@ -514,15 +514,17 @@ int DpsConvertHref(DPS_AGENT *Indexer, DPS_URL *CurURL, DPS_HREF *Href){
 	  return DPS_ERROR;
 	}
 	
-	if((parse_res=DpsURLParse(newURL, Href->url))){
-		switch(parse_res){
-			case DPS_URL_LONG:
-				DpsLog(Indexer,DPS_LOG_DEBUG,"URL too long: '%s'",Href->url);
-				break;
-			case DPS_URL_BAD:
-			default:
-				DpsLog(Indexer,DPS_LOG_DEBUG,"Error in URL: '%s'",Href->url);
-		}
+	if ((parse_res=DpsURLParse(newURL, Href->url))) {
+	    switch(parse_res){
+	    case DPS_URL_LONG:
+		Href->method = DPS_METHOD_DISALLOW;
+		DpsLog(Indexer,DPS_LOG_DEBUG,"URL too long: '%s'",Href->url);
+		break;
+	    case DPS_URL_BAD:
+	    default:
+		Href->method = DPS_METHOD_DISALLOW;
+		DpsLog(Indexer,DPS_LOG_DEBUG,"Error in URL: '%s'",Href->url);
+	    }
 	}
 
 	newURL->charset_id = Href->charset_id;
@@ -530,7 +532,7 @@ int DpsConvertHref(DPS_AGENT *Indexer, DPS_URL *CurURL, DPS_HREF *Href){
 	
 	DpsLog(Indexer,DPS_LOG_DEBUG,"Link '%s' %s",Href->url,newhref);
 
-	DpsHrefCheck(Indexer, Href, newhref);
+/* it should not be checked here to avoid deadlocking in robots processing */
 
 	DPS_FREE(Href->url);
 	Href->url = (char*)DpsStrdup(newhref);
