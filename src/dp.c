@@ -723,6 +723,7 @@ int main() {
     a0[i] = (char)(1 + (rand() % 255));
   }
 
+
   {
     char* d = zeroarr(N + 8);
     char* a = copyarr(a0, N + 1);
@@ -749,7 +750,15 @@ int main() {
 	    );
     printf("\n\tmemcpy aligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
 
+    free(d);
+    free(a);
+  }
     /***************/
+
+  {
+    char* d = zeroarr(N + 8);
+    char* a = copyarr(a0, N + 1);
+    a[N] = 0;
 
     TimerStart();
     for (z =0; z < 8; z++)
@@ -773,7 +782,16 @@ int main() {
 	    );
     printf("\tmemcpy unaligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
 
-    /* ###################################### */
+    free(d);
+    free(a);
+  }
+
+  /* ###################################### */
+
+  {
+    char* d = zeroarr(N + 8);
+    char* a = copyarr(a0, N + 1);
+    a[N] = 0;
 
     TimerStart();
     for (i = N; i > STARTLEN; i--) {
@@ -795,7 +813,15 @@ int main() {
 	    );
     printf("\tmemmove aligned: %s (%g vs %g)\n",  (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
 
+    free(d);
+    free(a);
+  }
     /***************/
+
+  {
+    char* d = zeroarr(N + 8);
+    char* a = copyarr(a0, N + 1);
+    a[N] = 0;
 
     TimerStart();
     for (z =0; z < 8; z++)
@@ -818,8 +844,6 @@ int main() {
 	    (t_lib < t_dps) ? "*/" : ""
 	    );
     printf("\tmemmove unaligned: %s (%g vs %g)\n",  (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
-
-
 
     free(d);
     free(a);
