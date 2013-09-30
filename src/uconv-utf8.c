@@ -393,7 +393,6 @@ static char mustshiftsafe[128] = {
 #define verbose 1
 
 int dps_mb_wc_utf7(DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsigned char *s, const unsigned char *end) {
-  int n = end - s;
   const unsigned char *p;
   unsigned char *e, z;
   unsigned int sw;

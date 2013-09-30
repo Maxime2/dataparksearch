@@ -4537,7 +4537,7 @@ int DpsURLDataPreloadSQL(DPS_AGENT *Agent, DPS_DB *db) {
 
 
 static int DpsSortAndGroupByURL(DPS_AGENT *A, DPS_RESULT *R, DPS_DB *db){
-	unsigned long	ticks=DpsStartTimer();
+    unsigned long	ticks;
 	int group_by_site = DpsGroupBySiteMode(DpsVarListFindStr(&A->Vars, "GroupBySite", NULL));
 	int use_site_id = ( group_by_site && (DpsVarListFindInt(&A->Vars, "site", 0) == 0));
 /*****/
@@ -4606,7 +4606,7 @@ int DpsFindWordsSQL(DPS_AGENT * query, DPS_RESULT *Res, DPS_DB *db) {
 	int		rc;
 	int flag_null_wf;
 	size_t z, idx;
-	unsigned long 	ticks = DpsStartTimer();
+	unsigned long 	ticks;
 
 	TRACE_IN(query, "DpsFindWordsSQL");
 
@@ -5754,7 +5754,7 @@ static char * include_params(const char *src,char *path,char *dst, size_t start,
 
 int DpsHTDBGet(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, int flag_short) {
 	char		*qbuf = NULL;
-	char		*end=Doc->Buf.buf;
+	char		*end;
 	DPS_SQLRES	SQLres;
 	DPS_URL		realURL;
 	DPS_DB          db;
@@ -5957,7 +5957,7 @@ int DpsHTDBGet(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, int flag_short) {
 		}
 	}
 	end = DPS_STREND(Doc->Buf.buf);
-	Doc->Buf.size=end-Doc->Buf.buf;
+	Doc->Buf.size = end - Doc->Buf.buf;
 HTDBexit:
 	DpsDBFree(&db);
 	DpsURLFree(&realURL);

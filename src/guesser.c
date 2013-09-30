@@ -1413,7 +1413,6 @@ int  DpsGuessCharSet(DPS_AGENT *Indexer, DPS_DOCUMENT * Doc, DPS_LANGMAPLIST *Li
      size_t InfMiss = 2 * DPS_LM_TOPCNT * DPS_LM_TOPCNT;
      size_t InfHits = 2 * DPS_LM_TOPCNT;
      register size_t i;
-     int have_server_lang = (*server_lang != '\0');
      int forte_lang = 0, forte_charset = 0;
      int use_meta, u;
 #ifdef DEBUG_GUESSER

@@ -398,8 +398,6 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 	AspellCanHaveError *ret;
 	AspellSpeller *speller = NULL;
 	int use_aspellext = Conf->Flags.use_aspellext;
-	size_t naffixes = query->Conf->Affixes.naffixes;
-	DPS_AFFIX *Affix = (DPS_AFFIX *)query->Conf->Affixes.Affix;
 
 	if (use_aspellext) {
 	  aspell_config_replace(query->aspell_config, "lang", lang);

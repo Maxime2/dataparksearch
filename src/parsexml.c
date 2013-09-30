@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -634,6 +635,11 @@ gt:
 	DpsHTMLParseBuf(ud->Indexer, ud->Doc,  ud->sec, html_content);
 	DPS_FREE(html_content);*/
         int rc = DpsXMLValue(p, a.beg, a.end - a.beg);
+	if (DPS_XML_OK != rc) {
+	    XML_PARSER_DATA *ud = p->user_data;
+	    DPS_AGENT *Indexer = ud->Indexer;
+	    DpsLog(Indexer, DPS_LOG_ERROR, "Error in DpsXMLValue");
+	}
       }
     }
   }
