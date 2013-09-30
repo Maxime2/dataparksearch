@@ -625,7 +625,7 @@ int main(int argc, char **argv, char **envp) {
 	      struct sockaddr_in dps_addr;
 	      struct	sockaddr_in his_addr;
 	      struct	in_addr bind_address;
-	      unsigned char *p = (unsigned char*)&dps_addr.sin_port;
+	      unsigned char *p;
 	      ssize_t sent;
 
 	      close(s);

@@ -790,8 +790,8 @@ static int do_client(DPS_AGENT *Agent, int client){
 	socklen_t addrlen;
 #endif
 #ifdef DEBUG_SEARCH
-	unsigned long ticks;
-	unsigned long total_ticks = ticks = DpsStartTimer();
+	unsigned long ticks = DpsStartTimer();
+	unsigned long total_ticks;
 #else
 	unsigned long ticks = DpsStartTimer();
 #endif

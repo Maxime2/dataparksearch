@@ -1026,7 +1026,7 @@ int main(int argc,char **argv, char **envp) {
 		if (FD_ISSET(ctl_sock, &mask)) {
 		  char port_str[16];
 		  struct sockaddr_in dps_addr;
-		  unsigned char *p = (unsigned char*)&dps_addr.sin_port;
+		  unsigned char *p;
 		  ssize_t sent;
 
 
