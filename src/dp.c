@@ -203,25 +203,25 @@ char * dps_strncpy(char *dst0, const char *src0, size_t length)
     register char *dst = dst0;
     register const char *src = src0;
     if (r == 0) r = 8; else n++;
-    if (!(dst[0] = src[0])) { dst++; src++; goto dps_strncpy_second_pas; }
-    if (r > 1) { if (!(dst[1] = src[1])) { dst += 2; src += 2; goto dps_strncpy_second_pas; }
-    if (r > 2) { if (!(dst[2] = src[2])) { dst += 3; src += 3; goto dps_strncpy_second_pas; }
-    if (r > 3) { if (!(dst[3] = src[3])) { dst += 4; src += 4; goto dps_strncpy_second_pas; }
-    if (r > 4) { if (!(dst[4] = src[4])) { dst += 5; src += 5; goto dps_strncpy_second_pas; }
-    if (r > 5) { if (!(dst[5] = src[5])) { dst += 6; src += 6; goto dps_strncpy_second_pas; }
-    if (r > 6) { if (!(dst[6] = src[6])) { dst += 7; src += 7; goto dps_strncpy_second_pas; }
-    if (r > 7) { if (!(dst[7] = src[7])) { dst += 8; src += 8; goto dps_strncpy_second_pas; }
+    if (!(dst[0] = src[0])) { dst++; goto dps_strncpy_second_pas; }
+    if (r > 1) { if (!(dst[1] = src[1])) { dst += 2; goto dps_strncpy_second_pas; }
+    if (r > 2) { if (!(dst[2] = src[2])) { dst += 3; goto dps_strncpy_second_pas; }
+    if (r > 3) { if (!(dst[3] = src[3])) { dst += 4; goto dps_strncpy_second_pas; }
+    if (r > 4) { if (!(dst[4] = src[4])) { dst += 5; goto dps_strncpy_second_pas; }
+    if (r > 5) { if (!(dst[5] = src[5])) { dst += 6; goto dps_strncpy_second_pas; }
+    if (r > 6) { if (!(dst[6] = src[6])) { dst += 7; goto dps_strncpy_second_pas; }
+    if (r > 7) { if (!(dst[7] = src[7])) { dst += 8; goto dps_strncpy_second_pas; }
     }}}}}}}
     src += r; dst += r;
     while (--n > 0) {
-      if (!(dst[0] = src[0])) { dst++; src++; goto dps_strncpy_second_pas; }
-      if (!(dst[1] = src[1])) { dst += 2; src += 2; goto dps_strncpy_second_pas; }
-      if (!(dst[2] = src[2])) { dst += 3; src += 3; goto dps_strncpy_second_pas; }
-      if (!(dst[3] = src[3])) { dst += 4; src += 4; goto dps_strncpy_second_pas; }
-      if (!(dst[4] = src[4])) { dst += 5; src += 5; goto dps_strncpy_second_pas; }
-      if (!(dst[5] = src[5])) { dst += 6; src += 6; goto dps_strncpy_second_pas; }
-      if (!(dst[6] = src[6])) { dst += 7; src += 7; goto dps_strncpy_second_pas; }
-      if (!(dst[7] = src[7])) { dst += 8; src += 8; goto dps_strncpy_second_pas; }
+      if (!(dst[0] = src[0])) { dst++; goto dps_strncpy_second_pas; }
+      if (!(dst[1] = src[1])) { dst += 2; goto dps_strncpy_second_pas; }
+      if (!(dst[2] = src[2])) { dst += 3; goto dps_strncpy_second_pas; }
+      if (!(dst[3] = src[3])) { dst += 4; goto dps_strncpy_second_pas; }
+      if (!(dst[4] = src[4])) { dst += 5; goto dps_strncpy_second_pas; }
+      if (!(dst[5] = src[5])) { dst += 6; goto dps_strncpy_second_pas; }
+      if (!(dst[6] = src[6])) { dst += 7; goto dps_strncpy_second_pas; }
+      if (!(dst[7] = src[7])) { dst += 8; goto dps_strncpy_second_pas; }
       src += 8; dst += 8;
     }
 dps_strncpy_second_pas:
@@ -281,8 +281,7 @@ dps_strncpy_second_pas:
 #if defined DPS_USE_STRCAT_UNALIGNED || defined DPS_CONFIGURE
 
 char * dps_strcat(char *dst0, const char *src0) {
-  register size_t n = dps_strlen(dst0);
-  strcpy((char*)dst0 + n, src0);
+  strcpy((char*)dst0 + dps_strlen(dst0), src0);
   return dst0;
 }
 #endif /* DPS_USE_STRCAT_ALIGNED */
@@ -291,8 +290,7 @@ char * dps_strcat(char *dst0, const char *src0) {
 #if defined DPS_USE_STRNCAT_UNALIGNED || defined DPS_CONFIGURE
 
 char * dps_strncat(char *dst0, const char *src0, size_t length) {
-  register size_t n = dps_strlen(dst0);
-  strncpy((char*)dst0 + n, src0, length);
+  strncpy((char*)dst0 + dps_strlen(dst0), src0, length);
   return dst0;
 }
 #endif /* DPS_USE_STRNCAT_ALIGNED */
@@ -712,15 +710,15 @@ char *dps_strpbrk( const char *s, const char *accept)
 #define DPS_MIN(x,y) ((x)<(y)?(x):(y))
 
 #define N 4000 /* array size */
-char a0[N + 8];
+char a0[N + 2 * wsize];
 
 int main() {
-  size_t i, j, z = 0;
+  size_t i, z = 0;
   FILE *cfg = fopen("src/dp.inc", "w");
   double t_dps, t_dps2, t_lib;
 
   for (i=0; i<N; i++) {
-    a0[i] = (char)(1 + (rand() % 255));
+    a0[i] = (char)(1 + (rand() % 125));
   }
 
 
@@ -768,6 +766,7 @@ int main() {
       }
     t_dps = TimerEnd();
 
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
     TimerStart();
     for (z =0; z < 8; z++)
       for (i = N; i > STARTLEN; i--) {
@@ -800,6 +799,7 @@ int main() {
     }
     t_dps = TimerEnd();
 
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
     TimerStart();
     for (i = N; i > STARTLEN; i--) {
       memmove(d, a, i);
@@ -831,6 +831,7 @@ int main() {
       }
     t_dps = TimerEnd();
 
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
     TimerStart();
     for (z =0; z < 8; z++)
       for (i = N; i > STARTLEN; i--) {
@@ -1006,22 +1007,22 @@ int main() {
 
     /* ###################################### */
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + 2 * wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
     for (i = N-1; i > STARTLEN; i--) {
-      d[0] = '\0';
+      d[wsize] = '\0';
       dps_strcat(d, a+i);
-      a[0] = '\0';
+      a[wsize] = '\0';
       dps_strcat(a, d + i);
     }
     t_dps = TimerEnd();
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + 2 * wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
     for (i = N-1; i > STARTLEN; i--) {
-      d[0] = '\0';
+      d[wsize] = '\0';
       strcat(d, a+i);
-      a[0] = '\0';
+      a[wsize] = '\0';
       strcat(a, d + i);
     }
     t_lib = TimerEnd();
@@ -1034,24 +1035,24 @@ int main() {
 
     /***************/
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + 2 * wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
     for (z =0; z < 8; z++)
       for (i = N - z - 1; i > STARTLEN; i--) {
-	d[0] = '\0';
+	d[i%wsize] = '\0';
 	dps_strcat(d, a + z + i);
-	a[0] = '\0';
+	a[i%wsize] = '\0';
 	dps_strcat(a, d + z + i);
       }
     t_dps = TimerEnd();
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + 2 * wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
     for (z =0; z < 8; z++)
       for (i = N - z - 1; i > STARTLEN; i--) {
-	d[0] = '\0';
+	d[i%wsize] = '\0';
 	strcat(d, a + z + i);
-	a[0] = '\0';
+	a[i%wsize] = '\0';
 	strcat(a, d + z + i);
       }
     t_lib = TimerEnd();
@@ -1067,22 +1068,22 @@ int main() {
 
     /* ###################################### */
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
-    for (i = N; i > STARTLEN; i--) {
-      d[0] = '\0';
+    for (i = N - wsize; i > STARTLEN; i--) {
+      d[wsize] = '\0';
       dps_strncat(d, a, i);
-      a[0] = '\0';
+      a[wsize] = '\0';
       dps_strncat(a, d, i);
     }
     t_dps = TimerEnd();
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
-    for (i = N; i > STARTLEN; i--) {
-      d[0] = '\0';
+    for (i = N - wsize; i > STARTLEN; i--) {
+      d[wsize] = '\0';
       strncat(d, a, i);
-      a[0] = '\0';
+      a[wsize] = '\0';
       strncat(a, d, i);
     }
     t_lib = TimerEnd();
@@ -1095,24 +1096,23 @@ int main() {
 
     /***************/
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + 2 * wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
-    for (z =0; z < 8; z++)
-      for (i = N - z; i > STARTLEN; i--) {
-	d[0] = '\0';
+    for (z = 0; z < 8; z++)
+      for (i = N - z - wsize; i > STARTLEN; i--) {
+	d[1] = '\0';
 	dps_strncat(d, a + z, i);
-	a[0] = '\0';
+	a[1] = '\0';
 	dps_strncat(a, d+z, i);
       }
     t_dps = TimerEnd();
-
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    free(d); free(a); d = zeroarr(N + 2 * wsize); a = copyarr(a0, N + 1); a[N] = 0;
     TimerStart();
     for (z =0; z < 8; z++)
-      for (i = N - z; i > STARTLEN; i--) {
-	d[0] = '\0';
+      for (i = N - z - wsize; i > STARTLEN; i--) {
+	d[1] = '\0';
 	strncat(d, a + z, i);
-	a[0] = '\0';
+	a[1] = '\0';
 	strncat(a, d+z, i);
       }
     t_lib = TimerEnd();
@@ -1129,62 +1129,63 @@ int main() {
 
     /* ###################################### */
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
-    TimerStart();
-    /*    for (z =0; z < N/8; z++)*/
-    for (i = N-1; i > STARTLEN; i--) {
-      dps_strlen(a+i);
-      /*dps_strlen(d+i);*/
-    }
-    t_dps = TimerEnd();
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
+    {
+	size_t len;
+	TimerStart();
+	for (i = N-1; i > STARTLEN; i--) {
+	    len = dps_strlen(a+i);
+	}
+	t_dps = TimerEnd();
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
-    TimerStart();
-    /*for (z =0; z < N/8; z++)*/
-    for (i = N-1; i > STARTLEN; i--) {
-      strlen(a+i);
-      /*strlen(d+i);*/
+	free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
+	TimerStart();
+	for (i = N-1; i > STARTLEN; i--) {
+	    len = strlen(a+i);
+	}
+	t_lib = TimerEnd();
     }
-    t_lib = TimerEnd();
 
     fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRLEN_ALIGNED%s\n\n", t_dps, t_lib,
 	    (t_lib < t_dps) ? "/*" : "",
 	    (t_lib < t_dps) ? "*/" : ""
 	    );
-    printf("\tstrlen aligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+    printf("\tstrlen: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
 
 
     /* ###################################### */
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
-    char set[4] = { 13, 14, 15, 0}, *res;
-    TimerStart();
-    /*    for (z =0; z < N/8; z++)*/
-    for (i = N-1; i > STARTLEN; i--) {
-	res = dps_strpbrk1(a+i, set);
- 	res = dps_strpbrk1(set, a+i);
-    }
-    t_dps = TimerEnd();
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
+    {     
+	char set[5] = { 13, 14, 15, 127, 0}, *res;
+	TimerStart();
+	for (i = N-1; i > STARTLEN; i--) {
+	    res = dps_strpbrk1(a+i, set);
+	    res = dps_strpbrk1(set, a+i);
+	}
+	t_dps = TimerEnd();
+    
 
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
-    TimerStart();
-    /*for (z =0; z < N/8; z++)*/
-    for (i = N-1; i > STARTLEN; i--) {
-	res = strpbrk(a+i, set);
- 	res = strpbrk(set, a+i);
+	free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
+	TimerStart();
+	for (i = N-1; i > STARTLEN; i--) {
+	    res = strpbrk(a+i, set);
+	    res = strpbrk(set, a+i);
+	}
+	t_lib = TimerEnd();
     }
-    t_lib = TimerEnd();
 
     fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRPBRK_UNALIGNED%s\n\n", t_dps, t_lib,
 	    (t_lib < t_dps) ? "/*" : "",
 	    (t_lib < t_dps) ? "*/" : ""
 	    );
-    printf("\tstrbprk aligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+    printf("\tstrbprk: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
 
 
     /* ###################################### */
 
     free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1);
+    {
     char *etalon = copyarr(a0, N + 1);
     qsort(etalon, N, sizeof(*etalon), char_cmp);
 
@@ -1252,6 +1253,7 @@ int main() {
 #endif
 
     free(etalon);
+    }
 
 #if HAVE_HEAPSORT
 
@@ -1278,6 +1280,7 @@ int main() {
     /* This must be the last check as it sorts a0 */
 
     free(d); free(a);
+    {
     char w[5] = { 1, 2, 3, 4, 5};
     qsort(a0, N, sizeof(*a0), char_cmp);
     d = zeroarr(N + 8); a = copyarr(a0, N + 1);
@@ -1298,11 +1301,13 @@ int main() {
     t_lib = TimerEnd();
     if (bsearch(w+4, w, 5, sizeof(*w), char_cmp) != w+4 || bsearch(w+3, w, 4, sizeof(*w), char_cmp) != w+3) printf("bsearch() is not correct!\n");
 
+    }
+
     fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_BSEARCH%s\n\n", t_dps, t_lib,
 	    (t_lib < t_dps) ? "/*" : "",
 	    (t_lib < t_dps) ? "*/" : ""
 	    );
-    printf("\tbsearch aligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+    printf("\tbsearch: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
 
 
 
