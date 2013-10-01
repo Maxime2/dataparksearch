@@ -5974,7 +5974,7 @@ static char *BuildLimitQuery(DPS_DB *db, const char * field) {
   dps_snprintf(smallbuf, 128, ":%s:", field);
   if (strstr(":status:docsize:next_index_time:crc32:referrer:hops:seed:bad_since_time:site_id:pop_rank:url:", 
 	     smallbuf) != NULL) {
-    dps_snprintf(qbuf, 2048, "SELECT %s,rec_id,status FROM url u WHERE u.status>0 AND", field);
+    dps_snprintf(qbuf, 2048, "SELECT %s,rec_id as id,status FROM url u WHERE u.status>0 AND", field);
   } else if(strstr(":last_mod_time:", smallbuf) != NULL) {
     switch(db->DBType) {
     case DPS_DB_PGSQL:
@@ -5983,23 +5983,23 @@ static char *BuildLimitQuery(DPS_DB *db, const char * field) {
     case DPS_DB_SQLITE:
     case DPS_DB_SQLITE3:
     default:
-      dps_snprintf(qbuf, 2048, "SELECT (CASE WHEN %s=0 THEN since ELSE %s END),rec_id,status FROM url u WHERE u.status>0 AND",field, field);
+      dps_snprintf(qbuf, 2048, "SELECT (CASE WHEN %s=0 THEN since ELSE %s END),rec_id as id,status FROM url u WHERE u.status>0 AND",field, field);
       break;
     case DPS_DB_MYSQL:
     case DPS_DB_ACCESS:
     case DPS_DB_ORACLE7:
     case DPS_DB_ORACLE8:
     case DPS_DB_SAPDB:
-      dps_snprintf(qbuf, 2048, "SELECT IF(%s>0,%s,since),rec_id,status FROM url u WHERE u.status>0 AND", field, field);
+      dps_snprintf(qbuf, 2048, "SELECT IF(%s>0,%s,since),rec_id as id,status FROM url u WHERE u.status>0 AND", field, field);
       break;
     }
 
 /*  } else if(strstr(":tag:", smallbuf) != NULL) {
     dps_snprintf(qbuf, 2048, "SELECT s.%s,u.rec_id,u.status FROM server s, url u WHERE s.rec_id=u.server_id AND u.status>0 AND", field);*/
   } else if(strstr(":link:", smallbuf) != NULL) {
-    dps_snprintf(qbuf, 2048, "SELECT l.ot,l.k,200 FROM links l WHERE TRUE AND", field);
+    dps_snprintf(qbuf, 2048, "SELECT l.ot,l.k as id,200 FROM links l WHERE TRUE AND", field);
   } else {
-    dps_snprintf(qbuf, 2048, "SELECT i.sval,i.url_id,200 FROM urlinfo i WHERE i.sname=LOWER('%s') AND", field);
+    dps_snprintf(qbuf, 2048, "SELECT i.sval,i.url_id as id,200 FROM urlinfo i WHERE i.sname=LOWER('%s') AND", field);
   }
   return (char*)DpsStrdup(qbuf);
 }
@@ -6024,7 +6024,7 @@ int DpsLimit8SQL(DPS_AGENT *A, DPS_UINT8URLIDLIST *L,const char *field, int type
 	offset = 0;
 /*	DpsSQLBegin(db);*/
 	while (u) {
-	  dps_snprintf(qbuf, qbuflen, "%s u.rec_id>%d ORDER BY u.rec_id LIMIT %d", limit_query, rec_id, url_num);
+	  dps_snprintf(qbuf, qbuflen, "%s id>%d ORDER BY id LIMIT %d", limit_query, rec_id, url_num);
 	
 	  for (i = 0; i < 3; i ++) {
 	    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
@@ -6087,8 +6087,8 @@ int DpsLimit8SQL(DPS_AGENT *A, DPS_UINT8URLIDLIST *L,const char *field, int type
 
 int DpsLimitTagSQL(DPS_AGENT *A, DPS_UINT4URLIDLIST *L, DPS_DB *db) {
   char qbuf[512];
-  const char *info_query = "SELECT i.sval,u.rec_id FROM url u,urlinfo i WHERE u.rec_id=i.url_id AND i.sname='tag' AND u.status>0 AND";
-  const char *srv_query  = "SELECT s.tag,u.rec_id FROM url u,server s WHERE s.rec_id=u.server_id AND u.status>0 AND";
+  const char *info_query = "SELECT i.sval,u.rec_id FROM url u,urlinfo i WHERE u.rec_id=i.url_id AND i.sname='tag' AND";
+  const char *srv_query  = "SELECT s.tag,u.rec_id FROM url u,server s WHERE s.rec_id=u.server_id AND";
   DPS_SQLRES Res;
   size_t  url_num = (size_t)DpsVarListFindUnsigned(&A->Vars, "URLDumpCacheSize", DPS_URL_DUMP_CACHE_SIZE);
   size_t i, pL, nL, nrows, offset;
@@ -6490,7 +6490,7 @@ int DpsLimit4SQL(DPS_AGENT *A, DPS_UINT4URLIDLIST *L,const char *field, int type
 	offset = 0;
 /*	DpsSQLBegin(db);*/
 	while (u) {
-	  dps_snprintf(qbuf, qbuflen, "%s u.rec_id>%d ORDER BY u.rec_id LIMIT %d", limit_query, rec_id, url_num);
+	  dps_snprintf(qbuf, qbuflen, "%s id>%d ORDER BY id LIMIT %d", limit_query, rec_id, url_num);
 	
 	  for (i = 0; i < 3; i++) {
 	    if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
