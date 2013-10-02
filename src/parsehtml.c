@@ -1207,7 +1207,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 	char *base = NULL;
 	char *lang = NULL;
 	char *secname = NULL;
-	size_t i, seclen = 128, metacont_len = 0;
+	size_t i, j, seclen = 128, metacont_len = 0;
 	char savec;
 
 #ifdef WITH_PARANOIA
@@ -1386,33 +1386,44 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 		  lang = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
 		  for(n = lang; *n; *n = (char)dps_tolower((int)*n),n++);
 		  DPS_FREE(y);
-		} /*else*/ {
-		        if (tag->toks[i].nlen + 12 > seclen) {
-			  secname = (char*)DpsRealloc(secname, seclen = (tag->toks[i].nlen + 12));
-			  if (secname == NULL) {
+		} /*else*/ if (Doc->Spider.index && visible) {
+		  j = dps_max(tag->toks[i].nlen + 12, dps_strlen(name) + tag->toks[i].nlen + 2);
+		  if (j > seclen) {
+		    secname = (char*)DpsRealloc(secname, seclen = j);
+		    if (secname == NULL) {
 #ifdef WITH_PARANOIA
-			    DpsViolationExit(Indexer->handle, paran);
+		      DpsViolationExit(Indexer->handle, paran);
 #endif
-			    return(0);
-			  }
-			}
+		      return(0);
+		    }
+		  }
 			
-		        dps_strcpy(secname, "attribute.");
-			dps_strncat(secname + 10, tag->toks[i].name, tag->toks[i].nlen);
-			secname[seclen - 1]='\0';
+		  for ( 
+		       j = 0,
+			 dps_strcpy(secname, "attribute."),
+			 dps_strncat(secname + 10, tag->toks[i].name, tag->toks[i].nlen),
+			 secname[seclen - 1]='\0';
+		       j < 2;
+		    
+		       j++,
+			 dps_strcpy(secname, name), dps_strcat(secname, "."),
+			 dps_strncat(secname, tag->toks[i].name, tag->toks[i].nlen),
+			 secname[seclen - 1]='\0'
+			) {
 
-			if ((Sec = DpsVarListFind(&Doc->Sections, secname)) && Doc->Spider.index && visible) {
-			  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
-			  bzero((void*)&Item, sizeof(Item));
-			  Item.str = y;
-			  Item.section = Sec->section;
-			  Item.strict = Sec->strict;
-			  Item.section_name = Sec->name;
-			  Item.href = NULL;
-			  Item.len = tag->toks[i].vlen;
-			  (void)DpsTextListAdd(&Doc->TextList, &Item);
-			  DPS_FREE(y);
-			}
+		    if ((Sec = DpsVarListFind(&Doc->Sections, secname))) {
+		      char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
+		      bzero((void*)&Item, sizeof(Item));
+		      Item.str = y;
+		      Item.section = Sec->section;
+		      Item.strict = Sec->strict;
+		      Item.section_name = Sec->name;
+		      Item.href = NULL;
+		      Item.len = tag->toks[i].vlen;
+		      (void)DpsTextListAdd(&Doc->TextList, &Item);
+		      DPS_FREE(y);
+		    }
+		  }
 		}
 	}
 	
