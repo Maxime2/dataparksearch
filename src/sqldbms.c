@@ -2515,6 +2515,33 @@ static int DpsSQLiteQuery(DPS_DB *db, DPS_SQLRES *res, const char *q) {
 /*********************************** SQLITE3 *********************/
 #if (HAVE_SQLITE3)
 
+static void DpsSQLite3SignFunc(sqlite3_context *c, int argCount, sqlite3_value **args) {
+    if ( argCount != 1 ) {
+        sqlite3_result_null( c );
+        return;
+    }
+
+    switch ( sqlite3_value_type( args[0] ) ) {
+        case SQLITE_INTEGER: {
+            sqlite3_int64 asInt = sqlite3_value_int64( args[0] );
+            sqlite3_int64 sign = asInt < 0 ? -1 : (asInt > 0 ? 1 : 0);
+            sqlite3_result_int64( c, sign );
+            break;
+        }
+        case SQLITE_FLOAT: {
+            double asDouble = sqlite3_value_double( args[0] );
+            sqlite3_int64 sign = asDouble < 0 ? -1 : (asDouble > 0 ? 1 : 0);
+            sqlite3_result_double( c, sign );
+            break;
+        }
+        case SQLITE_NULL:
+        default: {
+            sqlite3_result_null( c );
+            break;
+        }
+    }
+}
+
 static int DpsSQLite3InitDB(DPS_DB *db) {
   char dbname[1024], *e;
   dps_strncpy(dbname,db->DBName,sizeof(dbname));
@@ -2538,6 +2565,7 @@ static int DpsSQLite3InitDB(DPS_DB *db) {
     db->errcode = 1;
     return DPS_ERROR;
   }
+  sqlite3_create_function( db->sqlt3, "sign", 1, SQLITE_ANY, NULL, DpsSQLite3SignFunc, NULL, NULL);
   db->connected = 1;
   return DPS_OK;
 }
