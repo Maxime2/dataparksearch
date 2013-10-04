@@ -1989,6 +1989,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 		Indexer->limits[i].start = 0;
 		Indexer->limits[i].origin = -1;
 		Indexer->limits[i].need_free = 1;
+		Indexer->limits[i].size = 0;
 
 		for (j = 0; j < db->nlimits; j++) {
 		  if ((db->limits[j].type == Indexer->limits[i].type) &&
@@ -2210,6 +2211,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	  
 	  present = 1;
 	  for (i = 0; i < Indexer->nlimits; i++) {
+	      if (Indexer->limits[i].data == NULL) continue;
 	      if (!PresentInLimit(Indexer->limits[i].data, Indexer->limits[i].size, &Indexer->limits[i].start, cur_url_id)) {
 		  present = 0;
 		  break;
