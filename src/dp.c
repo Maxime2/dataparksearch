@@ -1246,7 +1246,7 @@ int main() {
       }
     t_lib_u = TimerEnd();
 
-    printf("\tstrncat unaligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+    printf("\tstrncat unaligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps_u, t_lib_u);
 
     VariantOf();
 

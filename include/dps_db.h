@@ -222,7 +222,7 @@ extern int DpsCachedFlush(DPS_AGENT *Indexer, DPS_DB *db);
 
 extern void DpsDecodeHex8Str(const char *hex_str, dps_uint4 *hi, dps_uint4 *lo, dps_uint4 *fhi, dps_uint4 *flo);
 
-extern __C_LINK int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_name, const char *val);
+extern __C_LINK int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, DPS_SEARCH_LIMIT **limits, size_t *nlimits, int type, const char *file_name, const char *val);
 extern __C_LINK urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size);
 extern __C_LINK urlid_t* LoadLinearLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 val, size_t *size);
 extern __C_LINK urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 from, dps_uint4 to, size_t *size);

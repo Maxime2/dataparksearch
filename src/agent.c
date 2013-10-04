@@ -116,7 +116,7 @@ __C_LINK int DpsAgentStoredConnect(DPS_AGENT *Indexer) {
 
 DPS_DBLIST * DpsAgentDBLSet(DPS_AGENT *result, DPS_ENV *Env) {
   DPS_DBLIST *DBL = NULL;
-  size_t i;
+  size_t i, j;
   if (Env->flags & DPS_FLAG_UNOCON) {
     DBL = &Env->dbl;
   } else {
@@ -125,6 +125,14 @@ DPS_DBLIST * DpsAgentDBLSet(DPS_AGENT *result, DPS_ENV *Env) {
       if (DPS_OK != DpsDBListAdd(DBL, Env->dbl.db[i]->DBADDR, Env->dbl.db[i]->open_mode)) {
 	DBL = NULL;
 	break;
+      }
+      DBL->db[i]->nlimits = Env->dbl.db[i]->nlimits;
+      if (DBL->db[i]->nlimits) {
+	  DBL->db[i]->limits = (DPS_SEARCH_LIMIT*)DpsMalloc(DBL->db[i]->nlimits * sizeof(DPS_SEARCH_LIMIT));
+	  for (j = 0; j < DBL->db[i]->nlimits; j++) {
+	      DBL->db[i]->limits[j] = Env->dbl.db[i]->limits[j];
+	      DBL->db[i]->limits[j].need_free = 0;
+	  }
       }
     }
   }
@@ -374,8 +382,9 @@ __C_LINK void __DPSCALL DpsAgentFree(DPS_AGENT *Indexer){
 	DpsCookiesFree(&Indexer->Cookies);
 	DPS_FREE(Indexer->Locked);
 	DPS_FREE(Indexer->LangMap);
-	for (i = 0; i < Indexer->loaded_limits; i++)
-	  DPS_FREE(Indexer->limits[i].data);
+	for (i = 0; i < Indexer->nlimits; i++) {
+	    if (Indexer->limits[i].need_free) DPS_FREE(Indexer->limits[i].data);
+	}
 	DPS_FREE(Indexer->limits);
 /*	fprintf(stderr, "<%d> Indexer->Demons.nitems: %d   Indexer->Demons.Demon: %x\n", Indexer->handle,
 		Indexer->Demons.nitems, Indexer->Demons.Demon);*/

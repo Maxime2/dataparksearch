@@ -134,8 +134,9 @@ void *DpsDBInit(void *vdb){
 }
 
 
-void DpsDBFree(void *vdb){
+void DpsDBFree(void *vdb) {
 	DPS_DB	*db=vdb;
+	size_t i;
 
 #ifdef HAVE_SQL
 	DpsSQLFree(&db->Res);
@@ -216,6 +217,11 @@ void DpsDBFree(void *vdb){
 #endif
 
 ret:
+	for (i = 0; i < db->nlimits; i++) {
+	    if (db->limits[i].need_free) DPS_FREE(db->limits[i].data);
+	}
+	DPS_FREE(db->limits);
+
 	DpsVarListFree(&db->Vars);
 	if(db->freeme)DPS_FREE(vdb);
 	return;

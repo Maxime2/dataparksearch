@@ -1199,9 +1199,8 @@ typedef struct dps_indexer_struct{
         DPS_FLAGS       Flags;
 	DPS_WORDPARAM	WordParam;	/**< Word limits                */
 	
-	/** Cache mode limits */
-	DPS_SEARCH_LIMIT	*limits;
-        size_t		nlimits, loaded_limits;
+        DPS_SEARCH_LIMIT *limits;
+        size_t          nlimits;
 
         int     SpellLang;
 

@@ -1195,13 +1195,14 @@ static int cmp_hex4_ind(const DPS_UINT4_POS_LEN *c1, const DPS_UINT4_POS_LEN *c2
 	return(0);
 }
 
-int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_name, const char *val){
+
+int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, DPS_SEARCH_LIMIT **limits, size_t *nlimits, int type, const char *file_name, const char *val){
 	dps_uint4 hi, lo, f_hi, f_lo;
 	char *str = (char *)DpsMalloc(dps_strlen(val) + 7);
 	
 	TRACE_IN(Agent, "DpsAddSearchLimit");
 
-	if ((Agent->limits = (DPS_SEARCH_LIMIT*)DpsRealloc(Agent->limits, (Agent->nlimits + 1) * sizeof(DPS_SEARCH_LIMIT))) == NULL) {
+	if ((*limits = (DPS_SEARCH_LIMIT*)DpsRealloc(*limits, (*nlimits + 1) * sizeof(DPS_SEARCH_LIMIT))) == NULL) {
 	  DPS_FREE(str);
 	  TRACE_OUT(Agent);
 	  return DPS_ERROR;
@@ -1209,9 +1210,9 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_nam
 
 	DpsUnescapeCGIQuery(str, val);
 	
-	Agent->limits[Agent->nlimits].type = type;
-	dps_strncpy(Agent->limits[Agent->nlimits].file_name, file_name, PATH_MAX);
-	Agent->limits[Agent->nlimits].file_name[PATH_MAX-1] = '\0';
+	(*limits)[*nlimits].type = type;
+	dps_strncpy((*limits)[*nlimits].file_name, file_name, PATH_MAX);
+	(*limits)[*nlimits].file_name[PATH_MAX-1] = '\0';
 	switch(type){
 		case DPS_LIMTYPE_NESTED: DpsDecodeHex8Str(str, &hi, &lo, &f_hi, &f_lo); break;
 		default:
@@ -1219,12 +1220,12 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_nam
 		case DPS_LIMTYPE_LINEAR_INT: hi = atoi(str); lo=0; f_hi = hi; f_lo = lo; break;
 		case DPS_LIMTYPE_LINEAR_CRC: hi = DpsStrHash32(str); lo = 0; f_hi = hi; f_lo = 0; break;
 	}	
-	Agent->limits[Agent->nlimits].hi = hi;
-	Agent->limits[Agent->nlimits].lo = lo;
-	Agent->limits[Agent->nlimits].f_hi = f_hi;
-	Agent->limits[Agent->nlimits].f_lo = f_lo;
+	(*limits)[*nlimits].hi = hi;
+	(*limits)[*nlimits].lo = lo;
+	(*limits)[*nlimits].f_hi = f_hi;
+	(*limits)[*nlimits].f_lo = f_lo;
 	
-	Agent->nlimits++;
+	(*nlimits)++;
 
 	DpsLog(Agent, DPS_LOG_DEBUG, "val: %s[%s]  %x %x   %x %x", str, val,  hi, lo, f_hi, f_lo);
 
@@ -1232,6 +1233,7 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, int type, const char *file_nam
 	TRACE_OUT(Agent);
 	return DPS_OK;
 }
+
 
 urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size) {
 	char	fname[PATH_MAX];
@@ -1241,9 +1243,9 @@ urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size
 	size_t	num;
 	urlid_t	*data = NULL;
 	size_t	start = (size_t)-1, stop = (size_t)-1, len;
-	dps_uint4   hi = Agent->limits[lnum].hi, lo = Agent->limits[lnum].lo, 
-	  f_hi = Agent->limits[lnum].f_hi, f_lo = Agent->limits[lnum].f_lo;
-	const char *name = Agent->limits[lnum].file_name;
+	dps_uint4   hi = db->limits[lnum].hi, lo = db->limits[lnum].lo, 
+	    f_hi = db->limits[lnum].f_hi, f_lo = db->limits[lnum].f_lo;
+	const char *name = db->limits[lnum].file_name;
 	const char	*vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
 
 	TRACE_IN(Agent, "LoadNestedLimit");
@@ -1906,8 +1908,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	size_t del_count = 0, nwords;
 	DPS_LOGDEL *del_buf=NULL;
 	
-	DPS_SEARCH_LIMIT *lims = NULL;
-	size_t nlims = 0, num, nskipped, orig_size;
+	size_t num, nskipped, orig_size;
 	urlid_t cur_url_id;
 	int flag_null_wf, group_by_site, use_site_id;
 	int use_empty = !strcasecmp(DpsVarListFindStr(&Indexer->Vars, "empty", "yes"), "yes");
@@ -1982,52 +1983,44 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	ticks=DpsStartTimer();
 #endif
 
-	lims = (DPS_SEARCH_LIMIT*)DpsRealloc(lims, (Indexer->nlimits + 1) * sizeof(DPS_SEARCH_LIMIT));
-	if (lims == NULL) {
-	  DpsLog(Indexer, DPS_LOG_ERROR, "Can't alloc %d bytes at %s:%d", (nlims+1)*sizeof(DPS_SEARCH_LIMIT), __FILE__, __LINE__);
-	  TRACE_OUT(Indexer);
-	  return DPS_ERROR;
-	}
-
-	for(i = Indexer->loaded_limits; i < Indexer->nlimits; i++){
+	for(i = 0; i < Indexer->nlimits; i++){
 	        int not_loaded = 1;
 
-		lims[nlims].start = 0;
-		lims[nlims].origin = -1;
+		Indexer->limits[i].start = 0;
+		Indexer->limits[i].origin = -1;
+		Indexer->limits[i].need_free = 1;
 
-		lims[nlims].need_free = 1;
-		for (j = 0; j < Indexer->loaded_limits; j++) {
-		  if ((Indexer->limits[j].type == Indexer->limits[i].type) &&
-		      (Indexer->limits[j].hi == Indexer->limits[i].hi) &&
-		      (Indexer->limits[j].lo == Indexer->limits[i].lo) &&
-		      (Indexer->limits[j].f_hi == Indexer->limits[i].f_hi) &&
-		      (Indexer->limits[j].f_lo == Indexer->limits[i].f_lo)) {
-		    lims[nlims] = Indexer->limits[j];
-		    lims[nlims].need_free = 0;
-		    nlims++;
+		for (j = 0; j < db->nlimits; j++) {
+		  if ((db->limits[j].type == Indexer->limits[i].type) &&
+		      (db->limits[j].hi == Indexer->limits[i].hi) &&
+		      (db->limits[j].lo == Indexer->limits[i].lo) &&
+		      (db->limits[j].f_hi == Indexer->limits[i].f_hi) &&
+		      (db->limits[j].f_lo == Indexer->limits[i].f_lo)) {
+		    Indexer->limits[i] = db->limits[j];
+		    Indexer->limits[i].need_free = 0;
 		    not_loaded = 0; break;
 		  }
 		}
 
 		if (not_loaded)
-		switch(Indexer->limits[i].type){
-			case DPS_LIMTYPE_NESTED:
-			  if((lims[nlims].data = LoadNestedLimit(Indexer, db, i, &lims[nlims].size))) nlims++;
-				break;
-			case DPS_LIMTYPE_TIME:
-			  if((lims[nlims].data = LoadTimeLimit(Indexer, db, Indexer->limits[i].file_name,
+		    switch (Indexer->limits[i].type) {
+		    case DPS_LIMTYPE_NESTED:
+			Indexer->limits[i].data = LoadNestedLimit(Indexer, db, i, &Indexer->limits[i].size);
+			break;
+		    case DPS_LIMTYPE_TIME:
+			Indexer->limits[i].data = LoadTimeLimit(Indexer, db, Indexer->limits[i].file_name,
 								Indexer->limits[i].hi,
 								Indexer->limits[i].lo,
-								&lims[nlims].size))) nlims++;
+								&Indexer->limits[i].size);
 				break;
-			case DPS_LIMTYPE_LINEAR_INT:
-			case DPS_LIMTYPE_LINEAR_CRC:
-			  if((lims[nlims].data = LoadLinearLimit(Indexer, db, Indexer->limits[i].file_name,
-								Indexer->limits[i].hi,
-								&lims[nlims].size))) nlims++;
-				break;
-		}
-		DpsLog(Indexer, DPS_LOG_DEBUG, "\t\tlims.%d.size:%d", nlims - 1, lims[nlims - 1].size);
+		    case DPS_LIMTYPE_LINEAR_INT:
+		    case DPS_LIMTYPE_LINEAR_CRC:
+			Indexer->limits[i].data = LoadLinearLimit(Indexer, db, Indexer->limits[i].file_name,
+								  Indexer->limits[i].hi,
+								  &Indexer->limits[i].size);
+			break;
+		    }
+		DpsLog(Indexer, DPS_LOG_DEBUG, "\t\tAgent.limit.%d.size:%d", i, Indexer->limits[i].size);
 	}
 
 	nwords = Res->nitems - Res->ncmds;
@@ -2035,12 +2028,12 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 #ifdef DEBUG_SEARCH
 	ticks=DpsStartTimer() - ticks;
 	DpsLog(Indexer, DPS_LOG_EXTRA, "\t\t\tDone (%.2f)", (float)ticks / 1000);
-	  ticks = DpsStartTimer();
-	  DpsLog(Indexer, DPS_LOG_EXTRA, "    Sorting %d limits...", nlims);
+	ticks = DpsStartTimer();
+	DpsLog(Indexer, DPS_LOG_EXTRA, "    Sorting %d limits...", nlims);
 #endif
-	if (/*(Indexer->nlimits > 0) &&*/ (nlims > 1)) {
+	if (Indexer->nlimits > 1) {
 
-	  DpsSort(lims, nlims, sizeof(DPS_SEARCH_LIMIT), (qsort_cmp)cmp_search_limit);
+	    DpsSort(Indexer->limits, Indexer->nlimits, sizeof(DPS_SEARCH_LIMIT), (qsort_cmp)cmp_search_limit);
 
 	}
 #ifdef DEBUG_SEARCH
@@ -2050,7 +2043,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	ticks=DpsStartTimer();
 #endif
 
-	if (nwords == 0 && use_empty && nlims > 0) {
+	if (nwords == 0 && use_empty && Indexer->nlimits > 0) {
 	  DPS_URL_CRD *p;
 
 	  if ((pmerg = (DPS_STACK_ITEM**)DpsXmalloc(2 * sizeof(DPS_STACK_ITEM *))) == NULL) {
@@ -2059,23 +2052,23 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	    return DPS_ERROR;
 	  }
 	  pmerg[0] = &Res->items[0];
-	  pmerg[0]->pcur = pmerg[0]->pbegin = pmerg[0]->pchecked = (DPS_URL_CRD_DB*)DpsMalloc((lims[0].size + 1) * sizeof(DPS_URL_CRD_DB));
-	  pmerg[0]->db_pcur = pmerg[0]->db_pbegin = pmerg[0]->db_pchecked = p = (DPS_URL_CRD*)DpsMalloc((lims[0].size + 1) * sizeof(DPS_URL_CRD));
+	  pmerg[0]->pcur = pmerg[0]->pbegin = pmerg[0]->pchecked = (DPS_URL_CRD_DB*)DpsMalloc((Indexer->limits[0].size + 1) * sizeof(DPS_URL_CRD_DB));
+	  pmerg[0]->db_pcur = pmerg[0]->db_pbegin = pmerg[0]->db_pchecked = p = (DPS_URL_CRD*)DpsMalloc((Indexer->limits[0].size + 1) * sizeof(DPS_URL_CRD));
 
 	  if (pmerg[0]->db_pbegin != NULL) {
-	    for (i = 0; i < lims[0].size; i++) {
-	      p[i].url_id = lims[0].data[i];
-	      p[i].coord = 0;
-	    }
-	    pmerg[0]->count = num = RemoveOldCrds(pmerg[0]->db_pcur, lims[0].size, del_buf, del_count);
-	    if (flag_null_wf) {
-	      pmerg[0]->count = DpsRemoveNullSections(pmerg[0]->db_pcur, num, wf);
-	      num = pmerg[0]->count;
-	    }
-	    pmerg[0]->plast = &pmerg[0]->pcur[num];
-	    pmerg[0]->db_plast = &pmerg[0]->db_pcur[num];
-	    npmerge = 1;
-	    Res->CoordList.ncoords += num;
+	      for (i = 0; i < Indexer->limits[0].size; i++) {
+		  p[i].url_id = Indexer->limits[0].data[i];
+		  p[i].coord = 0;
+	      }
+	      pmerg[0]->count = num = RemoveOldCrds(pmerg[0]->db_pcur, Indexer->limits[0].size, del_buf, del_count);
+	      if (flag_null_wf) {
+		  pmerg[0]->count = DpsRemoveNullSections(pmerg[0]->db_pcur, num, wf);
+		  num = pmerg[0]->count;
+	      }
+	      pmerg[0]->plast = &pmerg[0]->pcur[num];
+	      pmerg[0]->db_plast = &pmerg[0]->db_pcur[num];
+	      npmerge = 1;
+	      Res->CoordList.ncoords += num;
 	  } else pmerg[0]->count = 0;
 
 	} else {
@@ -2178,7 +2171,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	ticks=DpsStartTimer();
 #endif
 
-	if (Res->CoordList.ncoords == 0) { DPS_FREE(lims); goto zero_exit; }
+	if (Res->CoordList.ncoords == 0) { goto zero_exit; }
 /* will make this later
 	Res->CoordList.Coords = (DPS_URL_CRD*)DpsRealloc(Res->CoordList.Coords, Res->CoordList.ncoords * sizeof(DPS_URL_CRD));
 	if (Res->CoordList.Coords == NULL) {
@@ -2213,11 +2206,11 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	  }
 	  
 	  present = 1;
-	  for (i = 0; i < nlims; i++) {
-	    if (!PresentInLimit(lims[i].data, lims[i].size, &lims[i].start, cur_url_id)) {
-	      present = 0;
-	      break;
-	    }
+	  for (i = 0; i < Indexer->nlimits; i++) {
+	      if (!PresentInLimit(Indexer->limits[i].data, Indexer->limits[i].size, &Indexer->limits[i].start, cur_url_id)) {
+		  present = 0;
+		  break;
+	      }
 	  }
 
 	  for(i = 0; i < npmerge; i++) {
@@ -2255,8 +2248,10 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	  Res->CoordList.ncoords += pmerg[i]->count;
 	}
 
-	for(i=0;i<nlims;i++) if (lims[i].need_free) DPS_FREE(lims[i].data);
-	DPS_FREE(lims);
+	for(i=0; i < Indexer->nlimits; i++) 
+	    if (Indexer->limits[i].need_free) DPS_FREE(Indexer->limits[i].data);
+	DPS_FREE(Indexer->limits);
+	Indexer->nlimits = 0;
 
 #ifdef DEBUG_SEARCH
 	ticks=DpsStartTimer() - ticks;

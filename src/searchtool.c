@@ -3901,7 +3901,7 @@ int DpsParseQueryString(DPS_AGENT * Agent,DPS_VARLIST * vars,char * query_string
 			}
 
 			if((fname != NULL) && *val != '\0') {
-			  DpsAddSearchLimit(Agent, ltype, fname, val);
+			    DpsAddSearchLimit(Agent, &Agent->limits, &Agent->nlimits, ltype, fname, val);
 			}
 		  }
 		}

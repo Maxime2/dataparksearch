@@ -1429,68 +1429,75 @@ static int add_limit(void *Cfg, size_t ac, char **av) {
 }
 
 static int preload_limit(void *Cfg, size_t ac,char **av){
-	DPS_CFG	*C=(DPS_CFG*)Cfg;
-	DPS_AGENT *Indexer = C->Indexer;
-	const char *fname = NULL;
-	int res = DPS_ERROR;
-	int ltype = 0;
-	size_t lind;
+    DPS_CFG	*C=(DPS_CFG*)Cfg;
+    DPS_AGENT *Indexer = C->Indexer;
+    DPS_DBLIST *dbl = &Indexer->Conf->dbl;
+    DPS_DB *db = NULL;
+    size_t i, dbto;
+    const char *fname = NULL;
+    int res = DPS_ERROR;
+    int ltype = 0;
+    size_t lind;
 
-#if 0 /* FIX ME !!!!*/
-	if(!strcasecmp(av[1], "category")) {
-	  ltype = DPS_LIMTYPE_NESTED; fname = DPS_LIMFNAME_CAT;
-	} else
-	  if(!strcasecmp(av[1], "tag")) {
-	    ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_TAG;
-	  } else
-	    if(!strcasecmp(av[1], "time")) {
-	      ltype = DPS_LIMTYPE_TIME; fname = DPS_LIMFNAME_TIME;
-	    } else
-	      if(!strcasecmp(av[1], "hostname")) {
-		ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_HOST;
-	      } else
-		if(!strcasecmp(av[1], "language")) {
-		  ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_LANG;
-		} else
-		  if(!strcasecmp(av[1], "content")) {
-		    ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_CTYPE;
-		  } else
-		    if(!strcasecmp(av[1], "siteid")) {
-		      ltype = DPS_LIMTYPE_LINEAR_INT; fname = DPS_LIMFNAME_SITE;
-		    }
+    if(!strcasecmp(av[1], "category")) {
+	ltype = DPS_LIMTYPE_NESTED; fname = DPS_LIMFNAME_CAT;
+    } else
+    if(!strcasecmp(av[1], "tag")) {
+	ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_TAG;
+    } else
+    if(!strcasecmp(av[1], "time")) {
+	ltype = DPS_LIMTYPE_TIME; fname = DPS_LIMFNAME_TIME;
+    } else
+    if(!strcasecmp(av[1], "hostname")) {
+	ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_HOST;
+    } else
+    if(!strcasecmp(av[1], "language")) {
+	ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_LANG;
+    } else
+    if(!strcasecmp(av[1], "content")) {
+	ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_CTYPE;
+    } else
+    if(!strcasecmp(av[1], "siteid")) {
+	ltype = DPS_LIMTYPE_LINEAR_INT; fname = DPS_LIMFNAME_SITE;
+    }
+
+    dbto = DPS_DBL_TO(Indexer);
+    for (i = 0; i < dbto; i++) {
+	db = DPS_DBL_DB(Indexer, i);
+
 	if((fname != NULL) && dps_strlen(av[2])) {
-	  res = DpsAddSearchLimit(Indexer, ltype, fname, av[2]);
+	    res = DpsAddSearchLimit(Indexer, &db->limits, &db->nlimits, ltype, fname, av[2]);
 	}
 
 	if (res != DPS_OK) return res;
 
-	lind = Indexer->nlimits - 1;
+	lind = db->nlimits - 1;
 
-	Indexer->limits[lind].start = 0;
-	Indexer->limits[lind].origin = -1;
+	db->limits[lind].start = 0;
+	db->limits[lind].origin = -1;
+	db->limits[lind].need_free = 1;
 
 	switch(ltype) {
 	case DPS_LIMTYPE_NESTED:
-	  if(!(Indexer->limits[lind].data = LoadNestedLimit(Indexer, lind, &Indexer->limits[lind].size))) Indexer->nlimits--;
-	  else Indexer->loaded_limits++;
-	  break;
+	    db->limits[lind].data = LoadNestedLimit(Indexer, db, lind, &db->limits[lind].size);
+	    break;
 	case DPS_LIMTYPE_TIME:
-	  if(!(Indexer->limits[lind].data = LoadTimeLimit(Indexer, Indexer->limits[lind].file_name,
-							  Indexer->limits[lind].hi,
-							  Indexer->limits[lind].lo,
-							  &Indexer->limits[lind].size))) Indexer->nlimits--;
-	  else Indexer->loaded_limits++;
-	  break;
+	    db->limits[lind].data = LoadTimeLimit(Indexer, db, 
+						  db->limits[lind].file_name,
+						  db->limits[lind].hi,
+						  db->limits[lind].lo,
+						  &db->limits[lind].size);
+	    break;
 	case DPS_LIMTYPE_LINEAR_INT:
 	case DPS_LIMTYPE_LINEAR_CRC:
-	  if(!(Indexer->limits[lind].data = LoadLinearLimit(Indexer, Indexer->limits[lind].file_name,
-							    Indexer->limits[lind].hi,
-							    &Indexer->limits[lind].size))) Indexer->nlimits--;
-	  else Indexer->loaded_limits++;
-	  break;
+	    db->limits[lind].data = LoadLinearLimit(Indexer, db,
+						    db->limits[lind].file_name,
+						    db->limits[lind].hi,
+						    &db->limits[lind].size);
+	    break;
 	}
-#endif
-	return DPS_OK;
+    }
+    return DPS_OK;
 }
 
 

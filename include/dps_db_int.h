@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2008 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -279,6 +280,10 @@ typedef struct struct_dps_db {
 
         char            *vardir;
         size_t          WrdFiles, StoredFiles, URLDataFiles;
+
+	/** Cache mode limits */
+	DPS_SEARCH_LIMIT	*limits;
+        size_t		nlimits;
 
 #if defined(HAVE_DP_PGSQL) || defined(HAVE_DP_MYSQL)
         int             async_in_process;
