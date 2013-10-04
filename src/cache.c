@@ -2029,7 +2029,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 	ticks=DpsStartTimer() - ticks;
 	DpsLog(Indexer, DPS_LOG_EXTRA, "\t\t\tDone (%.2f)", (float)ticks / 1000);
 	ticks = DpsStartTimer();
-	DpsLog(Indexer, DPS_LOG_EXTRA, "    Sorting %d limits...", nlimits);
+	DpsLog(Indexer, DPS_LOG_EXTRA, "    Sorting %d limits...", Indexer->nlimits);
 #endif
 	if (Indexer->nlimits > 1) {
 
