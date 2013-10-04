@@ -1428,12 +1428,12 @@ static int add_limit(void *Cfg, size_t ac, char **av) {
 	return rc;
 }
 
-static int preload_limit(void *Cfg, size_t ac,char **av){
+static int preload_limit(void *Cfg, size_t ac,char **av) {
     DPS_CFG	*C=(DPS_CFG*)Cfg;
     DPS_AGENT *Indexer = C->Indexer;
     DPS_DBLIST *dbl = &Indexer->Conf->dbl;
-    DPS_DB *db = NULL;
-    size_t i, dbto;
+    DPS_DB *db;
+    size_t i;
     const char *fname = NULL;
     int res = DPS_ERROR;
     int ltype = 0;
@@ -1461,9 +1461,8 @@ static int preload_limit(void *Cfg, size_t ac,char **av){
 	ltype = DPS_LIMTYPE_LINEAR_INT; fname = DPS_LIMFNAME_SITE;
     }
 
-    dbto = DPS_DBL_TO(Indexer);
-    for (i = 0; i < dbto; i++) {
-	db = DPS_DBL_DB(Indexer, i);
+    for (i = 0; i < dbl->nitems; i++) {
+	db = dbl->db[i];
 
 	if((fname != NULL) && dps_strlen(av[2])) {
 	    res = DpsAddSearchLimit(Indexer, &db->limits, &db->nlimits, ltype, fname, av[2]);
