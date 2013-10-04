@@ -1979,7 +1979,7 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 #endif
 
 #ifdef DEBUG_SEARCH
-	DpsLog(Indexer, DPS_LOG_EXTRA, "    Reading limits (%d, loaded:%d)... ", Indexer->nlimits, Indexer->loaded_limits);
+	DpsLog(Indexer, DPS_LOG_EXTRA, "    Reading limits (%d, loaded:%d)... ", Indexer->nlimits, db->nlimits);
 	ticks=DpsStartTimer();
 #endif
 
