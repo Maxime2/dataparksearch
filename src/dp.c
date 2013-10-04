@@ -101,7 +101,9 @@ char* zeroarr(int N) {
 
 char *dps_strcpy1(char *dst0, const char *src0);
 char *dps_strcpy2(char *dst0, const char *src0);
-size_t dps_strlen(const char *src);
+size_t dps_strlen1(const char *src);
+size_t dps_strlen2(const char *src);
+size_t (*dps_strlen)(const char *src);
 
 #else /* DPS_CONFIGURE */
 
@@ -159,7 +161,7 @@ char *dps_strcpy2(char *dst0, const char *src0)
 char *dps_strcpy(char *dst0, const char *src0)
 #endif
 {
-  register size_t n = strlen(src0);
+  register size_t n = dps_strlen(src0);
   return memmove(dst0, src0, n + 1);
 }
 #endif /* DPS_USE_STRCPY_ALIGNED */
@@ -174,7 +176,7 @@ char * dps_strncpy1(char *dst0, const char *src0, size_t length)
 char * dps_strncpy(char *dst0, const char *src0, size_t length)
 #endif
 {
-  register size_t n = strlen(src0);
+  register size_t n = dps_strlen(src0);
   register char *dst = dps_memmove(dst0, src0, (n < length) ? n : length);
   if (n < length) bzero(dst + n, (length - n));
   return dst;
@@ -314,7 +316,7 @@ dps_strncpy_second_pas:
 #if defined DPS_USE_STRCAT_UNALIGNED || defined DPS_CONFIGURE
 
 char * dps_strcat(char *dst0, const char *src0) {
-  strcpy((char*)dst0 + strlen(dst0), src0);
+  strcpy((char*)dst0 + dps_strlen(dst0), src0);
   return dst0;
 }
 #endif /* DPS_USE_STRCAT_ALIGNED */
@@ -323,7 +325,7 @@ char * dps_strcat(char *dst0, const char *src0) {
 #if defined DPS_USE_STRNCAT_UNALIGNED || defined DPS_CONFIGURE
 
 char * dps_strncat(char *dst0, const char *src0, size_t length) {
-  strncpy((char*)dst0 + strlen(dst0), src0, length);
+  strncpy((char*)dst0 + dps_strlen(dst0), src0, length);
   return dst0;
 }
 #endif /* DPS_USE_STRNCAT_ALIGNED */
@@ -923,6 +925,55 @@ int main() {
   /* ###################################### */
 
   {
+      size_t len;
+      char* d = zeroarr(N + 8);
+      char* a = copyarr(a0, N + 1);
+      a[N] = 0;
+      TimerStart();
+      for (i = N-1; i > STARTLEN; i--) {
+	  len = dps_strlen1(a+i);
+      }
+      t_dps = t_dps_u = TimerEnd();
+
+      TimerStart();
+      for (i = N-1; i > STARTLEN; i--) {
+	  len = dps_strlen2(a+i);
+      }
+      t_dps2 = t_dps2_u = TimerEnd();
+
+//	free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
+      TimerStart();
+      for (i = N-1; i > STARTLEN; i--) {
+	  len = strlen(a+i);
+      }
+      t_lib = t_lib_u = TimerEnd();
+
+      free(d);
+      free(a);
+  }
+
+  printf("\tstrlen: %s (%g vs %g vs %g)\n", 
+	 t_lib_u < DPS_MIN(t_dps_u,t_dps2_u) ? "lib" : ((t_dps_u < t_dps2_u) ? "dps1" : "dps2"), 
+	 t_dps_u, t_dps2_u, t_lib_u
+      );
+  
+  VariantOf2();
+
+  fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRLEN%d%s\n\n", DPS_MIN(t_dps, t_dps2), t_lib,
+	  (variant == 0) ? "/*" : "", variant,
+	  (variant == 0) ? "*/" : ""
+      );
+  switch(variant) {
+  default:
+  case 0: dps_strlen = &strlen; break;
+  case 1: dps_strlen = &dps_strlen1; break;
+  case 2: dps_strlen = &dps_strlen2; break;
+  }
+  
+
+    /* ###################################### */
+
+  {
     char* d = zeroarr(N + 8);
     char* a = copyarr(a0, N + 1);
     a[N] = 0;
@@ -1205,44 +1256,6 @@ int main() {
 	    );
 
 
-
-
-    /* ###################################### */
-
-    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
-    {
-	size_t len;
-	TimerStart();
-	for (i = N-1; i > STARTLEN; i--) {
-	    len = dps_strlen1(a+i);
-	}
-	t_dps = t_dps_u = TimerEnd();
-
-	TimerStart();
-	for (i = N-1; i > STARTLEN; i--) {
-	    len = dps_strlen2(a+i);
-	}
-	t_dps2 = t_dps2_u = TimerEnd();
-
-//	free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
-	TimerStart();
-	for (i = N-1; i > STARTLEN; i--) {
-	    len = strlen(a+i);
-	}
-	t_lib = t_lib_u = TimerEnd();
-    }
-
-    printf("\tstrlen: %s (%g vs %g vs %g)\n", 
-	   t_lib_u < DPS_MIN(t_dps_u,t_dps2_u) ? "lib" : ((t_dps_u < t_dps2_u) ? "dps1" : "dps2"), 
-	   t_dps_u, t_dps2_u, t_lib_u
-	);
-
-    VariantOf2();
-
-    fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRLEN%d%s\n\n", DPS_MIN(t_dps, t_dps2), t_lib,
-	    (variant == 0) ? "/*" : "", variant,
-	    (variant == 0) ? "*/" : ""
-	    );
 
 
     /* ###################################### */
