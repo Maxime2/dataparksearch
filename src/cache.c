@@ -1235,7 +1235,10 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, DPS_SEARCH_LIMIT **limits, siz
 }
 
 
-urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size) {
+urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, 
+			 dps_uint4 hi, dps_uint4 lo, 
+			 dps_uint4 f_hi, dps_uint4 f_lo, 
+			 size_t *size) {
 	char	fname[PATH_MAX];
 	int	ind_fd, dat_fd;
 	DPS_UINT8_POS_LEN *ind = NULL;
@@ -1243,9 +1246,6 @@ urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, size_t lnum, size_t *size
 	size_t	num;
 	urlid_t	*data = NULL;
 	size_t	start = (size_t)-1, stop = (size_t)-1, len;
-	dps_uint4   hi = db->limits[lnum].hi, lo = db->limits[lnum].lo, 
-	    f_hi = db->limits[lnum].f_hi, f_lo = db->limits[lnum].f_lo;
-	const char *name = db->limits[lnum].file_name;
 	const char	*vardir = (db->vardir) ? db->vardir : DpsVarListFindStr(&Agent->Vars, "VarDir", DPS_VAR_DIR);
 
 	TRACE_IN(Agent, "LoadNestedLimit");
@@ -2005,7 +2005,10 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 		if (not_loaded)
 		    switch (Indexer->limits[i].type) {
 		    case DPS_LIMTYPE_NESTED:
-			Indexer->limits[i].data = LoadNestedLimit(Indexer, db, i, &Indexer->limits[i].size);
+			Indexer->limits[i].data = LoadNestedLimit(Indexer, db, Indexer->limits[i].file_name, 
+								  Indexer->limits[i].hi, Indexer->limits[i].lo,
+								  Indexer->limits[i].f_hi, Indexer->limits[i].f_lo,
+								  &Indexer->limits[i].size);
 			break;
 		    case DPS_LIMTYPE_TIME:
 			Indexer->limits[i].data = LoadTimeLimit(Indexer, db, Indexer->limits[i].file_name,

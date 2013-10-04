@@ -1479,7 +1479,13 @@ static int preload_limit(void *Cfg, size_t ac,char **av){
 
 	switch(ltype) {
 	case DPS_LIMTYPE_NESTED:
-	    db->limits[lind].data = LoadNestedLimit(Indexer, db, lind, &db->limits[lind].size);
+	    db->limits[lind].data = LoadNestedLimit(Indexer, db,
+						    db->limits[lind].file_name,
+						    db->limits[lind].hi,
+						    db->limits[lind].lo,
+						    db->limits[lind].f_hi,
+						    db->limits[lind].f_lo,
+						    &db->limits[lind].size);
 	    break;
 	case DPS_LIMTYPE_TIME:
 	    db->limits[lind].data = LoadTimeLimit(Indexer, db, 
