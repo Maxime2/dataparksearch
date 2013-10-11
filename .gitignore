@@ -1,3 +1,8 @@
 .svn
 *~
 *.bak
+*.o
+*.lo
+*.la
+.deps/
+.libs/
