@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl
-AC_INIT([DataparkSearch Engine], [4.54-2013-10-04], [dataparksearch@googlegroups.com], [dpsearch])
+AC_INIT([DataparkSearch Engine], [4.54-2013-10-15], [dataparksearch@googlegroups.com], [dpsearch])
 dnl AC_INIT([DataparkSearch Engine], [4.53], [dataparksearch@googlegroups.com], [dpsearch])
 AC_CONFIG_SRCDIR([TODO])
 AC_CANONICAL_SYSTEM
@@ -137,7 +137,7 @@ AC_MSG_RESULT(no))
 
 
 dnl Check if libbsd is required, e.g. on Linux
-AC_CHECK_LIB(bsd, mergesort, LIBS="$LIBS -lbsd")
+AC_CHECK_LIB(bsd, mergesort, CTOR_LIBS=`pkg-config libbsd-ctor --libs` LIBS="$LIBS -lbsd $CTOR_LIBS")
 
 
 dnl Check for library functions
