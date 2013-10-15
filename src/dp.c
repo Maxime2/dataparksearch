@@ -104,6 +104,8 @@ char *dps_strcpy2(char *dst0, const char *src0);
 size_t dps_strlen1(const char *src);
 size_t dps_strlen2(const char *src);
 size_t (*dps_strlen)(const char *src);
+void * (*dps_memmove)(void *dst0, const void *src0, size_t length);
+char * (*dps_strncpy)(char *dst0, const char *src0, size_t length);
 
 #else /* DPS_CONFIGURE */
 
@@ -325,7 +327,7 @@ char * dps_strcat(char *dst0, const char *src0) {
 #if defined DPS_USE_STRNCAT_UNALIGNED || defined DPS_CONFIGURE
 
 char * dps_strncat(char *dst0, const char *src0, size_t length) {
-  strncpy((char*)dst0 + dps_strlen(dst0), src0, length);
+  dps_strncpy((char*)dst0 + dps_strlen(dst0), src0, length);
   return dst0;
 }
 #endif /* DPS_USE_STRNCAT_ALIGNED */
@@ -974,8 +976,8 @@ int main() {
 
     TimerStart();
     for (i = N; i > STARTLEN; i--) {
-      dps_memmove(d, a, i);
-      dps_memmove(a, d, i);
+      dps_memmove1(d, a, i);
+      dps_memmove1(a, d, i);
     }
     t_dps = TimerEnd();
 
@@ -1006,8 +1008,8 @@ int main() {
     TimerStart();
     for (z =0; z < 8; z++)
       for (i = N; i > STARTLEN; i--) {
-	dps_memmove(d+z, a, i);
-	dps_memmove(a, d+z, i);
+	dps_memmove1(d+z, a, i);
+	dps_memmove1(a, d+z, i);
       }
     t_dps_u = TimerEnd();
 
@@ -1028,6 +1030,11 @@ int main() {
 	    (variant == 0) ? "/*" : "",
 	    (variant == 0) ? "*/" : ""
 	    );
+    switch (variant) {
+    default:
+    case 0: dps_memmove = &memmove; break;
+    case 1: dps_memmove = &dps_memmove1; break;
+    }
     free(d);
     free(a);
   }
@@ -1235,6 +1242,12 @@ int main() {
 	    (variant == 0) ? "*/" : ""
 	    );
 
+    switch(variant) {
+    default:
+    case 0: dps_strncpy = &strncpy; break;
+    case 1: dps_strncpy = &dps_strncpy1; break;
+    case 2: dps_strncpy = &dps_strncpy2; break;
+    }
 
 
 
@@ -1356,7 +1369,7 @@ int main() {
       }
     t_lib_u = TimerEnd();
 
-    printf("\tstrncat unaligned: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps_u, t_lib_u);
+    printf("\tstrncat unaligned: %s (%g vs %g)\n", (t_dps_u < t_lib_u) ? "dps" : "lib", t_dps_u, t_lib_u);
 
     VariantOf();
 

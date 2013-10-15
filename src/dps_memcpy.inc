@@ -1,4 +1,5 @@
-/* Copyright (C) 2010-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2010-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,7 +15,6 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
 */
-
 /*
   memmove
   memcpy
@@ -34,10 +34,15 @@ typedef long dps_mword;  /* up to 32 bytes long */
 #if (defined DPS_MEMMOVE && (defined DPS_USE_MEMMOVE_UNALIGNED || defined DPS_CONFIGURE)) || (!defined DPS_MEMMOVE && (defined DPS_USE_MEMCPY_UNALIGNED || defined DPS_CONFIGURE))
 
 #ifdef DPS_MEMMOVE
-void *dps_memmove(void *dst0, const void *src0, size_t length) {
+#ifdef DPS_CONFIGURE
+void *dps_memmove1(void *dst0, const void *src0, size_t length) 
 #else
-void *dps_memcpy(void *dst0, const void *src0, size_t length) {
+void *dps_memmove(void *dst0, const void *src0, size_t length) 
 #endif
+#else
+void *dps_memcpy(void *dst0, const void *src0, size_t length) 
+#endif
+{
 	size_t t;
 
   if (length == 0 || dst0 == src0)		/* nothing to do */
@@ -45,7 +50,7 @@ void *dps_memcpy(void *dst0, const void *src0, size_t length) {
   if ((DPS_PNTYPE)dst0 < (DPS_PNTYPE)src0) { /* copy forward */
     register char *dst = (char*)dst0;
     register const char *src = (const char*)src0;
-    t = (size_t)src & wmask;
+    t = (size_t)((unsigned long)src & wmask);
 
     if (t) {
     	if (length < wsize) {
@@ -174,7 +179,9 @@ void *dps_memcpy(void *dst0, const void *src0, size_t length) {
   } else { /* copy backward */
     register char *dst = (char*)dst0 + length;
     register const char *src = (const char *)src0 + length;
-    t = (size_t)src & wmask;
+    t = (size_t)((unsigned long)src & wmask);
+
+//    fprintf(stderr, "** dst: %p t: %zu\n", dst  
 
     if (t) {
 	if (length < wsize) {
