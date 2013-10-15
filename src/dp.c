@@ -113,7 +113,6 @@ char * (*dps_strncpy)(char *dst0, const char *src0, size_t length);
 #include "dps_config.h"
 #include <stdlib.h>
 #include <string.h>
-#include "dp.inc"
 
 #define dps_memmove  memmove
 #define dps_memcpy   memcpy
@@ -124,6 +123,10 @@ char * (*dps_strncpy)(char *dst0, const char *src0, size_t length);
 #define dps_strlen   strlen
 #define dps_bsearch  bsearch
 #define dps_heapsort heapsort
+#define dps_strcmp   strcmp
+#define dps_strstr   strstr
+
+#include "dp.inc"
 
 #endif /* DPS_CONFIGURE */
 
@@ -911,6 +914,33 @@ int dps_strcmp(const char *s1, const char *s2)
 #endif
 
 
+#if defined DPS_USE_STRSTR1 || defined DPS_CONFIGURE
+
+#if defined DPS_CONFIGURE
+char * dps_strstr1(const char *s, const char *find)
+#else
+char * dps_strstr(const char *s, const char *find)
+#endif
+{
+    register char c, sc;
+    register size_t len;
+ 	
+    if ((c = *find++) != '\0') {
+ 	len = dps_strlen(find);
+ 	do {
+	    do {
+		if ((sc = *s++) == '\0')
+		    return (NULL);
+	    } while (sc != c);
+ 	} while (strncmp(s, find, len) != 0);
+ 	s--;
+    }
+    return ((char *)s);
+}
+
+#endif
+
+
 
 
 
@@ -1550,7 +1580,7 @@ int main() {
 
     free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
     {     
-	char set[5] = { 13, 127, 0}; int res;
+	char set[3] = { a[5], a[6], 0}; int res;
 	TimerStart();
 	for (i = N-1; i > STARTLEN; i--) {
 	    res = dps_strcmp1(a, a0);
@@ -1573,6 +1603,36 @@ int main() {
     VariantOf();
 
     fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRCMP1%s\n\n", t_dps, t_lib,
+	    (variant == 0) ? "/*" : "",
+	    (variant == 0) ? "*/" : ""
+	    );
+
+    /* ###################################### */
+
+    free(d); free(a); d = zeroarr(N + 8); a = copyarr(a0, N + 1); a[N] = 0;
+    {     
+	char set[3] = { a[5], a[6], 0}; int res;
+	TimerStart();
+	for (i = N-1; i > STARTLEN; i--) {
+	    res = dps_strstr1(a, set);
+	    res = dps_strstr1(a+i, set);
+	}
+	t_dps = t_dps_u = TimerEnd();
+    
+
+	TimerStart();
+	for (i = N-1; i > STARTLEN; i--) {
+	    res = strstr(a, set);
+	    res = strstr(a+i, set);
+	}
+	t_lib = t_lib_u = TimerEnd();
+    }
+
+    printf("\tstrstr: %s (%g vs %g)\n", (t_dps < t_lib) ? "dps" : "lib", t_dps, t_lib);
+
+    VariantOf();
+
+    fprintf(cfg, "/* dps:%g vs. lib:%g */\n%s#define DPS_USE_STRSTR1%s\n\n", t_dps, t_lib,
 	    (variant == 0) ? "/*" : "",
 	    (variant == 0) ? "*/" : ""
 	    );
