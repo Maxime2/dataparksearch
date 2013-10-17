@@ -499,7 +499,7 @@ static const unsigned long mask80 = 0x8080808080808080;
 	 * they always fall in the same memory page, as long as page
 	 * boundaries is integral multiple of word size.
 	 */
-	lp = (const unsigned long *)((uintptr_t)src & ~LONGPTR_MASK);
+	lp = (const unsigned long *)((unsigned long)src & ~LONGPTR_MASK);
 	va = (*lp - mask01);
 	vb = ((~*lp) & mask80);
 	lp++;
