@@ -507,7 +507,8 @@ static int perform(DPS_AGENT *query, DPS_RESULT *Res, DPS_BOOLSTACK *s, int com)
 			x2 = POPARG(s);
 			if (x2 == NULL || x1 == NULL) {
 			  if (x1 != NULL) { res = *x1; x1 = NULL; }
-			  if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else { bzero(&res, sizeof(res)); }
 			} else {
 #ifdef DEBUG_BOOL
 /*			  printBoolRes(query, x1);*/
@@ -574,7 +575,8 @@ static int perform(DPS_AGENT *query, DPS_RESULT *Res, DPS_BOOLSTACK *s, int com)
 			x2 = POPARG(s);
 			if (x2 == NULL || x1 == NULL) {
 			  if (x1 != NULL) { res = *x1; x1 = NULL; }
-			  if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else { bzero(&res, sizeof(res)); }
 			} else {
 			  res.order_from = (x1->order_from <= x2->order_from) ? x1->order_from : x2->order_from;
 			  res.order_to = (x1->order_to >= x2->order_to) ? x1->order_to : x2->order_to;
@@ -675,7 +677,8 @@ static int perform(DPS_AGENT *query, DPS_RESULT *Res, DPS_BOOLSTACK *s, int com)
 			x2 = POPARG(s); flag1 = 0;
 			if (x2 == NULL || x1 == NULL) {
 			  if (x1 != NULL) { res = *x1; x1 = NULL; }
-			  if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else { bzero(&res, sizeof(res)); }
 			} else {
 			  res.order_from = (x1->order_from <= x2->order_from) ? x1->order_from : x2->order_from;
 			  res.order_to = (x1->order_to >= x2->order_to) ? x1->order_to : x2->order_to;
@@ -761,7 +764,8 @@ static int perform(DPS_AGENT *query, DPS_RESULT *Res, DPS_BOOLSTACK *s, int com)
 			x2 = POPARG(s);
 			if (x2 == NULL || x1 == NULL) {
 			  if (x1 != NULL) { res = *x1; x1 = NULL; }
-			  if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else if (x2 != NULL) { res = *x2; x2 = NULL; }
+			  else { bzero(&res, sizeof(res)); }
 			} else {
 #ifdef DEBUG_BOOL
 /*			  printBoolRes(query, x1);*/
