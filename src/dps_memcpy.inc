@@ -181,8 +181,6 @@ void *dps_memcpy(void *dst0, const void *src0, size_t length)
     register const char *src = (const char *)src0 + length;
     t = (size_t)((unsigned long)src & wmask);
 
-//    fprintf(stderr, "** dst: %p t: %zu\n", dst  
-
     if (t) {
 	if (length < wsize) {
 		t = length;
