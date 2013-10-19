@@ -1508,7 +1508,7 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
       local.add_cmd = DPS_STACK_OR;
       local.order = state->order;
       local.origin = (Origin & ~1) | DPS_WORD_ORIGIN_ACCENT;
-      if (DpsAddStackItem(query, Res, &local, OWord->word, af_uwrd) != DPS_OK) {
+      if (DpsAddStackItem(query, Res, &local, clex, af_uwrd) != DPS_OK) {
 	return DPS_ERROR;
       }
 				
@@ -1551,7 +1551,7 @@ static int DpsExpandWord(DPS_AGENT *query, DPS_RESULT *Res, DPS_WIDEWORD *OWord,
       local.add_cmd = DPS_STACK_OR;
       local.order = state->order;
       local.origin = (Origin & ~1) | DPS_WORD_ORIGIN_ACCENT;
-      if (DpsAddStackItem(query, Res, &local, OWord->word, de_uwrd) != DPS_OK) {
+      if (DpsAddStackItem(query, Res, &local, clex, de_uwrd) != DPS_OK) {
 	return DPS_ERROR;
       }
 				
@@ -1903,7 +1903,7 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 	  DpsConv(&query->uni_lc, wrd, query->WordParam.max_word_len * 12,(char*)uwrd, sizeof(uwrd[0])*(wlen+1));
 	  clex = DpsTrim(wrd, " \t\r\n");
 
-	  DpsLog(query, DPS_LOG_DEBUG, "\t\t\twrd {len:%d,class:%d,forte:%d}: %s", wlen, DPS_UNI_CTYPECLASS(ctype), have_bukva_forte, wrd);
+	  DpsLog(query, DPS_LOG_DEBUG, "\t\t\twrd {len:%d,class:%d,forte:%d}: %s", wlen, DPS_UNI_CTYPECLASS(ctype), have_bukva_forte, clex);
 			
 	  if (DPS_UNI_CTYPECLASS(ctype) != DPS_UNI_BUKVA) {
 	    size_t ULen = DpsUniLen(uwrd);
