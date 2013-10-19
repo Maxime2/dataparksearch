@@ -2951,69 +2951,62 @@ ret:
 #if defined(HAVE_DP_PGSQL) || defined(HAVE_DP_MYSQL)
 
 int __DPSCALL _DpsSQLAsyncQuery(DPS_DB *db, DPS_SQLRES *SQLRes, const char * query, const char *file, const int line) {
-  DPS_SQLRES *res = (SQLRes == NULL) ? &db->Res : SQLRes;
-  int rc, done = 0;
-	
+    DPS_SQLRES *res = (SQLRes == NULL) ? &db->Res : SQLRes;
+    int rc;
 #ifdef DEBUG_SQL
-	unsigned long ticks;
-	ticks = DpsStartTimer();
+    int done = 0;
+    unsigned long ticks;
+    ticks = DpsStartTimer();
 #endif
 
-	if(SQLRes) {
-	  DpsSQLFree(SQLRes);
-/*	  bzero((void*)SQLRes, sizeof(*SQLRes));*/
-	}
+    if(SQLRes) {
+	DpsSQLFree(SQLRes);
+    }
 
 #if HAVE_DP_PGSQL
-	if(db->DBDriver==DPS_DB_PGSQL){
-/*		res=(DPS_SQLRES*)DpsMalloc(sizeof(*res));
-		bzero((void*)res, sizeof(*res));*/
-		DpsPgSQLAsyncQuery(db, res, query);
-		res->DBDriver = db->DBDriver;
-		if(!res->pgsqlres){
-/*			DPS_FREE(res);*/
-			res = NULL;
-		}
-		done = 1;
-		goto asyncret;
+    if(db->DBDriver==DPS_DB_PGSQL){
+	DpsPgSQLAsyncQuery(db, res, query);
+	res->DBDriver = db->DBDriver;
+	if(!res->pgsqlres){
+	    res = NULL;
 	}
+#ifdef DEBUG_SQL
+	done = 1;
+#endif
+	goto asyncret;
+    }
 #endif
 #if HAVE_DP_MYSQL
-	if(db->DBDriver == DPS_DB_MYSQL) {
-/*		res = (DPS_SQLRES*)DpsMalloc(sizeof(*res));
-		bzero((void*)res, sizeof(*res));*/
-		DpsMySQLAsyncQuery(db, res, query);
-		res->DBDriver = db->DBDriver;
-		done = 1;
-		goto asyncret;
-	}
+    if(db->DBDriver == DPS_DB_MYSQL) {
+	DpsMySQLAsyncQuery(db, res, query);
+	res->DBDriver = db->DBDriver;
+#ifdef DEBUG_SQL
+	done = 1;
+#endif
+	goto asyncret;
+    }
 #endif
 
-	rc = _DpsSQLQuery(db, res, query, file, line);
+    rc = _DpsSQLQuery(db, res, query, file, line);
 	
 asyncret:
 #ifdef DEBUG_SQL
-	ticks=DpsStartTimer()-ticks;
+    ticks=DpsStartTimer()-ticks;
 /*	fprintf(stderr,"[%d,%x] %.2fs SQL {%s:%d}: %s\n", getpid(), db, (float)ticks/1000, file, line, query);*/
-	if (done) fprintf(stderr,"%.2fs AsSQL {%s:%d}: %s\n", (float)ticks/1000, file, line, query);
+    if (done) fprintf(stderr,"%.2fs AsSQL {%s:%d}: %s\n", (float)ticks/1000, file, line, query);
 #endif
 	
 #ifdef DEBUG_ERR_QUERY
-	if (db->errcode == 1) {
-	  fprintf(stderr, "{%s:%d} Query: %s\n", file, line, query);
-	  fprintf(stderr, "\tSQL-server message: %s\n\n", db->errstr);
-	}
+    if (db->errcode == 1) {
+	fprintf(stderr, "{%s:%d} Query: %s\n", file, line, query);
+	fprintf(stderr, "\tSQL-server message: %s\n\n", db->errstr);
+    }
 #endif
 
-	if(res){
-	  if(SQLRes) {
-/*	    SQLRes[0] = res[0];*/
-	  } else {
-	    DpsSQLFree(res);
-	  }
-/*	  DPS_FREE(res);*/
-	}
-	return db->errcode ? DPS_ERROR : DPS_OK;
+    if (res && !SQLRes) {
+	DpsSQLFree(res);
+    }
+    return db->errcode ? DPS_ERROR : DPS_OK;
 }
 
 #endif

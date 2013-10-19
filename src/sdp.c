@@ -273,7 +273,7 @@ int __DPSCALL DpsResAddDocInfoSearchd(DPS_AGENT * query,DPS_DB *cl,DPS_RESULT * 
 				  break;
 				}
 				nrecv = DpsRecvall(cl->searchd, msg, hdr.len, 360);
-				msg[nrecv]='\0';
+				msg[(nrecv >= 0) ? nrecv : 0]='\0';
 				sprintf(query->Conf->errstr,"Searchd error: '%s'",msg);
 				rc=DPS_ERROR;
 				DPS_FREE(msg);
@@ -286,7 +286,7 @@ int __DPSCALL DpsResAddDocInfoSearchd(DPS_AGENT * query,DPS_DB *cl,DPS_RESULT * 
 				  break;
 				}
 				nrecv = DpsRecvall(cl->searchd, msg, hdr.len, 360);
-				msg[nrecv]='\0';
+				msg[(nrecv >= 0) ? nrecv : 0]='\0';
 #ifdef DEBUG_SDP
 				DpsLog(query, DPS_LOG_ERROR, "Message from searchd: '%s'\n",msg);
 #endif
@@ -299,7 +299,7 @@ int __DPSCALL DpsResAddDocInfoSearchd(DPS_AGENT * query,DPS_DB *cl,DPS_RESULT * 
 				  break;
 				}
 				nrecv = DpsRecvall(cl->searchd, dinfo, hdr.len, 360);
-				dinfo[hdr.len]='\0';
+				dinfo[(nrecv > 0) ? nrecv : 0] = '\0';
 #ifdef DEBUG_SDP
 				DpsLog(query, DPS_LOG_ERROR, "Received DOCINFO size=%d buf=%s\n",hdr.len,dinfo);
 #endif				
@@ -394,8 +394,10 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				  break;
 				}
 				nrecv = DpsRecvall(cl->searchd, msg, hdr.len, 360);
-				msg[nrecv]='\0';
-				sprintf(query->Conf->errstr,"Searchd error: '%s',received:%d", msg, (int)nrecv);
+				if (nrecv >= 0) {
+				    msg[nrecv]='\0';
+				    sprintf(query->Conf->errstr,"Searchd error: '%s',received:%d", msg, (int)nrecv);
+				}
 				rc = DPS_ERROR;
 				DPS_FREE(msg);
 				done=1;
@@ -407,7 +409,7 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				  break;
 				}
 				nrecv = DpsRecvall(cl->searchd, msg, hdr.len, 360);
-				msg[nrecv]='\0';
+				msg[(nrecv >= 0) ? nrecv : 0] = '\0';
 				if (strncmp(msg, "Total_found", 11) == 0) {
 				  Res->total_found = (size_t)DPS_ATOI(msg + 12);
 				  Res->grand_total = (size_t)DPS_ATOI(strchr(msg + 12, (int)' ') + 1);
@@ -426,7 +428,7 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				}
 				nrecv = DpsRecvall(cl->searchd, wrd, hdr.len, 360);
 				/*Res->total_found=hdr.len/sizeof(*wrd);*/
-				Res->num_rows = hdr.len / sizeof(*wrd);
+				Res->num_rows = (nrecv >= 0) ? (size_t)nrecv / sizeof(*wrd) : 0;
 #ifdef DEBUG_SDP
 				DpsLog(query, DPS_LOG_ERROR, "Received words size=%d nwrd=%d\n",hdr.len, Res->num_rows /*Res->total_found*/);
 #endif
@@ -439,7 +441,7 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				  done = 1; break;
 				}
 				nrecv = DpsRecvall(cl->searchd, Res->Suggest, hdr.len, 360);
-				Res->Suggest[hdr.len] = '\0';
+				Res->Suggest[(nrecv >=0) ? nrecv : 0] = '\0';
 #ifdef DEBUG_SDP
 				DpsLog(query, DPS_LOG_ERROR, "Received Suggest size=%d\n", hdr.len);
 #endif
@@ -453,7 +455,7 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				}
 				nrecv = DpsRecvall(cl->searchd, Res->PerSite, hdr.len, 360);
 #ifdef DEBUG_SDP
-				DpsLog(query, DPS_LOG_ERROR, "Received PerSite size=%d nwrd=%d\n",hdr.len, Res->num_rows/*Res->total_found*/);
+				DpsLog(query, DPS_LOG_ERROR, "Received PerSite size=%d nwrd=%d\n", nrecv, Res->num_rows/*Res->total_found*/);
 #endif
 				break;
 		        case DPS_SEARCHD_CMD_DATA:
@@ -464,7 +466,7 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				}
 				nrecv = DpsRecvall(cl->searchd, udt, hdr.len, 360);
 #ifdef DEBUG_SDP
-				DpsLog(query, DPS_LOG_ERROR, "Received URLDATA size=%d nwrd=%d\n", hdr.len, Res->num_rows/*Res->total_found*/);
+				DpsLog(query, DPS_LOG_ERROR, "Received URLDATA size=%d nwrd=%d\n", nrecv, Res->num_rows);
 #endif
 				break;
 
@@ -477,7 +479,7 @@ int DpsSearchdGetWordResponse(DPS_AGENT *query,DPS_RESULT *Res,DPS_DB *cl) {
 				}
 				nrecv = DpsRecvall(cl->searchd, trk, hdr.len, 360);
 #ifdef DEBUG_SDP
-				DpsLog(query, DPS_LOG_ERROR, "Received TRACKDATA size=%d nwrd=%d\n", hdr.len, Res->num_rows/*Res->total_found*/);
+				DpsLog(query, DPS_LOG_ERROR, "Received TRACKDATA size=%d nwrd=%d\n", nrecv, Res->num_rows);
 #endif
 				break;
 #endif
@@ -671,7 +673,7 @@ int __DPSCALL DpsSearchdCatAction(DPS_AGENT *A, DPS_CATEGORY *C, int cmd, void *
 				  break;
 				}
 				nrecv = DpsRecvall(searchd->searchd, msg, hdr.len, 360);
-				msg[nrecv] = '\0';
+				msg[(nrecv >= 0) ? nrecv : 0 ] = '\0';
 				sprintf(A->Conf->errstr, "Searchd error: '%s'", msg);
 				rc=DPS_ERROR;
 				DPS_FREE(msg);
@@ -684,7 +686,7 @@ int __DPSCALL DpsSearchdCatAction(DPS_AGENT *A, DPS_CATEGORY *C, int cmd, void *
 				  break;
 				}
 				nrecv = DpsRecvall(searchd->searchd, msg, hdr.len, 360);
-				msg[nrecv] = '\0';
+				msg[(nrecv >= 0) ? nrecv : 0] = '\0';
 #ifdef DEBUG_SDP
 				DpsLog(A, DPS_LOG_ERROR, "Message from searchd: '%s'\n",msg);
 #endif
@@ -697,7 +699,7 @@ int __DPSCALL DpsSearchdCatAction(DPS_AGENT *A, DPS_CATEGORY *C, int cmd, void *
 				  break;
 				}
 				nrecv = DpsRecvall(searchd->searchd, dinfo, hdr.len, 360);
-				dinfo[hdr.len]='\0';
+				dinfo[(nrecv >= 0) ? nrecv : 0] = '\0';
 #ifdef DEBUG_SDP
 				DpsLog(A, DPS_LOG_ERROR, "Received CATINFO size=%d buf=%s\n",hdr.len,dinfo);
 #endif				
@@ -779,7 +781,7 @@ int __DPSCALL DpsSearchdURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd, void *
 				  break;
 				}
 				nrecv = DpsRecvall(searchd->searchd, msg, hdr.len, 360);
-				msg[nrecv] = '\0';
+				msg[(nrecv >= 0) ? nrecv : 0] = '\0';
 				sprintf(A->Conf->errstr, "Searchd error: '%s'", msg);
 				rc=DPS_OK;
 				DPS_FREE(msg);
@@ -792,7 +794,7 @@ int __DPSCALL DpsSearchdURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd, void *
 				  break;
 				}
 				nrecv = DpsRecvall(searchd->searchd, msg, hdr.len, 360);
-				msg[nrecv] = '\0';
+				msg[(nrecv >= 0) ? nrecv : 0] = '\0';
 #ifdef DEBUG_SDP
 				DpsLog(A, DPS_LOG_ERROR, "Message from searchd: '%s'\n",msg);
 #endif
@@ -805,7 +807,7 @@ int __DPSCALL DpsSearchdURLAction(DPS_AGENT *A, DPS_DOCUMENT *D, int cmd, void *
 				  break;
 				}
 				nrecv = DpsRecvall(searchd->searchd, dinfo, hdr.len, 360);
-				dinfo[hdr.len]='\0';
+				dinfo[(nrecv >= 0) ? nrecv : 0] = '\0';
 
 				A->doccount += *((int *)dinfo);
 #ifdef DEBUG_SDP
@@ -860,7 +862,7 @@ int DpsCloneListSearchd(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_RESULT *Res, 
 				  break;
 				}
 				nrecv = DpsRecvall(db->searchd, msg, hdr.len, 360);
-				msg[nrecv] = '\0';
+				msg[(nrecv >= 0) ? nrecv : 0] = '\0';
 				sprintf(Indexer->Conf->errstr, "Searchd error: '%s'", msg);
 				rc = DPS_ERROR;
 				DPS_FREE(msg);
@@ -873,7 +875,7 @@ int DpsCloneListSearchd(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_RESULT *Res, 
 				  break;
 				}
 				nrecv = DpsRecvall(db->searchd, dinfo, hdr.len, 360);
-				dinfo[hdr.len] = '\0';
+				dinfo[(nrecv >= 0) ? nrecv : 0] = '\0';
 #ifdef DEBUG_SDP
 				DpsLog(Indexer, DPS_LOG_DEBUG, "Received DOCINFO size=%d buf=%s\n", hdr.len, dinfo);
 #endif				
