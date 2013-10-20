@@ -1,4 +1,7 @@
-EXTRA_DIST= blob.txt crc-multi.txt create.txt cross-crc.txt drop.cross-crc.txt drop.crc-multi.txt drop.multi.txt drop.txt multi.txt url-raid.txt crc.txt drop.crc.txt
+EXTRA_DIST= blob.txt crc-multi.txt create.txt \
+	cross-crc.txt drop.cross-crc.txt drop.crc-multi.txt \
+	drop.multi.txt drop.txt multi.txt url-raid.txt \
+	crc.txt drop.crc.txt
 
 all: create drop
 
@@ -31,30 +34,33 @@ drop.crc.sql: drop.txt drop.cross-crc.txt drop.crc.txt
 	cat $(srcdir)/drop.txt $(srcdir)/drop.cross-crc.txt $(srcdir)/drop.crc.txt > $@
 
 drop.crc-multi.sql: drop.txt drop.crc-multi.txt
-	cat  $(srcdir)/drop.txt  $(srcdir)/drop.crc-multi.txt > $@
+	cat  $(srcdir)/drop.txt $(srcdir)/drop.crc-multi.txt > $@
 
 drop.cache.sql: drop.txt drop.cross-crc.txt
 	cat $(srcdir)/drop.txt $(srcdir)/drop.cross-crc.txt > $@
 
 
-CLEANFILES= create.single.sql \
+CLEANFILES= create.crc-multi.sql \
+  create.crc.sql \
   create.multi.sql \
-  create.crc-multi.sql \
+  create.single.sql \
   create.cache.sql \
-  drop.single.sql \
-  drop.multi.sql \
   drop.crc-multi.sql \
+  drop.crc.sql \
+  drop.multi.sql \
+  drop.single.sql \
   drop.cache.sql
 
-sql_FILES= create.single.sql \
+sql_FILES= create.crc-multi.sql \
+  create.crc.sql \
   create.multi.sql \
-  create.crc-multi.sql \
+  create.single.sql \
   create.cache.sql \
-  drop.single.sql \
-  drop.multi.sql \
   drop.crc-multi.sql \
+  drop.crc.sql \
+  drop.multi.sql \
+  drop.single.sql \
   drop.cache.sql
-
 
 if PORTS
 dpstodir=$(pkgdatadir)

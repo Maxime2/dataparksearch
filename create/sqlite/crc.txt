@@ -1,0 +1,9 @@
+CREATE TABLE ndict (
+  url_id  int DEFAULT 0 NOT NULL,
+  word_id int DEFAULT 0 NOT NULL,
+  intag   int DEFAULT 0 NOT NULL
+);
+CREATE INDEX key_ndict_url_id ON ndict (url_id);
+CREATE INDEX key_ndict_word   ON ndict (word_id);
+
+

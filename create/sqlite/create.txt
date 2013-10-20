@@ -91,16 +91,8 @@ CREATE TABLE crossdict (
 CREATE INDEX key_crossdict_url_id ON crossdict (url_id);
 CREATE INDEX key_crossdict_ref_id ON crossdict (ref_id);
 CREATE INDEX key_crossdict_word   ON crossdict (word);
+CREATE INDEX crossdict_word_url_id ON crossdict (word, url_id);
 
-
-
-CREATE TABLE ndict (
-  url_id  int DEFAULT 0 NOT NULL,
-  word_id int DEFAULT 0 NOT NULL,
-  intag   int DEFAULT 0 NOT NULL
-);
-CREATE INDEX key_ndict_url_id ON ndict (url_id);
-CREATE INDEX key_ndict_word   ON ndict (word_id);
 
 
 create table server (

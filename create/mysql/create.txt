@@ -95,7 +95,8 @@ CREATE TABLE crossdict (
   intag  int(11) DEFAULT '0' NOT NULL,
   KEY url_id (url_id),
   KEY ref_id (ref_id),
-  KEY word (word)
+  KEY word (word),
+  KEY word_url_id (word, url_id)
 );
 
 

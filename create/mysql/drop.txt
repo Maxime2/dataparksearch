@@ -1,9 +1,7 @@
 DROP TABLE url;
 DROP TABLE urlinfo;
 DROP TABLE dict;
-DROP TABLE ndict;
 DROP TABLE crossdict;
-DROP TABLE ncrossdict;
 DROP TABLE categories;
 DROP TABLE qtrack;
 DROP TABLE qinfo;
