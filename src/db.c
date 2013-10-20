@@ -735,7 +735,7 @@ static int DpsDocUpdate(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc){
 		size_t	docnum;
 
 		if (I->num_rows)
-			DpsLog(Indexer, DPS_LOG_EXTRA, "Flush %d document(s)", I->num_rows + ((Doc != NULL) ? 1 : 0));
+			DpsLog(Indexer, DPS_LOG_INFO, "Flush %d document(s)", I->num_rows + ((Doc != NULL) ? 1 : 0));
 		
 		if (Doc) {
 			DPS_THREADINFO(Indexer, "Updating", DpsVarListFindStr(&Doc->Sections, "URL", ""));
