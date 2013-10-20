@@ -5794,7 +5794,7 @@ int DpsHTDBGet(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, int flag_short) {
 	  if ((Doc->Buf.buf = (char*)DpsRealloc(Doc->Buf.buf, Doc->Buf.allocated_size + 1)) == NULL) {
 	    Doc->Buf.allocated_size = 0;
 	    rc = DPS_NET_ALLOC_ERROR;
-	    return DPS_ERROR;
+	    return rc;
 	  }
 	}
 

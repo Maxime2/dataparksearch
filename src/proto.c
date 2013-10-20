@@ -693,12 +693,8 @@ static ssize_t fdgets(char *str, size_t size, int fd) {
 			nbytes++;
 		}
 	}
-/*	if(!nbytes){
-		return 0;
-	}else{*/
-		str[nbytes]='\0';
-		return nbytes;
-/*	}*/
+	str[nbytes] = '\0';
+	return nbytes;
 }
 
 
@@ -1036,7 +1032,7 @@ static int DpsNNTPGet(DPS_AGENT * Indexer,DPS_DOCUMENT *Doc){
 			
 		case DPS_NNTP_RECVCMD:
 			nbytes=NNTPRecv(str,sizeof(str),fd);
-			status=atoi(str);
+			status = (nbytes > 0) ? atoi(str) : 500;
 			break;
 			
 		case DPS_NNTP_SEND:

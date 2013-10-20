@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -158,9 +159,10 @@ __C_LINK int __DPSCALL DpsMirrorGET(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
 
 
 __C_LINK int __DPSCALL DpsMirrorPUT(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_URL *url, const char *suffix) {
-     int       fd,size;
+     int       fd;
      char      *str, *estr;
-     size_t         str_len, estr_len;
+     size_t    str_len, estr_len, buf_len;
+     ssize_t   size;
      const char     *mirror_data = DpsVarListFindStr(&Doc->Sections, "MirrorRoot", NULL);
      const char     *mirror_hdrs = DpsVarListFindStr(&Doc->Sections, "MirrorHeadersRoot", NULL);
      const char     *accept_lang = DpsVarListFindStr(&Doc->Sections, "Content-Language", NULL);
@@ -261,7 +263,10 @@ __C_LINK int __DPSCALL DpsMirrorPUT(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
 	 DPS_FREE(estr); DPS_FREE(str);
 	 return DPS_MIRROR_CANT_OPEN;
        }
-       size = write(fd, Doc->Buf.buf, dps_strlen(Doc->Buf.buf));
+       size = write(fd, Doc->Buf.buf, buf_len = dps_strlen(Doc->Buf.buf));
+       if (size < 0) {
+	   dps_strerror(Indexer, DPS_LOG_ERROR, "Error writing mirror file %", str);
+       }
        DpsClose(fd);
      }
      DPS_FREE(estr); DPS_FREE(str);

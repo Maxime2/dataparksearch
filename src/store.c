@@ -868,7 +868,7 @@ void *DpsExcerptDoc(void *param) {
 
   add = DpsConv(&dc_uni, (char*)uni, sizeof(*uni)*(DocSize+10), HDoc, len + 1) / sizeof(*uni);
   prevlen = len;
-  ulen = DpsUniLen(uni);
+  ulen = (add > 0) ? DpsUniLen(uni) : 0;
   if ((index_limit != 0) && (ulen > index_limit)) {
     ulen = index_limit;
     uni[ulen] = 0;
