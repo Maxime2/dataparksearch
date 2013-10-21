@@ -110,7 +110,6 @@
 static	fd_set mask;
 static DPS_CHILD Children[DPS_CHILDREN_LIMIT];
 /*static*/ int clt_sock, sockfd;
-static int my_generation = 0;
 static pid_t parent_pid = 0;
 static size_t MaxClients = 1;
 
@@ -1174,6 +1173,9 @@ static int do_client(DPS_AGENT *Agent, int client){
 				  hdr.cmd = DPS_SEARCHD_CMD_QLC;
 				  hdr.len = dps_strlen(p);
 				  nsent = DpsSearchdSendPacket(server, &hdr, p);
+				  if (nsent != sizeof(hdr) + hdr.len) {
+				      DpsLog(Agent, DPS_LOG_ERROR, "Error sending cmd_qlc packet, %d of %d bytes sent", nsent, sizeof(hdr) + hdr.len);
+				  }
 
 				  hdr.cmd = DPS_SEARCHD_CMD_WWL;
 				  hdr.len = sizeof(DPS_WIDEWORDLIST_EX);

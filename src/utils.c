@@ -1145,7 +1145,6 @@ time_t Dps_dp2time_t(const char * time_str){
 					return -1;
 				else{
 					t=i;
-					flag=2;
 					return t;
 				}    
 			default:

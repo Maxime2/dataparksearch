@@ -389,7 +389,11 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    }
 		if (status == DPS_HTTP_STATUS_OK) {
 		    result = DpsRobotParse(Indexer, rServer, rDoc->Buf.content, (char*)DPS_NULL2EMPTY(rDoc->CurURL.hostinfo), 
-					   (Doc) ? DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1 : 0);
+					   (Doc) ? DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1 : 0)
+			;
+		    if (result != DPS_OK) {
+			DpsLog(Indexer, DPS_LOG_ERROR, "Robot rules parsing error");
+		    }
 		    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);
 		} else {
 		    DPS_GETLOCK(Indexer, DPS_LOCK_ROBOTS);

@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -156,9 +157,10 @@ static void DpsParseHTTPHeader(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *
 }
 
 void DpsParseHTTPResponse(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {			
-  char	*token, *lt, *headers, savec;
-	int     oldstatus;
-	DPS_DSTR header;
+    char *token, *lt, *headers, savec;
+    int status, oldstatus;
+    DPS_DSTR header;
+    time_t now, last_mod_time;
 	
 	Doc->Buf.content=NULL;
 	oldstatus = DpsVarListFindInt(&Doc->Sections, "Status", 0);
@@ -205,7 +207,7 @@ void DpsParseHTTPResponse(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
 	}
 	
 	if(!strncmp(token,"HTTP/",5)){
-		int	status = atoi(token + 8);
+		status = atoi(token + 8);
 		DpsVarListReplaceStr(&Doc->Sections,"ResponseLine",token);
 		DpsVarListReplaceInt(&Doc->Sections, "Status", (oldstatus > status) ? oldstatus : status );
 	}else{
@@ -237,12 +239,12 @@ void DpsParseHTTPResponse(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
 	DPS_FREE(headers);
 	
 	{
-	  time_t now = Indexer->now, last_mod_time = DpsHttpDate2Time_t(DpsVarListFindStr(&Doc->Sections, "Last-Modified", ""));
-	  if (last_mod_time > now + 3600 * 4) { /* we have a document with Last-Modified time in the future */
-	    DpsLog(Indexer, DPS_LOG_EXTRA, "Last-Modified date is deep in future (%d>%d), dropping it.", last_mod_time, now);
-	    last_mod_time = 0;
-	    DpsVarListDel(&Doc->Sections, "Last-Modified");
-	  }
+	    now = Indexer->now;
+	    last_mod_time = DpsHttpDate2Time_t(DpsVarListFindStr(&Doc->Sections, "Last-Modified", ""));
+	    if (last_mod_time > now + 3600 * 4) { /* we have a document with Last-Modified time in the future */
+		DpsLog(Indexer, DPS_LOG_EXTRA, "Last-Modified date is deep in future (%d>%d), dropping it.", last_mod_time, now);
+		DpsVarListDel(&Doc->Sections, "Last-Modified");
+	    }
 	}
 
 	/* Bad response, return */
