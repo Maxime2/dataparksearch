@@ -299,6 +299,12 @@ int DpsHrefCheck(DPS_AGENT *Indexer, DPS_HREF *Href, const char *newhref) {
 	  DpsLog(Indexer, DPS_LOG_DEBUG, " Server: site_id: %d pattern: %s", Srv->site_id, Srv->Match.pattern);
 	  Href->server_id = Srv->site_id;
 
+	  if (DPS_FOLLOW_NO == DpsVarListFindInt(&Srv->Vars, "Follow", DPS_FOLLOW_PATH)) {
+	      DpsLog(Indexer, DPS_LOG_DEBUG, "Server nofollow, skip it");
+	      Href->method = DPS_METHOD_DISALLOW;
+	      goto check_ret;
+	  }
+
 	  if (dps_strlen(newhref) > Srv->MaxURLength) {
 	    DpsLog(Indexer, DPS_LOG_DEBUG, "too long URL (%d, max: %d), skip it", dps_strlen(newhref), Srv->MaxURLength);
 	    Href->method = DPS_METHOD_DISALLOW;
