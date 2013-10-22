@@ -717,17 +717,24 @@ static int DpsSitemapEndElement(DPS_XML_PARSER *parser, const char *name, size_t
     DpsHrefInit(&Href);
     Href.url = DpsVarListFindStr(&Doc->Sections, "URL", NULL);
     if (Href.url) {
-      DPS_SERVER *Server = DpsServerFind(Indexer, 0 /*Server_id*/, Href.url, Doc->charset_id, NULL);
-      if (Server) {
-	int method = DpsMethod(DpsVarListFindStr(&Server->Vars, "Method", "Allow"));
-	int follow = DpsVarListFindInt(&Server->Vars, "Follow", DPS_FOLLOW_PATH);
-	if (method != DPS_METHOD_DISALLOW && method != DPS_METHOD_VISITLATER && follow != DPS_FOLLOW_NO) {
-	    Href.method = DPS_METHOD_GET;
-	    Href.checked = 0;
-	    Href.weight = (float)DPS_ATOF(DpsVarListFindStr(&Doc->Sections, "Pop_Rank", "0.5"));
-	    DpsHrefListAdd(Indexer, &Indexer->Hrefs, &Href);
-	    if(Indexer->Hrefs.nhrefs > 1024) DpsStoreHrefs(Indexer);
-	}
+      DpsHrefCheck(Indexer, &Href, Href.url);
+      if (Href.method != DPS_METHOD_DISALLOW && Href.method != DPS_METHOD_VISITLATER) {
+	  DpsVarListReplaceInt(&Doc->Sections, "Referrer-ID", Href.referrer);
+	  DpsVarListReplaceUnsigned(&Doc->Sections,"Hops", Href.hops);
+	  DpsVarListReplaceInt(&Doc->Sections, "Site_id", Href.site_id);
+	  DpsVarListReplaceInt(&Doc->Sections, "Server_id", Href.server_id);
+	  DpsVarListReplaceDouble(&Doc->Sections, "weight", (double)Href.weight);
+	  DpsVarListDel(&Doc->Sections, "E_URL");
+	  DpsVarListDel(&Doc->Sections, "URL_ID");
+	  Doc->charset_id = Href.charset_id;
+	  if (Href.delay) {
+	      char dbuf[64];
+	      dps_snprintf(dbuf, sizeof(dbuf), "%lu", Indexer->now + Href.delay);
+	      DpsVarListReplaceStr(&Doc->Sections, "Next-Index-Time", dbuf);
+	  }
+	  if(DPS_OK != DpsURLAction(Indexer, Doc, DPS_URL_ACTION_ADD)) {
+	      DpsLog(Indexer, DPS_LOG_ERROR, "Error adding an URL from sitemap");
+	  }
       }
     }
     DpsVarListFree(&Doc->Sections);
