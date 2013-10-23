@@ -88,14 +88,14 @@ static double TimerEnd(void) {
 }
 char* copyarr(char*, int);
 char* copyarr(char* a0, int N) {
-    char* a = (char*)malloc(sizeof(char) * N);
-    memcpy(a, a0, sizeof(char) * N);
+    char* a = (char*)malloc(sizeof(char) * (size_t)N);
+    memcpy(a, a0, sizeof(char) * (size_t)N);
     return a;
 }
 char* zeroarr(int);
 char* zeroarr(int N) {
-    char* a = (char*)malloc(sizeof(char)*N);
-    bzero(a, sizeof(char) * N);
+    char* a = (char*)malloc(sizeof(char) * (size_t)N);
+    bzero(a, sizeof(char) * (size_t)N);
     return a;
 }
 
@@ -403,7 +403,7 @@ size_t dps_strlen(const char *src)
 #endif
 {
 
-#if SIZEOF_LONG != 4 && SIZEOF_LONG != 8
+#if (SIZEOF_LONG != 4 && SIZEOF_LONG != 8)
 
   const char *s = src;
 

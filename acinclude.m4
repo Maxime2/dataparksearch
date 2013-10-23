@@ -1,6 +1,8 @@
 sinclude(build/m4/docbook.m4)
 sinclude(build/m4/net.m4)
 sinclude(build/m4/threads.m4)
+sinclude(build/m4/qsort_r.m4)
+sinclude(build/m4/ax_func_which_gethostbyname_r.m4)
 dnl builtin([include], [docbook.m4])
 dnl builtin([include], [net.m4])
 dnl builtin([include], [threads.m4])

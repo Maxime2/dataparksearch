@@ -257,27 +257,29 @@ static int DpsGetHostByName(DPS_AGENT *Indexer, DPS_CONN *connp, const char *hos
 /*    DpsLog(Indexer, DPS_LOG_DEBUG, "Resolver: %s - > %s", hostname, inet_ntoa(connp->sin.sin_addr));*/
     if (res != NULL) freeaddrinfo(res);
   }
-#elif defined(HAVE_PTHREAD) && (defined(HAVE_GETHOSTBYNAME_R_3) || defined(HAVE_GETHOSTBYNAME_R_5) || defined(HAVE_GETHOSTBYNAME_R_6))
+#elif defined(HAVE_PTHREAD) && (defined(HAVE_FUNC_GETHOSTBYNAME_R_3) || defined(HAVE_FUNC_GETHOSTBYNAME_R_5) || defined(HAVE_FUNC_GETHOSTBYNAME_R_6))
   {
     struct hostent *he = NULL;
     struct hostent hpstr;
-#ifdef HAVE_GETHOSTBYNAME_R_3
+#ifdef HAVE_FUNC_GETHOSTBYNAME_R_3
     struct hostent_data hdata;
 #endif
     char   buf[BUFSIZ];
     int    herrno = 0;
 
     for (i = 0; (i < 3) && (he == NULL); i++) {
-#ifdef HAVE_GETHOSTBYNAME_R_3
+#ifdef HAVE_FUNC_GETHOSTBYNAME_R_3
       if (gethostbyname_r(hostname, &hpstr, &hdata) == 0) {
 	he = &hpstr;
       } else {
 	he = NULL;
       }
-#elif defined(HAVE_GETHOSTBYNAME_R_5)
+#elif defined(HAVE_FUNC_GETHOSTBYNAME_R_5)
       he = gethostbyname_r(hostname, &hpstr, buf, sizeof(buf), &herrno);
-#else
+#elif defined(HAVE_FUNC_GETHOSTBYNAME_R_6)
       gethostbyname_r(hostname, &hpstr, buf, sizeof(buf), &he, &herrno);
+#else
+#error gethostbyname_r has unknown number of arguments
 #endif
     }
     if (he == NULL) {

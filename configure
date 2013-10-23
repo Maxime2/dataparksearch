@@ -16476,10 +16476,13 @@ fi
 
 
 if test "$pthreads" = yes ; then
+
 _CFLAGS="$CFLAGS"
 _LIBS="$LIBS"
+
 CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
 LIBS="$LIBS $PTHREAD_LFLAGS $PTHREAD_LDADD"
+
 for ac_func in strerror_r gmtime_r
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
@@ -16493,110 +16496,314 @@ fi
 done
 
 
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for gethostbyname_r" >&5
-$as_echo_n "checking for gethostbyname_r... " >&6; }
-    if test -z "$ac_cv_gethostbyname_args"; then
-        cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
 
-#include <sys/types.h>
+    ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking how many arguments gethostbyname_r() takes" >&5
+$as_echo_n "checking how many arguments gethostbyname_r() takes... " >&6; }
+
+    if ${ac_cv_func_which_gethostbyname_r+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+
+################################################################
+
+ac_cv_func_which_gethostbyname_r=unknown
+
+#
+# ONE ARGUMENT (sanity check)
+#
+
+# This should fail, as there is no variant of gethostbyname_r() that takes
+# a single argument. If it actually compiles, then we can assume that
+# netdb.h is not declaring the function, and the compiler is thereby
+# assuming an implicit prototype. In which case, we're out of luck.
+#
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
 #include <netdb.h>
 int
 main ()
 {
 
-struct hostent *hp;
-struct hostent h;
-char *name;
-char buffer[10];
-int  h_errno;
-hp = gethostbyname_r(name, &h, buffer, 10, &h_errno);
+            char *name = "www.gnu.org";
+            (void)gethostbyname_r(name) /* ; */
+
   ;
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_gethostbyname_args=5
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_func_which_gethostbyname_r=no
 fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-    fi
-    if test -z "$ac_cv_gethostbyname_args"; then
-        cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
-#include <sys/types.h>
+#
+# SIX ARGUMENTS
+# (e.g. Linux)
+#
+
+if test "$ac_cv_func_which_gethostbyname_r" = "unknown"; then
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
 #include <netdb.h>
 int
 main ()
 {
 
-struct hostent h;
-struct hostent_data hdata;
-char *name;
-int  rc;
-rc = gethostbyname_r(name, &h, &hdata);
+            char *name = "www.gnu.org";
+            struct hostent ret, *retp;
+            char buf[1024];
+            int buflen = 1024;
+            int my_h_errno;
+            (void)gethostbyname_r(name, &ret, buf, buflen, &retp, &my_h_errno) /* ; */
+
   ;
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_gethostbyname_args=3
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_func_which_gethostbyname_r=six
 fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-    fi
-    if test -z "$ac_cv_gethostbyname_args"; then
-        cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
-#include <sys/types.h>
+fi
+
+#
+# FIVE ARGUMENTS
+# (e.g. Solaris)
+#
+
+if test "$ac_cv_func_which_gethostbyname_r" = "unknown"; then
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
 #include <netdb.h>
 int
 main ()
 {
 
-struct hostent h;
-struct hostent *hp;
-char *name;
-char buf[10];
-int rc;
-int h_errno;
-
-rc = gethostbyname_r(name, &h, buf, 10, &hp, &h_errno);
+            char *name = "www.gnu.org";
+            struct hostent ret;
+            char buf[1024];
+            int buflen = 1024;
+            int my_h_errno;
+            (void)gethostbyname_r(name, &ret, buf, buflen, &my_h_errno) /* ; */
 
   ;
   return 0;
 }
 _ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_gethostbyname_args=6
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_func_which_gethostbyname_r=five
 fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-    fi
-    if test -z "$ac_cv_gethostbyname_args"; then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-        have_missing_r_funcs="$have_missing_r_funcs gethostbyname_r"
-    else
-        if test "$ac_cv_gethostbyname_args" = 3; then
-            $as_echo "#define HAVE_GETHOSTBYNAME_R_3 1" >>confdefs.h
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
-        elif test "$ac_cv_gethostbyname_args" = 5; then
-            $as_echo "#define HAVE_GETHOSTBYNAME_R_5 1" >>confdefs.h
+fi
 
-        elif test "$ac_cv_gethostbyname_args" = 6; then
-            $as_echo "#define HAVE_GETHOSTBYNAME_R_6 1" >>confdefs.h
+#
+# THREE ARGUMENTS
+# (e.g. AIX, HP-UX, Tru64)
+#
 
-        fi
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes, and it takes $ac_cv_gethostbyname_args arguments" >&5
-$as_echo "yes, and it takes $ac_cv_gethostbyname_args arguments" >&6; }
-    fi
+if test "$ac_cv_func_which_gethostbyname_r" = "unknown"; then
+
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <netdb.h>
+int
+main ()
+{
+
+            char *name = "www.gnu.org";
+            struct hostent ret;
+            struct hostent_data data;
+            (void)gethostbyname_r(name, &ret, &data) /* ; */
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_func_which_gethostbyname_r=three
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+
+fi
+
+################################################################
+
+
+fi
+
+case "$ac_cv_func_which_gethostbyname_r" in
+    three|five|six)
+
+$as_echo "#define HAVE_GETHOSTBYNAME_R 1" >>confdefs.h
+
+    ;;
+esac
+
+case "$ac_cv_func_which_gethostbyname_r" in
+    three)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: three" >&5
+$as_echo "three" >&6; }
+
+$as_echo "#define HAVE_FUNC_GETHOSTBYNAME_R_3 1" >>confdefs.h
+
+    ;;
+
+    five)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: five" >&5
+$as_echo "five" >&6; }
+
+$as_echo "#define HAVE_FUNC_GETHOSTBYNAME_R_5 1" >>confdefs.h
+
+    ;;
+
+    six)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: six" >&5
+$as_echo "six" >&6; }
+
+$as_echo "#define HAVE_FUNC_GETHOSTBYNAME_R_6 1" >>confdefs.h
+
+    ;;
+
+    no)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: cannot find function declaration in netdb.h" >&5
+$as_echo "cannot find function declaration in netdb.h" >&6; }
+    ;;
+
+    unknown)
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: can't tell" >&5
+$as_echo "can't tell" >&6; }
+    ;;
+
+    *)
+    as_fn_error $? "internal error" "$LINENO" 5
+    ;;
+esac
+
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+
+
+
 
 CFLAGS="$_CFLAGS"
 LIBS="$_LIBS"
 
+fi
+
+
+
+ac_fn_c_check_func "$LINENO" "qsort_r" "ac_cv_func_qsort_r"
+if test "x$ac_cv_func_qsort_r" = xyes; then :
+
+$as_echo "#define HAVE_QSORT_R 1" >>confdefs.h
+
+fi
+
+
+if test "$ac_cv_func_qsort_r" == yes ; then
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking that qsort_r is BSD version" >&5
+$as_echo_n "checking that qsort_r is BSD version... " >&6; }
+if test "$cross_compiling" = yes; then :
+  { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "cannot run test program while cross compiling
+See \`config.log' for more details" "$LINENO" 5; }
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+#include <stdio.h>
+#include <stdlib.h>
+int unsorted[16]={1,3,5,7,9,11,13,15,2,4,6,8,10,12,14,16};
+int bsd_sort_compare(void *a, const void *b, const void *c)
+{
+const int *p1, *p2;
+if(a != (void *)unsorted)
+{
+exit(2);
+}
+
+p1 = (const int *)b;
+p2 = (const int *)c;
+if(*p1 > *p2)
+{
+return 1;
+}
+else if(*p2 > *p1)
+{
+return -1;
+}
+
+return 0;
+}
+int main()
+{
+int i1;
+qsort_r(unsorted, 16, sizeof(unsorted[0]), (void *)unsorted,
+bsd_sort_compare);
+
+for(i1; i1 < 16; i1++)
+{
+if(unsorted[i1 - 1] + 1 != unsorted[i1])
+{
+exit(3);
+}
+}
+
+return 0;
+}
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define QSORT_R_BSD 1" >>confdefs.h
+
+
+else
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+$as_echo "#define QSORT_R_GNUC 1" >>confdefs.h
+
+
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+else
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using internal qsort_r implementation" >&5
+$as_echo "$as_me: WARNING: using internal qsort_r implementation" >&2;}
 fi
 
 
@@ -17324,24 +17531,21 @@ fi
   AM_CPPFLAGS="$AM_CPPFLAGS -I$zlib/include"
 fi
 
-aspell=yes
 LIBS_save="$LIBS"
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for aspell" >&5
-$as_echo_n "checking for aspell... " >&6; }
 
 # Check whether --with-aspell was given.
 if test "${with_aspell+set}" = set; then :
   withval=$with_aspell; aspell=$withval
 else
-  aspell=yes
+  aspell=auto
 fi
 
 
 
 if test "$aspell" = "no" ; then
     x=$x
-elif test "$aspell" = "yes" ; then
+elif test "$aspell" = "yes"  -o "$aspell" = "auto"; then
 
     aspell=no
     MY_DIRS="/usr/local/include /usr/include /opt/local/include /opt/include"
@@ -17353,7 +17557,7 @@ elif test "$aspell" = "yes" ; then
 	fi
     done
 
-    if test "$aspell" = "yes" ; then
+    if test "$aspell" = "yes" -o "$aspell" = "auto"; then
 
 	aspell=no
 	MY_DIRS="/usr/lib /usr/local/lib /opt/local/lib /opt/lib"
@@ -17413,6 +17617,8 @@ fi
 		{ ac_cv_lib_aspell_new_aspell_config=; unset ac_cv_lib_aspell_new_aspell_config;}
     	done
 
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for aspell" >&5
+$as_echo_n "checking for aspell... " >&6; }
 	if test "$aspell" != "yes" ; then
 		as_fn_error $? "Unable to find working aspell library or stdc++ library" "$LINENO" 5
 	fi
@@ -17420,6 +17626,8 @@ fi
 $as_echo "$aspell" >&6; }
 
     else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for aspell" >&5
+$as_echo_n "checking for aspell... " >&6; }
 	if test "$withval" = "yes" ; then
 	   as_fn_error $? "No aspell.h has been found." "$LINENO" 5
 	else

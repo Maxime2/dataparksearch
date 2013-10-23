@@ -952,77 +952,24 @@ AC_SUBST(PTHREAD_LDADD)
 
 
 if test "$pthreads" = yes ; then
+
 _CFLAGS="$CFLAGS"
 _LIBS="$LIBS"
+
 CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
 LIBS="$LIBS $PTHREAD_LFLAGS $PTHREAD_LDADD"
+
 AC_CHECK_FUNCS(strerror_r gmtime_r)
+AX_FUNC_WHICH_GETHOSTBYNAME_R
 
-    AC_MSG_CHECKING(for gethostbyname_r)
-    if test -z "$ac_cv_gethostbyname_args"; then
-        AC_TRY_LINK(
-	    [
-#include <sys/types.h>
-#include <netdb.h>],
-	    [
-struct hostent *hp;
-struct hostent h;
-char *name;
-char buffer[10];
-int  h_errno;
-hp = gethostbyname_r(name, &h, buffer, 10, &h_errno);],
-            ac_cv_gethostbyname_args=5)
-    fi
-    if test -z "$ac_cv_gethostbyname_args"; then
-        AC_TRY_LINK(
-	    [
-#include <sys/types.h>
-#include <netdb.h>],
-	    [
-struct hostent h;
-struct hostent_data hdata;
-char *name;
-int  rc;
-rc = gethostbyname_r(name, &h, &hdata);],
-            ac_cv_gethostbyname_args=3)
-    fi
-    if test -z "$ac_cv_gethostbyname_args"; then
-        AC_TRY_LINK(
-	    [
-#include <sys/types.h>
-#include <netdb.h>],
-	    [
-struct hostent h;
-struct hostent *hp;
-char *name;
-char buf[10];
-int rc;
-int h_errno;
-
-rc = gethostbyname_r(name, &h, buf, 10, &hp, &h_errno);
-	    ],
-	    ac_cv_gethostbyname_args=6)
-    fi
-    if test -z "$ac_cv_gethostbyname_args"; then
-        AC_MSG_RESULT(no)
-        have_missing_r_funcs="$have_missing_r_funcs gethostbyname_r"
-    else
-        if test "$ac_cv_gethostbyname_args" = 3; then
-            AC_DEFINE(HAVE_GETHOSTBYNAME_R_3)
-        elif test "$ac_cv_gethostbyname_args" = 5; then
-            AC_DEFINE(HAVE_GETHOSTBYNAME_R_5)
-        elif test "$ac_cv_gethostbyname_args" = 6; then
-            AC_DEFINE(HAVE_GETHOSTBYNAME_R_6)
-        fi
-        AC_MSG_RESULT([yes, and it takes $ac_cv_gethostbyname_args arguments])
-    fi
 
 CFLAGS="$_CFLAGS"
 LIBS="$_LIBS"
 
 fi
 
-
+dnl Check for system qsort_r
+DPSAC_QSORT_R
 
 
 parser=yes
@@ -1384,21 +1331,20 @@ else
 fi
 
 dnl aspell related stuff
-aspell=yes
+dnl aspell=yes
 LIBS_save="$LIBS"
 
-AC_MSG_CHECKING(for aspell)
 AC_ARG_WITH(aspell,
 [  --with-aspell           enable automatic words correction using aspell],
 [aspell=$withval],
-[aspell=yes])
+[aspell=auto])
   
 dnl AC_MSG_RESULT([$aspell])
 
 if test "$aspell" = "no" ; then
   dnl to avoid bash error
   x=$x
-elif test "$aspell" = "yes" ; then
+elif test "$aspell" = "yes"  -o "$aspell" = "auto"; then
 
     aspell=no
     MY_DIRS="/usr/local/include /usr/include /opt/local/include /opt/include"
@@ -1410,7 +1356,7 @@ elif test "$aspell" = "yes" ; then
 	fi
     done
 
-    if test "$aspell" = "yes" ; then
+    if test "$aspell" = "yes" -o "$aspell" = "auto"; then
 
 	aspell=no
 	MY_DIRS="/usr/lib /usr/local/lib /opt/local/lib /opt/lib"
@@ -1428,12 +1374,14 @@ elif test "$aspell" = "yes" ; then
 		AS_UNSET([ac_cv_lib_aspell_new_aspell_config])
     	done
 
+	AC_MSG_CHECKING(for aspell)
 	if test "$aspell" != "yes" ; then
 		AC_MSG_ERROR([Unable to find working aspell library or stdc++ library])
 	fi
 	AC_MSG_RESULT([$aspell])
 
     else
+	AC_MSG_CHECKING(for aspell)
 	if test "$withval" = "yes" ; then
 	   AC_MSG_ERROR([No aspell.h has been found.])
 	else

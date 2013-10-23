@@ -125,7 +125,7 @@ __C_LINK int __DPSCALL DpsHrefListAdd(DPS_AGENT *A, DPS_HREFLIST * HrefList,DPS_
 		HrefList->Href=(DPS_HREF *)DpsRealloc(HrefList->Href,HrefList->mhrefs*sizeof(DPS_HREF));
 		if (HrefList->Href == NULL) {
 		  DpsLog(A, DPS_LOG_ERROR, "Can't realloc %d bytes at "__FILE__":%d", HrefList->mhrefs * sizeof(DPS_HREF), __LINE__);
-		  HrefList->mhrefs = HrefList->nhrefs = 0;
+		  HrefList->mhrefs = HrefList->nhrefs = HrefList->dhrefs = HrefList->shrefs = 0;
 		  return 0;
 		}
 	}
