@@ -78,6 +78,7 @@ DPS_ENV *DpsEnvInit(DPS_ENV *Conf){
 	Conf->Flags.MaxCrawlDelay = 300;
 	Conf->Flags.rel_nofollow = 1;
 	Conf->Flags.bind_addr.sin_family = AF_INET;
+	Conf->Flags.use_meta = 1;
 	Conf->WordParam.min_word_len = 1;
 	Conf->WordParam.max_word_len = 32;
 	Conf->WordParam.correct_factor = 1;
