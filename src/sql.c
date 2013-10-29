@@ -3447,7 +3447,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	size_t		i = 0, j, nrows, qbuflen, start_target;
 	size_t		url_num;
 	urlid_t         rec_id;
-	dps_uint4       nit = (dps_uint4)DpsVarListFindUnsigned(&Indexer->Conf->Vars, "PopRank_nit", 0);
+	urlid_t         nit;
 	DPS_SQLRES 	SQLRes, sr;
 	char		smallbuf[128];
 	int		rc=DPS_OK;
@@ -3459,7 +3459,8 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	DPS_CHARSET	*doccs;
 	DPS_CHARSET	*loccs;
 	DPS_CONV        lc_dc;
-	int             prev_id = -1, ntry = 0;
+	DPS_VAR         *V;
+	int             prev_id = -1, ntry = 0, first;
 
 	TRACE_IN(Indexer, "DpsTargetsSQL");
 
@@ -3522,12 +3523,24 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 		  goto unlock;
 	}
 
+	if ((V = DpsVarListFind(&Indexer->Conf->Vars, "PopRank_nit") == NULL)) {
+	    if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
+	    rc = DpsSQLQuery(db, &SQLRes, "SELECT MIN(rec_id) FROM url");
+	    if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
+	    if (DpsSQLNumRows(&SQLRes)) nit = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes, 0, 0));
+	    DpsSQLFree(&SQLRes);
+	    first = 1;
+	} else { 
+	    nit = (urlid_t)DPS_ATOU(V->val);
+	    first = 0;
+	}
+
  one_try:
 	qbuf[0]='\0';
 	sortstr[0] = '\0';
 	smallbuf[0] = '\0';
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
-	  sprintf(sortstr, " ORDER BY url.next_index_time+ABS(url.rec_id)");
+	  sprintf(sortstr, " ORDER BY url.rec_id");
 	} else if ( (Indexer->flags & (DPS_FLAG_SORT_HOPS | DPS_FLAG_SORT_EXPIRED | DPS_FLAG_SORT_POPRANK)) 
 	     || (Indexer->flags & DPS_FLAG_SORT_SEED)  ) {
 	  int notfirst = 0;
@@ -3609,7 +3622,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	
 
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
-	    dps_snprintf(nitstr, sizeof(nitstr), "next_index_time+ABS(url.rec_id)>%lu", (unsigned long)nit);
+	    dps_snprintf(nitstr, sizeof(nitstr), "url.rec_id>%s%ld", (first)?"=":"",(long)nit);
 	} else if (Indexer->Flags.expire) {
 	  nitstr[0] = '\0';
 	} else {
@@ -3778,6 +3791,7 @@ unlock:
 	if (rc != DPS_OK) {
 	  DpsLog(Indexer, DPS_LOG_ERROR, "DpsTargetsSQL: DB error: %s", db->errstr);
 	}
+
 
 	if (0) {
 	  switch(db->DBType) {
