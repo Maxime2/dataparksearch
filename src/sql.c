@@ -3720,8 +3720,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 		}
 	}
 	if ((Indexer->Flags.cmd & DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) && (nrows != 0)) {
-	  urlid_t rit = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, 1));
-	  nit = DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, (Indexer->Flags.provide_referer) ? 13 : 12)) + rit;
+	    nit = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLRes, nrows - 1, 1));
 	}
 	DpsSQLFree(&SQLRes);
 	if (Indexer->flags & DPS_FLAG_FROM_STORED) DpsSQLFree(&sr);
