@@ -6736,6 +6736,9 @@ __C_LINK int __DPSCALL DpsSQLLimit4(DPS_AGENT *A, DPS_UINT4URLIDLIST *L, const c
 #define PAS_HI -0.01
 #define PAS_LO -9999999.99
 
+#define XSTR(s) STR(s)
+#define STR(s) #s
+
 typedef struct {
   double weight, pop_rank;
   urlid_t rec_id;
@@ -6845,8 +6848,8 @@ static int DpsPopRankPasNeoSQL(DPS_AGENT *A, DPS_DB *db, const char *rec_id, con
 	  if (fabs(dw) > 0.000000000001) {
 	    dps_snprintf(double_str, sizeof(double_str), "%.12f", dw);
 	    dps_snprintf(qbuf, sizeof(qbuf), 
-			 "UPDATE links SET weight = MAX(%d, MIN(%d, weight + (%s))) WHERE k=%s%s%s AND ot=%s%s%s", 
-			 LINK_WEIGHT_LO, LINK_WEIGHT_HI, DpsDBEscDoubleStr(double_str), qu, DpsSQLValue(&SQLres, j, 0), qu, qu, rec_id, qu);
+			 "UPDATE links SET weight = MAX(" XSTR(LINK_WEIGHT_LO) ", MIN(" XSTR(LINK_WEIGHT_HI) ", weight + (%s))) WHERE k=%s%s%s AND ot=%s%s%s", 
+			 DpsDBEscDoubleStr(double_str), qu, DpsSQLValue(&SQLres, j, 0), qu, qu, rec_id, qu);
 	    DpsSQLAsyncQuery(db, NULL, qbuf);
 	  }
 	}
