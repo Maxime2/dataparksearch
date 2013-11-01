@@ -3523,7 +3523,7 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 		  goto unlock;
 	}
 
-	if ((V = DpsVarListFind(&Indexer->Conf->Vars, "PopRank_nit") == NULL)) {
+	if ((V = DpsVarListFind(&Indexer->Conf->Vars, "PopRank_nit")) == NULL) {
 	    if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
 	    rc = DpsSQLQuery(db, &SQLRes, "SELECT MIN(rec_id) FROM url");
 	    if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
@@ -6985,7 +6985,7 @@ static int DpsPopRankPasNeo(DPS_AGENT *A, DPS_DB *db, const char *rec_id, const 
   A->poprank_docs++;
 
 /* links K */	
-/*
+
   if (skip_same_site) {
     dps_snprintf(qbuf, sizeof(qbuf), "SELECT COUNT(*) FROM links l, url uo, url uk WHERE uo.rec_id=l.ot AND uk.rec_id=l.k AND (uo.site_id<>uk.site_id OR l.k=l.ot) AND l.k=%s%s%s", qu, rec_id, qu);
   } else {
@@ -6996,6 +6996,25 @@ static int DpsPopRankPasNeo(DPS_AGENT *A, DPS_DB *db, const char *rec_id, const 
   }
   n_di = DPS_ATOI(DpsSQLValue(&SQLres, 0, 0));
   DpsSQLFree(&SQLres);
+  if (n_di > url_num) return DpsPopRankPasNeoSQL(A, db, rec_id, hops_str, skip_same_site, url_num, need_count, detect_clones);
+
+/* links OT */
+  if (skip_same_site) {
+    dps_snprintf(qbuf, sizeof(qbuf), "SELECT COUNT(*) FROM links l, url uo, url uk WHERE uo.rec_id=l.ot AND uk.rec_id=l.k AND (uo.site_id<>uk.site_id OR l.k=l.ot) AND l.ot=%s%s%s", qu, rec_id, qu);
+  } else {
+    dps_snprintf(qbuf, sizeof(qbuf), "SELECT COUNT(*) FROM links l WHERE l.ot=%s%s%s", qu, rec_id, qu);
+  }
+  if(DPS_OK != (rc = DpsSQLQuery(db, &SQLres, qbuf))) {
+    DPS_FREE(OUT); return rc;
+  }
+  n_Oi = DPS_ATOI(DpsSQLValue(&SQLres, 0, 0));
+  DpsSQLFree(&SQLres);
+  if (n_Oi > url_num) return DpsPopRankPasNeoSQL(A, db, rec_id, hops_str, skip_same_site, url_num, need_count, detect_clones);
+
+
+/* links K */	
+
+/*
   IN = (DPS_LNK*)DpsMalloc((n_di + 1) * sizeof(DPS_LNK));
   if (IN == NULL) return DpsPopRankPasNeoSQL(A, db, rec_id, hops_str, skip_same_site, url_num, need_count);
 */
@@ -7025,16 +7044,6 @@ static int DpsPopRankPasNeo(DPS_AGENT *A, DPS_DB *db, const char *rec_id, const 
   } else di = LOW_BORDER_EPS2;
 
 /* links OT */
-  if (skip_same_site) {
-    dps_snprintf(qbuf, sizeof(qbuf), "SELECT COUNT(*) FROM links l, url uo, url uk WHERE uo.rec_id=l.ot AND uk.rec_id=l.k AND (uo.site_id<>uk.site_id OR l.k=l.ot) AND l.ot=%s%s%s", qu, rec_id, qu);
-  } else {
-    dps_snprintf(qbuf, sizeof(qbuf), "SELECT COUNT(*) FROM links l WHERE l.ot=%s%s%s", qu, rec_id, qu);
-  }
-  if(DPS_OK != (rc = DpsSQLQuery(db, &SQLres, qbuf))) {
-    DPS_FREE(OUT); return rc;
-  }
-  n_Oi = DPS_ATOI(DpsSQLValue(&SQLres, 0, 0));
-  DpsSQLFree(&SQLres);
   OUT = (DPS_LNK*)DpsMalloc((n_Oi + 1) * sizeof(DPS_LNK));
   if (OUT == NULL) { DPS_FREE(OUT); return DpsPopRankPasNeoSQL(A, db, rec_id, hops_str, skip_same_site, url_num, need_count, detect_clones); }
   if (skip_same_site) {
