@@ -246,7 +246,7 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
   int res = DPS_OK;
   size_t          catcolumns = 0;
   ssize_t		page1,page2,npages,ppp=10;
-  int		page_size, page_number, have_p = 1;
+  int		page_size, page_number, have_p = 1, not_first_fl = 0;
   size_t		i, swlen = 0, nav_len, storedlen;
 #ifdef WITH_GOOGLEGRP
   int             site_id, prev_site_id = 0;
@@ -542,6 +542,10 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
 		
     /* Skip clones */
     if(dc_origin_id) continue;
+
+    if (not_first_fl) {
+	DpsTemplatePrint(Agent, (DPS_OUTPUTFUNCTION)&DpsSockPrintf, &client, NULL, 0, &Agent->tmpl, "betweenres");
+    } else not_first_fl = 1;
 		
     clist = (char*)DpsMalloc(2048); 
     if (clist == NULL) {

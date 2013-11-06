@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 Datapark corp. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -65,7 +66,7 @@ int main(int argc, char **argv, char **envp) {
 	int		res,httpd=0;
 	size_t          catcolumns = 0;
 	ssize_t		page1,page2,npages,ppp=10;
-	int		page_size, page_number, have_p = 1;
+	int		page_size, page_number, have_p = 1, not_first_fl = 0;
 	size_t		i, swlen = 0, nav_len, storedlen;
 	DPS_ENV		*Env;
 	DPS_AGENT	*Agent;
@@ -666,6 +667,10 @@ int main(int argc, char **argv, char **envp) {
 		
 		/* Skip clones */
 		if(dc_origin_id)continue;
+		
+		if (not_first_fl) {
+		    DpsTemplatePrint(Agent, (DPS_OUTPUTFUNCTION)&fprintf, stdout, NULL, 0, &Agent->tmpl, "betweenres");
+		} else not_first_fl = 1;
 		
 		clist = (char*)DpsMalloc(2048); 
 		if (clist == NULL) {
