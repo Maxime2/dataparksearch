@@ -363,16 +363,17 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
   /* Date: header */
   {
       char buf[64];
-      struct tm tm = *gmtime(Agent->now);
-      strftime(buf, sizeof(buf), "%a, %d %b %Y %H:%M:%S %Z", &tm);
+      DpsTime_t2HttpStr(Agent->now, buf);
       DpsSockPrintf(&client, "Date: %s\n", buf);
   }
   /* Add user defined headers */
+/*
   for(i = 0; i < Agent->tmpl.Env_Vars->Root[(size_t)'r'].nvars; i++) {
       DPS_VAR *Hdr = &Agent->tmpl.Env_Vars->Root[(size_t)'r'].Var[i];
       if (strncmp(DPS_NULL2EMPTY(Hdr->name), "Request.", 8)) continue;
       DpsSockPrintf(&client, "%s: %s\n", Hdr->name + 8, Hdr->val);
   }
+*/
   DpsSockPrintf(&client, "Content-Type: %s; charset=%s\n\n", ResultContentType, bcharset);
 
   res         = DpsVarListFindInt(&Agent->Vars, "ps", DPS_DEFAULT_PS);
