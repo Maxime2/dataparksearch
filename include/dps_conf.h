@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2009 Datapark corp. All rights reserved.
+/* Copyright (C) 2010-2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2009 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -36,6 +37,7 @@ extern dps_uint4 DpsHrefFrom(const char *);
 
 extern const char	*DpsMethodStr(int method);
 extern __C_LINK const char * __DPSCALL DpsFollowStr(int follow);
+extern const char *DpsHTTPStatusStr(int status);
 
 extern size_t DpsGetArgs(char *str, char **av, size_t max);
 extern size_t DpsRelEtcName(DPS_ENV *Env, char *res, size_t maxlen, const char *name);

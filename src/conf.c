@@ -123,6 +123,15 @@ int DpsFollowType(const char * follow){
 	return(DPS_FOLLOW_UNKNOWN);
 }
 
+const char *DpsHTTPStatusStr(int status) {
+    switch(status) {
+    case DPS_HTTP_STATUS_OK: return "OK";                                       /* 200 */
+    case DPS_HTTP_STATUS_BAD_REQUEST: return "BAD REQUEST";			/* 400 */
+    case DPS_HTTP_STATUS_INTERNAL_SERVER_ERROR:	return "INTERNAL SERVER ERROR";	/* 500 */
+    }
+    return "UNKNOWN";
+}
+
 const char *DpsMethodStr(int method){
 	switch(method){
 		case DPS_METHOD_DISALLOW:	return "Disallow";

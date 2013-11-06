@@ -42,6 +42,7 @@
 #include "dps_searchcache.h"
 #include "dps_url.h"
 #include "dps_template.h"
+#include "dps_proto.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -289,6 +290,7 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
   DpsURLNormalizePath(template_name);
 
 #define RESTexit(rc) res = rc; goto farend;
+#define RESTstatus(status) DpsSockPrintf(&client, "HTTP/1.0 %d %s\nServer: %s\nConnection: close\n", status, DpsHTTPStatusStr(status), PACKAGE)
 
   if ( (strncmp(template_name, conf_dir, dps_strlen(conf_dir)) || (res = DpsTemplateLoad(Agent, Env, &Agent->tmpl, template_name)))) {
     DpsLog(Agent, DPS_LOG_ERROR, "Can't load template: '%s' %s\n", template_name, Env->errstr);
@@ -344,16 +346,34 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
   lcharset = DpsVarListFindStr(&Agent->Vars, "LocalCharset", "iso-8859-1");
   Env->lcs = DpsGetCharSet(lcharset);
   if(!Env->bcs) {
-    DpsSockPrintf(&client, "Unknown BrowserCharset '%s' in template '%s'\n", bcharset, template_name);
-    RESTexit(DPS_ERROR);
+      RESTstatus(DPS_HTTP_STATUS_INTERNAL_SERVER_ERROR);
+      DpsSockPrintf(&client, "Unknown BrowserCharset '%s' in template '%s'\n", bcharset, template_name);
+      RESTexit(DPS_ERROR);
   }
   if(!Env->lcs) {
-    DpsSockPrintf(&client, "Unknown LocalCharset '%s' in template '%s'\n", lcharset, template_name);
-    RESTexit(DPS_ERROR);
+      RESTstatus(DPS_HTTP_STATUS_INTERNAL_SERVER_ERROR);
+      DpsSockPrintf(&client, "Unknown LocalCharset '%s' in template '%s'\n", lcharset, template_name);
+      RESTexit(DPS_ERROR);
   }
 
   ppp = DpsVarListFindInt(&Agent->Vars, "PagesPerScreen", 10);
   ResultContentType = DpsVarListFindStr(&Agent->Vars, "ResultContentType", "text/html");
+
+  RESTstatus(DPS_HTTP_STATUS_OK);
+  /* Date: header */
+  {
+      char buf[64];
+      struct tm tm = *gmtime(Agent->now);
+      strftime(buf, sizeof(buf), "%a, %d %b %Y %H:%M:%S %Z", &tm);
+      DpsSockPrintf(&client, "Date: %s\n", buf);
+  }
+  /* Add user defined headers */
+  for(i = 0; i < Agent->tmpl.Env_Vars->Root[(size_t)'r'].nvars; i++) {
+      DPS_VAR *Hdr = &Agent->tmpl.Env_Vars->Root[(size_t)'r'].Var[i];
+      if (strncmp(DPS_NULL2EMPTY(Hdr->name), "Request.", 8)) continue;
+      DpsSockPrintf(&client, "%s: %s\n", Hdr->name + 8, Hdr->val);
+  }
+  DpsSockPrintf(&client, "Content-Type: %s; charset=%s\n\n", ResultContentType, bcharset);
 
   res         = DpsVarListFindInt(&Agent->Vars, "ps", DPS_DEFAULT_PS);
   page_size   = dps_min(res, MAX_PS);
