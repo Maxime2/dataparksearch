@@ -21,19 +21,19 @@
 
 <indexentry>
   <primaryie>Accent insensitive search,
-    <ulink url="dpsearch-fuzzy.en.html#ACCENT" role="AEN6305">Accent insensitive search</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ACCENT" role="AEN6343">Accent insensitive search</ulink>
   </primaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>Acronyms and abbreviations,
-    <ulink url="dpsearch-fuzzy.en.html#ACRONYM" role="AEN6325">Acronyms and abbreviations</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ACRONYM" role="AEN6363">Acronyms and abbreviations</ulink>
   </primaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>Aspell,
-    <ulink url="dpsearch-fuzzy.en.html#ASPELL" role="AEN6247">Aspell</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ASPELL" role="AEN6285">Aspell</ulink>
   </primaryie>
 </indexentry>
 
@@ -50,7 +50,7 @@
     <ulink url="dpsearch-doingsearch.en.html#SEARCH-BOOL" role="AEN5081">Advanced boolean search</ulink>
   </secondaryie>
   <secondaryie>relevance,
-    <ulink url="dpsearch-rel.en.html#REL-BOOL" role="AEN6036">Boolean search</ulink>
+    <ulink url="dpsearch-rel.en.html#REL-BOOL" role="AEN6074">Boolean search</ulink>
   </secondaryie>
 </indexentry>
 
@@ -58,7 +58,7 @@
   <primaryie>Bugs
   </primaryie>
   <secondaryie>reporting,
-    <ulink url="dpsearch-misc.en.html#BUGS" role="AEN6367">Reporting bugs</ulink>
+    <ulink url="dpsearch-misc.en.html#BUGS" role="AEN6405">Reporting bugs</ulink>
   </secondaryie>
 </indexentry>
 
@@ -96,10 +96,10 @@
   <primaryie>Command
   </primaryie>
   <secondaryie>AccentExtensions,
-    <ulink url="dpsearch-fuzzy.en.html#ACCENT" role="AEN6307">Accent insensitive search</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ACCENT" role="AEN6345">Accent insensitive search</ulink>
   </secondaryie>
   <secondaryie>Acronym,
-    <ulink url="dpsearch-fuzzy.en.html#ACRONYM" role="AEN6333">Acronyms and abbreviations</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ACRONYM" role="AEN6371">Acronyms and abbreviations</ulink>
   </secondaryie>
   <secondaryie>ActionSQL,
     <ulink url="dpsearch-extended-indexing.en.html#DATA-ACQ" role="AEN2902">Data acquisition</ulink>
@@ -109,12 +109,12 @@
     <ulink url="dpsearch-indexcmd.en.html#ADDTYPE_CMD" role="AEN2338">AddType command</ulink>
   </secondaryie>
   <secondaryie>Affix,
-    <ulink url="dpsearch-fuzzy.en.html#USING-ISPELL" role="AEN6184">Using Ispell</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#USING-ISPELL" role="AEN6222">Using Ispell</ulink>
   </secondaryie>
   <secondaryie>Alias,
     <ulink url="dpsearch-aliases.en.html#ALIAS-CONF" role="AEN1252">Alias indexer.conf command</ulink>,
     <ulink url="dpsearch-aliases.en.html#ALIAS-SEARCH" role="AEN1355">Alias command in search.htm search template</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5619">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5657">Variables section</ulink>
   </secondaryie>
   <secondaryie>AliasProg,
     <ulink url="dpsearch-aliases.en.html#ALIAS-PROG" role="AEN1307">AliasProg command</ulink>
@@ -123,7 +123,7 @@
     <ulink url="dpsearch-indexcmd.en.html#ALLOW_CMD" role="AEN2203">Allow command</ulink>
   </secondaryie>
   <secondaryie>AspellExtensions,
-    <ulink url="dpsearch-fuzzy.en.html#ASPELL" role="AEN6254">Aspell</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ASPELL" role="AEN6292">Aspell</ulink>
   </secondaryie>
   <secondaryie>AuthBasic,
     <ulink url="dpsearch-indexing.en.html#GENERAL-DBSTAT" role="AEN660">Database Statistics</ulink>,
@@ -140,11 +140,11 @@
   </secondaryie>
   <secondaryie>BrowserCharset,
     <ulink url="dpsearch-international.en.html#CHARSET-SEARCHDEC" role="AEN4420">Recoding at search time</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5571">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5609">Variables section</ulink>
   </secondaryie>
   <secondaryie>Cache,
     <ulink url="dpsearch-perf.en.html#SEARCH-CACHE" role="AEN3678">Search results caching</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5575">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5613">Variables section</ulink>
   </secondaryie>
   <secondaryie>CacheLogDels,
     <ulink url="dpsearch-cachemode.en.html#CACHEMODE-STR" role="AEN3420">Cache mode word indexes structure</ulink>
@@ -180,7 +180,7 @@
     <ulink url="dpsearch-perf.en.html" role="AEN3656">DataparkSearch performance issues</ulink>
   </secondaryie>
   <secondaryie>CollectLinks,
-    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5954">Popularity rank</ulink>
+    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5992">Popularity rank</ulink>
   </secondaryie>
   <secondaryie>Cookies,
     <ulink url="dpsearch-indexcmd.en.html#COOKIES_CMD" role="AEN2504">Cookies command</ulink>
@@ -189,10 +189,10 @@
     <ulink url="dpsearch-follow.en.html#CRAWLDELAY_CMD" role="AEN1225">CrawlDelay command</ulink>
   </secondaryie>
   <secondaryie>CrossWords,
-    <ulink url="dpsearch-rel.en.html#REL-CWORDS" role="AEN6047">Crosswords</ulink>
+    <ulink url="dpsearch-rel.en.html#REL-CWORDS" role="AEN6085">Crosswords</ulink>
   </secondaryie>
   <secondaryie>CrossWordsSkipSameSite,
-    <ulink url="dpsearch-rel.en.html#REL-CWORDS" role="AEN6057">Crosswords</ulink>
+    <ulink url="dpsearch-rel.en.html#REL-CWORDS" role="AEN6095">Crosswords</ulink>
   </secondaryie>
   <secondaryie>DataparkSearchdConf,
     <ulink url="dpsearch-mod_dpsearch.en.html" role="AEN5165">mod_dpsearch module for Apache httpd</ulink>
@@ -204,11 +204,11 @@
     <ulink url="dpsearch-mod_dpsearch.en.html" role="AEN5171">mod_dpsearch module for Apache httpd</ulink>
   </secondaryie>
   <secondaryie>DateFormat,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5641">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5679">Variables section</ulink>
   </secondaryie>
   <secondaryie>DBAddr,
     <ulink url="dpsearch-indexcmd.en.html#DBADDR_CMD" role="AEN2026">DBAddr command</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5551">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5589">Variables section</ulink>
   </secondaryie>
   <secondaryie>DefaultLang,
     <ulink url="dpsearch-international.en.html#DEFLANG" role="AEN4506">Default Language</ulink>
@@ -218,7 +218,7 @@
   </secondaryie>
   <secondaryie>DetectClones,
     <ulink url="dpsearch-clones.en.html#DETECTCLONES_CMD" role="AEN862">DetectClones command</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5580">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5618">Variables section</ulink>
   </secondaryie>
   <secondaryie>DisableRelNoFollow,
     <ulink url="dpsearch-htmlparser-links.en.html" role="AEN3281">Links</ulink>
@@ -263,7 +263,7 @@
     <ulink url="dpsearch-international.en.html#FORCEIISCHARSET1251_CMD" role="AEN4528">ForceIISCharset1251 command</ulink>
   </secondaryie>
   <secondaryie>GroupBySite,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5586">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5624">Variables section</ulink>
   </secondaryie>
   <secondaryie>GuesserBytes,
     <ulink url="dpsearch-international.en.html#CHARSET-GUESSER" role="AEN4490">Automatic charset guesser</ulink>
@@ -273,17 +273,17 @@
   </secondaryie>
   <secondaryie>HlBeg,
     <ulink url="dpsearch-stored.en.html#STORED-SEARCH" role="AEN3147">Using stored during search</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5611">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5649">Variables section</ulink>
   </secondaryie>
   <secondaryie>HlEnd,
     <ulink url="dpsearch-stored.en.html#STORED-SEARCH" role="AEN3151">Using stored during search</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5614">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5652">Variables section</ulink>
   </secondaryie>
   <secondaryie>HoldBadHrefs,
     <ulink url="dpsearch-indexcmd.en.html#HOLDBADHREFS_CMD" role="AEN2305">HoldBadHrefs command</ulink>
   </secondaryie>
   <secondaryie>HoldCache,
-    <ulink url="dpsearch-srcache.en.html" role="AEN6159">Search results cache</ulink>
+    <ulink url="dpsearch-srcache.en.html" role="AEN6197">Search results cache</ulink>
   </secondaryie>
   <secondaryie>HrefOnly,
     <ulink url="dpsearch-indexcmd.en.html#HREFONLY_CMD" role="AEN2246">HrefOnly command</ulink>
@@ -347,13 +347,13 @@
   </secondaryie>
   <secondaryie>LocalCharset,
     <ulink url="dpsearch-international.en.html#LOCALCHARSET_CMD" role="AEN4518">LocalCharset command</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5565">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5603">Variables section</ulink>
   </secondaryie>
   <secondaryie>Locale,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5672">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5710">Variables section</ulink>
   </secondaryie>
   <secondaryie>Log2stderr,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5653">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5691">Variables section</ulink>
   </secondaryie>
   <secondaryie>LogLevel,
     <ulink url="dpsearch-syslog.en.html" role="AEN2920">Using syslog</ulink>
@@ -366,7 +366,7 @@
   </secondaryie>
   <secondaryie>MakePrefixes,
     <ulink url="dpsearch-indexcmd.en.html#MKPREFIX-CMD" role="AEN2654">MakePrefixes command</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5684">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5722">Variables section</ulink>
   </secondaryie>
   <secondaryie>MarkForIndex,
     <ulink url="dpsearch-perf.en.html#MARKFORINDEX-CMD" role="AEN3719">MarkForIndex command</ulink>
@@ -396,7 +396,7 @@
     <ulink url="dpsearch-indexcmd.en.html#MAXNETERRORS_CMD" role="AEN2455">MaxNetErrors command</ulink>
   </secondaryie>
   <secondaryie>MaxSiteLevel,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5605">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5643">Variables section</ulink>
   </secondaryie>
   <secondaryie>MaxWordLength,
     <ulink url="dpsearch-indexcmd.en.html#WORDLENGTHS_CMD" role="AEN2137">Word length commands</ulink>
@@ -433,7 +433,7 @@
     <ulink url="dpsearch-stored.en.html" role="AEN3002">Storing compressed document copies</ulink>
   </secondaryie>
   <secondaryie>NumSections,
-    <ulink url="dpsearch-rel.en.html#RELEVANCY" role="AEN5807">Relevance calculation</ulink>
+    <ulink url="dpsearch-rel.en.html#RELEVANCY" role="AEN5845">Relevance calculation</ulink>
   </secondaryie>
   <secondaryie>OptimizeAtUpdate,
     <ulink url="dpsearch-indexcmd.en.html#OPTIMIZEATUPDATE_CMD" role="AEN2612">OptimizeAtUpdate command</ulink>
@@ -445,7 +445,7 @@
     <ulink url="dpsearch-stored.en.html#STORED-START" role="AEN3068">Configure stored</ulink>
   </secondaryie>
   <secondaryie>PagesInGroup,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5600">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5638">Variables section</ulink>
   </secondaryie>
   <secondaryie>ParserTimeOut,
     <ulink url="dpsearch-pars.en.html#PARSERTIMEOUT" role="AEN1472">Avoid indexer hang on parser execution</ulink>
@@ -458,31 +458,31 @@
     <ulink url="dpsearch-indexcmd.en.html#PERIODBYHOPS_CMD" role="AEN2360">PeriodByHops command</ulink>
   </secondaryie>
   <secondaryie>PopRankFeedBack,
-    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN5984">"Goo" popularity rank calculation method</ulink>
+    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6022">"Goo" popularity rank calculation method</ulink>
   </secondaryie>
   <secondaryie>PopRankMethod,
-    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5946">Popularity rank</ulink>
+    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5984">Popularity rank</ulink>
   </secondaryie>
   <secondaryie>PopRankNeoIterations,
-    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN6023">Popularity rank</ulink>
+    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN6061">Popularity rank</ulink>
   </secondaryie>
   <secondaryie>PopRankPostpone,
-    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN6027">Popularity rank</ulink>
+    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN6065">Popularity rank</ulink>
   </secondaryie>
   <secondaryie>PopRankShowCntRatio,
-    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6006">"Goo" popularity rank calculation method</ulink>
+    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6044">"Goo" popularity rank calculation method</ulink>
   </secondaryie>
   <secondaryie>PopRankShowCntWeight,
-    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6014">"Goo" popularity rank calculation method</ulink>
+    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6052">"Goo" popularity rank calculation method</ulink>
   </secondaryie>
   <secondaryie>PopRankSkipSameSite,
-    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5963">Popularity rank</ulink>
+    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN6001">Popularity rank</ulink>
   </secondaryie>
   <secondaryie>PopRankUseShowCnt,
-    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN5999">"Goo" popularity rank calculation method</ulink>
+    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6037">"Goo" popularity rank calculation method</ulink>
   </secondaryie>
   <secondaryie>PopRankUseTracking,
-    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN5992">"Goo" popularity rank calculation method</ulink>
+    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6030">"Goo" popularity rank calculation method</ulink>
   </secondaryie>
   <secondaryie>PreloadLimit,
     <ulink url="dpsearch-searchd.en.html#SEARCHD-START" role="AEN3786">Starting searchd</ulink>
@@ -500,10 +500,10 @@
     <ulink url="dpsearch-indexcmd.en.html#PROXYAUTHBASIC_CMD" role="AEN2567">ProxyAuthBasic command</ulink>
   </secondaryie>
   <secondaryie>Quffix,
-    <ulink url="dpsearch-fuzzy.en.html#QUFFIX" role="AEN6237">Query words modification</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#QUFFIX" role="AEN6275">Query words modification</ulink>
   </secondaryie>
   <secondaryie>R*,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5628">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5666">Variables section</ulink>
   </secondaryie>
   <secondaryie>ReadTimeOut,
     <ulink url="dpsearch-indexcmd.en.html#READTIMEOUT_CMD" role="AEN2467">ReadTimeOut command</ulink>
@@ -534,10 +534,10 @@
     <ulink url="dpsearch-cjk.en.html" role="AEN4732">Segmenters for Chinese, Japanese, Korean and Thai languages</ulink>
   </secondaryie>
   <secondaryie>ResultContentType,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5666">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5704">Variables section</ulink>
   </secondaryie>
   <secondaryie>ResultsLimit,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5659">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5697">Variables section</ulink>
   </secondaryie>
   <secondaryie>ReverseAlias,
     <ulink url="dpsearch-aliases.en.html#ALIAS-REVERSE" role="AEN1321">ReverseAlias command</ulink>
@@ -552,13 +552,13 @@
     <ulink url="dpsearch-follow.en.html#ROBOTSPERIOD_CMD" role="AEN1212">RobotsPeriod command</ulink>
   </secondaryie>
   <secondaryie>SEASections,
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6098">The Summary Extraction Algorithm (SEA)</ulink>
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6136">The Summary Extraction Algorithm (SEA)</ulink>
   </secondaryie>
   <secondaryie>SEASentenceMinLength,
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6087">The Summary Extraction Algorithm (SEA)</ulink>
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6125">The Summary Extraction Algorithm (SEA)</ulink>
   </secondaryie>
   <secondaryie>SEASentences,
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6092">The Summary Extraction Algorithm (SEA)</ulink>
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6130">The Summary Extraction Algorithm (SEA)</ulink>
   </secondaryie>
   <secondaryie>Section,
     <ulink url="dpsearch-indexcmd.en.html#SECTION_CMD" role="AEN2515">Section command</ulink>
@@ -577,7 +577,7 @@
   </secondaryie>
   <secondaryie>ServerWeight,
     <ulink url="dpsearch-indexcmd.en.html#SERVERWEIGHT_CMD" role="AEN2602">ServerWeight command</ulink>,
-    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN5975">"Goo" popularity rank calculation method</ulink>
+    <ulink url="dpsearch-rel.en.html#GOO-POPRANK" role="AEN6013">"Goo" popularity rank calculation method</ulink>
   </secondaryie>
   <secondaryie>SkipHrefIn,
     <ulink url="dpsearch-htmlparser-links.en.html" role="AEN3275">Links</ulink>
@@ -586,7 +586,7 @@
     <ulink url="dpsearch-indexcmd.en.html#SKIPUNREFERRED_CMD" role="AEN2622">SkipUnreferred command</ulink>
   </secondaryie>
   <secondaryie>Spell,
-    <ulink url="dpsearch-fuzzy.en.html#USING-ISPELL" role="AEN6187">Using Ispell</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#USING-ISPELL" role="AEN6225">Using Ispell</ulink>
   </secondaryie>
   <secondaryie>SRVInfoSQL,
     <ulink url="dpsearch-perf.en.html#SRVINFO-CMD" role="AEN3709">SRVInfoSQLcommand</ulink>
@@ -619,8 +619,8 @@
     <ulink url="dpsearch-follow.en.html#FILE_CMD" role="AEN1149">ServerFile, RealmFile, SubnetFile and URLFile commands</ulink>
   </secondaryie>
   <secondaryie>Synonym,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5633">Variables section</ulink>,
-    <ulink url="dpsearch-fuzzy.en.html#SYNONYMS" role="AEN6276">Synonyms</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5671">Variables section</ulink>,
+    <ulink url="dpsearch-fuzzy.en.html#SYNONYMS" role="AEN6314">Synonyms</ulink>
   </secondaryie>
   <secondaryie>SyslogFacility,
     <ulink url="dpsearch-indexcmd.en.html#SYSLOGFACILITY_CMD" role="AEN2125">SyslogFacility command</ulink>
@@ -633,13 +633,13 @@
     <ulink url="dpsearch-subsections.en.html#TAGIF_CMD" role="AEN3948">TagIf command</ulink>
   </secondaryie>
   <secondaryie>TrackDBAddr,
-    <ulink url="dpsearch-track.en.html" role="AEN6134">Search queries tracking</ulink>
+    <ulink url="dpsearch-track.en.html" role="AEN6172">Search queries tracking</ulink>
   </secondaryie>
   <secondaryie>TrackHops,
     <ulink url="dpsearch-indexcmd.en.html#TARCKHOPS_CMD" role="AEN2415">TrackHops command</ulink>
   </secondaryie>
   <secondaryie>TZ,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5678">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5716">Variables section</ulink>
   </secondaryie>
   <secondaryie>URL,
     <ulink url="dpsearch-follow.en.html#URL_CMD" role="AEN1107">URL command</ulink>
@@ -677,7 +677,7 @@
   <secondaryie>VarDir,
     <ulink url="dpsearch-indexcmd.en.html#VARDIR_CMD" role="AEN2109">VarDir command</ulink>,
     <ulink url="dpsearch-stored.en.html#STORED-START" role="AEN3042">Configure stored</ulink>,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5558">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5596">Variables section</ulink>
   </secondaryie>
   <secondaryie>VaryLang,
     <ulink url="dpsearch-vary.en.html" role="AEN4814">Multilingual servers support</ulink>
@@ -707,7 +707,7 @@
 
 <indexentry>
   <primaryie>Crosswords,
-    <ulink url="dpsearch-rel.en.html#REL-CWORDS" role="AEN6045">Crosswords</ulink>
+    <ulink url="dpsearch-rel.en.html#REL-CWORDS" role="AEN6083">Crosswords</ulink>
   </primaryie>
 </indexentry>
 
@@ -719,7 +719,7 @@
 
 <indexentry>
   <primaryie>Database schema,
-    <ulink url="dpsearch-dbschema.en.html" role="AEN6439">Database schema</ulink>
+    <ulink url="dpsearch-dbschema.en.html" role="AEN6477">Database schema</ulink>
   </primaryie>
 </indexentry>
 
@@ -748,13 +748,13 @@
     <ulink url="dpsearch-stored.en.html#EXCERPTS" role="AEN3156">Document excerpts</ulink>
   </secondaryie>
   <secondaryie>summary,
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6074">The Summary Extraction Algorithm (SEA)</ulink>
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6112">The Summary Extraction Algorithm (SEA)</ulink>
   </secondaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>Donations,
-    <ulink url="dpsearch-donations.en.html" role="AEN6627">Donations</ulink>
+    <ulink url="dpsearch-donations.en.html" role="AEN6665">Donations</ulink>
   </primaryie>
 </indexentry>
 
@@ -827,13 +827,13 @@
 
 <indexentry>
   <primaryie>Ispell,
-    <ulink url="dpsearch-fuzzy.en.html#ISPELL" role="AEN6171">Ispell</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#ISPELL" role="AEN6209">Ispell</ulink>
   </primaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>libdpsearch,
-    <ulink url="dpsearch-lib.en.html" role="AEN6399">Using libdpsearch library</ulink>
+    <ulink url="dpsearch-lib.en.html" role="AEN6437">Using libdpsearch library</ulink>
   </primaryie>
 </indexentry>
 
@@ -979,19 +979,19 @@
 
 <indexentry>
   <primaryie>Popularity rank,
-    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5943">Popularity rank</ulink>
+    <ulink url="dpsearch-rel.en.html#POPRANK" role="AEN5981">Popularity rank</ulink>
   </primaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>Relevance,
-    <ulink url="dpsearch-rel.en.html" role="AEN5790">Relevance</ulink>
+    <ulink url="dpsearch-rel.en.html" role="AEN5828">Relevance</ulink>
   </primaryie>
   <secondaryie>fast method,
-    <ulink url="dpsearch-rel.en.html#REL-FAST" role="AEN5932">A fast method of relevance calculation.</ulink>
+    <ulink url="dpsearch-rel.en.html#REL-FAST" role="AEN5970">A fast method of relevance calculation.</ulink>
   </secondaryie>
   <secondaryie>full method,
-    <ulink url="dpsearch-rel.en.html#REL-FULL" role="AEN5919">A full method of relevance calculation.</ulink>
+    <ulink url="dpsearch-rel.en.html#REL-FULL" role="AEN5957">A full method of relevance calculation.</ulink>
   </secondaryie>
 </indexentry>
 
@@ -1020,7 +1020,7 @@
   <primaryie>SEA
   </primaryie>
   <secondaryie>The Summary Extraction Algorithm,
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6068">The Summary Extraction Algorithm (SEA)</ulink>
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6106">The Summary Extraction Algorithm (SEA)</ulink>
   </secondaryie>
 </indexentry>
 
@@ -1032,7 +1032,7 @@
 
 <indexentry>
   <primaryie>Search results cache,
-    <ulink url="dpsearch-srcache.en.html" role="AEN6144">Search results cache</ulink>
+    <ulink url="dpsearch-srcache.en.html" role="AEN6182">Search results cache</ulink>
   </primaryie>
 </indexentry>
 
@@ -1079,13 +1079,13 @@
 
 <indexentry>
   <primaryie>Summary Extraction Algorithm, The,
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6065">The Summary Extraction Algorithm (SEA)</ulink>
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6103">The Summary Extraction Algorithm (SEA)</ulink>
   </primaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>Synonyms,
-    <ulink url="dpsearch-fuzzy.en.html#SYNONYMS" role="AEN6267">Synonyms</ulink>
+    <ulink url="dpsearch-fuzzy.en.html#SYNONYMS" role="AEN6305">Synonyms</ulink>
   </primaryie>
 </indexentry>
 
@@ -1110,41 +1110,44 @@
 <indexentry>
   <primaryie>Template section
   </primaryie>
+  <secondaryie>BETWEENRES,
+    <ulink url="dpsearch-templates.en.html#BETWEENRES-SECTION" role="AEN5486">BETWEENRESsection</ulink>
+  </secondaryie>
   <secondaryie>BOTTON,
-    <ulink url="dpsearch-templates.en.html#BOTTOM-SECTION" role="AEN5290">BOTTOM section</ulink>
+    <ulink url="dpsearch-templates.en.html#BOTTOM-SECTION" role="AEN5307">BOTTOM section</ulink>
   </secondaryie>
   <secondaryie>CLONE,
-    <ulink url="dpsearch-templates.en.html#CLONE-SECTION" role="AEN5466">CLONE section</ulink>
+    <ulink url="dpsearch-templates.en.html#CLONE-SECTION" role="AEN5495">CLONE section</ulink>
   </secondaryie>
   <secondaryie>error,
-    <ulink url="dpsearch-templates.en.html#ERROR-SECTION" role="AEN5531">error section</ulink>
+    <ulink url="dpsearch-templates.en.html#ERROR-SECTION" role="AEN5568">error section</ulink>
   </secondaryie>
   <secondaryie>navbar0,
-    <ulink url="dpsearch-templates.en.html#NAVBAR0-SECTION" role="AEN5490">navbar0 section</ulink>
+    <ulink url="dpsearch-templates.en.html#NAVBAR0-SECTION" role="AEN5522">navbar0 section</ulink>
   </secondaryie>
   <secondaryie>navbar1,
-    <ulink url="dpsearch-templates.en.html#NAVBAR1-SECTION" role="AEN5506">navbar1 section</ulink>
+    <ulink url="dpsearch-templates.en.html#NAVBAR1-SECTION" role="AEN5540">navbar1 section</ulink>
   </secondaryie>
   <secondaryie>navright, navright_nop,
-    <ulink url="dpsearch-templates.en.html#NAVRIGHT-SECTION" role="AEN5498">navright, navright_nop section</ulink>
+    <ulink url="dpsearch-templates.en.html#NAVRIGHT-SECTION" role="AEN5531">navright, navright_nop section</ulink>
   </secondaryie>
   <secondaryie>noquery,
-    <ulink url="dpsearch-templates.en.html#NOQUERY-SECTION" role="AEN5523">noquery section</ulink>
+    <ulink url="dpsearch-templates.en.html#NOQUERY-SECTION" role="AEN5559">noquery section</ulink>
   </secondaryie>
   <secondaryie>notfound,
-    <ulink url="dpsearch-templates.en.html#NOTFOUND-SECTION" role="AEN5514">notfound section</ulink>
+    <ulink url="dpsearch-templates.en.html#NOTFOUND-SECTION" role="AEN5549">notfound section</ulink>
   </secondaryie>
   <secondaryie>RES,
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5364">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5383">RES section</ulink>
   </secondaryie>
   <secondaryie>RESBOT,
-    <ulink url="dpsearch-templates.en.html#RESBOT-SECTION" role="AEN5475">RESBOT section</ulink>
+    <ulink url="dpsearch-templates.en.html#RESBOT-SECTION" role="AEN5505">RESBOT section</ulink>
   </secondaryie>
   <secondaryie>RESTOP,
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5299">RESTOP section</ulink>
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5317">RESTOP section</ulink>
   </secondaryie>
   <secondaryie>TOP,
-    <ulink url="dpsearch-templates.en.html#TOP-SECTION" role="AEN5238">TOP section</ulink>
+    <ulink url="dpsearch-templates.en.html#TOP-SECTION" role="AEN5254">TOP section</ulink>
   </secondaryie>
 </indexentry>
 
@@ -1152,85 +1155,85 @@
   <primaryie>Template variable
   </primaryie>
   <secondaryie>$(Body),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5386">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5405">RES section</ulink>
   </secondaryie>
   <secondaryie>$(BrowserCharset),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5443">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5462">RES section</ulink>
   </secondaryie>
   <secondaryie>$(CL),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5437">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5456">RES section</ulink>
   </secondaryie>
   <secondaryie>$(Content-Length),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5401">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5420">RES section</ulink>
   </secondaryie>
   <secondaryie>$(Content-Type),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5391">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5410">RES section</ulink>
   </secondaryie>
   <secondaryie>$(DY),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5431">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5450">RES section</ulink>
   </secondaryie>
   <secondaryie>$(E),
-    <ulink url="dpsearch-templates.en.html#ERROR-SECTION" role="AEN5535">error section</ulink>
+    <ulink url="dpsearch-templates.en.html#ERROR-SECTION" role="AEN5572">error section</ulink>
   </secondaryie>
   <secondaryie>$(FancySize),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5406">RES section</ulink>
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5425">RES section</ulink>
   </secondaryie>
   <secondaryie>$(first),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5306">RESTOP section</ulink>
-  </secondaryie>
-  <secondaryie>$(grand_total),
     <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5324">RESTOP section</ulink>
   </secondaryie>
+  <secondaryie>$(grand_total),
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5342">RESTOP section</ulink>
+  </secondaryie>
   <secondaryie>$(last),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5312">RESTOP section</ulink>
-  </secondaryie>
-  <secondaryie>$(Last-Modified),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5396">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(meta.description),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5421">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(meta.keywords),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5426">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(ndocs),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5355">RESTOP section</ulink>
-  </secondaryie>
-  <secondaryie>$(Order),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5411">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(PerSite),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5448">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(Pos),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5416">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(Score),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5381">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(sea),
-    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6071">The Summary Extraction Algorithm (SEA)</ulink>
-  </secondaryie>
-  <secondaryie>$(SearchTime),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5349">RESTOP section</ulink>
-  </secondaryie>
-  <secondaryie>$(Title),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5376">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(total),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5318">RESTOP section</ulink>
-  </secondaryie>
-  <secondaryie>$(URL),
-    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5371">RES section</ulink>
-  </secondaryie>
-  <secondaryie>$(W),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5336">RESTOP section</ulink>
-  </secondaryie>
-  <secondaryie>$(WE),
     <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5330">RESTOP section</ulink>
   </secondaryie>
+  <secondaryie>$(Last-Modified),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5415">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(meta.description),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5440">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(meta.keywords),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5445">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(ndocs),
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5373">RESTOP section</ulink>
+  </secondaryie>
+  <secondaryie>$(Order),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5430">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(PerSite),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5467">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(Pos),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5435">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(Score),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5400">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(sea),
+    <ulink url="dpsearch-rel.en.html#SEA" role="AEN6109">The Summary Extraction Algorithm (SEA)</ulink>
+  </secondaryie>
+  <secondaryie>$(SearchTime),
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5367">RESTOP section</ulink>
+  </secondaryie>
+  <secondaryie>$(Title),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5395">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(total),
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5336">RESTOP section</ulink>
+  </secondaryie>
+  <secondaryie>$(URL),
+    <ulink url="dpsearch-templates.en.html#RES-SECTION" role="AEN5390">RES section</ulink>
+  </secondaryie>
+  <secondaryie>$(W),
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5354">RESTOP section</ulink>
+  </secondaryie>
+  <secondaryie>$(WE),
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5348">RESTOP section</ulink>
+  </secondaryie>
   <secondaryie>$(WS),
-    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5343">RESTOP section</ulink>
+    <ulink url="dpsearch-templates.en.html#RESTOP-SECTION" role="AEN5361">RESTOP section</ulink>
   </secondaryie>
 </indexentry>
 
@@ -1242,13 +1245,13 @@
     <ulink url="dpsearch-templates.en.html#TEMPLATES-SECT" role="AEN5231">Template sections</ulink>
   </secondaryie>
   <secondaryie>Variables section,
-    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5542">Variables section</ulink>
+    <ulink url="dpsearch-templates.en.html#TEMPLATES-VAR" role="AEN5579">Variables section</ulink>
   </secondaryie>
 </indexentry>
 
 <indexentry>
   <primaryie>tracking of search queries,
-    <ulink url="dpsearch-track.en.html" role="AEN6116">Search queries tracking</ulink>
+    <ulink url="dpsearch-track.en.html" role="AEN6154">Search queries tracking</ulink>
   </primaryie>
 </indexentry>
 

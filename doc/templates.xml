@@ -46,11 +46,28 @@ $(x:json) - JSON encoding for characters.
 		<title>Template sections</title>
 <indexterm><primary>Templates</primary><secondary>sections</secondary></indexterm>
 
-		<para>The following section names are defined:</para>
+		<para>The following section names are defined:
+<xref linkend="top-section" endterm="top-name"/>,
+<xref linkend="bottom-section" endterm="bottom-name"/>,
+<xref linkend="restop-section" endterm="restop-name"/>,
+<xref linkend="res-section" endterm="res-name"/>,
+<xref linkend="betweenres-section" endterm="betweenres-name"/>,
+<xref linkend="clone-section" endterm="clone-name"/>,
+<xref linkend="resbot-section" endterm="resbot-name"/>,
+<xref linkend="navleft-section" endterm="navleft-name"/>,
+<xref linkend="navbar0-section" endterm="navbar0-name"/>,
+<xref linkend="navright-section" endterm="navright-name"/>,
+<xref linkend="navbar1-section" endterm="navbar1-name"/>,
+<xref linkend="notfound-section" endterm="notfound-name"/>,
+<xref linkend="noquery-section" endterm="noquery-name"/>,
+<xref linkend="error-section" endterm="error-name"/>,
+<xref linkend="templates-var" endterm="var-name"/>.
+</para>
 
 
 <sect3 id="top-section">
 <title><emphasis>TOP</emphasis> section</title>
+<titleabbrev id="top-name">TOP</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>TOP</secondary></indexterm>
 		<para>
 This section is
@@ -286,6 +303,7 @@ and
 
 <sect3 id="bottom-section">
 <title><emphasis>BOTTOM</emphasis> section</title>
+<titleabbrev id="bottom-name">BOTTOM</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>BOTTON</secondary></indexterm>
 		<para>
 This section is always included last in every page. So you should provide all closing
@@ -314,6 +332,7 @@ ALT="[Powered by DataparkSearch search engine software]"&gt;
 
 <sect3 id="restop-section">
 <title><emphasis>RESTOP</emphasis> section</title>
+<titleabbrev id="restop-name">RESTOP</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>RESTOP</secondary></indexterm>
 		<para>
 This section is included just before the search results. It's a good idea to provide
@@ -404,6 +423,7 @@ Displaying documents $(first)-$(last) of total &lt;B&gt;$(total)&lt;/B&gt; found
 
 <sect3 id="res-section">
 <title><emphasis>RES</emphasis> section</title>
+<titleabbrev id="res-name">RES</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>RES</secondary></indexterm>
 		<para>
 This section is used for displaying various information about every found
@@ -519,8 +539,21 @@ $(CL)
 </sect3>
 
 
+<sect3 id="betweenres-section">
+<title><emphasis>BETWEENRES</emphasis>section</title>
+<titleabbrev id="betweenres-name">BETWEENRES</titleabbrev>
+<indexterm><primary>Template section</primary><secondary>BETWEENRES</secondary></indexterm>
+<para>
+The content of this section is inserted between search results shown with RES section.
+You can use it if the format of your search result page requires a separator between records, as in JSON, eg. (see 
+<filename>doc/samples/json.htm</filename>).
+</para>
+</sect3>
+
+
 <sect3 id="clone-section">
 <title><emphasis>CLONE</emphasis> section</title>
+<titleabbrev id="clone-name">CLONE</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>CLONE</secondary></indexterm>
 		<para>
 The contents of this section is included in result just instead of $(CL) meta symbol for
@@ -542,6 +575,7 @@ use to place it here.</para>
 
 <sect3 id="resbot-section">
 <title><emphasis>RESBOT</emphasis> section</title>
+<titleabbrev id="resbot-name">RESBOT</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>RESBOT</secondary></indexterm>
 <para>
 This is included just after last 'res' section. You usually give a navigation bar here
@@ -567,6 +601,7 @@ constructed from the following template sections:</para>
 
 <sect3 id="navleft-section">
 <title><emphasis>navleft, navleft_nop</emphasis> section</title>
+<titleabbrev id="navleft-name">navleft, navleft_nop</titleabbrev>
 <para>These are used for printing the link to the
 previous page. If that page exists, &lt;!--navleft--&gt; is used, and
 on the first page there is no previous page, so
@@ -588,6 +623,7 @@ on the first page there is no previous page, so
 
 <sect3 id="navbar0-section">
 <title><emphasis>navbar0</emphasis> section</title>
+<titleabbrev id="navbar0-name">navbar0</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>navbar0</secondary></indexterm>
 		<para>
 This is used for printing the current page in the page list.
@@ -603,6 +639,7 @@ This is used for printing the current page in the page list.
 
 <sect3 id="navright-section">
 <title><emphasis>navright, navright_nop</emphasis> section</title>
+<titleabbrev id="navright-name">navright, navright_nop</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>navright, navright_nop</secondary></indexterm>
 		<para>
 These are used for printing the link to the next page. If that page
@@ -629,6 +666,7 @@ exists, &lt;!--navright--&gt; is used, and on the last page
 
 <sect3 id="navbar1-section">
 <title><emphasis>navbar1</emphasis> section</title>
+<titleabbrev id="navbar1-name">navbar1</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>navbar1</secondary></indexterm>
 		<para>
 This is used for printing the links to the other pages in the page list.
@@ -648,6 +686,7 @@ This is used for printing the links to the other pages in the page list.
 
 <sect3 id="notfound-section">
 <title><emphasis>notfound</emphasis> section</title>
+<titleabbrev id="notfound-name">notfound</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>notfound</secondary></indexterm>
 		<para>
 As its name
@@ -671,6 +710,7 @@ Sorry, but search hasn't returned results.&lt;P&gt;
 
 <sect3 id="noquery-section">
 <title><emphasis>noquery</emphasis> section</title>
+<titleabbrev id="noquery-name">noquery</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>noquery</secondary></indexterm>
 		<para>
 This section is displayed in case when user gives an empty query. Below is an example
@@ -690,6 +730,7 @@ You haven't typed any word(s) to search for.
 
 <sect3 id="error-section">
 <title><emphasis>error</emphasis> section</title>
+<titleabbrev id="error-name">error</titleabbrev>
 <indexterm><primary>Template section</primary><secondary>error</secondary></indexterm>
 		<para>
 This section is displayed in case some internal error occurred while searching. For
@@ -721,6 +762,7 @@ following meta symbol:<indexterm><primary>Template variable</primary><secondary>
 	<sect2 id="templates-var">
 <indexterm><primary>Templates</primary><secondary>Variables section</secondary></indexterm>
 		<title>Variables section</title>
+<titleabbrev id="var-name">variables</titleabbrev>
 
 		<para>There is also a special variables section, in which you can set up some values for search. </para>
 		<para>Special variables section usually looks like this:</para>

@@ -45,6 +45,7 @@ $(x:json) - JSON-кодировка символов.
 <xref linkend="bottom-section" endterm="bottom-name"/>,
 <xref linkend="restop-section" endterm="restop-name"/>,
 <xref linkend="res-section" endterm="res-name"/>,
+<xref linkend="betweenres-section" endterm="betweenres-name"/>,
 <xref linkend="clone-section" endterm="clone-name"/>,
 <xref linkend="resbot-section" endterm="resbot-name"/>,
 <xref linkend="navleft-section" endterm="navleft-name"/>,
@@ -453,6 +454,17 @@ $(CL)
 </sect3>
 
 
+<sect3 id="betweenres-section">
+<title>Секция <emphasis>BETWEENRES</emphasis></title>
+<titleabbrev id="betweenres-name">BETWEENRES</titleabbrev>
+<indexterm><primary>Секция шаблона</primary><secondary>BETWEENRES</secondary></indexterm>
+<para>
+Содержимое этой секции вставляется между результатами поиска, выврдимыми секцией RES. Это используется в том случае, если формат вашего документа с результатами поиска требует разделитель между записями. Например, при выдаче результатов в формате JSON (см.
+<filename>doc/samples/json.htm</filename>).
+</para>
+</sect3>
+
+
 <sect3 id="clone-section">
 <title>Секция <emphasis>CLONE</emphasis></title>
 <titleabbrev id="clone-name">CLONE</titleabbrev>
@@ -659,7 +671,7 @@ You haven't typed any word(s) to search for.
 <indexterm><primary>Секция шаблона</primary><secondary>Variables</secondary></indexterm>
 </title>
 <titleabbrev id="var-name">variables</titleabbrev>
-		<para>В специальной секции <literal>variables</literal> вы можеде задать значения некоторых переменных и параметров
+		<para>В специальной секции <literal>variables</literal> вы можете задать значения некоторых переменных и параметров
 поиска. </para>
 		<para>Секция <literal>variables</literal> обычно выглядит примерно так:
 			<programlisting>
