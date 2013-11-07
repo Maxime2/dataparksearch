@@ -3728,10 +3728,10 @@ int DpsTargetsSQL(DPS_AGENT *Indexer, DPS_DB *db){
 	if (Indexer->Flags.cmd == DPS_IND_POPRANK || Indexer->Flags.cmd == DPS_IND_FILTER) {
 	  DpsVarListReplaceUnsigned(&Indexer->Conf->Vars, "PopRank_nit", (unsigned)nit);
 	  /* To see what rec_id has been indexed in "ps" output on xBSD */
-	  if (DpsNeedLog(DPS_LOG_INFO)) dps_setproctitle("[%d] %s rec_id: %u, next_index_time: %u", Indexer->handle, 
-							 (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "PopRank" : "Filter", (unsigned)rec_id, (unsigned)nit);
-	  DpsLog(Indexer, DPS_LOG_INFO, "[%d] %s rec_id: %u, next_index_time: %u", 
-		 Indexer->handle, (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "PopRank" : "Filter", (unsigned)rec_id, (unsigned)nit);
+	  if (DpsNeedLog(DPS_LOG_INFO)) dps_setproctitle("[%d] %s rec_id: %u", Indexer->handle, 
+							 (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "PopRank" : "Filter", (unsigned)rec_id);
+	  DpsLog(Indexer, DPS_LOG_INFO, "[%d] %s rec_id: %u", 
+		 Indexer->handle, (Indexer->Flags.cmd == DPS_IND_POPRANK) ? "PopRank" : "Filter", (unsigned)rec_id);
 	}else if (Indexer->Flags.mark_for_index) {
 	  if (db->DBSQL_IN) {
 		char	*urlin=NULL;
