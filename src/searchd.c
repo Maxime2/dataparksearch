@@ -290,7 +290,7 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
   DpsURLNormalizePath(template_name);
 
 #define RESTexit(rc) res = rc; goto farend;
-#define RESTstatus(status) DpsSockPrintf(&client, "HTTP/1.0 %d %s\nServer: %s\nConnection: close\n", status, DpsHTTPStatusStr(status), PACKAGE)
+#define RESTstatus(status) DpsSockPrintf(&client, "HTTP/1.0 %d %s\r\nServer: %s\r\nConnection: close\r\n", status, DpsHTTPStatusStr(status), PACKAGE)
 
   if ( (strncmp(template_name, conf_dir, dps_strlen(conf_dir)) || (res = DpsTemplateLoad(Agent, Env, &Agent->tmpl, template_name)))) {
     DpsLog(Agent, DPS_LOG_ERROR, "Can't load template: '%s' %s\n", template_name, Env->errstr);
@@ -364,17 +364,17 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
   {
       char buf[64];
       DpsTime_t2HttpStr(Agent->now, buf);
-      DpsSockPrintf(&client, "Date: %s\n", buf);
+      DpsSockPrintf(&client, "Date: %s\r\n", buf);
   }
   /* Add user defined headers */
 /*
   for(i = 0; i < Agent->tmpl.Env_Vars->Root[(size_t)'r'].nvars; i++) {
       DPS_VAR *Hdr = &Agent->tmpl.Env_Vars->Root[(size_t)'r'].Var[i];
       if (strncmp(DPS_NULL2EMPTY(Hdr->name), "Request.", 8)) continue;
-      DpsSockPrintf(&client, "%s: %s\n", Hdr->name + 8, Hdr->val);
+      DpsSockPrintf(&client, "%s: %s\r\n", Hdr->name + 8, Hdr->val);
   }
 */
-  DpsSockPrintf(&client, "Content-Type: %s; charset=%s\n\n", ResultContentType, bcharset);
+  DpsSockPrintf(&client, "Content-Type: %s; charset=%s\r\n\r\n", ResultContentType, bcharset);
 
   res         = DpsVarListFindInt(&Agent->Vars, "ps", DPS_DEFAULT_PS);
   page_size   = dps_min(res, MAX_PS);
