@@ -254,6 +254,7 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
 
   while (*p != '\0' && *p != ' ') p++; /* skip command name, it's only GET implemented */
   if (*p == ' ') p++;
+  if ((pp = strchr(p, (int)'?')) != NULL) p = pp + 1;
   if (*p == '\0') return DPS_ERROR;
   query_string = (char*)DpsMalloc(REST_REQ_SIZE);
   if (query_string == NULL) return DPS_ERROR;
