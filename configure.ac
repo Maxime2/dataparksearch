@@ -1331,7 +1331,7 @@ else
 fi
 
 dnl aspell related stuff
-dnl aspell=yes
+dnl aspell=auto
 LIBS_save="$LIBS"
 
 AC_ARG_WITH(aspell,
@@ -1382,11 +1382,7 @@ elif test "$aspell" = "yes"  -o "$aspell" = "auto"; then
 
     else
 	AC_MSG_CHECKING(for aspell)
-	if test "$withval" = "yes" ; then
-	   AC_MSG_ERROR([No aspell.h has been found.])
-	else
-	   AC_MSG_RESULT([no])
-	fi
+	AC_MSG_RESULT([no])
     fi
 
 
