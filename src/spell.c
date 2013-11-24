@@ -882,7 +882,7 @@ __C_LINK int __DPSCALL DpsImportAffixes(DPS_ENV * Conf,const char *lang, const c
 #endif
 
   if (stat(filename, &sb)) {
-    dps_strerror(NULL, 0, "Unable to stat affixes file '%s': %s", filename);
+    dps_strerror(NULL, 0, "Unable to stat affixes file '%s'", filename);
 #ifdef WITH_PARANOIA
     DpsViolationExit(-1, paran);
 #endif
