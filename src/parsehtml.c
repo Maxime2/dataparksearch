@@ -141,8 +141,10 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
     DPS_FREE(de_uword);
   }
 
+
 #ifdef HAVE_ASPELL
-  if (strict && have_speller && have_bukva_forte && Indexer->Flags.use_aspellext && ((uwlen = DpsUniLen(uword)) > 2)
+  if (/*strict &&*/ /* workaround for missed words in spell checking */
+      have_speller && have_bukva_forte && Indexer->Flags.use_aspellext && ((uwlen = DpsUniLen(uword)) > 2)
       && (DpsUniStrChr(uword, (dpsunicode_t) '&') == NULL) /* aspell trap workaround */
       ) {
     register int ii;
