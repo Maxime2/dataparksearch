@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl
-AC_INIT([DataparkSearch Engine], [4.54-2013-11-07], [dataparksearch@googlegroups.com], [dpsearch])
+AC_INIT([DataparkSearch Engine], [4.54-2013-11-24], [dataparksearch@googlegroups.com], [dpsearch])
 dnl AC_INIT([DataparkSearch Engine], [4.53], [dataparksearch@googlegroups.com], [dpsearch])
 AC_CONFIG_SRCDIR([TODO])
 AC_CANONICAL_SYSTEM
