@@ -2851,7 +2851,7 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
   int wf[256];
   double Rbc;
   dps_uint4 *R, *D;
-  double xy_wf;
+  int xy_wf;
   int nsec;
   size_t nwordpos;
   int w_origin;
