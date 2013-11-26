@@ -333,6 +333,7 @@ __C_LINK DPS_AGENT * __DPSCALL DpsAgentInit(DPS_AGENT *result, DPS_ENV * Env, in
 	aspell_config_replace(result->aspell_config, "normalize", "false");
 	aspell_config_replace(result->aspell_config, "size", "10");
 	aspell_config_replace(result->aspell_config, "home-dir", DpsVarListFindStr(&result->Conf->Vars,"EtcDir",DPS_CONF_DIR));
+	aspell_config_replace(result->aspell_config, "local-data-dir", DpsVarListFindStr(&result->Conf->Vars,"EtcDir",DPS_CONF_DIR));
 	aspell_config_replace(result->aspell_config, "use-other-dicts", "true");
 #endif
 #if defined(HAVE_LIBARES) || defined (HAVE_LIBCARES)
