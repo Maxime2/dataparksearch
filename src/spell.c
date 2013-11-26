@@ -535,6 +535,7 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 			if(*s == NL_CHAR) *s = '\0';
 			s++;
 		}
+		if (str[0] == '#' && (str[1] == ' ' || str[1] == '\t')) goto loop_continue;
 		if((s=strchr(str,'/'))){
 			*s=0;
 			s++;flag=s;
@@ -579,10 +580,13 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 		  for (frm = 0; frm < forms.nwords; frm++) {
 		  
 		      DpsConv(&toutf8, lstr, 2048, ((const char*)forms.Word[frm].uword), sizeof(forms.Word[frm].uword[0]) * DpsUniLen(forms.Word[frm].uword));
-		    /*		    fprintf(stderr, " -- frm:%d - %s\n", frm, forms.Word[frm].word);*/
-		    if (aspell_speller_check(speller, lstr, -1) == 0) {
-		      aspell_speller_add_to_personal(speller, lstr, -1);
-		    }
+/*		      fprintf(stderr, " -- frm:%d - %s\n", frm, forms.Word[frm].word);*/
+		      if (aspell_speller_check(speller, lstr, -1) == 0) {
+			  aspell_speller_add_to_personal(speller, lstr, -1);
+			  if (aspell_speller_error(speller) != 0) {
+			      fprintf(stderr, "aspell error: %s\n", aspell_speller_error_message(speller));
+			  }
+		      }
 		  }
 		  DpsWideWordListFree(&forms);
 		}
