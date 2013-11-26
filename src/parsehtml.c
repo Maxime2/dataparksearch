@@ -172,6 +172,9 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
     DPS_GETLOCK(Indexer, DPS_LOCK_ASPELL);
     ii = aspell_speller_check(speller, (const char *)utf_str, (int)(tlen = dps_strlen(utf_str)));
     if ( ii == 0) {
+	if (aspell_speller_error(speller) != 0) {
+	    DpsLog(Indexer, DPS_LOG_DEBUG, "aspell error: %s\n", aspell_speller_error_message(speller));
+	}
       suggestions = aspell_speller_suggest(speller, (const char *)utf_str, (int)tlen);
       elements = aspell_word_list_elements(suggestions);
       for (ii = 0; 
