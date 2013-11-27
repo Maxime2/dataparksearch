@@ -76,6 +76,83 @@ static void DpsUniDesegment(dpsunicode_t *s) {
   *d = *s;
 }
 
+#ifdef HAVE_ASPELL
+static void DpsSpellSuggest(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM *Item,
+			    dpsunicode_t *uword, size_t uwlen, int crossec,
+			    AspellSpeller *speller, DPS_DSTR *suggest,
+			    int *spelling
+) {
+    DPS_WORD Word;
+    register int ii;
+    char          *utf_str = NULL, *asug = NULL;
+    dpsunicode_t  *aword = NULL;
+    const AspellWordList *suggestions;
+    AspellStringEnumeration *elements;
+    size_t tlen;
+    static dpsunicode_t COLON[] = { ':', ' ', 0};
+    static dpsunicode_t COMMA[] = { ',', ' ', 0};
+    static dpsunicode_t PERIOD[] = { '.', 0};
+    int res = DPS_OK;
+
+    TRACE_LINE(Indexer);
+    if ((utf_str = (char*)DpsRealloc(utf_str, 16 * uwlen + 1)) == NULL) {
+	TRACE_OUT(Indexer);
+	return; 
+    }
+    if ((aword = (dpsunicode_t*)DpsMalloc((2 * uwlen + 1) * sizeof(dpsunicode_t))) == NULL) {
+	DPS_FREE(utf_str); TRACE_OUT(Indexer);
+	return; 
+    }
+    DpsUniStrCpy(aword, uword);
+    DpsUniAspellSimplify(aword);
+    DpsConv(&Indexer->uni_utf, utf_str, 16 * uwlen, (char*)aword, (int)(sizeof(dpsunicode_t) * (uwlen + 1)));
+    DPS_GETLOCK(Indexer, DPS_LOCK_ASPELL);
+    ii = aspell_speller_check(speller, (const char *)utf_str, (int)(tlen = dps_strlen(utf_str)));
+    if ( ii == 0) {
+	if (aspell_speller_error(speller) != 0) {
+	    DpsLog(Indexer, DPS_LOG_DEBUG, "aspell error: %s\n", aspell_speller_error_message(speller));
+	}
+	suggestions = aspell_speller_suggest(speller, (const char *)utf_str, (int)tlen);
+	elements = aspell_word_list_elements(suggestions);
+	for (ii = 0; 
+	     (ii < 2) && ((asug = (char*)aspell_string_enumeration_next(elements)) != NULL);
+	     ii++ ) { 
+
+	    TRACE_LINE(Indexer);
+	    DpsConv(&Indexer->utf_uni, (char*)aword, (2 * uwlen + 1) * sizeof(*aword), (char*)(asug), sizeof(asug[0])*(tlen + 1));
+      
+	    Word.uword = aword;
+	    Word.ulen = DpsUniLen(aword);
+
+	    res = DpsWordListAddFantom(Doc, &Word, Item->section);
+	    if (res != DPS_OK) break;
+	    *spelling = 1;
+	    if(Item->href != NULL && crossec != 0) {
+		DPS_CROSSWORD cw;
+		cw.url = Item->href;
+		cw.weight = crossec;
+		cw.pos = Doc->CrossWords.wordpos;
+		cw.uword = aword;
+		cw.ulen = Word.ulen;
+		DpsCrossListAddFantom(Doc, &cw);
+	    }
+	    if (suggest != NULL) {
+		if (ii == 0) {
+		    DpsDSTRAppendUniWithSpace(suggest, uword);
+		    DpsDSTRAppendUniStr(suggest, COLON);
+		} else {
+		    DpsDSTRAppendUniStr(suggest, COMMA);
+		}
+		DpsDSTRAppendUniStr(suggest, aword);
+	    }
+	}
+	if (ii > 0 && suggest != NULL) DpsDSTRAppendUniStr(suggest, PERIOD);
+	delete_aspell_string_enumeration(elements);
+    }
+    DPS_RELEASELOCK(Indexer, DPS_LOCK_ASPELL);
+    DPS_FREE(utf_str); DPS_FREE(aword);
+}
+#endif
 
 static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM *Item, size_t min_word_len, int crossec, int have_bukva_forte, 
 			      dpsunicode_t *uword, int make_prefixes, int make_suffixes, int strict
@@ -143,79 +220,11 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
 
 
 #ifdef HAVE_ASPELL
-  if (/*strict &&*/ /* workaround for missed words in spell checking */
+  if (strict && 
       have_speller && have_bukva_forte && Indexer->Flags.use_aspellext && ((uwlen = DpsUniLen(uword)) > 2)
       && (DpsUniStrChr(uword, (dpsunicode_t) '&') == NULL) /* aspell trap workaround */
-      ) {
-    register int ii;
-    char          *utf_str = NULL, *asug = NULL;
-    dpsunicode_t  *aword = NULL;
-    const AspellWordList *suggestions;
-    AspellStringEnumeration *elements;
-    size_t tlen;
-    static dpsunicode_t COLON[] = { ':', ' ', 0};
-    static dpsunicode_t COMMA[] = { ',', ' ', 0};
-    static dpsunicode_t PERIOD[] = { '.', 0};
-
-    TRACE_LINE(Indexer);
-    if ((utf_str = (char*)DpsRealloc(utf_str, 16 * uwlen + 1)) == NULL) {
-      TRACE_OUT(Indexer);
-      return; 
-    }
-    if ((aword = (dpsunicode_t*)DpsMalloc((2 * uwlen + 1) * sizeof(dpsunicode_t))) == NULL) {
-      DPS_FREE(utf_str); TRACE_OUT(Indexer);
-      return; 
-    }
-    DpsUniStrCpy(aword, uword);
-    DpsUniAspellSimplify(aword);
-    DpsConv(&Indexer->uni_utf, utf_str, 16 * uwlen, (char*)aword, (int)(sizeof(dpsunicode_t) * (uwlen + 1)));
-    DPS_GETLOCK(Indexer, DPS_LOCK_ASPELL);
-    ii = aspell_speller_check(speller, (const char *)utf_str, (int)(tlen = dps_strlen(utf_str)));
-    if ( ii == 0) {
-	if (aspell_speller_error(speller) != 0) {
-	    DpsLog(Indexer, DPS_LOG_DEBUG, "aspell error: %s\n", aspell_speller_error_message(speller));
-	}
-      suggestions = aspell_speller_suggest(speller, (const char *)utf_str, (int)tlen);
-      elements = aspell_word_list_elements(suggestions);
-      for (ii = 0; 
-	   (ii < 2) && ((asug = (char*)aspell_string_enumeration_next(elements)) != NULL);
-	   ii++ ) { 
-
-	TRACE_LINE(Indexer);
-	DpsConv(&Indexer->utf_uni, (char*)aword, (2 * uwlen + 1) * sizeof(*aword), (char*)(asug), sizeof(asug[0])*(tlen + 1));
-      
-	Word.uword = aword;
-	Word.ulen = DpsUniLen(aword);
-
-	res = DpsWordListAddFantom(Doc, &Word, Item->section);
-	if (res != DPS_OK) break;
-	spelling = 1;
-	if(Item->href != NULL && crossec != 0) {
-	  DPS_CROSSWORD cw;
-	  cw.url = Item->href;
-	  cw.weight = crossec;
-	  cw.pos = Doc->CrossWords.wordpos;
-	  cw.uword = aword;
-	  cw.ulen = Word.ulen;
-	  DpsCrossListAddFantom(Doc, &cw);
-	}
-	if (suggest != NULL) {
-	  if (ii == 0) {
-	    DpsDSTRAppendUniWithSpace(suggest, uword);
-	    DpsDSTRAppendUniStr(suggest, COLON);
-	  } else {
-	    DpsDSTRAppendUniStr(suggest, COMMA);
-	  }
-	  DpsDSTRAppendUniStr(suggest, aword);
-	}
-      }
-      if (ii > 0 && suggest != NULL) DpsDSTRAppendUniStr(suggest, PERIOD);
-      delete_aspell_string_enumeration(elements);
-    }
-    DPS_RELEASELOCK(Indexer, DPS_LOCK_ASPELL);
-    DPS_FREE(utf_str); DPS_FREE(aword);
-  }
-#endif	
+      ) DpsSpellSuggest(Indexer, Doc, Item, uword, uwlen, crossec, speller, suggest, &spelling);
+#endif
 
   if (strict == 0) {
     dpsunicode_t *dword = DpsUniDup(uword);
@@ -268,6 +277,8 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
 #endif
 			    );
 	}
+      } else {
+	  DpsSpellSuggest(Indexer, Doc, Item, uword, uwlen, crossec, speller, suggest, &spelling);
       }
     }
     DPS_FREE(dword); DPS_FREE(nword);
