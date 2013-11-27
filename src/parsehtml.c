@@ -94,7 +94,19 @@ static void DpsSpellSuggest(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM 
     static dpsunicode_t PERIOD[] = { '.', 0};
     int res = DPS_OK;
 
-    TRACE_LINE(Indexer);
+    TRACE_IN(Indexer, "DpsSpellSuggest");
+
+    ii = 1;
+    for (aword = uword; *aword; aword++) {
+	if (DpsUniCType(*aword) <= DPS_UNI_BUKVA_FORTE) {
+	    ii = 0; break;
+	}
+    }
+    if (ii) {
+	TRACE_OUT(Indexer);
+	return; 
+    }
+
     if ((utf_str = (char*)DpsRealloc(utf_str, 16 * uwlen + 1)) == NULL) {
 	TRACE_OUT(Indexer);
 	return; 
@@ -151,6 +163,8 @@ static void DpsSpellSuggest(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM 
     }
     DPS_RELEASELOCK(Indexer, DPS_LOCK_ASPELL);
     DPS_FREE(utf_str); DPS_FREE(aword);
+    TRACE_OUT(Indexer);
+    return;
 }
 #endif
 
