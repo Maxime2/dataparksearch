@@ -573,6 +573,16 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 		  bzero(&forms, sizeof(forms));
 		  bzero(&ww, sizeof(ww));
 
+		  DpsConv(&toutf8, lstr, 2048, ((const char*)ustr), sizeof(ustr[0]) * DpsUniLen(ustr));
+/*		  fprintf(stderr, " -- wrd %s\n", lstr);*/
+		  if (aspell_speller_check(speller, lstr, -1) == 0) {
+/*		      fprintf(stderr, " ++ wrd %s\n", lstr);*/
+		      aspell_speller_add_to_personal(speller, lstr, -1);
+		      if (aspell_speller_error(speller) != 0) {
+			  fprintf(stderr, "aspell error: %s\n", aspell_speller_error_message(speller));
+		      }
+		  }
+
 		  ww.uword = ustr;
 		  DpsWideWordListAdd(&forms, &ww, DPS_WWL_LOOSE);
 		  DpsAllFormsWord(query, &word, &forms, 0, 0);
@@ -582,6 +592,7 @@ __C_LINK int __DPSCALL DpsImportDictionary(DPS_AGENT *query, const char *lang, c
 		      DpsConv(&toutf8, lstr, 2048, ((const char*)forms.Word[frm].uword), sizeof(forms.Word[frm].uword[0]) * DpsUniLen(forms.Word[frm].uword));
 /*		      fprintf(stderr, " -- frm:%d - %s\n", frm, forms.Word[frm].word);*/
 		      if (aspell_speller_check(speller, lstr, -1) == 0) {
+/*			  fprintf(stderr, " ++ frm:%d - %s\n", frm, forms.Word[frm].word);*/
 			  aspell_speller_add_to_personal(speller, lstr, -1);
 			  if (aspell_speller_error(speller) != 0) {
 			      fprintf(stderr, "aspell error: %s\n", aspell_speller_error_message(speller));
