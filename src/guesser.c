@@ -1540,21 +1540,17 @@ int  DpsGuessCharSet(DPS_AGENT *Indexer, DPS_DOCUMENT * Doc, DPS_LANGMAPLIST *Li
 			     mapstat[i].hits, mapstat[i].miss, mapstat[i].map->lang, mapstat[i].map->charset);
 #endif
 
-		 if (*lang == '\0') {
-		     if (*charset == '\0') {
-			 DpsVarListReplaceStr(&Doc->Sections, "Charset", charset = mapstat[i].map->charset);
+		 if (*lang == '\0' && mapstat[i].map->lang) {
+		     if (
+			 strcasecmp(mapstat[i].map->charset, charset)
+			 && strcasecmp(mapstat[i].map->charset, DPS_NULL2EMPTY(server_charset))
+			 && strcasecmp(mapstat[i].map->charset, DPS_NULL2EMPTY(meta_charset))
+			 ) continue;
+		     if (!strcasecmp(mapstat[i].map->lang, DPS_NULL2EMPTY(server_lang))) {
 			 DpsVarListReplaceStr(&Doc->Sections, "Content-Language", lang = mapstat[i].map->lang);
-			 break;
-		     } else if (mapstat[i].map->lang) {
-			 if (strcasecmp(mapstat[i].map->charset, charset)) continue;
-			 if (!strcasecmp(mapstat[i].map->lang, DPS_NULL2EMPTY(server_lang))) {
-			     DpsVarListReplaceStr(&Doc->Sections, "Content-Language", lang = mapstat[i].map->lang);
-			     break;
-			 }
-			 if (!strcasecmp(mapstat[i].map->lang, DPS_NULL2EMPTY(meta_lang))) {
-			     DpsVarListReplaceStr(&Doc->Sections, "Content-Language", lang = mapstat[i].map->lang);
-			     break;
-			 }
+		     }
+		     if (!strcasecmp(mapstat[i].map->lang, DPS_NULL2EMPTY(meta_lang))) {
+			 DpsVarListReplaceStr(&Doc->Sections, "Content-Language", lang = mapstat[i].map->lang);
 		     }
 		 }
 		 if (*charset == '\0' && mapstat[i].map->charset) {
@@ -1564,7 +1560,7 @@ int  DpsGuessCharSet(DPS_AGENT *Indexer, DPS_DOCUMENT * Doc, DPS_LANGMAPLIST *Li
 			 DpsVarListReplaceStr(&Doc->Sections, "Charset", charset = mapstat[i].map->charset);
 		     }
 		 }
-
+		 if (*charset && *lang) break;
 		 if ((i > 50) && (mapstat[i].miss > mapstat[0].miss + mapstat[0].miss/10)) break;
 	     }
           
