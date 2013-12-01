@@ -5945,7 +5945,7 @@ int DpsHTDBGet(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, int flag_short) {
 			goto HTDBexit;
 		  }
 
-		  done = (htdblimit != DpsSQLNumRows(&SQLres));
+		  done = (htdblimit == 0 || htdblimit != DpsSQLNumRows(&SQLres));
 		  start += DpsSQLNumRows(&SQLres);
 
 		  for(i = 0; i < DpsSQLNumRows(&SQLres); i++) {
