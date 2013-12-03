@@ -646,7 +646,8 @@ int DpsPrepareWords(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
       crc32 = DpsHash32Update(crc32, (char*)ustr, reslen * sizeof(dpsunicode_t));
 
     /* Collect links from HrefSections */
-    if((Sec = DpsVarListFind(&Indexer->Conf->HrefSections, Item->section_name))) {
+    if(Doc->Spider.follow != DPS_FOLLOW_NO &&
+	(Sec = DpsVarListFind(&Indexer->Conf->HrefSections, Item->section_name))) {
       DPS_HREF	Href;
       DpsHrefInit(&Href);
       Href.referrer = DpsVarListFindInt(&Doc->Sections, "Referrer-ID", 0);
@@ -742,7 +743,8 @@ int DpsPrepareWords(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
       crc32 = DpsHash32Update(crc32, (char*)ustr, reslen * sizeof(dpsunicode_t));
 
     /* Collect links from HrefSections */
-    if((Sec = DpsVarListFind(&Indexer->Conf->HrefSections, Item->section_name))) {
+    if(Doc->Spider.follow != DPS_FOLLOW_NO &&
+       (Sec = DpsVarListFind(&Indexer->Conf->HrefSections, Item->section_name))) {
       DPS_HREF	Href;
       DpsHrefInit(&Href);
       Href.referrer = DpsVarListFindInt(&Doc->Sections, "Referrer-ID", 0);
