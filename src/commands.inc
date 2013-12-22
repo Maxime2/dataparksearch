@@ -49,6 +49,7 @@
 	{"CollectLinks",	1,1,	env_rpl_bool_var},
 	{"Cookies",             1,1,    srv_rpl_bool_var},
 /*   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.                */
+/*   Copyright (C) 2012-2013 Maxim Zakharov. All rights reserved.                */
 	{"CrawlDelay",          1,1,    srv_rpl_time_var},
 	{"CrossWords",		1,1,	env_rpl_bool_var},
 	{"CrossWordsSkipSameSite",1,1,	env_rpl_var},
@@ -60,6 +61,7 @@
 	{"DetectClones",	1,1,	srv_rpl_bool_var},
 	{"DisableRelNofollow",  1,1,    env_rpl_bool_var},
 	{"Disallow",		1,100,	add_filter},
+	{"DisallowIf",		1,100,	add_section_filter},
 	{"DocMemCacheSize",	1,1,	env_rpl_var},
 	{"DocTimeOut",		1,1,	srv_rpl_time_var},
 	{"DoExcerpt",		1,1,	env_rpl_bool_var},

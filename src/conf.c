@@ -154,6 +154,7 @@ const char *DpsMethodStr(int method){
 int DpsMethod(const char *s){
         if (s == NULL) return DPS_METHOD_UNKNOWN;
 	else if(!strcasecmp(s,"Disallow"))	return DPS_METHOD_DISALLOW;
+	else if(!strcasecmp(s,"DisallowIf"))	return DPS_METHOD_DISALLOW;
 	else if(!strcasecmp(s,"Allow"))		return DPS_METHOD_GET;
 	else if(!strcasecmp(s,"CheckMP3Only"))	return DPS_METHOD_CHECKMP3ONLY;
 	else if(!strcasecmp(s,"CheckMP3"))	return DPS_METHOD_CHECKMP3;

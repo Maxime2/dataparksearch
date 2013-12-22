@@ -2175,7 +2175,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 			  DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
 			  m = DpsSectionFilterFind(DPS_LOG_DEBUG,&Indexer->Conf->SectionFilters,Doc,reason);
 			  DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
-			  if (m != DPS_METHOD_NOINDEX) {
+			  if (m != DPS_METHOD_NOINDEX && m != DPS_METHOD_DISALLOW ) {
 			    char *subsection = NULL;
 			    DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
 			    if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
@@ -2719,7 +2719,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 		  DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
 		  m = DpsSectionFilterFind(DPS_LOG_DEBUG,&Indexer->Conf->SectionFilters,Doc,reason);
 		  DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
-		  if (m != DPS_METHOD_NOINDEX) {
+		  if (m != DPS_METHOD_NOINDEX && m != DPS_METHOD_DISALLOW) {
 		    char *subsection = NULL;
 		    DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
 		    if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
