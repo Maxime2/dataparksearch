@@ -2177,20 +2177,27 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 			  DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
 			  if (m != DPS_METHOD_NOINDEX && m != DPS_METHOD_DISALLOW ) {
 			    char *subsection = NULL;
-			    DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
-			    if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
+			    int pas;
 
-			    DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
-			    switch(DpsSubSectionMatchFind(Indexer, DPS_LOG_DEBUG, &Indexer->Conf->SubSectionMatch, Doc, reason, &subsection)) {
-			    case DPS_METHOD_TAG:
-			      DpsVarListReplaceStr(&Doc->Sections, "Tag", subsection); break;
-			    case DPS_METHOD_CATEGORY:
-			      DpsVarListReplaceStr(&Doc->Sections, "Category", subsection); break;
+			    for (pas = 2; pas > 0; pas--) {
+				DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
+				if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
+
+				DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
+				switch(DpsSubSectionMatchFind(Indexer, DPS_LOG_DEBUG, &Indexer->Conf->SubSectionMatch, Doc, reason, &subsection)) {
+				case DPS_METHOD_TAG:
+				    DpsVarListReplaceStr(&Doc->Sections, "Tag", subsection); break;
+				case DPS_METHOD_CATEGORY:
+				    DpsVarListReplaceStr(&Doc->Sections, "Category", subsection); break;
+				}
+				DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
+				DPS_FREE(subsection);
+
+				if (pas == 2 && Doc->method != DPS_METHOD_HREFONLY) { 
+				    DpsPrepareWords(Indexer, Doc); 
+				    m = DpsSectionFilterFind(DPS_LOG_DEBUG,&Indexer->Conf->SectionFilters,Doc,reason);
+				} else pas--;
 			    }
-			    DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
-			    DPS_FREE(subsection);
-
-			    if (Doc->method != DPS_METHOD_HREFONLY) { DpsPrepareWords(Indexer, Doc); }
 			  } else Doc->method = m;
 			  DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
 			}
@@ -2721,21 +2728,27 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 		  DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
 		  if (m != DPS_METHOD_NOINDEX && m != DPS_METHOD_DISALLOW) {
 		    char *subsection = NULL;
-		    DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
-		    if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
+		    int pas;
+		    
+		    for (pas = 2; pas > 0; pas--) {
+			DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
+			if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
 
-		    DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
-		    switch(DpsSubSectionMatchFind(Indexer, DPS_LOG_DEBUG, &Indexer->Conf->SubSectionMatch, Doc, reason, &subsection)) {
-		    case DPS_METHOD_TAG:
-		      DpsVarListReplaceStr(&Doc->Sections, "Tag", subsection); break;
-		    case DPS_METHOD_CATEGORY:
-		      DpsVarListReplaceStr(&Doc->Sections, "Category", subsection); break;
+			DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
+			switch(DpsSubSectionMatchFind(Indexer, DPS_LOG_DEBUG, &Indexer->Conf->SubSectionMatch, Doc, reason, &subsection)) {
+			case DPS_METHOD_TAG:
+			    DpsVarListReplaceStr(&Doc->Sections, "Tag", subsection); break;
+			case DPS_METHOD_CATEGORY:
+			    DpsVarListReplaceStr(&Doc->Sections, "Category", subsection); break;
+			}
+			DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
+			DPS_FREE(subsection);
+
+			if (pas == 2 && Doc->method != DPS_METHOD_HREFONLY) {
+			    DpsPrepareWords(Indexer, Doc);
+			    m = DpsSectionFilterFind(DPS_LOG_DEBUG,&Indexer->Conf->SectionFilters,Doc,reason);
+			} else pas--;
 		    }
-		    DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
-		    DPS_FREE(subsection);
-
-		    if (Doc->method != DPS_METHOD_HREFONLY) DpsPrepareWords(Indexer, Doc);
-
 		  } else Doc->method = m;
 		  DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
 		}
