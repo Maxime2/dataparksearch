@@ -665,15 +665,14 @@ int main(int argc, char **argv, char **envp) {
 	    DpsParseURLText(&Main, Doc);
 	    {
 		char reason[PATH_MAX+1];
-		int m;
+		int m, pas;
 		DPS_GETLOCK(Indexer, DPS_LOCK_CONF);
 		m = DpsSectionFilterFind(DPS_LOG_DEBUG, &Main.Conf->SectionFilters,Doc,reason);
 		DPS_RELEASELOCK(Indexer, DPS_LOCK_CONF);
-		if (m != DPS_METHOD_NOINDEX && m != DPS_METHOD_DISALLOW) {
-		    char *subsection = NULL;
-		    int pas;
+		for (pas = 2; pas > 0; pas--) {
+		    if (m != DPS_METHOD_NOINDEX && m != DPS_METHOD_DISALLOW) {
+			char *subsection = NULL;
 
-		    for (pas = 2; pas > 0; pas--) {
 			DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
 			if (m == DPS_METHOD_INDEX) Doc->method = DPS_METHOD_GET;
 
@@ -691,8 +690,11 @@ int main(int argc, char **argv, char **envp) {
 			    DpsPrintSections(Indexer, Doc);
 			    m = DpsSectionFilterFind(DPS_LOG_DEBUG,&Indexer->Conf->SectionFilters,Doc,reason);
 			} else pas--;
+		    } else {
+			Doc->method = m;
+			pas--;
 		    }
-		} else Doc->method = m;
+		}
 		DpsLog(Indexer, DPS_LOG_DEBUG, "%s", reason);
 	    }
 	}
