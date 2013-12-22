@@ -5996,14 +5996,14 @@ static char *BuildLimitQuery(DPS_DB *db, const char * field) {
     case DPS_DB_SQLITE:
     case DPS_DB_SQLITE3:
     default:
-      dps_snprintf(qbuf, 2048, "SELECT (CASE WHEN %s<since THEN since ELSE %s END),rec_id as id,status FROM url u WHERE u.status>0 AND rec_id",field, field);
+      dps_snprintf(qbuf, 2048, "SELECT (CASE WHEN %s=0 THEN since ELSE %s END),rec_id as id,status FROM url u WHERE u.status>0 AND rec_id",field, field);
       break;
     case DPS_DB_MYSQL:
     case DPS_DB_ACCESS:
     case DPS_DB_ORACLE7:
     case DPS_DB_ORACLE8:
     case DPS_DB_SAPDB:
-      dps_snprintf(qbuf, 2048, "SELECT IF(%s>since,%s,since),rec_id as id,status FROM url u WHERE u.status>0 AND rec_id", field, field);
+      dps_snprintf(qbuf, 2048, "SELECT IF(%s>0,%s,since),rec_id as id,status FROM url u WHERE u.status>0 AND rec_id", field, field);
       break;
     }
 
