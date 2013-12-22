@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -460,6 +461,15 @@ __C_LINK int __DPSCALL DpsCacheMakeIndexes(DPS_AGENT *Indexer, DPS_DB *db) {
 /*	if (DPS_OK == DpsLimit4(Indexer, &L4, "link",  DPS_IFIELD_TYPE_INT, db)) {
 	  MakeLinearIndex(Indexer, &L4, DPS_LIMFNAME_LINK, db);
 	}*/
+
+      } else if (!strcasecmp(ind, "since")) {
+
+	/* To see the URL being indexed in "ps" output */
+	if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] Since Time index creation", Indexer->handle);
+	DpsLog(Indexer, DPS_LOG_EXTRA, "Creating since time index");
+	if (DPS_OK == DpsLimit4(Indexer, &L4, "since",  DPS_IFIELD_TYPE_HOUR, db)) {
+	  MakeLinearIndex(Indexer, &L4, DPS_LIMFNAME_TIME, db);
+	}
 
       } else if (!strcasecmp(ind, "time")) {
 

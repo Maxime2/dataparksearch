@@ -3876,6 +3876,8 @@ int DpsParseQueryString(DPS_AGENT * Agent,DPS_VARLIST * vars,char * query_string
 			  ltype = DPS_LIMTYPE_LINEAR_CRC; fname = DPS_LIMFNAME_TAG;
 			} else if(!strcasecmp(lim, "link")) {
 			  ltype = DPS_LIMTYPE_LINEAR_INT; fname = DPS_LIMFNAME_LINK;
+			} else if(!strcasecmp(lim, "since")) {
+			  ltype = DPS_LIMTYPE_TIME; fname = str;
 			} else if(!strcasecmp(lim, "time")) {
 			  ltype = DPS_LIMTYPE_TIME; fname = DPS_LIMFNAME_TIME;
 			} else if(!strcasecmp(lim, "hostname")) {
