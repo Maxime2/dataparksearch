@@ -166,7 +166,7 @@ void DpsParseHTTPResponse(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
 	oldstatus = DpsVarListFindInt(&Doc->Sections, "Status", 0);
 	DpsVarListReplaceInt(&Doc->Sections, "ResponseSize", (int)Doc->Buf.size);
 	DpsVarListDel(&Doc->Sections, "Content-Length");
-	DpsVarListDel(&Doc->Sections, "Last-Modified");
+/*	DpsVarListDel(&Doc->Sections, "Last-Modified");*/ /* if it's not deleted Lat-Modified equals to the first appearance in db */
 
 	if (Doc->Buf.buf == NULL) return;
 
