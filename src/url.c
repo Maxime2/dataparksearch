@@ -465,15 +465,67 @@ char * DpsURLNormalizePath(char * str){
 	return str;
 }
 
+/* RFC3986: http://www.ietf.org/rfc/rfc3986.txt
 
- void RelLink(DPS_AGENT *Indexer, DPS_URL *curURL, DPS_URL *newURL, char **str, int ReverseAliasFlag) {
+5.2.2.  Transform References
+
+   For each URI reference (R), the following pseudocode describes an
+   algorithm for transforming R into its target URI (T):
+
+      -- The URI reference is parsed into the five URI components
+      --
+      (R.scheme, R.authority, R.path, R.query, R.fragment) = parse(R);
+
+      -- A non-strict parser may ignore a scheme in the reference
+      -- if it is identical to the base URI's scheme.
+      --
+      if ((not strict) and (R.scheme == Base.scheme)) then
+         undefine(R.scheme);
+      endif;
+
+      if defined(R.scheme) then
+         T.scheme    = R.scheme;
+         T.authority = R.authority;
+         T.path      = remove_dot_segments(R.path);
+         T.query     = R.query;
+      else
+         if defined(R.authority) then
+            T.authority = R.authority;
+            T.path      = remove_dot_segments(R.path);
+            T.query     = R.query;
+         else
+            if (R.path == "") then
+               T.path = Base.path;
+               if defined(R.query) then
+                  T.query = R.query;
+               else
+                  T.query = Base.query;
+               endif;
+            else
+               if (R.path starts-with "/") then
+                  T.path = remove_dot_segments(R.path);
+               else
+                  T.path = merge(Base.path, R.path);
+                  T.path = remove_dot_segments(T.path);
+               endif;
+               T.query = R.query;
+            endif;
+            T.authority = Base.authority;
+         endif;
+         T.scheme = Base.scheme;
+      endif;
+
+      T.fragment = R.fragment;
+
+*/
+void RelLink(DPS_AGENT *Indexer, DPS_URL *curURL, DPS_URL *newURL, char **str, int ReverseAliasFlag, int ConfFlag) {
 	const char	*schema = newURL->schema ? newURL->schema : curURL->schema;
 	const char	*hostname = newURL->hostname ? newURL->hostname : curURL->hostname;
 	const char	*auth = NULL;
 	const char	*path = (newURL->path && newURL->path[0]) ? newURL->path : curURL->path;
 	const char	*fname = ((newURL->filename && newURL->filename[0]) || (newURL->path && newURL->path[0])) ? 
 	  newURL->filename : curURL->filename;
-	const char      *query_string = newURL->query_string;
+	const char      *query_string = (newURL->query_string || !ConfFlag) ? newURL->query_string : curURL->query_string;
 	char            *anchor = newURL->anchor;
 	char		*pathfile = (char*)DpsMalloc(dps_strlen(DPS_NULL2EMPTY(path)) + dps_strlen(DPS_NULL2EMPTY(fname)) +
 						     dps_strlen(DPS_NULL2EMPTY(query_string)) + +dps_strlen(DPS_NULL2EMPTY(anchor)) + 5);

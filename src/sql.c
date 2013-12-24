@@ -726,7 +726,7 @@ static int DpsServerDB(DPS_AGENT *Indexer, DPS_SERVER *Srv, DPS_DB *db) {
 	  }
 #endif
 	  PunyURL->hostname = ascii;
-	  RelLink(Indexer, SrvURL, PunyURL, &Srv->Match.idn_pattern, 0);
+	  RelLink(Indexer, SrvURL, PunyURL, &Srv->Match.idn_pattern, 0, 1); /* No ReverseAlias, Conf */
       }
 /*				  DPS_FREE(ascii);  will be freed later with DpsURLFree(PunyURL) */
       DPS_FREE(uni); 
@@ -868,7 +868,7 @@ FROM %s WHERE enabled=1 AND parent=%s0%s ORDER BY ordre", name, qu, qu);
 			      }
 #endif
 			      PunyURL->hostname = ascii;
-			      RelLink(Indexer, SrvURL, PunyURL, &Server->Match.idn_pattern, 0);
+			      RelLink(Indexer, SrvURL, PunyURL, &Server->Match.idn_pattern, 0, 1); /* No ReverseAlias, Conf */
 			  }
 /*				  DPS_FREE(ascii);  will be freed later with DpsURLFree(PunyURL) */
 			  DPS_FREE(uni); 

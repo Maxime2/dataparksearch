@@ -534,7 +534,7 @@ int DpsConvertHref(DPS_AGENT *Indexer, DPS_URL *CurURL, DPS_HREF *Href){
 	}
 
 	newURL->charset_id = Href->charset_id;
-	RelLink(Indexer, CurURL, newURL, &newhref, 1);
+	RelLink(Indexer, CurURL, newURL, &newhref, 1, 0); /* ReverseAlias, No Conf */
 	
 	DpsLog(Indexer,DPS_LOG_DEBUG,"Link '%s' %s",Href->url,newhref);
 
@@ -1832,7 +1832,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	}
 
 	newURL->charset_id = Parent->charset_id;
-	RelLink(Indexer, (base) ? baseURL : &Parent->CurURL, newURL, &newhref, 1);
+	RelLink(Indexer, (base) ? baseURL : &Parent->CurURL, newURL, &newhref, 1, 0); /* ReverseAlias, No Conf */
 	DpsVarListReplaceLst(&Doc->Sections, &Parent->Sections, NULL, "*");
 	DpsVarListDel(&Doc->Sections, "E_URL");
 	DpsVarListDel(&Doc->Sections, "URL_ID");
