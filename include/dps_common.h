@@ -1577,4 +1577,8 @@ extern int log2stderr;
 #define DPS_DBL_DB(A, i) ((A)->flags & DPS_FLAG_UNOCON) ? (A)->Conf->dbl.db[i] : (A)->dbl.db[i]
 #define DPS_DBL_TO(A) ((A)->flags & DPS_FLAG_UNOCON) ? (A)->Conf->dbl.nitems : (A)->dbl.nitems
 
+#define DPS_STATUS_UPPER(I) (((I)->Flags.SubDocLevel > 0) ? 400 : 300)
+#define DPS_STATUS_IN_INDEX(u,s)  ((s >= 200 && s < u) || s == 304)
+#define DPS_STATUS_NOT_INDEX(u,s) ((s < 200 || s >= u) && s != 304)
+
 #endif /* _DPS_COMMON_H */

@@ -2741,7 +2741,7 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	int rc = DPS_OK, u = 1, recs, status;
 	int NFiles;
 	int *FF = NULL;
-	int upper_status = (Indexer->Flags.SubDocLevel > 0) ? 400 : 300;
+	int upper_status = DPS_STATUS_UPPER(Indexer);
 	int max_shows, use_showcnt = !strcasecmp(DpsVarListFindStr(&Indexer->Vars, "PopRankUseShowCnt", "no"), "yes");
 	double min_weight, scale_weight;
 	const char	*vardir;
@@ -2812,7 +2812,7 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	  for (i = 0; i < nitems; i++) {
 	    status = DPS_ATOI(DpsSQLValue(&SQLres, i, 5));
 	    
-	    if ((status < 200 || status >= upper_status) && (status != 304)) continue;
+	    if (DPS_STATUS_NOT_INDEX(upper_status,status)) continue;
 
 	    Item.url_id = DPS_ATOI(DpsSQLValue(&SQLres, i, 0));
 	    Item.site_id = DPS_ATOI(DpsSQLValue(&SQLres, i, 1));

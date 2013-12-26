@@ -473,11 +473,21 @@ static int DocUpdate(DPS_AGENT * Indexer, DPS_DOCUMENT *Doc) {
 		TRACE_OUT(Indexer);
 		return result;
 	
-	case DPS_HTTP_STATUS_OK:				/*  200 */
-	case DPS_HTTP_STATUS_PARTIAL_OK:			/*  206 */
+	case DPS_HTTP_STATUS_MULTIPLE_CHOICES:			/*  300 */
+	case DPS_HTTP_STATUS_MOVED_PARMANENTLY:			/*  301 */
 	case DPS_HTTP_STATUS_MOVED_TEMPORARILY:			/*  302 */
 	case DPS_HTTP_STATUS_SEE_OTHER:				/*  303 */
 	case DPS_HTTP_STATUS_TEMPORARY_REDIRECT:                /*  307 */
+	    if (status > DPS_STATUS_UPPER(Indexer)) {
+		/* FIXME: check that status is changed and remove words if necessary */
+		result = DpsURLAction(Indexer, Doc, DPS_URL_ACTION_SUPDATE);
+		TRACE_OUT(Indexer);
+		return result;
+	    }
+	    /* There is not break by design */
+
+	case DPS_HTTP_STATUS_OK:				/*  200 */
+	case DPS_HTTP_STATUS_PARTIAL_OK:			/*  206 */
 		if(!DpsVarListFind(&Doc->Sections,"Content-Type")){
 		        if (Doc->method != DPS_METHOD_VISITLATER && Doc->method == DPS_METHOD_CRAWLDELAY) {
 			  if (Doc->connp.Host != NULL) Doc->connp.Host->net_errors++;
@@ -498,8 +508,6 @@ static int DocUpdate(DPS_AGENT * Indexer, DPS_DOCUMENT *Doc) {
 		}
 		break;
 	
-	case DPS_HTTP_STATUS_MULTIPLE_CHOICES:			/*  300 */
-	case DPS_HTTP_STATUS_MOVED_PARMANENTLY:			/*  301 */
 	case DPS_HTTP_STATUS_NOT_MODIFIED:			/*  304 */
 	case DPS_HTTP_STATUS_OK_CLONES:                         /* 2200 */
 	case DPS_HTTP_STATUS_PARTIAL_OK_CLONES:                 /* 2206 */
