@@ -1940,12 +1940,11 @@ int DpsBuild(const char *path, int omode) {
 		}
 		if (last)
 			(void)umask(oumask);
-		if (stat(path, &sb)) {
+		if (stat(pp, &sb)) {
 			if (errno != ENOENT ||
-			    mkdir(path, last ? omode :
+			    mkdir(pp, last ? omode :
 				  S_IRWXU | S_IRWXG | S_IRWXO) < 0
 				 ){
-				/* warn("%s", path); */
 				retval = 1;
 				break;
 			}
@@ -1955,7 +1954,6 @@ int DpsBuild(const char *path, int omode) {
 				errno = EEXIST;
 			else
 				errno = ENOTDIR;
-			/* warn("%s", path); */
 			retval = 1;
 			break;
 		}

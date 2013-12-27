@@ -24,6 +24,7 @@
 #include "dps_log.h"
 #include "dps_charsetutils.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -89,10 +90,17 @@ __C_LINK int __DPSCALL DpsMirrorGET(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
      dps_snprintf(str, str_len, "%s"DPSSLASHSTR"%s"DPSSLASHSTR"%s%s%s.body", mirror_data,
                DPS_NULL2EMPTY(url->schema), DPS_NULL2EMPTY(url->hostname), DPS_NULL2EMPTY(url->path), estr);
 
+     body_again:
+
      if ((fbody = DpsOpen2(str, O_RDONLY | DPS_BINARY)) == -1){
-          DpsLog(Indexer, DPS_LOG_EXTRA, "Mirror file %s not found", str);
-          DPS_FREE(estr); DPS_FREE(str);
-          return DPS_MIRROR_NOT_FOUND;
+	 if (errno == ENAMETOOLONG) {
+	     dps_snprintf(str, str_len, "%s"DPSSLASHSTR"%s"DPSSLASHSTR"%s"DPSSLASHSTR"url_id_%d.body", mirror_data, 
+			  DPS_NULL2EMPTY(url->schema), DPS_NULL2EMPTY(url->hostname), DpsURL_ID(Doc, NULL));
+	     goto body_again;
+	 }
+	 DpsLog(Indexer, DPS_LOG_EXTRA, "Mirror file %s not found", str);
+	 DPS_FREE(estr); DPS_FREE(str);
+	 return DPS_MIRROR_NOT_FOUND;
      }
 
      /* Check on file mtime > days ? return */
@@ -112,22 +120,29 @@ __C_LINK int __DPSCALL DpsMirrorGET(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
           dps_snprintf(str, str_len, "%s"DPSSLASHSTR"%s"DPSSLASHSTR"%s%s%s.header", 
                 mirror_hdrs, DPS_NULL2EMPTY(url->schema), DPS_NULL2EMPTY(url->hostname), DPS_NULL2EMPTY(url->path), estr);
 
+     hdrs_again:
+
           if ((fheader = DpsOpen2(str, O_RDONLY | DPS_BINARY)) >= 0) {
-	    if (fstat(fheader, &sb)) {
-	      DPS_FREE(estr); DPS_FREE(str);
-	      return DPS_MIRROR_NOT_FOUND;
-	    }
-	    allocated_size += sb.st_size;
-	    if ((Doc->Buf.buf = (char*)DpsRealloc(Doc->Buf.buf, allocated_size + 1)) == NULL) {
-	      DPS_FREE(estr); DPS_FREE(str); 
-	      Doc->Buf.allocated_size = 0;
-	      return DPS_MIRROR_NOT_FOUND;
-	    } 
-	    Doc->Buf.allocated_size = allocated_size;
-	    size = read(fheader, Doc->Buf.buf, Doc->Buf.allocated_size);
-	    DpsClose(fheader);
-	    dps_strcpy(Doc->Buf.buf + size, "\r\n\r\n");
-	    have_headers = 1;
+	      if (errno == ENAMETOOLONG) {
+		  dps_snprintf(str, str_len, "%s"DPSSLASHSTR"%s"DPSSLASHSTR"%s"DPSSLASHSTR"url_id_%d.header", mirror_data, 
+			       DPS_NULL2EMPTY(url->schema), DPS_NULL2EMPTY(url->hostname), DpsURL_ID(Doc, NULL));
+		  goto hdrs_again;
+	      }
+	      if (fstat(fheader, &sb)) {
+		  DPS_FREE(estr); DPS_FREE(str);
+		  return DPS_MIRROR_NOT_FOUND;
+	      }
+	      allocated_size += sb.st_size;
+	      if ((Doc->Buf.buf = (char*)DpsRealloc(Doc->Buf.buf, allocated_size + 1)) == NULL) {
+		  DPS_FREE(estr); DPS_FREE(str); 
+		  Doc->Buf.allocated_size = 0;
+		  return DPS_MIRROR_NOT_FOUND;
+	      } 
+	      Doc->Buf.allocated_size = allocated_size;
+	      size = read(fheader, Doc->Buf.buf, Doc->Buf.allocated_size);
+	      DpsClose(fheader);
+	      dps_strcpy(Doc->Buf.buf + size, "\r\n\r\n");
+	      have_headers = 1;
           }
      } else {
        if ((Doc->Buf.buf = (char*)DpsRealloc(Doc->Buf.buf, allocated_size + 1)) == NULL) {
@@ -223,8 +238,10 @@ __C_LINK int __DPSCALL DpsMirrorPUT(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
 	    return DPS_MIRROR_CANT_BUILD;
        }
 
-       dps_strcat(str, DPSSLASHSTR);
+       if (url->path == NULL || url->path[0] == '\0') dps_strcat(str, DPSSLASHSTR);
        dps_strcat(str, estr);
+     body_again:
+
        if (suffix != NULL) {
 	 dps_strcat(str, ".");
 	 dps_strcat(str, suffix);
@@ -232,7 +249,12 @@ __C_LINK int __DPSCALL DpsMirrorPUT(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
        dps_strcat(str, ".body");
 
        if ((fd = DpsOpen3(str, O_CREAT | O_WRONLY | DPS_BINARY, DPS_IWRITE)) == -1) {
-               DpsLog(Indexer, DPS_LOG_EXTRA, "Can't open mirror file %s\n", str);
+	   if (errno == ENAMETOOLONG) {
+	       dps_snprintf(str, str_len, "%s"DPSSLASHSTR"%s"DPSSLASHSTR"%s"DPSSLASHSTR"url_id_%d", mirror_data, 
+			    DPS_NULL2EMPTY(url->schema), DPS_NULL2EMPTY(url->hostname), DpsURL_ID(Doc, NULL));
+	       goto body_again;
+	   }
+               dps_strerror(Indexer, DPS_LOG_EXTRA, "Can't open mirror file %s\n", str);
                *token = savechar;
                DPS_FREE(estr); DPS_FREE(str);
                return DPS_MIRROR_CANT_OPEN;
@@ -253,15 +275,22 @@ __C_LINK int __DPSCALL DpsMirrorPUT(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_U
 	 return DPS_MIRROR_CANT_BUILD;
        }
 
-       dps_strcat(str, DPSSLASHSTR);
+       if (url->path == NULL || url->path[0] == '\0') dps_strcat(str, DPSSLASHSTR);
        dps_strcat(str, estr);
+     hdrs_again:
+
        dps_strcat(str, ".header");
        
        if ((fd = DpsOpen3(str, O_CREAT | O_WRONLY | DPS_BINARY, DPS_IWRITE)) == -1) {
-	 DpsLog(Indexer, DPS_LOG_EXTRA, "Can't open mirror file %s\n", str);
-	 *token = savechar;
-	 DPS_FREE(estr); DPS_FREE(str);
-	 return DPS_MIRROR_CANT_OPEN;
+	   if (errno == ENAMETOOLONG) {
+	       dps_snprintf(str, str_len, "%s"DPSSLASHSTR"%s"DPSSLASHSTR"%s"DPSSLASHSTR"url_id_%d", mirror_data, 
+			    DPS_NULL2EMPTY(url->schema), DPS_NULL2EMPTY(url->hostname), DpsURL_ID(Doc, NULL));
+	       goto hdrs_again;
+	   }
+	   dps_strerror(Indexer, DPS_LOG_EXTRA, "Can't open mirror file %s\n", str);
+	   *token = savechar;
+	   DPS_FREE(estr); DPS_FREE(str);
+	   return DPS_MIRROR_CANT_OPEN;
        }
        size = write(fd, Doc->Buf.buf, buf_len = dps_strlen(Doc->Buf.buf));
        if (size < 0) {

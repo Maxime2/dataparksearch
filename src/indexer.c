@@ -1339,10 +1339,13 @@ int DpsDocParseContent(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
 /*		DpsVarListReplaceInt(&Doc->Sections,"Status",DPS_HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE);*/
 	  }
 
-	  DpsMirrorPUT(Indexer, Doc, &Doc->CurURL, "before");
+/*	  DpsMirrorPUT(Indexer, Doc, &Doc->CurURL, "before");*/
 	
 #ifdef HAVE_LIBEXTRACTOR
-	  if (strncasecmp(ct, "text/", 5) != 0 && strncasecmp(ct, "application/atom+xml", 20) != 0) {
+	  if (strncasecmp(ct, "text/", 5) != 0 
+	      && strncasecmp(ct, "application/atom+xml", 20) != 0
+	      && strncasecmp(ct, "application/rss+xml", 19) != 0
+	      ) {
 
 #if EXTRACTOR_VERSION < 0x00060000
 	    DPS_TEXTITEM  Item;
@@ -1531,7 +1534,7 @@ int DpsDocParseContent(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
 	     || !strncasecmp(real_content_type, "application/xhtml+xml", 21)
 	     || !strncasecmp(real_content_type, "text/vnd.wap.wml", 16)
 	     ){
-			DpsMirrorPUT(Indexer, Doc, &Doc->CurURL, "bf_html");
+/*			DpsMirrorPUT(Indexer, Doc, &Doc->CurURL, "bf_html");*/
 			DpsHTMLParse(Indexer,Doc);
 			DpsParseSections(Indexer, Doc);
 			nosections = 0;
@@ -1559,7 +1562,7 @@ int DpsDocParseContent(DPS_AGENT * Indexer, DPS_DOCUMENT * Doc) {
 	  }
 	}
 
-	DpsMirrorPUT(Indexer, Doc, &Doc->CurURL, "after");
+/*	DpsMirrorPUT(Indexer, Doc, &Doc->CurURL, "after");*/
 
 	/* Guesser stuff */	
 	DpsGuessCharSet(Indexer, Doc, &Indexer->Conf->LangMaps);
