@@ -848,7 +848,7 @@ void *DpsExcerptDoc(void *param) {
     case DPS_HTML_COM:
       break;
     case DPS_HTML_TAG:
-      DpsHTMLParseTag(query, &tag, Doc);
+	DpsHTMLParseTag(query, &tag, Doc, NULL);
       break;
     default:
       break;
@@ -906,7 +906,7 @@ void *DpsExcerptDoc(void *param) {
 	case DPS_HTML_COM:
 	  break;
 	case DPS_HTML_TAG:	 
-	  DpsHTMLParseTag(query, &tag, Doc);
+	    DpsHTMLParseTag(query, &tag, Doc, NULL);
 	  break;
 	default:
 	  break;

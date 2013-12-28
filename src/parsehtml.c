@@ -1223,9 +1223,30 @@ static int DpsHasEndTag(const char *name) {
 }
 
 
+static void putItem(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM *Item) {
+  DPS_TEXTITEM *Last;
+  if (Doc->TextList.nitems == 0) {
+    (void)DpsTextListAdd(&Doc->TextList, Item);
+  } else {
+    Last = Doc->TextList.Items + Doc->TextList.nitems - 1;
+    if (Item->section == Last->section 
+	&& ((Item->href == NULL && Last->href == NULL) || strcmp(DPS_NULL2EMPTY(Item->href), DPS_NULL2EMPTY(Last->href)) == 0)
+	) {
+      if ((Last->str = (char*)DpsRealloc(Last->str, Last->len + Item->len + 1)) == NULL) return;
+
+      dps_memcpy(Last->str + Last->len, Item->str, Item->len);
+      Last->len += Item->len;
+      Last->str[Last->len] = '\0';
+      /*return;*/
+    } else {
+      DpsTextListAdd(&Doc->TextList, Item); /* temporary, need to be implemented when Items will be in unicode */
+    }
+  }
+  return;
+}
 
 
-int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
+int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, DPS_VAR *CrosSec) {
 	DPS_TEXTITEM Item;
 	DPS_VAR	*Sec;
 	int opening, visible = 0;
@@ -1234,6 +1255,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 	char *metaname = NULL;
 	char *metacont = NULL;
 	char *href = NULL;
+	char *alt = NULL;
 	char *data_expanded_url = NULL;
 	char *data_ultimate_url = NULL;
 	char *base = NULL;
@@ -1342,6 +1364,13 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
 		  DPS_FREE(href);
 		  href = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
+		  DPS_FREE(y);
+		}else
+		if(ISTAG(i,"alt")){
+		  /* IMG, AREA, APPLET, and INPUT */
+		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
+		  DPS_FREE(alt);
+		  alt = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
 		  DPS_FREE(y);
 		}else
 		if(ISTAG(i,"data-expanded-url")){
@@ -1636,6 +1665,15 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc) {
 		/* It will be used only to compose relative links. */
 		DPS_FREE(href);
 	}
+	else if (href && CrosSec && alt != NULL && !strcmp(name, "img")) {
+	    Item.href = href;
+	    Item.section = CrosSec->section;
+	    Item.section_name = CrosSec->name;
+	    Item.strict = CrosSec->strict;
+	    Item.str = alt;
+	    Item.len = dps_strlen(alt);
+	    putItem(Indexer, Doc, &Item);
+	}
 
 	if((href || data_expanded_url || data_ultimate_url) && visible && (Doc->Spider.follow != DPS_FOLLOW_NO) && (tag->follow != DPS_FOLLOW_NO) && !(Indexer->Flags.SkipHrefIn & DpsHrefFrom(name)) ) {
 		DPS_HREF	Href;
@@ -1689,29 +1727,6 @@ typedef struct {
 } DPS_TAGSTACK;
 
 
-static void putItem(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITEM *Item) {
-  DPS_TEXTITEM *Last;
-  if (Doc->TextList.nitems == 0) {
-    (void)DpsTextListAdd(&Doc->TextList, Item);
-  } else {
-    Last = Doc->TextList.Items + Doc->TextList.nitems - 1;
-    if (Item->section == Last->section 
-	&& ((Item->href == NULL && Last->href == NULL) || strcmp(DPS_NULL2EMPTY(Item->href), DPS_NULL2EMPTY(Last->href)) == 0)
-	) {
-      if ((Last->str = (char*)DpsRealloc(Last->str, Last->len + Item->len + 1)) == NULL) return;
-
-      dps_memcpy(Last->str + Last->len, Item->str, Item->len);
-      Last->len += Item->len;
-      Last->str[Last->len] = '\0';
-      /*return;*/
-    } else {
-      DpsTextListAdd(&Doc->TextList, Item); /* temporary, need to be implemented when Items will be in unicode */
-    }
-  }
-  return;
-}
-
-
 int DpsHTMLParseBuf(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *section_name, const char *content) {
 	DPS_HTMLTOK	tag;
 	DPS_TEXTITEM	Item;
@@ -1725,6 +1740,7 @@ int DpsHTMLParseBuf(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *section_n
 	int		title_strict = TSec ? TSec->strict : 0;
 	int             status = DpsVarListFindInt(&Doc->Sections, "Status", 0);
 	int             skip = (status > 299 && status < 600 && status != 304);
+	DPS_VAR         *CrosSec = DpsVarListFind(&Doc->Sections, "crosswords");
 
 #ifdef WITH_PARANOIA
 	void *paran = DpsViolationEnter(paran);
@@ -1811,7 +1827,7 @@ int DpsHTMLParseBuf(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *section_n
 	    break;
 		
 	  case DPS_HTML_TAG:
-	    DpsHTMLParseTag(Indexer, &tag, Doc);
+	      DpsHTMLParseTag(Indexer, &tag, Doc, CrosSec);
 	    break;
 	  }
 	  htok = DpsHTMLToken(NULL, &last, &tag);
