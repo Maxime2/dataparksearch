@@ -1037,14 +1037,105 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="HOLDBADHREFS_CMD"
+NAME="ALLOWIF_CMD"
 >3.10.22. <B
+CLASS="COMMAND"
+>AllowIf</B
+> command</A
+></H2
+><A
+NAME="AEN2305"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>AllowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>This command is similar to the <B
+CLASS="COMMAND"
+>Allow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;), but is applicable to any section of the document indexed, and it is appplied after the content of the document downloaded and indexed. Use this command to allow indexing, if the value of <CODE
+CLASS="OPTION"
+>section</CODE
+> match the <CODE
+CLASS="OPTION"
+>arg</CODE
+> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <B
+CLASS="COMMAND"
+>Allow</B
+> command.</P
+><P
+>Example
+<PRE
+CLASS="PROGRAMLISTING"
+>AllowIf regex Title Manual
+AllowIf body "*important detail*"</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DISALLOWIF_CMD"
+>3.10.23. <B
+CLASS="COMMAND"
+>DisallowIf</B
+> command</A
+></H2
+><A
+NAME="AEN2320"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>This command is similar to the <B
+CLASS="COMMAND"
+>Disallow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#DISALLOW_CMD"
+>Section 3.10.15</A
+>&#62;), but is applicable to any section of the document indexed, and it is appplied after the content of the document downloaded and indexed. Use this command to delete corresponding document from the database, if the value of <CODE
+CLASS="OPTION"
+>section</CODE
+> match the <CODE
+CLASS="OPTION"
+>arg</CODE
+> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <B
+CLASS="COMMAND"
+>Allow</B
+> command (see <A
+HREF="dpsearch-indexcmd.en.html#ALLOW_CMD"
+>Section 3.10.14</A
+>&#62;).</P
+><P
+>Example
+<PRE
+CLASS="PROGRAMLISTING"
+>DisallowIf regex Title Sex
+DisallowIf body *xxx*</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOLDBADHREFS_CMD"
+>3.10.24. <B
 CLASS="COMMAND"
 >HoldBadHrefs</B
 > command</A
 ></H2
 ><A
-NAME="AEN2305"
+NAME="AEN2336"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1060,7 +1151,7 @@ CLASS="COMMAND"
 >Period</B
 > command in <A
 HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
->Section 3.10.26</A
+>Section 3.10.28</A
 >&#62;.
 <PRE
 CLASS="PROGRAMLISTING"
@@ -1073,13 +1164,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="DELETEOLDER_CMD"
->3.10.23. <B
+>3.10.25. <B
 CLASS="COMMAND"
 >DeleteOlder</B
 > command</A
 ></H2
 ><A
-NAME="AEN2316"
+NAME="AEN2347"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1092,7 +1183,7 @@ CLASS="COMMAND"
 >Period</B
 > command in <A
 HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
->Section 3.10.26</A
+>Section 3.10.28</A
 >&#62;.
 Default value is 0. "0" value mean "do not check". You may specify several <B
 CLASS="COMMAND"
@@ -1113,13 +1204,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="USEREMOTECONTENTTYPE_CMD"
->3.10.24. <B
+>3.10.26. <B
 CLASS="COMMAND"
 >UseRemoteContentType</B
 > command</A
 ></H2
 ><A
-NAME="AEN2329"
+NAME="AEN2360"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1141,13 +1232,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="ADDTYPE_CMD"
->3.10.25. <B
+>3.10.27. <B
 CLASS="COMMAND"
 >AddType</B
 > command</A
 ></H2
 ><A
-NAME="AEN2338"
+NAME="AEN2369"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1170,13 +1261,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PERIOD_CMD"
->3.10.26. <B
+>3.10.28. <B
 CLASS="COMMAND"
 >Period</B
 > command</A
 ></H2
 ><A
-NAME="AEN2347"
+NAME="AEN2378"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1226,13 +1317,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PERIODBYHOPS_CMD"
->3.10.27. <B
+>3.10.29. <B
 CLASS="COMMAND"
 >PeriodByHops</B
 > command</A
 ></H2
 ><A
-NAME="AEN2360"
+NAME="AEN2391"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1268,13 +1359,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="EXPIREAT_CMD"
->3.10.28. <B
+>3.10.30. <B
 CLASS="COMMAND"
 >ExpireAt</B
 > command</A
 ></H2
 ><A
-NAME="AEN2375"
+NAME="AEN2406"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1308,13 +1399,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="USEDATEHEADER_CMD"
->3.10.29. <B
+>3.10.31. <B
 CLASS="COMMAND"
 >UseDateHeader</B
 > command</A
 ></H2
 ><A
-NAME="AEN2388"
+NAME="AEN2419"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1329,13 +1420,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="LMDSECTION_CMD"
->3.10.30. <B
+>3.10.32. <B
 CLASS="COMMAND"
 >LMDSection</B
 > command</A
 ></H2
 ><A
-NAME="AEN2396"
+NAME="AEN2427"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1358,13 +1449,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXHOPS_CMD"
->3.10.31. <B
+>3.10.33. <B
 CLASS="COMMAND"
 >MaxHops</B
 > command</A
 ></H2
 ><A
-NAME="AEN2406"
+NAME="AEN2437"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1384,13 +1475,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="TARCKHOPS_CMD"
->3.10.32. <B
+>3.10.34. <B
 CLASS="COMMAND"
 >TrackHops</B
 > command</A
 ></H2
 ><A
-NAME="AEN2415"
+NAME="AEN2446"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1411,13 +1502,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDEPTH_CMD"
->3.10.33. <B
+>3.10.35. <B
 CLASS="COMMAND"
 >MaxDepth</B
 > command</A
 ></H2
 ><A
-NAME="AEN2424"
+NAME="AEN2455"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1438,13 +1529,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDOCSPERSERVER_CMD"
->3.10.34. <B
+>3.10.36. <B
 CLASS="COMMAND"
 >MaxDocsPerServer</B
 > command</A
 ></H2
 ><A
-NAME="AEN2433"
+NAME="AEN2464"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1473,13 +1564,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXHREFSPERSERVER_CMD"
->3.10.35. <B
+>3.10.37. <B
 CLASS="COMMAND"
 >MaxHrefsPerServer</B
 > command</A
 ></H2
 ><A
-NAME="AEN2444"
+NAME="AEN2475"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1507,13 +1598,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXNETERRORS_CMD"
->3.10.36. <B
+>3.10.38. <B
 CLASS="COMMAND"
 >MaxNetErrors</B
 > command</A
 ></H2
 ><A
-NAME="AEN2455"
+NAME="AEN2486"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1545,13 +1636,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="READTIMEOUT_CMD"
->3.10.37. <B
+>3.10.39. <B
 CLASS="COMMAND"
 >ReadTimeOut</B
 > command</A
 ></H2
 ><A
-NAME="AEN2467"
+NAME="AEN2498"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1563,7 +1654,7 @@ CLASS="OPTION"
 >&lt;time&gt;</CODE
 > format see <A
 HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
->Section 3.10.26</A
+>Section 3.10.28</A
 >&#62;.
 Default value is 30 seconds.
 Can be set any times before <B
@@ -1585,13 +1676,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="DOCTIMEOUT_CMD"
->3.10.38. <B
+>3.10.40. <B
 CLASS="COMMAND"
 >DocTimeOut</B
 > command</A
 ></H2
 ><A
-NAME="AEN2480"
+NAME="AEN2511"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1603,7 +1694,7 @@ CLASS="OPTION"
 >&lt;time&gt;</CODE
 > format see <A
 HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
->Section 3.10.26</A
+>Section 3.10.28</A
 >&#62;.
 Default value is 90 seconds.
 Can be set any times before <B
@@ -1625,13 +1716,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="NETERRORDELAYTIME_CMD"
->3.10.39. <B
+>3.10.41. <B
 CLASS="COMMAND"
 >NetErrorDelayTime</B
 > command</A
 ></H2
 ><A
-NAME="AEN2493"
+NAME="AEN2524"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1643,7 +1734,7 @@ CLASS="OPTION"
 >&lt;time&gt;</CODE
 > format see <A
 HREF="dpsearch-indexcmd.en.html#PERIOD_CMD"
->Section 3.10.26</A
+>Section 3.10.28</A
 >&#62;.
 Default value is one day
 <PRE
@@ -1657,13 +1748,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="COOKIES_CMD"
->3.10.40. <B
+>3.10.42. <B
 CLASS="COMMAND"
 >Cookies</B
 > command</A
 ></H2
 ><A
-NAME="AEN2504"
+NAME="AEN2535"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1690,13 +1781,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SECTION_CMD"
->3.10.41. <B
+>3.10.43. <B
 CLASS="COMMAND"
 >Section</B
 > command</A
 ></H2
 ><A
-NAME="AEN2515"
+NAME="AEN2546"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1762,13 +1853,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="HREFSECTION_CMD"
->3.10.42. <B
+>3.10.44. <B
 CLASS="COMMAND"
 >HrefSection</B
 > command</A
 ></H2
 ><A
-NAME="AEN2535"
+NAME="AEN2566"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1800,13 +1891,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="FASTHREFCHECK"
->3.10.43. <B
+>3.10.45. <B
 CLASS="COMMAND"
 >FastHrefCheck</B
 > command</A
 ></H2
 ><A
-NAME="AEN2547"
+NAME="AEN2578"
 ></A
 ><P
 >The "<B
@@ -1824,13 +1915,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="INDEX_CMD"
->3.10.44. <B
+>3.10.46. <B
 CLASS="COMMAND"
 >Index</B
 > command</A
 ></H2
 ><A
-NAME="AEN2556"
+NAME="AEN2587"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1858,13 +1949,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXYAUTHBASIC_CMD"
->3.10.45. <B
+>3.10.47. <B
 CLASS="COMMAND"
 >ProxyAuthBasic</B
 > command</A
 ></H2
 ><A
-NAME="AEN2567"
+NAME="AEN2598"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1895,13 +1986,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXY_CMD"
->3.10.46. <B
+>3.10.48. <B
 CLASS="COMMAND"
 >Proxy</B
 > command</A
 ></H2
 ><A
-NAME="AEN2579"
+NAME="AEN2610"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1940,13 +2031,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="AUTHBASIC_CMD"
->3.10.47. <B
+>3.10.49. <B
 CLASS="COMMAND"
 >AuthBasic</B
 > command</A
 ></H2
 ><A
-NAME="AEN2591"
+NAME="AEN2622"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1980,13 +2071,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SERVERWEIGHT_CMD"
->3.10.48. <B
+>3.10.50. <B
 CLASS="COMMAND"
 >ServerWeight</B
 > command</A
 ></H2
 ><A
-NAME="AEN2602"
+NAME="AEN2633"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2007,13 +2098,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="OPTIMIZEATUPDATE_CMD"
->3.10.49. <B
+>3.10.51. <B
 CLASS="COMMAND"
 >OptimizeAtUpdate</B
 > command</A
 ></H2
 ><A
-NAME="AEN2612"
+NAME="AEN2643"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2035,13 +2126,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SKIPUNREFERRED_CMD"
->3.10.50. <B
+>3.10.52. <B
 CLASS="COMMAND"
 >SkipUnreferred</B
 > command</A
 ></H2
 ><A
-NAME="AEN2622"
+NAME="AEN2653"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2060,13 +2151,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="BIND_CMD"
->3.10.51. <B
+>3.10.53. <B
 CLASS="COMMAND"
 >Bind</B
 > command</A
 ></H2
 ><A
-NAME="AEN2631"
+NAME="AEN2662"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2080,13 +2171,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROVIDEREF_CMD"
->3.10.52. <B
+>3.10.54. <B
 CLASS="COMMAND"
 >ProvideReferer</B
 > command</A
 ></H2
 ><A
-NAME="AEN2639"
+NAME="AEN2670"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2103,13 +2194,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="LONGESTTEXTITEMS_CMD"
->3.10.53. <B
+>3.10.55. <B
 CLASS="COMMAND"
 >LongestTextItems</B
 > command</A
 ></H2
 ><A
-NAME="AEN2648"
+NAME="AEN2679"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2123,13 +2214,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MKPREFIX-CMD"
->3.10.54. <B
+>3.10.56. <B
 CLASS="COMMAND"
 >MakePrefixes</B
 > command</A
 ></H2
 ><A
-NAME="AEN2654"
+NAME="AEN2685"
 ></A
 ><P
 >With <B

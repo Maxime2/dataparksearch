@@ -450,6 +450,48 @@ IndexIf body *xxx*
 </sect2>
 
 
+<sect2 id="allowif_cmd">
+<title>Команда <command>AllowIf</command></title>
+<indexterm><primary>Команда</primary><secondary>AllowIf</secondary></indexterm>
+<programlisting>
+AllowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Эта команда аналогчна команде <command>Allow</command>
+(см. <xref linkend="allow_cmd"/>), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда разрешает присутствие документа в поисковой базе при совпадении шаблона <option>arg</option> 
+по заданой секции <option>section</option> документа.
+Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>.
+</para>
+<para>Пример
+<programlisting>
+IndexIf regex Title Manual
+IndexIf body "*important detail*"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="disallowif_cmd">
+<title>Команда <command>DisallowIf</command></title>
+<indexterm><primary>Команда</primary><secondary>AllowIf</secondary></indexterm>
+<programlisting>
+DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+Эта команда аналогчна команде <command>Disallow</command>
+(см. <xref linkend="disallow_cmd"/>), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда удаляет документ из поисковой базы базе при совпадении шаблона <option>arg</option> 
+по заданой секции <option>section</option> документа.
+Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
+(см. <xref linkend="allow_cmd"/>).
+</para>
+<para>Пример
+<programlisting>
+DisallowIf regex Title Sex
+DisallowIf body *xxx*
+</programlisting>
+</para>
+</sect2>
+
 
 
 

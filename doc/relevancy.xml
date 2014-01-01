@@ -256,7 +256,8 @@ See also <xref linkend="search-bool"/>.
 
 		<para>This feature allows to assign words between
 &lt;a href="xxx"&gt; and &lt;/a&gt; also to a document this link leads
-to. <!--It works in SQL database mode and is not supported in cache mode.--> To enable Crosswords, please use
+to, and the words from <userinput>alt</userinput> attribute of <userinput>img</userinput> tag to 
+the picture this tag is pointed to. To enable Crosswords, please use
 <command>CrossWords yes</command> command in
 <filename>indexer.conf</filename> and
 <filename>search.htm</filename>, and define <userinput>crosswords</userinput> section in <filename>sections.conf</filename> file.

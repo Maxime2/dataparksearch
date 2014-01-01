@@ -84,7 +84,7 @@ NAME="REL"
 >8.5. Relevance</A
 ></H1
 ><A
-NAME="AEN5828"
+NAME="AEN5859"
 ></A
 ><DIV
 CLASS="SECT2"
@@ -137,7 +137,7 @@ CLASS="FILENAME"
 >indexer.conf</TT
 > file, use
 <A
-NAME="AEN5845"
+NAME="AEN5876"
 ></A
 > <B
 CLASS="COMMAND"
@@ -157,7 +157,7 @@ CLASS="COMMAND"
 ><DIV
 CLASS="TABLE"
 ><A
-NAME="AEN5852"
+NAME="AEN5883"
 ></A
 ><P
 ><B
@@ -434,7 +434,7 @@ NAME="REL-FULL"
 >8.5.2.1. A full method of relevance calculation.</A
 ></H3
 ><A
-NAME="AEN5957"
+NAME="AEN5988"
 ></A
 ><P
 >Let <TT
@@ -470,7 +470,7 @@ NAME="REL-FAST"
 >8.5.2.2. A fast method of relevance calculation.</A
 ></H3
 ><A
-NAME="AEN5970"
+NAME="AEN6001"
 ></A
 ><P
 >Let <TT
@@ -501,11 +501,11 @@ NAME="POPRANK"
 >8.5.3. Popularity rank</A
 ></H2
 ><A
-NAME="AEN5981"
+NAME="AEN6012"
 ></A
 ><P
 ><A
-NAME="AEN5984"
+NAME="AEN6015"
 ></A
 >
 <SPAN
@@ -526,7 +526,7 @@ CLASS="PROGRAMLISTING"
 ></P
 ><P
 ><A
-NAME="AEN5992"
+NAME="AEN6023"
 ></A
 >
 You need enable links collection by <B
@@ -552,7 +552,7 @@ If you place
 <B
 CLASS="COMMAND"
 ><A
-NAME="AEN6001"
+NAME="AEN6032"
 ></A
 >PopRankSkipSameSite no</B
 >
@@ -585,7 +585,7 @@ for every server is divide by number of links from this server. Thus, the weight
 At second stage, for every page we find the sum of weights of all links pointed to this page. This sum is popularity rank for this page.</P
 ><P
 ><A
-NAME="AEN6013"
+NAME="AEN6044"
 ></A
 >
 By default, the value of <CODE
@@ -608,7 +608,7 @@ CLASS="LITERAL"
 <CODE
 CLASS="OPTION"
 ><A
-NAME="AEN6022"
+NAME="AEN6053"
 ></A
 >PopRankFeedBack yes</CODE
 >
@@ -629,7 +629,7 @@ great 1, the weight for site set to this sum, otherwise, site weight is set to 1
 <CODE
 CLASS="OPTION"
 ><A
-NAME="AEN6030"
+NAME="AEN6061"
 ></A
 >PopRankUseTracking yes</CODE
 >
@@ -646,7 +646,7 @@ tracked queries with restriction on this site.</P
 <CODE
 CLASS="OPTION"
 ><A
-NAME="AEN6037"
+NAME="AEN6068"
 ></A
 >PopRankUseShowCnt yes</CODE
 >
@@ -665,7 +665,7 @@ value specified by
 <CODE
 CLASS="OPTION"
 ><A
-NAME="AEN6044"
+NAME="AEN6075"
 ></A
 >PopRankShowCntRatio</CODE
 >
@@ -687,7 +687,7 @@ CLASS="LITERAL"
 <CODE
 CLASS="OPTION"
 ><A
-NAME="AEN6052"
+NAME="AEN6083"
 ></A
 >PopRankShowCntWeight</CODE
 >
@@ -716,14 +716,14 @@ Popularity Rank for web pages</A
 <CODE
 CLASS="OPTION"
 ><A
-NAME="AEN6061"
+NAME="AEN6092"
 ></A
 >PopRankNeoIterations</CODE
 >
 command to specify the number of iterations of the Neo Popularity Rank calculation. Default value is 3.</P
 ><P
 ><A
-NAME="AEN6065"
+NAME="AEN6096"
 ></A
 >
 By default, the Neo Popularity Rank is caclulated along with indexing. To speed up indexing, 
@@ -750,7 +750,7 @@ NAME="REL-BOOL"
 >8.5.4. Boolean search</A
 ></H2
 ><A
-NAME="AEN6074"
+NAME="AEN6105"
 ></A
 ><P
 >Please note that in case of boolean searching for two or more
@@ -776,15 +776,22 @@ NAME="REL-CWORDS"
 >8.5.5. Crosswords</A
 ></H2
 ><A
-NAME="AEN6083"
+NAME="AEN6114"
 ></A
 ><A
-NAME="AEN6085"
+NAME="AEN6116"
 ></A
 ><P
 >This feature allows to assign words between
 &lt;a href="xxx"&gt; and &lt;/a&gt; also to a document this link leads
-to.  To enable Crosswords, please use
+to, and the words from <KBD
+CLASS="USERINPUT"
+>alt</KBD
+> attribute of <KBD
+CLASS="USERINPUT"
+>img</KBD
+> tag to 
+the picture this tag is pointed to. To enable Crosswords, please use
 <B
 CLASS="COMMAND"
 >CrossWords yes</B
@@ -805,7 +812,7 @@ CLASS="FILENAME"
 > file.</P
 ><P
 ><A
-NAME="AEN6095"
+NAME="AEN6128"
 ></A
 >
 With the <B
@@ -834,16 +841,16 @@ NAME="SEA"
 >8.5.6. The Summary Extraction Algorithm (SEA)</A
 ></H2
 ><A
-NAME="AEN6103"
+NAME="AEN6136"
 ></A
 ><A
-NAME="AEN6106"
+NAME="AEN6139"
 ></A
 ><A
-NAME="AEN6109"
+NAME="AEN6142"
 ></A
 ><A
-NAME="AEN6112"
+NAME="AEN6145"
 ></A
 ><P
 ><TT
@@ -879,7 +886,7 @@ template to show the summary in result pages.</P
 >Related configuration directives:</P
 ><P
 ><A
-NAME="AEN6125"
+NAME="AEN6158"
 ></A
 >
 The <B
@@ -889,7 +896,7 @@ CLASS="COMMAND"
 using the SEA. Default value: 64.</P
 ><P
 ><A
-NAME="AEN6130"
+NAME="AEN6163"
 ></A
 >
 The <B
@@ -904,7 +911,7 @@ Since the summary construction using SEA is nonlinear expensive (affects only in
 you may adjust this value according to desired indexing performance.</P
 ><P
 ><A
-NAME="AEN6136"
+NAME="AEN6169"
 ></A
 >
 With <B

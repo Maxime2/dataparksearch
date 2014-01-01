@@ -1064,14 +1064,108 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="HOLDBADHREFS_CMD"
+NAME="ALLOWIF_CMD"
 >3.10.22. Команда <B
+CLASS="COMMAND"
+>AllowIf</B
+></A
+></H2
+><A
+NAME="AEN2418"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>AllowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Эта команда аналогчна команде <B
+CLASS="COMMAND"
+>Allow</B
+>
+(см. <A
+HREF="dpsearch-indexcmd.ru.html#ALLOW_CMD"
+>&#1056;&#1072;&#1079;&#1076;. 3.10.14</A
+>&#62;), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда разрешает присутствие документа в поисковой базе при совпадении шаблона <CODE
+CLASS="OPTION"
+>arg</CODE
+> 
+по заданой секции <CODE
+CLASS="OPTION"
+>section</CODE
+> документа.
+Значение первых трёх необязательных параметров такое же как и у команды <B
+CLASS="COMMAND"
+>Allow</B
+>.</P
+><P
+>Пример
+<PRE
+CLASS="PROGRAMLISTING"
+>IndexIf regex Title Manual
+IndexIf body "*important detail*"</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="DISALLOWIF_CMD"
+>3.10.23. Команда <B
+CLASS="COMMAND"
+>DisallowIf</B
+></A
+></H2
+><A
+NAME="AEN2433"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
+><P
+>Эта команда аналогчна команде <B
+CLASS="COMMAND"
+>Disallow</B
+>
+(см. <A
+HREF="dpsearch-indexcmd.ru.html#DISALLOW_CMD"
+>&#1056;&#1072;&#1079;&#1076;. 3.10.15</A
+>&#62;), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда удаляет документ из поисковой базы базе при совпадении шаблона <CODE
+CLASS="OPTION"
+>arg</CODE
+> 
+по заданой секции <CODE
+CLASS="OPTION"
+>section</CODE
+> документа.
+Значение первых трёх необязательных параметров такое же как и у команды <B
+CLASS="COMMAND"
+>Allow</B
+>
+(см. <A
+HREF="dpsearch-indexcmd.ru.html#ALLOW_CMD"
+>&#1056;&#1072;&#1079;&#1076;. 3.10.14</A
+>&#62;).</P
+><P
+>Пример
+<PRE
+CLASS="PROGRAMLISTING"
+>DisallowIf regex Title Sex
+DisallowIf body *xxx*</PRE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="HOLDBADHREFS_CMD"
+>3.10.24. Команда <B
 CLASS="COMMAND"
 >HoldBadHrefs</B
 ></A
 ></H2
 ><A
-NAME="AEN2418"
+NAME="AEN2449"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1089,7 +1183,7 @@ CLASS="COMMAND"
 >Period</B
 > в <A
 HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
->&#1056;&#1072;&#1079;&#1076;. 3.10.26</A
+>&#1056;&#1072;&#1079;&#1076;. 3.10.28</A
 >&#62;.
 <PRE
 CLASS="PROGRAMLISTING"
@@ -1102,13 +1196,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="DELETEOLDER_CMD"
->3.10.23. Команда <B
+>3.10.25. Команда <B
 CLASS="COMMAND"
 >DeleteOlder</B
 ></A
 ></H2
 ><A
-NAME="AEN2430"
+NAME="AEN2461"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1122,7 +1216,7 @@ CLASS="COMMAND"
 >Period</B
 > в <A
 HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
->&#1056;&#1072;&#1079;&#1076;. 3.10.26</A
+>&#1056;&#1072;&#1079;&#1076;. 3.10.28</A
 >&#62;.
 Значение по умолчанию: 0, - означает "не проверять". Вы можете указать несколько команд <B
 CLASS="COMMAND"
@@ -1143,13 +1237,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="USEREMOTECONTENTTYPE_CMD"
->3.10.24. Команда <B
+>3.10.26. Команда <B
 CLASS="COMMAND"
 >UseRemoteContentType</B
 ></A
 ></H2
 ><A
-NAME="AEN2443"
+NAME="AEN2474"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1177,13 +1271,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="ADDTYPE_CMD"
->3.10.25. Команда <B
+>3.10.27. Команда <B
 CLASS="COMMAND"
 >AddType</B
 ></A
 ></H2
 ><A
-NAME="AEN2454"
+NAME="AEN2485"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1205,13 +1299,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PERIOD_CMD"
->3.10.26. Команда <B
+>3.10.28. Команда <B
 CLASS="COMMAND"
 >Period</B
 ></A
 ></H2
 ><A
-NAME="AEN2463"
+NAME="AEN2494"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1260,13 +1354,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PERIODBYHOPS_CMD"
->3.10.27. Команда <B
+>3.10.29. Команда <B
 CLASS="COMMAND"
 >PeriodByHops</B
 ></A
 ></H2
 ><A
-NAME="AEN2476"
+NAME="AEN2507"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1303,13 +1397,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="EXPIREAT_CMD"
->3.10.28. Команда <B
+>3.10.30. Команда <B
 CLASS="COMMAND"
 >ExpireAt</B
 ></A
 ></H2
 ><A
-NAME="AEN2491"
+NAME="AEN2522"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1344,13 +1438,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="USEDATEHEADER_CMD"
->3.10.29. Команда <B
+>3.10.31. Команда <B
 CLASS="COMMAND"
 >UseDateHeader</B
 ></A
 ></H2
 ><A
-NAME="AEN2504"
+NAME="AEN2535"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1366,13 +1460,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="LMDSECTION_CMD"
->3.10.30. Команда <B
+>3.10.32. Команда <B
 CLASS="COMMAND"
 >LMDSection</B
 ></A
 ></H2
 ><A
-NAME="AEN2512"
+NAME="AEN2543"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1395,13 +1489,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXHOPS_CMD"
->3.10.31. Команда <B
+>3.10.33. Команда <B
 CLASS="COMMAND"
 >MaxHops</B
 ></A
 ></H2
 ><A
-NAME="AEN2522"
+NAME="AEN2553"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1431,13 +1525,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="TRACKHOPS_CMD"
->3.10.32. Команда <B
+>3.10.34. Команда <B
 CLASS="COMMAND"
 >TrackHops</B
 ></A
 ></H2
 ><A
-NAME="AEN2534"
+NAME="AEN2565"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1458,13 +1552,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDEPTH_CMD"
->3.10.33. Команда <B
+>3.10.35. Команда <B
 CLASS="COMMAND"
 >MaxDepth</B
 ></A
 ></H2
 ><A
-NAME="AEN2543"
+NAME="AEN2574"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1494,13 +1588,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXDOCSPERSERVER_CMD"
->3.10.34. Команда <B
+>3.10.36. Команда <B
 CLASS="COMMAND"
 >MaxDocsPerServer</B
 ></A
 ></H2
 ><A
-NAME="AEN2555"
+NAME="AEN2586"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1543,13 +1637,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXHREFSPERSERVER_CMD"
->3.10.35. Команда <B
+>3.10.37. Команда <B
 CLASS="COMMAND"
 >MaxHrefsPerServer</B
 ></A
 ></H2
 ><A
-NAME="AEN2570"
+NAME="AEN2601"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1592,13 +1686,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MAXNETERRORS_CMD"
->3.10.36. Команда <B
+>3.10.38. Команда <B
 CLASS="COMMAND"
 >MaxNetErrors</B
 ></A
 ></H2
 ><A
-NAME="AEN2585"
+NAME="AEN2616"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1626,13 +1720,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="READTIMEOUT_CMD"
->3.10.37. Команда <B
+>3.10.39. Команда <B
 CLASS="COMMAND"
 >ReadTimeOut</B
 ></A
 ></H2
 ><A
-NAME="AEN2596"
+NAME="AEN2627"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1644,7 +1738,7 @@ CLASS="OPTION"
 >&lt;time&gt;</CODE
 > см. <A
 HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
->&#1056;&#1072;&#1079;&#1076;. 3.10.26</A
+>&#1056;&#1072;&#1079;&#1076;. 3.10.28</A
 >&#62;.
 Значение по умолчанию: 30 секунд.
 Команда действует до конца файла, или до следующей команды <B
@@ -1662,13 +1756,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="DOCTIMEOUT_CMD"
->3.10.38. Команда <B
+>3.10.40. Команда <B
 CLASS="COMMAND"
 >DocTimeOut</B
 ></A
 ></H2
 ><A
-NAME="AEN2608"
+NAME="AEN2639"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1680,7 +1774,7 @@ CLASS="OPTION"
 >&lt;time&gt;</CODE
 > см. в <A
 HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
->&#1056;&#1072;&#1079;&#1076;. 3.10.26</A
+>&#1056;&#1072;&#1079;&#1076;. 3.10.28</A
 >&#62;.
 Значение по умолчанию: 90 секунд.
 Команда действует до конца файла, или до следующей команды <B
@@ -1698,13 +1792,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="NETERRORDELAYTIME_CMD"
->3.10.39. Команда <B
+>3.10.41. Команда <B
 CLASS="COMMAND"
 >NetErrorDelayTime</B
 ></A
 ></H2
 ><A
-NAME="AEN2620"
+NAME="AEN2651"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1716,7 +1810,7 @@ CLASS="OPTION"
 >&lt;time&gt;</CODE
 > см. в <A
 HREF="dpsearch-indexcmd.ru.html#PERIOD_CMD"
->&#1056;&#1072;&#1079;&#1076;. 3.10.26</A
+>&#1056;&#1072;&#1079;&#1076;. 3.10.28</A
 >&#62;.
 Значение по умолчанию: один день.
 <PRE
@@ -1730,13 +1824,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="COOKIES_CMD"
->3.10.40. Команда <B
+>3.10.42. Команда <B
 CLASS="COMMAND"
 >Cookies</B
 ></A
 ></H2
 ><A
-NAME="AEN2631"
+NAME="AEN2662"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1759,13 +1853,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SECTION_CMD"
->3.10.41. Команда <B
+>3.10.43. Команда <B
 CLASS="COMMAND"
 >Section</B
 ></A
 ></H2
 ><A
-NAME="AEN2641"
+NAME="AEN2672"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1825,13 +1919,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="HREFSECTION_CMD"
->3.10.42. Команда <B
+>3.10.44. Команда <B
 CLASS="COMMAND"
 >HrefSection</B
 ></A
 ></H2
 ><A
-NAME="AEN2660"
+NAME="AEN2691"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1863,13 +1957,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="FASTHREFCHECK"
->3.10.43. Команда <B
+>3.10.45. Команда <B
 CLASS="COMMAND"
 >FastHrefCheck</B
 ></A
 ></H2
 ><A
-NAME="AEN2672"
+NAME="AEN2703"
 ></A
 ><P
 >Команда "<B
@@ -1887,13 +1981,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="INDEX_CMD"
->3.10.44. Команда <B
+>3.10.46. Команда <B
 CLASS="COMMAND"
 >Index</B
 ></A
 ></H2
 ><A
-NAME="AEN2681"
+NAME="AEN2712"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1918,13 +2012,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXYAUTHBASIC_CMD"
->3.10.45. Команда <B
+>3.10.47. Команда <B
 CLASS="COMMAND"
 >ProxyAuthBasic</B
 ></A
 ></H2
 ><A
-NAME="AEN2691"
+NAME="AEN2722"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1951,13 +2045,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROXY_CMD"
->3.10.46. Команда <B
+>3.10.48. Команда <B
 CLASS="COMMAND"
 >Proxy</B
 ></A
 ></H2
 ><A
-NAME="AEN2702"
+NAME="AEN2733"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1991,13 +2085,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="AUTHBASIC_CMD"
->3.10.47. Команда <B
+>3.10.49. Команда <B
 CLASS="COMMAND"
 >AuthBasic</B
 ></A
 ></H2
 ><A
-NAME="AEN2713"
+NAME="AEN2744"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2027,13 +2121,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SERVERWEIGHT_CMD"
->3.10.48. Команда <B
+>3.10.50. Команда <B
 CLASS="COMMAND"
 >ServerWeight</B
 ></A
 ></H2
 ><A
-NAME="AEN2723"
+NAME="AEN2754"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2055,13 +2149,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="OPTIMIZEATUPDATE_CMD"
->3.10.49. Команда <B
+>3.10.51. Команда <B
 CLASS="COMMAND"
 >OptimizeAtUpdate</B
 ></A
 ></H2
 ><A
-NAME="AEN2733"
+NAME="AEN2764"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2084,13 +2178,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="SKIPUNREFERRED_CMD"
->3.10.50. Команда <B
+>3.10.52. Команда <B
 CLASS="COMMAND"
 >SkipUnreferred</B
 ></A
 ></H2
 ><A
-NAME="AEN2743"
+NAME="AEN2774"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2108,13 +2202,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="BIND_CMD"
->3.10.51. Команда <B
+>3.10.53. Команда <B
 CLASS="COMMAND"
 >Bind</B
 ></A
 ></H2
 ><A
-NAME="AEN2752"
+NAME="AEN2783"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2128,13 +2222,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="PROVIDEREF_CMD"
->3.10.52. Команда <B
+>3.10.54. Команда <B
 CLASS="COMMAND"
 >ProvideReferer</B
 ></A
 ></H2
 ><A
-NAME="AEN2760"
+NAME="AEN2791"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2151,13 +2245,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="LONGESTTEXTITEMS_CMD"
->3.10.53. Команда <B
+>3.10.55. Команда <B
 CLASS="COMMAND"
 >LongestTextItems</B
 ></A
 ></H2
 ><A
-NAME="AEN2769"
+NAME="AEN2800"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -2171,13 +2265,13 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="MKPREFIX-CMD"
->3.10.54. Команда <B
+>3.10.56. Команда <B
 CLASS="COMMAND"
 >MakePrefixes</B
 ></A
 ></H2
 ><A
-NAME="AEN2775"
+NAME="AEN2806"
 ></A
 ><P
 >При помощи команды <B

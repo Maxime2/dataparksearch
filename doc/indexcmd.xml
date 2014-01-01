@@ -460,6 +460,44 @@ IndexIf body *xxx*
 </para>
 </sect2>
 
+<sect2 id="allowif_cmd">
+<title><command>AllowIf</command> command</title>
+<indexterm><primary>Command</primary><secondary>AllowIf</secondary></indexterm>
+<programlisting>
+AllowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+This command is similar to the <command>Allow</command> command (see <xref linkend="allow_cmd"/>), but is applicable to any section of the document indexed, and it is appplied after the content of the document downloaded and indexed. Use this command to allow indexing, if the value of <option>section</option> match the <option>arg</option> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <command>Allow</command> command.
+</para>
+<para>Example
+<programlisting>
+AllowIf regex Title Manual
+AllowIf body "*important detail*"
+</programlisting>
+</para>
+</sect2>
+
+
+<sect2 id="disallowif_cmd">
+<title><command>DisallowIf</command> command</title>
+<indexterm><primary>Command</primary><secondary>DisallowIf</secondary></indexterm>
+<programlisting>
+DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
+</programlisting>
+<para>
+This command is similar to the <command>Disallow</command> command (see <xref linkend="disallow_cmd"/>), but is applicable to any section of the document indexed, and it is appplied after the content of the document downloaded and indexed. Use this command to delete corresponding document from the database, if the value of <option>section</option> match the <option>arg</option> pattern given.
+The meaning of first three optional parameters is exactly the same 
+as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>).
+</para>
+<para>Example
+<programlisting>
+DisallowIf regex Title Sex
+DisallowIf body *xxx*
+</programlisting>
+</para>
+</sect2>
 
 
 

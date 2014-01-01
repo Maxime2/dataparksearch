@@ -200,7 +200,8 @@ PopRankPostpone yes
 <indexterm><primary>Crosswords</primary></indexterm>
 </title>
 		<para>Эта возможность позволяет связать слова между
-&lt;a href="xxx"&gt; и &lt;/a&gt; с документом, на который указывает данная ссылка.
+&lt;a href="xxx"&gt; и &lt;/a&gt; с документом, на который указывает данная ссылка, а также слова из аттрибута <userinput>alt</userinput>
+тэга <userinput>img</userinput> с картинкой, на которую указывает этот тэг.
 Для включения этой возможности, используйте команду
 <command>CrossWords yes
 <indexterm><primary>Команда</primary><secondary>CrossWords</secondary></indexterm>
