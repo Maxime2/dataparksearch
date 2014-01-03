@@ -473,7 +473,7 @@ IndexIf body "*important detail*"
 
 <sect2 id="disallowif_cmd">
 <title>Команда <command>DisallowIf</command></title>
-<indexterm><primary>Команда</primary><secondary>AllowIf</secondary></indexterm>
+<indexterm><primary>Команда</primary><secondary>DisallowIf</secondary></indexterm>
 <programlisting>
 DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
 </programlisting>
