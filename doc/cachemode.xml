@@ -292,6 +292,8 @@ Instead of strcrc32 it's possible to use any of the following limit types:
 <row><entry>hex8str</entry><entry>Hex or hexavigesimal (base-26) string similar to those used in categories. The nested limit will be created.</entry></row>
 <row><entry>strcrc32</entry><entry>A string, the hash32 value is calculated on, used as key for this limit.</entry></row>
 <row><entry>int</entry><entry>An integer (4-byte wide).</entry></row>
+<row><entry>hour</entry><entry>An integer (4-byte wide) number of seconds since epoch. The value in index is in hour precision.</entry></row>
+<row><entry>minute</entry><entry>An integer (4-byte wide) number of seconds since epoch. The value in index is in minute precision.</entry></row>
   </tbody>
  </tgroup>
 </table>

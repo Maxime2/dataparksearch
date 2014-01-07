@@ -525,7 +525,7 @@ __C_LINK int __DPSCALL DpsCacheMakeIndexes(DPS_AGENT *Indexer, DPS_DB *db) {
 	  return DPS_ERROR;
 	}
 	if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] %s index creation", Indexer->handle, nm);
-	DpsLog(Indexer, DPS_LOG_EXTRA, "Creating %s index", nm);
+	DpsLog(Indexer, DPS_LOG_EXTRA, "Creating %s index of type %s", nm, ind);
 	dps_snprintf(buf, buf_len, "Req-%s", nm);
 	req = DpsVarListFindStr(&Indexer->Conf->Vars, buf, NULL);
 	if (req != NULL) {
@@ -544,6 +544,7 @@ __C_LINK int __DPSCALL DpsCacheMakeIndexes(DPS_AGENT *Indexer, DPS_DB *db) {
 	    int field_type = DPS_IFIELD_TYPE_INT;
 	    if (!strcasecmp(ind, "strcrc32")) field_type = DPS_IFIELD_TYPE_STRCRC32;
 	    else if (!strcasecmp(ind, "hour")) field_type = DPS_IFIELD_TYPE_HOUR;
+	    else if (!strcasecmp(ind, "minute")) field_type = DPS_IFIELD_TYPE_MIN;
 	    else if (!strcasecmp(ind, "hostname")) field_type = DPS_IFIELD_TYPE_HOSTNAME;
 	    else if (!strcasecmp(ind, "char2")) field_type = DPS_IFIELD_TYPE_STR2CRC32;
 	    else if (!strcasecmp(ind, "int")) field_type = DPS_IFIELD_TYPE_INT;

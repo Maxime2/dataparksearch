@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -107,6 +107,8 @@
 #define DPS_LIMTYPE_TIME       1
 #define DPS_LIMTYPE_LINEAR_INT 2
 #define DPS_LIMTYPE_LINEAR_CRC 3
+#define DPS_LIMTYPE_HOUR       4
+#define DPS_LIMTYPE_MINUTE     5
 
 #define DPS_LIMFNAME_CAT   "lim_cat"
 #define DPS_LIMFNAME_TAG   "lim_tag"
@@ -225,7 +227,7 @@ extern void DpsDecodeHex8Str(const char *hex_str, dps_uint4 *hi, dps_uint4 *lo, 
 extern __C_LINK int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, DPS_SEARCH_LIMIT **limits, size_t *nlimits, int type, const char *file_name, const char *val);
 extern __C_LINK urlid_t* LoadNestedLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 hi, dps_uint4 lo, dps_uint4 f_hi, dps_uint4 f_lo,size_t *size);
 extern __C_LINK urlid_t* LoadLinearLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 val, size_t *size);
-extern __C_LINK urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 from, dps_uint4 to, size_t *size);
+extern __C_LINK urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, int type, const char *name, dps_uint4 from, dps_uint4 to, size_t *size);
 
 extern int DpsURLDataPreloadCache(DPS_AGENT *Agent, DPS_DB *db);
 extern int DpsURLDataLoadCache(DPS_AGENT *Indexer, DPS_RESULT *Res, DPS_DB *db);

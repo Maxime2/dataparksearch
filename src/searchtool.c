@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -3893,7 +3893,9 @@ int DpsParseQueryString(DPS_AGENT * Agent,DPS_VARLIST * vars,char * query_string
 			} else if (!strcasecmp(lim, "strcrc32")) {
 			  ltype = DPS_LIMTYPE_LINEAR_CRC; fname = str;
 			} else if (!strcasecmp(lim, "hour")) {
-			  ltype = DPS_LIMTYPE_TIME; fname = str;
+			  ltype = DPS_LIMTYPE_HOUR; fname = str;
+			} else if (!strcasecmp(lim, "hour")) {
+			  ltype = DPS_LIMTYPE_MINUTE; fname = str;
 			} else if (!strcasecmp(lim, "hostname")) {
 			  ltype = DPS_LIMTYPE_LINEAR_CRC; fname = str;
 			} else if (!strcasecmp(lim, "char2")) {

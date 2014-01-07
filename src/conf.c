@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1421,7 +1421,9 @@ static int add_limit(void *Cfg, size_t ac, char **av) {
 		    dps_snprintf(Conf->errstr, sizeof(Conf->errstr) - 1, "SQL request isn't specified. [ac:%d]", ac);
 		    return DPS_ERROR;
 		  }
-		  if (strcasecmp(sc, "hex8str") && strcasecmp(sc, "strcrc32") && strcasecmp(sc, "int") && strcasecmp(sc, "hour")
+		  if (strcasecmp(sc, "hex8str") && strcasecmp(sc, "strcrc32") && strcasecmp(sc, "int") 
+		      && strcasecmp(sc, "hour")
+		      && strcasecmp(sc, "minute")
 		      && strcasecmp(sc, "hostname")  && strcasecmp(sc, "str2crc32")) {
 		    dps_snprintf(Conf->errstr, sizeof(Conf->errstr) - 1, "Unknown Limit type %s", sc);
 		    return DPS_ERROR;
@@ -1497,7 +1499,9 @@ static int preload_limit(void *Cfg, size_t ac,char **av) {
 						    &db->limits[lind].size);
 	    break;
 	case DPS_LIMTYPE_TIME:
-	    db->limits[lind].data = LoadTimeLimit(Indexer, db, 
+	case DPS_LIMTYPE_HOUR:
+	case DPS_LIMTYPE_MINUTE:
+	    db->limits[lind].data = LoadTimeLimit(Indexer, db, ltype,
 						  db->limits[lind].file_name,
 						  db->limits[lind].hi,
 						  db->limits[lind].lo,

@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1213,13 +1213,15 @@ int __DPSCALL DpsAddSearchLimit(DPS_AGENT *Agent, DPS_SEARCH_LIMIT **limits, siz
 	(*limits)[*nlimits].type = type;
 	dps_strncpy((*limits)[*nlimits].file_name, file_name, PATH_MAX);
 	(*limits)[*nlimits].file_name[PATH_MAX-1] = '\0';
-	switch(type){
-		case DPS_LIMTYPE_NESTED: DpsDecodeHex8Str(str, &hi, &lo, &f_hi, &f_lo); break;
-		default:
-		case DPS_LIMTYPE_TIME: f_hi = hi = 0; f_lo = lo = 0; break;
-		case DPS_LIMTYPE_LINEAR_INT: hi = atoi(str); lo=0; f_hi = hi; f_lo = lo; break;
-		case DPS_LIMTYPE_LINEAR_CRC: hi = DpsStrHash32(str); lo = 0; f_hi = hi; f_lo = 0; break;
-	}	
+	switch(type) {
+	case DPS_LIMTYPE_NESTED: DpsDecodeHex8Str(str, &hi, &lo, &f_hi, &f_lo); break;
+	default:
+	case DPS_LIMTYPE_HOUR:
+	case DPS_LIMTYPE_MINUTE:
+	case DPS_LIMTYPE_TIME: f_hi = hi = 0; f_lo = lo = 0; break;
+	case DPS_LIMTYPE_LINEAR_INT: hi = atoi(str); lo=0; f_hi = hi; f_lo = lo; break;
+	case DPS_LIMTYPE_LINEAR_CRC: hi = DpsStrHash32(str); lo = 0; f_hi = hi; f_lo = 0; break;
+	}
 	(*limits)[*nlimits].hi = hi;
 	(*limits)[*nlimits].lo = lo;
 	(*limits)[*nlimits].f_hi = f_hi;
@@ -1455,9 +1457,9 @@ err1:
 #define timegm mktime
 #endif
 
-urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4 from, dps_uint4 to, size_t *size) {
+urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, int type, const char *name, dps_uint4 from, dps_uint4 to, size_t *size) {
 	char	fname[PATH_MAX];
-	int	ind_fd,dat_fd;
+	int	ind_fd, dat_fd , divisor;
 	DPS_UINT4_POS_LEN *found1 = NULL, *found2 = NULL, *ind = NULL;
 	struct	stat sb;
 	size_t	num,len;
@@ -1469,10 +1471,17 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 
 	TRACE_IN(Agent, "LoadTimeLimit");
 
+	switch(type) {
+	case DPS_LIMTYPE_TIME:
+	case DPS_LIMTYPE_HOUR: divisor = 3600; break;
+	case DPS_LIMTYPE_MINUTE: divisor = 60; break;
+	default: divisor = 1;
+	}
+
 	bzero((void*)&tm, sizeof(struct tm));
 	if (!strcasecmp(dt, "back")) {
-	  dp = Dps_dp2time_t(DpsVarListFindStr(&Agent->Vars, "dp", "")) / 3600;
-	  to = Agent->now / 3600;
+	  dp = Dps_dp2time_t(DpsVarListFindStr(&Agent->Vars, "dp", "")) / divisor;
+	  to = Agent->now / divisor;
 	  from = to - dp;
 	} else if (!strcasecmp(dt, "er")) {
 	  tm.tm_mday = DpsVarListFindInt(&Agent->Vars, "dd", 1);
@@ -1480,9 +1489,9 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	  tm.tm_year = DpsVarListFindInt(&Agent->Vars, "dy", 1970) - 1900;
 	  if (DpsVarListFindInt(&Agent->Vars, "dx", 1) == -1) {
 	    from = 0;
-	    to = timegm(&tm) / 3600;
+	    to = timegm(&tm) / divisor;
 	  } else {
-	    from = timegm(&tm) / 3600;
+	    from = timegm(&tm) / divisor;
 	    to = INT_MAX;
 	  }
 	} else if (!strcasecmp(dt, "range")) {
@@ -1492,7 +1501,7 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	  tm.tm_hour = 0;
 	  tm.tm_min = 0;
 	  tm.tm_sec = 0;
-	  from = timegm(&tm) / 3600;
+	  from = timegm(&tm) / divisor;
 	  bzero((void*)&tm, sizeof(struct tm));
 	  sscanf(DpsVarListFindStr(&Agent->Vars, "de", "01/01/1970"), "%d/%d/%d", &tm.tm_mday, &tm.tm_mon, &tm.tm_year);
 	  tm.tm_year -= 1900;
@@ -1500,7 +1509,7 @@ urlid_t* LoadTimeLimit(DPS_AGENT *Agent, DPS_DB *db, const char *name, dps_uint4
 	  tm.tm_hour = 23;
 	  tm.tm_min = 59;
 	  tm.tm_sec = 59;
-	  to = timegm(&tm) / 3600;
+	  to = timegm(&tm) / divisor;
 	} else {
 	  TRACE_OUT(Agent);
 	  return NULL;
@@ -2012,7 +2021,9 @@ int DpsFindWordsCache(DPS_AGENT * Indexer, DPS_RESULT *Res, DPS_DB *db) {
 								  &Indexer->limits[i].size);
 			break;
 		    case DPS_LIMTYPE_TIME:
-			Indexer->limits[i].data = LoadTimeLimit(Indexer, db, Indexer->limits[i].file_name,
+		    case DPS_LIMTYPE_HOUR:
+		    case DPS_LIMTYPE_MINUTE:
+			Indexer->limits[i].data = LoadTimeLimit(Indexer, db, Indexer->limits[i].type, Indexer->limits[i].file_name,
 								Indexer->limits[i].hi,
 								Indexer->limits[i].lo,
 								&Indexer->limits[i].size);

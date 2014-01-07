@@ -282,6 +282,8 @@ Limit prm:strcrc32 "SELECT label, rec_id FROM labels" pgsql://u:p@localhost/site
 <row><entry>hex8str</entry><entry>Шестнадцатеричная строка, или строка в base-26, аналогичная используемым в лимите по категории. В этом случае строится вложенный лимит.</entry></row>
 <row><entry>strcrc32</entry><entry>Строка символов, по которой расчитывается значение hash32, служащее ключом этого лимита.</entry></row>
 <row><entry>int</entry><entry>Целое (4-байтовое) число.</entry></row>
+<row><entry>hour</entry><entry>Целое (4-байтовое) число секунд с начала эпохи. Значение с точностью до часа.</entry></row>
+<row><entry>minute</entry><entry>Целое (4-байтовое) число секунд с начала эпохи. Значание с точность до минуты.</entry></row>
   </tbody>
  </tgroup>
 </table>
