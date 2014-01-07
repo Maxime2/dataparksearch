@@ -3894,7 +3894,7 @@ int DpsParseQueryString(DPS_AGENT * Agent,DPS_VARLIST * vars,char * query_string
 			  ltype = DPS_LIMTYPE_LINEAR_CRC; fname = str;
 			} else if (!strcasecmp(lim, "hour")) {
 			  ltype = DPS_LIMTYPE_HOUR; fname = str;
-			} else if (!strcasecmp(lim, "hour")) {
+			} else if (!strcasecmp(lim, "minute")) {
 			  ltype = DPS_LIMTYPE_MINUTE; fname = str;
 			} else if (!strcasecmp(lim, "hostname")) {
 			  ltype = DPS_LIMTYPE_LINEAR_CRC; fname = str;
