@@ -291,9 +291,12 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
 #endif
 			    );
 	}
-      } else if (have_speller) {
+      }
+#ifdef HAVE_ASPELL
+      else if (have_speller) {
 	  DpsSpellSuggest(Indexer, Doc, Item, uword, uwlen, crossec, speller, suggest, &spelling);
       }
+#endif
     }
     DPS_FREE(dword); DPS_FREE(nword);
   }
