@@ -234,8 +234,9 @@ static void DpsProcessFantoms(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_TEXTITE
 
 
 #ifdef HAVE_ASPELL
+  uwlen = DpsUniLen(uword);
   if (strict && 
-      have_speller && have_bukva_forte && Indexer->Flags.use_aspellext && ((uwlen = DpsUniLen(uword)) > 2)
+      have_speller && have_bukva_forte && Indexer->Flags.use_aspellext && (uwlen > 2)
       && (DpsUniStrChr(uword, (dpsunicode_t) '&') == NULL) /* aspell trap workaround */
       ) DpsSpellSuggest(Indexer, Doc, Item, uword, uwlen, crossec, speller, suggest, &spelling);
 #endif
