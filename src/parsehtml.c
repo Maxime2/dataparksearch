@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -50,6 +50,9 @@
 #include <strings.h>
 #include <sys/types.h>
 #include <ctype.h>
+
+#define TAG_WITH_CROSSATTRIBUTE (!strcmp(name, "img") || !strcmp(name, "a") || !strcmp(name, "link") )
+
 
 /****************************************************************/
 
@@ -1259,7 +1262,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	char *metaname = NULL;
 	char *metacont = NULL;
 	char *href = NULL;
-	char *alt = NULL;
+	char *alt = NULL, *title = NULL;
 	char *data_expanded_url = NULL;
 	char *data_ultimate_url = NULL;
 	char *base = NULL;
@@ -1375,6 +1378,13 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
 		  DPS_FREE(alt);
 		  alt = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
+		  DPS_FREE(y);
+		}else
+		if(ISTAG(i,"title")){
+		  /* All elements but BASE, BASEFONT, HEAD, HTML, META, PARAM, SCRIPT, TITLE */
+		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
+		  DPS_FREE(title);
+		  title = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
 		  DPS_FREE(y);
 		}else
 		if(ISTAG(i,"data-expanded-url")){
@@ -1669,13 +1679,22 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		/* It will be used only to compose relative links. */
 		DPS_FREE(href);
 	}
-	else if (href && CrosSec && alt != NULL && !strcmp(name, "img")) {
+	else if (href && CrosSec && alt != NULL && TAG_WITH_CROSSATTRIBUTE ) {
 	    Item.href = href;
 	    Item.section = CrosSec->section;
 	    Item.section_name = CrosSec->name;
 	    Item.strict = CrosSec->strict;
 	    Item.str = alt;
 	    Item.len = dps_strlen(alt);
+	    putItem(Indexer, Doc, &Item);
+	}
+	else if (href && CrosSec && title != NULL && TAG_WITH_CROSSATTRIBUTE ) {
+	    Item.href = href;
+	    Item.section = CrosSec->section;
+	    Item.section_name = CrosSec->name;
+	    Item.strict = CrosSec->strict;
+	    Item.str = title;
+	    Item.len = dps_strlen(title);
 	    putItem(Indexer, Doc, &Item);
 	}
 
