@@ -40,9 +40,10 @@
 		<para>В настоящий момент HTML-парсер обрабатывает
 		специальным образом следующие META-тэги.
 		<note>
-		Замечание:  <literal>&lt;META "NAME"&gt;</literal>
-		обрабатывается так же, как и
+		Замечание:  наряду с <literal>&lt;META "NAME"&gt;</literal> ниже также обрабатываются и
 		<literal>&lt;META "HTTP-EQUIV"&gt;</literal>
+		и
+		<literal>&lt;META "PROPERTY"&gt;</literal>
 		</note>
 		</para>
 

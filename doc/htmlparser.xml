@@ -38,7 +38,7 @@
 <indexterm><primary>META tags</primary></indexterm>
 
 		<para>Indexer's HTML parser currently understands the
-following META tags. Note that <literal>"HTTP-EQUIV"</literal> may be
+following META tags. Note that <literal>"HTTP-EQUIV"</literal> or <literal>"PROPERTY"</literal> may be
 used instead of <literal>"NAME"</literal> in all entries.</para>
 
 		<itemizedlist>

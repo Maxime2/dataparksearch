@@ -1353,11 +1353,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	tag->index = Doc->Spider.index;
 
 	for(i=0;i<tag->ntoks;i++){
-		if(ISTAG(i,"name")){
-		  DPS_FREE(metaname);
-		  if (tag->toks[i].vlen) metaname = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
-		}else
-		if(ISTAG(i,"http-equiv")){
+		if(ISTAG(i,"name") || ISTAG(i,"http-equiv") || ISTAG(i,"property")) {
 		  DPS_FREE(metaname);
 		  if (tag->toks[i].vlen) metaname = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
 		}else
