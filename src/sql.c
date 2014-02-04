@@ -5222,7 +5222,7 @@ static int DpsDocInfoRefresh(DPS_AGENT *A, DPS_DB *db) {
   DpsSQLResInit(&SQLres);
   while (u) {
     dps_snprintf(qbuf, qbuflen, 
-		 "SELECT rec_id FROM url WHERE rec_id > %d AND (status=200 OR status=206 OR status=302 OR status=304 OR status=303 OR status=307) ORDER BY rec_id LIMIT %d", 
+		 "SELECT rec_id FROM url WHERE rec_id > %d AND status < 400 ORDER BY rec_id LIMIT %d", 
 		 rec_id, url_num);
     if (A->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(A, DPS_LOCK_DB);
     rc = DpsSQLQuery(db, &SQLres, qbuf);
