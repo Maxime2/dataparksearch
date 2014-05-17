@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl
-AC_INIT([DataparkSearch Engine], [4.54-2013-11-24], [dataparksearch@googlegroups.com], [dpsearch])
+AC_INIT([DataparkSearch Engine], [4.54-2014-01-09], [dataparksearch@googlegroups.com], [dpsearch])
 dnl AC_INIT([DataparkSearch Engine], [4.53], [dataparksearch@googlegroups.com], [dpsearch])
 AC_CONFIG_SRCDIR([TODO])
 AC_CANONICAL_SYSTEM
@@ -179,9 +179,19 @@ AC_CHECK_LIB(cares, ares_init, AC_DEFINE(HAVE_LIBCARES) LIBS="$LIBS -lcares",
  )
 )
 
-AC_CHECK_LIB(extractor, EXTRACTOR_plugin_add_defaults, AC_DEFINE(HAVE_LIBEXTRACTOR) LIBS="$LIBS -lextractor",
-	AC_CHECK_LIB(extractor, EXTRACTOR_loadDefaultLibraries, AC_DEFINE(HAVE_LIBEXTRACTOR) LIBS="$LIBS -lextractor")
-)
+dnl Check for libextractor
+libextractor=yes
+AC_MSG_CHECKING(for libextractor)
+AC_ARG_WITH(libextractor,
+[  --without-libextractor  disable support for libextractor],
+[libextractor=$withval],
+[libextractor=yes])
+AC_MSG_RESULT([$libextractor])
+if test "$libextractor"  != "no" ; then
+   AC_CHECK_LIB(extractor, EXTRACTOR_plugin_add_defaults, AC_DEFINE(HAVE_LIBEXTRACTOR) LIBS="$LIBS -lextractor",
+   	AC_CHECK_LIB(extractor, EXTRACTOR_loadDefaultLibraries, AC_DEFINE(HAVE_LIBEXTRACTOR) LIBS="$LIBS -lextractor")
+	)
+fi
 
 
 dnl AC_CHECK_LIB(bind, getaddrinfo, AC_DEFINE(HAVE_LIBBIND) [
