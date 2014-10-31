@@ -1700,7 +1700,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	  
 	  DpsConvertHref(Indexer, &Doc->CurURL, &Href);
 
-	  if (!strcasecmp(DpsVarListFindStr(&Indexer->Vars, "DetectClones", DPS_DETECTCLONES), "yes") && !strcasecmp(Href.url, URL)) {
+	  if (!strcasecmp(DpsVarListFindStr(&Indexer->Vars, "DetectClones", DPS_DETECTCLONES), "yes") && strcasecmp(Href.url, URL)) {
 		
 		Doc->method = DPS_METHOD_DISALLOW;
 	  }
