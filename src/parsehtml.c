@@ -1268,6 +1268,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	char *base = NULL;
 	char *lang = NULL;
 	char *secname = NULL;
+	char *rel = NULL;
 	size_t i, j, seclen = 128, metacont_len = 0;
 	char savec;
 
@@ -1367,6 +1368,13 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
 		  DPS_FREE(href);
 		  href = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
+		  DPS_FREE(y);
+		}else
+		if(ISTAG(i,"rel")){
+		  /* A, LINK*/
+		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
+		  DPS_FREE(rel);
+		  rel = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
 		  DPS_FREE(y);
 		}else
 		if(ISTAG(i,"alt")){
@@ -1675,6 +1683,30 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		/* It will be used only to compose relative links. */
 		DPS_FREE(href);
 	}
+	if(( !strcmp(name, "link")) && (href) && (rel) && !strcasecmp(rel, "canonical")) {
+
+	  DPS_HREF	Href;
+	  char *URL = DpsVarListFindStr(&Doc->Sections, "URL", NULL);
+	  char *newhref = NULL;
+
+	  DpsHrefInit(&Href);
+	  Href.referrer = DpsVarListFindInt(&Doc->Sections, "Referrer-ID", 0);
+	  Href.hops = 1 + DpsVarListFindInt(&Doc->Sections, "Hops", 0);
+	  Href.site_id = 0;
+	  Href.url = href;
+	  Href.method = DPS_METHOD_GET;
+	  Href.charset_id = Doc->charset_id;
+	  DpsHrefListAdd(Indexer, &Doc->Hrefs, &Href);
+	  
+	  DpsConvertHref(Indexer, &Doc->CurURL, &Href);
+
+	  if (!strcasecmp(DpsVarListFindStr(&Indexer->Vars, "DetectClones", DPS_DETECTCLONES), "yes") && !strcasecmp(Href.url, URL)) {
+		
+		Doc->method = DPS_METHOD_DISALLOW;
+	  }
+	  /* Do not add LINK HREF into database, we already do it above. */
+	  DPS_FREE(href);
+	}
 	else if (href && CrosSec && alt != NULL && TAG_WITH_CROSSATTRIBUTE ) {
 	    Item.href = href;
 	    Item.section = CrosSec->section;
@@ -1730,6 +1762,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	DPS_FREE(base);
 	DPS_FREE(lang);
 	DPS_FREE(secname);
+	DPS_FREE(rel);
 	
 #ifdef WITH_PARANOIA
 	DpsViolationExit(Indexer->handle, paran);
