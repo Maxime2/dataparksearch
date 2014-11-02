@@ -1693,7 +1693,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	  Href.referrer = DpsVarListFindInt(&Doc->Sections, "Referrer-ID", 0);
 	  Href.hops = 1 + DpsVarListFindInt(&Doc->Sections, "Hops", 0);
 	  Href.site_id = 0;
-	  Href.url = href;
+	  Href.url = DpsStrdup(href);
 	  Href.method = DPS_METHOD_GET;
 	  Href.charset_id = Doc->charset_id;
 	  DpsHrefListAdd(Indexer, &Doc->Hrefs, &Href);
@@ -1704,6 +1704,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		
 		Doc->method = DPS_METHOD_DISALLOW;
 	  }
+	  DPS_FREE(Href.url); /* this is freed and reallocated inside DpsConvertHref */
 	  /* Do not add LINK HREF into database, we already do it above. */
 	  DPS_FREE(href);
 	}
