@@ -454,7 +454,7 @@ int DpsDocAddServExtraHeaders(DPS_SERVER *Server,DPS_DOCUMENT *Doc) {
 				DpsVarListReplaceStr(&Doc->RequestHeaders, "Accept-Language", Hdr->val);
 			}
 		}else{
-			if(!strncmp(Hdr->name,"Request.",8))
+			if(!strncasecmp(Hdr->name,"Request.",8))
 				DpsVarListReplaceStr(&Doc->RequestHeaders,Hdr->name+8,Hdr->val);
 		}
 	  }
