@@ -445,7 +445,10 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    }
 		    DpsVarListReplaceStr(&rDoc->Sections, "URL", PingURL);
 		  }
+		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
 		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
+		  DpsDocProcessResponseHeaders(Indexer, rDoc);
+		  DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "AUTHPING.Response");
 		}
 		DpsFree(AuthPing);
 	      }
