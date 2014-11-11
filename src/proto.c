@@ -1525,7 +1525,7 @@ static int DpsFILEGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc){
 
 
 static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
-        const char	*method=(Doc->method==DPS_METHOD_HEAD)?"HEAD ":((Doc->method==DPS_METHOD_POST)?"POST":"GET ");
+        const char	*method=(Doc->method==DPS_METHOD_HEAD)?"HEAD ":((Doc->method==DPS_METHOD_POST)?"POST ":"GET ");
 	const char	*proxy=DpsVarListFindStr(&Doc->RequestHeaders,"Proxy",NULL);
 	size_t		i, r;
 	char            *url = (char*)DpsMalloc((i = dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.path)) + 
