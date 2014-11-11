@@ -27,6 +27,7 @@
 	{"AspellExtensions",    1,1,    env_rpl_bool_var},
 /*   (at your option) any later version.                                       */
 	{"AuthBasic",		1,1,	srv_rpl_auth},
+	{"AuthPing",		1,1,	srv_rpl_auth},
 	{"BaseFiles",		1,1,	env_rpl_var},
 	{"Bind",                1,1,    env_rpl_var},
 	{"BodyBrackets",	2,2,	add_body_brackets},
@@ -49,7 +50,7 @@
 	{"CollectLinks",	1,1,	env_rpl_bool_var},
 	{"Cookies",             1,1,    srv_rpl_bool_var},
 /*   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.                */
-/*   Copyright (C) 2012-2013 Maxim Zakharov. All rights reserved.                */
+/*   Copyright (C) 2012-2014 Maxim Zakharov. All rights reserved.              */
 	{"CrawlDelay",          1,1,    srv_rpl_time_var},
 	{"CrossWords",		1,1,	env_rpl_bool_var},
 	{"CrossWordsSkipSameSite",1,1,	env_rpl_var},

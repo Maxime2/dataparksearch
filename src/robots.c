@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -415,6 +415,37 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	    }
 	    if (robot == NULL) {
 		robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
+	    }
+	    if (Server != NULL) {
+	      char *AuthPing = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
+	      char *PingData = NULL;
+	      if (AuthPing != NULL) {
+		if (!strcasecmp(AuthPing, "GET")) {
+		  rDoc->method = DPS_METHOD_GET;
+		  PingData = DpsTrim(AuthPing + 3, " \t\r\n");
+		} else if (!strcasecmp(AuthPing, "POST")) {
+		  rDoc->method = DPS_METHOD_POST;
+		  PingData = DpsTrim(AuthPing + 4, " \t\r\n");
+		} else {
+		  DpsLog(Indexer, DPS_LOG_ERROR, "AuthPing should be GET or POST: %s", AuthPing);
+		}
+		if (PingData != NULL) {
+		  size_t size = dps_strlen(PingData);
+		  {
+		    char PingURL[size + 2];
+		    char PingBody[size];
+		    sscanf(PingData, "%s %s", PingURL, PingBody);
+		    if (rDoc->method == DPS_METHOD_GET) {
+		      dps_strcat(PingURL, "?");
+		      dps_strcat(PingURL, PingBody);
+		    } else {
+		      DpsVarListReplaceStr(&rDoc->Sections, "body", PingBody);
+		    }
+		    DpsVarListReplaceStr(&rDoc->Sections, "URL", PingURL);
+		  }
+		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
+		}
+	      }
 	    }
 	}
 	if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));

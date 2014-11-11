@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2004-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1468,7 +1468,8 @@ enum {
   DPS_METHOD_CRAWLDELAY  = 12,
   DPS_METHOD_STORE       = 13,
   DPS_METHOD_NOSTORE     = 14,
-  DPS_METHOD_HOST        = 15
+  DPS_METHOD_HOST        = 15,
+  DPS_METHOD_POST 	 = 16
 };
 
 /* Words origins */

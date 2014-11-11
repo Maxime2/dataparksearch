@@ -147,6 +147,7 @@ const char *DpsMethodStr(int method){
 	        case DPS_METHOD_CATEGORY:       return "CategoryIf";
 	        case DPS_METHOD_STORE:          return "Store";
 	        case DPS_METHOD_NOSTORE:        return "NoStore";
+	        case DPS_METHOD_POST:           return "Post";
 	}
 	return "<Unknown method>";
 }
@@ -168,6 +169,7 @@ int DpsMethod(const char *s){
 	else if(!strcasecmp(s,"CategoryIf"))    return DPS_METHOD_CATEGORY;
 	else if(!strcasecmp(s,"Store"))         return DPS_METHOD_STORE;
 	else if(!strcasecmp(s,"NoStore"))       return DPS_METHOD_NOSTORE;
+	else if(!strcasecmp(s,"Post"))          return DPS_METHOD_POST;
 	return DPS_METHOD_UNKNOWN;
 }
 
@@ -408,6 +410,7 @@ static int add_srv(void *Cfg, size_t ac,char **av){
 	DpsMatchFree(&C->Srv->Match);
 	/*	DpsMatchListFree(&C->Srv->HTDBsec);*/
 	DpsVarListDel(&C->Srv->Vars,"AuthBasic");
+	DpsVarListDel(&C->Srv->Vars,"AuthPing");
 	DpsVarListDel(&C->Srv->Vars,"Alias");
 	return DPS_OK;
 }
@@ -1224,6 +1227,7 @@ static int add_srv_db(void *Cfg, size_t ac, char **av) {
 	DpsMatchFree(&C->Srv->Match);
 	/*	DpsMatchListFree(&C->Srv->HTDBsec);*/
 	DpsVarListDel(&C->Srv->Vars,"AuthBasic");
+	DpsVarListDel(&C->Srv->Vars,"AuthPing");
 	DpsVarListDel(&C->Srv->Vars,"Alias");
 	return DPS_OK;
 }

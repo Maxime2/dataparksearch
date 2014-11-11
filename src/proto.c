@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1525,13 +1525,14 @@ static int DpsFILEGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc){
 
 
 static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
-	const char	*method=(Doc->method==DPS_METHOD_HEAD)?"HEAD ":"GET ";
+        const char	*method=(Doc->method==DPS_METHOD_HEAD)?"HEAD ":((Doc->method==DPS_METHOD_POST)?"POST":"GET ");
 	const char	*proxy=DpsVarListFindStr(&Doc->RequestHeaders,"Proxy",NULL);
 	size_t		i, r;
 	char            *url = (char*)DpsMalloc((i = dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.path)) + 
 						 dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.filename)) + 
 						 dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.query_string)) + 1));
 	char            *eurl = (char*)DpsMalloc(3 * i);
+	char            *body = (Doc->method == DPS_METHOD_POST) ? DpsVarListFindStr(&Doc->Sections, "body", NULL) : NULL;
 
 	if (url == NULL || eurl == NULL) {
 	    DPS_FREE(url); DPS_FREE(eurl);
@@ -1544,6 +1545,10 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	dps_strcat(url, DPS_NULL2EMPTY(Doc->CurURL.filename));
 	dps_strcat(url, DPS_NULL2EMPTY(Doc->CurURL.query_string));
 	DpsEscapeURI(eurl, url);
+
+	if (body != NULL) {
+	  i += dps_strlen(body);
+	}
 
 	Doc->Buf.allocated_size = 3 * i + DPS_NET_BUF_SIZE;
 	
@@ -1584,6 +1589,12 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	
 	/* Empty line is the end of HTTP header */
 	dps_strcat(Doc->Buf.buf,"\r\n");
+
+	/* append body section if we have POST request */
+	if (body != NULL) {
+	  dps_strcat(Doc->Buf.buf, body);
+	}
+
 #ifdef DEBUG_REQUEST
 	fprintf(stderr,"Request:'%s'\n",Doc->Buf.buf);
 #endif
