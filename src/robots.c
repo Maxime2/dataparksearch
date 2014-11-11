@@ -439,7 +439,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    char PingBody[size];
 
 		    dps_snprintf(rurl, rurlen, "%s://%s/", DPS_NULL2EMPTY(URL->schema), DPS_NULL2EMPTY(URL->hostinfo));
-		    DpsVarListAddStr(&rDoc->Sections, "URL", rurl);
+		    DpsVarListReplaceStr(&rDoc->Sections, "URL", rurl);
 		    DpsURLParse(&rDoc->CurURL, rurl);
 		    DpsLog(Indexer, DPS_LOG_INFO, "HOME: %s", rurl);
 		    rDoc->method = DPS_METHOD_HEAD;
