@@ -421,10 +421,10 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	      if (PingData != NULL) {
 		char *AuthPing = DpsStrdup(PingData);
 		dps_base64_decode(AuthPing, PingData, dps_strlen(PingData));
-		if (!strcasecmp(AuthPing, "GET")) {
+		if (!strncasecmp(AuthPing, "GET", 3)) {
 		  rDoc->method = DPS_METHOD_GET;
 		  PingData = DpsTrim(AuthPing + 3, " \t\r\n");
-		} else if (!strcasecmp(AuthPing, "POST")) {
+		} else if (!strncasecmp(AuthPing, "POST", 4)) {
 		  rDoc->method = DPS_METHOD_POST;
 		  PingData = DpsTrim(AuthPing + 4, " \t\r\n");
 		} else {
