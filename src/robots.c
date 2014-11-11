@@ -420,12 +420,13 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	      char *PingData = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
 	      if (PingData != NULL) {
 		char *AuthPing = DpsStrdup(PingData);
+		int method = DPS_METHOD_GET;
 		dps_base64_decode(AuthPing, PingData, dps_strlen(PingData));
 		if (!strncasecmp(AuthPing, "GET", 3)) {
-		  rDoc->method = DPS_METHOD_GET;
+		  method = DPS_METHOD_GET;
 		  PingData = DpsTrim(AuthPing + 3, " \t\r\n");
 		} else if (!strncasecmp(AuthPing, "POST", 4)) {
-		  rDoc->method = DPS_METHOD_POST;
+		  method = DPS_METHOD_POST;
 		  PingData = DpsTrim(AuthPing + 4, " \t\r\n");
 		} else {
 		  DpsLog(Indexer, DPS_LOG_ERROR, "AuthPing should be GET or POST: %s", AuthPing);
@@ -436,6 +437,17 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		  {
 		    char PingURL[size + 2];
 		    char PingBody[size];
+
+		    dps_snprintf(rurl, rurlen, "%s://%s/", DPS_NULL2EMPTY(URL->schema), DPS_NULL2EMPTY(URL->hostinfo));
+		    DpsVarListAddStr(&rDoc->Sections, "URL", rurl);
+		    DpsURLParse(&rDoc->CurURL, rurl);
+		    DpsLog(Indexer, DPS_LOG_INFO, "HOME: %s", rurl);
+		    rDoc->method = DPS_METHOD_HEAD;
+		    DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "HOME.Request");
+		    result = DpsGetURL(Indexer, rDoc, NULL); /* Just get headers from the home as we need only Cookies from it */
+		    DpsDocProcessResponseHeaders(Indexer, rDoc);
+		    DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "HOME.Response");
+
 		    sscanf(PingData, "%s %s", PingURL, PingBody);
 		    if (rDoc->method == DPS_METHOD_GET) {
 		      dps_strcat(PingURL, "?");
@@ -447,6 +459,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    DpsURLParse(&rDoc->CurURL, PingURL);
 		    DpsLog(Indexer, DPS_LOG_INFO, "AUTH.PING: %s", PingURL);
 		  }
+		  rDoc->method = method;
 		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
 		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
 		  DpsDocProcessResponseHeaders(Indexer, rDoc);
