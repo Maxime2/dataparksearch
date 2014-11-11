@@ -500,7 +500,7 @@ DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOC
 
 	URL = (Doc == NULL) ? pURL : &Doc->CurURL;
 
-	if (strcasecmp(DPS_NULL2EMPTY(URL->schema), "http")) { /* robots.txt exist only for http scheme */
+	if (strncasecmp(DPS_NULL2EMPTY(URL->schema), "http", 4)) { /* robots.txt exists only for http and https */
 #ifdef WITH_PARANOIA
 	  DpsViolationExit(Indexer->handle, paran);
 #endif
