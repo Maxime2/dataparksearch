@@ -417,9 +417,10 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
 	    }
 	    if (Server != NULL) {
-	      char *AuthPing = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
-	      char *PingData = NULL;
-	      if (AuthPing != NULL) {
+	      char *PingData = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
+	      if (PingData != NULL) {
+		char *AuthPing = DpsStrdup(PingData);
+		dps_base64_decode(AuthPing, PingData, dps_strlen(PingData));
 		if (!strcasecmp(AuthPing, "GET")) {
 		  rDoc->method = DPS_METHOD_GET;
 		  PingData = DpsTrim(AuthPing + 3, " \t\r\n");
@@ -428,6 +429,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		  PingData = DpsTrim(AuthPing + 4, " \t\r\n");
 		} else {
 		  DpsLog(Indexer, DPS_LOG_ERROR, "AuthPing should be GET or POST: %s", AuthPing);
+		  PingData = NULL;
 		}
 		if (PingData != NULL) {
 		  size_t size = dps_strlen(PingData);
@@ -445,6 +447,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		  }
 		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
 		}
+		DpsFree(AuthPing);
 	      }
 	    }
 	}
