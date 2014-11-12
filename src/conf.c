@@ -2358,7 +2358,7 @@ __C_LINK  int __DPSCALL DpsEnvLoad(DPS_AGENT *Indexer, const char *cname, dps_ui
 		  DpsRTrim(accept_str, "*");
 		  sprintf(DPS_STREND(accept_str), ";q=0.6");
 		}
-		sprintf(DPS_STREND(accept_str), ",*;q=0.1");
+		sprintf(DPS_STREND(accept_str), ",*/*;q=0.1");
 
 		DpsVarListInsStr(&Indexer->Conf->Vars, "Request.Accept", accept_str);
 		DPS_FREE(accept_str);
