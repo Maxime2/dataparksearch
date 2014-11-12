@@ -461,7 +461,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		  }
 		  rDoc->method = method;
 		  if (method == DPS_METHOD_POST) {
-		    DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", "application/x-www-form-urlencoded");
+		    DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", "application/x-www-form-urlencoded; charset=%", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
 		  }
 		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
 		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
