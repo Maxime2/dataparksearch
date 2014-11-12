@@ -460,6 +460,9 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    DpsLog(Indexer, DPS_LOG_INFO, "AUTH.PING: %s", PingURL);
 		  }
 		  rDoc->method = method;
+		  if (method == DPS_METHOD_POST) {
+		    DpsVarListReplaceStr(&rDoc->Sections, "Content-Type", "application/x-www-form-urlencoded");
+		  }
 		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
 		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
 		  DpsDocProcessResponseHeaders(Indexer, rDoc);
