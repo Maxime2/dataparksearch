@@ -462,7 +462,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		  rDoc->method = method;
 		  if (method == DPS_METHOD_POST) {
 		    char encoding[64];
-		    dps_snprintf(encoding, sizeof(encoding), "application/x-www-form-urlencoded; charset=%", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
+		    dps_snprintf(encoding, sizeof(encoding), "application/x-www-form-urlencoded; charset=%s", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
 		    DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", encoding);
 		  }
 		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
