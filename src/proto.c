@@ -1533,6 +1533,7 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 						 dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.query_string)) + 1));
 	char            *eurl = (char*)DpsMalloc(3 * i);
 	char            *body = (Doc->method == DPS_METHOD_POST) ? DpsVarListFindStr(&Doc->Sections, "body", NULL) : NULL;
+	DPS_VAR *Hdr_Host, *Hdr_UA;
 
 	if (url == NULL || eurl == NULL) {
 	    DPS_FREE(url); DPS_FREE(eurl);
@@ -1558,6 +1559,9 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	  DPS_FREE(url); DPS_FREE(eurl);
 	  return DPS_ERROR;
 	}
+
+	Hdr_Host = DpsVarListFind(&Doc->RequestHeaders, "Host");
+	Hdr_UA = DpsVarListFind(&Doc->RequestHeaders, "User-Agent");
 	
 	if(proxy && strcasecmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "file")) {
 /*		sprintf(Doc->Buf.buf,"%s%s://%s%s HTTP/1.0\r\n", method, DPS_NULL2EMPTY(Doc->CurURL.schema), 
@@ -1576,11 +1580,27 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	}
 	DPS_FREE(eurl);DPS_FREE(url);
 	
+
+	/* Add Host then User-Agent headers first */
+	if (Hdr_Host != NULL) {
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_Host->name);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_Host->val);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), "\r\n");
+	}
+	if (Hdr_UA != NULL) {
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_UA->name);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_UA->val);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), "\r\n");
+	}
+
 	/* Add user defined headers */
 	for (r = 0; r < 256; r++)
 	for(i = 0; i < Doc->RequestHeaders.Root[r].nvars; i++) {
 		DPS_VAR *Hdr = &Doc->RequestHeaders.Root[r].Var[i];
 /*		sprintf(DPS_STREND(Doc->Buf.buf), "%s: %s\r\n", Hdr->name, Hdr->val);*/
+		if (!strcasecmp(Hdr->name, "Host") || !strcasecmp(Hdr->name, "User-Agent")) continue;
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr->name);
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr->val);
