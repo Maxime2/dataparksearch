@@ -103,8 +103,6 @@ static void DpsParseHTTPHeader(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *
 	   part = dps_strtok_r(NULL, ";", &lpart, &savec)) {
 	char *arg;
 
-	fprintf(stderr, " %% %s: part=%s\n", __FUNCTION__, part);
-
 	part = DpsTrim(part, " ");
 	if ((arg = strchr(part, '='))) {
 	  *arg++ = '\0';
@@ -140,8 +138,6 @@ static void DpsParseHTTPHeader(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *
 	if (!path) {
 	  path = Doc->CurURL.path ? Doc->CurURL.path : "/";
 	}
-
-	fprintf(stderr, " ** add Cookie: domain:%s path:%s name:%s value:%s secure:%c expire:%d\n",  domain, path, name, value, secure, expire);
 
 	DpsCookiesAdd(Indexer, domain, path, name, value, secure, expire, 1);
 
