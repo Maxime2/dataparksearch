@@ -95,25 +95,31 @@ static void DpsParseHTTPHeader(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *
       char *part, *lpart;
       char *name = NULL;
       char *value = NULL;
-      const char *domain = NULL;
-      const char *path = NULL;
-      dps_uint4 expire = 0;
+      char *domain = NULL;
+      char *path = NULL;
+      dps_uint4 expire = 0, need_free_domain = 1;
       char secure = 'n';
       for (part = dps_strtok_r(val, ";" , &lpart, &savec) ; part;
 	   part = dps_strtok_r(NULL, ";", &lpart, &savec)) {
 	char *arg;
+
+	fprintf(stderr, " %% %s: part=%s\n", __FUNCTION__, part);
+
 	part = DpsTrim(part, " ");
 	if ((arg = strchr(part, '='))) {
 	  *arg++ = '\0';
 	  if (!name) {
 	    name = part;
-	    value = arg;
+	    DpsFree(value);
+	    value = DpsStrdup(arg);
 	  } else 
 	    if (!strcasecmp(part, "path")) {
-	      path = arg;
+	      DpsFree(path);
+	      path = DpsStrdup(arg);
 	    } else
 	      if (!strcasecmp(part, "domain")) {
-		domain = arg;
+		DpsFree(domain);
+		domain = DpsStrdup(arg);
 	      } else
 		if (!strcasecmp(part, "secure")) {
 		  secure = 'y';
@@ -127,13 +133,22 @@ static void DpsParseHTTPHeader(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *
 	if (domain && domain[0] == '.') {
 	  domain++;
 	} else {
+	  if (domain) DpsFree(domain);
 	  domain = Doc->CurURL.hostname ? Doc->CurURL.hostname : "localhost";
+	  need_free_domain = 0;
 	}
 	if (!path) {
 	  path = Doc->CurURL.path ? Doc->CurURL.path : "/";
 	}
+
+	fprintf(stderr, " ** add Cookie: domain:%s path:%s name:%s value:%s secure:%c expire:%d\n",  domain, path, name, value, secure, expire);
+
 	DpsCookiesAdd(Indexer, domain, path, name, value, secure, expire, 1);
+
       }
+      DpsFree(value);
+      DpsFree(path);
+      if (need_free_domain) DpsFree(domain);
 /*			  token = dps_strtok_r(NULL,"\r\n",&lt);
 			  continue;*/
       return;
