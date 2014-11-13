@@ -151,6 +151,7 @@
 	{"MinServerWeight",    	1,1,	srv_rpl_num_var},
 	{"Robots",		1,1,	srv_rpl_bool_var},
 	{"Sitemaps",		1,1,	srv_rpl_bool_var},
+	{"Cookie",              1,1,    env_rpl_var},
 	{"Cookies",             1,1,    srv_rpl_bool_var},
 	{"DetectClones",	1,1,	srv_rpl_bool_var},
 	{"Index",		1,1,	srv_rpl_bool_var},

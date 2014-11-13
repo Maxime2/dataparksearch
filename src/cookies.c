@@ -31,7 +31,7 @@
 
 
 int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, const char *name, const char *value, const char secure,
-		  dps_uint4 expires, int insert_flag) {
+		  dps_uint4 expires, const char from_config, int insert_flag) {
 #ifdef HAVE_SQL
 
   char buf[3*PATH_MAX];
@@ -57,7 +57,7 @@ int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, con
 
   for (i = 0; i < Cookies->ncookies; i++) {
     Coo = &Cookies->Cookie[i];
-    if (!strcasecmp(Coo->domain, domain) && !strcasecmp(Coo->path, DPS_NULL2EMPTY(path)) && !strcasecmp(Coo->name, name) && (Coo->secure == secure) ) {
+    if (!strcasecmp(Coo->domain, domain) && !strcasecmp(Coo->path, DPS_NULL2EMPTY(path)) && !strcasecmp(Coo->name, name) && (Coo->secure == secure)/* && (Coo->from_config == from_config)*/ ) {
       DPS_FREE(Coo->value);
       Coo->value = DpsStrdup(value);
 /*      Coo->expires = expires;*/
@@ -86,6 +86,7 @@ int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, con
   Coo = &Cookies->Cookie[Cookies->ncookies];
 /*  Coo->expires = expires;*/
   Coo->secure = secure;
+  Coo->from_config = from_config;
   Coo->domain = DpsStrdup(domain);
   Coo->path = DpsStrdup(path);
   Coo->name = DpsStrdup(name);
@@ -109,6 +110,68 @@ int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, con
 #endif /*HAVE_SQL*/
   return DPS_OK;
 }
+
+
+int DpsCookiesAddStr(DPS_AGENT *Indexer, DPS_URL *CurURL, const char *cookie_str, int insert_flag) {
+  char *part, *lpart;
+  char *name = NULL;
+  char *value = NULL;
+  char *domain = NULL, *orig_domain = NULL;
+  char *path = NULL;
+  dps_uint4 expire = 0, need_free_domain = 1, need_free_path = 1;
+  char secure = 'n', savec;
+
+  for (part = dps_strtok_r(cookie_str, ";" , &lpart, &savec) ; part;
+       part = dps_strtok_r(NULL, ";", &lpart, &savec)) {
+    char *arg;
+
+    part = DpsTrim(part, " ");
+    if ((arg = strchr(part, '='))) {
+      *arg++ = '\0';
+      if (!name) {
+	name = part;
+	DpsFree(value);
+	value = DpsStrdup(arg);
+      } else 
+	if (!strcasecmp(part, "path")) {
+	  DpsFree(path);
+	  path = DpsStrdup(arg);
+	} else
+	  if (!strcasecmp(part, "domain")) {
+	    DpsFree(orig_domain);
+	    orig_domain = domain = DpsStrdup(arg);
+	  } else
+	    if (!strcasecmp(part, "secure")) {
+	      secure = 'y';
+	    } else
+	      if (!strcasecmp(part, "expires")) {
+		expire = (dps_uint4)DpsHttpDate2Time_t(arg);
+	      }
+    }
+  }
+  if (name && value) {
+    if (domain && domain[0] == '.') {
+      domain++;
+    } else {
+      if (domain) DpsFree(orig_domain);
+      domain = (CurURL && CurURL->hostname) ? CurURL->hostname : "localhost";
+      need_free_domain = 0;
+    }
+    if (!path) {
+      path = (CurURL && CurURL->path) ? CurURL->path : "/";
+      need_free_path = 0;
+    }
+
+    DpsCookiesAdd(Indexer, domain, path, name, value, secure, expire, (CurURL==NULL)?1:0, 1);
+
+  }
+  DpsFree(value);
+  if (need_free_path) DpsFree(path);
+  if (need_free_domain) DpsFree(orig_domain);
+
+  return DPS_OK;
+}
+
 
 void DpsCookiesFree(DPS_COOKIES *Cookies) {
   size_t i;
@@ -171,7 +234,7 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
     if (Coo->secure == 'y' && strcasecmp(Doc->CurURL.schema, "https")) continue;
     if (strncasecmp(Coo->path, Doc->CurURL.path, dps_strlen(Coo->path))) continue;
     if (strcasecmp(Coo->domain, hostinfo + (blen - slen))) continue;
-    have_no_cookies = 0;
+    if (Coo->from_config != 1) have_no_cookies = 0;
     if (Coo->name[0] == '\0' && Coo->value[0] == '\0') continue;
     if (cookie.data_size)
       DpsDSTRAppend(&cookie, "; ", 2);
@@ -201,9 +264,8 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
 	rows = DpsSQLNumRows(&Res);
 	for(i = 0; i < rows; i++) {
 	  DpsCookiesAdd(Indexer, hostinfo, DpsSQLValue(&Res, i, 2), DpsSQLValue(&Res, i, 0), DpsSQLValue(&Res, i, 1), 
-			*DpsSQLValue(&Res, i, 3), 0, 0);
+			*DpsSQLValue(&Res, i, 3), 0, 0, 0);
 	  if (*DpsSQLValue(&Res, i, 3) == 'y' && strcasecmp(Doc->CurURL.schema, "https")) continue;
-	  if (*DpsSQLValue(&Res, i, 3) == 'n' && !strcasecmp(Doc->CurURL.schema, "https")) continue;
 	  if (strncasecmp(DpsSQLValue(&Res, i, 2), Doc->CurURL.path, dps_strlen(DpsSQLValue(&Res, i, 2)))) continue;
 	  if (cookie.data_size)
 	    DpsDSTRAppend(&cookie, "; ", 2);
@@ -212,7 +274,7 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
 	  DpsDSTRAppendStr(&cookie, DpsSQLValue(&Res, i, 1));
 	}
 	if (rows == 0) {
-	  DpsCookiesAdd(Indexer, hostinfo, "/", "", "", 'n', 0, 0);
+	  DpsCookiesAdd(Indexer, hostinfo, "/", "", "", 'n', 0, 0, 0);
 	}
       }
       DpsSQLFree(&Res);

@@ -1682,6 +1682,7 @@ static int env_rpl_env_var (void *Cfg, size_t ac, char **av) {
 static int env_rpl_var(void *Cfg, size_t ac,char **av){
 	DPS_CFG	*C=(DPS_CFG*)Cfg;
 	DPS_ENV	*Conf=C->Indexer->Conf;
+	DPS_AGENT *A = C->Indexer;
 	int res = 0;
 #ifdef WITH_PARANOIA
 	void * paran = DpsViolationEnter(paran);
@@ -1709,6 +1710,8 @@ static int env_rpl_var(void *Cfg, size_t ac,char **av){
 	  Conf->Flags.SkipHrefIn = DpsHrefFrom(av[1]);
 	}else if (!strcasecmp(av[0], "PopRankMethod")) {
 	  Conf->Flags.poprank_method = DpsPRMethod(av[1]);
+	}else if (!strcasecmp(av[0], "Cookie")) {
+	  DpsCookiesAddStr(A, NULL, av[1], 1);
 	}
 	DpsVarListReplaceStr(&Conf->Vars,av[0],av[1]);
 #ifdef WITH_PARANOIA

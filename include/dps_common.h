@@ -793,6 +793,7 @@ typedef struct {
         char            *value;
         char            *path;
         char            secure;
+        char            from_config;
 } DPS_COOKIE;
 
 typedef struct {
