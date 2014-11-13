@@ -443,6 +443,12 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    DpsURLParse(&rDoc->CurURL, rurl);
 		    DpsLog(Indexer, DPS_LOG_INFO, "HOME: %s", rurl);
 		    rDoc->method = DPS_METHOD_HEAD;
+		    DpsVarListFree(&rDoc->RequestHeaders);
+		    DpsDocAddDocExtraHeaders(Indexer, rDoc);
+		    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
+		    if (rServer != NULL) {
+		      DpsDocAddServExtraHeaders(rServer, rDoc);
+		    }
 		    DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "HOME.Request");
 		    result = DpsGetURL(Indexer, rDoc, NULL); /* Just get headers from the home as we need only Cookies from it */
 		    DpsDocProcessResponseHeaders(Indexer, rDoc);
@@ -458,12 +464,21 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 		    DpsVarListReplaceStr(&rDoc->Sections, "URL", PingURL);
 		    DpsURLParse(&rDoc->CurURL, PingURL);
 		    DpsLog(Indexer, DPS_LOG_INFO, "AUTH.PING: %s", PingURL);
-		  }
-		  rDoc->method = method;
-		  if (method == DPS_METHOD_POST) {
-		    char encoding[64];
-		    dps_snprintf(encoding, sizeof(encoding), "application/x-www-form-urlencoded; charset=%s", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
-		    DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", encoding);
+		  
+		    rDoc->method = method;
+		    DpsVarListFree(&rDoc->RequestHeaders);
+		    DpsDocAddDocExtraHeaders(Indexer, rDoc);
+		    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
+		    if (rServer != NULL) {
+		      DpsDocAddServExtraHeaders(rServer, rDoc);
+		    }
+		    if (method == DPS_METHOD_POST) {
+		      char encoding[64];
+		      dps_snprintf(encoding, sizeof(encoding), "application/x-www-form-urlencoded; charset=%s", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
+		      DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", encoding);
+		      dps_snprintf(encoding, sizeof(encoding), "%d", dps_strlen(PingBody));
+		      DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Length", encoding);
+		    }
 		  }
 		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
 		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
