@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2006-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -169,7 +169,6 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
     slen = dps_strlen(Coo->domain);
     if (slen > blen) continue;
     if (Coo->secure == 'y' && strcasecmp(Doc->CurURL.schema, "https")) continue;
-    if (Coo->secure == 'n' && !strcasecmp(Doc->CurURL.schema, "https")) continue;
     if (strncasecmp(Coo->path, Doc->CurURL.path, dps_strlen(Coo->path))) continue;
     if (strcasecmp(Coo->domain, hostinfo + (blen - slen))) continue;
     have_no_cookies = 0;
