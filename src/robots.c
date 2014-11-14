@@ -335,7 +335,7 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	if (Doc != NULL) {
 	    DpsVarListReplaceLst(&rDoc->RequestHeaders, &Doc->RequestHeaders, NULL, "*"); 
 	} else {
-	    DpsDocAddDocExtraHeaders(Indexer, rDoc);
+	    DpsDocAddDocExtraHeaders(Indexer, rServer, rDoc);
 	    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
 	}
 
@@ -415,79 +415,6 @@ static DPS_ROBOT *DpsRobotClone(DPS_AGENT *Indexer, DPS_SERVER *Server,
 	    }
 	    if (robot == NULL) {
 		robot = DpsRobotFind(Robots, DPS_NULL2EMPTY(URL->hostinfo));
-	    }
-	    if (Server != NULL) {
-	      char *PingData = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
-	      if (PingData != NULL) {
-		char *AuthPing = DpsStrdup(PingData);
-		int method = DPS_METHOD_GET;
-		dps_base64_decode(AuthPing, PingData, dps_strlen(PingData));
-		if (!strncasecmp(AuthPing, "GET", 3)) {
-		  method = DPS_METHOD_GET;
-		  PingData = DpsTrim(AuthPing + 3, " \t\r\n");
-		} else if (!strncasecmp(AuthPing, "POST", 4)) {
-		  method = DPS_METHOD_POST;
-		  PingData = DpsTrim(AuthPing + 4, " \t\r\n");
-		} else {
-		  DpsLog(Indexer, DPS_LOG_ERROR, "AuthPing should be GET or POST: %s", AuthPing);
-		  PingData = NULL;
-		}
-		if (PingData != NULL) {
-		  size_t size = dps_strlen(PingData);
-		  {
-		    char PingURL[size + 2];
-		    char PingBody[size];
-
-		    dps_snprintf(rurl, rurlen, "%s://%s/", DPS_NULL2EMPTY(URL->schema), DPS_NULL2EMPTY(URL->hostinfo));
-		    DpsVarListReplaceStr(&rDoc->Sections, "URL", rurl);
-		    DpsURLParse(&rDoc->CurURL, rurl);
-		    DpsLog(Indexer, DPS_LOG_INFO, "HOME: %s", rurl);
-		    rDoc->method = DPS_METHOD_HEAD;
-		    DpsVarListFree(&rDoc->RequestHeaders);
-		    DpsDocAddDocExtraHeaders(Indexer, rDoc);
-		    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
-		    if (rServer != NULL) {
-		      DpsDocAddServExtraHeaders(rServer, rDoc);
-		    }
-		    DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "HOME.Request");
-		    result = DpsGetURL(Indexer, rDoc, NULL); /* Just get headers from the home as we need only Cookies from it */
-		    DpsDocProcessResponseHeaders(Indexer, rDoc);
-		    DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "HOME.Response");
-
-		    sscanf(PingData, "%s %s", PingURL, PingBody);
-		    if (rDoc->method == DPS_METHOD_GET) {
-		      dps_strcat(PingURL, "?");
-		      dps_strcat(PingURL, PingBody);
-		    } else {
-		      DpsVarListReplaceStr(&rDoc->Sections, "body", PingBody);
-		    }
-		    DpsVarListReplaceStr(&rDoc->Sections, "URL", PingURL);
-		    DpsURLParse(&rDoc->CurURL, PingURL);
-		    DpsLog(Indexer, DPS_LOG_INFO, "AUTH.PING: %s", PingURL);
-		  
-		    rDoc->method = method;
-		    DpsVarListFree(&rDoc->RequestHeaders);
-		    DpsDocAddDocExtraHeaders(Indexer, rDoc);
-		    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
-		    if (rServer != NULL) {
-		      DpsDocAddServExtraHeaders(rServer, rDoc);
-		    }
-		    if (method == DPS_METHOD_POST) {
-		      char encoding[64];
-		      dps_snprintf(encoding, sizeof(encoding), "application/x-www-form-urlencoded; charset=%s", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
-		      DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", encoding);
-		      dps_snprintf(encoding, sizeof(encoding), "%d", dps_strlen(PingBody));
-		      DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Length", encoding);
-		    }
-		  }
-		  DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
-		  result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
-		  DpsDocProcessResponseHeaders(Indexer, rDoc);
-		  DpsVarListDel(&rDoc->Sections, "body");
-		  DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "AUTHPING.Response");
-		}
-		DpsFree(AuthPing);
-	      }
 	    }
 	}
 	if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));
@@ -862,7 +789,7 @@ static int DpsSitemapParse(DPS_AGENT *Indexer, int hops, const char *s) {
 
   mServer = DpsServerFind(Indexer, 0, s, mDoc->CurURL.charset_id, NULL);
 
-  DpsDocAddDocExtraHeaders(Indexer, mDoc);
+  DpsDocAddDocExtraHeaders(Indexer, mServer, mDoc);
   DpsDocAddConfExtraHeaders(Indexer->Conf, mDoc);
 
   if (mServer != NULL) {

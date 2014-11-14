@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -306,7 +306,7 @@ int DpsDocLookupConn(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
 }
 
 
-int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
+int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc) {
   int rc = DPS_OK;
   /* Host Name for virtual hosts */
 
@@ -362,7 +362,7 @@ int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {
     }
 
 /* Add Cookies if any */
-    if (Doc->Spider.use_cookies) DpsCookiesFind(Indexer, Doc, ascii);
+    if (Doc->Spider.use_cookies) DpsCookiesFind(Indexer, Server, Doc, ascii);
     if (Indexer->Flags.provide_referer && strncasecmp(Doc->CurURL.schema, "http", 4) == 0 ) 
       rc = DpsURLAction(Indexer, Doc, DPS_URL_ACTION_REFERER);
     

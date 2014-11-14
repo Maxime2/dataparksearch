@@ -26,6 +26,7 @@
 #include "dps_utils.h"
 #include "dps_vars.h"
 #include "dps_charsetutils.h"
+#include "dps_doc.h"
 
 #include <string.h>
 
@@ -165,6 +166,7 @@ int DpsCookiesAddStr(DPS_AGENT *Indexer, DPS_URL *CurURL, const char *cookie_str
     DpsCookiesAdd(Indexer, domain, path, name, value, secure, expire, (CurURL==NULL)?1:0, 1);
 
   }
+
   DpsFree(value);
   if (need_free_path) DpsFree(path);
   if (need_free_domain) DpsFree(orig_domain);
@@ -218,13 +220,17 @@ void DpsCookiesClean(DPS_AGENT *A) {
 }
 
 
-void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo) {
+void DpsCookiesFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc, const char *hostinfo) {
 #ifdef HAVE_SQL
   DPS_DSTR cookie;
   DPS_COOKIES *Cookies = &Indexer->Cookies;
   DPS_COOKIE *Coo;
   size_t i, blen = dps_strlen(hostinfo), slen;
-  int have_no_cookies = 1;
+  int have_no_cookies = DpsVarListFindInt(&Doc->Sections, "have_no_cookies", 1);
+#ifdef WITH_PARANOIA
+  void *paran = DpsViolationEnter(paran);
+#endif
+  TRACE_IN(Indexer, "DpsCookiesFind");
 
   DpsDSTRInit(&cookie, 1024);
   for(i = 0; i < Cookies->ncookies; i++) {
@@ -249,6 +255,123 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
     DPS_SQLRES Res;
     size_t rows;
     int rc;
+
+
+	    if (Server != NULL) {
+	      char *PingData = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
+	      if (PingData != NULL) {
+		char *AuthPing = DpsStrdup(PingData);
+		int method = DPS_METHOD_GET;
+		dps_base64_decode(AuthPing, PingData, dps_strlen(PingData));
+		if (!strncasecmp(AuthPing, "GET", 3)) {
+		  method = DPS_METHOD_GET;
+		  PingData = DpsTrim(AuthPing + 3, " \t\r\n");
+		} else if (!strncasecmp(AuthPing, "POST", 4)) {
+		  method = DPS_METHOD_POST;
+		  PingData = DpsTrim(AuthPing + 4, " \t\r\n");
+		} else {
+		  DpsLog(Indexer, DPS_LOG_ERROR, "AuthPing should be GET or POST: %s", AuthPing);
+		  PingData = NULL;
+		}
+		if (PingData != NULL) {
+		  size_t size = dps_strlen(PingData);
+		  {
+		    char PingURL[size + 2];
+		    char PingBody[size];
+		    DPS_DOCUMENT *rDoc;
+		    int result;
+
+		    rDoc = DpsDocInit(NULL);
+		    DpsSpiderParamInit(&rDoc->Spider);
+		    DpsVarList2Doc(rDoc, Server);
+		    rDoc->Buf.max_size = (size_t)DpsVarListFindInt(&Indexer->Vars, "MaxDocSize", DPS_MAXDOCSIZE);
+		    rDoc->Buf.allocated_size = DPS_NET_BUF_SIZE;
+		    if ((rDoc->Buf.buf = (char*)DpsMalloc(rDoc->Buf.allocated_size + 1)) == NULL) {
+		      DpsDocFree(rDoc);
+		      TRACE_OUT(Indexer);
+		      return;
+		    }
+		    rDoc->Buf.buf[0]='\0';
+		    rDoc->subdoc = Indexer->Flags.SubDocLevel + 1;
+
+#if 1
+		    dps_snprintf(buf, sizeof(buf), "%s://%s/", DPS_NULL2EMPTY(Doc->CurURL.schema), DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
+		    DpsVarListReplaceStr(&rDoc->Sections, "URL", buf);
+		    DpsURLParse(&rDoc->CurURL, buf);
+		    DpsLog(Indexer, DPS_LOG_INFO, "HOME: %s", buf);
+		    rDoc->method = DPS_METHOD_HEAD;
+		    /*		    DpsVarListFree(&rDoc->RequestHeaders);*/
+		    if (Doc != NULL) {
+		      DpsVarListReplaceLst(&rDoc->RequestHeaders, &Doc->RequestHeaders, NULL, "*"); 
+		    }
+
+		    DpsVarListReplaceStr(&rDoc->Sections, "have_no_cookies", "0");
+		    DpsDocAddDocExtraHeaders(Indexer, Server, rDoc);
+		    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
+		    DpsVarListReplaceLst(&rDoc->Sections, &Server->Vars, NULL, "*");
+		    DpsDocAddServExtraHeaders(Server, rDoc);
+		    DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "HOME.Request");
+		    if (Doc == NULL || Indexer->Flags.cmd == DPS_IND_FILTER) {
+		      DpsDocLookupConn(Indexer, rDoc);
+		    } else {
+		      DPS_FREE(rDoc->connp.connp);
+		      rDoc->connp = Doc->connp;
+		    }
+		    result = DpsGetURL(Indexer, rDoc, NULL); /* Just get headers from the home as we need only Cookies from it */
+		    DpsDocProcessResponseHeaders(Indexer, rDoc);
+		    DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "HOME.Response");
+#endif
+
+		    sscanf(PingData, "%s %s", PingURL, PingBody);
+		    if (rDoc->method == DPS_METHOD_GET) {
+		      dps_strcat(PingURL, "?");
+		      dps_strcat(PingURL, PingBody);
+		    } else {
+		      DpsVarListReplaceStr(&rDoc->Sections, "body", PingBody);
+		    }
+		    DpsVarListReplaceStr(&rDoc->Sections, "URL", PingURL);
+		    DpsURLParse(&rDoc->CurURL, PingURL);
+		    DpsLog(Indexer, DPS_LOG_INFO, "AUTH.PING: %s", PingURL);
+		  
+		    rDoc->method = method;
+		    DpsVarListFree(&rDoc->RequestHeaders);
+		    DpsVarListReplaceStr(&rDoc->Sections, "have_no_cookies", "0");
+		    DpsDocAddDocExtraHeaders(Indexer, Server, rDoc);
+		    DpsDocAddConfExtraHeaders(Indexer->Conf, rDoc);
+		    DpsVarListReplaceLst(&rDoc->Sections, &Server->Vars, NULL, "*");
+		    DpsDocAddServExtraHeaders(Server, rDoc);
+		    if (method == DPS_METHOD_POST) {
+		      dps_snprintf(buf, sizeof(buf), "application/x-www-form-urlencoded; charset=%s", DpsVarListFindStr(&Indexer->Conf->Vars, "LocalCharset", "iso-8859-1"));
+		      DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Type", buf);
+		      dps_snprintf(buf, sizeof(buf), "%d", dps_strlen(PingBody));
+		      DpsVarListReplaceStr(&rDoc->RequestHeaders, "Content-Length", buf);
+		    }
+		  
+		    DpsVarListLog(Indexer, &rDoc->RequestHeaders, DPS_LOG_DEBUG, "AUTHPING.Request");
+#if 0
+		    if (Doc == NULL || Indexer->Flags.cmd == DPS_IND_FILTER) {
+		      DpsDocLookupConn(Indexer, rDoc);
+		    } else {
+		      DPS_FREE(rDoc->connp.connp);
+		      rDoc->connp = Doc->connp;
+		    }
+#endif
+
+		    result = DpsGetURL(Indexer, rDoc, NULL); /* Just get it as we need only Cookies from the headers */
+		    DpsDocProcessResponseHeaders(Indexer, rDoc);
+		    DpsVarListDel(&rDoc->Sections, "body");
+		    DpsVarListLog(Indexer, &rDoc->Sections, DPS_LOG_DEBUG, "AUTHPING.Response");
+		    if (Doc != NULL) bzero(&rDoc->connp, sizeof(rDoc->connp));
+		    DpsDocFree(rDoc);
+		  }
+		}
+		DpsFree(AuthPing);
+	      }
+	    }
+
+
+
+
 
     while(hostinfo != NULL) {
       url_id = DpsStrHash32(hostinfo);
@@ -290,4 +413,6 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *hostinfo)
   }
   DpsDSTRFree(&cookie);
 #endif
+  TRACE_OUT(Indexer);
+  return;
 }

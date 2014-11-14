@@ -1,4 +1,4 @@
-/* Copyright (C) 2003 Datapark corp. All rigths reserved.
+/* Copyright (C) 2003-2014 Datapark corp. All rigths reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ extern __C_LINK void __DPSCALL DpsDocFree(DPS_DOCUMENT*);
 extern char * DpsDocToTextBuf(DPS_DOCUMENT * Doc, int numsection_flag, int e_url_flag);
 extern __C_LINK int __DPSCALL DpsDocFromTextBuf(DPS_DOCUMENT * Doc, const char *d);
 extern int DpsDocLookupConn(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);
-extern int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);
+extern int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc);
 extern int DpsDocAddConfExtraHeaders(DPS_ENV *Conf, DPS_DOCUMENT *Doc);
 extern int DpsDocAddServExtraHeaders(DPS_SERVER *Server, DPS_DOCUMENT *Doc);
 extern int DpsDocProcessResponseHeaders(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);

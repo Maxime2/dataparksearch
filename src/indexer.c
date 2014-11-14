@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1998,7 +1998,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	      }
 	    }
 	  }
-	  DpsDocAddDocExtraHeaders(Indexer, Doc);
+	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);
 	  if(origurl != NULL){
 	    DpsVarListReplaceStr(&Doc->Sections,"URL",origurl);
 	    DpsVarListDel(&Doc->Sections, "E_URL");
@@ -2545,7 +2545,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	      }
 	    }
 	  }
-	  DpsDocAddDocExtraHeaders(Indexer, Doc);
+	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);
 	  if(origurl != NULL){
 	    DpsVarListReplaceStr(&Doc->Sections,"URL",origurl);
 	    DpsVarListDel(&Doc->Sections, "E_URL");

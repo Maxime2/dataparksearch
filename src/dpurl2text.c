@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -583,7 +583,7 @@ int main(int argc, char **argv, char **envp) {
 	DpsVarListReplaceLst(&Doc->Sections, &Conf.Sections, NULL, "*");
 	DpsVarListReplaceStr(&Doc->Sections, "URL", url);
 	DpsDocAddConfExtraHeaders(Main.Conf, Doc);
-	DpsDocAddDocExtraHeaders(&Main, Doc);
+	DpsDocAddDocExtraHeaders(&Main, &Srv, Doc);
 	if (charset_from != NULL) {
 	    DpsVarListReplaceStr(&Doc->Sections, "RemoteCharset", charset_from);
 	}
