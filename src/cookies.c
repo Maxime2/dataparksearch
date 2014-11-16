@@ -258,9 +258,9 @@ void DpsCookiesFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc, c
 
 
 	    if (Server != NULL) {
-	      char *PingData = DpsTrim(DpsVarListFindStr(&Server->Vars, "AuthPing", NULL), " \t\r\n");
+	      char *PingData = DpsVarListFindStr(&Server->Vars, "AuthPing", NULL);
 	      if (PingData != NULL) {
-		char *AuthPing = DpsStrdup(PingData);
+		char *AuthPing = DpsStrdup(DpsTrim(PingData, " \t\r\n"));
 		int method = DPS_METHOD_GET;
 		dps_base64_decode(AuthPing, PingData, dps_strlen(PingData));
 		if (!strncasecmp(AuthPing, "GET", 3)) {
