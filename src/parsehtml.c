@@ -1703,6 +1703,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	  if (!strcasecmp(DpsVarListFindStr(&Indexer->Vars, "DetectClones", DPS_DETECTCLONES), "yes") && strcasecmp(Href.url, URL)) {
 		
 		Doc->method = DPS_METHOD_DISALLOW;
+		DpsLog(Indexer, DPS_LOG_DEBUG, "Disallow not canonical URL");
 	  }
 	  DPS_FREE(Href.url); /* this is freed and reallocated inside DpsConvertHref */
 	  /* Do not add LINK HREF into database, we already do it above. */

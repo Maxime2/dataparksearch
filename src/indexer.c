@@ -162,7 +162,7 @@ int DpsSectionFilterFind(int log_level, DPS_MATCHLIST *L, DPS_DOCUMENT *Doc, cha
 	  res = DpsMethod(M->arg);
 	}else{
 	  if (DpsNeedLog(log_level))
-	    dps_snprintf(reason, PATH_MAX, "%s method is used", DpsMethodStr(Doc->method));
+	    dps_snprintf(reason, PATH_MAX, "%s method is retained", DpsMethodStr(Doc->method));
 	}
 #ifdef WITH_PARANOIA
 	DpsViolationExit(-1, paran);
