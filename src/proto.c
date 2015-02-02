@@ -1595,7 +1595,7 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	if (Hdr_Host != NULL) {
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_Host->name));
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
-	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_Host->val)));
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_Host->val));
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), "\r\n");
 	}
 	if (Hdr_UA != NULL) {
