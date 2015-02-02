@@ -1547,7 +1547,7 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	dps_strcat(url, DPS_NULL2EMPTY(Doc->CurURL.query_string));
 	DpsEscapeURI(eurl, url);
 
-	i = dps_strlen(eurl);
+	i += dps_strlen(eurl) + 5;
 	if (body != NULL) {
 	  i += dps_strlen(body);
 	}
