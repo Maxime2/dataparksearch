@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1560,11 +1560,11 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	for(i = 0; i < Doc->RequestHeaders.Root[r].nvars; i++) {
 		DPS_VAR *Hdr = &Doc->RequestHeaders.Root[r].Var[i];
 		if (!strcasecmp(Hdr->name, "Host") || !strcasecmp(Hdr->name, "User-Agent")) continue;
-		i += dps_strlen(Hdr->name) + dps_strlen(Hdr->val) + 4;
+		i += dps_strlen(DPS_NULL2EMPTY(Hdr->name)) + dps_strlen(DPS_NULL2EMPTY(Hdr->val)) + 4;
 	}
 	
 
-	Doc->Buf.allocated_size = i + DPS_NET_BUF_SIZE;
+	Doc->Buf.allocated_size = i + 7 + DPS_NET_BUF_SIZE;
 	
 	Doc->Buf.buf = (char*)DpsRealloc(Doc->Buf.buf, Doc->Buf.allocated_size + 1);
 	if (Doc->Buf.buf == NULL) {
@@ -1593,15 +1593,15 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 
 	/* Add Host then User-Agent headers first */
 	if (Hdr_Host != NULL) {
-	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_Host->name);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_Host->name));
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
-	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_Host->val);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_Host->val)));
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), "\r\n");
 	}
 	if (Hdr_UA != NULL) {
-	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_UA->name);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_UA->name));
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
-	  dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr_UA->val);
+	  dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr_UA->val));
 	  dps_strcpy(DPS_STREND(Doc->Buf.buf), "\r\n");
 	}
 
@@ -1611,9 +1611,9 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 		DPS_VAR *Hdr = &Doc->RequestHeaders.Root[r].Var[i];
 /*		sprintf(DPS_STREND(Doc->Buf.buf), "%s: %s\r\n", Hdr->name, Hdr->val);*/
 		if (!strcasecmp(Hdr->name, "Host") || !strcasecmp(Hdr->name, "User-Agent")) continue;
-		dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr->name);
+		dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr->name));
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
-		dps_strcpy(DPS_STREND(Doc->Buf.buf), Hdr->val);
+		dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr->val));
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), "\r\n");
 	}
 	
