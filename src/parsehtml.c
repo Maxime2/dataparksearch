@@ -1370,6 +1370,14 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		  href = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
 		  DPS_FREE(y);
 		}else
+		if(ISTAG(i,"onclick")){
+		  /* use onclick if no href is set yet to make reversealiasing if needed */
+		  if (href == NULL) {
+		    char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
+		    href = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
+		    DPS_FREE(y);
+		  }
+		}else
 		if(ISTAG(i,"rel")){
 		  /* A, LINK*/
 		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
