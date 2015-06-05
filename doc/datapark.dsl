@@ -150,6 +150,7 @@
   '(
 	("META" ("NAME" "Description") ("CONTENT" "DataparkSearch - Full Featured Web site Open Source Search Engine Software over the Internet and Intranet Web Sites Based on SQL Database. It is a Free search software covered by GNU license."))
         ("META" ("NAME" "Keywords") ("CONTENT" "shareware, freeware, download, internet, unix, utilities, search engine, text retrieval, knowledge retrieval, text search, information retrieval, database search, mining, intranet, webserver, index, spider, filesearch, meta, free, open source, full-text, udmsearch, website, find, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"))
+	("META" ("NAME" "viewport") ("CONTENT" "width=device-width, initial-scale=1"))
    )
 )
 
