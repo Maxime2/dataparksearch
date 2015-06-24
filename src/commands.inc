@@ -51,7 +51,7 @@
 	{"Cookie",              1,1,    env_rpl_var},
 	{"Cookies",             1,1,    srv_rpl_bool_var},
 /*   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.                */
-/*   Copyright (C) 2012-2014 Maxim Zakharov. All rights reserved.              */
+/*   Copyright (C) 2012-2015 Maxim Zakharov. All rights reserved.              */
 	{"CrawlDelay",          1,1,    srv_rpl_time_var},
 	{"CrossWords",		1,1,	env_rpl_bool_var},
 	{"CrossWordsSkipSameSite",1,1,	env_rpl_var},
@@ -167,7 +167,7 @@
 	{"PreloadLimit",        2,2,    preload_limit},
 	{"PreloadURLData",      1,1,    env_rpl_bool_var},
 	{"ProvideReferer",	1,1,	env_rpl_bool_var},
-	{"Proxy",		0,1,	srv_rpl_var},
+	{"Proxy",		0,2,	srv_rpl_var},
 	{"ProxyAuthBasic",	1,1,	srv_rpl_auth},
 	{"Quffix",              3,3,    add_quffix},
 	{"ReadTimeOut",		1,1,	srv_rpl_time_var},

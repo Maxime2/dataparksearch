@@ -199,8 +199,20 @@ int connect_tm(int s, const struct sockaddr *name, unsigned int namelen, unsigne
 
 
 static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
-        size_t i;
+        size_t i, len;
         int net;
+	const char *socks5_reply[] = {
+	  "successed",
+	  "general SOCKS server failure",
+	  "connection not allowed by ruleset",
+	  "Network unreachable",
+	  "Host unreachable",
+	  "Connection refused",
+	  "TTL expired",
+	  "Command not supported",
+	  "Address type not supportred",
+	  ""
+	};
 	
 	net = socket(AF_INET, SOCK_STREAM, 0);
 	DpsSockOpt(Agent, net);
@@ -224,9 +236,88 @@ static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 		DpsLog(Agent, DPS_LOG_DEBUG, "connecting %dth addr for %s", i, abuf);
 	  }
 	  if(!connect_tm(net, (struct sockaddr *)&Doc->connp.sin, sizeof (struct sockaddr_in),(unsigned int)Doc->Spider.read_timeout)) {
+	    const char *proxy_type = DpsVarListFindStr(&Doc->RequestHeaders, "ProxyType", "http");
+	    if (!strcasecmp(proxy_type, "socks5")) {
+	      char buffer[514], *ptr = buffer;
+	      ssize_t size;
+	      int port;
+	      *ptr++ = 5; /* Socks version 5 */
+	      *ptr++ = 1; //2; /* supporting 2 auth methods */
+	      *ptr++ = 0x00; /* no auth */
+	      //	      *ptr++ = 0x02; /* user password auth */
+	      if (DpsSend(net, buffer, ptr - buffer, 0) < 0) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 sending method selection failed");
+		goto error_exit;
+	      }
+	      size = read(net, buffer, 2);
+	      if (size != 2) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 receiving method selection failed");
+		goto error_exit;
+	      }
+	      if (buffer[0] != 5) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 version mismatch, 5 is expected");
+		goto error_exit;
+	      }
+	      if (buffer[1] == 0xFF) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 none auth method supported by server");
+		goto error_exit;
+	      }
+	      if (buffer[1] == 0x02) { /* send user name and password */
+		const char *cred = DpsVarListFindStr(&Doc->RequestHeaders, "Proxy-Authorizarion", NULL);
+		if (cred == NULL) {
+		  dps_strerror(Agent, DPS_LOG_ERROR, "socks5 no username:password specified with BasicAuth command");
+		  goto error_exit;
+		}
+	      }
+	      ptr = buffer;
+	      *ptr++ = 5; /* socks version 5*/
+	      *ptr++ = 1; /* CONNECT command */
+	      *ptr++ = 0; /* reserved */
+	      *ptr++ = 3; /* ATYP: DOMAINNAME; up to 255 characters only! */
+	      *ptr++ = (dps_uint2)dps_strlen(Doc->CurURL.hostname) & 0xFF;
+	      dps_strncpy(ptr, Doc->CurURL.hostname, 255);
+	      ptr += (dps_uint2)dps_strlen(Doc->CurURL.hostname) & 0xFF;
+	      port = (Doc->CurURL.port) ? Doc->CurURL.port : Doc->CurURL.default_port;
+	      *ptr++ = (port >> 8); /* Port number in network byte order, i.e. big endian */
+	      *ptr++ = (port & 0xFF);
+	      if (DpsSend(net, buffer, ptr - buffer, 0) < 0) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 sending request failed");
+		goto error_exit;
+	      }
+	      size = read(net, buffer, 5); /* read first 5 bytes of socks5 reply as the rest if of variable length */
+	      if (size != 5) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 receiving reply fixed part failed");
+		goto error_exit;
+	      }
+	      if (buffer[0] != 5) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 version mismatch, 5 is expected");
+		goto error_exit;
+	      }
+	      if (buffer[1] != 0) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 reply with failure '%s'",
+			     (buffer[1] > 8) ? "unassigned by RFC 1928" : socks5_reply[buffer[1]]);
+		goto error_exit;
+	      }
+	      switch(buffer[3]) {
+	      case 1: len = 5; break;
+	      case 3: len = 2 + buffer[4]; break;
+	      case 4: len = 17; break;
+	      default:
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 reply unknown ATYP %d", buffer[3]);
+		goto error_exit;
+	      }
+	      size = read(net, buffer + 5, len); /* read the rest of socks5 reply */
+	      if (size != len) {
+		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 receiving reply variable part failed");
+		goto error_exit;
+	      }
+	      
+	      
+	    }
 	    return(net);
 	  }
 	}
+ error_exit:
 	dps_closesocket(net);
 	DpsLog(Agent, DPS_LOG_DEBUG, "Can't connect (%d addresses resolved)", Doc->connp.n_sinaddr);
 	return(DPS_NET_CANT_CONNECT);
@@ -1527,6 +1618,7 @@ static int DpsFILEGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc){
 static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
         const char	*method=(Doc->method==DPS_METHOD_HEAD)?"HEAD ":((Doc->method==DPS_METHOD_POST)?"POST ":"GET ");
 	const char	*proxy=DpsVarListFindStr(&Doc->RequestHeaders,"Proxy",NULL);
+	const char      *proxy_type = DpsVarListFindStr(&Doc->RequestHeaders, "ProxyType", "http");
 	size_t		i, r;
 	char            *url = (char*)DpsMalloc((i = dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.path)) + 
 						 dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.filename)) + 
@@ -1573,7 +1665,10 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	  return DPS_ERROR;
 	}
 
-	if(proxy && strcasecmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "file")) {
+	if(proxy
+	   && !strcasecmp(proxy_type, "http")
+	   && strcasecmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "file")
+	   ) {
 /*		sprintf(Doc->Buf.buf,"%s%s://%s%s HTTP/1.0\r\n", method, DPS_NULL2EMPTY(Doc->CurURL.schema), 
 			DPS_NULL2EMPTY(Doc->CurURL.hostinfo), eurl);*/
 		dps_strcpy(Doc->Buf.buf, method);
@@ -1610,7 +1705,9 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 	for(i = 0; i < Doc->RequestHeaders.Root[r].nvars; i++) {
 		DPS_VAR *Hdr = &Doc->RequestHeaders.Root[r].Var[i];
 /*		sprintf(DPS_STREND(Doc->Buf.buf), "%s: %s\r\n", Hdr->name, Hdr->val);*/
-		if (!strcasecmp(Hdr->name, "Host") || !strcasecmp(Hdr->name, "User-Agent")) continue;
+		if (!strcasecmp(Hdr->name, "Host") || !strcasecmp(Hdr->name, "User-Agent")
+		    || !strcasecmp(Hdr->name, "Proxy")
+		    || !strcasecmp(Hdr->name, "ProxyType")) continue;
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr->name));
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), ": ");
 		dps_strcpy(DPS_STREND(Doc->Buf.buf), DPS_NULL2EMPTY(Hdr->val));

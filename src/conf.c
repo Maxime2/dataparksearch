@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1759,6 +1759,12 @@ static int srv_rpl_var(void *Cfg, size_t ac,char **av){
 	  char name[PATH_MAX];
 	  dps_snprintf(name, PATH_MAX, "HTDBText-%s", av[1]);
 	  DpsVarListReplaceStr(&C->Srv->Vars, name, av[2]);
+	} else if (ac == 3 && (strcasecmp(av[0], "Proxy") == 0)) {
+	  if (strcasecmp(av[1], "http") && strcasecmp(av[1], "socks5")) {
+	    dps_snprintf(C->Indexer->Conf->errstr, sizeof(C->Indexer->Conf->errstr) - 1, "Unknown proxy type '%s' for %s command", av[1], av[0]);
+	  }
+	  DpsVarListReplaceStr(&C->Srv->Vars, av[0], av[2]);
+	  DpsVarListReplaceStr(&C->Srv->Vars, "ProxyType", av[1]);
 	} else {
 	  dps_snprintf(C->Indexer->Conf->errstr,  sizeof(C->Indexer->Conf->errstr) - 1, "Too many arguments for '%s' command", av[0]);
 	  return DPS_ERROR;

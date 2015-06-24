@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -444,7 +444,7 @@ int DpsDocAddServExtraHeaders(DPS_SERVER *Server,DPS_DOCUMENT *Doc) {
 				DpsVarListReplaceStr(&Doc->RequestHeaders,"Proxy-Authorization",arg);
 			}
 		}else
-		if(!strcasecmp(Hdr->name, "Proxy")){
+		  if(!strcasecmp(Hdr->name, "Proxy") || !strcasecmp(Hdr->name, "ProxyType")){
 			if(Hdr->val && Hdr->val[0]){
 				DpsVarListReplaceStr(&Doc->RequestHeaders, Hdr->name, Hdr->val);
 			}
