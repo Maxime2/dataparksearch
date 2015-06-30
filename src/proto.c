@@ -238,14 +238,15 @@ static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 	  if(!connect_tm(net, (struct sockaddr *)&Doc->connp.sin, sizeof (struct sockaddr_in),(unsigned int)Doc->Spider.read_timeout)) {
 	    const char *proxy_type = DpsVarListFindStr(&Doc->RequestHeaders, "ProxyType", "http");
 	    if (!strcasecmp(proxy_type, "socks5")) {
-	      char buffer[514], *ptr = buffer;
+	      unsigned char buffer[514], *ptr = buffer;
+	      const char *cred = DpsVarListFindStr(&Doc->RequestHeaders, "Proxy-Authorization", NULL);
 	      ssize_t size;
 	      int port;
 	      *ptr++ = 5; /* Socks version 5 */
-	      *ptr++ = 1; //2; /* supporting 2 auth methods */
+	      *ptr++ = (cred == NULL) ? 1 : 2; /* supporting 2 auth methods */
 	      *ptr++ = 0x00; /* no auth */
-	      //	      *ptr++ = 0x02; /* user password auth */
-	      if (DpsSend(net, buffer, ptr - buffer, 0) < 0) {
+	      if (cred != NULL) *ptr++ = 0x02; /* user password auth */
+	      if (DpsSend(net, buffer, (size_t)(ptr - buffer), 0) < 0) {
 		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 sending method selection failed");
 		goto error_exit;
 	      }
@@ -263,9 +264,41 @@ static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 		goto error_exit;
 	      }
 	      if (buffer[1] == 0x02) { /* send user name and password */
-		const char *cred = DpsVarListFindStr(&Doc->RequestHeaders, "Proxy-Authorizarion", NULL);
+		char *pptr;
+		char loginfo[514];
 		if (cred == NULL) {
 		  dps_strerror(Agent, DPS_LOG_ERROR, "socks5 no username:password specified with BasicAuth command");
+		  goto error_exit;
+		}
+		if (NULL == (pptr = strchr(cred, ' '))) {
+		  dps_strerror(Agent, DPS_LOG_ERROR, "ProxyAuthorization internal format proken!");
+		  goto error_exit;
+		}
+		dps_base64_decode(loginfo, pptr + 1, sizeof(loginfo));
+		if (NULL == (pptr = strchr(loginfo, ':'))) {
+		  dps_strerror(Agent, DPS_LOG_ERROR, "ProxyAuthBasic has ':' missed");
+		  goto error_exit;
+		}
+		*pptr++ = '\0';
+		ptr = buffer;
+		*ptr++ = 0x01; /* version of subnegotiation 0x01 */
+		*ptr++ = (dps_uint2)(dps_strlen(loginfo) & 0xFF); /* username length 1..255 */
+		dps_strncpy((char*)ptr, loginfo, 255); /* username */
+		ptr += (dps_uint2)(dps_strlen(loginfo) & 0xFF);
+		*ptr++ = (dps_uint2)(dps_strlen(pptr) & 0xFF); /* passord length 1..255 */
+		dps_strncpy((char*)ptr, pptr, 255); /* password */
+		ptr += (dps_uint2)dps_strlen(pptr) & 0xFF;
+		if (DpsSend(net, buffer, (size_t)(ptr - buffer), 0) < 0) {
+		  dps_strerror(Agent, DPS_LOG_ERROR, "socks5 user passord authentication request failed");
+		  goto error_exit;
+		}
+		size = read(net, buffer, 2); /* read first 5 bytes of socks5 reply as the rest if of variable length */
+		if (size != 2) {
+		  dps_strerror(Agent, DPS_LOG_ERROR, "socks5 receiving user passord authentication reply failed");
+		  goto error_exit;
+		}
+		if (buffer[1] != 0x00) {
+		  dps_strerror(Agent, DPS_LOG_ERROR, "socks5 user password auth failure, status 0x%x", buffer[1]);
 		  goto error_exit;
 		}
 	      }
@@ -274,13 +307,13 @@ static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 	      *ptr++ = 1; /* CONNECT command */
 	      *ptr++ = 0; /* reserved */
 	      *ptr++ = 3; /* ATYP: DOMAINNAME; up to 255 characters only! */
-	      *ptr++ = (dps_uint2)dps_strlen(Doc->CurURL.hostname) & 0xFF;
-	      dps_strncpy(ptr, Doc->CurURL.hostname, 255);
-	      ptr += (dps_uint2)dps_strlen(Doc->CurURL.hostname) & 0xFF;
+	      *ptr++ = (dps_uint2)(dps_strlen(Doc->CurURL.hostname) & 0xFF);
+	      dps_strncpy((char*)ptr, Doc->CurURL.hostname, 255);
+	      ptr += (dps_uint2)(dps_strlen(Doc->CurURL.hostname) & 0xFF);
 	      port = (Doc->CurURL.port) ? Doc->CurURL.port : Doc->CurURL.default_port;
-	      *ptr++ = (port >> 8); /* Port number in network byte order, i.e. big endian */
-	      *ptr++ = (port & 0xFF);
-	      if (DpsSend(net, buffer, ptr - buffer, 0) < 0) {
+	      *ptr++ = (unsigned char)(port >> 8); /* Port number in network byte order, i.e. big endian */
+	      *ptr++ = (unsigned char)(port & 0xFF);
+	      if (DpsSend(net, buffer, (size_t)(ptr - buffer), 0) < 0) {
 		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 sending request failed");
 		goto error_exit;
 	      }
@@ -300,14 +333,14 @@ static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 	      }
 	      switch(buffer[3]) {
 	      case 1: len = 5; break;
-	      case 3: len = 2 + buffer[4]; break;
+	      case 3: len = (size_t)2 + buffer[4]; break;
 	      case 4: len = 17; break;
 	      default:
 		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 reply unknown ATYP %d", buffer[3]);
 		goto error_exit;
 	      }
 	      size = read(net, buffer + 5, len); /* read the rest of socks5 reply */
-	      if (size != len) {
+	      if (size != (ssize_t)len) {
 		dps_strerror(Agent, DPS_LOG_ERROR, "socks5 receiving reply variable part failed");
 		goto error_exit;
 	      }
