@@ -954,7 +954,7 @@ Index no
 ProxyAuthBasic login:passwd
 </programlisting>
 <para>
-Use http proxy basic authorization.
+Specity username and password for http proxy basic authorisation and for SOCKS5 authorisation.
 Can be used before every <command>Server</command> command and
 takes effect only for next one <command>Server</command> command!
 It should be also before <command>Proxy</command> command.
@@ -970,11 +970,11 @@ ProxyAuthBasic somebody:something
 <title><command>Proxy</command> command</title>
 <indexterm><primary>Command</primary><secondary>Proxy</secondary></indexterm>
 <programlisting>
-Proxy your.proxy.host[:port]
+Proxy [http|socks5] your.proxy.host[:port]
 </programlisting>
 <para>
-Use proxy rather then connect directly.
-One can index ftp servers when using proxy
+Use proxy rather then connect directly. You can specify either HTTP or SOCK5 proxy type. HTTP proxy type is used by default.
+One can index ftp servers when using HTTP proxy
 Default port value if not specified is 3128 (Squid)
 If proxy host is not specified direct connect will be used.
 Can be set before every <command>Server</command> command and
@@ -986,6 +986,8 @@ Examples:
 Proxy atoll.anywhere.com
 #           Proxy on lota.anywhere.com, port 8090:
 Proxy lota.anywhere.com:8090
+#	    Proxy on local Tor
+Proxy socks5 localhost:9050
 #           Disable proxy (direct connect):
 Proxy
 </programlisting>

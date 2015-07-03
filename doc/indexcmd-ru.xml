@@ -942,7 +942,7 @@ Index no
 ProxyAuthBasic login:passwd
 </programlisting>
 <para>
-Задаёт http proxy basic authorization.
+Задаёт имя пользователя и пароль для авторизации http proxy basic или SOCKS5 username.
 Может быть указана перед каждой командой <command>Server</command>, но действует только для этой команды!.
 Может также использовать перед командой <command>Proxy</command>.
 Примеры:
@@ -956,10 +956,10 @@ ProxyAuthBasic somebody:something
 <title>Команда <command>Proxy</command></title>
 <indexterm><primary>Команда</primary><secondary>Proxy</secondary></indexterm>
 <programlisting>
-Proxy your.proxy.host[:port]
+Proxy [http|socks5] your.proxy.host[:port]
 </programlisting>
 <para>
-Вместо прямого соединения, использовать прокси-соединение.
+Вместо прямого соединения, использовать прокси-соединение. Вы можете задать тип прокси: HTTP или SOCK5. HTTP прокси используется по умолчанию.
 Значение номера порта по умолчанию: 3128 (Squid).
 Команда действует до конца файла, или до следующей команды <command>Proxy</command>.
 Если не указано ни одной команды <command>Proxy</command>, или для этой команды не указан хост - используется
@@ -970,6 +970,8 @@ Proxy your.proxy.host[:port]
 Proxy atoll.anywhere.com
 #           Proxy on lota.anywhere.com, port 8090:
 Proxy lota.anywhere.com:8090
+#           Proxy on local Tor
+Proxy socks5 localhost:9050
 #           Disable proxy (direct connect):
 Proxy
 </programlisting>
