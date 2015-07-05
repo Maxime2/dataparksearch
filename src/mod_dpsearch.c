@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2004-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -309,7 +309,7 @@ static int dpstoredoc_handler(request_rec *r) {
 	    DpsVarListReplaceStr(&Doc->Sections, "URL", origurl);
 	    Doc->Buf.max_size = (size_t)DpsVarListFindInt(&Agent->Vars, "MaxDocSize", DPS_MAXDOCSIZE);
 	    DpsURLParse(&Doc->CurURL, origurl);
-	    DpsDocAddDocExtraHeaders(Agent, Doc);
+	    DpsDocAddDocExtraHeaders(Agent, Env->Cfg_Srv, Doc);
 	    DpsDocLookupConn(Agent, Doc);
 	    if (DpsGetURL(Agent, Doc, origurl) != DPS_OK) goto fin;
 	    {
