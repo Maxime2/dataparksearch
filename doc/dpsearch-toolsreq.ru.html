@@ -27,7 +27,9 @@ HREF="datapark.css"><META
 NAME="Description"
 CONTENT="DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."><META
 NAME="Keywords"
-CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"></HEAD
+CONTENT="shareware, freeware, интернет, unix, поисковик, поисковая машина, поиск, поиск информации, интранет, open source, opensource, search, searching, software, udmsearch, engine, indexing, system, web, ftp, http, cgi, php, SQL, MySQL, database, php3, FreeBSD, Linux, Unix, DataparkSearch, MacOS X, Mac OS X, Windows, 2000, NT, 95, 98, GNU, GPL, url, grabbing"><META
+NAME="viewport"
+CONTENT="width=device-width, initial-scale=1"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -188,6 +190,28 @@ CLASS="FILENAME"
 > чтобы скомпилировать её.</P
 ></LI
 ></UL
+><P
+>Если вы хотите внести изменения в исходный текст, документацию или конфигурацию, вам нужно установить следующие пакеты на Ubuntu Linux для сборки вайлов дистрибуции:</P
+><P
+></P
+><UL
+><LI
+><B
+CLASS="COMMAND"
+>sudo apt-get install zlib1g-dev automake autoconf autotools-dev libsigsegv2 m4 libtool libltdl-dev openjade sgml-data docbook-dsssl docbook docbook-xml docbook-xsl sp libidn11-dev libc-ares-dev</B
+></LI
+></UL
+><P
+>В зависимости от ваших предпочтений вам необходимо установить соответсвующий пакет разработчика, или все эти пакеты, если вам нужна поддержка всех этих SQL-серверов:</P
+><P
+></P
+><UL
+><LI
+><B
+CLASS="COMMAND"
+>sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev</B
+></LI
+></UL
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -252,7 +276,7 @@ CLASS="APPLICATION"
 >DataparkSearch</SPAN
 >
 <A
-NAME="AEN312"
+NAME="AEN320"
 ></A
 ></TD
 ></TR

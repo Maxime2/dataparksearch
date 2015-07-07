@@ -87,7 +87,7 @@
 				<para>Solaris 10 x86, gcc</para>
 			</listitem>
 			<listitem>
-				<para>Ubuntu Linux 6.10, 7.x, 8.x, 9.04 (i386 and amd)</para>
+				<para>Ubuntu Linux 6.10, 7.x, 8.x, 9.04 (i386 and amd), 1x.yy</para>
 			</listitem>
 			<listitem>
 				<para>Gentoo Linux 2007.0 amd64</para>
@@ -150,6 +150,20 @@
 </para>
 </listitem>
 		</itemizedlist>
+<para>Если вы хотите внести изменения в исходный текст, документацию или конфигурацию, вам нужно установить следующие пакеты на Ubuntu Linux для сборки вайлов дистрибуции:</para>
+<itemizedlist>
+<listitem>
+<command>sudo apt-get install zlib1g-dev automake autoconf autotools-dev libsigsegv2 m4 libtool libltdl-dev openjade sgml-data docbook-dsssl docbook docbook-xml docbook-xsl sp libidn11-dev libc-ares-dev</command>
+</listitem>
+</itemizedlist>
+<para>В зависимости от ваших предпочтений вам необходимо установить соответсвующий пакет разработчика, или все эти пакеты, если вам нужна поддержка всех этих SQL-серверов:</para>
+<itemizedlist>
+<listitem>
+<command>
+sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
+</command>
+</listitem>
+</itemizedlist>
 	</sect1>
 
 	<sect1 id="installing">

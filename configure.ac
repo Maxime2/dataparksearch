@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl
-AC_INIT([DataparkSearch Engine], [4.54-2014-01-09], [dataparksearch@googlegroups.com], [dpsearch])
+AC_INIT([DataparkSearch Engine], [4.54-2015-07-06], [dataparksearch@googlegroups.com], [dpsearch])
 dnl AC_INIT([DataparkSearch Engine], [4.53], [dataparksearch@googlegroups.com], [dpsearch])
 AC_CONFIG_SRCDIR([TODO])
 AC_CANONICAL_SYSTEM
@@ -2748,7 +2748,7 @@ AC_SUBST(ORACLE8_INCLUDE)
 # Check for DocBook and tools
 #
 PGAC_PROG_JADE
-PGAC_CHECK_DOCBOOK([4.5 4.1 3.1 3.0])
+PGAC_CHECK_DOCBOOK([4.1 3.1 3.0])
 PGAC_PATH_DOCBOOK_STYLESHEETS
 PGAC_PATH_COLLATEINDEX
 doc_FILES_EN="HTML_DEP_NOJADE_EN"
