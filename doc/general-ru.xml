@@ -183,7 +183,7 @@
 
 	</sect2>
 	<sect2 id="general-parallel">
-		<title>Параллельное индекирование
+		<title>Параллельное индексирование
 <indexterm><primary>Параллельное индексирование</primary></indexterm>
 </title>
 		<para>Возможно запускать одновременно несколько <command>indexer</command> с одним и тем же файлом конфигурации
