@@ -938,6 +938,7 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 	DPS_ROBOT *robot;
 	int rule = 0, common = 0, my = 0, newrecord = 1, has_cmd = 0;
 	int result = DPS_OK;
+	int use_sitemaps = 0;
 	char *s,*e,*lt;
 	char *agent = NULL;
 	struct sitemap_str {
@@ -960,6 +961,15 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 	    DPS_RELEASELOCK(Indexer, DPS_LOCK_ROBOTS);
 	    return(DPS_OK);
 	}
+
+	if (Srv == NULL) {
+	    use_sitemaps = 0;
+	} else if ((DPS_FOLLOW_NO == DpsVarListFindInt(&Srv->Vars, "Follow", DPS_FOLLOW_PATH))) {
+	    use_sitemaps = 0;
+	} else {
+	    use_sitemaps = DpsVarListFindInt(&Srv->Vars, "Sitemaps", 1);
+	}
+
 /*
 	fprintf(stderr, "ROBOTS CONTENT: %s\n", content);
 */
@@ -1088,7 +1098,7 @@ int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, cons
 			  }
 			}
 		  }else
-		  if((!(strncasecmp(s, "Sitemap", 7))) && (rule) && DpsVarListFindInt(&Srv->Vars, "Sitemaps", 1)) {
+		  if((!(strncasecmp(s, "Sitemap", 7))) && (rule) && use_sitemaps) {
 			if((e=strchr(s+8,'#')))*e=0;
 			e=s+8;DPS_SKIP(e," \t");s=e;
 			DPS_SKIPN(e," \t");*e=0;
