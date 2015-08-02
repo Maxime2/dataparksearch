@@ -221,7 +221,7 @@ __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
 	  P->PreviousItemPos = P->CurrentItemPos;
 	  P->CurrentItemPos = P->Item.next;
 	  if (lseek(P->Ifd, (off_t)P->CurrentItemPos, SEEK_SET) == (off_t)-1) {
-	    DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
+	      DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s (%s:%d), %d %s", P->Ifilename, __FILE__, __LINE__, errno, strerror(errno));
 	    DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
 	    TRACE_OUT(P->A);
 	    return DPS_ERROR;
@@ -788,7 +788,7 @@ extern __C_LINK int __DPSCALL DpsBaseOptimize(DPS_BASE_PARAM *P, int sbase) {
     if (DpsBaseOpen(P, DPS_WRITE_LOCK) != DPS_OK) {
       DpsLog(P->A, DPS_LOG_ERROR, "Can't open base %s/%s {%s:%d}", P->subdir, P->basename, __FILE__, __LINE__);
       DpsBaseClose(P);
-      return DPS_ERROR;
+      continue;
     }
     if (lseek(P->Ifd, (off_t)0, SEEK_SET) == (off_t)-1) {
       DpsLog(P->A, DPS_LOG_ERROR, "Can't seek %s {%s:%d}", P->Ifilename, __FILE__, __LINE__);
