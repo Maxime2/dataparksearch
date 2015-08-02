@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2003 Lavtech.com corp. All rights reserved.
 
@@ -132,7 +132,7 @@ __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
 #endif
     DPS_FREE(hTable);
     if (lseek(P->Ifd, (off_t)0, SEEK_SET) == (off_t)-1) {
-      DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s", P->Ifilename);
+      DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
       DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
       TRACE_OUT(P->A);
       return DPS_ERROR;
@@ -192,7 +192,7 @@ __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
 
 	/* search rec_id */
 	if ( (P->CurrentItemPos = (dps_uint8)lseek(P->Ifd, (off_t)(hash * sizeof(DPS_BASEITEM)), SEEK_SET)) == (dps_uint8)-1) {
-	    DpsLog(P->A, DPS_LOG_ERROR, "Can't seeek for file %s", P->Ifilename);
+	    DpsLog(P->A, DPS_LOG_ERROR, "Can't seeek for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
 	    DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
 	    TRACE_OUT(P->A);
 	    return DPS_ERROR;
@@ -221,7 +221,7 @@ __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
 	  P->PreviousItemPos = P->CurrentItemPos;
 	  P->CurrentItemPos = P->Item.next;
 	  if (lseek(P->Ifd, (off_t)P->CurrentItemPos, SEEK_SET) == (off_t)-1) {
-	    DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s", P->Ifilename);
+	    DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
 	    DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
 	    TRACE_OUT(P->A);
 	    return DPS_ERROR;
