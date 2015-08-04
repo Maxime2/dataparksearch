@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -3928,7 +3928,6 @@ int DpsResAddDocInfoCache(DPS_AGENT *query, DPS_DB *db, DPS_RESULT *Res, size_t 
 
   if(!Res->num_rows) {TRACE_OUT(query); return DPS_OK;}
   if (use_showcnt) ratio = DpsVarListFindDouble(&query->Vars, "PopRankShowCntRatio", 25.0);
-  DpsLog(query, DPS_LOG_DEBUG, "use_showcnt: %d  ratio: %f", use_showcnt, ratio);
 
   bzero(&P, sizeof(P));
   P.subdir = DPS_URLDIR;
