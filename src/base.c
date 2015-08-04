@@ -56,6 +56,20 @@
 
 /*********************************************************************/
 
+static int DpsBaseWriteItem(DPS_BASE_PARAM *P, dps_uint8 ItemPos) {
+    ssize_t wr;
+    if (lseek(P->Ifd, (off_t)ItemPos, SEEK_SET) == (off_t)-1) {
+	DpsLog(P->A, DPS_LOG_ERROR, "Can't seeek for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
+	return DPS_ERROR;
+    }
+    if ((wr = write(P->Ifd, &P->Item, sizeof(DPS_BASEITEM))) != sizeof(DPS_BASEITEM)) {
+	DpsLog(P->A, DPS_LOG_ERROR, "Can't write previous pos for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
+	return DPS_ERROR;
+    }
+    return DPS_OK;
+}
+
+
 
 __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
   unsigned int hash;
@@ -218,14 +232,19 @@ __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
       P->PreviousItemPos = P->CurrentItemPos;
       if (P->mishash)
 	while((P->Item.next != 0) && (P->Item.rec_id != P->rec_id)) {
+	  if (lseek(P->Ifd, (off_t)P->Item.next, SEEK_SET) == (off_t)-1) {
+	      DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s (%s:%d), %d %s", P->Ifilename, __FILE__, __LINE__, errno, strerror(errno));
+	      if (errno == EINVAL) {
+		  DpsLog(P->A, DPS_LOG_ERROR, "Trying to recover an invalid offset %ld", P->Item.next);
+		  P->Item.next = 0;
+		  if (DPS_OK == DpsBaseWriteItem(P, P->PreviousItemPos)) goto search_again;
+	      }
+	      DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
+	      TRACE_OUT(P->A);
+	      return DPS_ERROR;
+	  }
 	  P->PreviousItemPos = P->CurrentItemPos;
 	  P->CurrentItemPos = P->Item.next;
-	  if (lseek(P->Ifd, (off_t)P->CurrentItemPos, SEEK_SET) == (off_t)-1) {
-	      DpsLog(P->A, DPS_LOG_ERROR, "Can't seek for file %s (%s:%d), %d %s", P->Ifilename, __FILE__, __LINE__, errno, strerror(errno));
-	    DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
-	    TRACE_OUT(P->A);
-	    return DPS_ERROR;
-	  }
 	  if ((wr = read(P->Ifd, &P->Item, sizeof(DPS_BASEITEM))) != sizeof(DPS_BASEITEM)) {
 	    if (wr == 0) {
 	      DpsLog(P->A, DPS_LOG_ERROR, "Possible corrupted hash chain for file %s, trying to restore (%s:%d)", 
@@ -243,17 +262,10 @@ __C_LINK int __DPSCALL DpsBaseOpen(DPS_BASE_PARAM *P, int mode) {
 		return DPS_ERROR;
 	      }
 	      P->Item.next = 0;
-	      if (lseek(P->Ifd, (off_t)P->PreviousItemPos, SEEK_SET) == (off_t)-1) {
-		DpsLog(P->A, DPS_LOG_ERROR, "Can't seeek for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
-		DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
-		TRACE_OUT(P->A);
-		return DPS_ERROR;
-	      }
-	      if ((wr = write(P->Ifd, &P->Item, sizeof(DPS_BASEITEM))) != sizeof(DPS_BASEITEM)) {
-		DpsLog(P->A, DPS_LOG_ERROR, "Can't write previous pos for file %s (%s:%d)", P->Ifilename, __FILE__, __LINE__);
-		DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
-		TRACE_OUT(P->A);
-		return DPS_ERROR;
+	      if (DPS_OK != DpsBaseWriteItem(P, P->PreviousItemPos)) {
+		  DPS_FREE(P->Ifilename);    DPS_FREE(P->Sfilename);
+		  TRACE_OUT(P->A);
+		  return DPS_ERROR;
 	      }
 	      goto search_again;
 	
