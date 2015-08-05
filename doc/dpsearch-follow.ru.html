@@ -1180,21 +1180,32 @@ NAME="AEN1263"
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> также поддерживает директивы <A
+> также поддерживает директивы 
+<A
 HREF="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"
 TARGET="_top"
 ><CODE
 CLASS="OPTION"
 >Crawl-delay</CODE
 ></A
-> и <A
+>,
+<A
 HREF="http://help.yandex.ru/webmaster/?id=996567#996574"
 TARGET="_top"
 ><CODE
 CLASS="OPTION"
 >Host</CODE
 ></A
-> в <TT
+>
+и <A
+HREF="http://www.sitemaps.org/"
+TARGET="_top"
+><CODE
+CLASS="OPTION"
+>Sitemap</CODE
+></A
+>
+ в <TT
 CLASS="FILENAME"
 >robots.txt</TT
 >.</P
@@ -1215,7 +1226,7 @@ CLASS="COMMAND"
 ></A
 ></H3
 ><A
-NAME="AEN1277"
+NAME="AEN1279"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1237,7 +1248,10 @@ CLASS="FILENAME"
 CLASS="COMMAND"
 >Robots</B
 >.
-Значение по умолчанию: yes.
+Значение по умолчанию: <CODE
+CLASS="OPTION"
+>yes</CODE
+>.
 <PRE
 CLASS="PROGRAMLISTING"
 >Robots yes</PRE
@@ -1256,7 +1270,7 @@ CLASS="COMMAND"
 ></H3
 ><P
 ><A
-NAME="AEN1291"
+NAME="AEN1294"
 ></A
 >
 По умолчанию, данные из robots.txt хранятся в SQL-базе одну неделю. Вы можете изменить этот период используя команду
@@ -1293,7 +1307,7 @@ CLASS="COMMAND"
 ></H3
 ><P
 ><A
-NAME="AEN1303"
+NAME="AEN1306"
 ></A
 >
 Используйте эту команду для задания периода в секундах между последовательными запросами к одному и тому же серверу. 
@@ -1334,7 +1348,7 @@ CLASS="COMMAND"
 ></H3
 ><P
 ><A
-NAME="AEN1316"
+NAME="AEN1319"
 ></A
 >
 Когда <SPAN
@@ -1351,6 +1365,54 @@ CLASS="PROGRAMLISTING"
 >MaxCrawlDelay 60</PRE
 ><P
 >Значение по-умолчанию: 300 секунд.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="SITEMAPS_CMD"
+>3.6.9.5. Команда <B
+CLASS="COMMAND"
+>Sitemaps</B
+></A
+></H3
+><A
+NAME="AEN1329"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Sitemaps yes/no</PRE
+><P
+>Разрешает или запрещает обработку карт сайтов, указанных в файле <TT
+CLASS="FILENAME"
+>robots.txt</TT
+>
+при помощи директивы <B
+CLASS="COMMAND"
+>Sitemap</B
+>.
+Используйте опцию <CODE
+CLASS="OPTION"
+>no</CODE
+>, когда , например, вы индексируете только
+заданные страницы большого сайта и/или используя опцию nofollow.
+Команда может указываться перед каждой командой <B
+CLASS="COMMAND"
+>Server</B
+> и 
+действует до конца файла конфигурации, или до следующей команды <B
+CLASS="COMMAND"
+>Sitemaps</B
+>.
+Значение по умолчанию: <CODE
+CLASS="OPTION"
+>yes</CODE
+>.
+<PRE
+CLASS="PROGRAMLISTING"
+>Sitemaps no</PRE
+></P
 ></DIV
 ></DIV
 ></DIV

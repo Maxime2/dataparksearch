@@ -1025,21 +1025,32 @@ NAME="AEN1192"
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> also supports the <A
+> also supports 
+<A
 HREF="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"
 TARGET="_top"
 ><CODE
 CLASS="OPTION"
 >Crawl-delay</CODE
 ></A
-> and <A
+>,
+<A
 HREF="http://help.yandex.ru/webmaster/?id=996567#996574"
 TARGET="_top"
 ><CODE
 CLASS="OPTION"
 >Host</CODE
 ></A
-> directives in <TT
+>
+and <A
+HREF="http://www.sitemaps.org/"
+TARGET="_top"
+><CODE
+CLASS="OPTION"
+>Sitemap</CODE
+></A
+>
+directives in <TT
 CLASS="FILENAME"
 >robots.txt</TT
 >.</P
@@ -1060,7 +1071,7 @@ CLASS="COMMAND"
 > command</A
 ></H3
 ><A
-NAME="AEN1206"
+NAME="AEN1208"
 ></A
 ><PRE
 CLASS="PROGRAMLISTING"
@@ -1082,7 +1093,10 @@ takes effect till the end of config file or till next <B
 CLASS="COMMAND"
 >Robots</B
 > command.
-Default value is "yes".
+Default value is <CODE
+CLASS="OPTION"
+>yes</CODE
+>.
 <PRE
 CLASS="PROGRAMLISTING"
 >Robots yes</PRE
@@ -1101,7 +1115,7 @@ CLASS="COMMAND"
 ></H3
 ><P
 ><A
-NAME="AEN1220"
+NAME="AEN1223"
 ></A
 >
 By defaults, robots.txt data holds in SQL-database for one week. You may change this period using
@@ -1137,7 +1151,7 @@ CLASS="COMMAND"
 ></H3
 ><P
 ><A
-NAME="AEN1233"
+NAME="AEN1236"
 ></A
 >
 Use this command to specify default pause in seconds between consecutive fetches from same server. 
@@ -1175,7 +1189,7 @@ CLASS="COMMAND"
 ></H3
 ><P
 ><A
-NAME="AEN1245"
+NAME="AEN1248"
 ></A
 >
 When <SPAN
@@ -1191,6 +1205,50 @@ CLASS="PROGRAMLISTING"
 >MaxCrawlDelay 60</PRE
 ><P
 >Default value is 300 seconds.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="SITEMAPS_CMD"
+>3.6.10.5. <B
+CLASS="COMMAND"
+>Sitemaps</B
+> command</A
+></H3
+><A
+NAME="AEN1258"
+></A
+><PRE
+CLASS="PROGRAMLISTING"
+>Sitemaps yes/no</PRE
+><P
+>Allows/disallows processing for sitemaps specified in <TT
+CLASS="FILENAME"
+>robots.txt</TT
+> file.
+Use <CODE
+CLASS="OPTION"
+>no</CODE
+>, for example, when you fetch single pages from a huge
+website and/or with nofollow option.
+Command may be used several times before <B
+CLASS="COMMAND"
+>Server</B
+> command and
+takes effect till the end of config file or till next <B
+CLASS="COMMAND"
+>Sitemaps</B
+> command.
+Default value is <CODE
+CLASS="OPTION"
+>yes</CODE
+>.
+<PRE
+CLASS="PROGRAMLISTING"
+>Sitemaps no</PRE
+></P
 ></DIV
 ></DIV
 ></DIV

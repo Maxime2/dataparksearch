@@ -594,7 +594,11 @@ In example above, URLs are takes from the text file <option>url.lst</option> loc
 <para>
 <indexterm><primary>robots.txt</primary><secondary>Crawl-Delay</secondary></indexterm>
 <indexterm><primary>robots.txt</primary><secondary>Host</secondary></indexterm>
-<application>DataparkSearch</application> also supports the <ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink> and <ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink> directives in <filename>robots.txt</filename>.</para>
+<application>DataparkSearch</application> also supports 
+<ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink>,
+<ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink>
+and <ulink url="http://www.sitemaps.org/"><option>Sitemap</option></ulink>
+directives in <filename>robots.txt</filename>.</para>
 
 <para>Below are commands in <filename>indexer.conf</filename> file related to the Robots exclusion standard.</para>
 
@@ -609,7 +613,7 @@ Allows/disallows using <filename>robots.txt</filename> and &lt;META NAME="robots
 exclusions. Use <option>no</option>, for example for link validation of your server(s).
 Command may be used several times before <command>Server</command> command and
 takes effect till the end of config file or till next <command>Robots</command> command.
-Default value is "yes".
+Default value is <option>yes</option>.
 <programlisting>
 Robots yes
 </programlisting>
@@ -655,6 +659,24 @@ MaxCrawlDelay 60
 <para>Default value is 300 seconds.</para>
 </sect3>
 
+<sect3 id="sitemaps_cmd">
+<title><command>Sitemaps</command> command</title>
+<indexterm><primary>Command</primary><secondary>Sitemaps</secondary></indexterm>
+<programlisting>
+Sitemaps yes/no
+</programlisting>
+<para>
+Allows/disallows processing for sitemaps specified in <filename>robots.txt</filename> file.
+Use <option>no</option>, for example, when you fetch single pages from a huge
+website and/or with nofollow option.
+Command may be used several times before <command>Server</command> command and
+takes effect till the end of config file or till next <command>Sitemaps</command> command.
+Default value is <option>yes</option>.
+<programlisting>
+Sitemaps no
+</programlisting>
+</para>
+</sect3>
 
 </sect2>
 

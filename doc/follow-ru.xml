@@ -489,7 +489,11 @@ URLFile url.lst
 <para>
 <indexterm><primary>robots.txt</primary><secondary>Crawl-Delay</secondary></indexterm>
 <indexterm><primary>robots.txt</primary><secondary>Host</secondary></indexterm>
-<application>DataparkSearch</application> также поддерживает директивы <ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink> и <ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink> в <filename>robots.txt</filename>.</para>
+<application>DataparkSearch</application> также поддерживает директивы 
+<ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink>,
+<ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink>
+и <ulink url="http://www.sitemaps.org/"><option>Sitemap</option></ulink>
+ в <filename>robots.txt</filename>.</para>
 
 <para>Ниже указаны команды в файле <filename>indexer.conf</filename>, относящиеся к стандарту исключений для роботов.</para>
 
@@ -504,7 +508,7 @@ Robots yes/no
 для исключения страниц. Используйте <option>no</option>, например, для проверки ссылок на вашем сайте или сайтах.
 Имейте в виду, что игнорирование чужих <filename>robots.txt</filename> не приветсвуется сетевым этикетом.
 Команда действует до конца файла, или до следующей команды <command>Robots</command>.
-Значение по умолчанию: yes.
+Значение по умолчанию: <option>yes</option>.
 <programlisting>
 Robots yes
 </programlisting>
@@ -552,7 +556,25 @@ MaxCrawlDelay 60
 <para>Значение по-умолчанию: 300 секунд.</para>
 </sect3>
 
-
+<sect3 id="sitemaps_cmd">
+<title>Команда <command>Sitemaps</command></title>
+<indexterm><primary>Команда</primary><secondary>Sitemaps</secondary></indexterm>
+<programlisting>
+Sitemaps yes/no
+</programlisting>
+<para>
+Разрешает или запрещает обработку карт сайтов, указанных в файле <filename>robots.txt</filename>
+при помощи директивы <command>Sitemap</command>.
+Используйте опцию <option>no</option>, когда , например, вы индексируете только
+заданные страницы большого сайта и/или используя опцию nofollow.
+Команда может указываться перед каждой командой <command>Server</command> и 
+действует до конца файла конфигурации, или до следующей команды <command>Sitemaps</command>.
+Значение по умолчанию: <option>yes</option>.
+<programlisting>
+Sitemaps no
+</programlisting>
+</para>
+</sect3>
 
 </sect2>
 
