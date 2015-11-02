@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -441,7 +441,7 @@ void DpsServerListSort(DPS_SERVERLIST *List){
 	Spider->maxhops = DPS_DEFAULT_MAX_HOPS;
 	Spider->index = 1;
 	Spider->follow = DPS_FOLLOW_PATH;
-	Spider->use_robots = 1;
+	Spider->use_robots = DPS_ROBOTS_YES;
 	Spider->use_clones = 1;
 	Spider->net_error_delay_time=DPS_DEFAULT_NET_ERROR_DELAY_TIME;
 	Spider->ExpireAt.eight = 0;
@@ -466,7 +466,7 @@ __C_LINK int __DPSCALL DpsServerInit(DPS_SERVER * srv){
 	srv->MaxHrefsPerServer = (dps_uint4)-1;/* default MaxHrefsPerServer value */
 	srv->ndocs = 0;                        /* no docs indexed */
 	srv->nhrefs = 0;                       /* no hrefs added */
-	srv->use_robots = 1;
+	srv->use_robots = DPS_ROBOTS_YES;
 	return(0);
 }
 

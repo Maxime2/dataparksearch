@@ -1862,7 +1862,16 @@ static int srv_rpl_hdr(void *Cfg, size_t ac,char **av){
 static int srv_rpl_bool_var(void *Cfg, size_t ac,char **av){
 	DPS_CFG	*C=(DPS_CFG*)Cfg;
 	int res=!strcasecmp(av[1],"yes");
-	if(!strcasecmp(av[0], "Robots")) C->Srv->use_robots = res;
+	if(!strcasecmp(av[0], "Robots")) {
+	  res = (res) ?
+	    DPS_ROBOTS_YES
+	    : (
+	       (!strcasecmp(av[1],"collect")) ?
+	       DPS_ROBOTS_COLLECT
+	       : DPS_ROBOTS_NO
+	       );
+	  C->Srv->use_robots = res;
+	}
 	else DpsVarListReplaceInt(&C->Srv->Vars,av[0],res);
 	if (!strcasecmp(av[0], "DetectClones")) DpsVarListReplaceStr(&C->Indexer->Conf->Vars, av[0], av[1]);
 	return DPS_OK;

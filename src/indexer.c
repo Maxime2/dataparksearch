@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -255,6 +255,7 @@ int DpsHrefCheck(DPS_AGENT *Indexer, DPS_HREF *Href, const char *newhref) {
 	char		reason[PATH_MAX+1]="";
 	DPS_URL		*newURL;
 	DPS_SERVER	*Srv;
+	DPS_ROBOT_RULE  *rule;
 	size_t          depth;
 	const char      *method, *s;
 
@@ -360,10 +361,9 @@ int DpsHrefCheck(DPS_AGENT *Indexer, DPS_HREF *Href, const char *newhref) {
 
 	  Href->delay = (int)(Srv->crawl_delay / 1000);
 #if 1
-	  if (Srv->use_robots) {
-	    DPS_ROBOT_RULE	*rule;
+	  if (Srv->use_robots != DPS_ROBOTS_NO) {
 	    rule = DpsRobotRuleFind(Indexer, Srv, NULL, newURL, 0, 0);
-	    if (rule) {
+	    if (DPS_ROBOTS_YES == Srv->use_robots && rule) {
 	      DpsLog(Indexer, DPS_LOG_DEBUG, "Href.robots.txt: '%s %s'", (rule->cmd==DPS_METHOD_DISALLOW)?"Disallow":"Allow", rule->path);
 	      if ((rule->cmd == DPS_METHOD_DISALLOW) || (rule->cmd == DPS_METHOD_VISITLATER) ) {
 		Href->method = rule->cmd;
@@ -1771,6 +1771,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	char		*newhref = NULL;
 	char		*origurl = NULL, *aliasurl = NULL;
 	DPS_SERVER	*Server = NULL;
+	DPS_ROBOT_RULE  *rule;
 	int		result = DPS_OK, status = 0, parse_res;
 	int             hops = DpsVarListFindInt(&Parent->Sections, "Hops", 0);
 	size_t          i;
@@ -1971,17 +1972,15 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	if(Doc->method != DPS_METHOD_DISALLOW && Doc->method != DPS_METHOD_VISITLATER && Indexer->Flags.cmd != DPS_IND_POPRANK) {
 	  /*	  DpsDocAddDocExtraHeaders(Indexer, Doc);*/
 	  if(!strncmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "http", 4)) {
-	    if(!Doc->Spider.use_robots){
+	    if(DPS_ROBOTS_NO == Doc->Spider.use_robots){
 	      DpsLog(Indexer,DPS_LOG_DEBUG, "robots.txt support is disallowed for '%s'", DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
 /*	      DPS_GETLOCK(Indexer,DPS_LOCK_CONF);*/
 	      result = DpsRobotParse(Indexer, NULL, NULL, DPS_NULL2EMPTY(Doc->CurURL.hostinfo), hops + 1);
 /*	      DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);*/
 	    }else{
-	      DPS_ROBOT_RULE	*rule;
-
 	      /* Check whether URL is disallowed by robots.txt */
 	      rule = DpsRobotRuleFind(Indexer, Server, Doc, &Doc->CurURL, 1, (alias) ? 1 : 0);
-	      if(rule) {
+	      if(DPS_ROBOTS_YES == Doc->Spider.use_robots && rule) {
 		char *w;
 		switch(rule->cmd) {
 		case DPS_METHOD_DISALLOW:
@@ -2358,6 +2357,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	const char	*url, *alias = NULL;
 	char		*origurl = NULL, *aliasurl = NULL;
 	DPS_SERVER	*Server = NULL;
+	DPS_ROBOT_RULE  *rule;
 #ifdef WITH_PARANOIA
 	void * paran = DpsViolationEnter(paran);
 #endif
@@ -2518,17 +2518,15 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	if(Doc->method != DPS_METHOD_DISALLOW && Doc->method != DPS_METHOD_VISITLATER && Indexer->Flags.cmd != DPS_IND_POPRANK) {
 	  /*	  DpsDocAddDocExtraHeaders(Indexer, Doc);*/
 	  if(!strncmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "http", 4)) {
-	    if(!Doc->Spider.use_robots){
+	    if(DPS_ROBOTS_NO == Doc->Spider.use_robots){
 	      DpsLog(Indexer,DPS_LOG_DEBUG, "robots.txt support is disallowed for '%s'", DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
 /*	      DPS_GETLOCK(Indexer,DPS_LOCK_CONF);*/
 	      result = DpsRobotParse(Indexer, NULL, NULL, DPS_NULL2EMPTY(Doc->CurURL.hostinfo), DpsVarListFindInt(&Doc->Sections, "Hops", 0) + 1);
 /*	      DPS_RELEASELOCK(Indexer,DPS_LOCK_CONF);*/
 	    }else{
-	      DPS_ROBOT_RULE	*rule;
-
 	      /* Check whether URL is disallowed by robots.txt */
 	      rule = DpsRobotRuleFind(Indexer, Server, Doc, &Doc->CurURL, 1, (alias) ? 1 : 0);
-	      if(rule) {
+	      if(DPS_ROBOTS_YES == Doc->Spider.use_robots && rule) {
 		char *w;
 		switch(rule->cmd) {
 		case DPS_METHOD_DISALLOW:

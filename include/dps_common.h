@@ -1570,6 +1570,12 @@ enum dps_href_from {
   DPS_HREF_FROM_SCRIPT  = 256
 };
 
+enum dps_use_robots {
+  DPS_ROBOTS_NO  = 0,
+  DPS_ROBOTS_YES = 1,
+  DPS_ROBOTS_COLLECT = 2
+};
+
 
 extern char dps_pid_name[];
 extern unsigned int milliseconds; /* To sleep between documents    */
