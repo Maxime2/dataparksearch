@@ -1,0 +1,17 @@
+language: c
+dist:
+- precise
+- trusty
+before_script:
+- sudo apt-get update
+# `sudo apt-get install postgresql` fails with `Refused to start PostgreSQL 9.5, because PostgreSQL 9.1 is currently running! You should first stop 9.1 instance...`
+- sudo service postgresql stop
+- sudo apt-get install --yes postgresql
+# necessary for packaging `make` targets:
+- sudo apt-get install dh-make libegl1-mesa:amd64 libgl1-mesa-glx:i386 libaspell15 sgml-data docbook docbook-xml opensp docbook-dsssl libc6-i386 libosp5 libc6-x32 libc6:i386 libbsd-dev metacity-common libaspell-dev
+script:
+- export DPS_TEST_DBADDR="mysql://localhost/test/;pgsql://root@/root/"
+- ./bootstrap && ./configure && make -j8 && make -j8 check && sudo make install
+- make bin-dist
+- make pkg-deb
+- make pkg-rpm
