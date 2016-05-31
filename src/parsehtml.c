@@ -1312,7 +1312,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		size_t glen, slen;
 		opening = 0;
 		dps_memmove(name, name + 1, (slen = dps_strlen(name+1)) + 1);
-		if ((strcasecmp(name, "p")) && (strcasecmp(name, "br")) && (strcasecmp(name, "option")) && (strcasecmp(name, "input")) && (strcasecmp(name, "font"))) {
+		if ((strcasecmp(name, "hr")) && (strcasecmp(name, "br")) && (strcasecmp(name, "font"))) {
 		  do {
 		    /* Find previous '.' or beginning */
 		    for(e = tag->trailend; (e > tag->trail) && (e[0] != '.'); e--);
@@ -1325,7 +1325,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	}else{
 	        size_t name_len = dps_strlen(name);
 		opening = 1;
-		if ((strcasecmp(name, "p")) && (strcasecmp(name, "br")) && (strcasecmp(name, "option")) && (strcasecmp(name, "input")) && (strcasecmp(name, "font"))) {
+		if ((strcasecmp(name, "hr")) && (strcasecmp(name, "br")) && (strcasecmp(name, "font"))) {
 		  Sec = DpsVarListFind(&Doc->Sections, name);
 		  if (tag->level < sizeof(tag->visible) - 1) visible = tag->visible[tag->level + 1] = tag->visible[tag->level];
 		  tag->section[tag->level] = (Sec) ? (unsigned char)Sec->section : 0;
