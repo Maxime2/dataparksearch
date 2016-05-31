@@ -1373,7 +1373,9 @@ int main(int argc, char **argv, char **envp) {
      int       pid_fd, cfg_res, cache_opened = 0;
      char      pidbuf[1024];
 #ifdef __FreeBSD__
-#if __FreeBSD__ >= 7
+#if __FreeBSD__ >= 10
+     /* FreeBSD 10.x and above has new allocator not suppoting _malloc_options */
+#elif __FreeBSD__ >= 7
  #if __FreeBSD_version < 701000
      _malloc_options = "axNNNH";
  #else

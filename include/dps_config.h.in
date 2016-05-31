@@ -371,9 +371,6 @@
 /* Define if you have the pthread_setconcurrency function. */
 #undef HAVE_PTHREAD_SETCONCURRENCY_PROTO
 
-/* Define if you have the pthread_yeild function. */
-#undef HAVE_PTHREAD_YIELD_PROTO
-
 /* Define if you have the pthread_tryjoin_np function. */
 #undef HAVE_PTHREAD_TRYJOIN_NP_PROTO
 

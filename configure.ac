@@ -210,7 +210,6 @@ AC_SUBST(MODLIB)
 AC_CHECK_FUNCS(hstrerror getaddrinfo)
 AC_CHECK_FUNC_PROTO(inet_net_pton, arpa/inet.h)
 AC_CHECK_FUNC_PROTO([pthread_setconcurrency], [pthread.h])
-AC_CHECK_FUNC_PROTO([pthread_yield], [pthread.h])
 AC_CHECK_FUNC_PROTO([pthread_tryjoin_np], [pthread.h])
 AC_CHECK_FUNC_PROTO([thr_setconcurrency], [thread.h])
 
