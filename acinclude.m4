@@ -62,3 +62,30 @@ EOF
    [$3]
   fi
 ])dnl AX_CHECK_CFLAGS
+
+AC_DEFUN([DP_TAR_FLAGS],
+[
+	_dp_tar_flags='-jcPf -ycPf'
+	AC_MSG_CHECKING([tar flags for bzip2 compressed bundle])
+	if test -n "${am_cv_dp_tar_flags}"; then
+	   	dp_tar_flags=$am_cv_dp_tar_flags
+	else
+		for dp_tar_flags in $_dp_tar_flags; do
+    		    # tar/untar a dummy directory, and stop if the command works.
+    		    rm -rf conftest.dir conftest.tar.bz2
+    		    mkdir conftest.dir
+    		    echo GrepMe > conftest.dir/file
+    		    AM_RUN_LOG([tar $dp_tar_flags conftest.tar.bz2 conftest.dir])
+    		    rm -rf conftest.dir
+    		    if test -s conftest.tar.bz2; then
+      		       AM_RUN_LOG([tar -xf conftest.tar.bz2])
+      		       AM_RUN_LOG([cat conftest.dir/file])
+     		       grep GrepMe conftest.dir/file >/dev/null 2>&1 && break
+    		    fi
+		done
+		rm -rf conftest.dir conftest.tar.bz2
+	fi
+	AC_CACHE_VAL([am_cv_dp_tar_flags], [am_cv_dp_tar_flags=$dp_tar_flags])
+	AC_MSG_RESULT([$dp_tar_flags])
+	AC_SUBST([dp_tar_flags])
+])dnl DP_TAR_FLAGS

@@ -36,8 +36,7 @@ uninstall-local:
 bin-dist:
 	$(MAKE) install DESTDIR=$(CDIR)/$(PACKAGE)-$(VERSION)
 	cd $(CDIR)/$(PACKAGE)-$(VERSION)$(prefix) \
-		&& tar -ycPf $(PACKAGE)-$(VERSION)-$(DBTYPE)-$(host_triplet)-$(LINKING).tar.bz2 ./
-	mv $(CDIR)/$(PACKAGE)-$(VERSION)$(prefix)/*.tar.bz2 $(CDIR)
+		&& tar $(dp_tar_flags) ../$(PACKAGE)-$(VERSION)-$(DBTYPE)-$(host_triplet)-$(LINKING).tar.bz2 ./
 	rm -r $(CDIR)/$(PACKAGE)-$(VERSION)
 
 EXTRA_DIST = install.pl bootstrap acinclude.m4 README.XML README.md BUGS LICENSE \

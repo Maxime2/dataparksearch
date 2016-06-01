@@ -2762,7 +2762,8 @@ AC_SUBST(doc_FILES_EN)
 AC_SUBST(doc_FILES_RU)
 AC_SUBST(COLLATEINDEX)
 
-
+# check for tar flags for bzip2 compression
+DP_TAR_FLAGS
 
 
 
