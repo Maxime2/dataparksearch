@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2004-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -60,6 +60,9 @@
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_BSD_UNISTD_H
+#include <bsd/unistd.h>
 #endif
 #ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>

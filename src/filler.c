@@ -1,4 +1,5 @@
-/* Copyright (C) 2006-2007 Datapark corp. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2006-2012 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -32,6 +33,9 @@
 #endif
 #ifdef   HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef   HAVE_BSD_UNISTD_H
+#include <bsd/unistd.h>
 #endif
 
 /* This should be last include */

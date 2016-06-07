@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserverd.
+   Copyright (C) 2003-2013 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -34,6 +35,9 @@
 #include <errno.h>
 #ifdef   HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef   HAVE_BSD_UNISTD_H
+#include <bsd/unistd.h>
 #endif
 
 #ifdef HAVE_SYS_MMAN_H
@@ -168,7 +172,7 @@ void DpsGetSemLimit(void) {
   }
 #endif
 
-#if defined(HAVE_UNISTD_H) && defined(_SC_SEM_NSEMS_MAX)
+#if (defined(HAVE_UNISTD_H) || defined(HAVE_BSD_UNISTD_H)) && defined(_SC_SEM_NSEMS_MAX)
   if (Nsems == -1) {
     Nsems = sysconf(_SC_SEM_NSEMS_MAX);
   }

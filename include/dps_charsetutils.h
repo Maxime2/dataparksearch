@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2005-2012 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,8 @@
 
 #ifndef _DPS_CHARSETUTILS_H
 #define _DPS_CHARSETUTILS_H
+
+#include <string.h>
 
 #define dps_memmove memmove
 #define dps_memcpy  memcpy

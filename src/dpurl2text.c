@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@
 #include <locale.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_BSD_UNISTD_H
+#include <bsd/unistd.h>
 #endif
 
 #include "dps_common.h"

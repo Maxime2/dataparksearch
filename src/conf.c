@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2015 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -46,6 +46,7 @@
 #include "dps_mkind.h"
 #include "dps_indexer.h"
 #include "dps_charsetutils.h"
+#include "dps_cookies.h"
 
 #include <stdio.h>
 #include <stdlib.h>

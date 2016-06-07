@@ -490,6 +490,12 @@
 /* Define if you have the <unistd.h> header file.  */
 #undef HAVE_UNISTD_H
 
+/* Define if you have the <bsd/unistd.h> header file.  */
+#undef HAVE_BSD_UNISTD_H
+
+/* Define if you have the <bsd/stdlib.h> header file.  */
+#undef HAVE_BSD_STDLIB_H
+
 /* Define if you have the <limits.h> header file. */
 #undef HAVE_LIMITS_H
 
@@ -680,6 +686,9 @@ typedef unsigned int dps_uintptr_t;
 #elif defined(BOEHMGC)
 
 #include <stdlib.h>
+#ifdef HAVE_BSD_STDLIB_H
+#include <bsd/stdlib.h>
+#endif
 
 #define GC_DEBUG
 #include "gc.h"

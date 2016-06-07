@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -16,6 +16,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
 */
+#define _GNU_SOURCE
 #include "dps_common.h"
 #include "dps_utils.h"
 #include "dps_unicode.h"
@@ -54,6 +55,9 @@
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_BSD_UNISTD_H
+#include <bsd/unistd.h>
 #endif
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>

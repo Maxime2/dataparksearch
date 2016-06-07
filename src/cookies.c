@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2006-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,10 @@
 #include "dps_vars.h"
 #include "dps_charsetutils.h"
 #include "dps_doc.h"
+#include "dps_server.h"
+#include "dps_indexer.h"
+#include "dps_url.h"
+#include "dps_proto.h"
 
 #include <string.h>
 

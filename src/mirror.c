@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -23,6 +23,7 @@
 #include "dps_vars.h"
 #include "dps_log.h"
 #include "dps_charsetutils.h"
+#include "dps_store.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -32,6 +33,9 @@
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_BSD_UNISTD_H
+#include <bsd/unistd.h>
 #endif
 
 #include <fcntl.h>
