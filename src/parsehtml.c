@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1853,7 +1853,7 @@ int DpsHTMLParseBuf(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *section_n
 	      int z;
 	      for(z = (int)tag.level - 1; z >= 0 && tag.section[z] == 0; z--);
 	      bzero((void*)&Item, sizeof(Item));
-	      Item.href=tag.lasthref;
+	      Item.href = NULL;
 	      if (z >= 0) {
 		Item.section = tag.section[z];
 		Item.strict = tag.strict[z];
@@ -1873,6 +1873,14 @@ int DpsHTMLParseBuf(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, const char *section_n
 	      Item.len = (size_t)(tmpend-tmpbeg+1);
 	      /*	      DpsTextListAdd(&Doc->TextList,&Item);*/
 	      putItem(Indexer, Doc, &Item);
+
+	      if (tag.lasthref != NULL && CrosSec != NULL) {
+		Item.href = tag.lasthref;
+		Item.section = CrosSec->section;
+		Item.section_name = CrosSec->name;
+		Item.strict = CrosSec->strict;
+		putItem(Indexer, Doc, &Item);
+	      }
 	    }
 	    if (TSec && (tag.comment != 1) && (tag.noindex != 1) && tag.title && tag.index && !tag.select && tag.visible[tag.level]) {
 	      bzero((void*)&Item, sizeof(Item));
