@@ -416,6 +416,7 @@ int DpsCheckAddr(struct sockaddr_in *addr, unsigned int read_timeout) {
 	case 415: return("Unsupported Media Type");
 	case 416: return "Requested range not satisfiable";
 	case 417: return "Expectation failed";
+	case 418: return "I am a teapot";
 	case 450: return "Can't read file";
 	case 451: return "SSI Error(s)";
 	case 500: return("Internal Server Error");

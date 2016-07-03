@@ -491,6 +491,7 @@ static int DocUpdate(DPS_AGENT * Indexer, DPS_DOCUMENT *Doc) {
 
 	case DPS_HTTP_STATUS_OK:				/*  200 */
 	case DPS_HTTP_STATUS_PARTIAL_OK:			/*  206 */
+	case DPS_HTTP_STATUS_I_AM_A_TEAPOT:			/*  418 */ /* It is a joke, let index it :) */
 		if(!DpsVarListFind(&Doc->Sections,"Content-Type")){
 		        if (Doc->method != DPS_METHOD_VISITLATER && Doc->method == DPS_METHOD_CRAWLDELAY) {
 			  if (Doc->connp.Host != NULL) Doc->connp.Host->net_errors++;
