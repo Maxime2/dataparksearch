@@ -1561,15 +1561,15 @@ AC_ARG_ENABLE(apache-module,
 
 	ac_save_cflags="$CFLAGS"
 	CFLAGS="$CFLAGS -I$APACHE_INCDIR"
-	if test "$APACHE_VER" = "2" -a -x "$APRCONFIG"; then
-		APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
-	fi
 
 AC_MSG_CHECKING([for Apache version])
 
 	APACHE_TRIM_VERSION=`$APXS -q HTTPD_VERSION | sed -e "s|\.*pre[[0-9]]*$||"`
 	APACHE_VER=`echo $APACHE_TRIM_VERSION | sed -e "s|\.[[^.]]*$||" | sed -e "s|\..*||g"`
 
+	if test "$APACHE_VER" = "2" -a -x "$APRCONFIG"; then
+		APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
+	fi
 	if test "$APACHE_VER" = "2"; then
 		APACHE_NOTEST_CPPFLAGS=`$APXS -q NOTEST_CPPFLAGS`
 		APACHE_EXTRA_CPPFLAGS=`$APXS -q EXTRA_CPPFLAGS`
