@@ -551,8 +551,8 @@ __C_LINK int __DPSCALL DpsCacheMakeIndexes(DPS_AGENT *Indexer, DPS_DB *db) {
 	    else if (!strcasecmp(ind, "hostname")) field_type = DPS_IFIELD_TYPE_HOSTNAME;
 	    else if (!strcasecmp(ind, "char2")) field_type = DPS_IFIELD_TYPE_STR2CRC32;
 	    else if (!strcasecmp(ind, "int")) field_type = DPS_IFIELD_TYPE_INT;
-	    if (DPS_OK == DpsSQLLimit4(Indexer, &L4, req,  field_type, db)) {
-	      MakeLinearIndex(Indexer, &L4, lfname, db);
+	    if (DPS_OK == DpsSQLLimit4(Indexer, &L4, req,  field_type, pdb)) {
+	      MakeLinearIndex(Indexer, &L4, lfname, pdb);
 	    }
 	  }
 	}
