@@ -71,6 +71,7 @@
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
+#include <openssl/engine.h>
 #endif
 
 #include "dps_common.h"
