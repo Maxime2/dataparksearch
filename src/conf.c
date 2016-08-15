@@ -1407,26 +1407,27 @@ static int add_limit(void *Cfg, size_t ac, char **av) {
 
 		DpsVarListReplaceStr(&Conf->Vars, nm, sc);
 
-		if(!strcasecmp(sc, "category")) {
-		  Conf->Flags.limits |= DPS_LIMIT_CAT;
-		} else if(!strcasecmp(sc, "tag")) {
-		  Conf->Flags.limits |= DPS_LIMIT_TAG;
-		} else if(!strcasecmp(sc, "time")) {
-		  Conf->Flags.limits |= DPS_LIMIT_TIME;
-		} else if(!strcasecmp(sc, "language")) {
-		  Conf->Flags.limits |= DPS_LIMIT_LANG;
-		} else if(!strcasecmp(sc, "content")) {
-		  Conf->Flags.limits |= DPS_LIMIT_CTYPE;
-		} else if(!strcasecmp(sc, "siteid")) {
-		  Conf->Flags.limits |= DPS_LIMIT_SITE;
-		} else if(!strcasecmp(sc, "link")) {
-/*		  Conf->Flags.limits |= DPS_LIMIT_LINK;*/
-                } else if(!strcasecmp(sc, "minute")) {
-		} else {
-		  if (ac == 1) {
+		if (ac == 2) {
+		  if(!strcasecmp(sc, "category")) {
+		    Conf->Flags.limits |= DPS_LIMIT_CAT;
+		  } else if(!strcasecmp(sc, "tag")) {
+		    Conf->Flags.limits |= DPS_LIMIT_TAG;
+		  } else if(!strcasecmp(sc, "time")) {
+		    Conf->Flags.limits |= DPS_LIMIT_TIME;
+		  } else if(!strcasecmp(sc, "language")) {
+		    Conf->Flags.limits |= DPS_LIMIT_LANG;
+		  } else if(!strcasecmp(sc, "content")) {
+		    Conf->Flags.limits |= DPS_LIMIT_CTYPE;
+		  } else if(!strcasecmp(sc, "siteid")) {
+		    Conf->Flags.limits |= DPS_LIMIT_SITE;
+		  } else if(!strcasecmp(sc, "link")) {
+/*		    Conf->Flags.limits |= DPS_LIMIT_LINK;*/
+/*		  } else if(!strcasecmp(sc, "minute")) {*/
+		  } else {
 		    dps_snprintf(Conf->errstr, sizeof(Conf->errstr) - 1, "SQL request isn't specified. [ac:%d]", ac);
 		    return DPS_ERROR;
 		  }
+		} else {
 		  if (strcasecmp(sc, "hex8str") && strcasecmp(sc, "strcrc32") && strcasecmp(sc, "int") 
 		      && strcasecmp(sc, "hour")
 		      && strcasecmp(sc, "minute")

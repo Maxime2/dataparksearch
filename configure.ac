@@ -1561,41 +1561,15 @@ AC_ARG_ENABLE(apache-module,
 
 	ac_save_cflags="$CFLAGS"
 	CFLAGS="$CFLAGS -I$APACHE_INCDIR"
+
+AC_MSG_CHECKING([for Apache version])
+
+	APACHE_TRIM_VERSION=`$APXS -q HTTPD_VERSION | sed -e "s|\.*pre[[0-9]]*$||"`
+	APACHE_VER=`echo $APACHE_TRIM_VERSION | sed -e "s|\.[[^.]]*$||" | sed -e "s|\..*||g"`
+
 	if test "$APACHE_VER" = "2" -a -x "$APRCONFIG"; then
 		APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
 	fi
-
-AC_MSG_CHECKING([for Apache version])
-	if test -z "$APACHE_VER"; then
-AC_TRY_COMPILE([#include <httpd.h> 
-#include <mpm.h> 
-#include <apr.h>], [
-	apr_byte_t b;
-], [
-	APACHE_VER=2
-], [
-	APACHE_VER=1
-])
-	fi
-
-dnl	ac_save_cflags="$CFLAGS"
-	if test "$APACHE_VER" = "1" -a -x "$APRCONFIG"; then
-        	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
-	        AC_TRY_COMPILE([#include <httpd.h> 
-#include <mpm.h> 
-#include <apr.h>], [
-        	        apr_byte_t b;
-	        ], [
-        	        APACHE_VER=2
-			APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
-dnl	        	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
-	        ], [
-        	        APACHE_VER=1
-dnl			CFLAGS="$ac_save_cflags"
-
-	        ])
-	fi
-
 	if test "$APACHE_VER" = "2"; then
 		APACHE_NOTEST_CPPFLAGS=`$APXS -q NOTEST_CPPFLAGS`
 		APACHE_EXTRA_CPPFLAGS=`$APXS -q EXTRA_CPPFLAGS`
@@ -1603,6 +1577,7 @@ dnl			CFLAGS="$ac_save_cflags"
 		AC_SUBST(APACHE_NOTEST_CPPFLAGS)
 		AC_SUBST(APACHE_EXTRA_CPPFLAGS)
 		AC_SUBST(APACHE_EXTRA_CFLAGS)
+		AC_MSG_RESULT($APACHE_VER)
 		AC_MSG_CHECKING([for Apache version >=2.4])
         	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
 		AC_TRY_COMPILE([
@@ -1621,6 +1596,7 @@ r->connection->client_ip[0] = 0;
 	if test "$APACHE_VER" = "1"; then
 		APACHE_EXTRA_CFLAGS="$APACHE_CFLAGS"
 		AC_SUBST(APACHE_EXTRA_CFLAGS)
+		AC_MSG_RESULT($APACHE_VER)
 	fi
 
 	CFLAGS="$ac_save_cflags"
@@ -1633,7 +1609,6 @@ r->connection->client_ip[0] = 0;
 	AC_SUBST(APACHE_INCDIR)
 	AC_SUBST(APACHE_MODDIR)
 	AC_SUBST(APXS)
-	AC_MSG_RESULT($APACHE_VER)
 
   else
 	AC_MSG_RESULT(no)

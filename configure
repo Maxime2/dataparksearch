@@ -18414,71 +18414,16 @@ $as_echo "yes, apxs is $APXS, apr-config is $APRCONFIG, includes at $APACHE_INCD
 
 	ac_save_cflags="$CFLAGS"
 	CFLAGS="$CFLAGS -I$APACHE_INCDIR"
-	if test "$APACHE_VER" = "2" -a -x "$APRCONFIG"; then
-		APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
-	fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Apache version" >&5
 $as_echo_n "checking for Apache version... " >&6; }
-	if test -z "$APACHE_VER"; then
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <httpd.h>
-#include <mpm.h>
-#include <apr.h>
-int
-main ()
-{
 
-	apr_byte_t b;
+	APACHE_TRIM_VERSION=`$APXS -q HTTPD_VERSION | sed -e "s|\.*pre[0-9]*$||"`
+	APACHE_VER=`echo $APACHE_TRIM_VERSION | sed -e "s|\.[^.]*$||" | sed -e "s|\..*||g"`
 
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-
-	APACHE_VER=2
-
-else
-
-	APACHE_VER=1
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+	if test "$APACHE_VER" = "2" -a -x "$APRCONFIG"; then
+		APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
 	fi
-
-	if test "$APACHE_VER" = "1" -a -x "$APRCONFIG"; then
-        	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
-	        cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <httpd.h>
-#include <mpm.h>
-#include <apr.h>
-int
-main ()
-{
-
-        	        apr_byte_t b;
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-
-        	        APACHE_VER=2
-			APACHE_CFLAGS="$APACHE_CFLAGS `$APRCONFIG --includes`"
-
-else
-
-        	        APACHE_VER=1
-
-
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-	fi
-
 	if test "$APACHE_VER" = "2"; then
 		APACHE_NOTEST_CPPFLAGS=`$APXS -q NOTEST_CPPFLAGS`
 		APACHE_EXTRA_CPPFLAGS=`$APXS -q EXTRA_CPPFLAGS`
@@ -18486,6 +18431,8 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
 
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $APACHE_VER" >&5
+$as_echo "$APACHE_VER" >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Apache version >=2.4" >&5
 $as_echo_n "checking for Apache version >=2.4... " >&6; }
         	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
@@ -18521,6 +18468,8 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 	if test "$APACHE_VER" = "1"; then
 		APACHE_EXTRA_CFLAGS="$APACHE_CFLAGS"
 
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $APACHE_VER" >&5
+$as_echo "$APACHE_VER" >&6; }
 	fi
 
 	CFLAGS="$ac_save_cflags"
@@ -18533,8 +18482,6 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
 
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $APACHE_VER" >&5
-$as_echo "$APACHE_VER" >&6; }
 
   else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
