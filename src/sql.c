@@ -7211,8 +7211,8 @@ static int DpsPopRankCalculateNeo(DPS_AGENT *A, DPS_DB *db) {
 	  u = ((irows == url_num) && (A->Conf->url_number > 0)) ;
 	  offset += (A->Conf->url_number > 0) ? irows : (i + 1);
 	  /* To see the URL being indexed in "ps" output on xBSD */
-	  if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] Neo:%d URLs done", A->handle, offset);
-	  DpsLog(A, DPS_LOG_EXTRA, "Neo:%d URLs processed", offset);
+	  if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] Neo:%zd URLs done", A->handle, offset);
+	  DpsLog(A, DPS_LOG_EXTRA, "Neo:%zd URLs processed", offset);
 	}
 
 	rc = DPS_OK;
@@ -7220,7 +7220,7 @@ static int DpsPopRankCalculateNeo(DPS_AGENT *A, DPS_DB *db) {
 Calc_unlockNeo:
 	/* To see the URL being indexed in "ps" output on xBSD */
 	if (DpsNeedLog(DPS_LOG_INFO)) dps_setproctitle("[%d] Neo done", A->handle);
-	DpsLog(A, DPS_LOG_INFO, "Neo PopRank done: %d URLs processed, total pas: %ld", offset, A->poprank_pas);
+	DpsLog(A, DPS_LOG_INFO, "Neo PopRank done: %zd URLs processed, total pas: %ld", offset, A->poprank_pas);
 	return rc;
 }
 
@@ -7390,8 +7390,8 @@ static int DpsPopRankCalculateGoo(DPS_AGENT *A, DPS_DB *db) {
 	  u = (nrows == url_num);
 	  offset += nrows;
 	  /* To see the URL being indexed in "ps" output on xBSD */
-	  if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] Goo:%d URLs done", A->handle, offset);
-	  DpsLog(A, DPS_LOG_EXTRA, "Goo:%d URLs processed", offset);
+	  if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] Goo:%zd URLs done", A->handle, offset);
+	  DpsLog(A, DPS_LOG_EXTRA, "Goo:%zd URLs processed", offset);
 	}
 
 	rc = DPS_OK;
