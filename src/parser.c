@@ -106,8 +106,9 @@ static void sighandler(int sign){
 /* Parser1: from STDIN to STDOUT */
 static char *parse1(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const char *cmd) {
 	int wr[2];
-	int rd[2];    
-	pid_t pid;    
+	int rd[2];
+	int rc;
+	pid_t pid;
 	size_t gap = (size_t)(Doc->Buf.content - Doc->Buf.buf);
 
 	/* Create write and read pipes */
@@ -203,7 +204,9 @@ static char *parse1(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 			init_signals();
 			alarm((unsigned int) DpsVarListFindInt(&Agent->Vars, "ParserTimeOut", 300) );
 
-			(void)system(cmd);
+			if (0 != (rc = system(cmd))) {
+			  DpsLog(Agent, DPS_LOG_WARN, "parse1: system() in child process returned %d", rc);
+			}
 			DpsUnsetEnv("DPS_URL");
 			_exit(0);
 		}
@@ -216,8 +219,9 @@ static char *parse1(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 static char *parse2(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const char *cmd) {
 	size_t gap = Doc->Buf.content - Doc->Buf.buf;
 	ssize_t rs;
-	int rd[2];    
-	pid_t pid;    
+	int rd[2];
+	int rc;
+	pid_t pid;
 
 	if (pipe(rd) == -1){
 		DpsLog(Agent,DPS_LOG_ERROR,"Cannot make a pipe for a read");
@@ -283,7 +287,9 @@ static char *parse2(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 		init_signals();
 		alarm((unsigned int) DpsVarListFindInt(&Agent->Vars, "ParserTimeOut", 300) );
 
-		(void)system(cmd);
+		if (0 != (rc = system(cmd))) {
+		  DpsLog(Agent, DPS_LOG_WARN, "parse2: system() in child process returned %d", rc);
+		}
 		DpsUnsetEnv("DPS_URL");
 		close (rd[1]);
 		_exit(rc);
@@ -297,7 +303,8 @@ static char *parse2(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 /* Parser3: from FILE to FILE */
 static char *parse3(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const char *cmd, const char *to_file) {
 	int fd;
-	pid_t pid;    
+	int rc;
+	pid_t pid;
 	size_t gap = Doc->Buf.content - Doc->Buf.buf;
 	ssize_t rs;
 #ifdef UNIONWAIT
@@ -317,7 +324,9 @@ static char *parse3(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 	  DpsSetEnv("DPS_URL",url);
 	  init_signals();
 	  alarm((unsigned int) DpsVarListFindInt(&Agent->Vars, "ParserTimeOut", 300) );
-	  (void)system(cmd);
+	  if (0 != (rc = system(cmd))) {
+	    DpsLog(Agent, DPS_LOG_WARN, "parse3: system() in child process returned %d", rc);
+	  }
 	  DpsUnsetEnv("DPS_URL");
 	  _exit(0);
 	}
@@ -356,8 +365,8 @@ static char *parse3(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 static char *parse4(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const char *cmd, const char *to_file) {
 	size_t gap = Doc->Buf.content - Doc->Buf.buf;
 	ssize_t rs;
-	int wr[2], fd;
-	pid_t pid;    
+	int wr[2], fd, rc;
+	pid_t pid;
 #ifdef UNIONWAIT
 	union wait status;
 #else
@@ -398,7 +407,9 @@ static char *parse4(DPS_AGENT * Agent, DPS_DOCUMENT *Doc, const char *url, const
 	  init_signals();
 	  alarm((unsigned int) DpsVarListFindInt(&Agent->Vars, "ParserTimeOut", 300) );
 
-	  (void)system(cmd);
+	  if (0 != (rc = system(cmd))) {
+	    DpsLog(Agent, DPS_LOG_WARN, "parse4: system() in child process returned %d", rc);
+	  }
 	  DpsUnsetEnv("DPS_URL");
 	  _exit(0);
 	}
