@@ -472,7 +472,7 @@ __C_LINK int __DPSCALL DpsServerInit(DPS_SERVER * srv){
 
 
 urlid_t DpsServerGetSiteId(DPS_AGENT *Indexer, DPS_SERVER *srv, DPS_DOCUMENT *Doc) {
-  char *urlstr, *pp = NULL;
+  char *urlstr_allocate = NULL, *urlstr, *pp = NULL;
   DPS_SERVER S;
   int rc;
   char *url, *psite;
@@ -486,20 +486,21 @@ urlid_t DpsServerGetSiteId(DPS_AGENT *Indexer, DPS_SERVER *srv, DPS_DOCUMENT *Do
   }
 
   if (url == NULL) {
-    if((urlstr = (char*)DpsMalloc(dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.schema)) + 
-				  dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.hostname)) + 
-				  dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.path)) +
-				  10)) == NULL) {
+    if((urlstr_allocate = (char*)DpsMalloc(dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.schema)) +
+					   dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.hostname)) +
+					   dps_strlen(DPS_NULL2EMPTY(Doc->CurURL.path)) +
+					   10 + sizeof(dps_uint8))) == NULL) {
       return 0;
     }
+    urlstr = urlstr_allocate + sizeof(dps_uint8);
     sprintf(urlstr, "%s://%s/%s", DPS_NULL2EMPTY(Doc->CurURL.schema), DPS_NULL2EMPTY(Doc->CurURL.hostname),
 	    (Indexer->Flags.MaxSiteLevel < 0) ? DPS_NULL2EMPTY(Doc->CurURL.path) : "");
   } else {
     register char *p, *pp;
-    if((urlstr = (char*)DpsMalloc(dps_strlen(url) + 2)) == NULL) {
+    if((urlstr_allocate = (char*)DpsMalloc(dps_strlen(url) + 2 + sizeof(dps_uint8))) == NULL) {
       return 0;
     }
-    dps_strcpy(urlstr, url);
+    dps_strcpy((urlstr = urlstr_allocate + sizeof(dps_uint8)), url);
     if ((p = strstr(urlstr, ":/")) == NULL) {DPS_FREE(urlstr); return 0; }
     if (Indexer->Flags.MaxSiteLevel < 0) {
       if ((pp = strrchr(urlstr, '/')) == NULL) { DPS_FREE(urlstr); return 0; }
@@ -573,6 +574,6 @@ urlid_t DpsServerGetSiteId(DPS_AGENT *Indexer, DPS_SERVER *srv, DPS_DOCUMENT *Do
   DpsVarListReplaceDouble(&Doc->Sections, "SiteWeight", (double)S.weight);
   DpsVarListReplaceInt(&Doc->Sections, "SiteNdocs", (int)S.ndocs++);
 
-  DPS_FREE(urlstr);
+  DPS_FREE(urlstr_allocate);
   return (rc == DPS_OK) ? S.site_id : 0;
 }
