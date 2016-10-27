@@ -21,7 +21,7 @@ CREATE TABLE url (
   charset_id      smallint(6),
   shows           int(11) DEFAULT '0' NOT NULL,
   pop_rank	  float DEFAULT 1 NOT NULL,
-  url		  BLOB DEFAULT '' NOT NULL,
+  url		  TEXT NOT NULL,
   PRIMARY KEY (rec_id),
   UNIQUE url (url(255)),
   KEY key_crc (crc32),
@@ -71,7 +71,7 @@ INSERT INTO categories (path,link,name) VALUES ('', '', 'Root');
 CREATE TABLE qtrack (
   rec_id  int(11) NOT NULL auto_increment,
   ip      varchar(16) NOT NULL,
-  qwords  TEXT DEFAULT '' NOT NULL,
+  qwords  TEXT NOT NULL,
   qtime   int(11) DEFAULT '0' NOT NULL,
   wtime   int(11) DEFAULT '0' NOT NULL,
   found   int(11) DEFAULT '0' NOT NULL,
@@ -101,10 +101,10 @@ CREATE TABLE crossdict (
 
 
 create table server (
-	rec_id		int null primary key,
+	rec_id		int not null primary key,
 	enabled		int		not null	default 0,
-	url		BLOB		not null	default '',
-	tag		TEXT		not null	default '',
+	url		TEXT		not null,
+	tag		TEXT		not null,
 	category	int		not null	default 0,
 	command		char(1)		not null	default 'S',
 	ordre		int		not null	default 0,

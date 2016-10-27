@@ -2053,6 +2053,7 @@ int main(int argc, char **argv, char **envp) {
 			DpsAgentFree(Agent);
 			DpsEnvFree(Conf);
 			unlink(dps_pid_name);
+			DpsDeInit();
 			DpsDestroyMutexes();
 			exit(1);
 		}
@@ -2154,6 +2155,7 @@ int main(int argc, char **argv, char **envp) {
 	}
 
 	unlink(dps_pid_name);
+	DpsDeInit();
 	DpsDestroyMutexes();
 
 #ifdef EFENCE

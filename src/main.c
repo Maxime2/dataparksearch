@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1827,7 +1827,6 @@ ex:
      total_threads=0;
      DpsAgentFree(&Main);
      DpsEnvFree(&Conf);
-     DpsDestroyMutexes();
      fclose(stdout);
 
      {
@@ -1839,6 +1838,7 @@ ex:
      }
      
      DpsDeInit();
+     DpsDestroyMutexes();
 
 #ifdef EFENCE
      fprintf(stderr, "Memory leaks checking\n");

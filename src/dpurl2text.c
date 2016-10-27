@@ -710,10 +710,10 @@ int main(int argc, char **argv, char **envp) {
     DpsDocFree(Doc);
     DpsAgentFree(&Main);
     DpsEnvFree(&Conf);
-    DpsDestroyMutexes();
     fclose(stdout);
 
     DpsDeInit();
+    DpsDestroyMutexes();
 
 #ifdef EFENCE
     fprintf(stderr, "Memory leaks checking\n");
