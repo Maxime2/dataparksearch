@@ -1421,7 +1421,7 @@ static int add_limit(void *Cfg, size_t ac, char **av) {
 		  Conf->Flags.limits |= DPS_LIMIT_SITE;
 		} else if(!strcasecmp(sc, "link")) {
 /*		  Conf->Flags.limits |= DPS_LIMIT_LINK;*/
-                } else if(!strcasecmp(sc, "minute")) {
+/*                } else if(!strcasecmp(sc, "minute")) {*/
 		} else {
 		  if (ac == 1) {
 		    dps_snprintf(Conf->errstr, sizeof(Conf->errstr) - 1, "SQL request isn't specified. [ac:%d]", ac);
