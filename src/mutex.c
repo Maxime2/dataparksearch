@@ -663,16 +663,26 @@ static void handle_error(const char *file, int lineno, const char *msg) {
 #endif
 }
 
+#if OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
+
+static void id_function(CRYPTO_THREADID *id) {
+  CRYPTO_THREADID_set_numeric(id, (unsigned long)DPS_THREAD_ID);
+}
+
+#else
+
 static unsigned long id_function(void) {
   return ((unsigned long)DPS_THREAD_ID);
 }
 
+#endif
+
 static void locking_function(int mode, int n, const char *file, int line) {
 #if defined HAVE_PTHREAD && defined WITH_HTTPS
   if (mode & CRYPTO_LOCK)
-    DPS_MUTEX_LOCK((dps_mutex_t)id_function(), &mutex_buf[n]);
+    DPS_MUTEX_LOCK((dps_mutex_t)DPS_THREAD_ID, &mutex_buf[n]);
   else
-    DPS_MUTEX_UNLOCK((dps_mutex_t)id_function(), &mutex_buf[n]);
+    DPS_MUTEX_UNLOCK((dps_mutex_t)DPS_THREAD_ID, &mutex_buf[n]);
 #endif
 }
 
@@ -685,8 +695,15 @@ int dps_libcrypto_thread_setup(void) {
     return 0;
   for (i = 0;  i < CRYPTO_num_locks(  );  i++)
     InitMutex(&mutex_buf[i]);
+
+#if OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
+  CRYPTO_THREADID_set_callback(id_function);
+#else
   CRYPTO_set_id_callback(id_function);
+#endif
+
   CRYPTO_set_locking_callback(locking_function);
+
 #endif
   return 1;
 }
@@ -698,7 +715,11 @@ int dps_libcrypto_thread_cleanup(void) {
   if (!mutex_buf)
     return 0;
   CRYPTO_set_id_callback(NULL);
+#if OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
+  CRYPTO_THREADID_set_callback(NULL);
+#else
   CRYPTO_set_locking_callback(NULL);
+#endif
   for (i = 0;  i < CRYPTO_num_locks(  );  i++)
     DestroyMutex(&mutex_buf[i]);
   free(mutex_buf);

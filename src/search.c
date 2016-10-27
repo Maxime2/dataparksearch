@@ -921,6 +921,7 @@ end:
 	DPS_FREE(nav);
 
 	DpsDeInit();
+	DpsDestroyMutexes();
 	
 #ifdef EFENCE
 	fprintf(stderr, "Memory leaks checking\n");
