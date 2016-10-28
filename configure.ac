@@ -1289,22 +1289,28 @@ AC_ARG_WITH(openssl,
 [
   if test "$withval" != "no"; then
         if test "$withval" = "yes"; then
-                if test -f /usr/include/openssl/ssl.h; then
-                        SSL_INCDIR=/usr/include
-		elif test -f /usr/sfw/include/openssl/ssl.h; then
-			SSL_INCDIR=/usr/sfw/include
-                else
-                        SSL_INCDIR=/usr/local/ssl/include
-                fi
-                if test -f /usr/local/lib/libssl.a; then
-                        SSL_LIBDIR=/usr/local/lib
-                elif test -f /usr/lib/libssl.a; then
-                        SSL_LIBDIR=/usr/lib
-		elif test -f /usr/sfw/lib/libssl.a; then
-			SSL_LIBDIR=/usr/sfw/lib
-                else
-                        SSL_LIBDIR=/usr/local/ssl/lib
-                fi
+	   	SSL_PREFIX=`pkg-config openssl --variable=prefix`
+		if test "x$SSL_PREFIX" != "x"; then
+		   	SSL_INCDIR="$SSL_PREFIX/unclude"
+			SSL_LIBDIR="$SSL_PREFIX/lib"
+		else
+			if test -f /usr/include/openssl/ssl.h; then
+                           	SSL_INCDIR=/usr/include
+			elif test -f /usr/sfw/include/openssl/ssl.h; then
+			     	SSL_INCDIR=/usr/sfw/include
+                	else
+				SSL_INCDIR=/usr/local/ssl/include
+                	fi
+                	if test -f /usr/local/lib/libssl.a; then
+                           	SSL_LIBDIR=/usr/local/lib
+                	elif test -f /usr/lib/libssl.a; then
+                             	SSL_LIBDIR=/usr/lib
+			elif test -f /usr/sfw/lib/libssl.a; then
+			     	SSL_LIBDIR=/usr/sfw/lib
+                	else
+				SSL_LIBDIR=/usr/local/ssl/lib
+                	fi
+		fi
         else
                 SSL_INCDIR=$withval/include
                 test -d $withval/include/openssl && SSL_INCDIR=$withval/include
