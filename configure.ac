@@ -309,7 +309,25 @@ AC_TRY_LINK([#include <signal.h>],
     AC_MSG_RESULT(yes),
     AC_MSG_RESULT(no))
 
-	
+
+dnl check for memory model
+mcmodel=medium
+AC_ARG_ENABLE([mcmodel],
+     [AS_HELP_STRING([--enable-mcmodel=ARG],
+         [Use compiler option -mcmodel, avaiable arguments --> tiny; --> small; -->medium; -->large
+          (defalut is medium)])],
+     [ case "${enableval}" in
+       large) mcmodel=large ;;
+       medium) mcmodel=medium ;;
+       small) mcmodel=small ;;
+       tiny) mcmodel=tiny ;;
+       *) AC_MSG_ERROR(bad value ${enableval} for --enable-mcmodel) ;;
+       esac],
+     [mcmodel=medium])
+
+AX_CHECK_CFLAGS([-mcmodel=$mcmodel],,AC_MSG_FAILURE([$CC compiler option -mcmodel=$mcmodel is not avaiable]))
+
+
 dnl check for paranoia support
 paranoia=no
 AC_MSG_CHECKING(for paranoia support)

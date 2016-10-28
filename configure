@@ -873,6 +873,7 @@ with_tre
 with_libextractor
 with_debug
 with_optimise
+enable_mcmodel
 enable_paranoia
 enable_syslog
 enable_trace
@@ -1602,6 +1603,9 @@ Optional Features:
                           speeds up one-time build
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --disable-largefile     omit support for large files
+  --enable-mcmodel=ARG    Use compiler option -mcmodel, avaiable arguments -->
+                          tiny; --> small; -->medium; -->large (defalut is
+                          medium)
   --enable-paranoia       Enable paranoia support. Stack will be checked like with libparanoia
                           This works only on Intel architecture using gcc. Optimisation should be switched off.
   --enable-syslog         Use syslog (default)
@@ -15845,6 +15849,46 @@ $as_echo "no" >&6; }
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
+
+
+mcmodel=medium
+# Check whether --enable-mcmodel was given.
+if test "${enable_mcmodel+set}" = set; then :
+  enableval=$enable_mcmodel;  case "${enableval}" in
+       large) mcmodel=large ;;
+       medium) mcmodel=medium ;;
+       small) mcmodel=small ;;
+       tiny) mcmodel=tiny ;;
+       *) as_fn_error $? "bad value ${enableval} for --enable-mcmodel" "$LINENO" 5 ;;
+       esac
+else
+  mcmodel=medium
+fi
+
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether compiler accepts \"-mcmodel=$mcmodel\"" >&5
+$as_echo_n "checking whether compiler accepts \"-mcmodel=$mcmodel\"... " >&6; }
+  cat > conftest.c++ << EOF
+  int main(){
+    return 0;
+  }
+EOF
+  if $CC $CPPFLAGS $CFLAGS -o conftest.o conftest.c++ -mcmodel=$mcmodel > /dev/null 2>&1
+  then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+    CFLAGS="${CFLAGS} -mcmodel=$mcmodel"
+
+  else
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+   { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "$CC compiler option -mcmodel=$mcmodel is not avaiable
+See \`config.log' for more details" "$LINENO" 5; }
+  fi
+
 
 
 paranoia=no
