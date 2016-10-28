@@ -136,6 +136,8 @@ libdpsearch_mod_la_LIBADD = libdp.la @MODLIB@
 
 if APACHEMODULE
 libdpsearch_mod_la_CFLAGS = $(AM_CFLAGS) -DAPACHE@APACHE_VER@ -I@APACHE_INCDIR@ $(APACHE_CFLAGS) $(APACHE_NOTEST_CPPFLAGS) $(APACHE_EXTRA_CPPFLAGS) $(APACHE_EXTRA_CFLAGS)
+else
+libdpsearch_mod_la_CFLAGS = $(AM_CFLAGS)
 endif
 
 libdpsearch_mod_la_LDFLAGS = -release @DPS_BASE_VERSION@

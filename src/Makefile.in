@@ -829,6 +829,7 @@ libdpcharset_la_DEPENDENCIES = libdp.la
 @THREADSLESS_TRUE@efence.c ef_page.c ef_print.c filence.c
 
 @THREADSLESS_TRUE@libdpsearch_mod_la_LIBADD = libdp.la @MODLIB@ 
+@APACHEMODULE_FALSE@@THREADSLESS_TRUE@libdpsearch_mod_la_CFLAGS = $(AM_CFLAGS)
 @APACHEMODULE_TRUE@@THREADSLESS_TRUE@libdpsearch_mod_la_CFLAGS = $(AM_CFLAGS) -DAPACHE@APACHE_VER@ -I@APACHE_INCDIR@ $(APACHE_CFLAGS) $(APACHE_NOTEST_CPPFLAGS) $(APACHE_EXTRA_CPPFLAGS) $(APACHE_EXTRA_CFLAGS)
 @THREADSLESS_TRUE@libdpsearch_mod_la_LDFLAGS = -release @DPS_BASE_VERSION@
 @THREADSLESS_TRUE@libdpsearch_mod_la_DEPENDENCIES = libdpcharset.la libdp.la
