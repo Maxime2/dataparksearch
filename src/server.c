@@ -501,11 +501,11 @@ urlid_t DpsServerGetSiteId(DPS_AGENT *Indexer, DPS_SERVER *srv, DPS_DOCUMENT *Do
       return 0;
     }
     dps_strcpy((urlstr = urlstr_allocate + sizeof(dps_uint8)), url);
-    if ((p = strstr(urlstr, ":/")) == NULL) {DPS_FREE(urlstr); return 0; }
+    if ((p = strstr(urlstr, ":/")) == NULL) {DPS_FREE(urlstr_allocate); return 0; }
     if (Indexer->Flags.MaxSiteLevel < 0) {
-      if ((pp = strrchr(urlstr, '/')) == NULL) { DPS_FREE(urlstr); return 0; }
+      if ((pp = strrchr(urlstr, '/')) == NULL) { DPS_FREE(urlstr_allocate); return 0; }
     } else {
-      if ((pp = strchr(p + 3, '/')) == NULL) {DPS_FREE(urlstr); return 0; }
+      if ((pp = strchr(p + 3, '/')) == NULL) {DPS_FREE(urlstr_allocate); return 0; }
     }
     pp[1] = '\0';
     if ((pp = strchr(p + 3, '@')) != NULL) {
@@ -518,8 +518,8 @@ urlid_t DpsServerGetSiteId(DPS_AGENT *Indexer, DPS_SERVER *srv, DPS_DOCUMENT *Do
   if (Indexer->Flags.MaxSiteLevel < 0) {
     int level = Indexer->Flags.MaxSiteLevel;
     register char *p;
-    if ((p = strstr(urlstr, ":/")) == NULL) {DPS_FREE(urlstr); return 0; }
-    if ((pp = strchr(p + 3, '/')) == NULL) {DPS_FREE(urlstr); return 0; }
+    if ((p = strstr(urlstr, ":/")) == NULL) {DPS_FREE(urlstr_allocate); return 0; }
+    if ((pp = strchr(p + 3, '/')) == NULL) {DPS_FREE(urlstr_allocate); return 0; }
     for (p += 3; p < pp; p++) { *p = (char)dps_tolower((int)*p); }
     for ( ; level < 0; level++) {
       if ((p = strchr(pp + 1, '/')) == NULL) break;
