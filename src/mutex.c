@@ -53,6 +53,11 @@
 #ifdef __Linux__
 #include <linux/sem.h>
 #endif
+
+#ifdef WITH_HTTPS
+#include <openssl/crypto.h>
+#endif
+
 /* The treatment of `union semun' depends architecture. */
 /* See man page of `semctl'. */
 
@@ -663,7 +668,9 @@ static void handle_error(const char *file, int lineno, const char *msg) {
 #endif
 }
 
-#if OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
+#ifdef WITH_HTTPS
+
+#if WITH_HTTPS && OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
 
 static void id_function(CRYPTO_THREADID *id) {
   CRYPTO_THREADID_set_numeric(id, (unsigned long)DPS_THREAD_ID);
@@ -674,6 +681,8 @@ static void id_function(CRYPTO_THREADID *id) {
 static unsigned long id_function(void) {
   return ((unsigned long)DPS_THREAD_ID);
 }
+
+#endif
 
 #endif
 
