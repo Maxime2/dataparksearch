@@ -15862,7 +15862,15 @@ if test "${enable_mcmodel+set}" = set; then :
        *) as_fn_error $? "bad value ${enableval} for --enable-mcmodel" "$LINENO" 5 ;;
        esac
 else
-  mcmodel=medium
+          	   	case "$host" in
+			*-*-freebsd*)
+				mcmodel=small
+			;;
+			*)
+				mcmodel=medium
+			;;
+		esac
+
 fi
 
 

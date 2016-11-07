@@ -323,7 +323,16 @@ AC_ARG_ENABLE([mcmodel],
        tiny) mcmodel=tiny ;;
        *) AC_MSG_ERROR(bad value ${enableval} for --enable-mcmodel) ;;
        esac],
-     [mcmodel=medium])
+     [ dnl switching to mcmodel=small for freebsd due to a buf in cc: https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=213870
+       	   	case "$host" in
+			*-*-freebsd*)
+				mcmodel=small
+			;;
+			*)
+				mcmodel=medium
+			;;
+		esac
+     ])
 
 AX_CHECK_CFLAGS([-mcmodel=$mcmodel],,AC_MSG_FAILURE([$CC compiler option -mcmodel=$mcmodel is not avaiable]))
 
