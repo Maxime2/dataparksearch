@@ -2757,7 +2757,6 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	int *FF = NULL;
 	int upper_status = DPS_STATUS_UPPER(Indexer);
 	int max_shows, use_showcnt = !strcasecmp(DpsVarListFindStr(&Indexer->Vars, "PopRankUseShowCnt", "no"), "yes");
-	double min_weight, scale_weight;
 	const char	*vardir;
 	char fname[PATH_MAX];
 	char str[512];
@@ -2776,44 +2775,29 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	FF = (int*)DpsXmalloc(NFiles * sizeof(int));
 	if (FF == NULL) { TRACE_OUT(Indexer); return DPS_ERROR;}
 
-/*	if (db->DBType != DPS_DB_CACHE) {*/
-	  dps_snprintf(str, sizeof(str), "SELECT MIN(weight), MAX(weight) FROM server WHERE command='S'");
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
-	  rc = DpsSQLQuery(db, &SQLres, str);
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
-	  if (rc != DPS_OK) {
-	    goto URLDataWrite_exit;
-	  }
-	  min_weight = DPS_ATOF(DpsSQLValue(&SQLres, 0, 0));
-	  scale_weight = DPS_ATOF(DpsSQLValue(&SQLres, 0, 1)) - min_weight + 0.001;
-	  min_weight -= 0.001;
-	  DpsSQLFree(&SQLres);
-	
-
-	  if (use_showcnt) {
-	    dps_snprintf(str, sizeof(str), "SELECT MAX(shows),MIN(rec_id) FROM url");
-	  }else {
-	    dps_snprintf(str, sizeof(str), "SELECT 0, MIN(rec_id) FROM url");
-	  }
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
-	  rc = DpsSQLQuery(db, &SQLres, str);
-	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
-	  if (rc != DPS_OK) {
-	    goto URLDataWrite_exit;
-	  }
-	  max_shows = DPS_ATOI(DpsSQLValue(&SQLres, 0, 0)) + 1;
-	  rec_id = DPS_ATOI(DpsSQLValue(&SQLres, 0, 1));
-	  DpsSQLFree(&SQLres);
-/*	}*/
+	if (use_showcnt) {
+	  dps_snprintf(str, sizeof(str), "SELECT MAX(shows),MIN(rec_id) FROM url");
+	}else {
+	  dps_snprintf(str, sizeof(str), "SELECT 0, MIN(rec_id) FROM url");
+	}
+	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
+	rc = DpsSQLQuery(db, &SQLres, str);
+	if (Indexer->flags & DPS_FLAG_UNOCON) DPS_RELEASELOCK(Indexer, DPS_LOCK_DB);
+	if (rc != DPS_OK) {
+	  goto URLDataWrite_exit;
+	}
+	max_shows = DPS_ATOI(DpsSQLValue(&SQLres, 0, 0)) + 1;
+	rec_id = DPS_ATOI(DpsSQLValue(&SQLres, 0, 1));
+	DpsSQLFree(&SQLres);
 
 	while(u) {
 	  if (use_showcnt) {
 	    dps_snprintf(str, sizeof(str), 
- "SELECT u.rec_id,u.site_id,u.pop_rank,u.last_mod_time,u.since,u.status,u.crc32,s.weight,u.shows FROM url u,server s WHERE u.rec_id>=%d AND s.rec_id=u.site_id ORDER by u.rec_id LIMIT %d",
+ "SELECT u.rec_id,u.site_id,u.pop_rank,u.last_mod_time,u.since,u.status,u.crc32,u.shows FROM url u WHERE u.rec_id>=%d ORDER by u.rec_id LIMIT %d",
 			 rec_id, recs);
 	  } else {
 	    dps_snprintf(str, sizeof(str), 
- "SELECT u.rec_id,u.site_id,u.pop_rank,u.last_mod_time,u.since,u.status,u.crc32,s.weight FROM url u,server s WHERE u.rec_id>=%d AND s.rec_id=u.site_id ORDER by u.rec_id LIMIT %d",
+ "SELECT u.rec_id,u.site_id,u.pop_rank,u.last_mod_time,u.since,u.status,u.crc32 FROM url u WHERE u.rec_id>=%d ORDER by u.rec_id LIMIT %d",
 			 rec_id, recs);
 	  }
 	  if (Indexer->flags & DPS_FLAG_UNOCON) DPS_GETLOCK(Indexer, DPS_LOCK_DB);
@@ -2831,14 +2815,9 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	    Item.url_id = DPS_ATOI(DpsSQLValue(&SQLres, i, 0));
 	    Item.site_id = DPS_ATOI(DpsSQLValue(&SQLres, i, 1));
 	    if (use_showcnt) {
-	      Item.pop_rank = DPS_ATOF(DpsSQLValue(&SQLres, i, 2)) * log(2.8 + DPS_ATOF(DpsSQLValue(&SQLres, i, 8))) / log(2.8 + max_shows) 
-		* log(2.8 + DPS_ATOF(DpsSQLValue(&SQLres, i, 7)) - min_weight) / log(2.8 + scale_weight);
+	      Item.pop_rank = DPS_ATOF(DpsSQLValue(&SQLres, i, 2)) * log(2.8 + DPS_ATOF(DpsSQLValue(&SQLres, i, 7))) / log(2.8 + max_shows);
 	    } else {
-	      
-	      Item.pop_rank = DPS_ATOF(DpsSQLValue(&SQLres, i, 2)) * log(2.8 + DPS_ATOF(DpsSQLValue(&SQLres, i, 7)) - min_weight) / log(2.8 + scale_weight);
-	      /*
 	      Item.pop_rank = DPS_ATOF(DpsSQLValue(&SQLres, i, 2));
-	      */
 	    }
 	    if ((Item.last_mod_time = DPS_ATOU(DpsSQLValue(&SQLres, i, 3))) == 0) {
 	      Item.last_mod_time = DPS_ATOU(DpsSQLValue(&SQLres, i, 4));
