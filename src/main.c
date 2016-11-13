@@ -1459,12 +1459,20 @@ int main(int argc, char **argv, char **envp) {
           cname[sizeof(cname)-1]='\0';
      }
 
+     DpsOpenLog("indexer.cfg", &Conf, log2stderr);
+     if(DPS_OK != (cfg_res = DpsIndexerEnvLoad(&Main, cname, flags))) {
+          fprintf(stderr,"%s\n",DpsEnvErrMsg(&Conf));
+	  DpsAgentFree(&Main);
+          DpsEnvFree(&Conf);
+          exit(1);
+     }
+
      if (block) {
        /* Check that another instance isn't running */
        /* and create PID file.                      */
                     
-       sprintf(pidname, "%s/%s", DPS_VAR_DIR, "indexer.pid");
-       pid_fd = DpsOpen3(pidname, O_CREAT|O_EXCL|O_WRONLY, 0644);
+       sprintf(pidname,"%s/%s", DpsVarListFindStr(&Conf.Vars, "VarDir", DPS_VAR_DIR), "indexer.pid");
+       pid_fd = DpsOpen3(pidname, O_CREAT | O_EXCL | O_WRONLY, 0644);
        if(pid_fd < 0){
 	 dps_strerror(NULL, 0, "%s Can't create '%s'", time_pid_info(), pidname);
 	 if(errno == EEXIST){
@@ -1493,18 +1501,15 @@ int main(int argc, char **argv, char **envp) {
 	     close(pid_fd);
 	     goto ex;
 	   }
+	   dps_strerror(NULL, 0, "%s Process %s seems to be dead. Flushing '%s'", time_pid_info(), pidbuf, pidname);
+	   lseek(pid_fd, 0L, SEEK_SET);
+	   ftruncate(pid_fd, 0L);
 	 }
        }
+       sprintf(pidbuf,"%d\n",(int)getpid());
+       (void)write(pid_fd, pidbuf, dps_strlen(pidbuf));
        DpsClose(pid_fd);
-       unlink(pidname);
-     }
-     
-     DpsOpenLog("indexer.cfg", &Conf, log2stderr);
-     if(DPS_OK != (cfg_res = DpsIndexerEnvLoad(&Main, cname, flags))) {
-          fprintf(stderr,"%s\n",DpsEnvErrMsg(&Conf));
-	  DpsAgentFree(&Main);
-          DpsEnvFree(&Conf);
-          exit(1);
+       atexit(&exitproc);
      }
 
      DpsInitMutexes();
@@ -1691,57 +1696,13 @@ int main(int argc, char **argv, char **envp) {
 		 if (DpsVarListFindInt(&Main.Vars, "OldURLDataFiles", 0) != 0) DpsBaseRelocate(&Main, 1);
 		 if (DpsVarListFindInt(&Main.Vars, "OldWrdFiles", 0) != 0) DpsBaseRelocate(&Main, 2);
 	       }
-               if (!pop_rank || (Main.Flags.poprank_method != DPS_POPRANK_NEO)) break;
-	       cmd = DPS_IND_POPRANK;
+	       if (pop_rank) cmd = DPS_IND_POPRANK;
+               if ((!pop_rank || (Main.Flags.poprank_method != DPS_POPRANK_NEO))) break;
           default:
           {
 	    time_t sec, now;
 	    float M = 0.0, K = 0.0;
 
-               if (block) {
-                    /* Check that another instance isn't running */
-                    /* and create PID file.                      */
-                    
-                    sprintf(pidname,"%s/%s", DpsVarListFindStr(&Conf.Vars, "VarDir", DPS_VAR_DIR), "indexer.pid");
-                    pid_fd = DpsOpen3(pidname, O_CREAT | O_EXCL | O_WRONLY, 0644);
-                    if(pid_fd < 0){
-		      dps_strerror(NULL, 0, "%s Can't create '%s'", time_pid_info(), pidname);
-		      if(errno == EEXIST){
-			int pid = 0;
-			pid_fd = DpsOpen3(pidname, O_RDWR, 0644);
-			if (pid_fd < 0) {
-			  dps_strerror(NULL, 0, "%s Can't open '%s'", time_pid_info(), pidname);
-			  goto ex;
-			}
-			(void)read(pid_fd, pidbuf, sizeof(pidbuf));
-			if (1 > sscanf(pidbuf, "%d", &pid)) {
-			  dps_strerror(NULL, 0, "%s Can't read pid from '%s'", time_pid_info(), pidname);
-			  close(pid_fd);
-			  goto ex;
-			}
-			pid = kill((pid_t)pid, 0);
-			if (pid == 0) {
-			  fprintf(stderr, "It seems that another indexer is already running!\n");
-			  fprintf(stderr, "Remove '%s' if it is not true.\n", pidname);
-			  close(pid_fd);
-			  goto ex;
-			}
-			if (errno == EPERM) {
-			  fprintf(stderr, "Can't check if another indexer is already running!\n");
-			  fprintf(stderr, "Remove '%s' if it is not true.\n", pidname);
-			  close(pid_fd);
-			  goto ex;
-			}
-			dps_strerror(NULL, 0, "%s Process %s seems to be dead. Flushing '%s'", time_pid_info(), pidbuf, pidname);
-			lseek(pid_fd, 0L, SEEK_SET);
-			ftruncate(pid_fd, 0L);
-		      }
-                    }
-                    sprintf(pidbuf,"%d\n",(int)getpid());
-                    (void)write(pid_fd, pidbuf, dps_strlen(pidbuf));
-		    DpsClose(pid_fd);
-                    atexit(&exitproc);
-               }
 	       Conf.Flags.cmd = Main.Flags.cmd = cmd;
 	       DpsSetLockProc(&Conf, DpsLockProc);
                DpsLog(&Main, DPS_LOG_ERROR, "indexer from %s-%s-%s started with '%s'", PACKAGE, VERSION, DPS_DBTYPE, cname);
