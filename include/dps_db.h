@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -202,7 +202,7 @@ extern int DpsURLDataLoadSQL(DPS_AGENT *Indexer, DPS_RESULT *Res, DPS_DB *db);
 extern int LogdInit(DPS_DB *db,const char *var_dir);
 extern int LogdClose(DPS_DB *db);
 extern int LogdSaveAllBufs(DPS_DB *db);
-extern int DpsLogdSaveBuf(DPS_AGENT *Indexer, DPS_ENV * Env, size_t log_num);
+extern int DpsLogdSaveBuf(DPS_AGENT *Indexer, DPS_ENV * Env, DPS_DB *db, size_t log_num);
 extern int LogdStoreDoc(DPS_DB *db,DPS_LOGD_CMD cmd,DPS_LOGD_WRD *wrd);
 
 extern int DpsLogdClose(DPS_AGENT *Agent, DPS_DB *db, const char *var_dir, size_t i, int shared);

@@ -545,9 +545,11 @@ static void * thread_flush_limits(void *arg) {
 
 static void * thread_optimize(void *arg) {
   DPS_AGENT *Agent = (DPS_AGENT*)arg;
+  DPS_DB *db;
   DPS_BASE_PARAM P, I;
   size_t WrdFiles, URLDataFiles;
-  int OptimizeInterval, current_base, current_urlbase, res;
+  size_t j, dbfrom = 0, dbto;
+  int OptimizeInterval, current_base, current_urlbase, res, u;
 #if defined(HAVE_PTHREAD)
   sigset_t mask;
 
@@ -601,6 +603,10 @@ static void * thread_optimize(void *arg) {
   current_base = (int)time(NULL) % P.NFiles;
   current_urlbase = (int)time(NULL) % I.NFiles;
 
+  DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+  dbto = DPS_DBL_TO(Agent);
+  DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+
   while(1) {
     if (have_sighup) {
 /*      size_t i;
@@ -621,9 +627,17 @@ static void * thread_optimize(void *arg) {
       P.rec_id = current_base;
 
       if (!Agent->Conf->logs_only) {
-	DPS_GETLOCK(Agent, DPS_LOCK_CACHED_N(current_base));
-	res = DpsLogdSaveBuf(Agent, Agent->Conf, current_base);
-	DPS_RELEASELOCK(Agent, DPS_LOCK_CACHED_N(current_base));
+	for (j = dbfrom; j < dbto; j++) {
+	  DPS_GETLOCK(Agent, DPS_LOCK_CONF);
+	  db = DPS_DBL_DB(Agent, j);
+	  DPS_RELEASELOCK(Agent, DPS_LOCK_CONF);
+	  DPS_GETLOCK(Agent, DPS_LOCK_CACHED_N(current_base));
+	  u = (db->LOGD.wrd_buf[current_base].nrec || db->LOGD.wrd_buf[current_base].ndel);
+	  if (u) {
+	    res = DpsLogdSaveBuf(Agent, Agent->Conf, db, current_base);
+	  }
+	  DPS_RELEASELOCK(Agent, DPS_LOCK_CACHED_N(current_base));
+	}
       }
       if (!Agent->Flags.OptimizeAtUpdate) DpsBaseOptimize(&P, current_base);
       DpsBaseClose(&P);
