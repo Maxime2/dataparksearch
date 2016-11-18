@@ -542,12 +542,14 @@ static int DpsHTTPGet(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 {
     int fd;
+    fd_set sfds;
     int res = 0, status;
     SSL_CTX* ctx;
     SSL*     ssl=NULL;
     const SSL_METHOD *meth;
     time_t start_time;
     size_t buf_size = DPS_NET_BUF_SIZE;
+    struct timeval tv;
 
     /* Connect to HTTPS server */
     if( (fd=open_host(Indexer,Doc)) < 0 )
@@ -567,6 +569,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
       sslcleanup;
       return DPS_NET_ERROR;
     }
+    SSL_set_mode(ssl, SSL_MODE_AUTO_RETRY);
 
     SSL_set_verify(ssl, SSL_VERIFY_NONE, NULL);
 
@@ -587,6 +590,22 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
     Doc->Buf.size = 0;
     start_time = time(NULL);
     while(1) {
+      tv.tv_sec = (long) Doc->Spider.read_timeout;
+      tv.tv_usec = 0;
+
+      FD_ZERO( &sfds );
+      FD_SET( fd, &sfds );
+
+      status = select(FD_SETSIZE, &sfds, NULL, NULL, &tv);
+      if( status == -1 ) {
+	res = DPS_NET_ERROR;
+	break;
+      } else if( status == 0 ) {
+	res = DPS_NET_TIMEOUT;
+	break;
+      } else {
+
+	 if(FD_ISSET(fd,&sfds)) {
 		if(Doc->Buf.size + buf_size > Doc->Buf.max_size)
 			buf_size = Doc->Buf.max_size - Doc->Buf.size;
 		else
@@ -616,6 +635,12 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
                    if( Doc->Buf.size == Doc->Buf.max_size )
                        break;
                }
+
+	 } else {
+	   break;
+	 }
+      }
+
     }
 /*    nread = SSL_read(ssl, Doc->buf, (int)(Doc->Buf.maxsize - 1));*/
 /*
