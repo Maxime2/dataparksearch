@@ -712,8 +712,21 @@ APACHE_VER
 APACHE_EXTRA_CFLAGS
 APACHE_EXTRA_CPPFLAGS
 APACHE_NOTEST_CPPFLAGS
-SSL_LFLAGS
-SSL_INCLUDE
+CRYPTO_LIBS
+CRYPTO_CFLAGS
+CRYPTO_PKG
+CRYPTO_USE_MBEDTLS_FALSE
+CRYPTO_USE_MBEDTLS_TRUE
+CRYPTO_USE_WOLFSSL_FALSE
+CRYPTO_USE_WOLFSSL_TRUE
+CRYPTO_USE_OPENSSL_FALSE
+CRYPTO_USE_OPENSSL_TRUE
+WITH_HTTPS_FALSE
+WITH_HTTPS_TRUE
+WOLFSSL_LIBS
+WOLFSSL_CFLAGS
+OPENSSL_LIBS
+OPENSSL_CFLAGS
 MECAB_INCLUDE
 MECAB_LFLAGS
 BOEHMGC_INCLUDE
@@ -773,6 +786,12 @@ PORTNAME
 DPS_VERSION_ID
 DPS_TAIL_VERSION
 DPS_BASE_VERSION
+MBEDTLS_MINIMUM
+WOLFSSL_MINIMUM
+OPENSSL_MINIMUM
+PKG_CONFIG_LIBDIR
+PKG_CONFIG_PATH
+PKG_CONFIG
 MAINT
 MAINTAINER_MODE_FALSE
 MAINTAINER_MODE_TRUE
@@ -918,6 +937,7 @@ enable_filedebug
 enable_chasen
 enable_mecab
 with_openssl
+with_https
 with_zlib
 with_aspell
 with_readline
@@ -950,6 +970,9 @@ with_oracle_instantclient
       ac_precious_vars='build_alias
 host_alias
 target_alias
+PKG_CONFIG
+PKG_CONFIG_PATH
+PKG_CONFIG_LIBDIR
 CC
 CFLAGS
 LDFLAGS
@@ -957,6 +980,10 @@ LIBS
 CPPFLAGS
 LT_SYS_LIBRARY_PATH
 CPP
+OPENSSL_CFLAGS
+OPENSSL_LIBS
+WOLFSSL_CFLAGS
+WOLFSSL_LIBS
 DOCBOOKSTYLE'
 
 
@@ -1698,8 +1725,10 @@ Optional Packages:
   --with-lesswrdunifactor=NUM Define NUM as factor of non-uniform words count distribution in relevance calculation.
                           Default value is 20.
   --without-tcmalloc           disable support for libtcmalloc
-  --with-openssl=DIR    Include Openssl support.  DIR is the Openssl
-                          base install directory, defaults to /usr/local/ssl.
+  --with-openssl=DIR      Include Openssl support. DIR is the Openssl base
+                          install directory, defaults to /usr/local/ssl
+  --with-https=PKG        Use specified crypto library for HTTPS: auto
+                          (default), openssl, wolfssl, mbedtls
   --without-zlib          disable HTTP Content-Encoding support
                             and cache mode indexes compression
   --with-aspell           enable automatic words correction using aspell
@@ -1752,6 +1781,11 @@ What DBMS support do you want (you may select several):
                           home directory, defaults to /usr
 
 Some influential environment variables:
+  PKG_CONFIG  path to pkg-config utility
+  PKG_CONFIG_PATH
+              directories to add to pkg-config's search path
+  PKG_CONFIG_LIBDIR
+              path overriding pkg-config's built-in search path
   CC          C compiler command
   CFLAGS      C compiler flags
   LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
@@ -1762,6 +1796,14 @@ Some influential environment variables:
   LT_SYS_LIBRARY_PATH
               User-defined run-time library search path.
   CPP         C preprocessor
+  OPENSSL_CFLAGS
+              C compiler flags for OPENSSL, overriding pkg-config
+  OPENSSL_LIBS
+              linker flags for OPENSSL, overriding pkg-config
+  WOLFSSL_CFLAGS
+              C compiler flags for WOLFSSL, overriding pkg-config
+  WOLFSSL_LIBS
+              linker flags for WOLFSSL, overriding pkg-config
   DOCBOOKSTYLE
               location of DocBook stylesheets
 
@@ -3561,6 +3603,134 @@ $as_echo "no" >&6; }
   SET_MAKE="MAKE=${MAKE-make}"
 fi
 
+
+
+
+
+
+
+
+
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_PKG_CONFIG+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+fi
+if test -z "$ac_cv_path_PKG_CONFIG"; then
+  ac_pt_PKG_CONFIG=$PKG_CONFIG
+  # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_ac_pt_PKG_CONFIG+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $ac_pt_PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ac_pt_PKG_CONFIG="$ac_pt_PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_ac_pt_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+ac_pt_PKG_CONFIG=$ac_cv_path_ac_pt_PKG_CONFIG
+if test -n "$ac_pt_PKG_CONFIG"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_pt_PKG_CONFIG" >&5
+$as_echo "$ac_pt_PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_pt_PKG_CONFIG" = x; then
+    PKG_CONFIG=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    PKG_CONFIG=$ac_pt_PKG_CONFIG
+  fi
+else
+  PKG_CONFIG="$ac_cv_path_PKG_CONFIG"
+fi
+
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=0.9.0
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking pkg-config is at least version $_pkg_min_version" >&5
+$as_echo_n "checking pkg-config is at least version $_pkg_min_version... " >&6; }
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+		PKG_CONFIG=""
+	fi
+fi
+
+
+OPENSSL_MINIMUM=0.9.8
+
+WOLFSSL_MINIMUM=3.4.0
+
+MBEDTLS_MINIMUM=0x01030000 #1.3
 
 
 # Set all version vars based on $VERSION. How do we do this more elegant ?
@@ -17931,62 +18101,475 @@ fi
 
 
 
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Openssl support" >&5
-$as_echo_n "checking for Openssl support... " >&6; }
+https=auto
+https_dir=yes
 
 # Check whether --with-openssl was given.
 if test "${with_openssl+set}" = set; then :
-  withval=$with_openssl;
-  if test "$withval" != "no"; then
-        if test "$withval" = "yes"; then
-	   	SSL_PREFIX=`pkg-config openssl --variable=prefix`
-		if test "x$SSL_PREFIX" != "x"; then
-		   	SSL_INCDIR="$SSL_PREFIX/unclude"
-			SSL_LIBDIR="$SSL_PREFIX/lib"
-		else
-			if test -f /usr/include/openssl/ssl.h; then
-                           	SSL_INCDIR=/usr/include
-			elif test -f /usr/sfw/include/openssl/ssl.h; then
-			     	SSL_INCDIR=/usr/sfw/include
-                	else
-				SSL_INCDIR=/usr/local/ssl/include
-                	fi
-                	if test -f /usr/local/lib/libssl.a; then
-                           	SSL_LIBDIR=/usr/local/lib
-                	elif test -f /usr/lib/libssl.a; then
-                             	SSL_LIBDIR=/usr/lib
-			elif test -f /usr/sfw/lib/libssl.a; then
-			     	SSL_LIBDIR=/usr/sfw/lib
-                	else
-				SSL_LIBDIR=/usr/local/ssl/lib
-                	fi
-		fi
-        else
-                SSL_INCDIR=$withval/include
-                test -d $withval/include/openssl && SSL_INCDIR=$withval/include
-                SSL_LIBDIR=$withval/lib
-        fi
-    SSL_INCLUDE="-I$SSL_INCDIR"
-    SSL_LFLAGS="-L$SSL_LIBDIR -lssl -lcrypto"
-	if test -f /usr/kerberos/include/krb5.h; then
-		SSL_INCLUDE="$SSL_INCLUDE -I/usr/kerberos/include"
-	fi
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-    $as_echo "#define WITH_HTTPS 1" >>confdefs.h
-
-  else
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-  fi
-
-else
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
+  withval=$with_openssl;  https_dir=$withval
+	  if test "$withval" = "yes"; then
+	     https=openssl
+	  elif test "$withval" = "no"; then
+	     https=no
+	  fi
 
 fi
+
+
+
+# Check whether --with-https was given.
+if test "${with_https+set}" = set; then :
+  withval=$with_https; https=$withval
+fi
+
+
+if test "x$https" = "xauto" -o "x$https" = "xopenssl"; then :
+
+    if  test -d $https_dir/include/openssl ; then :
+  https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="-I$https_dir/include"; CRYPTO_LIBS="-L$https_dir/lib -lssl -lcrypto"
+else
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for OPENSSL" >&5
+$as_echo_n "checking for OPENSSL... " >&6; }
+
+if test -n "$OPENSSL_CFLAGS"; then
+    pkg_cv_OPENSSL_CFLAGS="$OPENSSL_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"openssl >= \$OPENSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "openssl >= $OPENSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_OPENSSL_CFLAGS=`$PKG_CONFIG --cflags "openssl >= $OPENSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$OPENSSL_LIBS"; then
+    pkg_cv_OPENSSL_LIBS="$OPENSSL_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"openssl >= \$OPENSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "openssl >= $OPENSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_OPENSSL_LIBS=`$PKG_CONFIG --libs "openssl >= $OPENSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        OPENSSL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "openssl >= $OPENSSL_MINIMUM" 2>&1`
+        else
+	        OPENSSL_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "openssl >= $OPENSSL_MINIMUM" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$OPENSSL_PKG_ERRORS" >&5
+
+	if test "x$https" = "xopenssl"; then :
+  as_fn_error $? "OpenSSL support requested, but library not found." "$LINENO" 5
+
+fi
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	if test "x$https" = "xopenssl"; then :
+  as_fn_error $? "OpenSSL support requested, but library not found." "$LINENO" 5
+
+fi
+
+else
+	OPENSSL_CFLAGS=$pkg_cv_OPENSSL_CFLAGS
+	OPENSSL_LIBS=$pkg_cv_OPENSSL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="$OPENSSL_CFLAGS"; CRYPTO_LIBS="$OPENSSL_LIBS"
+fi
+
+fi
+
+fi
+if test "x$https" = "xauto" -o "x$https" = "xwolfssl"; then :
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for WOLFSSL" >&5
+$as_echo_n "checking for WOLFSSL... " >&6; }
+
+if test -n "$WOLFSSL_CFLAGS"; then
+    pkg_cv_WOLFSSL_CFLAGS="$WOLFSSL_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wolfssl >= \$WOLFSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "wolfssl >= $WOLFSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_WOLFSSL_CFLAGS=`$PKG_CONFIG --cflags "wolfssl >= $WOLFSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$WOLFSSL_LIBS"; then
+    pkg_cv_WOLFSSL_LIBS="$WOLFSSL_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wolfssl >= \$WOLFSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "wolfssl >= $WOLFSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_WOLFSSL_LIBS=`$PKG_CONFIG --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        WOLFSSL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>&1`
+        else
+	        WOLFSSL_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$WOLFSSL_PKG_ERRORS" >&5
+
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for WOLFSSL" >&5
+$as_echo_n "checking for WOLFSSL... " >&6; }
+
+if test -n "$WOLFSSL_CFLAGS"; then
+    pkg_cv_WOLFSSL_CFLAGS="$WOLFSSL_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wolfssl >= \$WOLFSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "wolfssl >= $WOLFSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_WOLFSSL_CFLAGS=`$PKG_CONFIG --cflags "wolfssl >= $WOLFSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$WOLFSSL_LIBS"; then
+    pkg_cv_WOLFSSL_LIBS="$WOLFSSL_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wolfssl >= \$WOLFSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "wolfssl >= $WOLFSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_WOLFSSL_LIBS=`$PKG_CONFIG --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        WOLFSSL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>&1`
+        else
+	        WOLFSSL_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$WOLFSSL_PKG_ERRORS" >&5
+
+	if test "x$https" = "xwolfssl"; then :
+  as_fn_error $? "Wolfssl support requested, but library not found." "$LINENO" 5
+
+fi
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	if test "x$https" = "xwolfssl"; then :
+  as_fn_error $? "Wolfssl support requested, but library not found." "$LINENO" 5
+
+fi
+
+else
+	WOLFSSL_CFLAGS=$pkg_cv_WOLFSSL_CFLAGS
+	WOLFSSL_LIBS=$pkg_cv_WOLFSSL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"
+fi
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for WOLFSSL" >&5
+$as_echo_n "checking for WOLFSSL... " >&6; }
+
+if test -n "$WOLFSSL_CFLAGS"; then
+    pkg_cv_WOLFSSL_CFLAGS="$WOLFSSL_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wolfssl >= \$WOLFSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "wolfssl >= $WOLFSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_WOLFSSL_CFLAGS=`$PKG_CONFIG --cflags "wolfssl >= $WOLFSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$WOLFSSL_LIBS"; then
+    pkg_cv_WOLFSSL_LIBS="$WOLFSSL_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"wolfssl >= \$WOLFSSL_MINIMUM\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "wolfssl >= $WOLFSSL_MINIMUM") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_WOLFSSL_LIBS=`$PKG_CONFIG --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        WOLFSSL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>&1`
+        else
+	        WOLFSSL_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "wolfssl >= $WOLFSSL_MINIMUM" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$WOLFSSL_PKG_ERRORS" >&5
+
+	if test "x$https" = "xwolfssl"; then :
+  as_fn_error $? "Wolfssl support requested, but library not found." "$LINENO" 5
+
+fi
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	if test "x$https" = "xwolfssl"; then :
+  as_fn_error $? "Wolfssl support requested, but library not found." "$LINENO" 5
+
+fi
+
+else
+	WOLFSSL_CFLAGS=$pkg_cv_WOLFSSL_CFLAGS
+	WOLFSSL_LIBS=$pkg_cv_WOLFSSL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"
+fi
+
+else
+	WOLFSSL_CFLAGS=$pkg_cv_WOLFSSL_CFLAGS
+	WOLFSSL_LIBS=$pkg_cv_WOLFSSL_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"
+fi
+
+fi
+if test "x$https" = "xauto" -o "x$https" = "xmbedtls"; then :
+
+    ac_fn_c_check_header_mongrel "$LINENO" "mbedtls/version.h" "ac_cv_header_mbedtls_version_h" "$ac_includes_default"
+if test "x$ac_cv_header_mbedtls_version_h" = xyes; then :
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <mbedtls/version.h>
+                                     #if defined (MBEDTLS_VERSION_NUMBER) && MBEDTLS_VERSION_NUMBER >= $MBEDTLS_MINIMUM
+                                     version_ok
+                                     #endif
+_ACEOF
+if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
+  $EGREP "version_ok" >/dev/null 2>&1; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for mbedtls_dhm_calc_secret in -lmbedtls" >&5
+$as_echo_n "checking for mbedtls_dhm_calc_secret in -lmbedtls... " >&6; }
+if ${ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lmbedtls  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char mbedtls_dhm_calc_secret ();
+int
+main ()
+{
+return mbedtls_dhm_calc_secret ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret=yes
+else
+  ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" >&5
+$as_echo "$ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" >&6; }
+if test "x$ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" = xyes; then :
+  https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"
+else
+  if test "x$https" = "xmbedtls"; then :
+  as_fn_error $? "Mbedtls support requested, but library not found." "$LINENO" 5
+
+fi
+
+fi
+
+else
+  if test "x$https" = "xmbedtls"; then :
+  as_fn_error $? "MbedTLS support requested, but version not suitable." "$LINENO" 5
+
+fi
+
+fi
+rm -f conftest*
+
+else
+  if test "x$https" = "xmbedtls"; then :
+  as_fn_error $? "MbedTLS support requested, but headers not found." "$LINENO" 5
+
+fi
+
+fi
+
+
+
+fi
+# we should have found the library by now
+if test "x$CRYPTO_PKG" = "x"; then :
+
+    if test "x$https" = "xauto"; then :
+  as_fn_error $? "Unable to find any supported crypto library." "$LINENO" 5
+elif as_fn_error $? "Requested crypto library \"$https\" is not supported." "$LINENO" 5; then :
+
+fi
+
+fi
+
+ if test "x$CRYPTO_PKG" != "x"; then
+  WITH_HTTPS_TRUE=
+  WITH_HTTPS_FALSE='#'
+else
+  WITH_HTTPS_TRUE='#'
+  WITH_HTTPS_FALSE=
+fi
+
+ if test "x$CRYPTO_PKG" = "xopenssl"; then
+  CRYPTO_USE_OPENSSL_TRUE=
+  CRYPTO_USE_OPENSSL_FALSE='#'
+else
+  CRYPTO_USE_OPENSSL_TRUE='#'
+  CRYPTO_USE_OPENSSL_FALSE=
+fi
+
+ if test "x$CRYPTO_PKG" = "xwolfssl"; then
+  CRYPTO_USE_WOLFSSL_TRUE=
+  CRYPTO_USE_WOLFSSL_FALSE='#'
+else
+  CRYPTO_USE_WOLFSSL_TRUE='#'
+  CRYPTO_USE_WOLFSSL_FALSE=
+fi
+
+ if test "x$CRYPTO_PKG" = "xmbedtls"; then
+  CRYPTO_USE_MBEDTLS_TRUE=
+  CRYPTO_USE_MBEDTLS_FALSE='#'
+else
+  CRYPTO_USE_MBEDTLS_TRUE='#'
+  CRYPTO_USE_MBEDTLS_FALSE=
+fi
+
+
+
+
 
 
 
@@ -20710,6 +21293,22 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
+if test -z "${WITH_HTTPS_TRUE}" && test -z "${WITH_HTTPS_FALSE}"; then
+  as_fn_error $? "conditional \"WITH_HTTPS\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${CRYPTO_USE_OPENSSL_TRUE}" && test -z "${CRYPTO_USE_OPENSSL_FALSE}"; then
+  as_fn_error $? "conditional \"CRYPTO_USE_OPENSSL\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${CRYPTO_USE_WOLFSSL_TRUE}" && test -z "${CRYPTO_USE_WOLFSSL_FALSE}"; then
+  as_fn_error $? "conditional \"CRYPTO_USE_WOLFSSL\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${CRYPTO_USE_MBEDTLS_TRUE}" && test -z "${CRYPTO_USE_MBEDTLS_FALSE}"; then
+  as_fn_error $? "conditional \"CRYPTO_USE_MBEDTLS\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
 if test -z "${APACHEMODULE_TRUE}" && test -z "${APACHEMODULE_FALSE}"; then
   as_fn_error $? "conditional \"APACHEMODULE\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5

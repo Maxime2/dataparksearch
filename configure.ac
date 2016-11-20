@@ -9,6 +9,15 @@ AM_MAINTAINER_MODE
 AM_CONFIG_HEADER(include/dps_config.h)
 AC_PROG_MAKE_SET
 AC_CONFIG_MACRO_DIR([build/m4])
+PKG_PROG_PKG_CONFIG
+
+
+OPENSSL_MINIMUM=0.9.8
+AC_SUBST(OPENSSL_MINIMUM)
+WOLFSSL_MINIMUM=3.4.0
+AC_SUBST(WOLFSSL_MINIMUM)
+MBEDTLS_MINIMUM=0x01030000 #1.3
+AC_SUBST(MBEDTLS_MINIMUM)
 
 # Set all version vars based on $VERSION. How do we do this more elegant ?
 # Remember that regexps needs to quote [ and ] since this is run through m4
@@ -1290,57 +1299,87 @@ fi
 AC_SUBST(MECAB_LFLAGS)
 AC_SUBST(MECAB_INCLUDE)
 
+https=auto
+https_dir=yes
+dnl For compatibility with previous versions
+AC_ARG_WITH([openssl], AC_HELP_STRING([--with-openssl[=DIR]],
+		       [Include Openssl support.  DIR is the Openssl
+                        base install directory, defaults to /usr/local/ssl ]),
+	[ https_dir=$withval
+	  if test "$withval" = "yes"; then
+	     https=openssl
+	  elif test "$withval" = "no"; then
+	     https=no
+	  fi
+	])
 
-AC_MSG_CHECKING(for Openssl support)
-AC_ARG_WITH(openssl,
-[  --with-openssl[=DIR]    Include Openssl support.  DIR is the Openssl 
-                          base install directory, defaults to /usr/local/ssl.],
-[
-  if test "$withval" != "no"; then
-        if test "$withval" = "yes"; then
-	   	SSL_PREFIX=`pkg-config openssl --variable=prefix`
-		if test "x$SSL_PREFIX" != "x"; then
-		   	SSL_INCDIR="$SSL_PREFIX/unclude"
-			SSL_LIBDIR="$SSL_PREFIX/lib"
-		else
-			if test -f /usr/include/openssl/ssl.h; then
-                           	SSL_INCDIR=/usr/include
-			elif test -f /usr/sfw/include/openssl/ssl.h; then
-			     	SSL_INCDIR=/usr/sfw/include
-                	else
-				SSL_INCDIR=/usr/local/ssl/include
-                	fi
-                	if test -f /usr/local/lib/libssl.a; then
-                           	SSL_LIBDIR=/usr/local/lib
-                	elif test -f /usr/lib/libssl.a; then
-                             	SSL_LIBDIR=/usr/lib
-			elif test -f /usr/sfw/lib/libssl.a; then
-			     	SSL_LIBDIR=/usr/sfw/lib
-                	else
-				SSL_LIBDIR=/usr/local/ssl/lib
-                	fi
-		fi
-        else
-                SSL_INCDIR=$withval/include
-                test -d $withval/include/openssl && SSL_INCDIR=$withval/include
-                SSL_LIBDIR=$withval/lib
-        fi
-    SSL_INCLUDE="-I$SSL_INCDIR"
-    SSL_LFLAGS="-L$SSL_LIBDIR -lssl -lcrypto"
-	if test -f /usr/kerberos/include/krb5.h; then
-		SSL_INCLUDE="$SSL_INCLUDE -I/usr/kerberos/include"
-	fi
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(WITH_HTTPS)
-  else
-    AC_MSG_RESULT(no)
-  fi
-],[
-  AC_MSG_RESULT(no)
+AC_ARG_WITH([https], AS_HELP_STRING([--with-https=PKG],
+            [Use specified crypto library for HTTPS: auto (default), openssl, wolfssl, mbedtls]),
+            [https=$withval])
+
+AS_IF([test "x$https" = "xauto" -o "x$https" = "xopenssl"], [
+    AS_IF([ test -d $https_dir/include/openssl ],
+        [https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="-I$https_dir/include"; CRYPTO_LIBS="-L$https_dir/lib -lssl -lcrypto"],
+	[
+    PKG_CHECK_MODULES(OPENSSL, [openssl >= $OPENSSL_MINIMUM],
+        [https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="$OPENSSL_CFLAGS"; CRYPTO_LIBS="$OPENSSL_LIBS"],
+        [AS_IF([test "x$https" = "xopenssl"],
+            [AC_MSG_ERROR([OpenSSL support requested, but library not found.])]
+        )]
+    )
+    ])
+])
+AS_IF([test "x$https" = "xauto" -o "x$https" = "xwolfssl"], [
+    PKG_CHECK_MODULES(WOLFSSL, [wolfssl >= $WOLFSSL_MINIMUM],
+        [https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"],
+        [PKG_CHECK_MODULES(WOLFSSL, [wolfssl >= $WOLFSSL_MINIMUM],
+            [https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"],
+            [AS_IF([test "x$https" = "xwolfssl"],
+                [AC_MSG_ERROR([Wolfssl support requested, but library not found.])]
+            )]
+        )]
+    )
+])
+AS_IF([test "x$https" = "xauto" -o "x$https" = "xmbedtls"], [
+    AC_CHECK_HEADER([mbedtls/version.h],
+        [AC_EGREP_CPP([version_ok], [#include <mbedtls/version.h>
+                                     #if defined (MBEDTLS_VERSION_NUMBER) && MBEDTLS_VERSION_NUMBER >= $MBEDTLS_MINIMUM
+                                     version_ok
+                                     #endif],
+            [AC_CHECK_LIB([mbedtls], [mbedtls_dhm_calc_secret],
+                [https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"],
+                [AS_IF([test "x$https" = "xmbedtls"],
+                    [AC_MSG_ERROR([Mbedtls support requested, but library not found.])]
+                )]
+            )],
+            [AS_IF([test "x$https" = "xmbedtls"],
+                [AC_MSG_ERROR([MbedTLS support requested, but version not suitable.])]
+            )]
+        )],
+        [AS_IF([test "x$https" = "xmbedtls"],
+            [AC_MSG_ERROR([MbedTLS support requested, but headers not found.])]
+        )]
+    )
+])
+# we should have found the library by now
+AS_IF([test "x$CRYPTO_PKG" = "x"], [
+    AS_IF([test "x$https" = "xauto"],
+        [AC_MSG_ERROR([Unable to find any supported crypto library.])],
+        [AC_MSG_ERROR([Requested crypto library "$https" is not supported.])],
+    )
 ])
 
-AC_SUBST(SSL_INCLUDE)
-AC_SUBST(SSL_LFLAGS)
+AM_CONDITIONAL([WITH_HTTPS],[test "x$CRYPTO_PKG" != "x"])
+AM_CONDITIONAL([CRYPTO_USE_OPENSSL],[test "x$CRYPTO_PKG" = "xopenssl"])
+AM_CONDITIONAL([CRYPTO_USE_WOLFSSL],[test "x$CRYPTO_PKG" = "xwolfssl"])
+AM_CONDITIONAL([CRYPTO_USE_MBEDTLS],[test "x$CRYPTO_PKG" = "xmbedtls"])
+AC_SUBST(CRYPTO_PKG)
+AC_SUBST(CRYPTO_CFLAGS)
+AC_SUBST(CRYPTO_LIBS)
+
+
+
+
 
 
 zlib=yes
