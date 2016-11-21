@@ -78,6 +78,7 @@
 #endif
 
 #ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/x509.h>
@@ -86,6 +87,7 @@
 #include <openssl/crypto.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
+#endif
 #endif
 
 #ifdef O_BINARY
@@ -539,10 +541,14 @@ static int DpsHTTPGet(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 
 #ifdef WITH_HTTPS
 
-#define sslcleanup dps_closesocket(fd); SSL_shutdown(ssl); SSL_set_quiet_shutdown(ssl, 1); SSL_free (ssl); SSL_CTX_free (ctx)
+#ifdef WITH_OPENSSL
+
+#define sslcleanup dps_closesocket(fd); SSL_set_quiet_shutdown(ssl, 1); SSL_shutdown(ssl); SSL_free (ssl); SSL_CTX_free (ctx)
 
 #ifndef OPENSSL_VERSION_NUMBER
 #define OPENSSL_VERSION_NUMBER 0x0000
+#endif
+
 #endif
 
 static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
@@ -550,19 +556,23 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
     int fd;
     fd_set sfds;
     int res = 0, status;
-    SSL_CTX* ctx;
-    SSL*     ssl=NULL;
-    const SSL_METHOD *meth;
     time_t start_time;
     size_t buf_size = DPS_NET_BUF_SIZE;
     struct timeval tv;
+    SSL_CTX* ctx;
+    SSL*     ssl=NULL;
+    const SSL_METHOD *meth;
 
     /* Connect to HTTPS server */
     if( (fd=open_host(Indexer,Doc)) < 0 )
        return(fd);
 
+#if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+    meth = TLS_client_method();
+#else
     meth = SSLv23_client_method();
-
+#endif
+    
     if ((ctx = SSL_CTX_new (meth))==NULL){
       sslcleanup;
       return DPS_NET_ERROR;
@@ -648,16 +658,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
       }
 
     }
-/*    nread = SSL_read(ssl, Doc->buf, (int)(Doc->Buf.maxsize - 1));*/
-/*
-    if(nread <= 0){
-      sslcleanup;
-      return DPS_NET_ERROR;
-    }
-*/    
-/*    SSL_shutdown (ssl);*/  /* send SSL/TLS close_notify */
 
-/*    Doc->Buf.size=nread;*/
     if (res == 0) Doc->Buf.buf[Doc->Buf.size] = '\0';
 
     /* Clean up. */

@@ -161,6 +161,11 @@
 /* Define if you want to support https:// URL schema */
 #undef WITH_HTTPS
 
+/* Define what crypto library to use for https:// URL schema */
+#undef WITH_OPENSSL
+#undef WITH_WOLFSSL
+#undef WITH_MBEDTLS
+
 /* Define if you want to support ftp:// URL schema */
 #undef WITH_FTP
 

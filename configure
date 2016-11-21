@@ -715,14 +715,10 @@ APACHE_NOTEST_CPPFLAGS
 CRYPTO_LIBS
 CRYPTO_CFLAGS
 CRYPTO_PKG
-CRYPTO_USE_MBEDTLS_FALSE
-CRYPTO_USE_MBEDTLS_TRUE
-CRYPTO_USE_WOLFSSL_FALSE
-CRYPTO_USE_WOLFSSL_TRUE
-CRYPTO_USE_OPENSSL_FALSE
-CRYPTO_USE_OPENSSL_TRUE
-WITH_HTTPS_FALSE
-WITH_HTTPS_TRUE
+WITH_MBEDTLS
+WITH_WOLFSSL
+WITH_OPENSSL
+WITH_HTTPS
 WOLFSSL_LIBS
 WOLFSSL_CFLAGS
 OPENSSL_LIBS
@@ -18126,7 +18122,8 @@ fi
 if test "x$https" = "xauto" -o "x$https" = "xopenssl"; then :
 
     if  test -d $https_dir/include/openssl ; then :
-  https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="-I$https_dir/include"; CRYPTO_LIBS="-L$https_dir/lib -lssl -lcrypto"
+  https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="-I$https_dir/include"; CRYPTO_LIBS="-L$https_dir/lib -lssl -lcrypto"; $as_echo "#define WITH_OPENSSL 1" >>confdefs.h
+
 else
 
 
@@ -18206,7 +18203,8 @@ else
 	OPENSSL_LIBS=$pkg_cv_OPENSSL_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="$OPENSSL_CFLAGS"; CRYPTO_LIBS="$OPENSSL_LIBS"
+	https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="$OPENSSL_CFLAGS"; CRYPTO_LIBS="$OPENSSL_LIBS"; $as_echo "#define WITH_OPENSSL 1" >>confdefs.h
+
 fi
 
 fi
@@ -18350,7 +18348,8 @@ else
 	WOLFSSL_LIBS=$pkg_cv_WOLFSSL_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"
+	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"; $as_echo "#define WITH_WOLFSSL 1" >>confdefs.h
+
 fi
 
 elif test $pkg_failed = untried; then
@@ -18433,7 +18432,8 @@ else
 	WOLFSSL_LIBS=$pkg_cv_WOLFSSL_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"
+	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"; $as_echo "#define WITH_WOLFSSL 1" >>confdefs.h
+
 fi
 
 else
@@ -18441,7 +18441,8 @@ else
 	WOLFSSL_LIBS=$pkg_cv_WOLFSSL_LIBS
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"
+	https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"; $as_echo "#define WITH_WOLFSSL 1" >>confdefs.h
+
 fi
 
 fi
@@ -18495,10 +18496,11 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" >&5
 $as_echo "$ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" >&6; }
 if test "x$ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" = xyes; then :
-  https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"
+  https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"; $as_echo "#define WITH_MBEDTLS 1" >>confdefs.h
+
 else
   if test "x$https" = "xmbedtls"; then :
-  as_fn_error $? "Mbedtls support requested, but library not found." "$LINENO" 5
+  as_fn_error $? "MbedTLS support requested, but library not found." "$LINENO" 5
 
 fi
 
@@ -18532,40 +18534,16 @@ if test "x$CRYPTO_PKG" = "x"; then :
 elif as_fn_error $? "Requested crypto library \"$https\" is not supported." "$LINENO" 5; then :
 
 fi
-
-fi
-
- if test "x$CRYPTO_PKG" != "x"; then
-  WITH_HTTPS_TRUE=
-  WITH_HTTPS_FALSE='#'
 else
-  WITH_HTTPS_TRUE='#'
-  WITH_HTTPS_FALSE=
+
+    $as_echo "#define WITH_HTTPS 1" >>confdefs.h
+
+
 fi
 
- if test "x$CRYPTO_PKG" = "xopenssl"; then
-  CRYPTO_USE_OPENSSL_TRUE=
-  CRYPTO_USE_OPENSSL_FALSE='#'
-else
-  CRYPTO_USE_OPENSSL_TRUE='#'
-  CRYPTO_USE_OPENSSL_FALSE=
-fi
 
- if test "x$CRYPTO_PKG" = "xwolfssl"; then
-  CRYPTO_USE_WOLFSSL_TRUE=
-  CRYPTO_USE_WOLFSSL_FALSE='#'
-else
-  CRYPTO_USE_WOLFSSL_TRUE='#'
-  CRYPTO_USE_WOLFSSL_FALSE=
-fi
 
- if test "x$CRYPTO_PKG" = "xmbedtls"; then
-  CRYPTO_USE_MBEDTLS_TRUE=
-  CRYPTO_USE_MBEDTLS_FALSE='#'
-else
-  CRYPTO_USE_MBEDTLS_TRUE='#'
-  CRYPTO_USE_MBEDTLS_FALSE=
-fi
+
 
 
 
@@ -21293,22 +21271,6 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 
-if test -z "${WITH_HTTPS_TRUE}" && test -z "${WITH_HTTPS_FALSE}"; then
-  as_fn_error $? "conditional \"WITH_HTTPS\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${CRYPTO_USE_OPENSSL_TRUE}" && test -z "${CRYPTO_USE_OPENSSL_FALSE}"; then
-  as_fn_error $? "conditional \"CRYPTO_USE_OPENSSL\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${CRYPTO_USE_WOLFSSL_TRUE}" && test -z "${CRYPTO_USE_WOLFSSL_FALSE}"; then
-  as_fn_error $? "conditional \"CRYPTO_USE_WOLFSSL\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${CRYPTO_USE_MBEDTLS_TRUE}" && test -z "${CRYPTO_USE_MBEDTLS_FALSE}"; then
-  as_fn_error $? "conditional \"CRYPTO_USE_MBEDTLS\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
 if test -z "${APACHEMODULE_TRUE}" && test -z "${APACHEMODULE_FALSE}"; then
   as_fn_error $? "conditional \"APACHEMODULE\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5

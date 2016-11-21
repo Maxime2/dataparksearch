@@ -1319,10 +1319,10 @@ AC_ARG_WITH([https], AS_HELP_STRING([--with-https=PKG],
 
 AS_IF([test "x$https" = "xauto" -o "x$https" = "xopenssl"], [
     AS_IF([ test -d $https_dir/include/openssl ],
-        [https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="-I$https_dir/include"; CRYPTO_LIBS="-L$https_dir/lib -lssl -lcrypto"],
+        [https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="-I$https_dir/include"; CRYPTO_LIBS="-L$https_dir/lib -lssl -lcrypto"; AC_DEFINE([WITH_OPENSSL])],
 	[
     PKG_CHECK_MODULES(OPENSSL, [openssl >= $OPENSSL_MINIMUM],
-        [https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="$OPENSSL_CFLAGS"; CRYPTO_LIBS="$OPENSSL_LIBS"],
+        [https="openssl"; CRYPTO_PKG="openssl"; CRYPTO_CFLAGS="$OPENSSL_CFLAGS"; CRYPTO_LIBS="$OPENSSL_LIBS"; AC_DEFINE([WITH_OPENSSL])],
         [AS_IF([test "x$https" = "xopenssl"],
             [AC_MSG_ERROR([OpenSSL support requested, but library not found.])]
         )]
@@ -1331,9 +1331,9 @@ AS_IF([test "x$https" = "xauto" -o "x$https" = "xopenssl"], [
 ])
 AS_IF([test "x$https" = "xauto" -o "x$https" = "xwolfssl"], [
     PKG_CHECK_MODULES(WOLFSSL, [wolfssl >= $WOLFSSL_MINIMUM],
-        [https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"],
+        [https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"; AC_DEFINE([WITH_WOLFSSL])],
         [PKG_CHECK_MODULES(WOLFSSL, [wolfssl >= $WOLFSSL_MINIMUM],
-            [https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"],
+            [https="wolfssl"; CRYPTO_PKG="wolfssl"; CRYPTO_CFLAGS="$WOLFSSL_CFLAGS"; CRYPTO_LIBS="$WOLFSSL_LIBS"; AC_DEFINE([WITH_WOLFSSL])],
             [AS_IF([test "x$https" = "xwolfssl"],
                 [AC_MSG_ERROR([Wolfssl support requested, but library not found.])]
             )]
@@ -1347,9 +1347,9 @@ AS_IF([test "x$https" = "xauto" -o "x$https" = "xmbedtls"], [
                                      version_ok
                                      #endif],
             [AC_CHECK_LIB([mbedtls], [mbedtls_dhm_calc_secret],
-                [https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"],
+                [https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"; AC_DEFINE([WITH_MBEDTLS])],
                 [AS_IF([test "x$https" = "xmbedtls"],
-                    [AC_MSG_ERROR([Mbedtls support requested, but library not found.])]
+                    [AC_MSG_ERROR([MbedTLS support requested, but library not found.])]
                 )]
             )],
             [AS_IF([test "x$https" = "xmbedtls"],
@@ -1366,13 +1366,14 @@ AS_IF([test "x$CRYPTO_PKG" = "x"], [
     AS_IF([test "x$https" = "xauto"],
         [AC_MSG_ERROR([Unable to find any supported crypto library.])],
         [AC_MSG_ERROR([Requested crypto library "$https" is not supported.])],
-    )
+    )],[
+    AC_DEFINE(WITH_HTTPS)
 ])
 
-AM_CONDITIONAL([WITH_HTTPS],[test "x$CRYPTO_PKG" != "x"])
-AM_CONDITIONAL([CRYPTO_USE_OPENSSL],[test "x$CRYPTO_PKG" = "xopenssl"])
-AM_CONDITIONAL([CRYPTO_USE_WOLFSSL],[test "x$CRYPTO_PKG" = "xwolfssl"])
-AM_CONDITIONAL([CRYPTO_USE_MBEDTLS],[test "x$CRYPTO_PKG" = "xmbedtls"])
+AC_SUBST(WITH_HTTPS)
+AC_SUBST(WITH_OPENSSL)
+AC_SUBST(WITH_WOLFSSL)
+AC_SUBST(WITH_MBEDTLS)
 AC_SUBST(CRYPTO_PKG)
 AC_SUBST(CRYPTO_CFLAGS)
 AC_SUBST(CRYPTO_LIBS)
