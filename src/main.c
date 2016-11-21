@@ -352,6 +352,21 @@ static void DpsFeatures(DPS_VARLIST *V){
 #else
      DpsVarListReplaceStr(V,"WITH_HTTPS","no");
 #endif
+#ifdef WITH_OPENSSL
+     DpsVarListReplaceStr(V,"WITH_OPENSSL","yes");
+#else
+     DpsVarListReplaceStr(V,"WITH_OPENSSL","no");
+#endif
+#ifdef WITH_WOLFSSL
+     DpsVarListReplaceStr(V,"WITH_WOLFSSL","yes");
+#else
+     DpsVarListReplaceStr(V,"WITH_WOLFSSL","no");
+#endif
+#ifdef WITH_MBEDTLS
+     DpsVarListReplaceStr(V,"WITH_MBEDTLS","yes");
+#else
+     DpsVarListReplaceStr(V,"WITH_MBEDTLS","no");
+#endif
 #ifdef DMALLOC
      DpsVarListReplaceStr(V,"DMALLOC","yes");
 #else

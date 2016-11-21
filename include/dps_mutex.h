@@ -34,7 +34,7 @@
 #include <bsd/unistd.h>
 #endif
 
-#ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
 #include <openssl/err.h>
 #endif
 

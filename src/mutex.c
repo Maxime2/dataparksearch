@@ -54,7 +54,7 @@
 #include <linux/sem.h>
 #endif
 
-#ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
 #include <openssl/crypto.h>
 #endif
 
@@ -663,14 +663,14 @@ static dps_mutex_t *mutex_buf = NULL;
 
 static void handle_error(const char *file, int lineno, const char *msg) {
   fprintf(stderr, "** %s:%d %s\n", file, lineno, msg);
-#if defined WITH_HTTPS
+#if defined WITH_OPENSSL
   ERR_print_errors_fp(stderr);
 #endif
 }
 
-#ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
 
-#if WITH_HTTPS && OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
+#if WITH_OPENSSL && OPENSSL_VERSION_NUMBER >= OPENSSL_VERSION_1_0_0
 
 static void id_function(CRYPTO_THREADID *id) {
   CRYPTO_THREADID_set_numeric(id, (unsigned long)DPS_THREAD_ID);
@@ -687,7 +687,7 @@ static unsigned long id_function(void) {
 #endif
 
 static void locking_function(int mode, int n, const char *file, int line) {
-#if defined HAVE_PTHREAD && defined WITH_HTTPS
+#if defined HAVE_PTHREAD && defined WITH_OPENSSL
   if (mode & CRYPTO_LOCK)
     DPS_MUTEX_LOCK((dps_mutex_t)DPS_THREAD_ID, &mutex_buf[n]);
   else
@@ -696,7 +696,7 @@ static void locking_function(int mode, int n, const char *file, int line) {
 }
 
 int dps_libcrypto_thread_setup(void) {
-#if defined WITH_HTTPS
+#if defined WITH_OPENSSL
   int i;
  
   mutex_buf = (dps_mutex_t *)malloc(CRYPTO_num_locks(  ) * sizeof(dps_mutex_t));
@@ -718,7 +718,7 @@ int dps_libcrypto_thread_setup(void) {
 }
  
 int dps_libcrypto_thread_cleanup(void) {
-#if defined WITH_HTTPS
+#if defined WITH_OPENSSL
   int i;
  
   if (!mutex_buf)

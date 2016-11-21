@@ -62,7 +62,7 @@
 #include <chasen.h>
 #endif
 
-#ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/x509.h>
@@ -72,6 +72,10 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 #include <openssl/engine.h>
+#endif
+
+#ifdef WITH_WOLFSSL
+#include <wolfssl/ssl.h>
 #endif
 
 #include "dps_common.h"
@@ -1349,7 +1353,7 @@ __C_LINK int __DPSCALL DpsInit(int argc, char **argv, char **envp) {
 	 }
      }
 #endif
-#ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
      {
        time_t start_time;
        pid_t pid;
@@ -1368,6 +1372,11 @@ __C_LINK int __DPSCALL DpsInit(int argc, char **argv, char **envp) {
 #endif
        SSL_library_init();
        SSL_load_error_strings(); 
+     }
+#endif
+#ifdef WITH_WOLFSSL
+     {
+       wolfSSL_Init();
      }
 #endif
      return(0);
@@ -2234,7 +2243,7 @@ static char **new_environ = NULL;
 
 void DpsDeInit(void) {
 
-#ifdef WITH_HTTPS
+#ifdef WITH_OPENSSL
     CONF_modules_free();
     ERR_remove_state(0);
     ENGINE_cleanup();
@@ -2243,6 +2252,9 @@ void DpsDeInit(void) {
     EVP_cleanup();
     CRYPTO_cleanup_all_ex_data();
     sk_SSL_COMP_free(SSL_COMP_get_compression_methods());
+#endif
+#ifdef WITH_WOLFSSL
+    wolfSSL_Cleanup();
 #endif
   if (new_environ) {
     size_t i;

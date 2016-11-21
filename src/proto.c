@@ -78,6 +78,7 @@
 #endif
 
 #ifdef WITH_HTTPS
+
 #ifdef WITH_OPENSSL
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -88,6 +89,11 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 #endif
+
+#ifdef WITH_WOLFSSL
+#include <wolfssl/ssl.h>
+#endif
+
 #endif
 
 #ifdef O_BINARY
@@ -543,13 +549,22 @@ static int DpsHTTPGet(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 
 #ifdef WITH_OPENSSL
 
-#define sslcleanup dps_closesocket(fd); SSL_set_quiet_shutdown(ssl, 1); SSL_shutdown(ssl); SSL_free (ssl); SSL_CTX_free (ctx)
+#define DPS_SSL_WRITE SSL_write
+#define DPS_SSL_READ  SSL_read
+#define sslcleanup { SSL_set_quiet_shutdown(ssl, 1); SSL_shutdown(ssl); SSL_free (ssl); SSL_CTX_free (ctx); dps_closesocket(fd); }
 
 #ifndef OPENSSL_VERSION_NUMBER
 #define OPENSSL_VERSION_NUMBER 0x0000
 #endif
 
 #endif
+
+#ifdef WITH_WOLFSSL
+#define DPS_SSL_WRITE wolfSSL_write
+#define DPS_SSL_READ  wolfSSL_read
+#define sslcleanup { wolfSSL_shutdown(ssl); wolfSSL_free(ssl); wolfSSL_CTX_free(ctx); dps_closesocket(fd); }
+#endif
+
 
 static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 {
@@ -559,13 +574,21 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
     time_t start_time;
     size_t buf_size = DPS_NET_BUF_SIZE;
     struct timeval tv;
+#ifdef WITH_OPENSSL
     SSL_CTX* ctx;
     SSL*     ssl=NULL;
     const SSL_METHOD *meth;
+#endif
+#ifdef WITH_WOLFSSL
+    WOLFSSL_CTX* ctx;
+    WOLFSSL* ssl=NULL;
+#endif
 
     /* Connect to HTTPS server */
     if( (fd=open_host(Indexer,Doc)) < 0 )
        return(fd);
+
+#ifdef WITH_OPENSSL
 
 #if (OPENSSL_VERSION_NUMBER >= 0x10100000L)
     meth = TLS_client_method();
@@ -586,18 +609,40 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
       return DPS_NET_ERROR;
     }
     SSL_set_mode(ssl, SSL_MODE_AUTO_RETRY);
-
     SSL_set_verify(ssl, SSL_VERIFY_NONE, NULL);
-
     SSL_set_fd (ssl, fd);
 
     if (SSL_connect(ssl)==-1){
       sslcleanup;
       return DPS_NET_ERROR;
     }
+#endif
+
+#ifdef WITH_WOLFSSL
+    if ( (ctx = wolfSSL_CTX_new(wolfTLSv1_client_method())) == NULL) {
+      sslcleanup;
+      return DPS_NET_ERROR;
+    }
+
+    /* mimic OpenSSL behavior; not recommended by WolfSSL */
+    wolfSSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, 0);
+
+    if ( (ssl = wolfSSL_new(ctx)) == NULL) {
+      sslcleanup;
+      return DPS_NET_ERROR;
+    }
+
+    wolfSSL_set_compression(ssl);
+    wolfSSL_set_fd(ssl, fd);
+#endif
 
     /* Send HTTP request */
-    if ((SSL_write(ssl, Doc->Buf.buf, (int)dps_strlen(Doc->Buf.buf))) == -1){
+    if ((DPS_SSL_WRITE(ssl, Doc->Buf.buf, (int)dps_strlen(Doc->Buf.buf))) == -1){
+      /*      char errorString[80];
+      int err = wolfSSL_get_error(ssl, 0);
+      wolfSSL_ERR_error_string(err, errorString);
+      fprintf(stderr, " ** %s\n", errorString);
+      */
       sslcleanup;
       return DPS_NET_ERROR;
     }
@@ -635,7 +680,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 		    break;
 		  }
 		}
-		status = SSL_read(ssl, Doc->Buf.buf + Doc->Buf.size, (int)buf_size);
+		status = DPS_SSL_READ(ssl, Doc->Buf.buf + Doc->Buf.size, (int)buf_size);
                if( status < 0 ){
                    res = status;
                    break;
