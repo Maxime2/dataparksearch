@@ -1773,6 +1773,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	DPS_FREE(lang);
 	DPS_FREE(secname);
 	DPS_FREE(rel);
+	DPS_FREE(alt);
 	
 #ifdef WITH_PARANOIA
 	DpsViolationExit(Indexer->handle, paran);
