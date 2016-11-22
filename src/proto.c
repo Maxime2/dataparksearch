@@ -626,6 +626,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 
     /* mimic OpenSSL behavior; not recommended by WolfSSL */
     wolfSSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, 0);
+    wolfSSL_CTX_set_timeout(ctx, (unsigned int)Doc->Spider.doc_timeout);
 
     if ( (ssl = wolfSSL_new(ctx)) == NULL) {
       sslcleanup;
