@@ -1256,18 +1256,6 @@ static int DpsIndex(DPS_AGENT *A) {
 	mprotect(&A, sizeof(DPS_AGENT *), PROT_READ);
 #endif
 
-/*
-	Doc = DpsDocInit(NULL);
-	if (Doc != NULL) {
-	  int rc;
-	  DpsVarListAddStr(&Doc->Sections, "DP_ID", "0");
-	  rc = DpsDeleteBadHrefs(Indexer, Doc, db)
-	    DpsDocFree(Doc);
-	  if(DPS_OK!= rc) return rc;
-	}
-
-*/
-
 	for(i = 0; i < maxthreads - 1; i++) {
 	    DPS_AGENT *Indexer;
 
@@ -1385,7 +1373,7 @@ extern char *malloc_options = "axH>>>R";
 
 int main(int argc, char **argv, char **envp) {
      char      *language=NULL,*affix=NULL,*dictionary=NULL, *env;
-     int       pid_fd, cfg_res, cache_opened = 0;
+     int       pid_fd, cfg_res;
      char      pidbuf[1024];
 #ifdef __FreeBSD__
 #if __FreeBSD__ >= 10
@@ -1568,11 +1556,10 @@ int main(int argc, char **argv, char **envp) {
 	 Main.flags &= ~DPS_FLAG_UNOCON;
      }
      if(DPS_OK != DpsOpenCache(&Main, 0)) {
-	 fprintf(stderr,"Cache mode initializing error: '%s'\n",DpsEnvErrMsg(&Conf));
-	 DpsEnvFree(&Conf);
-	 exit(1);
+       fprintf(stderr,"Cache mode initializing error: '%s'\n",DpsEnvErrMsg(&Conf));
+       DpsEnvFree(&Conf);
+       exit(1);
      }
-     cache_opened = 1;
 /*     }*/
     
      if (cmd==DPS_IND_SQLMON){
@@ -1797,7 +1784,7 @@ int main(int argc, char **argv, char **envp) {
 #endif
      
 ex:
-     if (cache_opened /*cmd != DPS_IND_INDEX && cmd != DPS_IND_POPRANK*/) {
+     if (Main.cache_opened /*cmd != DPS_IND_INDEX && cmd != DPS_IND_POPRANK*/) {
 	 DpsCloseCache(&Main, 0, 1);
      }
      total_threads=0;

@@ -1176,6 +1176,7 @@ typedef struct {
 typedef struct dps_indexer_struct{
 	int		freeme;		/**< whenever it was allocated    */
 	int		handle;		/**< Handler for threaded version */
+        int             cache_opened;   /**< whenever cache was opened    */
 	time_t		start_time;	/**< Time of allocation, for stat */
         time_t          now;            /**< Time of current document processing */
 	size_t		ndocs;		/**< Number of documents indexed  */

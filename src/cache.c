@@ -230,6 +230,8 @@ int DpsOpenCache(DPS_AGENT *A, int shared) {
     const char	*vardir = DpsVarListFindStr(&A->Vars, "VarDir", DPS_VAR_DIR);
     size_t i, dbfrom = 0, dbto = DPS_DBL_TO(A);
 
+    if (A->cache_opened) return DPS_OK;
+
     DpsLog(A, DPS_LOG_DEBUG, "DpsOpenCache:");
 
     if (A->Demons.Demon == NULL) {
@@ -306,6 +308,7 @@ int DpsOpenCache(DPS_AGENT *A, int shared) {
 	}
 	DpsLog(A, DPS_LOG_DEBUG, "wrd_buf: %x", db->LOGD.wrd_buf);
     }
+    A->cache_opened = 1;
     DpsLog(A, DPS_LOG_DEBUG, "Done.");
 
     return(DPS_OK);
@@ -321,6 +324,10 @@ int DpsCloseCache(DPS_AGENT *A, int shared, int last) {
     int res;
 
     TRACE_IN(A, "DpsCloseCache");
+    if (!A->cache_opened) {
+      TRACE_OUT(A);
+      return DPS_OK;
+    }
     res = DpsLogdCloseLogs(A);
 
     for (i = dbfrom; i < dbto; i++) {
@@ -336,6 +343,7 @@ int DpsCloseCache(DPS_AGENT *A, int shared, int last) {
 	}
 	if (res != DPS_OK) break;
     }
+    A->cache_opened = 0;
     TRACE_OUT(A);
     return res;
 }
