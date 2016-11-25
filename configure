@@ -18459,9 +18459,9 @@ if test "x$ac_cv_header_mbedtls_version_h" = xyes; then :
 _ACEOF
 if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
   $EGREP "version_ok" >/dev/null 2>&1; then :
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for mbedtls_dhm_calc_secret in -lmbedtls" >&5
-$as_echo_n "checking for mbedtls_dhm_calc_secret in -lmbedtls... " >&6; }
-if ${ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret+:} false; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for mbedtls_net_init in -lmbedtls" >&5
+$as_echo_n "checking for mbedtls_net_init in -lmbedtls... " >&6; }
+if ${ac_cv_lib_mbedtls_mbedtls_net_init+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -18475,27 +18475,27 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char mbedtls_dhm_calc_secret ();
+char mbedtls_net_init ();
 int
 main ()
 {
-return mbedtls_dhm_calc_secret ();
+return mbedtls_net_init ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret=yes
+  ac_cv_lib_mbedtls_mbedtls_net_init=yes
 else
-  ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret=no
+  ac_cv_lib_mbedtls_mbedtls_net_init=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" >&5
-$as_echo "$ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" >&6; }
-if test "x$ac_cv_lib_mbedtls_mbedtls_dhm_calc_secret" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mbedtls_mbedtls_net_init" >&5
+$as_echo "$ac_cv_lib_mbedtls_mbedtls_net_init" >&6; }
+if test "x$ac_cv_lib_mbedtls_mbedtls_net_init" = xyes; then :
   https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"; $as_echo "#define WITH_MBEDTLS 1" >>confdefs.h
 
 else

@@ -1346,7 +1346,7 @@ AS_IF([test "x$https" = "xauto" -o "x$https" = "xmbedtls"], [
                                      #if defined (MBEDTLS_VERSION_NUMBER) && MBEDTLS_VERSION_NUMBER >= $MBEDTLS_MINIMUM
                                      version_ok
                                      #endif],
-            [AC_CHECK_LIB([mbedtls], [mbedtls_dhm_calc_secret],
+            [AC_CHECK_LIB(mbedtls, mbedtls_net_init,
                 [https="mbedtls"; CRYPTO_PKG="mbedtls"; CRYPTO_CFLAGS=""; CRYPTO_LIBS="-lmbedtls"; AC_DEFINE([WITH_MBEDTLS])],
                 [AS_IF([test "x$https" = "xmbedtls"],
                     [AC_MSG_ERROR([MbedTLS support requested, but library not found.])]

@@ -94,6 +94,14 @@
 #include <wolfssl/ssl.h>
 #endif
 
+#ifdef WITH_MBEDTLS
+#include "mbedtls/net.h"
+#include "mbedtls/ssl.h"
+#include "mbedtls/entropy.h"
+#include "mbedtls/ctr_drbg.h"
+#include "mbedtls/debug.h"
+#endif
+
 #endif
 
 #ifdef O_BINARY
@@ -566,6 +574,22 @@ static int DpsHTTPGet(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 #endif
 
 
+#ifdef WITH_MBEDTLS
+#define DPS_SSL_WRITE mbedtls_ssl_write
+#define DPS_SSL_READ  mbedtls_ssl_read
+#define sslcleanup { mbedtls_net_free(&server_fd); mbedtls_ssl_free(ssl); mbedtls_ssl_config_free(&conf); mbedtls_ctr_drbg_free(&ctr_drbg); mbedtls_entropy_free(&entropy); }
+
+static void SSL_debug(void *ctx, int level, const char *file,
+		      int line, const char *str) {
+  DPS_AGENT *Indexer = (DPS_AGENT*) ctx;
+  DpsLog(Indexer, DPS_LOG_INFO, "mbedtls[%d]:%s:%d -- %s",
+	 level, file, line, str);
+}
+
+
+#endif
+
+
 static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 {
     int fd;
@@ -582,6 +606,13 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 #ifdef WITH_WOLFSSL
     WOLFSSL_CTX* ctx;
     WOLFSSL* ssl=NULL;
+#endif
+#ifdef WITH_MBEDTLS
+    mbedtls_net_context server_fd;
+    mbedtls_entropy_context entropy;
+    mbedtls_ctr_drbg_context ctr_drbg;
+    mbedtls_ssl_context o_ssl, *ssl = &o_ssl;
+    mbedtls_ssl_config conf;
 #endif
 
     /* Connect to HTTPS server */
@@ -626,6 +657,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 
     /* mimic OpenSSL behavior; not recommended by WolfSSL */
     wolfSSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, 0);
+
     wolfSSL_CTX_set_timeout(ctx, (unsigned int)Doc->Spider.doc_timeout);
 
     if ( (ssl = wolfSSL_new(ctx)) == NULL) {
@@ -635,6 +667,54 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
 
     wolfSSL_set_compression(ssl);
     wolfSSL_set_fd(ssl, fd);
+#endif
+
+#ifdef WITH_MBEDTLS
+    mbedtls_net_init( &server_fd );
+    mbedtls_ssl_init( ssl );
+    mbedtls_ssl_config_init( &conf );
+    //    mbedtls_x509_crt_init( &cacert );
+    mbedtls_ctr_drbg_init( &ctr_drbg );
+
+    mbedtls_entropy_init( &entropy );
+    if( ( res = mbedtls_ctr_drbg_seed( &ctr_drbg, mbedtls_entropy_func, &entropy,
+				       NULL, 0 ) ) != 0 ) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "mbedtls_ctr_drbg_seed returned %d", res );
+      sslcleanup;
+      return DPS_NET_ERROR;
+    }
+
+    server_fd.fd = fd;
+
+    if( ( res = mbedtls_ssl_config_defaults( &conf,
+					     MBEDTLS_SSL_IS_CLIENT,
+					     MBEDTLS_SSL_TRANSPORT_STREAM,
+					     MBEDTLS_SSL_PRESET_DEFAULT ) ) != 0 ) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "mbedtls_ssl_config_defaults returned %d", res );
+      sslcleanup;
+      return DPS_NET_ERROR;
+    }
+
+    /* mimic OpenSSL behavior; not recommended by tls.mbed.org */
+    mbedtls_ssl_conf_authmode( &conf, MBEDTLS_SSL_VERIFY_NONE );
+
+    mbedtls_ssl_conf_rng( &conf, mbedtls_ctr_drbg_random, &ctr_drbg );
+    mbedtls_ssl_conf_dbg( &conf, SSL_debug, Indexer );
+
+    if( ( res = mbedtls_ssl_setup( ssl, &conf ) ) != 0 ) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "mbedtls_ssl_setup returned %d", res );
+      sslcleanup;
+      return DPS_NET_ERROR;
+    }
+
+    if( ( res = mbedtls_ssl_set_hostname( ssl, Doc->CurURL.hostname ) ) != 0 ) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "mbedtls_ssl_set_hostname returned %d", res );
+      sslcleanup;
+      return DPS_NET_ERROR;
+    }
+
+    mbedtls_ssl_set_bio( ssl, &server_fd, mbedtls_net_send, mbedtls_net_recv, NULL );
+
 #endif
 
     /* Send HTTP request */
