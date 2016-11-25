@@ -745,17 +745,19 @@ static int DpsDocUpdate(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc){
 
 	if (flush) {
 		size_t	docnum;
+		int rc_I = DPS_OK;
 
 		if (I->num_rows)
 			DpsLog(Indexer, DPS_LOG_INFO, "Flush %d document(s)", I->num_rows + ((Doc != NULL) ? 1 : 0));
 		
 		if (Doc) {
 			DPS_THREADINFO(Indexer, "Updating", DpsVarListFindStr(&Doc->Sections, "URL", ""));
-			if(DPS_OK != (rc = DocUpdate(Indexer, Doc))) {
+			rc = DocUpdate(Indexer, Doc);
+			DpsDocFree(Doc);
+			if (DPS_OK != rc) {
 			  TRACE_OUT(Indexer);
 			  return rc;
 			}
-			DpsDocFree(Doc);
 		}
 		
 		for (docnum = 0; docnum < I->num_rows; docnum++) {
@@ -766,11 +768,14 @@ static int DpsDocUpdate(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc){
 			
 			DPS_THREADINFO(Indexer, "Updating", DpsVarListFindStr(&I->Doc[docnum].Sections, "URL", ""));
 			if(DPS_OK != (rc = DocUpdate(Indexer, &I->Doc[docnum]))) {
-			        TRACE_OUT(Indexer);
-				return rc;
+			  if (DPS_OK == rc_I) rc_I = rc;
 			}
 		}
 		if (Indexer->Indexed.num_rows) DpsResultFree(&Indexer->Indexed);
+		if (DPS_OK != rc_I) {
+		  TRACE_OUT(Indexer);
+		  return rc_I;
+		}
 	} else {
 		/* Add document into cache */
 		I->Doc=(DPS_DOCUMENT*)DpsRealloc(I->Doc, (I->num_rows + 1) * sizeof(DPS_DOCUMENT));
