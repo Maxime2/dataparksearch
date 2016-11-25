@@ -1379,6 +1379,9 @@ __C_LINK int __DPSCALL DpsInit(int argc, char **argv, char **envp) {
        wolfSSL_Init();
      }
 #endif
+#ifdef HAVE_DP_MYSQL
+     mysql_library_init(argc, argv, envp);
+#endif
      return(0);
 }
 
@@ -2243,6 +2246,9 @@ static char **new_environ = NULL;
 
 void DpsDeInit(void) {
 
+#ifdef HAVE_DP_MYSQL
+     mysql_library_end();
+#endif
 #ifdef WITH_OPENSSL
     CONF_modules_free();
     ERR_remove_state(0);
