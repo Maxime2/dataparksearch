@@ -1135,7 +1135,12 @@ static void * thread_main(void *arg){
      TRACE_OUT(Indexer);
 
 #ifdef HAVE_PTHREAD
-     if (Indexer->handle) DpsAgentFree(Indexer);
+     if (Indexer->handle) {
+       DpsAgentFree(Indexer);
+#ifdef HAVE_DP_MYSQL
+       mysql_thread_end();
+#endif
+     }
 #endif
  
      return NULL;
