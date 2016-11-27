@@ -235,6 +235,7 @@ static int open_host(DPS_AGENT *Agent, DPS_DOCUMENT *Doc) {
 	
 	net = socket(AF_INET, SOCK_STREAM, 0);
 	DpsSockOpt(Agent, net);
+	DpsDocSockOpt(Agent, Doc, net);
 	if (bind(net, (struct sockaddr *)&Agent->Flags.bind_addr, sizeof(Agent->Flags.bind_addr)) == -1) {
 	  char abuf[INET_ADDRSTRLEN];
 	  if (inet_ntop(AF_INET, &Agent->Flags.bind_addr.sin_addr, abuf, sizeof(abuf)) == NULL) {
@@ -666,6 +667,7 @@ static int DpsHTTPSGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc)
     }
 
     wolfSSL_set_compression(ssl);
+    wolfSSL_set_using_nonblock(ssl, 1);
     wolfSSL_set_fd(ssl, fd);
 #endif
 

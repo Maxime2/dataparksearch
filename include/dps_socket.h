@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -45,6 +46,7 @@ extern ssize_t DpsRecvall(int s, void *buf, size_t len, size_t time_to_wait);
 extern ssize_t DpsRecvstr(int s, void *buf, size_t len, size_t time_to_wait);
 extern ssize_t DpsSend(int s, const void *msg, size_t len, int flags);
 extern void DpsSockOpt(DPS_AGENT *A, int socket);
+extern void DpsDocSockOpt(DPS_AGENT *A, DPS_DOCUMENT *Doc, int socket);
 extern int DpsSockPrintf(int *socket, const char *fmt, ...);
 
 #endif
