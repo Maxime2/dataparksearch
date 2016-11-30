@@ -1952,6 +1952,10 @@ What DBMS support do you want (you may select several):
     AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor, MYSQL_LFLAGS="$MYSQL_LFLAGS -lm"))
     dnl MySQL 3.23 requires -lz sometime
     AC_CHECK_FUNC(compress, , AC_CHECK_LIB(z, compress, MYSQL_LFLAGS="$MYSQL_LFLAGS -lz"))
+    dnl MySQL requires -lrt sometime
+    AC_CHECK_FUNC(aio_init, , AC_CHECK_LIB(rt, aio_init, MYSQL_LFLAGS="$MYSQL_LFLAGS -lrt"))
+    dnl MySQL requires -ldl sometime
+    AC_CHECK_FUNC(dl_open, , AC_CHECK_LIB(dl, dlopen, MYSQL_LFLAGS="$MYSQL_LFLAGS -ldl"))
     if test "x$DBTYPE" = "x" ; then
        DBTYPE="mysql"
     else
