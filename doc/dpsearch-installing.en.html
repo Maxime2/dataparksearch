@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
@@ -89,7 +89,7 @@ CLASS="APPLICATION"
 ></A
 ></H1
 ><A
-NAME="AEN316"
+NAME="AEN314"
 ></A
 ><P
 ></P
@@ -179,7 +179,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN345"
+NAME="AEN343"
 ></A
 ><TABLE
 BORDER="1"
@@ -314,17 +314,23 @@ use configure with the following option:</P
 ><P
 >					<KBD
 CLASS="USERINPUT"
->./configure --with-openssl</KBD
+>./configure --with-https=PKG</KBD
 >
 				</P
 ><P
->or in case the OpenSSL library is installed in a non-standard location:</P
-><P
->					<KBD
-CLASS="USERINPUT"
->./configure --with-openssl=/path/to/library</KBD
->
-				</P
+>where PKG is one of auto (default), <A
+HREF="https://www.openssl.org/"
+TARGET="_top"
+>openssl</A
+>, <A
+HREF="https://www.wolfssl.com/"
+TARGET="_top"
+>wolfssl</A
+> and <A
+HREF="https://tls.mbed.org/"
+TARGET="_top"
+>mbedtls</A
+>.</P
 ><DIV
 CLASS="NOTE"
 ><BLOCKQUOTE
@@ -332,8 +338,7 @@ CLASS="NOTE"
 ><P
 ><B
 >Note: </B
->Please note that OpenSSL
-library installed on your system is required for HTTPS support.</P
+>Please note that you need to install appropriate development package beforehand.</P
 ></BLOCKQUOTE
 ></DIV
 ><P
@@ -419,7 +424,7 @@ CLASS="OPTION"
 indexer on FreeBSD and Linux machines.</P
 ><P
 ><A
-NAME="AEN422"
+NAME="AEN421"
 ></A
 >
 To enable <A

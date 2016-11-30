@@ -101,7 +101,7 @@ are:</para>
 
 		<para>We hope <application>DataparkSearch</application> will work on other Unix
 platforms as well. Please report successful platforms 
-to <ulink url="mailto:maxime@maxime.net.ru">maxime@maxime.net.ru</ulink>.</para>
+to <ulink url="mailto:dp.maxime@gmail.com">dp.maxime@gmail.com</ulink>.</para>
 
 <para><emphasis>NFS notes</emphasis>: There are some problems reported running <application>DataparkSearch</application> over 
 <application>NFS v4</application> on <application>Linux 2.6.17</application>. 
@@ -151,7 +151,8 @@ Use <userinput>make book.pdf</userinput> command in <filename>doc/</filename> su
 <para>If you wish to make changes into source code, documentation or configuration files you may need to install the following packages on Ubuntu Linux to be able to make distribution packages:</para>
 <itemizedlist>
 <listitem>
-<command>sudo apt-get install zlib1g-dev automake autoconf autotools-dev libsigsegv2 m4 libtool libltdl-dev openjade sgml-data docbook-dsssl docbook docbook-xml docbook-xsl sp libidn11-dev libc-ares-dev</command>
+  <command>sudo apt-get install zlib1g-dev automake autoconf autotools-dev libsigsegv2 m4 libtool libltdl-dev openjade sgml-data docbook-dsssl docbook docbook-xml docbook-xsl sp libidn11-dev libc-ares-dev
+  </command>
 </listitem>
 </itemizedlist>
 <para>Depending on SQL-server of your choice you may need to install appropriate development package or all of them if you need support for all these SQL-servers:</para>
@@ -273,16 +274,11 @@ e.g.</para>
 				<para>To install <application>DataparkSearch</application> with HTTPS support
 use configure with the following option:</para>
 				<para>
-					<userinput>./configure --with-openssl</userinput>
+					<userinput>./configure --with-https=PKG</userinput>
 				</para>
-				<para>or in case the OpenSSL library is installed in a non-standard location:</para>
-				<para>
-					<userinput>./configure --with-openssl=/path/to/library</userinput>
-				</para>
+				<para>where PKG is one of auto (default), <ulink url="https://www.openssl.org/">openssl</ulink>, <ulink url="https://www.wolfssl.com/">wolfssl</ulink> and <ulink url="https://tls.mbed.org/">mbedtls</ulink>.</para>
 				<note>
-					<para>Please note that OpenSSL
-library installed on your system is required for HTTPS support.</para>
-
+				  <para>Please note that you need to install appropriate development package beforehand.</para>
 				</note>
 				<para>You can see all available options with <literal>./configure --help</literal>
 				</para>

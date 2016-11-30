@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <HTML
 ><HEAD
 ><TITLE
@@ -67,7 +67,7 @@ ALIGN="center"
 VALIGN="bottom"
 >&#1043;&#1083;&#1072;&#1074;&#1072; 2. Установка
 <A
-NAME="AEN181"
+NAME="AEN179"
 ></A
 ></TD
 ><TD
@@ -95,7 +95,7 @@ CLASS="APPLICATION"
 >DataparkSearch</SPAN
 >
 <A
-NAME="AEN320"
+NAME="AEN318"
 ></A
 ></A
 ></H1
@@ -187,7 +187,7 @@ CLASS="INFORMALTABLE"
 ><P
 ></P
 ><A
-NAME="AEN351"
+NAME="AEN349"
 ></A
 ><TABLE
 BORDER="1"
@@ -328,17 +328,23 @@ CLASS="COMMAND"
 ><P
 >					<KBD
 CLASS="USERINPUT"
->./configure --with-openssl</KBD
+>./configure --with-https=PKG</KBD
 >
 				</P
 ><P
->или, в случае, когда, библиотека OpenSSL установлена не в стандартной директории:</P
-><P
->					<KBD
-CLASS="USERINPUT"
->./configure --with-openssl=/path/to/library</KBD
->
-				</P
+>где значение PKG - одно из auto (по умолчанию), <A
+HREF="https://www.openssl.org/"
+TARGET="_top"
+>openssl</A
+>, <A
+HREF="https://www.wolfssl.com/"
+TARGET="_top"
+>wolfssl</A
+> и <A
+HREF="https://tls.mbed.org/"
+TARGET="_top"
+>mbedtls</A
+>.</P
 ><DIV
 CLASS="NOTE"
 ><BLOCKQUOTE
@@ -346,8 +352,7 @@ CLASS="NOTE"
 ><P
 ><B
 >&#1047;&#1072;&#1084;&#1077;&#1095;&#1072;&#1085;&#1080;&#1077;: </B
->Пожалуйста, имейте в виду, что установка библиотеки OpenSSL на вашем компьютере
-необходима для поддержки HTTPS.</P
+>Пожалуйста, имейте в виду, что необходимо заранее устрановить соответсвующий пакет разработчика.</P
 ></BLOCKQUOTE
 ></DIV
 ><P
@@ -449,7 +454,7 @@ CLASS="COMMAND"
 >.</P
 ><P
 ><A
-NAME="AEN436"
+NAME="AEN435"
 ></A
 >
 Для включения поддержки <A
@@ -694,7 +699,7 @@ ALIGN="right"
 VALIGN="top"
 >Возможные проблемы установки
 <A
-NAME="AEN505"
+NAME="AEN504"
 ></A
 ></TD
 ></TR

@@ -270,16 +270,11 @@ sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
 				<para>Для установки <application>DataparkSearch</application> с поддержкой HTTPS, 
 используйте следующий ключ для <command>configure</command>:</para>
 				<para>
-					<userinput>./configure --with-openssl</userinput>
+					<userinput>./configure --with-https=PKG</userinput>
 				</para>
-				<para>или, в случае, когда, библиотека OpenSSL установлена не в стандартной директории:</para>
-				<para>
-					<userinput>./configure --with-openssl=/path/to/library</userinput>
-				</para>
+				<para>где значение PKG - одно из auto (по умолчанию), <ulink url="https://www.openssl.org/">openssl</ulink>, <ulink url="https://www.wolfssl.com/">wolfssl</ulink> и <ulink url="https://tls.mbed.org/">mbedtls</ulink>.</para>
 				<note>
-					<para>Пожалуйста, имейте в виду, что установка библиотеки OpenSSL на вашем компьютере
-необходима для поддержки HTTPS.</para>
-
+				  <para>Пожалуйста, имейте в виду, что необходимо заранее устрановить соответсвующий пакет разработчика.</para>
 				</note>
 				<para>Вы можете видеть все ключи, запустив <literal>./configure --help</literal>
 				</para>

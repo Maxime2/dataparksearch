@@ -142,21 +142,15 @@ same database. Multi-threaded indexing support.</para>
 		<title>Where to get <application>DataparkSearch</application>.</title>
                  <indexterm><primary>Where to get <application>DataparkSearch</application></primary></indexterm>
                 
-		<para>Check for the latest version of <application>DataparkSearch</application> at:
-<ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>, as well at Google Code:
-<ulink url="http://code.google.com/p/dataparksearch/">http://code.google.com/p/dataparksearch/</ulink>.</para>
+		<para>Check for the latest version of <application>DataparkSearch</application> in Download section at:
+<ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>.</para>
 
-<!-- para>A mirror in Germany: <ulink url="http://dataparksearch.h0t.de/">http://dataparksearch.h0t.de/</ulink>.</para-->
-<!-- para>A mirror in Moscow, Russia: <ulink url="http://dataparksearch.newsa.ru/">http://dataparksearch.newsa.ru/</ulink>.</para-->
-
-<para><application>DataparkSearch</application> is also available in FreeBSD ports collection, 
-see <ulink url="http://www.freshports.org/www/dpsearch">www.freshports.org/www/dpsearch</ulink> and 
-in the <ulink url="http://www.t2-project.org/packages/dpsearch.html">T2 Linux SDE</ulink>.
+<para><application>DataparkSearch</application> is also available in the <ulink url="http://www.t2-project.org/packages/dpsearch.html">T2 Linux SDE</ulink>.
 </para>
 
-<para>DataparkSearch's source is available via SVN at Google Code:
+<para>DataparkSearch's source is available on GitHub:
 <programlisting>
-svn checkout http://dataparksearch.googlecode.com/svn/trunk/ dataparksearch-read-only
+git clone https://github.com/Maxime2/dataparksearch.git
 </programlisting>
 </para>
 
@@ -188,7 +182,7 @@ Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
         <indexterm><primary>Authors</primary></indexterm>
 <para>
 	<author><firstname>Maxim</firstname><surname>Zakharov</surname></author>
-				<email>maxime@maxime.net.ru</email>, <ulink url="http://www.maxime.net.ru/">homepage</ulink>
+				<email>dp.maxime@gmail.com</email>, <ulink url="http://blog.dataparksearch.org/">Founds, the blog</ulink>
 </para>
 
 		<sect2 id="contriblist">

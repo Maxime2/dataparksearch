@@ -132,20 +132,15 @@ ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (см. <xref linkend="oracle"
                  <indexterm><primary>Где взять <application>DataparkSearch</application></primary></indexterm>
                 </title>
 		<para>Последняя версия <application>DataparkSearch</application> доступна на 
-<ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>, а также на Google Code:
-<ulink url="http://code.google.com/p/dataparksearch/">http://code.google.com/p/dataparksearch/</ulink>.</para>
+<ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>.</para>
 
-<!-- para>Зеркало в Германии: <ulink url="http://dataparksearch.h0t.de/">http://dataparksearch.h0t.de/</ulink>.</para-->
-<!-- para>Зеркало в Москве, Россия: <ulink url="http://dataparksearch.newsa.ru/">http://dataparksearch.newsa.ru/</ulink>.</para-->
-
-<para><application>DataparkSearch</application> также доступен в коллекции портов FreeBSD, 
-см. <ulink url="http://www.freshports.org/www/dpsearch">www.freshports.org/www/dpsearch</ulink> и в репозитории 
+<para><application>DataparkSearch</application> также доступен в репозитории 
  <ulink url="http://www.t2-project.org/packages/dpsearch.html">T2 Linux SDE</ulink>.
 </para>
 
-<para>Исходники DataparkSearch доступны через SVN на Google Code:
+<para>Исходники DataparkSearch доступны на GitHub:
 <programlisting>
-svn checkout http://dataparksearch.googlecode.com/svn/trunk/ dataparksearch-read-only
+git clone https://github.com/Maxime2/dataparksearch.git
 </programlisting>
 </para>
 
@@ -172,7 +167,7 @@ Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 		<title>Авторы</title>
 <para>
 	<author><firstname>Maxim</firstname><surname>Zakharov</surname></author>
-				<email>maxime@maxime.net.ru</email>, <ulink url="http://www.maxime.net.ru/">домашняя страница</ulink>
+				<email>dp.maxime@gmail.com</email>, <ulink url="http://notes.sochi.org.ru/">Соноты, блог</ulink>
 </para>
 
 		<sect2 id="contriblist">
