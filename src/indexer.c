@@ -1987,14 +1987,15 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 		char *w;
 		switch(rule->cmd) {
 		case DPS_METHOD_DISALLOW:
-		case DPS_METHOD_VISITLATER:
 		  w = "Disallow"; break;
+		case DPS_METHOD_VISITLATER:
+		  w = "Skip"; break;
 		case DPS_METHOD_CRAWLDELAY:
 		  w = "Postpone"; break;
 		default:
 		  w = "Allow";
 		}
-		DpsLog(Indexer,(rule->cmd==DPS_METHOD_DISALLOW||rule->cmd==DPS_METHOD_VISITLATER) ? DPS_LOG_INFO : DPS_LOG_EXTRA, "SubDoc.robots.txt: '%s %s'", w, rule->path);
+		DpsLog(Indexer,(rule->cmd==DPS_METHOD_DISALLOW||rule->cmd==DPS_METHOD_VISITLATER) ? DPS_LOG_INFO : DPS_LOG_EXTRA, "SubDoc.robots.txt: '%s; %s'", w, rule->path);
 		if((rule->cmd == DPS_METHOD_DISALLOW) || (rule->cmd == DPS_METHOD_VISITLATER) || (rule->cmd == DPS_METHOD_CRAWLDELAY) )
 		  Doc->method = rule->cmd;
 	      }
@@ -2533,14 +2534,15 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 		char *w;
 		switch(rule->cmd) {
 		case DPS_METHOD_DISALLOW:
-		case DPS_METHOD_VISITLATER:
 		  w = "Disallow"; break;
+		case DPS_METHOD_VISITLATER:
+		  w = "Skip"; break;
 		case DPS_METHOD_CRAWLDELAY:
 		  w = "Postpone"; break;
 		default:
 		  w = "Allow";
 		}
-		DpsLog(Indexer, (rule->cmd==DPS_METHOD_DISALLOW||rule->cmd==DPS_METHOD_VISITLATER) ? DPS_LOG_INFO : DPS_LOG_EXTRA, "Doc.robots.txt: '%s %s'", w, rule->path);
+		DpsLog(Indexer, (rule->cmd==DPS_METHOD_DISALLOW||rule->cmd==DPS_METHOD_VISITLATER) ? DPS_LOG_INFO : DPS_LOG_EXTRA, "Doc.robots.txt: '%s; %s'", w, rule->path);
 		if((rule->cmd == DPS_METHOD_DISALLOW) || (rule->cmd == DPS_METHOD_VISITLATER) || (rule->cmd == DPS_METHOD_CRAWLDELAY) )
 		  Doc->method = rule->cmd;
 	      }
