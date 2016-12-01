@@ -1973,7 +1973,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	}
 	
 	if(Doc->method != DPS_METHOD_DISALLOW && Doc->method != DPS_METHOD_VISITLATER && Indexer->Flags.cmd != DPS_IND_POPRANK) {
-	  /*	  DpsDocAddDocExtraHeaders(Indexer, Doc);*/
+	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);
 	  if(!strncmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "http", 4)) {
 	    if(DPS_ROBOTS_NO == Doc->Spider.use_robots){
 	      DpsLog(Indexer,DPS_LOG_DEBUG, "robots.txt support is disallowed for '%s'", DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
@@ -2000,7 +2000,7 @@ __C_LINK int __DPSCALL DpsIndexSubDoc(DPS_AGENT *Indexer, DPS_DOCUMENT *Parent, 
 	      }
 	    }
 	  }
-	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);
+	  /*DpsDocAddDocExtraHeaders(Indexer, Server, Doc);*/
 	  if(origurl != NULL){
 	    DpsVarListReplaceStr(&Doc->Sections,"URL",origurl);
 	    DpsVarListDel(&Doc->Sections, "E_URL");
@@ -2519,7 +2519,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	}
 	
 	if(Doc->method != DPS_METHOD_DISALLOW && Doc->method != DPS_METHOD_VISITLATER && Indexer->Flags.cmd != DPS_IND_POPRANK) {
-	  /*	  DpsDocAddDocExtraHeaders(Indexer, Doc);*/
+	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);
 	  if(!strncmp(DPS_NULL2EMPTY(Doc->CurURL.schema), "http", 4)) {
 	    if(DPS_ROBOTS_NO == Doc->Spider.use_robots){
 	      DpsLog(Indexer,DPS_LOG_DEBUG, "robots.txt support is disallowed for '%s'", DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
@@ -2546,7 +2546,7 @@ __C_LINK int __DPSCALL DpsIndexNextURL(DPS_AGENT *Indexer){
 	      }
 	    }
 	  }
-	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);
+	  /*	  DpsDocAddDocExtraHeaders(Indexer, Server, Doc);*/
 	  if(origurl != NULL){
 	    DpsVarListReplaceStr(&Doc->Sections,"URL",origurl);
 	    DpsVarListDel(&Doc->Sections, "E_URL");
