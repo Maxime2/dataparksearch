@@ -1267,6 +1267,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	char *data_ultimate_url = NULL;
 	char *base = NULL;
 	char *lang = NULL;
+	char *charset = NULL;
 	char *secname = NULL;
 	char *rel = NULL;
 	size_t i, j, seclen = 128, metacont_len = 0;
@@ -1467,6 +1468,14 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		    DPS_FREE(y);
 		  }
 		}else
+		if (ISTAG(i, "charset")) {
+		  /* <META CHARSET="UTF-8"> */
+		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
+		  DPS_FREE(charset);
+		  charset = (char*)DpsStrdup(DpsTrim(y, " \t\r\n"));
+		  for(n = charset; *n; *n = (char)dps_tolower((int)*n),n++);
+		  DPS_FREE(y);
+		}else
 		if (ISTAG(i, "lang")) {
 		  char *y = DpsStrndup(DPS_NULL2EMPTY(tag->toks[i].val), tag->toks[i].vlen);
 		  DPS_FREE(lang);
@@ -1529,6 +1538,15 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 		if (opening && (lang != NULL)) {
 			DpsVarListReplaceStr(&Doc->Sections, "Meta-Language", lang);
 		}
+	}else
+	if((!strcmp(name,"meta")) && (charset)) {
+	  const char *cs = DpsCharsetCanonicalName(charset);
+	  const char *prev_cs = DpsVarListFindStr(&Doc->Sections, "Meta-Charset", NULL);
+	  if (prev_cs == NULL) {
+	    DpsVarListReplaceStr(&Doc->Sections, "Meta-Charset", cs ? cs : charset);
+	  } else if (strcasecmp(prev_cs, cs ? cs : charset) != 0) {
+	    DpsVarListReplaceStr(&Doc->Sections, "Meta-Charset", ""); /* nil it to let Guesser to decide */
+	  }
 	}else
 	if((!strcmp(name,"meta"))&&(metaname)&&(metacont)){ 
 		
@@ -1771,6 +1789,7 @@ int DpsHTMLParseTag(DPS_AGENT *Indexer, DPS_HTMLTOK * tag, DPS_DOCUMENT * Doc, D
 	DPS_FREE(data_ultimate_url);
 	DPS_FREE(base);
 	DPS_FREE(lang);
+	DPS_FREE(charset);
 	DPS_FREE(secname);
 	DPS_FREE(rel);
 	DPS_FREE(alt);

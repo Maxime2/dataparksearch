@@ -117,7 +117,9 @@
 				<para>"Content-type: text/html; charset=xxx"</para>
 			</listitem>
 			<listitem>
-				<para>&lt;META NAME="Content-Type" CONTENT="text/html; charset=xxx"&gt;</para>
+				<para id="guesser-use-meta">&lt;META NAME="Content-Type" CONTENT="text/html; charset=xxx"&gt;</para>
+			  <para>или</para>
+			  <para>&lt;META charset="xxx"&gt;</para>
 <para><indexterm><primary>Команда</primary><secondary>GuesserUseMeta</secondary></indexterm>
 Выбор этого варианта можно выключить указав команду <command>GuesserUseMeta no</command> в файле
 конфигурации <filename>indexer.conf</filename>.</para>
