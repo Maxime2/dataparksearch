@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1160,13 +1160,13 @@ void DpsLangMapListSave(DPS_LANGMAPLIST *List) {
 
 static const char *dps_next_char2map(register const char *p, register const char *end) {
   for(; p < end; p++) {
-    if (*p >= 0 && *p <= 0x40) continue;
+    //    if (*p >= 0 && *p <= 0x40) continue;
     if (*p == '<') {
       register int i = 0;
       for (p++; i < 64 && p < end; i++, p++) {
 	if (*p == '>') break;
       }
-    } else if (*p == '&') {
+      //    } else if (*p == '&') {
     }
     return p;
   }
