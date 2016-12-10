@@ -811,6 +811,10 @@ void *DpsExcerptDoc(void *param) {
     }
 
     if ((tag.Content = (char*)DpsMalloc(ChunkSize+10)) == NULL) {
+      if (!tag.finished) {
+	tag.chunks = 0;
+	if (s >= 0) DpsSend(s, &tag.chunks, sizeof(tag.chunks), 0);
+      }
       DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc); DPS_FREE(uni);
       return NULL;
     }
@@ -970,6 +974,10 @@ void *DpsExcerptDoc(void *param) {
 
   osl = (DpsUniLen(oi) + 1) * sizeof(char);
   if ((os = (char *)DpsMalloc(osl * 16)) == NULL) {
+    if (!tag.finished) {
+      tag.chunks = 0;
+      if (s >= 0) DpsSend(s, &tag.chunks, sizeof(tag.chunks), 0);
+    }
     DPS_FREE(oi); DPS_FREE(c); DPS_FREE(wlen); DPS_FREE(wpos); DPS_FREE(HDoc); DPS_FREE(uni);
     DPS_FREE(SourceToFree);
     return NULL;
