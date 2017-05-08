@@ -169,8 +169,8 @@ CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in \
-	$(top_srcdir)/perl/Makefile.PL.in AUTHORS ChangeLog INSTALL \
-	README TODO compile config.guess config.sub install-sh \
+	$(top_srcdir)/perl/Makefile.PL.in AUTHORS COPYING ChangeLog \
+	INSTALL README TODO compile config.guess config.sub install-sh \
 	ltconfig ltmain.sh missing mkinstalldirs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
@@ -1038,7 +1038,7 @@ pkg-deb: dist
 	tar --directory $(TMPDIR)/ \
 		-xjf $(TMPDIR)/$(PACKAGE)-$(VERSION).tar.bz2
 	cd $(TMPDIR)/$(PACKAGE)-$(VERSION)/; \
-		echo | dh_make --single --copyright gpl -e myemailaddress \
+		dh_make -y --single --copyright gpl -e myemailaddress \
 			--native -f ../$(PACKAGE)-$(VERSION).tar.bz2
 	cp build/debian/* $(TMPDIR)/$(PACKAGE)-$(VERSION)/debian/
 	echo "$(PACKAGE) ($(VERSION)-1) UNRELEASED; urgency=low" > $(TMPDIR)/$(PACKAGE)-$(VERSION)/debian/changelog

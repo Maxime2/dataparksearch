@@ -150,7 +150,7 @@ pkg-deb: dist
 	tar --directory $(TMPDIR)/ \
 		-xjf $(TMPDIR)/$(PACKAGE)-$(VERSION).tar.bz2
 	cd $(TMPDIR)/$(PACKAGE)-$(VERSION)/; \
-		echo | dh_make --single --copyright gpl -e myemailaddress \
+		dh_make -y --single --copyright gpl -e myemailaddress \
 			--native -f ../$(PACKAGE)-$(VERSION).tar.bz2
 	cp build/debian/* $(TMPDIR)/$(PACKAGE)-$(VERSION)/debian/
 	echo "$(PACKAGE) ($(VERSION)-1) UNRELEASED; urgency=low" > $(TMPDIR)/$(PACKAGE)-$(VERSION)/debian/changelog
