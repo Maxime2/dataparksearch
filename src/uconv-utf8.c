@@ -212,7 +212,7 @@ int dps_wc_mb_utf16le(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *pwc, 
     r[0] =  (unsigned char)(wc & 0xFF);
     r[1] =  (unsigned char)(wc >> 8);
     conv->ocodes = 1;
-    return conv->obytes = sizeof(dpsunicode_t);
+    return conv->obytes = 2;
   }
   if (wc < 0x200000) {
     if (r + 4 > e) return DPS_CHARSET_TOOSMALL;
@@ -223,7 +223,7 @@ int dps_wc_mb_utf16le(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *pwc, 
     r[2] = (unsigned char)(c & 0xFF);
     r[3] =  (unsigned char)(c >> 8);
     conv->ocodes = 2;
-    return conv->obytes = 2 * sizeof(dpsunicode_t);
+    return conv->obytes = 4;
   }
   return DPS_CHARSET_ILUNI;
 
@@ -265,7 +265,7 @@ int dps_wc_mb_utf16be(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *pwc, 
     r[0] =  (unsigned char)(wc >> 8);
     r[1] =  (unsigned char)(wc & 0xFF);
     conv->ocodes = 1;
-    return conv->obytes = sizeof(dpsunicode_t);
+    return conv->obytes = 2;
   }
   if (wc < 0x200000) {
     if (r + 4 > e) return DPS_CHARSET_TOOSMALL;
@@ -276,7 +276,7 @@ int dps_wc_mb_utf16be(DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *pwc, 
     r[2] =  (unsigned char)(c >> 8);
     r[3] = (unsigned char)(c & 0xFF);
     conv->ocodes = 2;
-    return conv->obytes = 2 * sizeof(dpsunicode_t);
+    return conv->obytes = 4;
   }
   return DPS_CHARSET_ILUNI;
 
