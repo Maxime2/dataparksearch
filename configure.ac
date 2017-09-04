@@ -343,7 +343,7 @@ AC_ARG_ENABLE([mcmodel],
 		esac
      ])
 
-AX_CHECK_CFLAGS([-mcmodel=$mcmodel],,AC_MSG_FAILURE([$CC compiler option -mcmodel=$mcmodel is not avaiable]))
+AX_CHECK_CFLAGS([-mcmodel=$mcmodel],,AC_MSG_NOTICE([$CC compiler option -mcmodel=$mcmodel is not avaiable]))
 
 
 dnl check for paranoia support
