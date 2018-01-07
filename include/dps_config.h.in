@@ -710,6 +710,8 @@ typedef unsigned int dps_uintptr_t;
 #define CHECK_LEAKS() GC_gcollect()
 #define DpsStrdup(x)     _DpsStrdup(x)
 extern char * _DpsStrdup(const char *str);
+#define DpsStrndup(x,y)     _DpsStrndup(x,y)
+extern char * _DpsStrndup(const char *str, size_t len);
 
 #else
 
