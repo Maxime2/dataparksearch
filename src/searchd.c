@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2018 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -484,7 +484,7 @@ static int do_RESTful(DPS_AGENT *Agent, int client, const DPS_SEARCHD_PACKET_HEA
     page1 -= (page2 - npages);
     page2 = npages;
   }
-  if(page1 < 0) page1 = page1 = 0;
+  if(page1 < 0) page1 = 0;
   if(page2 > npages) page2 = npages;
   nav = (char *)DpsRealloc(nav, nav_len = (size_t)(page2 - page1 + 2) * (1024 + 1024)); 
 	                                                    /* !!! 1024 - limit for navbar0/navbar1 template size */ 
