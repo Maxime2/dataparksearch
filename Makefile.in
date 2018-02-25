@@ -169,8 +169,8 @@ CTAGS = ctags
 CSCOPE = cscope
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in \
-	$(top_srcdir)/perl/Makefile.PL.in AUTHORS COPYING ChangeLog \
-	INSTALL README TODO compile config.guess config.sub install-sh \
+	$(top_srcdir)/perl/Makefile.PL.in AUTHORS ChangeLog INSTALL \
+	README TODO compile config.guess config.sub install-sh \
 	ltconfig ltmain.sh missing mkinstalldirs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
@@ -275,6 +275,8 @@ FGREP = @FGREP@
 GREP = @GREP@
 IBASE_INCLUDE = @IBASE_INCLUDE@
 IBASE_LFLAGS = @IBASE_LFLAGS@
+IDN_CFLAGS = @IDN_CFLAGS@
+IDN_LIBS = @IDN_LIBS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
