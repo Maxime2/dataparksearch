@@ -1015,7 +1015,8 @@ fi
 
 dnl Check for system qsort_r
 DPSAC_QSORT_R
-
+dnl Check for working SO_REUSEPORT
+DPSAC_SO_REUSEPORT
 
 parser=yes
 AC_MSG_CHECKING(for external parsers support)

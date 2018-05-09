@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2018 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1946,16 +1946,18 @@ int main(int argc, char **argv, char **envp) {
 			exit(1);
 		  }
 		  
+#ifdef SO_REUSEADDR
 		  if (setsockopt(clt_sock, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on)) != 0){
-			DpsLog(Agent, DPS_LOG_ERROR, "setsockopt() error %d", errno);
+			DpsLog(Agent, DPS_LOG_ERROR, "setsockopt(SO_REUSEADDR) error %d", errno);
 			DpsAgentFree(Agent);
 			DpsEnvFree(Conf);
 			unlink(dps_pid_name);
 			exit(1);
 		  }
-#ifdef SO_REUSEPORT
+#endif
+#ifdef HAVE_SO_REUSEPORT
 		  if (setsockopt(clt_sock, SOL_SOCKET, SO_REUSEPORT, (char *)&on, sizeof(on)) != 0){
-			dps_strerror(Agent, DPS_LOG_ERROR, "setsockopt() error");
+		        DpsLog(Agent, DPS_LOG_ERROR, "setsockopt(SO_REUSEPORT) error %d", errno);
 			DpsAgentFree(Agent);
 			DpsEnvFree(Conf);
 			unlink(dps_pid_name);

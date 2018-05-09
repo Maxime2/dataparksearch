@@ -16,13 +16,9 @@ Build-Depends: debhelper (>= 8.0.0), autotools-dev, mime-support,
   docbook-xml,
   opensp,
   docbook-dsssl,
-  libc6-i386,
   libosp5,
-  libc6-x32,
   libc6,
   libbsd-dev,
-  gawk,
-  metacity-common,
   libaspell-dev,
   cpio
 Standards-Version: 3.9.4
