@@ -688,6 +688,8 @@ MYSQL_INCLUDE
 MYSQL_LFLAGS
 PORTS_FALSE
 PORTS_TRUE
+IDN_LIBS
+IDN_CFLAGS
 PHPMODULE_FALSE
 PHPMODULE_TRUE
 PHP_MODULE
@@ -980,6 +982,8 @@ OPENSSL_CFLAGS
 OPENSSL_LIBS
 WOLFSSL_CFLAGS
 WOLFSSL_LIBS
+IDN_CFLAGS
+IDN_LIBS
 DOCBOOKSTYLE'
 
 
@@ -1800,6 +1804,8 @@ Some influential environment variables:
               C compiler flags for WOLFSSL, overriding pkg-config
   WOLFSSL_LIBS
               linker flags for WOLFSSL, overriding pkg-config
+  IDN_CFLAGS  C compiler flags for IDN, overriding pkg-config
+  IDN_LIBS    linker flags for IDN, overriding pkg-config
   DOCBOOKSTYLE
               location of DocBook stylesheets
 
@@ -19334,9 +19340,79 @@ if test "${enable_idn+set}" = set; then :
 					IDN_LIBS="-L/usr/local/lib -lidn -liconv"
 					IDN_INCLUDES="$IDN_CFLAGS"
 				else
-					IDN_CFLAGS=`pkg-config libidn --cflags`
-					IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
-					IDN_LIBS=`pkg-config libidn --libs`
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for IDN" >&5
+$as_echo_n "checking for IDN... " >&6; }
+
+if test -n "$IDN_CFLAGS"; then
+    pkg_cv_IDN_CFLAGS="$IDN_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libidn\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libidn") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_IDN_CFLAGS=`$PKG_CONFIG --cflags "libidn" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$IDN_LIBS"; then
+    pkg_cv_IDN_LIBS="$IDN_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libidn\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libidn") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_IDN_LIBS=`$PKG_CONFIG --libs "libidn" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        IDN_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libidn" 2>&1`
+        else
+	        IDN_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libidn" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$IDN_PKG_ERRORS" >&5
+
+	 as_fn_error $? "IDN support requested, but libidn mudule not found." "$LINENO" 5
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	 as_fn_error $? "IDN support requested, but libidn mudule not found." "$LINENO" 5
+
+else
+	IDN_CFLAGS=$pkg_cv_IDN_CFLAGS
+	IDN_LIBS=$pkg_cv_IDN_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	 IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
+fi
 				fi
 				$as_echo "#define WITH_IDN 1" >>confdefs.h
 
@@ -19346,9 +19422,79 @@ if test "${enable_idn+set}" = set; then :
 					IDN_CFLAGS=""
 					IDN_LIBS="-lidn"
 				else
-					IDN_CFLAGS=`pkg-config libidn --cflags`
-					IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
-					IDN_LIBS=`pkg-config libidn --libs`
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for IDN" >&5
+$as_echo_n "checking for IDN... " >&6; }
+
+if test -n "$IDN_CFLAGS"; then
+    pkg_cv_IDN_CFLAGS="$IDN_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libidn\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libidn") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_IDN_CFLAGS=`$PKG_CONFIG --cflags "libidn" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$IDN_LIBS"; then
+    pkg_cv_IDN_LIBS="$IDN_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libidn\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libidn") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_IDN_LIBS=`$PKG_CONFIG --libs "libidn" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        IDN_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libidn" 2>&1`
+        else
+	        IDN_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libidn" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$IDN_PKG_ERRORS" >&5
+
+	 as_fn_error $? "IDN support requested, but libidn mudule not found." "$LINENO" 5
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	 as_fn_error $? "IDN support requested, but libidn mudule not found." "$LINENO" 5
+
+else
+	IDN_CFLAGS=$pkg_cv_IDN_CFLAGS
+	IDN_LIBS=$pkg_cv_IDN_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	 IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
+fi
 				fi
 				$as_echo "#define WITH_IDN 1" >>confdefs.h
 
@@ -19359,9 +19505,79 @@ if test "${enable_idn+set}" = set; then :
 					IDN_LIBS="-L/usr/local/lib -lidn"
 					IDN_INCLUDES="$IDN_CFLAGS"
 				else
-					IDN_CFLAGS=`pkg-config libidn --cflags`
-					IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
-					IDN_LIBS=`pkg-config libidn --libs`
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for IDN" >&5
+$as_echo_n "checking for IDN... " >&6; }
+
+if test -n "$IDN_CFLAGS"; then
+    pkg_cv_IDN_CFLAGS="$IDN_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libidn\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libidn") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_IDN_CFLAGS=`$PKG_CONFIG --cflags "libidn" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$IDN_LIBS"; then
+    pkg_cv_IDN_LIBS="$IDN_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libidn\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libidn") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_IDN_LIBS=`$PKG_CONFIG --libs "libidn" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        IDN_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libidn" 2>&1`
+        else
+	        IDN_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libidn" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$IDN_PKG_ERRORS" >&5
+
+	 as_fn_error $? "IDN support requested, but libidn mudule not found." "$LINENO" 5
+
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	 as_fn_error $? "IDN support requested, but libidn mudule not found." "$LINENO" 5
+
+else
+	IDN_CFLAGS=$pkg_cv_IDN_CFLAGS
+	IDN_LIBS=$pkg_cv_IDN_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+	 IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
+fi
 				fi
 				$as_echo "#define WITH_IDN 1" >>confdefs.h
 
@@ -23049,6 +23265,7 @@ $as_echo X"$file" |
     cat <<_LT_EOF >> "$cfgfile"
 #! $SHELL
 # Generated automatically by $as_me ($PACKAGE) $VERSION
+# Libtool was configured on host `(hostname || uname -n) 2>/dev/null | sed 1q`:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.

@@ -1803,9 +1803,10 @@ AC_ARG_ENABLE(idn,
 					IDN_LIBS="-L/usr/local/lib -lidn -liconv"
 					IDN_INCLUDES="$IDN_CFLAGS"
 				else
-					IDN_CFLAGS=`pkg-config libidn --cflags`
-					IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
-					IDN_LIBS=`pkg-config libidn --libs`
+					PKG_CHECK_MODULES(IDN, [libidn],
+							       [ IDN_INCLUDES=`pkg-config libidn --cflags-only-I` ],
+							       [ AC_MSG_ERROR([IDN support requested, but libidn mudule not found.]) ]
+							       )
 				fi
 				AC_DEFINE(WITH_IDN)
 				;;
@@ -1814,9 +1815,10 @@ AC_ARG_ENABLE(idn,
 					IDN_CFLAGS=""
 					IDN_LIBS="-lidn"
 				else
-					IDN_CFLAGS=`pkg-config libidn --cflags`
-					IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
-					IDN_LIBS=`pkg-config libidn --libs`
+					PKG_CHECK_MODULES(IDN, [libidn],
+							       [ IDN_INCLUDES=`pkg-config libidn --cflags-only-I` ],
+							       [ AC_MSG_ERROR([IDN support requested, but libidn mudule not found.]) ]
+							       )
 				fi
 				AC_DEFINE(WITH_IDN)
 				;;
@@ -1826,9 +1828,10 @@ AC_ARG_ENABLE(idn,
 					IDN_LIBS="-L/usr/local/lib -lidn"
 					IDN_INCLUDES="$IDN_CFLAGS"
 				else
-					IDN_CFLAGS=`pkg-config libidn --cflags`
-					IDN_INCLUDES=`pkg-config libidn --cflags-only-I`
-					IDN_LIBS=`pkg-config libidn --libs`
+					PKG_CHECK_MODULES(IDN, [libidn],
+							       [ IDN_INCLUDES=`pkg-config libidn --cflags-only-I` ],
+							       [ AC_MSG_ERROR([IDN support requested, but libidn mudule not found.]) ]
+							       )
 				fi
 				AC_DEFINE(WITH_IDN)
 				;;

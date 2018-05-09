@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2018 Maxim Zakharov. All rights reserved.
    Copyright (C) 2005-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -241,7 +241,7 @@ int __DPSCALL DpsAcronymListLoad(DPS_AGENT * query, const char * filename) {
 
                for (i = 0; i < ac; i++) {
 		 ww[i].word = av[i];
-                 ww[i].len = dps_strlen(av[i]);
+                 ww[i].len = (dps_uint4)dps_strlen(av[i]);
 		 ww[i].uword = t = (dpsunicode_t*)DpsMalloc((5 * ww[i].len + 1) * sizeof(dpsunicode_t));
 		 if (ww[i].uword == NULL) {
 		   DPS_FREE(data); 
@@ -266,7 +266,7 @@ int __DPSCALL DpsAcronymListLoad(DPS_AGENT * query, const char * filename) {
                  DpsUniStrToLower(ww[i].uword);
 		 ww[i].uword = DpsUniNormalizeNFC(NULL, ww[i].uword);
 		 DPS_FREE(t);
-		 DpsConv(&uni_lc, ww[i].word, (15*ww[i].len+1)*sizeof(char), (char*)ww[i].uword, sizeof(dpsunicode_t)*((ww[i].len = DpsUniLen(ww[i].uword)) + 1));
+		 DpsConv(&uni_lc, ww[i].word, (15*ww[i].len+1)*sizeof(char), (char*)ww[i].uword, sizeof(dpsunicode_t)*((ww[i].len = (dps_uint4)DpsUniLen(ww[i].uword)) + 1));
                }
 
 	       if((Env->Acronyms.nacronyms + 1) >= Env->Acronyms.macronyms){
