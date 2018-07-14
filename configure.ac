@@ -1104,8 +1104,11 @@ AC_ARG_ENABLE(gprofiler,
 [  --enable-gprofiler        enable Google profiler support],gprofiler=$enableval)
 
 if test "$gprofiler" == yes; then
-	LIBS="-lprofiler $LIBS"
-	AC_MSG_RESULT(yes)
+   	AC_CHECK_LIB(profiler, ProfilerStart,
+			       LIBS="-lprofiler $LIBS"
+			       AC_MSG_RESULT(yes),
+			       AC_MSG_ERROR([Unable to find profiler library from google-perftools])
+	)
 else
 	AC_MSG_RESULT([no])
 fi
@@ -1884,8 +1887,8 @@ AC_MSG_CHECKING(for MySQL support)
 AC_ARG_WITH(mysql,
 [
 What DBMS support do you want (you may select several):
-  --with-mysql[=DIR]      Include MySQL support.  DIR is the MySQL base
-                          install directory, default is to search through
+  --with-mysql[=DIR]      Include MySQL support.  DIR is the prefix for installed MySQL
+                          (e.g. /usr), omitting it triggers a search through
                           a number of common places for the MySQL files.],
 [
   if test "$withval" != "no"; then
@@ -1978,8 +1981,8 @@ AC_SUBST(MYSQL_INCLUDE)
 
 AC_MSG_CHECKING(for PostgreSQL support)
 AC_ARG_WITH(pgsql,
-[  --with-pgsql[=DIR]      Include PostgreSQL support.  DIR is the PostgreSQL
-                          base install directory, defaults to /usr/local/pgsql.],
+[  --with-pgsql[=DIR]      Include PostgreSQL support.  DIR is the prefix for
+                          installed PostgreSQL, defaults to /usr/local/pgsql.],
 [
   if test "$withval" != "no"; then
 

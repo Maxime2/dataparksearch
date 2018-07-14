@@ -1739,11 +1739,11 @@ Optional Packages:
                           chinese japanese euc-kr gujarati tscii
 
 What DBMS support do you want (you may select several):
-  --with-mysql=DIR      Include MySQL support.  DIR is the MySQL base
-                          install directory, default is to search through
+  --with-mysql=DIR      Include MySQL support.  DIR is the prefix for installed MySQL
+                          (e.g. /usr), omitting it triggers a search through
                           a number of common places for the MySQL files.
-  --with-pgsql=DIR      Include PostgreSQL support.  DIR is the PostgreSQL
-                          base install directory, defaults to /usr/local/pgsql.
+  --with-pgsql=DIR      Include PostgreSQL support.  DIR is the prefix for
+                          installed PostgreSQL, defaults to /usr/local/pgsql.
   --with-msql=DIR       Include mSQL support.  DIR is the mSQL base
                           install directory, defaults to /usr/local/Hughes.
   --with-iodbc=DIR      Include iODBC support.  DIR is the iODBC base
@@ -17791,9 +17791,51 @@ fi
 
 
 if test "$gprofiler" == yes; then
-	LIBS="-lprofiler $LIBS"
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for ProfilerStart in -lprofiler" >&5
+$as_echo_n "checking for ProfilerStart in -lprofiler... " >&6; }
+if ${ac_cv_lib_profiler_ProfilerStart+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lprofiler  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char ProfilerStart ();
+int
+main ()
+{
+return ProfilerStart ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_profiler_ProfilerStart=yes
+else
+  ac_cv_lib_profiler_ProfilerStart=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_profiler_ProfilerStart" >&5
+$as_echo "$ac_cv_lib_profiler_ProfilerStart" >&6; }
+if test "x$ac_cv_lib_profiler_ProfilerStart" = xyes; then :
+  LIBS="-lprofiler $LIBS"
+			       { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
+else
+  as_fn_error $? "Unable to find profiler library from google-perftools" "$LINENO" 5
+
+fi
+
 else
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
@@ -23265,7 +23307,6 @@ $as_echo X"$file" |
     cat <<_LT_EOF >> "$cfgfile"
 #! $SHELL
 # Generated automatically by $as_me ($PACKAGE) $VERSION
-# Libtool was configured on host `(hostname || uname -n) 2>/dev/null | sed 1q`:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 
 # Provide generalized library-building support services.
