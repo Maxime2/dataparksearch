@@ -2860,9 +2860,9 @@ static void DpsGroupByURLFull(DPS_AGENT *query, DPS_RESULT *Res) {
   size_t nwordpos;
   int w_origin;
   dps_uint4 a;
-  size_t xy;
+  size_t xy, tt;
 #ifdef WITH_REL_WRDCOUNT
-  size_t tt, sum;
+  size_t sum;
   size_t median;
 #endif
 
