@@ -22,7 +22,7 @@
 
 #include <sys/types.h>
 
-#ifdef HAVE_SYS_SYSCTL_H
+#if (defined(__FreeBSD__) || defined(__OpenBSD__)) && defined(HAVE_SYS_SYSCTL_H)
 #include <sys/sysctl.h>
 #endif
 

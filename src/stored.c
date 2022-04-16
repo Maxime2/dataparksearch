@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All right reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All right reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All right reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -35,6 +35,7 @@
 #include "dps_base.h"
 #include "dps_socket.h"
 #include "dps_charsetutils.h"
+#include "dps_host.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -381,7 +382,7 @@ int main(int argc, char **argv, char **envp) {
 	      dps_strerror(NULL, 0, "Can't open '%s'", dps_pid_name);
 	      exit(1);
 	    }
-	    (void)read(pid_fd, pidbuf, sizeof(pidbuf));
+	    Read(pid_fd, pidbuf, sizeof(pidbuf));
 	    if (1 > sscanf(pidbuf, "%d", &other_pid)) {
 	      dps_strerror(NULL, 0, "Can't read pid from '%s'", dps_pid_name);
 	      close(pid_fd);
@@ -402,12 +403,16 @@ int main(int argc, char **argv, char **envp) {
 	    }
 	    dps_strerror(NULL, 0, "Process %d seems to be dead. Flushing '%s'", other_pid, dps_pid_name);
 	    lseek(pid_fd, 0L, SEEK_SET);
-	    ftruncate(pid_fd, 0L);
+	    if (0 != ftruncate(pid_fd, 0L)) {
+	      fprintf(stderr, "ftruncate '%s': %d (%s): %s:%d", dps_pid_name, errno, strerror(errno), __FILE__, __LINE__);
+	      close(pid_fd);
+	      exit(1);
+	    }
 	  }
 	}
 
 	sprintf(pidbuf,"%d\n",(int)getpid());
-	(void)write(pid_fd,&pidbuf,dps_strlen(pidbuf));
+	Write(pid_fd,&pidbuf,dps_strlen(pidbuf));
 	DpsClose(pid_fd);
 
 	init_signals();

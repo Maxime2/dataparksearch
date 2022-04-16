@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 Datapark corp. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -57,7 +57,7 @@ typedef struct xml_attr_st {
 } DPS_XML_ATTR;
 
 typedef struct xml_stack_st {
-    char errstr[512];
+    char errstr[1024];
     char attr[4096];
     int hops;
     char *attrend;

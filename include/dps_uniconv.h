@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -182,7 +182,7 @@ typedef struct dps_cset_st{
 typedef struct dps_conv_st {
      DPS_CHARSET    *from;
      DPS_CHARSET    *to;
-     char           *CharsToEscape;
+     const char     *CharsToEscape;
      size_t         ibytes;
      size_t         obytes;
      size_t         icodes;

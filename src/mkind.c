@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -397,7 +397,7 @@ static int MakeLinearIndexLinks(DPS_AGENT *Indexer, const char *lim_name, DPS_DB
        offset += nitems;
 
        /* To see the URL being indexed in "ps" output */
-       if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] links data: %d records processed", Indexer->handle, offset);
+       if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] links data: %ld records processed", Indexer->handle, offset);
        DpsLog(Indexer, DPS_LOG_EXTRA, "%d records of links were written, at %d", offset, rec_id);
        rec_id = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLres, nitems - 1, 0));
        u = (nitems == (size_t)recs);

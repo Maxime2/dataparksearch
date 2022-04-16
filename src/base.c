@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2003 Lavtech.com corp. All rights reserved.
 
@@ -26,6 +26,7 @@
 #include "dps_signals.h"
 #include "dps_charsetutils.h"
 #include "dps_hash.h"
+#include "dps_host.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -892,7 +893,7 @@ extern __C_LINK int __DPSCALL DpsBaseOptimize(DPS_BASE_PARAM *P, int sbase) {
 	    lseek(P->Sfd, posold, SEEK_SET)
 	    ) {
 	  lseek(P->Sfd, pos, SEEK_SET);
-	  (void)write(P->Sfd, buffer, (size_t)nread);
+	  Write(P->Sfd, buffer, (size_t)nread);
 	  rsize += (size_t)nread;
 	  posold += (off_t)nread;
 	  pos += (off_t)nread;
@@ -931,7 +932,7 @@ extern __C_LINK int __DPSCALL DpsBaseOptimize(DPS_BASE_PARAM *P, int sbase) {
 		lseek(P->Sfd, posold, SEEK_SET)
 		) {
 	      lseek(P->Sfd, pos, SEEK_SET);
-	      (void)write(P->Sfd, buffer, (size_t)nread);
+	      Write(P->Sfd, buffer, (size_t)nread);
 	      rsize += (size_t)nread;
 	      posold += (off_t)nread;
 	      pos += (off_t)nread;
@@ -960,7 +961,12 @@ extern __C_LINK int __DPSCALL DpsBaseOptimize(DPS_BASE_PARAM *P, int sbase) {
       /*if (gain != 0 || OptimizeRatio == 0 || error_cnt > 0)*/ {
 
 	posold = lseek(P->Ifd, (off_t)0, SEEK_END);
-	(void)ftruncate(P->Ifd, (off_t)0);
+	if (0 != ftruncate(P->Ifd, (off_t)0)) {
+	  dps_strerror(P->A, DPS_LOG_ERROR, "ftruncate error (pos:0) [%s:%d]", __FILE__, __LINE__);
+	  DpsBaseClose(P);
+	  DPS_FREE(si);
+	  return DPS_ERROR;
+	}
 	lseek(P->Ifd, (off_t)0, SEEK_SET);
 
 	if ((hTable = (DPS_BASEITEM *)DpsXmalloc(sizeof(DPS_BASEITEM) * DPS_HASH_PRIME)) == NULL) {

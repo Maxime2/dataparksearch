@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -332,7 +332,7 @@ static int DpsGetHostByName(DPS_AGENT *Indexer, DPS_CONN *connp, const char *hos
 }
 
 
-static ssize_t Read(int p, void* buf, size_t len) {
+void Read(int p, void* buf, size_t len) {
   size_t left = len;
 
   while (left) {
@@ -341,7 +341,19 @@ static ssize_t Read(int p, void* buf, size_t len) {
     if (rd < 0) break;
     left -= rd;
   }
-  return 1;
+  return;
+}
+
+void Write(int p, const void* buf, size_t len) {
+  size_t left = len;
+
+  while (left) {
+    ssize_t rd;
+    rd = write(p, (char*)buf + len - left, left);
+    if (rd < 0) break;
+    left -= rd;
+  }
+  return;
 }
 
 
@@ -370,12 +382,12 @@ static void DpsResolver(DPS_AGENT *Indexer) {
       rc = DpsGetHostByName(Indexer, &connp, hostname);
       if (rc != 0) {
 	connp.err = DPS_NET_CANT_RESOLVE;
-	(void)write(Indexer->rcv_pipe[1], &connp.err, sizeof(connp.err));
+	Write(Indexer->rcv_pipe[1], &connp.err, sizeof(connp.err));
       } else {
-	(void)write(Indexer->rcv_pipe[1], &connp.err, sizeof(connp.err));
-	(void)write(Indexer->rcv_pipe[1], &connp.n_sinaddr, sizeof(connp.n_sinaddr));
+	Write(Indexer->rcv_pipe[1], &connp.err, sizeof(connp.err));
+	Write(Indexer->rcv_pipe[1], &connp.n_sinaddr, sizeof(connp.n_sinaddr));
 	for(i = 0; i < connp.n_sinaddr; i++) {
-	  (void)write(Indexer->rcv_pipe[1], &connp.sinaddr[i], sizeof(connp.sinaddr[0]));
+	  Write(Indexer->rcv_pipe[1], &connp.sinaddr[i], sizeof(connp.sinaddr[0]));
 	}
       }
 
@@ -391,11 +403,11 @@ static void DpsResolver(DPS_AGENT *Indexer) {
 static void DpsGetResolver(DPS_AGENT *Indexer, DPS_CONN *connp, const char *hostname) {
   size_t i, len = dps_strlen(DPS_NULL2EMPTY(hostname)) + 1;
 
-  (void)write(Indexer->snd_pipe[1], &len, sizeof(len));
-  (void)write(Indexer->snd_pipe[1], DPS_NULL2EMPTY(hostname), len);
+  Write(Indexer->snd_pipe[1], &len, sizeof(len));
+  Write(Indexer->snd_pipe[1], DPS_NULL2EMPTY(hostname), len);
   len = dps_strlen(DPS_NULL2EMPTY(connp->hostname));
-  (void)write(Indexer->snd_pipe[1], &len, sizeof(len));
-  (void)write(Indexer->snd_pipe[1], DPS_NULL2EMPTY(connp->hostname), len);
+  Write(Indexer->snd_pipe[1], &len, sizeof(len));
+  Write(Indexer->snd_pipe[1], DPS_NULL2EMPTY(connp->hostname), len);
 
   Read(Indexer->rcv_pipe[0], &connp->err, sizeof(connp->err));
   if (connp->err == 0) {
@@ -410,8 +422,8 @@ static void DpsGetResolver(DPS_AGENT *Indexer, DPS_CONN *connp, const char *host
 
 
 int DpsResolverStart(DPS_AGENT *Indexer) {
-  (void)pipe(Indexer->rcv_pipe);
-  (void)pipe(Indexer->snd_pipe);
+  if (0 != pipe(Indexer->rcv_pipe)) return DPS_ERROR;
+  if (0 != pipe(Indexer->snd_pipe)) return DPS_ERROR;
 
   if ((Indexer->resolver_pid = fork()) == 0) { /* child process */
 
@@ -443,7 +455,7 @@ int DpsResolverFinish(DPS_AGENT *Indexer) {
   int status;
 
   len = 0;
-  (void)write(Indexer->snd_pipe[1], &len, sizeof(len));
+  Write(Indexer->snd_pipe[1], &len, sizeof(len));
   waitpid(Indexer->resolver_pid, &status, 0);
 
   if (Indexer->rcv_pipe[0] >= 0) close(Indexer->rcv_pipe[0]);

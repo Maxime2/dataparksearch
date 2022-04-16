@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2021 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -2251,7 +2251,6 @@ void DpsDeInit(void) {
 #endif
 #ifdef WITH_OPENSSL
     CONF_modules_free();
-    ERR_remove_state(0);
     ENGINE_cleanup();
     CONF_modules_unload(1);
     ERR_free_strings();

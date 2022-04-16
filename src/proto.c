@@ -1625,7 +1625,7 @@ static int DpsFILEGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc){
 	DIR * dir;
 	struct dirent *rec;
 	char filename[1024];
-	char newfilename[1024];
+	char newfilename[2048];
 	char openname[1024];
 	char mystatname[1024];
 	char command[32]="";

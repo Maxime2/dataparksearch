@@ -1,4 +1,4 @@
-/* Copyright (C) 2013 Maxim Zakharov. Al rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. Al rights reserved.
    Copyright (C) 2005-2012 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -37,7 +37,7 @@ char *dps_strtolower(char *str) {
   register char *s = str;
   if (s != NULL) {
     while(*s) {
-      *s = (char*)dps_tolower((int)*s);
+      *s = (char)dps_tolower((int)*s);
       s++;
     }
   }

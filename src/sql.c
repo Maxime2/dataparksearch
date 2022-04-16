@@ -1594,7 +1594,7 @@ static int DpsDeleteWordFromURL(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc,DPS_DB *db)
 
 static int StoreWordsMulti(DPS_AGENT * Indexer,DPS_DOCUMENT * Doc,DPS_DB *db){
 	char	qbuf[512];
-	char	tablename[64]="dict";
+	char	tablename[32]="dict";
 	char	tbl_nm[64];
 	char    *word_escaped, *lcsword;
 	int	n, rc = DPS_OK;
@@ -1616,7 +1616,7 @@ static int StoreWordsMulti(DPS_AGENT * Indexer,DPS_DOCUMENT * Doc,DPS_DB *db){
 		if(prev_dictlen==dictlen[n])continue;
 		prev_dictlen=dictlen[n];
 
-		sprintf(tbl_nm, "%s%lu", tablename, (long unsigned)dictlen[n]);
+		snprintf(tbl_nm, sizeof(tbl_nm), "%s%lu", tablename, (long unsigned)dictlen[n]);
 		if(1){
 			switch(db->DBType){
 				case DPS_DB_PGSQL:

@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -201,7 +201,7 @@ int main(int argc, char ** argv){
 		/* Allocate memory for comparison statistics */
 		mapstat = (DPS_MAPSTAT *)DpsMalloc((env.nmaps + 1) * sizeof(DPS_MAPSTAT));
 		if (mapstat == NULL) {
-		  fprintf(stderr, "Can't alloc %d bytes at %s:%d\n", (int)env.nmaps * sizeof(DPS_MAPSTAT), __FILE__, __LINE__);
+		  fprintf(stderr, "Can't alloc %ld bytes at %s:%d\n", (int)env.nmaps * sizeof(DPS_MAPSTAT), __FILE__, __LINE__);
 		  exit(1);
 		}
 

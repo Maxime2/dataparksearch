@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -33,6 +33,7 @@ extern void malloc_stats(void);
 #include "dps_host.h"
 #include "dps_charsetutils.h"
 #include "dps_utils.h"
+#include "dps_host.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -198,7 +199,7 @@ static int CreateOrDrop(DPS_AGENT *A, enum dps_indcmd cmd) {
       DpsIndCmdStr(cmd),DpsDBModeToStr(db->DBMode));
     printf("'%s' dbtype=%d dbmode=%d\n",fname,db->DBType,db->DBMode);
     if(!(infile= fopen(fname,"r"))) {
-      sprintf(A->Conf->errstr,"Can't open file '%s'",fname);
+      snprintf(A->Conf->errstr, sizeof(A->Conf->errstr), "Can't open file '%s'",fname);
       return DPS_ERROR;
     }
     L->currdbnum = dn;
@@ -801,7 +802,11 @@ static void * thread_main(void *arg){
 #endif
 
 #if defined(HAVE_PTHREAD) && defined(__FreeBSD__) && !defined(HAVE_LIBBIND) && !(defined(HAVE_LIBARES) || defined(HAVE_LIBCARES))
-     DpsResolverStart(Indexer);
+     res = DpsResolverStart(Indexer);
+     if (res == DPS_ERROR) {
+       fprintf(stderr, "Resolver start error: %d, '%s'", errno, strerror(errno));
+       done = 1;
+     }
 #endif
 
 /*     if (!(Indexer->flags & DPS_FLAG_UNOCON)) {*/
@@ -1490,7 +1495,7 @@ int main(int argc, char **argv, char **envp) {
 	     dps_strerror(NULL, 0, "%s Can't open '%s'", time_pid_info(), pidname);
 	     goto ex;
 	   }
-	   (void)read(pid_fd, pidbuf, sizeof(pidbuf));
+	   Read(pid_fd, pidbuf, sizeof(pidbuf));
 	   if (1 > sscanf(pidbuf, "%d", &pid)) {
 	     dps_strerror(NULL, 0, "%s Can't read pid from '%s'", time_pid_info(), pidname);
 	     close(pid_fd);
@@ -1511,11 +1516,15 @@ int main(int argc, char **argv, char **envp) {
 	   }
 	   dps_strerror(NULL, 0, "%s Process %s seems to be dead. Flushing '%s'", time_pid_info(), pidbuf, pidname);
 	   lseek(pid_fd, 0L, SEEK_SET);
-	   ftruncate(pid_fd, 0L);
+	   if (0 != ftruncate(pid_fd, 0L)) {
+	     fprintf(stderr, "Truncate '%s' error %d (%s): %s:%d\n", pidname, errno, strerror(errno), __FILE__, __LINE__);
+	     close(pid_fd);
+	     goto ex;
+	   }
 	 }
        }
        sprintf(pidbuf,"%d\n",(int)getpid());
-       (void)write(pid_fd, pidbuf, dps_strlen(pidbuf));
+       Write(pid_fd, pidbuf, dps_strlen(pidbuf));
        DpsClose(pid_fd);
        atexit(&exitproc);
      }

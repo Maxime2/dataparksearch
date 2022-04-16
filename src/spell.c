@@ -874,7 +874,7 @@ __C_LINK int __DPSCALL DpsImportAffixes(DPS_ENV * Conf,const char *lang, const c
   struct stat     sb;
   char      *str, *data = NULL, *cur_n = NULL;
   char flag[2]="";
-  char mstr[14*BUFSIZ]="";
+  char mstr[16*BUFSIZ]="";
   char mask[14*BUFSIZ]="";
   char find[14*BUFSIZ]="";
   char repl[14*BUFSIZ]="";
@@ -1024,9 +1024,9 @@ __C_LINK int __DPSCALL DpsImportAffixes(DPS_ENV * Conf,const char *lang, const c
 #endif
 
     if (suffixes) {
-      sprintf(mstr, "%s$", mask);
+	snprintf(mstr, sizeof(mstr), "%s$", mask);
     } else {
-      sprintf(mstr, "^%s", mask);
+	snprintf(mstr, sizeof(mstr), "^%s", mask);
     }
 
     len = DpsConv(&touni, (char*)unimask, sizeof(unimask), mstr, dps_strlen(mstr) + 1);

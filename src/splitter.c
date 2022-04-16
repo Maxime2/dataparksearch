@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -226,7 +226,9 @@ int main(int argc,char **argv, char **envp) {
 		    if (log_buf != NULL) {
 		      unlink(dname);
 		      bytes = read(log_fd,log_buf,(size_t)sb.st_size);
-		      (void)ftruncate(log_fd, (off_t)0);
+		      if (0 != ftruncate(log_fd, (off_t)0)) {
+			dps_strerror(Indexer, DPS_LOG_ERROR, "ftruncate Log %x: %d (%s): %s:%s", log, errno, strerror(errno), __FILE__, __LINE__);
+		      }
 		      DpsUnLock(log_fd);
 		      DpsClose(log_fd);
 		      

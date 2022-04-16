@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -29,6 +29,7 @@
 #include "dps_log.h"
 #include "dps_db_int.h"
 #include "dps_boolean.h"
+#include "dps_host.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -165,28 +166,28 @@ int __DPSCALL DpsSearchCacheStore(DPS_AGENT * query, DPS_RESULT *Res){
 #ifdef DEBUG_CACHE
 	  fprintf(stderr, "found:%d, grand_total:%d ncoords:%d\n", Res->total_found, Res->grand_total, Res->CoordList.ncoords );	
 #endif
-	  (void)write(fd, &Res->total_found, sizeof(Res->total_found));
-	  (void)write(fd, &Res->grand_total, sizeof(Res->grand_total));
+	  Write(fd, &Res->total_found, sizeof(Res->total_found));
+	  Write(fd, &Res->grand_total, sizeof(Res->grand_total));
 
 			
-	  (void)write(fd, &(Res->WWList),sizeof(DPS_WIDEWORDLIST)); 
+	  Write(fd, &(Res->WWList),sizeof(DPS_WIDEWORDLIST)); 
 	  for (i = 0; i< Res->WWList.nwords; i++) {
-	    (void)write(fd, &(Res->WWList.Word[i]), sizeof(DPS_WIDEWORD));
-/*	    (void)write(fd, Res->WWList.Word[i].word, Res->WWList.Word[i].len);
-	    (void)write(fd, Res->WWList.Word[i].uword, sizeof(dpsunicode_t) * Res->WWList.Word[i].ulen);*/
+	    Write(fd, &(Res->WWList.Word[i]), sizeof(DPS_WIDEWORD));
+/*	    Write(fd, Res->WWList.Word[i].word, Res->WWList.Word[i].len);
+	    Write(fd, Res->WWList.Word[i].uword, sizeof(dpsunicode_t) * Res->WWList.Word[i].ulen);*/
 	  }
 			
-	  (void)write(fd, Res->CoordList.Coords, Res->CoordList.ncoords * sizeof(DPS_URL_CRD_DB));
-	  (void)write(fd, Res->CoordList.Data, Res->CoordList.ncoords * sizeof(DPS_URLDATA));
+	  Write(fd, Res->CoordList.Coords, Res->CoordList.ncoords * sizeof(DPS_URL_CRD_DB));
+	  Write(fd, Res->CoordList.Data, Res->CoordList.ncoords * sizeof(DPS_URLDATA));
 #ifdef WITH_REL_TRACK
-	  (void)write(fd, Res->CoordList.Track, Res->CoordList.ncoords * sizeof(DPS_URLTRACK));
+	  Write(fd, Res->CoordList.Track, Res->CoordList.ncoords * sizeof(DPS_URLTRACK));
 #endif
 	  if (Res->PerSite) {
-	    (void)write(fd, &Res->total_found, sizeof(Res->total_found));
-	    (void)write(fd, Res->PerSite, Res->CoordList.ncoords * sizeof(size_t));
+	    Write(fd, &Res->total_found, sizeof(Res->total_found));
+	    Write(fd, Res->PerSite, Res->CoordList.ncoords * sizeof(size_t));
 	  } else {
 	    size_t topcount = 0;
-	    (void)write(fd, &topcount, sizeof(topcount));
+	    Write(fd, &topcount, sizeof(topcount));
 	  }
 			
 	  DpsClose(fd);

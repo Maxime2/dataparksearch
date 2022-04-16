@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -45,6 +45,7 @@
 #include "dps_charsetutils.h"
 #include "dps_word.h"
 #include "dps_crossword.h"
+#include "dps_host.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -374,11 +375,13 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 		    if (-1 == rename(old_log_name, del_log_name)) {
 			if (errno != ENOENT) {
 			    dps_strerror(A, DPS_LOG_ERROR, "Can't rename '%s' into '%s'", old_log_name, del_log_name);
+			    TRACE_OUT(A);
 			    return;
 			}
 		    }
 		} else {
 		    dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+		    TRACE_OUT(A);
 		    return;
 		}
 	    } else {
@@ -389,6 +392,7 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 		dps_snprintf(del_log_name, sizeof(del_log_name), "%s%s%03X.log", db->log_dir, DPSSLASHSTR, log_num);
 		if((log_fd = DpsOpen3(del_log_name, O_RDWR | O_CREAT | DPS_BINARY, DPS_IWRITE)) == -1) {
 		    dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+		    TRACE_OUT(A);
 		    return;
 		}
 
@@ -403,7 +407,11 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 		}
 		DpsClose(split_fd);
 		lseek(log_fd, (off_t)0, SEEK_SET);
-		(void)ftruncate(log_fd, (off_t)0);
+		if (0 != ftruncate(log_fd, (off_t)0)) {
+		  dps_strerror(A, DPS_LOG_ERROR, "ftruncate '%s': %d (%s): %s:%s", del_log_name, errno, strerror(errno), __FILE__, __LINE__);
+		  TRACE_OUT(A);
+		  return;
+		}
   
 		DpsUnLock(log_fd);
 		DpsClose(log_fd);
@@ -414,6 +422,7 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 
 	if((split_fd = DpsOpen3(del_log_name, O_WRONLY | O_CREAT | O_APPEND | DPS_BINARY, DPS_IWRITE)) == -1) {
 	    dps_strerror(A, DPS_LOG_ERROR, "Can't open '%s' for writing", del_log_name);
+	    TRACE_OUT(A);
 	    return;
 	}
 	
@@ -432,7 +441,11 @@ void DpsRotateDelLog(DPS_AGENT *A) {
 	}
 	DpsClose(split_fd);
 	lseek(db->del_fd, (off_t)0, SEEK_SET);
-	(void)ftruncate(db->del_fd, (off_t)0);
+	if (0 != ftruncate(db->del_fd, (off_t)0)) {
+	  dps_strerror(A, DPS_LOG_ERROR, "ftruncate db->del_fd: %d (%s): %s:%s", errno, strerror(errno), __FILE__, __LINE__);
+	  TRACE_OUT(A);
+	  return;
+	}
   
 	DpsUnLock(db->del_fd);
     }
@@ -1173,7 +1186,7 @@ __C_LINK int __DPSCALL DpsProcessBuf(DPS_AGENT *Indexer, DPS_BASE_PARAM *P, size
     if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Log %03X updated in %.2f sec., ndel:%d", log_num, (float)total_ticks / 1000, ndel);
 #else
     DpsLog(Indexer, DPS_LOG_EXTRA, "Log %03X updated, nwrd:%d, ndel:%d", log_num, n, ndel);
-    if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Log %03X updated", log_num);
+    if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Log %03lX updated", log_num);
 #endif
 
     TRACE_OUT(Indexer);
@@ -1746,7 +1759,7 @@ int DpsURLDataLoadCache(DPS_AGENT *A, DPS_RESULT *R, DPS_DB *db) {
 		  TRACE_OUT(A);
 		  return DPS_ERROR;
 		}
-		(void)read(fd, D, (size_t)sb.st_size);
+		Read(fd, D, (size_t)sb.st_size);
 		nrec = (size_t)(sb.st_size / sizeof(DPS_URLDATA));
 		first = 0;
 		DpsUnLock(fd);
@@ -1826,7 +1839,7 @@ int DpsURLDataPreloadCache(DPS_AGENT *Agent, DPS_DB *db) {
 		  return DPS_ERROR;
 		}
 /*		DF[filenum].mtime = sb.st_mtime;*/
-		(void)read(fd, &DF[filenum].URLData[DF[filenum].nrec], (size_t)sb.st_size);
+		Read(fd, &DF[filenum].URLData[DF[filenum].nrec], (size_t)sb.st_size);
 		DpsUnLock(fd);
 		DF[filenum].nrec += nrec;
 		mem_used += nrec *  sizeof(DPS_URLDATA);
@@ -2617,7 +2630,10 @@ static int DpsLogdInit(DPS_AGENT *A, DPS_DB *db, const char* var_dir, size_t i, 
 	      dps_strerror(A, DPS_LOG_ERROR, "mmap: %s:%d", __FILE__, __LINE__);
 	      return DPS_ERROR;
 	    }
-	    (void)ftruncate(fd, (off_t) WrdBufSize);
+	    if (0 != ftruncate(fd, (off_t) WrdBufSize)) {
+	      dps_strerror(A, DPS_LOG_ERROR, "ftruncate: %d (%s): %s:%s", errno, strerror(errno), __FILE__, __LINE__);
+	      return DPS_ERROR;
+	    }
 	    DpsClose(fd);
 #elif defined(HAVE_SHAREDMEM_SYSV)
 	    if ((fd = shmget(ftok(shm_name, 0), WrdBufSize, IPC_CREAT | SHM_R | SHM_W | (SHM_R>>3) | (SHM_R>>6) )) < 0) {
@@ -2822,7 +2838,7 @@ static int URLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	  offset += nitems;
 
 	  /* To see the URL being indexed in "ps" output on xBSD */
-	  if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] url data: %d records processed", Indexer->handle, offset);
+	  if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] url data: %ld records processed", Indexer->handle, offset);
 	  DpsLog(Indexer, DPS_LOG_EXTRA, "%d records of url data written, at %d", offset, rec_id);
 	  rec_id = (urlid_t)DPS_ATOI(DpsSQLValue(&SQLres, nitems - 1, 0)) + 1;
 	  DpsSQLFree(&SQLres);
@@ -2906,13 +2922,17 @@ int DpsURLDataWrite(DPS_AGENT *Indexer, DPS_DB *db) {
 	  dps_snprintf(fname, PATH_MAX, "%s%s%s", vardir, DPSSLASHSTR, "searchd.pid");
 	  F = fopen(fname, "r");
 	  if (F != NULL) {
-	    int searchd_pid;
+	    int searchd_pid, rc;
 
-	    (void)fscanf(F, "%d", &searchd_pid);
+	    rc = fscanf(F, "%d", &searchd_pid);
 	    fclose(F);
-	  
-	    DpsLog(Indexer, DPS_LOG_EXTRA, "Sending HUP signal to searchd, pid:%d", searchd_pid);
-	    kill((pid_t)searchd_pid, SIGHUP);
+
+	    if (rc == 1) {
+	      DpsLog(Indexer, DPS_LOG_EXTRA, "Sending HUP signal to searchd, pid:%d", searchd_pid);
+	      kill((pid_t)searchd_pid, SIGHUP);
+	    } else {
+	      DpsLog(Indexer, DPS_LOG_ERROR, "Can't read pid from '%s'", fname);
+	    }
 	  }
 
 	  DpsLog(Indexer, DPS_LOG_INFO, "url data and limits Done");
@@ -3265,8 +3285,8 @@ static int DpsLogdCachedCheck(DPS_AGENT *A, DPS_DB *db, int level) {
     b = (z + bstart) % WrdFiles;
 
     /* To see the URL being indexed in "ps" output on xBSD */
-    if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] cached checkup %04x, %d of %d", A->handle, b, z + 1, WrdFiles);
-    DpsLog(A, DPS_LOG_EXTRA, "cached checkup %04x, %d of %d", b, z + 1, WrdFiles);
+    if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("[%d] cached checkup %04lx, %ld of %ld", A->handle, b, z + 1, WrdFiles);
+    DpsLog(A, DPS_LOG_EXTRA, "cached checkup %04x, %ld of %d", b, z + 1, WrdFiles);
 
     DpsBaseOptimize(&Q, (int)b);
     DpsBaseClose(&Q);
@@ -3630,7 +3650,9 @@ int DpsCacheConvert(DPS_AGENT *Indexer) {
     DpsClose(new_fd);
     DpsUnLock(old_fd);
     DpsClose(old_fd);
-    (void)system(command);
+    if (0 != system(command)) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "Error executing '%s'command", command);
+    }
     DpsLog(Indexer, DPS_LOG_INFO, "Done %s", filename);
   }
 
@@ -3661,7 +3683,9 @@ int DpsCacheConvert(DPS_AGENT *Indexer) {
     DpsClose(new_fd);
     DpsUnLock(old_fd);
     DpsClose(old_fd);
-    (void)system(command);
+    if (0 != system(command)) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "Error executing '%s' command", command);
+    }
     DpsLog(Indexer, DPS_LOG_INFO, "Done %s", filename);
   }
 
@@ -3692,7 +3716,9 @@ int DpsCacheConvert(DPS_AGENT *Indexer) {
     DpsClose(new_fd);
     DpsUnLock(old_fd);
     DpsClose(old_fd);
-    (void)system(command);
+    if (0 != system(command)) {
+      DpsLog(Indexer, DPS_LOG_ERROR, "Error executing '%s' command", command);
+    }
     DpsLog(Indexer, DPS_LOG_INFO, "Done %s", filename);
   }
 			  

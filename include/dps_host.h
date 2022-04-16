@@ -1,4 +1,5 @@
-/* Copyright (C) 2003-2005 Datapark corp. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
+   Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -19,9 +20,13 @@
 #ifndef _DPS_HOST_H
 #define _DPS_HOST_H
 
-extern int             DpsHostLookup(DPS_AGENT *, DPS_CONN *);
-extern void            DpsHostListFree(DPS_HOSTLIST *);
-extern int DpsResolverStart(DPS_AGENT *Indexer);
-extern int DpsResolverFinish(DPS_AGENT *Indexer);
+#include "dps_common.h"
+
+int             DpsHostLookup(DPS_AGENT *, DPS_CONN *);
+void            DpsHostListFree(DPS_HOSTLIST *);
+int DpsResolverStart(DPS_AGENT *Indexer);
+int DpsResolverFinish(DPS_AGENT *Indexer);
+void Read(int p, void* buf, size_t len);
+void Write(int p, const void* buf, size_t len);
 
 #endif

@@ -1698,12 +1698,12 @@ int DpsStoredCheck(DPS_AGENT *Agent, int ns, int sd, const char *Client) {
 		    return res;
 		}
 	    }
-	    if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Store %03X, %d lost records deleted", i, ndel);
+	    if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Store %03X, %ld lost records deleted", i, ndel);
 	    DpsLog(Agent, DPS_LOG_EXTRA, "Store %03X, %d lost records were deleted", i, ndel);
 	    totaldel += ndel;
 	    ndel = 0;
 	}
-	if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Total lost record(s) deleted: %d\n", totaldel);
+	if (DpsNeedLog(DPS_LOG_EXTRA)) dps_setproctitle("Total lost record(s) deleted: %ld\n", totaldel);
 	DpsLog(Agent, DPS_LOG_EXTRA, "Total lost record(s) were deleted: %d\n", totaldel);
 /*  for (z = dbfrom; z < dbto; z++) {
     db = (Agent->flags & DPS_FLAG_UNOCON) ? &Agent->Conf->dbl.db[z] : &Agent->dbl.db[z];

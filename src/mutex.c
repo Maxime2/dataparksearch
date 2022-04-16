@@ -44,9 +44,6 @@
 #include <sys/mman.h>
 #endif
 #include <sys/param.h>
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
 
 #ifdef HAVE_SYS_SEM_H
 #include <sys/sem.h>

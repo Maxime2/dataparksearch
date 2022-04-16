@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
    Copyright (C) 2004-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1124,7 +1124,7 @@ typedef struct dps_config_struct {
         DPS_FLAGS       Flags;
         dps_uint8           flags;
         DPS_URLDATA_FILE **URLDataFile;  /**< url data preloaded         */
-        char            *CharsToEscape; /**< characters to escape in output */
+        const char      *CharsToEscape; /**< characters to escape in output */
 	
 	/* Various file descriptors */
         int             logs_only;      /**< Cache mode writes mode            */

@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2021 Maxim Zakharov. All rights reserved.
    Copyright (C) 2006-2012 DataPark Ltd. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -117,7 +117,7 @@ int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, con
 }
 
 
-int DpsCookiesAddStr(DPS_AGENT *Indexer, DPS_URL *CurURL, const char *cookie_str, int insert_flag) {
+int DpsCookiesAddStr(DPS_AGENT *Indexer, DPS_URL *CurURL, char *cookie_str, int insert_flag) {
   char *part, *lpart;
   char *name = NULL;
   char *value = NULL;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2014 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2021 Maxim Zakharov. All rights reserved.
    Copyright (C) 2006 Datapark corp. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 
 extern int DpsCookiesAdd(DPS_AGENT *Indexer, const char *domain, const char * path, const char *name, const char *value, const char secure,
 			 dps_uint4 expires, const char from_config, int insert_flag);
-extern int DpsCookiesAddStr(DPS_AGENT *Indexer, DPS_URL *CurURL, const char *cookie_str, int insert_flag);
+extern int DpsCookiesAddStr(DPS_AGENT *Indexer, DPS_URL *CurURL, char *cookie_str, int insert_flag);
 extern void DpsCookiesFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc, const char *hostinfo);
 extern void DpsCookiesFree(DPS_COOKIES *Cookies);
 extern void DpsCookiesClean(DPS_AGENT *A);
