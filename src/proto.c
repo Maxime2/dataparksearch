@@ -1873,12 +1873,12 @@ static int DpsBuildHTTPRequest(DPS_DOCUMENT *Doc){
 		dps_strcat(Doc->Buf.buf, "://");
 		dps_strcat(Doc->Buf.buf, DPS_NULL2EMPTY(Doc->CurURL.hostinfo));
 		dps_strcat(Doc->Buf.buf, eurl);
-		dps_strcat(Doc->Buf.buf, " HTTP/1.0\r\n");
+		dps_strcat(Doc->Buf.buf, " HTTP/1.1\r\n");
 	}else{
 /*		sprintf(Doc->Buf.buf,"%s %s HTTP/1.0\r\n", method, eurl);*/
 		dps_strcpy(Doc->Buf.buf, method);
 		dps_strcat(Doc->Buf.buf, eurl);
-		dps_strcat(Doc->Buf.buf, " HTTP/1.0\r\n");
+		dps_strcat(Doc->Buf.buf, " HTTP/1.1\r\n");
 	}
 	DPS_FREE(eurl);DPS_FREE(url);
 	

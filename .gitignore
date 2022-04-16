@@ -10,6 +10,7 @@
 *~
 .deps/
 .libs/
+.idea/
 .svn
 Makefile
 autom4te.cache/
