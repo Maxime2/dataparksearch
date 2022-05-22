@@ -47,6 +47,7 @@
 #include "dps_guesser.h"
 #include "dps_match.h"
 #include "dps_signals.h"
+#include "dps_host.h"
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -2150,8 +2151,8 @@ int DpsPrepare(DPS_AGENT *query, DPS_RESULT *Res) {
 		      elements = aspell_word_list_elements(suggestions);
 		      if ((asug = (char*)aspell_string_enumeration_next(elements)) != NULL) {
 			tlen = dps_strlen(asug);
-			(void)write(rd[1], &tlen, sizeof(tlen));
-			(void)write(rd[1], asug, tlen);
+			Write(rd[1], &tlen, sizeof(tlen));
+			Write(rd[1], asug, tlen);
 		      }
 		      delete_aspell_string_enumeration(elements);
 		      close(2); /* close STDERR */
