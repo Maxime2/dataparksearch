@@ -1894,6 +1894,7 @@ What DBMS support do you want (you may select several):
   if test "$withval" != "no"; then
     MYSQL_INCLUDE=""
     MYSQL_LFLAGS=""
+    MYSQL_VERSION=""
   	if test "$withval" = "yes"; then
 
 		PATH_DIRS=`echo $PATH | tr : \ `
@@ -1909,6 +1910,7 @@ What DBMS support do you want (you may select several):
 		if test "$MYSQL_CONFIG" != ""; then
 			MYSQL_INCLUDE=`$MYSQL_CONFIG --include`
 			MYSQL_LFLAGS=`$MYSQL_CONFIG --libs`
+			MYSQL_VERSION=`$MYSQL_CONFIG --version`
 		elif test -f /usr/local/mysql/include/mysql/mysql.h; then
 			MYSQL_INCLUDE="-I/usr/local/mysql/include/mysql"
 			MYSQL_LFLAGS="-L/usr/local/mysql/lib/mysql -lmysqlclient"
@@ -1950,10 +1952,13 @@ What DBMS support do you want (you may select several):
 		fi
 	    	MYSQL_INCLUDE="-I$MYSQL_INCDIR"
     		MYSQL_LFLAGS="-L$MYSQL_LIBDIR -lmysqlclient"
+		if test "x$MYSQL_VERSION" = "x"; then
+		   MYSQL_VERSION=`grep MYSQL_SERVER_VERSION $MYSQL_INCDIR/mysql_version.h | sed -e's/"$//g' -e's/.*"//g'`
+		fi
    	fi
 
     AC_DEFINE(HAVE_DP_MYSQL)
-    AC_MSG_RESULT($withval)
+    AC_MSG_RESULT($withval ($MYSQL_VERSION))
     have_db=yes
     dnl MySQL requires -lm sometime
     AC_CHECK_FUNC(floor, , AC_CHECK_LIB(m, floor, MYSQL_LFLAGS="$MYSQL_LFLAGS -lm"))
@@ -1968,6 +1973,13 @@ What DBMS support do you want (you may select several):
     else
        DBTYPE="$DBTYPE-mysql"
     fi
+    AX_COMPARE_VERSION([$MYSQL_VERSION], [GE], ["8.0.0"],
+					 [
+					 if test "x$ac_cv_prog_cc_c99" = "xno" ; then
+					    AC_MSG_ERROR([C99 compiler is required for MySQL version $MYSQL_VERSION])
+					 fi
+					 ]
+					 )
 
   else
   	AC_MSG_RESULT(no)
