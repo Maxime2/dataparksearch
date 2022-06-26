@@ -14,6 +14,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
 */
+/* See https://people.eng.unimelb.edu.au/ammoffat/carry/ */
 /**************************************************************************
  *
  * word_coder.h -- tools for coding at word levels
