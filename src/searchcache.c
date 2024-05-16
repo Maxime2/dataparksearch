@@ -1,4 +1,5 @@
-/* Copyright (C) 2013-2022 Maxim Zakharov. All rights reserved.
+/*
+   Copyright (C) 2013-2024 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2011 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -16,6 +17,8 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
 */
+#define _GNU_SOURCE /* for DT_REG */
+
 #include "dps_common.h"
 #include "dps_utils.h"
 #include "dps_vars.h"
