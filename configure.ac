@@ -1,12 +1,12 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl
-AC_INIT([DataparkSearch Engine], [4.54-2017-09-05], [dataparksearch@googlegroups.com], [dpsearch])
-dnl AC_INIT([DataparkSearch Engine], [4.53], [dataparksearch@googlegroups.com], [dpsearch])
+AC_INIT([DataparkSearch Engine],[4.54-2017-09-05],[dataparksearch@googlegroups.com],[dpsearch])
+dnl AC_INIT([DataparkSearch Engine],[4.53],[dataparksearch@googlegroups.com],[dpsearch])
 AC_CONFIG_SRCDIR([TODO])
-AC_CANONICAL_SYSTEM
+AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
-AM_CONFIG_HEADER(include/dps_config.h)
+AC_CONFIG_HEADERS(include/dps_config.h)
 AC_PROG_MAKE_SET
 AC_CONFIG_MACRO_DIR([build/m4])
 PKG_PROG_PKG_CONFIG
@@ -41,14 +41,15 @@ AC_PREFIX_DEFAULT(/usr/local/dpsearch)
 dnl Check if build env is sane
 AM_SANITY_CHECK
 
-dnl Enable shared libs by default (to disable - place AM_DISABLE_SHARED)
-AC_PROG_LIBTOOL
-dnl AM_PROG_LIBTOOL
+dnl Enable shared libs by default (to disable - place AC_DISABLE_SHARED([]))
+LT_INIT
+dnl LT_INIT
+dnl LT_INIT
 AC_SUBST(LIBTOOL_DEPS)
 
 dnl Check for programs.
 AC_PROG_CC
-dnl AX_CHECK_CFLAGS([-std=c99 -pedantic])
+AX_CHECK_CFLAGS([-std=c99 -pedantic])
 AC_PROG_INSTALL
 
 AM_PROG_CC_C_O
@@ -91,7 +92,6 @@ case "$host" in
 esac
 
 dnl Checks for header files.
-AC_STDC_HEADERS
 AC_CHECK_HEADERS(sys/types.h fcntl.h unistd.h bsd/unistd.h sys/cdefs.h libutil.h bsd/libutil.h \
 sys/ioctl.h sys/time.h sys/times.h sys/param.h sys/wait.h limits.h sched.h \
 syslog.h select.h sys/select.h sys/socket.h arpa/inet.h sys/un.h netdb.h sys/sysctl.h sys/mman.h sys/shm.h \
@@ -122,11 +122,14 @@ AC_TYPE_LONG_LONG_INT
 PGAC_UNION_SEMUN
 # Check if we have socklen_t
 AC_CACHE_CHECK([for socklen_t], ac_cv_have_socklen_t,
-AC_TRY_COMPILE(
-[#include <sys/types.h>
-#include <sys/socket.h>],
-[socklen_t s;],
-ac_cv_have_socklen_t=yes, ac_cv_have_socklen_t=no))
+[AC_COMPILE_IFELSE(
+[AC_LANG_PROGRAM(
+[[
+#include <sys/types.h>
+#include <sys/socket.h>
+]],
+[[socklen_t s;]])],
+ac_cv_have_socklen_t=yes, ac_cv_have_socklen_t=no)])
 
 if test "$ac_cv_have_socklen_t" = "no"
 then
@@ -136,10 +139,15 @@ fi
 
 dnl Check for tm_gmtoff in struct tm
 AC_MSG_CHECKING(for tm_gmtoff in struct tm)
-AC_TRY_COMPILE([#include <time.h>],
-[struct tm tm;
+AC_COMPILE_IFELSE(
+[AC_LANG_PROGRAM(
+[[
+#include <time.h>
+]],
+[[
+struct tm tm;
 tm.tm_gmtoff=0;
-],
+]])],
 AC_DEFINE(HAVE_TM_GMTOFF)
 AC_MSG_RESULT(yes),
 AC_MSG_RESULT(no))
@@ -273,11 +281,11 @@ fi
 
 dnl Check for libc performance
 AC_MSG_CHECKING(for libc functions performance, please be patient)
-AC_RUN_IFELSE([AC_LANG_SOURCE([
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include "confdefs.h"
 #define DPS_CONFIGURE
 #include "src/dp.c"
-])], AC_MSG_RESULT(done), AC_MSG_FAILURE(unable to complete tests), AC_MSG_RESULT(cross-compiling?)
+]])], AC_MSG_RESULT(done), AC_MSG_FAILURE(unable to complete tests), AC_MSG_RESULT(cross-compiling?)
 )
 
 dnl Check for libraries
@@ -291,33 +299,50 @@ AC_LIBRARY_NET
 
 dnl Determine where getopt function denined
 AC_MSG_CHECKING(for getopt location)
-AC_TRY_LINK([#include <unistd.h>],
-[getopt(0, NULL, "h?");
-],
-	AC_MSG_RESULT(unistd.h),
-AC_TRY_LINK([#include <getopt.h>],
-[getopt(0, NULL, "h?");
-],
-	AC_DEFINE(HAVE_GETOPT_H)
-	AC_MSG_RESULT(getopt.h),
-	AC_MSG_RESULT(not found)
-	)
-	)
+AC_LINK_IFELSE(
+	[AC_LANG_PROGRAM([[
+	#include <unistd.h>
+	]],
+       [[getopt(0, NULL, "h?");]])],
+            AC_MSG_RESULT(unistd.h),
+
+	    AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM([[
+	    #include <getopt.h>
+	    ]],
+               [[getopt(0, NULL, "h?");]])],
+            AC_DEFINE(HAVE_GETOPT_H)
+	    AC_MSG_RESULT(getopt.h),
+            AC_MSG_RESULT(not found))
+	    )
+
 
 dnl Determine signal handling standard
-AC_TYPE_SIGNAL
-AC_MSG_CHECKING(for POSIX signals)
-AC_TRY_LINK([#include <signal.h>],
-[   sigset_t ss;
-    struct sigaction sa;
-    sigemptyset(&ss); sigsuspend(&ss);
-    sigaction(SIGINT, &sa, (struct sigaction *) 0);
-    sigprocmask(SIG_BLOCK, &ss, (sigset_t *) 0);
-],
-    AC_DEFINE(HAVE_POSIX_SIGNALS)
-    AC_MSG_RESULT(yes),
-    AC_MSG_RESULT(no))
+AC_CACHE_CHECK([return type of signal handlers],[ac_cv_type_signal],[AC_COMPILE_IFELSE(
+[AC_LANG_PROGRAM([[
+#include <sys/types.h>
+#include <signal.h>
+]],
+		 [[return *(signal (0, 0)) (0) == 1;]])],
+		   [ac_cv_type_signal=int],
+		   [ac_cv_type_signal=void])])
+AC_DEFINE_UNQUOTED([RETSIGTYPE],[$ac_cv_type_signal],[Define as the return type of signal handlers
+		    (`int' or `void').])
 
+AC_MSG_CHECKING(for POSIX signals)
+AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM([[
+	    #include <signal.h>
+	    ]],
+               [[   sigset_t ss;
+    	       	   struct sigaction sa;
+    		   sigemptyset(&ss); sigsuspend(&ss);
+    		   sigaction(SIGINT, &sa, (struct sigaction *) 0);
+    		   sigprocmask(SIG_BLOCK, &ss, (sigset_t *) 0);
+	       ]])],
+            AC_DEFINE(HAVE_POSIX_SIGNALS)
+    	    AC_MSG_RESULT(yes),
+            AC_MSG_RESULT(no))
 
 dnl check for memory model
 mcmodel=medium
@@ -370,46 +395,47 @@ sharedmem=no
 cok=no
 if test "$sharedmem" = no; then
 	AC_MSG_CHECKING(for POSIX shared memory library)
-	AC_TRY_LINK([
+	AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/mman.h>
-],
-[
- shm_open("/tmp", 0, 0644);
-], cok=yes 
-   sharedmem=posix
-   AC_DEFINE(HAVE_SHAREDMEM_POSIX)
-   AC_MSG_RESULT(ok)
-)
+	    ]],
+               [[shm_open("/tmp", 0, 0644);]])],
+            cok=yes 
+   	    sharedmem=posix
+   	    AC_DEFINE(HAVE_SHAREDMEM_POSIX)
+   	    AC_MSG_RESULT(ok)
+	)
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
-		LIBS="$LIBS -lc" 
-		AC_TRY_LINK([
+		LIBS="$LIBS -lc"
+		AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/mman.h>
-],
-[
- shm_open("/tmp", 0, 0644);
-], cok=yes 
-   sharedmem=posix
-   AC_DEFINE(HAVE_SHAREDMEM_POSIX)
-   AC_MSG_RESULT(-lc), 
-   LIBS="$ac_save_libs"
-)
+	    ]],
+               [[shm_open("/tmp", 0, 0644);]])],
+               			 cok=yes 
+   	       			 sharedmem=posix
+   	       			 AC_DEFINE(HAVE_SHAREDMEM_POSIX)
+   	       			 AC_MSG_RESULT(-lc), 
+   	       			 LIBS="$ac_save_libs"
+		)
 	fi
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
 		LIBS="$LIBS -lrt" 
-		AC_TRY_LINK([
+		AC_LINK_IFELSE([AC_LANG_PROGRAM(
+[[
 #include <sys/types.h>
 #include <sys/mman.h>
-],
-[
+]], [[
  shm_open("/tmp", 0, 0644);
-], cok=yes 
+]])],
+   cok=yes 
    sharedmem=posix
    AC_DEFINE(HAVE_SHAREDMEM_POSIX)
-   AC_MSG_RESULT(-lrt), 
+   AC_MSG_RESULT(-lrt),
    LIBS="$ac_save_libs"
 )
 	fi
@@ -417,47 +443,42 @@ fi
 
 if test "$sharedmem" = no; then
 	AC_MSG_CHECKING(for SystemV shared memory library)
-	AC_TRY_LINK([
+	AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/shm.h>
-],
-[
+]], [[
  shmat(1, 0, 0);
-],cok=yes
+]])],[cok=yes
   sharedmem=sysV
   AC_DEFINE(HAVE_SHAREDMEM_SYSV)
-  AC_MSG_RESULT(ok))
+  AC_MSG_RESULT(ok)],[])
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
 		LIBS="$LIBS -lc" 
-		AC_TRY_LINK([
+		AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/shm.h>
-],
-[
+]], [[
  shmat(1, 0, 0);
-],cok=yes 
+]])],[cok=yes 
   sharedmem=sysV
   AC_DEFINE(HAVE_SHAREDMEM_SYSV)
-  AC_MSG_RESULT(-lc), 
-  LIBS="$ac_save_libs"
-)
+  AC_MSG_RESULT(-lc)],[LIBS="$ac_save_libs"
+])
 	fi
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
 		LIBS="$LIBS -lrt" 
-		AC_TRY_LINK([
+		AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/shm.h>
-],
-[
+]], [[
  shmat(1, 0, 0);
-],cok=yes 
+]])],[cok=yes 
   sharedmem=sysV
   AC_DEFINE(HAVE_SHAREDMEM_SYSV)
-  AC_MSG_RESULT(-lrt), 
-  LIBS="$ac_save_libs"
-)
+  AC_MSG_RESULT(-lrt)],[LIBS="$ac_save_libs"
+])
 	fi
 fi 
 
@@ -479,24 +500,21 @@ if test "$syslog" != no; then
     AC_DEFINE(WITH_SYSLOG)
     if test "$syslog" != yes; then
 	AC_DEFINE_UNQUOTED(LOG_FACILITY, $syslog, syslog facility)
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 	    #include <sys/syslog.h>
 	    int main(void){
 	    openlog("Test", LOG_NDELAY, LOG_FACILITY);
 	    closelog();
 	    return 0;
 	}
-	],
-	AC_MSG_RESULT([enabled (will use $syslog facility)]),
-	[
+	]])],[AC_MSG_RESULT(enabled (will use $syslog facility))],[
 	AC_MSG_RESULT(error)
 	echo "You probably gave wrong facility argument ($syslog)"
 	echo "to --enable-syslog. This argument should be one defined in"
 	echo "/usr/include/sys/syslog.h, for example LOG_DAEMON or LOG_LOCAL7."
 	AC_MSG_ERROR([** Unknown syslog facility given **])
-	],
-	[echo $ac_n "cross compiling; assumed OK... $ac_c"]
-	)
+	],[echo $ac_n "cross compiling; assumed OK... $ac_c"
+	])
     else
 	AC_MSG_RESULT(enabled)
     fi
@@ -972,13 +990,11 @@ dnl    ac_save_cflags="$CFLAGS"
 dnl    LIBS="$LIBS $PTHREAD_LFLAGS $PTHREAD_LDADD"
 dnl    CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
 dnl    
-dnl    AC_TRY_LINK([#include <pthread.h>],
-dnl	[
+dnl    AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <pthread.h>]], [[dnl	
 dnl		pthread_attr_t type;
 dnl		pthread_attr_init(&type);
-dnl        ],AC_MSG_RESULT([yes]), 
-dnl          AC_MSG_ERROR([POSIX thread support not found])
-dnl    )
+dnl        ]])],[AC_MSG_RESULT(yes)],[dnl          AC_MSG_ERROR(POSIX thread support not found)
+dnl    ])
 dnl
 dnl    CFLAGS="$ac_save_cflags"
 dnl    LIBS="$ac_save_libs"
@@ -1235,24 +1251,27 @@ if test "$chasen" != no; then
 	CFLAGS="$CFLAGS -I/usr/local/include"
 	AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
 
-AC_TRY_LINK([#include <stdio.h>
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+#include <stdio.h>
 #include <chasen.h>
-],
-[       char            *chasen_argv[] = { "chasen", "-F \"%m \"", NULL };
+]],
+[[       char            *chasen_argv[] = { "chasen", "-F \"%m \"", NULL };
 	chasen_getopt_argv(chasen_argv, NULL);
-],
+]])],
 	AC_DEFINE(CHASEN)
 	AC_DEFINE(HAVE_CHARSET_japanese)
 	ADDCHARSETS="japanese"
 	AC_MSG_RESULT(yes),
 
 	LIBS="$LIBS -lstdc++"
-AC_TRY_LINK([#include <stdio.h>
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+[[
+#include <stdio.h>
 #include <chasen.h>
-],
-[       char            *chasen_argv[] = { "chasen", "-F \"%m \"", NULL };
+]],
+[[       char            *chasen_argv[] = { "chasen", "-F \"%m \"", NULL };
 	chasen_getopt_argv(chasen_argv, NULL);
-],
+]])],
 	AC_DEFINE(CHASEN)
 	AC_DEFINE(HAVE_CHARSET_japanese)
 	ADDCHARSETS="japanese"
@@ -1279,20 +1298,18 @@ if test "$mecab" != no; then
 	LIBS="$LIBS -L/usr/local/lib -lmecab -lstdc++"
 	CFLAGS="$CFLAGS -I/usr/local/include"
 
-AC_TRY_LINK([#include <stdio.h>
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[
+#include <stdio.h>
 #include <mecab.h>
-],
-[       char            *mecab_argv[] = { "mecab", "-F \"%m \" -E \" \" -B \" \" -Iline", NULL };
+]], [[       char            *mecab_argv[] = { "mecab", "-F \"%m \" -E \" \" -B \" \" -Iline", NULL };
 	mecab_t *m = mecab_new (2, mecab_argv);
-],
-	AC_DEFINE(MECAB)
+]])],[AC_DEFINE(MECAB)
 	AC_DEFINE(HAVE_CHARSET_japanese)
 	ADDCHARSETS="japanese"
 	MECAB_LFLAGS="-L/usr/local/lib -lmecab -lstdc++"
 	MECAB_INCLUDE="-I/usr/local/include"
 	AM_CPPFLAGS="$AM_CPPFLAGS -I/usr/local/include"
-	AC_MSG_RESULT(yes),
-	AC_MSG_RESULT(no))
+	AC_MSG_RESULT(yes)],[AC_MSG_RESULT(no)])
 
 	LIBS="$LIBS_SAVE"
 	CFLAGS="$CFLAGS_SAVE"
@@ -1306,7 +1323,7 @@ AC_SUBST(MECAB_INCLUDE)
 https=auto
 https_dir=yes
 dnl For compatibility with previous versions
-AC_ARG_WITH([openssl], AC_HELP_STRING([--with-openssl[=DIR]],
+AC_ARG_WITH([openssl], AS_HELP_STRING([--with-openssl[=DIR]],
 		       [Include Openssl support.  DIR is the Openssl
                         base install directory, defaults to /usr/local/ssl ]),
 	[ https_dir=$withval
@@ -1657,16 +1674,19 @@ AC_MSG_CHECKING([for Apache version])
 		AC_MSG_RESULT($APACHE_VER)
 		AC_MSG_CHECKING([for Apache version >=2.4])
         	CFLAGS="$CFLAGS `$APRCONFIG --includes`"
-		AC_TRY_COMPILE([
+		AC_COMPILE_IFELSE(
+			[AC_LANG_PROGRAM([[
 #include <httpd.h>
-#include <http_request.h>],
-[
+#include <http_request.h>
+				]],
+				[[
 request_rec *r;
 r->connection->client_ip[0] = 0;
-],
-		AC_DEFINE(APACHE2_4)
-		AC_MSG_RESULT([yes]),
-		AC_MSG_RESULT([no]))
+				]])],
+					AC_DEFINE(APACHE2_4)
+					AC_MSG_RESULT([yes]),
+            				AC_MSG_RESULT([no])
+		)
 
 
 	fi
@@ -2422,7 +2442,7 @@ AC_ARG_WITH(ibase,
 		dnl if echo $build_os | grep -q freebsdelf; then
 		dnl	RANLIB="$RANLIB -aout"
 		dnl	CFLAGS="$CFLAGS -aout"
-		dnl	AM_PROG_LIBTOOL
+		dnl	LT_INIT
 		dnl fi
 	fi
     if test "x$DBTYPE" = "x" ; then
@@ -2854,7 +2874,7 @@ AC_DEFINE_UNQUOTED(DPS_DBTYPE,"$DBTYPE")
 AC_SUBST(DBTYPE)
 CDIR=`pwd`
 AC_SUBST(CDIR)
-AC_OUTPUT(Makefile build/Makefile include/Makefile src/Makefile doc/Makefile etc/Makefile dnl
+AC_CONFIG_FILES(Makefile build/Makefile include/Makefile src/Makefile doc/Makefile etc/Makefile dnl
   misc/Makefile scripts/Makefile create/Makefile dnl
   dnl create/db2/Makefile 
   create/ibase/Makefile 
@@ -2868,6 +2888,7 @@ AC_OUTPUT(Makefile build/Makefile include/Makefile src/Makefile doc/Makefile etc
   scripts/dps-config scripts/run-splitter dnl
 dnl  build/dpsearch.spec
   perl/Makefile.PL test/Makefile)dnl php/Makefile)
+AC_OUTPUT
 
 
 if test "$have_db" != "yes"; then

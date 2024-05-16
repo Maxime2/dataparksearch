@@ -1,4 +1,6 @@
-dnl Copyright (c) 2005,2011 DataPark Ltd. All reserved.
+dnl  Copyright (c) 2024 dpSearch Pty Ltd. All rights reserved.
+dnl
+dnl  Copyright (c) 2005, 2011 DataPark Ltd. All rights reserved.
 dnl
 dnl  Copyright (c) 1999, 2000 Sascha Schumann. All rights reserved.
 dnl 
@@ -34,15 +36,18 @@ dnl Check whether the current setup can use POSIX threads calls
 dnl
 AC_DEFUN([PTHREADS_CHECK_COMPILE], [
 dnl it was AC_TRY_RUN below
-AC_TRY_COMPILE( [
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+[
 #include <pthread.h>
-#include <stddef.h>],[
+#include <stddef.h>
+],[
 
     pthread_t thd;
     pthread_mutexattr_t mattr;
     pthread_mutexattr_init(&mattr);
     return pthread_create(&thd, NULL, NULL, NULL);
-  ], [ 
+  ])],
+  [
   pthreads_working="yes"
   ], [
   pthreads_working="no"
@@ -50,7 +55,8 @@ AC_TRY_COMPILE( [
 dnl
 dnl PTHREADS_CHECK_LINK
 AC_DEFUN([PTHREADS_CHECK_LINK], [
-AC_TRY_LINK( [
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+[
 #include <pthread.h>
 ] ,
 [
@@ -61,7 +67,8 @@ AC_TRY_LINK( [
 	pthread_cleanup_push(0,0);
 	pthread_create(0,0,0,0);
 	pthread_cleanup_pop(0);
-], pthreads_working="yes", 
+])],
+   pthreads_working="yes",
    pthreads_working="no"
 ) ] )dnl
 dnl
