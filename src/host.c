@@ -18,6 +18,9 @@
 */
 
 #include "dps_common.h"
+#if defined(HAVE_GETADDRINFO)
+#define _POSIX_C_SOURCE 200112L
+#endif
 #include "dps_socket.h"
 #include "dps_host.h"
 #include "dps_proto.h"
