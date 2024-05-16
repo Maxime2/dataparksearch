@@ -496,7 +496,7 @@ static sigset_t accept_previous_mask;
 
 void DpsAcceptMutexCleanup(void) {
     if (accept_mutex != (dps_mutex_t *)-1
-	&& munmap((caddr_t) accept_mutex, sizeof(*accept_mutex))) {
+	&& munmap((void *) accept_mutex, sizeof(*accept_mutex))) {
 	perror("munmap");
     }
     accept_mutex = (dps_mutex_t *)-1;
@@ -545,7 +545,7 @@ void DpsAcceptMutexInit(const char *var_dir, const char *app) {
 	perror("open(/dev/zero)");
 	exit(DPS_ERROR);
     }
-    accept_mutex = (dps_mutex_t *) mmap((caddr_t) 0, sizeof(*accept_mutex),
+    accept_mutex = (dps_mutex_t *) mmap((void *) 0, sizeof(*accept_mutex),
 				 PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (accept_mutex == (dps_mutex_t *) -1) {
 	perror("mmap /dev/zero");
