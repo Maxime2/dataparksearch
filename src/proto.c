@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2016 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2024 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1672,14 +1672,14 @@ static int DpsFILEGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc){
 
 	/* If directory is given without ending "/"   */
 	/* we must redirect to the same URL with "/"  */
-	if((sb.st_mode&S_IFDIR)&&(filename[dps_strlen(filename)-1]!='/')){
+	if (S_ISDIR(sb.st_mode) && (filename[dps_strlen(filename)-1] != '/')) {
 		status=301;
 		sprintf(Doc->Buf.buf,"HTTP/1.0 %d %s\r\nLocation: file:%s/\r\n\r\n",status,DpsHTTPErrMsg(status),filename);
 		Doc->Buf.size=dps_strlen(Doc->Buf.buf);
 		return 0;
 	}
 	
-	if(sb.st_mode&S_IFDIR){
+	if (S_ISDIR(sb.st_mode)) {
 
 		if((dir=opendir(openname))){
 		        DPS_HREF Href;
@@ -1705,7 +1705,7 @@ static int DpsFILEGet(DPS_AGENT *Indexer,DPS_DOCUMENT *Doc){
 					DpsLog(Indexer, DPS_LOG_EXTRA, "Can't stat '%s'", newfilename);
 					is_dir = 0;
 				} else { 
-					is_dir = ((sb1.st_mode&S_IFDIR) > 0);
+				        is_dir = S_ISDIR(sb1.st_mode);
 				}
 				
 				e=escaped_name;

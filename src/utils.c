@@ -1,4 +1,4 @@
-/* Copyright (C) 2013-2021 Maxim Zakharov. All rights reserved.
+/* Copyright (C) 2013-2024 Maxim Zakharov. All rights reserved.
    Copyright (C) 2003-2012 DataPark Ltd. All rights reserved.
    Copyright (C) 2000-2002 Lavtech.com corp. All rights reserved.
 
@@ -1965,7 +1965,7 @@ int DpsBuild(const char *path, int omode) {
 				break;
 			}
 		}
-		else if ((sb.st_mode & S_IFMT) != S_IFDIR) {
+		else if (! S_ISDIR(sb.st_mode)) {
 			if (last)
 				errno = EEXIST;
 			else
