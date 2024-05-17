@@ -24,9 +24,9 @@
 </note>
 </para>
 <para>
-Индекс слов находится в файлах, расположенных в поддиректории <filename>/var/tree</filename> относительно корневой 
+Индекс слов находится в файлах, расположенных в поддиректории <filename>/var/tree</filename> относительно корневой
 директории установки <application>DataparkSearch</application>.
-Вспомогательная информация о документах храниится в файлах, расположенных в поддиректории 
+Вспомогательная информация о документах храниится в файлах, расположенных в поддиректории
 <filename>/var/url</filename> относительно корневой  директории установки <application>DataparkSearch</application>. </para>
 
 <para><indexterm><primary>Команда</primary><secondary>CacheLogWords</secondary></indexterm><indexterm><primary>Команда</primary><secondary>CacheLogDels</secondary></indexterm>
@@ -52,7 +52,7 @@ Volume = WrdFiles * (32 + 20 * CacheLogWords + 12 * CacheLogDels), для 64-битных
 и в новом режиме, в котором объединены функции <command>cachelogd</command> и <command>splitter</command>.</para>
 
 <para> <command>splitter</command> - программа создания индексов слов для быстрого поиска на основе записей,
-сделаных <command>cached</command> при работе в старом режиме. Эти индексы слов и используются в дальнейшем 
+сделаных <command>cached</command> при работе в старом режиме. Эти индексы слов и используются в дальнейшем
 при обработке запросов на поиск.</para>
 
 	</sect2>
@@ -91,11 +91,11 @@ Volume = WrdFiles * (32 + 20 * CacheLogWords + 12 * CacheLogDels), для 64-битных
 
 				<para>
 					<userinput>
-./cached -p8000 
+./cached -p8000
 </userinput>
 				</para>
 				<para>где <literal>8000</literal> - номер порта по вашему выбору.</para>
-				<para>Вы также можете указать другую директорию для записи информации 
+				<para>Вы также можете указать другую директорию для записи информации
 (по умолчанию это поддиректория <literal>/var</literal>) выдав такую команду:</para>
 
 				<para>
@@ -117,7 +117,7 @@ Volume = WrdFiles * (32 + 20 * CacheLogWords + 12 * CacheLogDels), для 64-битных
 проводить ускоренное распределенное индексирование.
 </para>
 			</listitem>
-<listitem><para>Сброс буферов <application>cached</application> и данных об url, а также создание лимитов 
+<listitem><para>Сброс буферов <application>cached</application> и данных об url, а также создание лимитов
 по завершении процесса индексирования.
 Пошлите сигнал -HUP для <filename>cached</filename>.
 Вы можете использовать файл <filename>cached.pid</filename> для этого:</para>
@@ -156,9 +156,9 @@ kill -HUP `cat /usr/local/dpsearch/var/cached.pid`
 		<title>Использование нескольких <command>splitter</command> одновременно</title>
 		<para><command>splitter</command> имеет два ключа:
 <option>-f [first file] -t [second file]</option>, задающих границы обрабатываемых файлов.
-Если эти параметры не указаны, <command>splitter</command> последовательно обрабатывает все 
+Если эти параметры не указаны, <command>splitter</command> последовательно обрабатывает все
 приготовленные файлы. Вы можете ограничить обрабатываемое количество задав ключами
--f и -t параметры в  HEX нотации. Например, 
+-f и -t параметры в  HEX нотации. Например,
 <command>splitter -f 000 -t A00</command> создаст индекс слов только из фалёлов с диапазона с 000 по A00.
 Используя эти ключи можно запускать одновременно несколько <command>splitter</command>. Что обычно позволяет ускорить
 создание общего индекса. Например, этот шеловский скрипт запускает в фоне четыре <command>splitter</command>:
@@ -196,12 +196,12 @@ run-splitter -k -s
 
 		<orderedlist numeration="arabic">
 			<listitem>
-				<para>Посылка сигнала -HUP к cached. 
+				<para>Посылка сигнала -HUP к cached.
 Этому соответствует парамет <literal>--hup</literal> (или <literal>-k</literal>).</para>
 
 			</listitem>
 			<listitem>
-				<para>Запуск <command>splitter</command>. 
+				<para>Запуск <command>splitter</command>.
 Этому соответсвует параметр <literal>--split</literal>  (или <literal>-s</literal>).</para>
 			</listitem>
 		</orderedlist>
@@ -228,7 +228,7 @@ run-splitter -k -s
 <title>Использование лимитов при поиске</title>
 <para><indexterm><primary>Команда</primary><secondary>Limit</secondary></indexterm>
 Для применения лимитов при поиске с использование способа хранения cache,
-необходимо добавить соответсвующие команды <command>Limit</command> в ваши <filename>indexer.conf</filename> 
+необходимо добавить соответсвующие команды <command>Limit</command> в ваши <filename>indexer.conf</filename>
 (или <filename>cached.conf</filename>, если используется <command>cached</command>) и
 <filename>search.htm</filename> или <filename>searchd.conf</filename> (если используется <command>searchd</command>).
 <synopsis>

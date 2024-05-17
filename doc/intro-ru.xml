@@ -4,7 +4,7 @@
 	<para>
 		<application>DataparkSearch</application> является поисковым движком, использующим SQL, и предназначенным для
 организации поиска на одном или многих веб-серверах.
-<application>DataparkSearch</application> состоит из двух частей. Первая часть - индексирующий механизм 
+<application>DataparkSearch</application> состоит из двух частей. Первая часть - индексирующий механизм
 (<command>indexer</command>). <command>Indexer</command> пробегает по ссылкам и сохраняет в базе данных
 все найденные слова и новые ссылки.
 Вторая часть состоит из CGI-программы, предоставляющей возможность поиска в данных, собраенных <command>indexer</command>ом.
@@ -19,7 +19,7 @@
 
 	<para><indexterm><primary>Changelog</primary></indexterm>
 Последние изменения можно найти <ulink url="http://www.dataparksearch.org/ChangeLog">на нашем web-сервере</ulink>.</para>
-	
+
 	<para><indexterm><primary>Twitter</primary></indexterm>
 Оперативная информация об изменениях в DatapakSearch доступна в Твиттере: <ulink url="http://twitter.com/dataparksearch">@dataparksearch</ulink>.</para>
 
@@ -32,7 +32,7 @@
 			<listitem>
 				<para>Поддержка MySQL (требуется библиотека <literal>libz</literal>),
 PostgreSQL, <!--mySQL,--> <!--Solid,--> iODBC, unixODBC, EasySoft
-ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (см. <xref linkend="oracle"/>), 
+ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (см. <xref linkend="oracle"/>),
 <!--SyBase,--> MS SQL<!--, SAPDB SQL--><!--, DB2 (см. <xref linkend="db2"/>)--> SQL-серверов.</para>
 
 			</listitem>
@@ -131,10 +131,10 @@ ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (см. <xref linkend="oracle"
 		<title>Где взять <application>DataparkSearch</application>
                  <indexterm><primary>Где взять <application>DataparkSearch</application></primary></indexterm>
                 </title>
-		<para>Последняя версия <application>DataparkSearch</application> доступна на 
+		<para>Последняя версия <application>DataparkSearch</application> доступна на
 <ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>.</para>
 
-<para><application>DataparkSearch</application> также доступен в репозитории 
+<para><application>DataparkSearch</application> также доступен в репозитории
  <ulink url="http://www.t2-project.org/packages/dpsearch.html">T2 Linux SDE</ulink>.
 </para>
 
@@ -156,7 +156,7 @@ Public License) опубликованной Фондом Свободного ПО (Free Software Foundation); 
 
 		<para>Эта программа распространяется в надежде, что она будет вам полезна, но БЕЗ КАКОЙ ЛИБО-ГАРАНТИИ; даже без подразумеваемой гарантии КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ОПРЕДЕЛЕННОЙ ЦЕЛИ. См. подробности в Общей публичной лицензии GNU.</para>
 
-		<para>Вы должны были получить копию Общей публичной лицензии GNU вместе с копией этой программы; если это не так, обратитесь в Фонд свободного программного обеспеченияя по адресу: 
+		<para>Вы должны были получить копию Общей публичной лицензии GNU вместе с копией этой программы; если это не так, обратитесь в Фонд свободного программного обеспеченияя по адресу:
 Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 02111-1307 USA </para>
 
@@ -185,7 +185,7 @@ Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
 </para>
 <para>
 	<author><firstname>Amit</firstname><surname>Joshi</surname></author>:
-Тестирование на <application>CentOS</application>, пэкадж для <application>Debian</application>, 
+Тестирование на <application>CentOS</application>, пэкадж для <application>Debian</application>,
 идею по улучшению работы на нескольких PC и с несколькими DBAddr.
 </para>
 

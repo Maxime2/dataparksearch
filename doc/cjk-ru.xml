@@ -13,7 +13,7 @@
 <indexterm><primary>Команда</primary><secondary>ResegmentKorean</secondary></indexterm>
 <indexterm><primary>Команда</primary><secondary>ResegmentThai</secondary></indexterm>
 Иногда для красоты, текст на китайском, японском, корейском или тайском языке набирается с пробелом между каждым иероглифом.
-В этом случае для индексирования таких текстов, вы можете использовать команды <command>"ResegmentChinese yes"</command>, 
+В этом случае для индексирования таких текстов, вы можете использовать команды <command>"ResegmentChinese yes"</command>,
 <command>"ResegmentJapanese yes"</command>, <command>"ResegmentKorean yes"</command> or <command>"ResegmentThai yes"</command>.
 При включенном ресегментировании все пробелы между символами в тексте убираются, а затем весь текст целиком обрабатывается
 сегментерами DataparkSearch (см. ниже).
@@ -50,7 +50,7 @@ MeCab</ulink></application>.
 Для включения поддержки сегментера фраз на китайском языке, необходимо при сборке <application>DataparkSearch</application>
 включить поддержку кодировки <literal>GB2312</literal>, если будет использоваться словарь упрощенного
 китайского <filename>mandarin.freq</filename>, или кодировки <literal>Big5</literal>, если будет использоваться
-словарь традиционного китайского <filename>TraditionalChinese.freq</filename>, 
+словарь традиционного китайского <filename>TraditionalChinese.freq</filename>,
 а также указать в <filename>indexer.conf</filename> при помощи команды
 <indexterm><primary>Команда</primary><secondary>LoadChineseList</secondary></indexterm>
 <command>LoadChineseList</command> частотный словарь слов китайского языка для загрузки.

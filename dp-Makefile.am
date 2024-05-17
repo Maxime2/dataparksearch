@@ -1,11 +1,11 @@
-## Process this file with automake to produce Makefile.in 
+## Process this file with automake to produce Makefile.in
 ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = foreign no-installinfo dist-bzip2 no-dist-gzip
 SUBDIRS = src
 
 # copy dirs w/out Makefile.am into dist
 dist-hook:
-	rm -f $(distdir)/include/dps_config.h $(distdir)/include/stamp.h 
+	rm -f $(distdir)/include/dps_config.h $(distdir)/include/stamp.h
 
 install-data-local:
 	$(mkinstalldirs) $(localstatedir)
@@ -29,4 +29,3 @@ EXTRA_DIST = LICENSE bootstrap
 
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
-

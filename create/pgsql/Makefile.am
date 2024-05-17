@@ -1,7 +1,7 @@
 EXTRA_DIST= blob.pgsql crc-multi.txt crc.txt create.txt \
  cross-crc.txt cross.txt drop.crc-multi.txt \
  drop.crc.txt drop.cross-crc.txt drop.cross.txt \
- drop.multi.txt drop.txt grant.txt multi.txt 
+ drop.multi.txt drop.txt grant.txt multi.txt
 
 all: create drop
 
@@ -83,4 +83,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/pgsql/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/pgsql
-

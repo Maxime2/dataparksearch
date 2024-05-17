@@ -12,14 +12,14 @@ $dbtype='mysql';
 
 
 # name of root to add if database is empty
-$root_name='Home'; 
+$root_name='Home';
 
 # Relative path with leading slash where unknown.gif and folder.gif located maybe empty)
-$images_path='/icons/'; 
+$images_path='/icons/';
 
 # tree filling strategy : 0 - new records always inserted at the end of tree (old behavior)
-#                         1 - new records inserted in first empty slot (new optimal strategy, DEFAULT) 
-$fill=1; 
+#                         1 - new records inserted in first empty slot (new optimal strategy, DEFAULT)
+$fill=1;
 
 # debug output (0-no, 1-yes)
 $DEBUG=0;

@@ -197,4 +197,4 @@
 /*	{"EST", -1, 10 * 3600},*/		/*	Eastern Standard Time	Australia	UTC + 10 hours*/
 /*	{"EST", -1, 11 * 3600},*/		/*	Eastern Summer Time	Australia	UTC + 11 hours*/
 /*	{"WST", -1, 9 * 3600},*/		/*	Western Summer Time	Australia	UTC + 9 hours*/
-/*****/	
+/*****/

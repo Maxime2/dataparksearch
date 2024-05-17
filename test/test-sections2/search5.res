@@ -58,16 +58,16 @@
              <A HREF="http://site/index.html" TARGET="_blank">http://site/index.html</A>
              <font color="#008800">
               - 1238 bytes [text/html]
-              - 
+              -
 	      	      <DD><small>[<a href="/cgi-bin/storedoc.cgi?rec_id=1517159580&amp;label=&amp;DM=Tue%2C+07+Jun+2016%2C+16%3A39%3A59+AEST&amp;DS=1238&amp;L=en&amp;CS=ISO-8859-1&amp;DU=http%3A%2F%2Fsite%2Findex.html&amp;CT=text%2Fhtml&amp;q=xtternal">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?np=0&amp;q=xtternal&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -95,16 +95,16 @@
              <A HREF="http://site2/test2.html" TARGET="_blank">http://site2/test2.html</A>
              <font color="#008800">
               - 90 bytes [text/html]
-              - 
+              -
 	      	      <DD><small>[<a href="/cgi-bin/storedoc.cgi?rec_id=1724132984&amp;label=&amp;DM=Tue%2C+31+May+2016%2C+16%3A47%3A45+AEST&amp;DS=90&amp;L=en&amp;CS=ISO-8859-1&amp;DU=http%3A%2F%2Fsite2%2Ftest2.html&amp;CT=text%2Fhtml&amp;q=xtternal">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?np=0&amp;q=xtternal&amp;site=1593274963">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

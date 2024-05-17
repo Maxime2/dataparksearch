@@ -86,7 +86,7 @@ mysql://foo:bar@localhost/dpsearch/?socket=/tmp/mysql.sock
 сравнению с режимами "<option>single</option>" и "<option>multi</option>",
 однако он не поддерживает поиск подстрок.
 Режим "<option>crc-multi</option>" использует туже самую структуру, как и режим "<option>crc</option>", но еще сохраняет
-идетификаторы слов в различных таблицах (файлах) в зависимости от длины этих слов, аналогично режиму 
+идетификаторы слов в различных таблицах (файлах) в зависимости от длины этих слов, аналогично режиму
 "<option>multi</option>". По умолчанию используется режим "<option>single</option>".
 </para>
 
@@ -158,7 +158,7 @@ NewsExtensions yes
 <indexterm><primary>Команда</primary><secondary>SyslogFacility</secondary></indexterm>
 <para> Может быть использована, если <application>Datapark</application> был скомпилировал
 с поддержкой <literal>syslog</literal> и вы хотите изменить значение по умолчанию.
-Задаваемое значение должно быть одним из описаных в файле <filename>syslog.conf</filename>. 
+Задаваемое значение должно быть одним из описаных в файле <filename>syslog.conf</filename>.
 См. syslog.conf(5).
 <programlisting>
 SyslogFacility local7
@@ -227,7 +227,7 @@ URLSelectCacheSize 10240
 <title>Команда <command>URLDumpCacheSize</command></title>
 <indexterm><primary>Команда</primary><secondary>URLDumpCacheSize</secondary></indexterm>
 <para>Задаёт число документов отбираемых за раз для записи индексов cache mode, загрузки данных в <command>searchd</command> или
-для расчёта индекса популярности. 
+для расчёта индекса популярности.
 Значение по умолчанию: 100000.
 <programlisting>
 URLDumpCacheSize 10240
@@ -274,10 +274,10 @@ Allow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... 
 Первые три необязательных параметра задают тип сравнения.
 Значения по умолчанию: Match, NoCase, String.
 Используйте <option>NoCase</option> или <option>Case</option> чтобы указать чувтсвительное или нечувствительное к регистру сравнение.
-Используйте <option>Regex</option> чтобы выбрать сравнение на основе регулярного выражения. 
+Используйте <option>Regex</option> чтобы выбрать сравнение на основе регулярного выражения.
 Используйте <option>String</option> чтобы задать сравнение по текстовому шаблону с использование спецсимволов.
 Возможные спецсимволы: '*' - для обозначения любого числа символов и '?' - для обозначения одного символа.
-Обратите внимание, что символы '?' и '*' имеют специальное значение при указатии тпа сравнения <option>String</option>. 
+Обратите внимание, что символы '?' и '*' имеют специальное значение при указатии тпа сравнения <option>String</option>.
 Вы можете использовать <option>Regex</option> для описания документов, содержащих символы '?' и/или '*' в URL.
 <option>String</option> намного быстрее <option>Regex</option>. Используйте <option>String</option> где это возможно.
 Вы можете задавать несколько аргументов для одной команды <command>Allow</command>.
@@ -317,7 +317,7 @@ Disallow NoMatch *.udm.net/*
 Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
 # Exclude cgi-bin and non-parsed-headers using "string" match:
 Disallow */cgi-bin/* *.cgi */nph-*
-# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# Exclude anything with '?' sign in URL. Note that '?' sign has a
 # special meaning in "string" match, so we have to use "regex" match here:
 Disallow Regex  \?
 </programlisting>
@@ -415,7 +415,7 @@ CheckMP3Only *.bin *.mp3
 IndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
 </programlisting>
 <para>
-Эта команда служит для разрешения индексирования при совпадении шаблона <option>arg</option> 
+Эта команда служит для разрешения индексирования при совпадении шаблона <option>arg</option>
 по заданой секции <option>section</option> документа.
 Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
 (см. <xref linkend="allow_cmd"/>).
@@ -436,7 +436,7 @@ IndexIf body "*important detail*"
 NoIndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
 </programlisting>
 <para>
-Эта команда служит для запрещения индексирования при совпадении шаблона <option>arg</option> 
+Эта команда служит для запрещения индексирования при совпадении шаблона <option>arg</option>
 по заданой секции <option>section</option> документа.
 Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
 (см. <xref linkend="allow_cmd"/>).
@@ -458,7 +458,7 @@ AllowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt;
 </programlisting>
 <para>
 Эта команда аналогчна команде <command>Allow</command>
-(см. <xref linkend="allow_cmd"/>), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда разрешает присутствие документа в поисковой базе при совпадении шаблона <option>arg</option> 
+(см. <xref linkend="allow_cmd"/>), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда разрешает присутствие документа в поисковой базе при совпадении шаблона <option>arg</option>
 по заданой секции <option>section</option> документа.
 Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>.
 </para>
@@ -479,7 +479,7 @@ DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&
 </programlisting>
 <para>
 Эта команда аналогчна команде <command>Disallow</command>
-(см. <xref linkend="disallow_cmd"/>), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда удаляет документ из поисковой базы базе при совпадении шаблона <option>arg</option> 
+(см. <xref linkend="disallow_cmd"/>), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда удаляет документ из поисковой базы базе при совпадении шаблона <option>arg</option>
 по заданой секции <option>section</option> документа.
 Значение первых трёх необязательных параметров такое же как и у команды <command>Allow</command>
 (см. <xref linkend="allow_cmd"/>).
@@ -578,18 +578,18 @@ Period &lt;time&gt;
 </programlisting>
 <para>
 Задаёт период переиндексирования.
-&lt;time&gt; указывается в формате 'xxxA[yyyB[zzzC]]'                                   
- (пробелы допустимы между xxx и A и yyy и т.д)                     
-   здесь xxx, yyy, zzz - числа (возможно отризательные!)                         
-         A, B, C могут быть одним из следующего:                                 
-		s - секунда                                                      
-		M - минута                                                      
-		h - час                                                        
-		d - день                                                         
-		m - месяц                                                       
-		y - год                                                        
+&lt;time&gt; указывается в формате 'xxxA[yyyB[zzzC]]'
+ (пробелы допустимы между xxx и A и yyy и т.д)
+   здесь xxx, yyy, zzz - числа (возможно отризательные!)
+         A, B, C могут быть одним из следующего:
+		s - секунда
+		M - минута
+		h - час
+		d - день
+		m - месяц
+		y - год
       (эти символы такие же как и для функций strptime/strftime).
-                                                                              
+
 Примеры:
 <programlisting>
  15s - 15 секунд
@@ -615,7 +615,7 @@ Period 7d
 <programlisting>
 PeriodByHops &lt;hops&gt; [ &lt;time&gt; ]
 </programlisting>
-<para>Задаёт период переиндексирования для страниц зо значением глубины в &quot;мышиных кликах&quot; равным &lt;hops&gt;. 
+<para>Задаёт период переиндексирования для страниц зо значением глубины в &quot;мышиных кликах&quot; равным &lt;hops&gt;.
 Формат для &lt;time&gt; такой же как и для команды <command>Period</command>.
 </para>
  <para>
@@ -635,7 +635,7 @@ PeriodByHops &lt;hops&gt; [ &lt;time&gt; ]
 <programlisting>
 ExpireAt [ A [ B [ C [ D [ E ]]]]]
 </programlisting>
-<para>Эта команда позволяет задать точное время устаревания документов. 
+<para>Эта команда позволяет задать точное время устаревания документов.
 Может задаваться для каждой команда Server/Realm в отдельности, действует до конца файла конфигурации или до следующей
 команды <command>ExpireAt</command>.
 <command>ExpireAt</command> указаная без аргументов означает отмену всех ранее указаных значений.
@@ -652,7 +652,7 @@ D - обозначает месяц, может быть * или 1-12; E - обозначает день недели, может б
 <programlisting>
 UseDateHeader yes|no|force
 </programlisting>
-<para>Использовать ли заголовок ответа сервера Date если в ответе сервера не содержится заголовок Last-Modified. 
+<para>Использовать ли заголовок ответа сервера Date если в ответе сервера не содержится заголовок Last-Modified.
 Если указано значение force, то заголовок Date используется даже если сервер отправляет заголовок Last-Modified.
 Значение по-умолчанию: no.
 </para>
@@ -667,7 +667,7 @@ UseDateHeader yes|no|force
 LMDSection &lt;section name&gt;
 </programlisting>
 <para>Эта команда задают секцию документа, которая будет использоваться в качестве даты последней модификации документа вместо HTTP-заголовка Last-Modified, отдаваемого удаленным сервером.
-Может задаваться неоднократно перед каждой командой <command>Server</command> и последнее установленное значение имеет эффект до конца файла конфигурации или до следующей команды <command>LMDSection</command>. 
+Может задаваться неоднократно перед каждой командой <command>Server</command> и последнее установленное значение имеет эффект до конца файла конфигурации или до следующей команды <command>LMDSection</command>.
 Значение по умолчанию не определено. Используйте эту команду без какого-либо аргумента, чтобы вернуться к значению по умолчанию.
 Если значение заданной этой командой секции не определено, будет использоваться значение HTTP-заголовка Last-Modified.
 </para>
@@ -865,7 +865,7 @@ Section &lt;string&gt; &lt;number&gt; &lt;maxlen&gt; [strict] [ &lt;pattern&gt; 
 от 0 до 255. Используйте 0 если вы не хотите индексировать какую-либо секцию.
 Лучше всего использовать различные ID для разных секций. В этом случае вы сможете во время поиска задавать различные веса
 конретным секциям, или же исключать их из результатов поиска.
-Параметр <option>&lt;maxlen&gt;</option>  задаёт максимальный размер секции, который будет сохранён в базе 
+Параметр <option>&lt;maxlen&gt;</option>  задаёт максимальный размер секции, который будет сохранён в базе
 (хотя сама секция будет проиндексирована целиком). Используйте 0, если вы не хотите сохранять в базе значение секции.
 <option>&lt;pattern&gt;</option> и <option>&lt;replacement&gt;</option> - шаблон и замена, аналогичная используемым в regex,
 для извления значения секции из тела документа.</para>
@@ -910,7 +910,7 @@ HrefSection     NewLink "&lt;newlink&gt;([^&lt;]*)&lt;/newlink&gt;" "$1"
 <sect2 id="FastHrefCheck">
 <title>Команда <command>FastHrefCheck</command></title>
 <indexterm><primary>Команда</primary><secondary>FastHrefCheck</secondary></indexterm>
-<para>Команда "<command>FastHrefCheck yes</command>" полезна для ускорения индексирования, если ваш список команд <command>Server/Realm/Subnet</command> огромен, 
+<para>Команда "<command>FastHrefCheck yes</command>" полезна для ускорения индексирования, если ваш список команд <command>Server/Realm/Subnet</command> огромен,
 т.к. она выключает проверку ссылок по списку серверов на этапе парсинга страницы.
 </para>
 </sect2>
@@ -947,7 +947,7 @@ ProxyAuthBasic login:passwd
 Может также использовать перед командой <command>Proxy</command>.
 Примеры:
 <programlisting>
-ProxyAuthBasic somebody:something  
+ProxyAuthBasic somebody:something
 </programlisting>
 </para>
 </sect2>
@@ -989,7 +989,7 @@ AuthBasic login:passwd
 Может быть указана перед каждой командой <command>Server</command>, но действует только для этой команды!.
 Примеры:
 <programlisting>
-AuthBasic somebody:something  
+AuthBasic somebody:something
 
 # If you have password protected directory(ies), but whole server is open,use:
 AuthBasic login1:passwd1
@@ -1009,7 +1009,7 @@ Server http://my.server.com/
 ServerWeight &lt;number&gt;
 </programlisting>
 <para>
-Задаёт вес Server для расчёта Popularity Rank (см. <xref linkend="poprank"/>). 
+Задаёт вес Server для расчёта Popularity Rank (см. <xref linkend="poprank"/>).
 Значение по умолчанию: 1.
 <programlisting>
 ServerWeight 1

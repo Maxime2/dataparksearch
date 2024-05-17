@@ -80,9 +80,9 @@ Category FFAABBCCDD
 CategoryIf &lt;category&gt; [Match|NoMatch] [NoCase|Case] [String|Regex] [loose] &lt;section&gt; &lt;arg&gt; [&lt;arg&gt; ... ]
 </programlisting>
 <para>
-Присвоить документу категорию &lt;category&gt;, если значение секции <option>section</option> подпадает под указаный 
+Присвоить документу категорию &lt;category&gt;, если значение секции <option>section</option> подпадает под указаный
 шаблон <option>arg</option>.
-Значение первых трёх необязательных параметров такое же как для команды 
+Значение первых трёх необязательных параметров такое же как для команды
 <command>Allow</command> (см. <xref linkend="allow_cmd"/>). Необязательный параметр <option>loose</option> используется для задания
 более низкого приоритета такому присвоению категории, т.е. если категория уже была присвоена на основании параметров сервера, новое значение категории присвоено не будет.
 </para>
@@ -98,17 +98,17 @@ CategoryIf 010F regex Title "JOB ID"
   <sect2 id="cattable">
     <title>Загрузка таблицы категорий</title>
 <indexterm><primary>Команда</primary><secondary>CategoryTable</secondary></indexterm>
-    <para>Когда задана команда 
+    <para>Когда задана команда
 <programlisting>
 CategoryTable mysql://user:pass@host/dbname/tablename[?charset=CHARSET]
 </programlisting>
-<application>indexer</application> будет загружать информацию о категориях из указаной SQL-таблицы <literal>tablename</literal>. 
-См. структуру этой таблицы в файле <filename>create/mysql/create.txt</filename>. 
+<application>indexer</application> будет загружать информацию о категориях из указаной SQL-таблицы <literal>tablename</literal>.
+См. структуру этой таблицы в файле <filename>create/mysql/create.txt</filename>.
 Если для вашей базы данных нет соответсвующего скрипта со структурой
 этой таблицы, возьмите этот файл в качестве образца.
 </para>
 
-    <para>Вы можете использовать несколько команд <command>CategoryTable</command> для загрузки информации о категориях из 
+    <para>Вы можете использовать несколько команд <command>CategoryTable</command> для загрузки информации о категориях из
 различных таблиц. В этом случае значения полей <option>rec_id</option> должны быть уникальными в пределах всех таких таблиц.
 </para>
   </sect2>

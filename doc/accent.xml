@@ -5,7 +5,7 @@
 	<para>Since version 4.17 <application>DataparkSearch</application> also support an
 accent insensitive search.</para>
 
-<para>To enable this extension, use <command>AccentExtensions</command> command in your 
+<para>To enable this extension, use <command>AccentExtensions</command> command in your
 <filename>search.htm</filename> (or in <filename>searchd.conf</filename>, if <command>searchd</command>
 is used) to make automatically accent-free copies for query words, and in your <filename>indexer.conf</filename>
 config file to produce accent-free word's copies to store in database.
@@ -17,4 +17,3 @@ AccentExtensions yes
 accent-free copies for those data also will be loaded automaticaly.
 </para>
 </sect2>
-

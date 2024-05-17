@@ -73,7 +73,7 @@ CREATE INDEX urlinfo_id_ind ON urlinfo (url_id)
 
 
 CREATE TABLE server (
-	rec_id          NUMBER          DEFAULT 0   NOT NULL, 
+	rec_id          NUMBER          DEFAULT 0   NOT NULL,
 	enabled		NUMBER		DEFAULT 0   NOT NULL,
 	url		VARCHAR2(128)	DEFAULT ''  NOT NULL,
 	period		NUMBER		DEFAULT 604800 NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE srvinfo (
 CREATE INDEX srvinfo_id ON srvinfo (srv_id)
 /
 
-	     
+
 CREATE TABLE links (
 	ot	 NUMBER not null,
 	k	 NUMBER not null,
@@ -229,7 +229,7 @@ CREATE INDEX cookies_time ON cookies ("expires")
 
 
 CREATE TABLE storedchk (
-       rec_id int, 
+       rec_id int,
        url_id int
        )
 /

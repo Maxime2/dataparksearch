@@ -49,32 +49,32 @@
 </para></entry></row>
 
 <row><entry><option>--with-bestpos=<option>NUM</option></option></entry>
-<entry><para>Задаёт <option>NUM</option> в качестве лучшего значения первой позиции слова запроса в найденом документе. 
+<entry><para>Задаёт <option>NUM</option> в качестве лучшего значения первой позиции слова запроса в найденом документе.
 Значение по умолчанию: 4.
 </para></entry></row>
 
 <row><entry><option>--with-bestwrdcnt=<option>NUM</option></option></entry>
-<entry><para>Задаёт <option>NUM</option> в качестве лучшего числа каждого из слов запроса в найденом документе. 
+<entry><para>Задаёт <option>NUM</option> в качестве лучшего числа каждого из слов запроса в найденом документе.
 Значение по умолчанию: 11.
 </para></entry></row>
 
 <row><entry><option>--with-distfactor=<option>NUM</option></option></entry>
-<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для среднего растояния между словами запроса в найденом документе. 
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для среднего растояния между словами запроса в найденом документе.
 Значение по умолчанию: 0.2.
 </para></entry></row>
 
 <row><entry><option>--with-posfactor=<option>NUM</option></option></entry>
-<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для расстояния между первой позицией слова запроса в найденом документе и значением, указаным параметром <option>--with-bestpos</option>. 
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для расстояния между первой позицией слова запроса в найденом документе и значением, указаным параметром <option>--with-bestpos</option>.
 Значение по умолчанию: 0.5.
 </para></entry></row>
 
 <row><entry><option>--with-wrdcntfactor=<option>NUM</option></option></entry>
-<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для расстояния между числом слова запроса в найденом документе и значением, указаным параметром <option>--with-bestwrdcnt</option>. 
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для расстояния между числом слова запроса в найденом документе и значением, указаным параметром <option>--with-bestwrdcnt</option>.
 Значение по умолчанию: 0.4.
 </para></entry></row>
 
 <row><entry><option>--with-wrdunifactor=<option>NUM</option></option></entry>
-<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для величины отклонения количеств вхождения слов запроса в найденый документ от равномерного распределения. 
+<entry><para>Задаёт <option>NUM</option> в качестве коэффициента для величины отклонения количеств вхождения слов запроса в найденый документ от равномерного распределения.
 Значение по умолчанию: 1.5.
 </para></entry></row>
 
@@ -90,7 +90,7 @@
 
 <para><indexterm><primary>Команда</primary><secondary>PopRankMethod</secondary></indexterm>
 <application>DataparkSearch</application> поддерживает два метода расчёта рейтинга популярности.
-Метод, использовавшийся в предыдущих версиях получил название <literal>Goo</literal>, а новый метод называется 
+Метод, использовавшийся в предыдущих версиях получил название <literal>Goo</literal>, а новый метод называется
 <literal>Neo</literal>. По умолчанию используется метод <literal>Goo</literal>. Чтобы выбрать нужный метод расчёта популярности
 используйте команду <command>PopRankMethod</command>:
 <programlisting>
@@ -102,16 +102,16 @@ PopRankMethod Neo
 Для метода расчёта популярности <literal>Neo</literal>,а также для полного варианта метода <literal>Goo</literal> вам
 необходимо включить сбор ссылок между страницами командой <command>CollectLinks yes</command> в вашем файле конфигурации
 <filename>indexer.conf</filename>. Однако, это незначительно уменьшает скорость индексирования, поэтому по умолчанию
-сбор этих ссылок выключен. 
+сбор этих ссылок выключен.
 </para>
 
 <para>По умолчанию, для расчета рейтинга популярности используются только ссылки между различными сайтами.
- Если в <filename>indexer.conf</filename> указана опция 
+ Если в <filename>indexer.conf</filename> указана опция
 <option><indexterm><primary>Команда</primary><secondary>PopRankSkipSameSite</secondary></indexterm>PopRankSkipSameSite no</option>,
  то при расчёте рейтинга популярности учитываются все ссылки.
 </para>
 
-<para>Вы можете присвоить начальное значение рейтинга популярности страницы используя МЕТА таг DP.PopRank 
+<para>Вы можете присвоить начальное значение рейтинга популярности страницы используя МЕТА таг DP.PopRank
 (см. <xref linkend="htmlparser-meta"/>).
 </para>
 
@@ -161,7 +161,7 @@ PopRankMethod Neo
 
 <para>При этом методе расчёта популярности подразумевается, что страницы являются нейронами, а ссылки между страницами
 являются связями между нейронами. Такми образом для образованой нейросети можно использовать один методов её обучения -
-метод обратного распространения ошибки. Рейтингом популярности страницы в данном случае считается уровень активности 
+метод обратного распространения ошибки. Рейтингом популярности страницы в данном случае считается уровень активности
 соответствующего нейрона. См. <ulink url="http://www.maxime.net.ru/doc/Neo.pdf">краткое описание метода расчёта популярности Neo</ulink>.
 </para>
 
@@ -211,7 +211,7 @@ PopRankPostpone yes
 
 <para><indexterm><primary>Команда</primary><secondary>CrossWordsSkipSameSite</secondary></indexterm>
 При помощи команды <command>CrossWordsSkipSameSite</command> можно управлять сбором кросс-слов со страниц того же сайта.
-Если указана опция <userinput>yes</userinput> (по умолчанию), то сбор кросс-слов со страниц того же сайта не происходит. 
+Если указана опция <userinput>yes</userinput> (по умолчанию), то сбор кросс-слов со страниц того же сайта не происходит.
 Для включения учета таких слов необходимо явно задать опцию <userinput>no</userinput>:
 <programlisting>
 CrossWordsSkipSameSite no
@@ -234,7 +234,7 @@ Section sea x y
 </programlisting>
 где <option>x</option> - номер секции и <option>y</option> - максимальный размер значения секции, задайте его равным 0, если вы не хотите
 показывать эту секцию на тсраницах результатов поиска.
-Если вы указываете ненулевое значение для <option>y</option>, вы можете использовать мета-переменную <literal>$(sea)</literal> 
+Если вы указываете ненулевое значение для <option>y</option>, вы можете использовать мета-переменную <literal>$(sea)</literal>
 в вашем шаблоне поиска для отображения реферата в результатах поиска.
 </para>
 

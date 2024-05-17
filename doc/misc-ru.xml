@@ -2,7 +2,7 @@
 <title>Стопслова</title>
 <indexterm><primary>Стопслова</primary></indexterm>
 
-<para><literal>Стопслова</literal> -- наиболее часто используемые слова, т.е слова, встречающиеся почти в каждом документе коллекции. 
+<para><literal>Стопслова</literal> -- наиболее часто используемые слова, т.е слова, встречающиеся почти в каждом документе коллекции.
 Стопслова удаляются перед созданием индекса, что посзволяет сократить размер индекса без сколько-нибудь значимой потери в качестве поиска.
 </para>
 
@@ -11,7 +11,7 @@
 <title>Команда <command>StopwordFile</command></title>
 <indexterm><primary>Команда</primary><secondary>StopwordFile</secondary></indexterm>
 <para>Загружает стоп-слова из указаного файла. Вы можете задать как абсолютный, так и относительный путь.
-Относительный путь задаётся от директории <filename>etc</filename>. 
+Относительный путь задаётся от директории <filename>etc</filename>.
 Можно использовать несколько команд <command>StopwordFile</command>.
 <programlisting>
 StopwordFile stopwords/en.sl
@@ -25,7 +25,7 @@ StopwordFile stopwords/en.sl
 <title>Формат файла стопслов</title>
 <indexterm><primary>Стопслова</primary><secondary>формат файла</secondary></indexterm>
 
-	<para>Вы можете создавать свои файлы стоп-слов. В качестве примера, вы можете использовать файл английских стоп-слов <filename>etc/stopwords/en.sl</filename>. 
+	<para>Вы можете создавать свои файлы стоп-слов. В качестве примера, вы можете использовать файл английских стоп-слов <filename>etc/stopwords/en.sl</filename>.
 В начале листа поместите следующие две команды:
 	<programlisting>
 Language: en
@@ -65,8 +65,8 @@ Match: regex ^\$##
 <title>Команда <command>FillDictionary</command>.</title>
 <indexterm><primary>Команда</primary><secondary>FillDictionary</secondary></indexterm>
 
-<para>При помощи команды <userinput>"FillDictionary yes"</userinput> в <filename>indexer.conf</filename> 
-вы можете включить сохранение всех индексируемых слов в таблице <filename>"dict"</filename> для способа хранения cache. 
+<para>При помощи команды <userinput>"FillDictionary yes"</userinput> в <filename>indexer.conf</filename>
+вы можете включить сохранение всех индексируемых слов в таблице <filename>"dict"</filename> для способа хранения cache.
 Это может пригодиться для отслеживания, какие слова могут быть стопсловами для вашей инсталляции.
 </para>
 </sect2>
@@ -101,7 +101,7 @@ DetectClones yes/no
 </programlisting>
 <para>
 Включает или выключает механихм определения и игнорирования "клонов" документов.
-При включении, <command>indexer</command> будет определять копии документов, расположенных, например, на зеркалах, и 
+При включении, <command>indexer</command> будет определять копии документов, расположенных, например, на зеркалах, и
 не индексировать их повторно.
 Значение по умолчанию: yes.
 <programlisting>

@@ -13,17 +13,17 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_SERVICES_H
 #define _DPS_SERVICES_H
 
-#define DPS_BASE_PORT		7000
-#define DPS_LOGD_PORT		(DPS_BASE_PORT + 0)
-#define DPS_SPELL_PORT		(DPS_BASE_PORT + 1)
-#define DPS_URLD_PORT		(DPS_BASE_PORT + 2)
-#define DPS_SEARCHD_PORT	(DPS_BASE_PORT + 3)
-#define DPS_STORED_PORT	        (DPS_BASE_PORT + 4)
+#define DPS_BASE_PORT 7000
+#define DPS_LOGD_PORT (DPS_BASE_PORT + 0)
+#define DPS_SPELL_PORT (DPS_BASE_PORT + 1)
+#define DPS_URLD_PORT (DPS_BASE_PORT + 2)
+#define DPS_SEARCHD_PORT (DPS_BASE_PORT + 3)
+#define DPS_STORED_PORT (DPS_BASE_PORT + 4)
 
 #endif

@@ -150,7 +150,7 @@ dpsearch-htmlparser-bodypatterns.en.html dpsearch-srvtable.en.html dpsearch-pars
 
 HTML_OUT = $(HTML_OUT_RU) $(HTML_OUT_EN)
 HTML_FILES = $(HTML_OUT) README.html body-after.html body-before.html datapark.css
-PDF_FILES = 
+PDF_FILES =
 # book.pdf
 
 EXTRA_DIST = $(man_MANS) $(XML_SRC) $(PDF_FILES) $(HTML_FILES) catalog datapark-ru.dsl datapark.dsl datapark-pdf.dsl
@@ -222,4 +222,3 @@ single.ru.html: $(@doc_FILES_RU@)
 	perl $(COLLATEINDEX) -i index-ru -o index-ru.xml HTML-ru.index
 	$(JADE) -V html-index -V nochunks -v -wno-valid -c ./catalog -d ./datapark-ru.dsl -V %root-filename%=single -t sgml \
 		 book-ru.xml
-

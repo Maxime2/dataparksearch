@@ -25,7 +25,7 @@
 в Ваш файл заданий <literal>crontab</literal>.</para>
 
 <indexterm><primary>Команда</primary><secondary>Period</secondary></indexterm>
-		<para>По умолчанию, <command>indexer</command>, вызванный без всяких параметров командной строки, 
+		<para>По умолчанию, <command>indexer</command>, вызванный без всяких параметров командной строки,
 переиндекирует, только устаревшие документы. Вы можете задать период "старения" при помощи команды <command>Period</command>
 в <filename>indexer.conf</filename>. Если Вам необходимо переиндекировать все документы, независимо от того, устарели
 они или нет, используйте ключ <option>-a</option>. <command>indexer</command> при запуске пометит все документы как
@@ -51,11 +51,11 @@
 <indexterm><primary>Создание SQL-таблиц</primary></indexterm>
 </title>
 		<para>Для создание SQL-таблиц, необходимых
-для работы <application>DataparkSearch</application>, 
+для работы <application>DataparkSearch</application>,
 используйте <literal>indexer -Ecreate</literal>. При запуске с таким
 аргументом, indexer ищет файл, содержащий SQL-выражения, необходимые
 для создания всех таблиц, учитывая тип базы данных и режим
-хранения, указанные в команде <command>DBAddr</command> в <filename>indexer.conf</filename>. 
+хранения, указанные в команде <command>DBAddr</command> в <filename>indexer.conf</filename>.
 Поиск файлов производится в каталоге <filename>/share</filename> инсталляции
 <application>DataparkSearch</application>, т.е. обычно в
 <filename>/usr/local/dpsearch/share/</filename>. </para>
@@ -66,9 +66,9 @@
 <indexterm><primary>Удаление SQL-таблиц</primary></indexterm>
 </title>
 		<para>Для удаления SQL-таблиц, созданных
-<application>DataparkSearch</application>,  используйте 
+<application>DataparkSearch</application>,  используйте
 <literal>indexer -Edrop</literal>.  Поиск файл с запросами для удаления
-таблиц производится в каталоге <filename>/share</filename> инсталляции 
+таблиц производится в каталоге <filename>/share</filename> инсталляции
 <application>DataparkSearch</application>. </para>
 	</sect2>
 
@@ -80,7 +80,7 @@
 <option>-g</option> соответсвует ограничению по категории,
 <option>-u</option> - ограничение по части URL (поддерживаются шаблоны SQL LIKE с символами % и _),
 <option>-s</option> - ограничение по HTTP статусу документа,
-<option>-y</option> - ограничения по Content-Type. 
+<option>-y</option> - ограничения по Content-Type.
 Все ограничения для одного и того же ключа объединяются опрератором ИЛИ, а группы разных ключей - оператором И.
 </para>
 	</sect2>
@@ -176,8 +176,8 @@
 		<para>Будучи запущенным с ключом <option>-I</option>,
 <command>indexer</command> показывает пары URL и страница, ссылающаяся на него.
 Это полезно для поиска битых ссылок на Ваших страницах.
-Вы также можете использовать ключи ограничений подсекций для этого режима. 
-Например, <literal>indexer -I -s 404</literal> покажет адреса всех ненайденных ('Not found') документов 
+Вы также можете использовать ключи ограничений подсекций для этого режима.
+Например, <literal>indexer -I -s 404</literal> покажет адреса всех ненайденных ('Not found') документов
 вместе с адресами страницами, содержащими ссылки на эти документы.
 Таким образом Вы можете использовать <application>DataparkSearch</application> для проверки ссылок на Вашем сайте.</para>
 
@@ -188,7 +188,7 @@
 </title>
 		<para>Возможно запускать одновременно несколько <command>indexer</command> с одним и тем же файлом конфигурации
 <filename>indexer.conf</filename>. Мы успешно опробовали 30 одновременно работающих <command>indexer</command>
-использующих базу данных <application>MySQL</application>. По умолчанию, <command>indexer</command> помечает документы, 
+использующих базу данных <application>MySQL</application>. По умолчанию, <command>indexer</command> помечает документы,
 выбранные к индексированию, как устаревающие через 4 часа в будущем для избежания двойного
 индексирования одних и тех же документов разными одновременно работающими <command>indexer</command>.
 Однако это не дает 100% гарантии избежания повторного индексирования.

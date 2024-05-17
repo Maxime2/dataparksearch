@@ -58,15 +58,15 @@
              <A HREF="http://site/index.html" TARGET="_blank">http://site/index.html</A>
              <font color="#008800">
               - 723 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=%22%D0%BF%D1%8F%D1%82%D0%B5%D1%80%D0%BA%D0%B0%22&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

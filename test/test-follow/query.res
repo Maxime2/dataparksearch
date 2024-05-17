@@ -41,22 +41,22 @@ SQL>'SELECT status, docsize, hops, crc32, url FROM url ORDER BY status, crc32, h
 200	216	1	1901937092	http://site1/test.html
 404	0	2	0	http://site2/?param
 SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,urlinfo WHERE url.rec_id=urlinfo.url_id ORDER BY url.status,url.crc32,lower(urlinfo.sname)'
-200	-2017391271	http://site2/	body	 .  test.html  .. 
+200	-2017391271	http://site2/	body	 .  test.html  ..
 200	-2017391271	http://site2/	charset	ISO-8859-1
 200	-2017391271	http://site2/	content-language	en
 200	-2017391271	http://site2/	content-type	text/html
 200	-2017391271	http://site2/	title	http://site2/
-200	-1433741546	http://site1/	body	 .  test.html  .. 
+200	-1433741546	http://site1/	body	 .  test.html  ..
 200	-1433741546	http://site1/	charset	ISO-8859-1
 200	-1433741546	http://site1/	content-language	en
 200	-1433741546	http://site1/	content-type	text/html
 200	-1433741546	http://site1/	title	http://site1/
-200	-548453559	http://site2/test.html	body	 Ss2 b2. Site1. 
+200	-548453559	http://site2/test.html	body	 Ss2 b2. Site1.
 200	-548453559	http://site2/test.html	charset	ISO-8859-1
 200	-548453559	http://site2/test.html	content-language	en
 200	-548453559	http://site2/test.html	content-type	text/html
 200	-548453559	http://site2/test.html	title	S2 t2
-200	1901937092	http://site1/test.html	body	 Ss1 bb1. Site2.  an OK link.  a stange link. 
+200	1901937092	http://site1/test.html	body	 Ss1 bb1. Site2.  an OK link.  a stange link.
 200	1901937092	http://site1/test.html	charset	ISO-8859-1
 200	1901937092	http://site1/test.html	content-language	en
 200	1901937092	http://site1/test.html	content-type	text/html

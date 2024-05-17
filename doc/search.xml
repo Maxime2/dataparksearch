@@ -17,7 +17,7 @@ odbc</userinput>. <application>DataparkSearch</application> will find all docume
 contain word <option>mysql</option> and/or word <option>odbc</option>. Best documents having bigger
 weights will be displayed first.</para>
 
-<para>To find a phrase, simple enclose it in quotas. For example: 
+<para>To find a phrase, simple enclose it in quotas. For example:
 <userinput>&quot;uncontrollable sphere&quot;</userinput>.
 </para>
 
@@ -44,9 +44,9 @@ search page.</para>
 					</row>
 					<row>
 						<entry>s</entry>
-						<entry>characters sequence, specify results sorting order. 
+						<entry>characters sequence, specify results sorting order.
 Small caps specify ascendant sorting, upper caps - descendant.
-Following characters can be used: <literal>R</literal> or <literal>r</literal> - for sorting by relevance, 
+Following characters can be used: <literal>R</literal> or <literal>r</literal> - for sorting by relevance,
 <literal>P</literal> or <literal>p</literal> - for sorting by PopularityRank,
 <literal>I</literal> or <literal>i</literal> - for sorting by Importance (multiplication of relevance and PopularityRank),
 <literal>A</literal> or <literal>a</literal> - for sorting by sum of relevance and PopularityRank,
@@ -171,14 +171,14 @@ For cache mode storage this should be exact match. For SQL-modes it may be sql-l
 				        <row>
 					<entry>dt</entry>
                                         <entry>Limit by time. Three types is supported.
-				<para>If <literal>dt</literal> is set to <literal>back</literal>, 
+				<para>If <literal>dt</literal> is set to <literal>back</literal>,
 that means you want to limit result to recent pages, and you should specify this recentness in variable <literal>dp</literal>.</para>
-				<para>If <literal>dt</literal> is set to <literal>er</literal>, 
+				<para>If <literal>dt</literal> is set to <literal>er</literal>,
 that means the search will be limited to pages newer or older than date given.
 Variable <option>dx</option> is newer/older flag (1 means newer or after, -1 means older or before).
 Date is specified in variables <option>dm, dy, dd</option>.</para>
-				<para>If <literal>dt</literal> is set to <literal>range</literal>, 
-that means search within given range of dates. Variables <option>db</option> and <option>de</option> 
+				<para>If <literal>dt</literal> is set to <literal>range</literal>,
+that means search within given range of dates. Variables <option>db</option> and <option>de</option>
 are used here and stands for beginning and end date.</para>
 
 <note>All times in cache mode measured in a hour precision.</note>
@@ -188,7 +188,7 @@ are used here and stands for beginning and end date.</para>
 <row>
 <entry>dp</entry><entry>Limit by recentness, if <literal>dt</literal> value is <literal>back</literal>.
 It should be specified in <literal>xxxA[yyyB[zzzC]]</literal> format. Spaces are allowed between xxx and A and yyy and so on).
- xxx, yyy, zzz are numbers (can be negative!), A, B, C can be one of the following (the letters are the same as in 
+ xxx, yyy, zzz are numbers (can be negative!), A, B, C can be one of the following (the letters are the same as in
 strptime/strftime functions): s - second, M - minute, h - hour, d - day, m - month, y - year. Examples:
 				<programlisting>
   4h30M 	  - 2 hours and 30 minutes
@@ -199,12 +199,12 @@ strptime/strftime functions): s - second, M - minute, h - hour, d - day, m - mon
 </row>
 
 <row> <entry>dx</entry>
-<entry>is newer/older flag (1 means newer or after, -1 means older or before), 
+<entry>is newer/older flag (1 means newer or after, -1 means older or before),
 if <literal>dt</literal> value is <literal>er</literal>.</entry>
 </row>
 
 <row> <entry>dm</entry>
-<entry>Month, if <literal>dt</literal> value is <literal>er</literal>. 0 - January, 1 - February, ... 
+<entry>Month, if <literal>dt</literal> value is <literal>er</literal>. 0 - January, 1 - February, ...
 11 - December.</entry>
 </row>
 
@@ -217,12 +217,12 @@ if <literal>dt</literal> value is <literal>er</literal>.</entry>
 </row>
 
 <row> <entry>db</entry>
-<entry>Beginning date, if <literal>dt</literal> value is <literal>range</literal>. 
+<entry>Beginning date, if <literal>dt</literal> value is <literal>range</literal>.
 Each date is string in the form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits year.</entry>
 </row>
 
 <row> <entry>de</entry>
-<entry>End date, if <literal>dt</literal> value is <literal>range</literal>. 
+<entry>End date, if <literal>dt</literal> value is <literal>range</literal>.
 Each date is string in the form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits year.</entry>
 </row>
 
@@ -267,7 +267,7 @@ configuration:</para>
 		<literallayout>
    wf=0001 will search through body only.
 
-   wf=1110 will search through title,keywords,description but not 
+   wf=1110 will search through title,keywords,description but not
 	through the body.
 
    wf=F421 will search through:
@@ -344,7 +344,7 @@ and  <filename>http://localhost/cgi-bin/search.cgi/search2.html</filename> uses 
 </listitem>
 			<listitem>
 				<para>
-					<filename>search.cgi</filename> also supports Apache internal redirect. It checks REDIRECT_STATUS and REDIRECT_URL environment variables. To activate this way of template usage you may add these lines in Apache <filename>srm.conf</filename>: 
+					<filename>search.cgi</filename> also supports Apache internal redirect. It checks REDIRECT_STATUS and REDIRECT_URL environment variables. To activate this way of template usage you may add these lines in Apache <filename>srm.conf</filename>:
 
 				<programlisting>
 AddType text/html .zhtml
@@ -383,14 +383,14 @@ installation.</para>
 
 <sect2 id="search-operators">
 <title>Search operators</title>
-<para>The operator <command>allin&lt;section&gt;:</command>, 
-where &lt;section&gt; is the name of a section, defined in <filename>sections.conf</filename> file 
-(or in any dpsearch's configuration file by <command>Section</command> command) with non-zero section number 
-(see <xref linkend="section_cmd"/>), 
+<para>The operator <command>allin&lt;section&gt;:</command>,
+where &lt;section&gt; is the name of a section, defined in <filename>sections.conf</filename> file
+(or in any dpsearch's configuration file by <command>Section</command> command) with non-zero section number
+(see <xref linkend="section_cmd"/>),
 that operator allows to limit the search domain for a query word by the section specified.</para>
 
 
-<para>This operator differ from limiting search domain using &amp;wf= CGI-variable in a way, 
+<para>This operator differ from limiting search domain using &amp;wf= CGI-variable in a way,
 that such limit is imposing only on query words specified after this operator.</para>
 
 <para>For example, if you have the following commands in <filename>sections.conf</filename> file
@@ -399,10 +399,10 @@ Section body 1 256
 Section title 2 128
 Section url 3 0 strict
 </programlisting>
-then you can use the following operators in search query: <command>allinbody:</command>, <command>allintitle:</command> and 
+then you can use the following operators in search query: <command>allinbody:</command>, <command>allintitle:</command> and
 <command>allinurl:</command>.</para>
 
-<para>For the query <userinput>computer allintitle: science</userinput> it will be found the documents that contain the word 
+<para>For the query <userinput>computer allintitle: science</userinput> it will be found the documents that contain the word
 "science" in the title and the word "computer" in any document section.</para>
 </sect2>
 
@@ -414,30 +414,30 @@ query language. You should select "bool" search mode in the search
 from.</para>
 
 		<para><application>DataparkSearch</application> understands the following boolean operators:</para>
-		<para><userinput>AND</userinput> or <userinput>&amp;</userinput> - logical AND. For example, 
-"<userinput>mysql &amp; odbc</userinput>" or "<userinput>mysql AND odbc</userinput>" - 
+		<para><userinput>AND</userinput> or <userinput>&amp;</userinput> - logical AND. For example,
+"<userinput>mysql &amp; odbc</userinput>" or "<userinput>mysql AND odbc</userinput>" -
 <application>DataparkSearch</application> will find any URLs that contain both "mysql" and
 "odbc".</para>
 
-		<para><userinput>NEAR</userinput> - NEAR operator, identical to AND operator, but come true if both 
-words are within 16 words of each other. 
-For example, "<userinput>mysql NEAR odbc</userinput>"  - 
+		<para><userinput>NEAR</userinput> - NEAR operator, identical to AND operator, but come true if both
+words are within 16 words of each other.
+For example, "<userinput>mysql NEAR odbc</userinput>"  -
 <application>DataparkSearch</application> will find any URLs that contain both "mysql" and
 "odbc" within 16 words of each other.</para>
 
-		<para><userinput>ANYWORD</userinput> or <userinput>*</userinput> - ANYWORD operator, 
-identical to AND operator, but come true if both words have any one word between and left operand have lesser position than right operand. 
-For example, "<userinput>mysql * odbc</userinput>"  - 
+		<para><userinput>ANYWORD</userinput> or <userinput>*</userinput> - ANYWORD operator,
+identical to AND operator, but come true if both words have any one word between and left operand have lesser position than right operand.
+For example, "<userinput>mysql * odbc</userinput>"  -
 <application>DataparkSearch</application> will find any URLs that contain both "mysql" and
 "odbc" within any word between, for example, any document with "mysql via odbc" phrase.</para>
 
 		<para><userinput>OR</userinput> or <userinput>|</userinput> - logical OR. For example,
-"<userinput>mysql | odbc</userinput>" or "<userinput>mysql OR odbc</userinput>" - 
+"<userinput>mysql | odbc</userinput>" or "<userinput>mysql OR odbc</userinput>" -
 <application>DataparkSearch</application> will find any URLs  that contain word
 "mysql" or word "odbc".</para>
 
 		<para><userinput>NOT</userinput> or <userinput>~</userinput> - logical NOT. For example,
-"<userinput>mysql &amp; ~ odbc</userinput>"  or "<userinput>mysql AND NOT odbc</userinput>" - 
+"<userinput>mysql &amp; ~ odbc</userinput>"  or "<userinput>mysql AND NOT odbc</userinput>" -
 <application>DataparkSearch</application> will find URLs that contain word "mysql" and do
 not contain word "odbc" at the same time. Note that ~ just excludes
 given word from results. Query "~ odbc" will find nothing!</para>

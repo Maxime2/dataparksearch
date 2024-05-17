@@ -44,7 +44,7 @@ CREATE TABLE bdict00 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict01 (
   word    varchar(32) not null,
@@ -52,7 +52,7 @@ CREATE TABLE bdict01 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict02 (
   word    varchar(32) not null,
@@ -60,7 +60,7 @@ CREATE TABLE bdict02 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict03 (
   word    varchar(32) not null,
@@ -68,7 +68,7 @@ CREATE TABLE bdict03 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict04 (
   word    varchar(32) not null,
@@ -76,7 +76,7 @@ CREATE TABLE bdict04 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict05 (
   word    varchar(32) not null,
@@ -84,7 +84,7 @@ CREATE TABLE bdict05 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict06 (
   word    varchar(32) not null,
@@ -92,7 +92,7 @@ CREATE TABLE bdict06 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict07 (
   word    varchar(32) not null,
@@ -100,7 +100,7 @@ CREATE TABLE bdict07 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict08 (
   word    varchar(32) not null,
@@ -108,7 +108,7 @@ CREATE TABLE bdict08 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict09 (
   word    varchar(32) not null,
@@ -116,7 +116,7 @@ CREATE TABLE bdict09 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict0A (
   word    varchar(32) not null,
@@ -124,7 +124,7 @@ CREATE TABLE bdict0A (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict0B (
   word    varchar(32) not null,
@@ -132,7 +132,7 @@ CREATE TABLE bdict0B (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict0C (
   word    varchar(32) not null,
@@ -140,7 +140,7 @@ CREATE TABLE bdict0C (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict0D (
   word    varchar(32) not null,
@@ -148,7 +148,7 @@ CREATE TABLE bdict0D (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict0E (
   word    varchar(32) not null,
@@ -156,7 +156,7 @@ CREATE TABLE bdict0E (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict0F (
   word    varchar(32) not null,
@@ -164,7 +164,7 @@ CREATE TABLE bdict0F (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict10 (
   word    varchar(32) not null,
@@ -172,7 +172,7 @@ CREATE TABLE bdict10 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict11 (
   word    varchar(32) not null,
@@ -180,7 +180,7 @@ CREATE TABLE bdict11 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict12 (
   word    varchar(32) not null,
@@ -188,7 +188,7 @@ CREATE TABLE bdict12 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict13 (
   word    varchar(32) not null,
@@ -196,7 +196,7 @@ CREATE TABLE bdict13 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict14 (
   word    varchar(32) not null,
@@ -204,7 +204,7 @@ CREATE TABLE bdict14 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict15 (
   word    varchar(32) not null,
@@ -212,7 +212,7 @@ CREATE TABLE bdict15 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict16 (
   word    varchar(32) not null,
@@ -220,7 +220,7 @@ CREATE TABLE bdict16 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict17 (
   word    varchar(32) not null,
@@ -228,7 +228,7 @@ CREATE TABLE bdict17 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict18 (
   word    varchar(32) not null,
@@ -236,7 +236,7 @@ CREATE TABLE bdict18 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict19 (
   word    varchar(32) not null,
@@ -244,7 +244,7 @@ CREATE TABLE bdict19 (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict1A (
   word    varchar(32) not null,
@@ -252,7 +252,7 @@ CREATE TABLE bdict1A (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict1B (
   word    varchar(32) not null,
@@ -260,7 +260,7 @@ CREATE TABLE bdict1B (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict1C (
   word    varchar(32) not null,
@@ -268,7 +268,7 @@ CREATE TABLE bdict1C (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict1D (
   word    varchar(32) not null,
@@ -276,7 +276,7 @@ CREATE TABLE bdict1D (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict1E (
   word    varchar(32) not null,
@@ -284,7 +284,7 @@ CREATE TABLE bdict1E (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
+);
 
 CREATE TABLE bdict1F (
   word    varchar(32) not null,
@@ -292,5 +292,4 @@ CREATE TABLE bdict1F (
   ncoords int not null,
   coords  blob not null,
   KEY (word)
-); 
-
+);

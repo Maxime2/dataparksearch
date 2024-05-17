@@ -2,7 +2,7 @@
 	<title>Алиасы</title>
 	<para>Встроенная в <application>DataparkSearch</application> поддержка алиасов дает возможность
 индексировать сайты, беря информацию для индексации из альтернативного источника
-данных. Например, при индексации локального веб-сервера можно выбирать 
+данных. Например, при индексации локального веб-сервера можно выбирать
 страницы напрямую с жесткого диска без использования веб-сервера и сетевых
 протоколов. Либо, например, можно для индексации какого-либо сайта использовать
 не его основной адрес, а его более быстрое зеркало.</para>
@@ -16,7 +16,7 @@
 Alias &lt;главныйURL&gt; &lt;вторичныйURL&gt;
 </programlisting>
 </para>
-		
+
 		<para>Например, для индексации
 <literal>http://www.site.ru/</literal> с использованием ближайшего зеркала
 <literal>http://www.other.com/mirrors/site.ru/</literal> нужно добавить
@@ -48,11 +48,11 @@ Alias http://home.udm.net/ file:/home/httpd/htdocs/
 	<sect2 id="aliases-diff">
 		<title>Алиасы для различных частей сервера</title>
 		<para>Алиасы просматриваются в порядке их появления в
-<filename>indexer.conf</filename>. Таким образом можно создавать алиасы 
+<filename>indexer.conf</filename>. Таким образом можно создавать алиасы
 для сервера и для отдельных его частей:
 
 		<programlisting>
-# Первое - создадим алиас для каталога /stat/ , который физически находится 
+# Первое - создадим алиас для каталога /stat/ , который физически находится
 # не на ожидаемом месте по умолчанию:
 Alias http://home.udm.net/stat/  file:/usr/local/stat/htdocs/
 
@@ -61,14 +61,14 @@ Alias http://home.udm.net/ file:/usr/local/apache/htdocs/
 </programlisting>
 		</para>
 		<note>
-			<para>Обратите внимание на то, что при изменении порядка следования 
+			<para>Обратите внимание на то, что при изменении порядка следования
 команд, алиас для каталога<filename>/stat/</filename> никогда не будет обработан.</para>
 
 		</note>
 	</sect2>
 	<sect2 id="alias-server">
 		<title>использование алиасов в команде Server</title>
-		<para>Возможно указание расположения данных для 
+		<para>Возможно указание расположения данных для
 		выборки индексером используя дополнительный аргумент команды Server:
 		<programlisting>
 Server  http://home.udm.net/  file:/home/httpd/htdocs/
@@ -92,7 +92,7 @@ Realm regex &lt;URL_выражение&gt; &lt;алиас_выражение&gt;
 		<para>Индексатор пропускает URL на совпадение с  URL_выражение
 строит алиас используя алиас_выражение. алиас_выражение может содержать
 ссылки вида $n. n - это число в диапазоне
-0-9. Каждая такая ссылка заменяется текстом, взятым из 
+0-9. Каждая такая ссылка заменяется текстом, взятым из
 n-ого по счету regex-выражения в круглых скобках. При этом
 $0 ссылается на текст которому соответствует все выражение целиком.
 Выражения в круглых скобках нумеруются слева направо (начиная с
@@ -138,7 +138,7 @@ file:/home/john/htdocs/news/index.html
 			<command>AliasProg</command> - еще одна команда для построения алиасов.
 			Иногда альтернативное расположение документов на локальном диске может быть слишком сложным,
 			чтобы описать его с помощью команд <command>Alias</command> или <command>Realm</command>.
-			<command>AliasProg</command> - это внешняя исполняемая программа, которая принимает 
+			<command>AliasProg</command> - это внешняя исполняемая программа, которая принимает
 			в качестве аргумента URL, и возвращает его алиас на STDOUT. Используйте $1 чтобы
 			передать значение URL.
 		</para>
@@ -151,7 +151,7 @@ file:/home/john/htdocs/news/index.html
 			<programlisting>AliasProg  "echo $1 | /usr/local/mysql/bin/mysql/replace http://www.apache.org/ file:/usr/local/apache/htdocs/"</programlisting>
 		</para>
 	</sect2>
-	
+
 	<sect2 id="alias-reverse">
 		<title>Команда ReverseAlias
 <indexterm><primary>Команда</primary><secondary>ReverseAlias</secondary></indexterm>
@@ -185,7 +185,7 @@ Server       http://name2.yourname.com/
 
 		<para>
 			Чтобы вырезать PHPSESSION, когда он является первым параметром, при условии, что
-			после него следуют другие параметры, т.е. <literal>http://www/a.php?PHPSESSION=xxx&amp;..</literal>, 
+			после него следуют другие параметры, т.е. <literal>http://www/a.php?PHPSESSION=xxx&amp;..</literal>,
 			используйте эту команду:
 			<programlisting>ReverseAlias regex  (http://[^?]*[?])PHPSESSION=[^&amp;]*&amp;(.*)  $1$2</programlisting>
 			Знак '&amp;' после аргумента PHPSESSION будет вырезан, а знак вопроса не будет.
@@ -206,13 +206,13 @@ Server       http://name2.yourname.com/
 <indexterm><primary>Команда</primary><secondary>ReverseAliasProg</secondary></indexterm>
 </title>
 		<para>
-			<command>ReverseAliasProg</command> - команда, аналогичная обеим командам <command>AliasProg</command> и <command>ReverseAlias</command>. 
+			<command>ReverseAliasProg</command> - команда, аналогичная обеим командам <command>AliasProg</command> и <command>ReverseAlias</command>.
 Она получает параметры аналогично команде <command>AliasProg</command>, но преобразовывет URL перед вставкой в базу, аналогично команде <command>ReverseAlias</command>.
 </para>
 </sect2>
 
 	<sect2 id="alias-search">
-		<title>Алиасы в search.htm 
+		<title>Алиасы в search.htm
 <indexterm><primary>Команда</primary><secondary>Alias</secondary></indexterm>
 </title>
 		<para>
@@ -239,5 +239,3 @@ Server       http://name2.yourname.com/
 		</para>
 	</sect2>
 </sect1>
-
-

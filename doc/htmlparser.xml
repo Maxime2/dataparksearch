@@ -74,7 +74,7 @@ URL value will be inserted in database.</para>
 			</listitem>
 <listitem>
 <para id="dppoprank-cmd"><indexterm><primary>META</primary><secondary>DP.PopRank</secondary></indexterm>
-<literal>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</literal> with Content value as a real number. This is used to assign the initial 
+<literal>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</literal> with Content value as a real number. This is used to assign the initial
 value of <link linkend="poprank">PopularityRank</link> for the page.
 </para>
 </listitem>
@@ -103,7 +103,7 @@ value of <link linkend="poprank">PopularityRank</link> for the page.
 				<para>&lt;AREA HREF="xxx"&gt;</para>
 			</listitem>
 			<listitem>
-				<para>&lt;BASE HREF="xxx"&gt; 
+				<para>&lt;BASE HREF="xxx"&gt;
 <note>
 						<para>If BASE HREF
 value has incorrectly formed URL, current one will be used instead to
@@ -120,7 +120,7 @@ SkipHrefIn "img, link, script"
 </para>
 
 <para><indexterm><primary>Command</primary><secondary>DisableRelNoFollow</secondary></indexterm>
-By default, <application>DataparkSearch</application> does not follow links with rel=nofollow attribute specified. 
+By default, <application>DataparkSearch</application> does not follow links with rel=nofollow attribute specified.
 But you can alter this behaviour with <command>"DisableRelNoFollow yes"</command> command. You need to put this command in your <filename>indexer.conf</filename> file.
 </para>
 

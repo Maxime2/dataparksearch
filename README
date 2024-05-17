@@ -15,7 +15,7 @@ Full featured web search engine
 
 ## Discussion group
 
-Feel free to ask any question about DataparkSearch Engine in 
+Feel free to ask any question about DataparkSearch Engine in
 [DataparkSearch group on Google Groups](https://groups.google.com/d/forum/dataparksearch)
 
 ## Features
@@ -47,8 +47,8 @@ Feel free to ask any question about DataparkSearch Engine in
 * Handles basic authentication (user name and password) and cookies.
 * Stores a compressed text version of the documents for extracting and viewing.
 * Can specify a default character set and language for a server or subdirectory, or a list of possible languages.
-* Noindex tags: &lt;!--UdmComment--&gt;, &lt;NOINDEX&gt;, &lt;!--noindex--&gt;, Google&#x27;s special comments 
-&lt;!-- google_ad_section_start --&gt;, &lt;!-- google_ad_section_start(weight=ignore) --&gt; and &lt;!-- google_ad_section_end --&gt; 
+* Noindex tags: &lt;!--UdmComment--&gt;, &lt;NOINDEX&gt;, &lt;!--noindex--&gt;, Google&#x27;s special comments
+&lt;!-- google_ad_section_start --&gt;, &lt;!-- google_ad_section_start(weight=ignore) --&gt; and &lt;!-- google_ad_section_end --&gt;
 consider as tags to include/exclude.
 * Can specify a content body tag.
 * Spellchecking for query words with aspell.

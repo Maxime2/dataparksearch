@@ -136,5 +136,3 @@ entre
 sense
 jo
 aquell
-
-

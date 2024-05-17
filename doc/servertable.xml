@@ -45,7 +45,7 @@ added URLs.</para>
 <indexterm><primary>Command</primary><secondary>FlushServerTable</secondary></indexterm>
 
 <para>
- Flush server.enabled to inactive for all server table records. 
+ Flush server.enabled to inactive for all server table records.
 Use this command to deactivate all command in servertable before load new from <filename>indexer.conf</filename>
 or from other servertable.
 </para>

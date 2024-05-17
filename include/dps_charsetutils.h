@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_CHARSETUTILS_H
@@ -22,12 +22,12 @@
 #include <string.h>
 
 #define dps_memmove memmove
-#define dps_memcpy  memcpy
-#define dps_strcpy  strcpy
+#define dps_memcpy memcpy
+#define dps_strcpy strcpy
 #define dps_strncpy strncpy
-#define dps_strcat  strcat
+#define dps_strcat strcat
 #define dps_strncat strncat
-#define dps_strlen  strlen
+#define dps_strlen strlen
 
 /*extern __C_LINK void* dps_memmove(void *dst0, const void *src0, size_t length);*/
 /*
@@ -40,36 +40,36 @@ extern __C_LINK void* dps_strncat(void *dst0, const void *src0, size_t length);
 extern __C_LINK size_t dps_strlen(const char *src);
 */
 
-extern char *dps_strtolower(char *str);
-extern __C_LINK int dps_tolower(int c);
-extern __C_LINK void dps_mstr(char *s, const char *src, size_t l1, size_t l2);
+extern char *dps_strtolower (char *str);
+extern __C_LINK int dps_tolower (int c);
+extern __C_LINK void dps_mstr (char *s, const char *src, size_t l1, size_t l2);
 
 #ifndef DPS_NULL2EMPTY
-#define DPS_NULL2EMPTY(x)	((x)?(x):"")
+#define DPS_NULL2EMPTY(x) ((x) ? (x) : "")
 #endif
 
 #ifndef DPS_NULL2STR
-#define DPS_NULL2STR(x)	        ((x)?(x):"<NULL>")
+#define DPS_NULL2STR(x) ((x) ? (x) : "<NULL>")
 #endif
 
-typedef struct {
+typedef struct
+{
   size_t allocated_size;
   size_t data_size;
   size_t page_size;
-  int    freeme;
-  char   *data;
+  int freeme;
+  char *data;
 } DPS_DSTR;
 
+DPS_DSTR *DpsDSTRInit (DPS_DSTR *dstr, size_t page_size);
+void DpsDSTRFree (DPS_DSTR *dstr);
+size_t DpsDSTRAppend (DPS_DSTR *dstr, const void *, size_t append_size);
+size_t DpsDSTRAppendStr (DPS_DSTR *dstr, const char *);
+size_t DpsDSTRAppendStrWithSpace (DPS_DSTR *dstr, const char *);
+size_t DpsDSTRAppendUni (DPS_DSTR *dstr, const dpsunicode_t);
+size_t DpsDSTRAppendUniStr (DPS_DSTR *dstr, const dpsunicode_t *);
+size_t DpsDSTRAppendUniWithSpace (DPS_DSTR *dstr, const dpsunicode_t *data);
 
-DPS_DSTR *DpsDSTRInit(DPS_DSTR *dstr, size_t page_size);
-void DpsDSTRFree(DPS_DSTR *dstr);
-size_t DpsDSTRAppend(DPS_DSTR *dstr, const void *, size_t append_size);
-size_t DpsDSTRAppendStr(DPS_DSTR *dstr, const char *);
-size_t DpsDSTRAppendStrWithSpace(DPS_DSTR *dstr, const char *);
-size_t DpsDSTRAppendUni(DPS_DSTR *dstr, const dpsunicode_t);
-size_t DpsDSTRAppendUniStr(DPS_DSTR *dstr, const dpsunicode_t *);
-size_t DpsDSTRAppendUniWithSpace(DPS_DSTR *dstr, const dpsunicode_t *data);
-
-int DpsUniNSpace(dpsunicode_t c);
+int DpsUniNSpace (dpsunicode_t c);
 
 #endif /* _DPS_CHARSETUTILS_H */

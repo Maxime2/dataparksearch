@@ -1,4 +1,4 @@
-#dpsearch.spec.in 
+#dpsearch.spec.in
 
 EXTRA_DIST= \
 m4/*.m4 \

@@ -170,8 +170,8 @@ m all
 <!ELIF NAME="c" CONTENT="0B0A"><a href="http://notes.sochi.org.ru/3761">$(Lib.lng)</a>
 <!ELIF NAME="c" CONTENT="010N"><a href="http://sochived.info/">$(Sochived.lng)</a>
 <!ELIF NAME="c" CONTENT="010S"><a href="http://inet-sochi.ru/news/">$(sochinews.lng)</a>
-<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a> 
-<!ELIF NAME="site" CONTENT="-1483588461"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a> 
+<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a>
+<!ELIF NAME="site" CONTENT="-1483588461"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a>
 <!ELIF NAME="label" CONTENT="sochi"><a href="http://inet-sochi.ru/">$(Sochi.org.ru.lng)</a>
 <!ELIF NAME="label" CONTENT="momentum"><a href="http://inet-sochi.ru/momentum">$(Momentum.lng)</a>
 <!ELIF NAME="c" CONTENT="09"><a href="http://inet-sochi.ru/gday">$(AU.lng)</a>
@@ -238,8 +238,8 @@ m all
 <tr id="ext1" style="visibility: hidden;">
 <td width="100%" align="right">
  <select name="m" class="inputrev">
- <option value="all" selected="$&(m)"> $(all.lng) 
- <option value="near" selected="$&(m)"> $(near.lng) 
+ <option value="all" selected="$&(m)"> $(all.lng)
+ <option value="near" selected="$&(m)"> $(near.lng)
  <option value="any" selected="$&(m)"> $(any.lng)
  <option value="bool" selected="$&(m)"> $(bool.lng)
  </select>
@@ -445,10 +445,10 @@ $(Order).&nbsp;<!-- $(DP_ID), site_id: $(Site_ID), ST: $(ST) - $(FancySize) $(by
  --><!IF NAME="Title" CONTENT="[no title]">
 	 <!IF NAME="MP3.Artist" CONTENT="">$(notitle.lng)<!ELSE>$(artist.lng): $&(MP3.Artist)<!ENDIF>
 	 <!ELIKE NAME="Title" CONTENT="/tmp/ind*">$(notitle.lng)
-    <!ELSE>$&(Title:cite:68)<!ENDIF><!-- 
+    <!ELSE>$&(Title:cite:68)<!ENDIF><!--
 --></a></div>
 <div class="serp2" style="margin-left:20px;">
-<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span> 
+<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span>
 $&(MP3.Album)<br><!ENDIF>
 <!IF NAME="MP3.Song" CONTENT=""> <!ELSE><span class="result">$(song.lng): </span>
 $&(MP3.Song)<br><!ENDIF>

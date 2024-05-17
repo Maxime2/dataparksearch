@@ -28,7 +28,7 @@ Please remember, you need to specify non-zero maximal length for any of these se
 </itemizedlist>
 </para>
 
-<para>With News extensions enable, the <command>indexer</command> try to detect Parent-ID for each article indexed and 
+<para>With News extensions enable, the <command>indexer</command> try to detect Parent-ID for each article indexed and
 also put the pairs (<literal>Parent-ID</literal>, <literal>ID</literal>) into <literal>links</literal> table.
 </para>
 </sect2>

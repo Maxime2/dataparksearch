@@ -1,5 +1,5 @@
 #
-# Dutch stop-list  
+# Dutch stop-list
 # Theo Vosse (theo@dmo.com) and Stan P. van de Burgt (stan@dmo.com)
 #
 

@@ -3,7 +3,7 @@
 <indexterm><primary>libdpsearch</primary></indexterm>
 </title>
 	<para>При компиляции <application>DataparkSearch</application> собирается
-	и устанавливается <literal>libdpsearch</literal> - библиотека, с помощью которой легко 
+	и устанавливается <literal>libdpsearch</literal> - библиотека, с помощью которой легко
 	расширить Ваше приложение возможностью поиска.  Программа на СИ,
 	использующая <literal>libdpsearch</literal>, должна включить заголовочный файл
 	<filename>dpsearch.h</filename>.
@@ -13,7 +13,7 @@
 		<title>Скрипт <filename>dps-config</filename></title>
 		<para>В зависимости от параметров, выбраных при компиляции
 <application>DataparkSearch</application>, <literal>libdpsearch</literal> может требовать дополнительные библиотеки. Например,
-при использовании <application>MySQL</application> в качестве хранилища <application>DataparkSearch</application>, библиотека 
+при использовании <application>MySQL</application> в качестве хранилища <application>DataparkSearch</application>, библиотека
 <literal>libmysqlclient</literal> также понадобится при линковки приложения с <literal>libdpsearch</literal>.
 В каталоге <filename>/bin</filename> относительно коренвой директории установки <application>DataparkSearch</application>
 вы можете найти скрипт <filename>dps-config</filename>

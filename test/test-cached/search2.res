@@ -58,15 +58,15 @@
              <A HREF="http://site/testpage11.html" TARGET="_blank">http://site/testpage11.html</A>
              <font color="#008800">
               - 1041 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -92,15 +92,15 @@
              <A HREF="http://site/testpage7.html" TARGET="_blank">http://site/testpage7.html</A>
              <font color="#008800">
               - 813 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -126,15 +126,15 @@
              <A HREF="http://site/testpage2.html" TARGET="_blank">http://site/testpage2.html</A>
              <font color="#008800">
               - 992 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -160,15 +160,15 @@
              <A HREF="http://site/testpage3.html" TARGET="_blank">http://site/testpage3.html</A>
              <font color="#008800">
               - 987 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -194,15 +194,15 @@
              <A HREF="http://site/testpage5.html" TARGET="_blank">http://site/testpage5.html</A>
              <font color="#008800">
               - 828 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -228,15 +228,15 @@
              <A HREF="http://site/testpage13.html" TARGET="_blank">http://site/testpage13.html</A>
              <font color="#008800">
               - 894 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -262,15 +262,15 @@
              <A HREF="http://site/testpage12.html" TARGET="_blank">http://site/testpage12.html</A>
              <font color="#008800">
               - 807 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -296,15 +296,15 @@
              <A HREF="http://site/testpage8.html" TARGET="_blank">http://site/testpage8.html</A>
              <font color="#008800">
               - 2989 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -330,15 +330,15 @@
              <A HREF="http://site/testpage10.html" TARGET="_blank">http://site/testpage10.html</A>
              <font color="#008800">
               - 1023 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -364,15 +364,15 @@
              <A HREF="http://site/testpage6.html" TARGET="_blank">http://site/testpage6.html</A>
              <font color="#008800">
               - 941 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=Wall&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

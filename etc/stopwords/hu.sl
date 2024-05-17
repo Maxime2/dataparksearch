@@ -1,6 +1,6 @@
 # Hungarian stopwords, charset windows-1250
 # By MURANYI Andras <muranyia@iqconsulting.hu>
-# 
+#
 
 Charset:   windows-1250
 Language:  hu
@@ -41,5 +41,3 @@ mi
 ti
 õk
 ön
-
-

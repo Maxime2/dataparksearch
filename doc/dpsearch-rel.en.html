@@ -121,7 +121,7 @@ NAME="RELEVANCY"
 >In indexing, <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> divides every document onto sections. A section is any part of the document, 
+> divides every document onto sections. A section is any part of the document,
 for example, for HTML documents this may be TITLE or META Description tag.</P
 ><P
 >In addition to sections, some document factors are also take in account for relevance calculation: the average distance between
@@ -266,7 +266,7 @@ CLASS="OPTION"
 >This option specify the <CODE
 CLASS="OPTION"
 >NUM</CODE
-> as the best number of each query word in document found. 
+> as the best number of each query word in document found.
 Value by default: 11.</P
 ></TD
 ></TR
@@ -284,7 +284,7 @@ CLASS="OPTION"
 >This option specify the <CODE
 CLASS="OPTION"
 >NUM</CODE
-> as a factor for average word distance for relevance calculation. 
+> as a factor for average word distance for relevance calculation.
 Value by default: 0.2.</P
 ></TD
 ></TR
@@ -330,7 +330,7 @@ CLASS="OPTION"
 > as factor for difference between first query word position in document found and best position specified by <CODE
 CLASS="OPTION"
 >--with-bestpos</CODE
-> option. 
+> option.
 Value by default: 0.5.</P
 ></TD
 ></TR
@@ -377,7 +377,7 @@ CLASS="OPTION"
 and the best value specified by <CODE
 CLASS="OPTION"
 >--with-bestwrdcnt</CODE
-> option. 
+> option.
 Value by default: 0.4.</P
 ></TD
 ></TR
@@ -420,7 +420,7 @@ CLASS="OPTION"
 >This option specify the <CODE
 CLASS="OPTION"
 >NUM</CODE
-> as factor for difference of query word counts from uniform distribution. 
+> as factor for difference of query word counts from uniform distribution.
 Value by default: 1.5.</P
 ></TD
 ></TR
@@ -442,7 +442,7 @@ NAME="AEN6021"
 >Let <TT
 CLASS="LITERAL"
 >x</TT
-> is the weighted sum of all sections. The weights for these sections are define by 
+> is the weighted sum of all sections. The weights for these sections are define by
 <CODE
 CLASS="OPTION"
 >wf</CODE
@@ -487,7 +487,7 @@ And let <TT
 CLASS="LITERAL"
 >xy</TT
 > is the number of bits where weighted values of sections of the "ideal" document are different to weighted
-values of sections of document found. Then value of document relevance is calculates as: 
+values of sections of document found. Then value of document relevance is calculates as:
 <TT
 CLASS="LITERAL"
 >( x - xy ) / ( x + y )</TT
@@ -534,7 +534,7 @@ NAME="AEN6056"
 You need enable links collection by <B
 CLASS="COMMAND"
 >CollectLinks yes</B
-> command in your 
+> command in your
 <TT
 CLASS="FILENAME"
 >indexer.conf</TT
@@ -548,7 +548,7 @@ CLASS="LITERAL"
 > method.
 But this slow down a bit indexing speed. By default, links collection is not enabled. </P
 ><P
->By default, only intersite links (i.e. links from a page on 
+>By default, only intersite links (i.e. links from a page on
 one site to a page on an another site) are taken in account for the popularity rank calculation.
 If you place
 <B
@@ -641,7 +641,7 @@ CLASS="FILENAME"
 > file, <B
 CLASS="COMMAND"
 >indexer</B
-> will calculate site weight as the number of 
+> will calculate site weight as the number of
 tracked queries with restriction on this site.</P
 ><P
 >If you place
@@ -663,7 +663,7 @@ corresponding <TT
 CLASS="LITERAL"
 >url.shows</TT
 > value will be increased on 1, if relevance for this result is great or equal to
-value specified by 
+value specified by
 <CODE
 CLASS="OPTION"
 ><A
@@ -706,11 +706,11 @@ NAME="NEO-POPRANK"
 ></DIV
 ><P
 >For this method is supposed all pages are neurons and links between pages are links between neurons.
-So it's possible use an error back-propagation algorithm to train this neural network. Popularity rank for a page is the 
+So it's possible use an error back-propagation algorithm to train this neural network. Popularity rank for a page is the
 activity level for corresponding neuron. See <A
 HREF="http://www.maxime.net.ru/doc/Neo-en.pdf"
 TARGET="_top"
->short description of The Neo 
+>short description of The Neo
 Popularity Rank for web pages</A
 >.</P
 ><P
@@ -728,7 +728,7 @@ command to specify the number of iterations of the Neo Popularity Rank calculati
 NAME="AEN6129"
 ></A
 >
-By default, the Neo Popularity Rank is caclulated along with indexing. To speed up indexing, 
+By default, the Neo Popularity Rank is caclulated along with indexing. To speed up indexing,
 you may postpone Popularity Rank execution using <B
 CLASS="COMMAND"
 >PopRankPostpone</B
@@ -737,7 +737,7 @@ CLASS="COMMAND"
 CLASS="PROGRAMLISTING"
 >PopRankPostpone yes</PRE
 ><P
->Then you may calculate the Neo Popularity Rank after indexing in same way as for method Goo, i.e.: 
+>Then you may calculate the Neo Popularity Rank after indexing in same way as for method Goo, i.e.:
 <B
 CLASS="COMMAND"
 >indexer -TR</B
@@ -792,7 +792,7 @@ CLASS="USERINPUT"
 > attribute of <KBD
 CLASS="USERINPUT"
 >img</KBD
-> tag to 
+> tag to
 the picture this tag is pointed to. To enable Crosswords, please use
 <B
 CLASS="COMMAND"
@@ -824,7 +824,7 @@ CLASS="COMMAND"
 If the option <KBD
 CLASS="USERINPUT"
 >yes</KBD
-> is set (by default), the crosswords from the same site doen't collected. 
+> is set (by default), the crosswords from the same site doen't collected.
 If you wish to collect such crosswords, you need to set <KBD
 CLASS="USERINPUT"
 >no</KBD
@@ -874,7 +874,7 @@ CLASS="OPTION"
 > - the number of section and <CODE
 CLASS="OPTION"
 >y</CODE
-> - the maximum length of this section value, 
+> - the maximum length of this section value,
 leave 0,  if you do not want show this in result pages.
 If you specify <CODE
 CLASS="OPTION"
@@ -882,7 +882,7 @@ CLASS="OPTION"
 > non-zero, you may use <TT
 CLASS="LITERAL"
 >$(sea)</TT
-> meta-variable in your search 
+> meta-variable in your search
 template to show the summary in result pages.</P
 ><P
 >Related configuration directives:</P
@@ -909,7 +909,7 @@ specified by the <B
 CLASS="COMMAND"
 >SEASentenceMinLength</B
 > command, which are used for summary construction in the SEA. Default value: 32.
-Since the summary construction using SEA is nonlinear expensive (affects only indexing), 
+Since the summary construction using SEA is nonlinear expensive (affects only indexing),
 you may adjust this value according to desired indexing performance.</P
 ><P
 ><A
@@ -926,12 +926,12 @@ CLASS="PROGRAMLISTING"
 >SEASections "body, title"</PRE
 ></P
 ><P
->This algorithm of automatic summary construction is based on ideas of Rada Mihalcea described in the paper 
+>This algorithm of automatic summary construction is based on ideas of Rada Mihalcea described in the paper
 <A
 HREF="http://www.cs.unt.edu/~rada/papers/mihalcea.ijcnlp05.pdf"
 TARGET="_top"
->Rada Mihalcea and Paul Tarau, 
-An Algorithm for Language Independent Single and Multiple Document Summarization, 
+>Rada Mihalcea and Paul Tarau,
+An Algorithm for Language Independent Single and Multiple Document Summarization,
 in Proceedings of the International Joint Conference on Natural Language Processing (IJCNLP), Korea, October 2005</A
 >.</P
 ><P
@@ -941,7 +941,7 @@ in Proceedings of the International Joint Conference on Natural Language Process
 ><UL
 ><LI
 ><P
->Initial weights for graph edges are calculates as a measure of similarity between 
+>Initial weights for graph edges are calculates as a measure of similarity between
 3-gram distributions of corresponding sentences.</P
 ></LI
 ><LI
@@ -954,7 +954,7 @@ in Proceedings of the International Joint Conference on Natural Language Process
 ></LI
 ></UL
 ><P
->After indexing of document collection with this section defined, you may use $(sea) meta-variable in your 
+>After indexing of document collection with this section defined, you may use $(sea) meta-variable in your
 template to show summary for a search result.</P
 ></DIV
 ></DIV

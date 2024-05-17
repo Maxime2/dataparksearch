@@ -321,7 +321,7 @@ CLASS="OPTION"
 CLASS="OPTION"
 >crc</CODE
 >", но еще сохраняет
-идетификаторы слов в различных таблицах (файлах) в зависимости от длины этих слов, аналогично режиму 
+идетификаторы слов в различных таблицах (файлах) в зависимости от длины этих слов, аналогично режиму
 "<CODE
 CLASS="OPTION"
 >multi</CODE
@@ -517,7 +517,7 @@ CLASS="LITERAL"
 Задаваемое значение должно быть одним из описаных в файле <TT
 CLASS="FILENAME"
 >syslog.conf</TT
->. 
+>.
 См. syslog.conf(5).
 <PRE
 CLASS="PROGRAMLISTING"
@@ -655,7 +655,7 @@ NAME="AEN2314"
 CLASS="COMMAND"
 >searchd</B
 > или
-для расчёта индекса популярности. 
+для расчёта индекса популярности.
 Значение по умолчанию: 100000.
 <PRE
 CLASS="PROGRAMLISTING"
@@ -742,7 +742,7 @@ CLASS="OPTION"
 Используйте <CODE
 CLASS="OPTION"
 >Regex</CODE
-> чтобы выбрать сравнение на основе регулярного выражения. 
+> чтобы выбрать сравнение на основе регулярного выражения.
 Используйте <CODE
 CLASS="OPTION"
 >String</CODE
@@ -751,7 +751,7 @@ CLASS="OPTION"
 Обратите внимание, что символы '?' и '*' имеют специальное значение при указатии тпа сравнения <CODE
 CLASS="OPTION"
 >String</CODE
->. 
+>.
 Вы можете использовать <CODE
 CLASS="OPTION"
 >Regex</CODE
@@ -829,7 +829,7 @@ Disallow NoMatch *.udm.net/*
 Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
 # Exclude cgi-bin and non-parsed-headers using "string" match:
 Disallow */cgi-bin/* *.cgi */nph-*
-# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# Exclude anything with '?' sign in URL. Note that '?' sign has a
 # special meaning in "string" match, so we have to use "regex" match here:
 Disallow Regex  \?</PRE
 ></P
@@ -998,7 +998,7 @@ CLASS="PROGRAMLISTING"
 >Эта команда служит для разрешения индексирования при совпадении шаблона <CODE
 CLASS="OPTION"
 >arg</CODE
-> 
+>
 по заданой секции <CODE
 CLASS="OPTION"
 >section</CODE
@@ -1040,7 +1040,7 @@ CLASS="PROGRAMLISTING"
 >Эта команда служит для запрещения индексирования при совпадении шаблона <CODE
 CLASS="OPTION"
 >arg</CODE
-> 
+>
 по заданой секции <CODE
 CLASS="OPTION"
 >section</CODE
@@ -1089,7 +1089,7 @@ HREF="dpsearch-indexcmd.ru.html#ALLOW_CMD"
 >&#62;), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда разрешает присутствие документа в поисковой базе при совпадении шаблона <CODE
 CLASS="OPTION"
 >arg</CODE
-> 
+>
 по заданой секции <CODE
 CLASS="OPTION"
 >section</CODE
@@ -1134,7 +1134,7 @@ HREF="dpsearch-indexcmd.ru.html#DISALLOW_CMD"
 >&#62;), однако может применяться к любой секции документа и она применяется уже после того, как документ выкачан и проиндексирован. Команда удаляет документ из поисковой базы базе при совпадении шаблона <CODE
 CLASS="OPTION"
 >arg</CODE
-> 
+>
 по заданой секции <CODE
 CLASS="OPTION"
 >section</CODE
@@ -1314,18 +1314,18 @@ CLASS="PROGRAMLISTING"
 >Period &lt;time&gt;</PRE
 ><P
 >Задаёт период переиндексирования.
-&lt;time&gt; указывается в формате 'xxxA[yyyB[zzzC]]'                                   
- (пробелы допустимы между xxx и A и yyy и т.д)                     
-   здесь xxx, yyy, zzz - числа (возможно отризательные!)                         
-         A, B, C могут быть одним из следующего:                                 
-		s - секунда                                                      
-		M - минута                                                      
-		h - час                                                        
-		d - день                                                         
-		m - месяц                                                       
-		y - год                                                        
+&lt;time&gt; указывается в формате 'xxxA[yyyB[zzzC]]'
+ (пробелы допустимы между xxx и A и yyy и т.д)
+   здесь xxx, yyy, zzz - числа (возможно отризательные!)
+         A, B, C могут быть одним из следующего:
+		s - секунда
+		M - минута
+		h - час
+		d - день
+		m - месяц
+		y - год
       (эти символы такие же как и для функций strptime/strftime).
-                                                                              
+
 Примеры:
 <PRE
 CLASS="PROGRAMLISTING"
@@ -1368,7 +1368,7 @@ NAME="AEN2532"
 CLASS="PROGRAMLISTING"
 >PeriodByHops &lt;hops&gt; [ &lt;time&gt; ]</PRE
 ><P
->Задаёт период переиндексирования для страниц зо значением глубины в &quot;мышиных кликах&quot; равным &lt;hops&gt;. 
+>Задаёт период переиндексирования для страниц зо значением глубины в &quot;мышиных кликах&quot; равным &lt;hops&gt;.
 Формат для &lt;time&gt; такой же как и для команды <B
 CLASS="COMMAND"
 >Period</B
@@ -1411,7 +1411,7 @@ NAME="AEN2547"
 CLASS="PROGRAMLISTING"
 >ExpireAt [ A [ B [ C [ D [ E ]]]]]</PRE
 ><P
->Эта команда позволяет задать точное время устаревания документов. 
+>Эта команда позволяет задать точное время устаревания документов.
 Может задаваться для каждой команда Server/Realm в отдельности, действует до конца файла конфигурации или до следующей
 команды <B
 CLASS="COMMAND"
@@ -1452,7 +1452,7 @@ NAME="AEN2560"
 CLASS="PROGRAMLISTING"
 >UseDateHeader yes|no|force</PRE
 ><P
->Использовать ли заголовок ответа сервера Date если в ответе сервера не содержится заголовок Last-Modified. 
+>Использовать ли заголовок ответа сервера Date если в ответе сервера не содержится заголовок Last-Modified.
 Если указано значение force, то заголовок Date используется даже если сервер отправляет заголовок Last-Modified.
 Значение по-умолчанию: no.</P
 ></DIV
@@ -1481,7 +1481,7 @@ CLASS="COMMAND"
 > и последнее установленное значение имеет эффект до конца файла конфигурации или до следующей команды <B
 CLASS="COMMAND"
 >LMDSection</B
->. 
+>.
 Значение по умолчанию не определено. Используйте эту команду без какого-либо аргумента, чтобы вернуться к значению по умолчанию.
 Если значение заданной этой командой секции не определено, будет использоваться значение HTTP-заголовка Last-Modified.</P
 ></DIV
@@ -1880,7 +1880,7 @@ CLASS="OPTION"
 Параметр <CODE
 CLASS="OPTION"
 >&lt;maxlen&gt;</CODE
->  задаёт максимальный размер секции, который будет сохранён в базе 
+>  задаёт максимальный размер секции, который будет сохранён в базе
 (хотя сама секция будет проиндексирована целиком). Используйте 0, если вы не хотите сохранять в базе значение секции.
 <CODE
 CLASS="OPTION"
@@ -1974,7 +1974,7 @@ CLASS="COMMAND"
 >" полезна для ускорения индексирования, если ваш список команд <B
 CLASS="COMMAND"
 >Server/Realm/Subnet</B
-> огромен, 
+> огромен,
 т.к. она выключает проверку ссылок по списку серверов на этапе парсинга страницы.</P
 ></DIV
 ><DIV
@@ -2109,7 +2109,7 @@ CLASS="COMMAND"
 Примеры:
 <PRE
 CLASS="PROGRAMLISTING"
->AuthBasic somebody:something  
+>AuthBasic somebody:something
 
 # If you have password protected directory(ies), but whole server is open,use:
 AuthBasic login1:passwd1
@@ -2140,7 +2140,7 @@ CLASS="PROGRAMLISTING"
 >Задаёт вес Server для расчёта Popularity Rank (см. <A
 HREF="dpsearch-rel.ru.html#POPRANK"
 >&#1056;&#1072;&#1079;&#1076;. 8.5.3</A
->&#62;). 
+>&#62;).
 Значение по умолчанию: 1.
 <PRE
 CLASS="PROGRAMLISTING"

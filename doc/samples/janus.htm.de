@@ -157,7 +157,7 @@ sy 0
 <!ELIF NAME="c" CONTENT="0D"><a href="http://www.43n39e.ru/oregon">$(Oregon.lng)</a>
 <!ELIF NAME="c" CONTENT="04"><a href="http://www.maxime.net.ru/">$(Compr.lng)</a>
 <!ELIF NAME="c" CONTENT="06"><a href="http://justine.43n39e.ru/">$(Justine.lng)</a>
-<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a> 
+<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a>
 <!ELSE><a href="http://www.43n39e.ru/">$(43N39E.lng)</a>
 <!ENDIF>
 </b></td>
@@ -212,8 +212,8 @@ sy 0
 <tr id="ext1" style="visibility: hidden;">
 <td width="100%" align="right">
  <select name="m" class="inputrev">
- <option value="all" selected="$&(m)"> $(all.lng) 
- <option value="near" selected="$&(m)"> $(near.lng) 
+ <option value="all" selected="$&(m)"> $(all.lng)
+ <option value="near" selected="$&(m)"> $(near.lng)
  <option value="any" selected="$&(m)"> $(any.lng)
  <option value="bool" selected="$&(m)"> $(bool.lng)
  </select>
@@ -413,10 +413,10 @@ $(Order).&nbsp;<!-- $(DP_ID), site_id: $(Site_ID), ST: $(ST) - $(FancySize) $(by
  --><!IF NAME="Title" CONTENT="[no title]">
 	 <!IF NAME="MP3.Artist" CONTENT="">$(notitle.lng)<!ELSE>$(artist.lng): $&(MP3.Artist)<!ENDIF>
 	 <!ELIKE NAME="Title" CONTENT="/tmp/ind*">$(notitle.lng)
-    <!ELSE>$&(Title:cite:72)<!ENDIF><!-- 
+    <!ELSE>$&(Title:cite:72)<!ENDIF><!--
 --></a></div>
 <div class="serp2" style="margin-left:20px;">
-<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span> 
+<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span>
 $&(MP3.Album)<br><!ENDIF>
 <!IF NAME="MP3.Song" CONTENT=""> <!ELSE><span class="result">$(song.lng): </span>
 $&(MP3.Song)<br><!ENDIF>
@@ -530,8 +530,8 @@ document.write('<script src=\"http://autocontext.begun.ru/autocontext2.js\" type
  <INPUT class="inputrev" TYPE="submit" VALUE="&gt;&gt;&gt;">
  &nbsp;
  <select name="m" class="inputrev">
- <option value="all" selected="$&(m)">$(all.lng)</option> 
- <option value="near" selected="$&(m)">$(near.lng)</option> 
+ <option value="all" selected="$&(m)">$(all.lng)</option>
+ <option value="near" selected="$&(m)">$(near.lng)</option>
  <option value="any" selected="$&(m)">$(any.lng)</option>
  <option value="bool" selected="$&(m)">$(bool.lng)</option>
  </select>

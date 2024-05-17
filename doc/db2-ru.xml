@@ -12,7 +12,7 @@ PassEnv DB2DIR DB2INSTANCE
 </programlisting>
 	</para>
 
-	<para>Где <command>DB2DIR</command> - пусть до места установки DB2. 
+	<para>Где <command>DB2DIR</command> - пусть до места установки DB2.
 <command>DB2INSTANCE</command> - DB2 instance, которую должен использовать <filename>search.cgi</filename>.</para>
 
 </sect1>

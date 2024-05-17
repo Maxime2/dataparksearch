@@ -13,14 +13,14 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_RESULT_H
 #define _DPS_RESULT_H
 
-extern DPS_RESULT   *DpsResultInit(DPS_RESULT*);
-extern __C_LINK void __DPSCALL DpsResultFree(DPS_RESULT*);
+extern DPS_RESULT *DpsResultInit (DPS_RESULT *);
+extern __C_LINK void __DPSCALL DpsResultFree (DPS_RESULT *);
 /*extern int           DpsResultToTextBuf(DPS_RESULT *R, char *buf, size_t len);
 extern int           DpsResultFromTextBuf(DPS_RESULT *R, char *buf);*/
 

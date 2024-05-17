@@ -3,7 +3,7 @@ set quoted_identifier on;
 --
 -- In MS SQL  we can't use TEXT type like in PgSQL or MySQL:
 --
--- The text, ntext, and image data types cannot be compared or sorted, 
+-- The text, ntext, and image data types cannot be compared or sorted,
 -- except when using IS NULL or LIKE operator.
 --
 -- We use VARCHAR() instead.
@@ -37,9 +37,9 @@ CREATE INDEX "url_next_index_time" ON "url" ( "next_index_time" );
 CREATE INDEX "url_status" ON "url" ( "status" );
 CREATE INDEX "url_bad_since_time" ON "url" ( "bad_since_time" );
 CREATE INDEX "url_hops" ON "url" ( "hops" );
-CREATE INDEX "url_siteid" ON "url" ( "site_id" ); 
-CREATE INDEX "url_server" ON "url" ( "server_id" ); 
-CREATE INDEX "url_poprank" ON "url" ( "pop_rank" ); 
+CREATE INDEX "url_siteid" ON "url" ( "site_id" );
+CREATE INDEX "url_server" ON "url" ( "server_id" );
+CREATE INDEX "url_poprank" ON "url" ( "pop_rank" );
 
 
 CREATE TABLE "urlinfo" (
@@ -55,7 +55,7 @@ CREATE INDEX "uinfo_sval"  ON "urlinfo" ( "sval" );
 CREATE TABLE "dict" (
 	"url_id" int  NOT NULL ,
 	"word"   varchar(4096) NOT NULL ,
-	"intag"  int  NOT NULL 
+	"intag"  int  NOT NULL
 );
 CREATE INDEX "dict_word" ON "dict" ( "word" );
 CREATE INDEX "dict_url_id" ON "dict" ("url_id");
@@ -167,7 +167,7 @@ CREATE INDEX cookies_time ON cookies ("expires");
 
 
 CREATE TABLE "storedchk" (
-       rec_id integer, 
+       rec_id integer,
        url_id integer
 );
 CREATE INDEX storedchk_i ON storedchk (url_id);
@@ -181,4 +181,3 @@ CREATE TABLE cachedchk2 (
        url_id integer
 );
 CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
-

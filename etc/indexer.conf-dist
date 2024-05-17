@@ -24,7 +24,7 @@
 
 ###########################################################################
 # DBAddr <URL-style database description>
-# Options (type, host, database name, port, user and password) 
+# Options (type, host, database name, port, user and password)
 # to connect to SQL database.
 # Do not matter for built-in text files support.
 # Should be used only once and before any other commands.
@@ -39,12 +39,12 @@
 #	Use DBHost to specify Solid server
 #	DBName does not matter for Solid
 #
-# Currently supported DBType values are 
+# Currently supported DBType values are
 # mysql, pgsql, msql, solid, mssql, oracle, ibase.
 # Actually, it does not matter for native libraries support.
 # But ODBC users should specify one of supported values.
 # If your database type is not supported, you may use "unknown" instead.
-# 
+#
 # MySQL users can specify path to Unix socket when connecting to localhost:
 # mysql://foo:bar@localhost/search/?socket=/tmp/mysql.sock
 #
@@ -53,16 +53,16 @@
 # then PostgreSQL will not work via TCP, but will use Unix socket.
 #
 # You may also select database mode of words storage.
-# When "single" is specified, all words are stored in the same table (file). 
-# If "multi" is selected, words will be located in different tables (files) 
-# depending of their lengths. "multi" mode is usually faster but requires more 
-# tables (files). 
+# When "single" is specified, all words are stored in the same table (file).
+# If "multi" is selected, words will be located in different tables (files)
+# depending of their lengths. "multi" mode is usually faster but requires more
+# tables (files).
 # If "crc" mode is selected, DataparkSearch will store 32 bit integer
-# word IDs calculated by CRC32 algorythm instead of words. This mode requres 
+# word IDs calculated by CRC32 algorythm instead of words. This mode requres
 # less disk space and it is faster comparing with "single" and "multi" modes,
 # however it doesn't support subsrting searches.
-# "crc-multi" uses the same storage structure with the "crc" mode, but also 
-# stores words in different tables (files) depending on words lengths like 
+# "crc-multi" uses the same storage structure with the "crc" mode, but also
+# stores words in different tables (files) depending on words lengths like
 # "multi" mode. Default mode is "single".
 
 DBAddr		mysql://foo:bar@localhost/search/?dbmode=cache
@@ -104,7 +104,7 @@ DBAddr		mysql://foo:bar@localhost/search/?dbmode=cache
 # LocalCharset <charset>
 # Defines the charset which will be used to store data in database.
 # All other character sets will be recoded into given charset.
-# Take a look into DataparkSearch documentation for detailed explanation 
+# Take a look into DataparkSearch documentation for detailed explanation
 # how to choose a LocalCharset depending on languages used on your site(s).
 # This command should be used once and takes global effect for the config file.
 # Only most popular charsets used in Internet are written here.
@@ -199,7 +199,7 @@ DBAddr		mysql://foo:bar@localhost/search/?dbmode=cache
 
 ###########################################################################
 # StopwordFile <filename>
-# Load stop words from the given text file. You may specify either absolute 
+# Load stop words from the given text file. You may specify either absolute
 # file name or a name relative to DataparkSearch /etc directory. You may use
 # several StopwordFile commands.
 #
@@ -210,7 +210,7 @@ Include stopwords.conf
 
 ###########################################################################
 # LangMapFile <filename>
-# Load language map for charset and language guesser from the given file. 
+# Load language map for charset and language guesser from the given file.
 # You may specify either absolute file name or a name relative to DataparkSearch
 # /etc directory. You may use several LangMapFile commands.
 #
@@ -239,7 +239,7 @@ Include langmap.conf
 #######################################################################
 # MinDocSize bytes
 # To checkonly urls with content size less than value specified.
-# Default value 0 
+# Default value 0
 # Takes global effect for whole config file
 #MinDocSize 1024
 
@@ -285,11 +285,11 @@ Include langmap.conf
 
 ##########################################################################
 # LoadChineseList <charset> <dictionaryfilename>
-# Load chinese words frequency list. 
+# Load chinese words frequency list.
 # By default GB2312 charset and mandarin.fread dictionary is used.
 #LoadChineseList
 
-########################################################################## 
+##########################################################################
 # LoadThaiList <charset> <dictionaryfilename>
 # Load thai words frequency list
 # By default tis-620 and thai.freq dectionary is used.
@@ -314,12 +314,12 @@ Include langmap.conf
 # Default values are Match, NoCase, String.
 # Use "NoCase" or "Case" values to choose case insensitive or case sensitive
 # comparison.
-# Use "Regex" to choose regular expression comparison. 
+# Use "Regex" to choose regular expression comparison.
 # Use "String" to choose string with wildcards comparison.
 # Widlcards are '*' for any number of characters and '?' for one character.
 # Note that '?' and '*' have special meaning in "String" match type. Please use
 # "Regex" to describe documents with '?' and '*' signs in URL.
-# "String" match is much faster than "Regex". Use "String" where it 
+# "String" match is much faster than "Regex". Use "String" where it
 # is possible.
 # You may use several arguments for one 'Allow' command.
 # You may use this command any times.
@@ -339,7 +339,7 @@ Include langmap.conf
 ##########################################################################
 #Disallow [Match|NoMatch] [NoCase|Case] [String|Regex] <arg> [<arg> ... ]
 # Use this to disallow URLs that match (doesn't match) given argument.
-# The meaning of first three optional parameters is exactly the same 
+# The meaning of first three optional parameters is exactly the same
 # with "Allow" command.
 # You can use several arguments for one 'Disallow' command.
 # Takes global effect for config file.
@@ -351,14 +351,14 @@ Include langmap.conf
 #Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
 # Exclude cgi-bin and non-parsed-headers using "string" match:
 #Disallow */cgi-bin/* *.cgi */nph-*
-# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# Exclude anything with '?' sign in URL. Note that '?' sign has a
 # special meaning in "string" match, so we have to use "regex" match here:
 #Disallow Regex  \?
 
 
 # Exclude some known extensions using fast "String" match:
 Disallow *.b    *.sh   *.md5  *.rpm
-Disallow *.arj  *.tar  *.zip  *.tgz  *.gz   *.z     *.bz2 
+Disallow *.arj  *.tar  *.zip  *.tgz  *.gz   *.z     *.bz2
 Disallow *.lha  *.lzh  *.rar  *.zoo  *.ha   *.tar.Z
 Disallow *.gif  *.jpg  *.jpeg *.bmp  *.tiff *.tif   *.xpm  *.xbm *.pcx
 Disallow *.vdo  *.mpeg *.mpe  *.mpg  *.avi  *.movie *.mov  *.dat
@@ -369,7 +369,7 @@ Disallow *.tex  *.texi *.xls  *.doc  *.texinfo
 Disallow *.rtf  *.pdf  *.cdf  *.ps
 Disallow *.ai   *.eps  *.ppt  *.hqx
 Disallow *.cpt  *.bms  *.oda  *.tcl
-Disallow *.o    *.a    *.la   *.so 
+Disallow *.o    *.a    *.la   *.so
 Disallow *.pat  *.pm   *.m4   *.am   *.css
 Disallow *.map  *.aif  *.sit  *.sea
 Disallow *.m3u  *.qt   *.mov
@@ -377,7 +377,7 @@ Disallow *.m3u  *.qt   *.mov
 # Exclude Apache directory list in different sort order using "string" match:
 Disallow *D=A *D=D *M=A *M=D *N=A *N=D *S=A *S=D *O=A *O=D
 
-# More complicated case. RAR .r00-.r99, ARJ a00-a99 files 
+# More complicated case. RAR .r00-.r99, ARJ a00-a99 files
 # and unix shared libraries. We use "Regex" match type here:
 Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
@@ -385,11 +385,11 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
 ##########################################################################
 #CheckOnly [Match|NoMatch] [NoCase|Case] [String|Regex] <arg> [<arg> ... ]
-# The meaning of first three optional parameters is exactly the same 
+# The meaning of first three optional parameters is exactly the same
 # with "Allow" command.
 # Indexer will use HEAD instead of GET HTTP method for URLs that
-# match/do not match given regular expressions. It means that the file 
-# will be checked only for being existing and will not be downloaded. 
+# match/do not match given regular expressions. It means that the file
+# will be checked only for being existing and will not be downloaded.
 # Useful for zip,exe,arj and other binary files.
 # Note that you can disallow those files with commands given below.
 # You may use several arguments for one "CheckOnly" commands.
@@ -401,7 +401,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 #CheckOnly *.b	  *.sh   *.md5
 #CheckOnly *.arj  *.tar  *.zip  *.tgz  *.gz
 #CheckOnly *.lha  *.lzh  *.rar  *.zoo  *.tar*.Z
-#CheckOnly *.gif  *.jpg  *.jpeg *.bmp  *.tiff 
+#CheckOnly *.gif  *.jpg  *.jpeg *.bmp  *.tiff
 #CheckOnly *.vdo  *.mpeg *.mpe  *.mpg  *.avi  *.movie
 #CheckOnly *.mid  *.mp3  *.rm   *.ram  *.wav  *.aiff
 #CheckOnly *.vrml *.wrl  *.png
@@ -419,7 +419,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
 ##########################################################################
 #HrefOnly [Match|NoMatch] [NoCase|Case] [String|Regex] <arg> [<arg> ... ]
-# The meaning of first three optional parameters is exactly the same 
+# The meaning of first three optional parameters is exactly the same
 # with "Allow" command.
 #
 # Use this to scan a HTML page for "href" tags but not to index the contents
@@ -427,7 +427,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 # Commands have global effect for all configuration file.
 #
 # When indexing large mail list archives for example, the index and thread
-# index pages (like mail.10.html, thread.21.html, etc.) should be scanned 
+# index pages (like mail.10.html, thread.21.html, etc.) should be scanned
 # for links but shouldn't be indexed:
 #
 #HrefOnly */mail*.html */thread*.html
@@ -435,7 +435,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
 ##########################################################################
 #CheckMp3 [Match|NoMatch] [NoCase|Case] [String|Regex] <arg> [<arg> ...]
-# The meaning of first three optional parameters is exactly the same 
+# The meaning of first three optional parameters is exactly the same
 # with "Allow" command.
 # If an URL matches given rules, indexer will download only a little part
 # of the document and try to find MP3 tags in it. On success, indexer
@@ -449,24 +449,24 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
 #######################################################################
 #CheckMP3Only [Match|NoMatch] [NoCase|Case] [String|Regex] <arg> [<arg> ...]
-# The meaning of first three optional parameters is exactly the same 
+# The meaning of first three optional parameters is exactly the same
 # with "Allow" command.
 # If an URL matches given rules, indexer, like in the case CheckMP3 command,
 # will download only a little part of the document and try to find MP3 tags.
-# On success, indexer will parse MP3 tags, else it will NOT download whole 
+# On success, indexer will parse MP3 tags, else it will NOT download whole
 # document.
 #CheckMP3Only *.bin *.mp3
 
 
 # How to combine Allow, Disallow, CheckOnly, HrefOnly commands.
 #
-# indexer compares URLs against all these command arguments in the 
-# order of their appearance in indexer.conf file. 
-# If indexer finds that URL matches some rule, it will make a decision of what 
-# to do with this URL, allow it, disallow it or use HEAD instead 
+# indexer compares URLs against all these command arguments in the
+# order of their appearance in indexer.conf file.
+# If indexer finds that URL matches some rule, it will make a decision of what
+# to do with this URL, allow it, disallow it or use HEAD instead
 # of the GET method. So, you may use different Allow, Disallow,
 # CheckOnly, HrefOnly commands order.
-# If no one of these commands are given, DataparkSearch will allow everything 
+# If no one of these commands are given, DataparkSearch will allow everything
 # by default.
 #
 # There are many possible combinations. Samples of two of them are here:
@@ -478,7 +478,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 # indexer.conf loading).
 #
 # Sample of second combination.
-# Allow some known text extensions (html, txt) and directory index ( / ), 
+# Allow some known text extensions (html, txt) and directory index ( / ),
 # then disallow everything else:
 #
 #Allow .html .txt */
@@ -488,7 +488,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
 ################################################################
 # Uncomment these commands to strip out session IDs from URL
-# before insertion into database. This stops indexing same pages 
+# before insertion into database. This stops indexing same pages
 # with different session IDs.
 #
 #ReverseAlias regex ^(.*)[&\?][a-zA-Z;]+=[a-zA-Z0-9]{32}$ $1
@@ -513,7 +513,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 # How much time to hold URLs with erroneous status before deleting them
 # from the database. For example, if host is down, indexer will not delete
 # pages from this site immediately and search will use previous content
-# of these pages.. However if site doesn't respond for a month, probably 
+# of these pages.. However if site doesn't respond for a month, probably
 # it's time to remove these pages from the database.
 # For <time> format see description of Period command.
 #HoldBadHrefs 30d
@@ -521,7 +521,7 @@ Disallow Regex \.r[0-9][0-9]$ \.a[0-9][0-9]$ \.so\.[0-9]$
 
 ################################################################
 # DeleteOlder <time>
-# How much time to hold URLs before deleting them from the database. For example, 
+# How much time to hold URLs before deleting them from the database. For example,
 # for news sites indexing, you may delete automaticaly old news articles after specified period.
 # For <time> format see description of Period command.
 # Default value is 0. "0" value mean "do not check". You may specify several DeleteOlder commands,
@@ -569,7 +569,7 @@ AddType text/x-postscript		*.ps
 
 
 # You may also use quotes in mime type definition
-# for example to specify charset. e.g. Russian webmasters 
+# for example to specify charset. e.g. Russian webmasters
 # often use *.htm extension for windows-1251 documents and
 # *.html for unix koi8-r documents:
 #
@@ -595,8 +595,8 @@ AddType	application/unknown *.*
 #
 # Optional charset parameter used to change charset if needed
 #
-# Command line may have $1 parameter which stands for temporary file name. 
-# Some parsers can not operate on stdin, so indexer creates temporary file 
+# Command line may have $1 parameter which stands for temporary file name.
+# Some parsers can not operate on stdin, so indexer creates temporary file
 # for parser and it's name passed instead of $1. Take a look into documentation
 # for other parser types and parsers usage explanation.
 # Examples:
@@ -622,12 +622,12 @@ ParserTimeOut 300
 
 #########################################################################
 #Alias <master> <mirror>
-# You can use this command for example to organize search through 
+# You can use this command for example to organize search through
 # master site by indexing a mirror site. It is also usefull to
 # index your site from local file system.
 # DataparkSearch will display URLs from <master> while searching
 # but go to the <mirror> while indexing.
-# This command has global indexer.conf file effect. 
+# This command has global indexer.conf file effect.
 # You may use several aliases in one indexer.conf.
 #Alias http://www.mysql.com/ http://mysql.udm.net/
 #Alias http://www.site.com/  file:/usr/local/apache/htdocs/
@@ -650,18 +650,18 @@ ParserTimeOut 300
 #######################################################################
 #Period <time>
 # Set reindex period.
-# <time> is in the form 'xxxA[yyyB[zzzC]]'                                   
-# (Spaces are allowed between xxx and A and yyy and so on)                     
-#   there xxx, yyy, zzz are numbers (can be negative!)                         
-#         A, B, C can be one of the following:                                 
-#		s - second                                                      
-#		M - minute                                                      
-#		h - hour                                                        
-#		d - day                                                         
-#		m - month                                                       
-#		y - year                                                        
-#      (these letters are the same as in strptime/strftime functions)                   
-#                                                                              
+# <time> is in the form 'xxxA[yyyB[zzzC]]'
+# (Spaces are allowed between xxx and A and yyy and so on)
+#   there xxx, yyy, zzz are numbers (can be negative!)
+#         A, B, C can be one of the following:
+#		s - second
+#		M - minute
+#		h - hour
+#		d - day
+#		m - month
+#		y - year
+#      (these letters are the same as in strptime/strftime functions)
+#
 # Examples:
 # 15s - 15 seconds
 # 4h30M - 4 hours and 30 minutes
@@ -708,7 +708,7 @@ ParserTimeOut 300
 #######################################################################
 #VaryLang <string>
 #Specify languages list for multilingual servers indexing
-#VaryLang "ru en fr de" 
+#VaryLang "ru en fr de"
 
 
 #######################################################################
@@ -743,8 +743,8 @@ ParserTimeOut 300
 #MaxNetErrors <number>
 # Maximum network errors for each server.
 # Default value is 16. Use 0 for unlimited errors number.
-# If there too many network errors on some server 
-# (server is down, host unreachable, etc) indexer will try to do 
+# If there too many network errors on some server
+# (server is down, host unreachable, etc) indexer will try to do
 # not more then 'number' attempts to connect to this server.
 # Takes effect till the end of config file or till next MaxNetErrors command.
 #MaxNetErrors 16
@@ -799,7 +799,7 @@ ParserTimeOut 300
 
 #######################################################################
 #DetectClones yes/no
-# Allow/disallow clone detection and eliminating. If alowed, indexer will 
+# Allow/disallow clone detection and eliminating. If alowed, indexer will
 # detect the same documents under different location, such as
 # mirrors, and will index only one document from the group of
 # such equal documents. "DetectClones yes" also allows to reduce space usage.
@@ -825,7 +825,7 @@ Include sections.conf
 
 ########################################################################
 #RemoteCharset <charset>
-#<RemoteCharset> is default character set for the server in next "Server" 
+#<RemoteCharset> is default character set for the server in next "Server"
 # command(s).
 # This is required only for "bad" servers that do not send information
 # about charset in header: "Content-type: text/html; charset=some_charset"
@@ -838,12 +838,12 @@ Include sections.conf
 
 #########################################################################
 #ProxyAuthBasic login:passwd
-# Use http proxy basic authorization 
+# Use http proxy basic authorization
 # Can be used before every "Server" command and
 # takes effect only for next one "Server" command!
 # It should be also before "Proxy" command.
 # Examples:
-#ProxyAuthBasic somebody:something  
+#ProxyAuthBasic somebody:something
 
 
 #########################################################################
@@ -869,11 +869,11 @@ Include sections.conf
 
 #########################################################################
 #AuthBasic login:passwd
-# Use basic http authorization 
+# Use basic http authorization
 # Can be set before every "Server" command and
 # takes effect only for next one Server command!
 # Examples:
-#AuthBasic somebody:something  
+#AuthBasic somebody:something
 #
 # If you have password protected directory(ies), but whole server is open,use:
 #AuthBasic login1:passwd1
@@ -894,7 +894,7 @@ Include sections.conf
 #MirrorHeadersRoot /path/to/headers
 #
 # MirrorPeriod <time>
-# You may specify period during wich earlier mirrored files 
+# You may specify period during wich earlier mirrored files
 # will be used while indexing instead of real downloading.
 # It is very useful when you do some experiments with DataparkSearch
 # indexing the same hosts and do not want much traffic from/to Internet.
@@ -945,7 +945,7 @@ Include sections.conf
 
 #########################################################################
 #Server [Method] [SubSection] <URL> [alias]
-# This is the main command of the indexer.conf file. It's used 
+# This is the main command of the indexer.conf file. It's used
 # to describe web-space you want to index. It also inserts
 # given URL into database to use it as a start point.
 # You may use "Server" command as many times as a number of different
@@ -954,8 +954,8 @@ Include sections.conf
 # "Method" is an optional parameter which can take on of the following values:
 # Allow, Disallow, CheckOnly, HrefOnly, CheckMP3, CheckMP3Only, Skip.
 #
-# "SubSecion" is an optional parameter to specify server's subsection, 
-# i.e. a part of Server command argument. 
+# "SubSecion" is an optional parameter to specify server's subsection,
+# i.e. a part of Server command argument.
 # It can take the following values:
 # "page" describes web space which consists of one page with address <URL>.
 # "path" describes all documents which are under the same path with <URL>.
@@ -987,7 +987,7 @@ Include sections.conf
 
 #########################################################################
 #Realm [Method] [CmpType] [Match|NoMatch] <arg> [alias]
-# It works almost like "Server" command but takes a regular expression or 
+# It works almost like "Server" command but takes a regular expression or
 # a string wildcards as it's argument and do not insert any URL into
 # database for indexing. To insert URLs into database use URL command (see
 # below).
@@ -1016,10 +1016,9 @@ Include sections.conf
 # This command inserts given URL into database. This is usefull to add
 # several entry points to one server. Has no effect if an URL is already
 # in the database. When inserting indexer does not executes any checkings
-# and this URL may be delated at first indexing attempt if URL has no 
-# correspondent Server command or is disallowed by rules given in 
-# Allow/Disallow commands. 
+# and this URL may be delated at first indexing attempt if URL has no
+# correspondent Server command or is disallowed by rules given in
+# Allow/Disallow commands.
 #
 #This command will add /main/index.html page:
 #URL http://localhost/main/index.html
-

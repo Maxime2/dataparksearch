@@ -196,7 +196,7 @@ CLASS="PROGRAMLISTING"
 Например: <KBD
 CLASS="USERINPUT"
 >mysql odbc</KBD
->. 
+>.
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -276,7 +276,7 @@ CLASS="LITERAL"
 > или <TT
 CLASS="LITERAL"
 >r</TT
-> - сортировка по релевантности, 
+> - сортировка по релевантности,
 <TT
 CLASS="LITERAL"
 >P</TT
@@ -411,7 +411,7 @@ CLASS="COMMAND"
 CLASS="FILENAME"
 >search.cgi</TT
 > дообавит знаки % до и после значения этого параметра,
-если используется SQL база данных для хранения информации. Например, 
+если используется SQL база данных для хранения информации. Например,
 &lt;OPTION VALUE="/manual/"&gt; а не VALUE="%/manual/%". Если указан полный URL (с указанием схемы)б <TT
 CLASS="FILENAME"
 >search.cgi</TT
@@ -589,7 +589,7 @@ CLASS="LITERAL"
 > равно <TT
 CLASS="LITERAL"
 >er</TT
->. 0 - январь, 1 - февраль, ... 
+>. 0 - январь, 1 - февраль, ...
 11 - декабрь.</TD
 ></TR
 ><TR
@@ -671,7 +671,7 @@ CLASS="FILENAME"
 секций документов, указываемых в командах <B
 CLASS="COMMAND"
 >Section</B
-> файла конфигурации 
+> файла конфигурации
 <TT
 CLASS="FILENAME"
 >indexer.conf</TT
@@ -793,7 +793,7 @@ CLASS="FILENAME"
 CLASS="FILENAME"
 >search.cgi</TT
 >
-сначала проверяет переменную DPSEARCH_SELF и только потом, при неудаче SCRIPT_NAME. 
+сначала проверяет переменную DPSEARCH_SELF и только потом, при неудаче SCRIPT_NAME.
 Вот пример использования переменной окружения DPSEARCH_SELF при помощи команд конфигурирования сервера Apache
 <B
 CLASS="COMMAND"
@@ -859,7 +859,7 @@ CLASS="FILENAME"
 Например, <TT
 CLASS="FILENAME"
 >http://localhost/cgi-bin/search.cgi/search1.html</TT
-> в качестве шаблона использует 
+> в качестве шаблона использует
 <TT
 CLASS="FILENAME"
 >search1.htm</TT
@@ -885,7 +885,7 @@ CLASS="VARNAME"
 CLASS="VARNAME"
 >REDIRECT_URL</CODE
 >.
-Для использования этого способа указания шаблона, необходимо добавить следующие строчки в файл конфигурации 
+Для использования этого способа указания шаблона, необходимо добавить следующие строчки в файл конфигурации
 Apache <TT
 CLASS="FILENAME"
 >httpd.conf</TT
@@ -916,7 +916,7 @@ CLASS="FILENAME"
 <TT
 CLASS="LITERAL"
 >http://www.site.com/path/to/template.zhtml</TT
-> 
+>
 Конечно, вы можете использовать любое свободное расширение вместо .zhtml. </P
 ></LI
 ><LI
@@ -955,7 +955,7 @@ CLASS="APPLICATION"
 <TT
 CLASS="LITERAL"
 >/usr/local/dpsearch/etc</TT
->). Таким образом вы можете использовать без перекомпиляции тот же 
+>). Таким образом вы можете использовать без перекомпиляции тот же
 самый <B
 CLASS="COMMAND"
 >search.cgi</B
@@ -993,14 +993,14 @@ NAME="SEARCH-OPERATORS"
 >Оператор <B
 CLASS="COMMAND"
 >allin&lt;section&gt;:</B
->, где &lt;section&gt; - имя любой секции, 
+>, где &lt;section&gt; - имя любой секции,
 определенной в файле конфигурации <TT
 CLASS="FILENAME"
 >sections.conf</TT
 > (или командами <B
 CLASS="COMMAND"
 >Section</B
-> в 
+> в
 <TT
 CLASS="FILENAME"
 >indexer.conf</TT
@@ -1010,14 +1010,14 @@ CLASS="FILENAME"
 >/<TT
 CLASS="FILENAME"
 >searchd.conf</TT
->) и имеющей ненулевой номер 
+>) и имеющей ненулевой номер
 секции (см. <A
 HREF="dpsearch-indexcmd.ru.html#SECTION_CMD"
 >&#1056;&#1072;&#1079;&#1076;. 3.10.43</A
->&#62;), 
+>&#62;),
 позволяет ограничить область поиска указываемого слова в поисковом запросе только заданой секцией.</P
 ><P
->От ограничения поиска по секциям при помощи CGI-параметра &amp;wf= отличается тем, 
+>От ограничения поиска по секциям при помощи CGI-параметра &amp;wf= отличается тем,
 что ограничение действует только на слова поискового запроса, указываемые после данного оператора.</P
 ><P
 >Например, если <TT
@@ -1026,7 +1026,7 @@ CLASS="FILENAME"
 > содержит команды
 <PRE
 CLASS="PROGRAMLISTING"
-> 
+>
 Section body 1 256
 Section title 2 128
 Section url 3 0 strict</PRE
@@ -1037,7 +1037,7 @@ CLASS="COMMAND"
 >, <B
 CLASS="COMMAND"
 >allintitle:</B
-> и 
+> и
 <B
 CLASS="COMMAND"
 >allinurl:</B
@@ -1046,7 +1046,7 @@ CLASS="COMMAND"
 >По запросу <KBD
 CLASS="USERINPUT"
 >computer allintitle: science</KBD
-> будут найдены документы, 
+> будут найдены документы,
 содержащие слово "science" в заголовке и слово "computer" в любой секции документа. </P
 ></DIV
 ><DIV
@@ -1079,7 +1079,7 @@ CLASS="USERINPUT"
 > или <KBD
 CLASS="USERINPUT"
 >&amp;</KBD
-> - логическое И. 
+> - логическое И.
 Например, <TT
 CLASS="LITERAL"
 >mysql &amp; odbc</TT
@@ -1096,8 +1096,8 @@ CLASS="USERINPUT"
 ><KBD
 CLASS="USERINPUT"
 >NEAR</KBD
-> - Оператор NEAR принимает истиное значение если оба слова 
-находятся не далее, чем в 16 словах друг от друга. 
+> - Оператор NEAR принимает истиное значение если оба слова
+находятся не далее, чем в 16 словах друг от друга.
 Например, <TT
 CLASS="LITERAL"
 >mysql NEAR odbc</TT
@@ -1105,7 +1105,7 @@ CLASS="LITERAL"
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> будет искать URL, содержащие оба слова "mysql" и "odbc", 
+> будет искать URL, содержащие оба слова "mysql" и "odbc",
 расположеные на расстоянии не далее 16 слов друг от друга.</P
 ><P
 ><KBD
@@ -1114,12 +1114,12 @@ CLASS="USERINPUT"
 > или <KBD
 CLASS="USERINPUT"
 >*</KBD
-> - Оператор ANYWORD аналогичен оператору И, 
-но принимает истиное значение, если между обеими словами находится одно любое слово и левый операнд имеет меньшую позицию, нежели правый. 
+> - Оператор ANYWORD аналогичен оператору И,
+но принимает истиное значение, если между обеими словами находится одно любое слово и левый операнд имеет меньшую позицию, нежели правый.
 Например, "<KBD
 CLASS="USERINPUT"
 >mysql * odbc</KBD
->"  - 
+>"  -
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -1132,7 +1132,7 @@ CLASS="USERINPUT"
 > или <KBD
 CLASS="USERINPUT"
 >|</KBD
-> - логическое ИЛИ. 
+> - логическое ИЛИ.
 Например, <TT
 CLASS="LITERAL"
 >mysql|odbc</TT
@@ -1148,7 +1148,7 @@ CLASS="USERINPUT"
 > или <KBD
 CLASS="USERINPUT"
 >~</KBD
-> - логическое НЕ. 
+> - логическое НЕ.
 Например, <TT
 CLASS="LITERAL"
 >mysql &amp; ~ odbc</TT

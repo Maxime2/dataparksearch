@@ -6,9 +6,9 @@
 #   Section <string> <number> <maxlen>
 #
 # where <string> is a section name and <number> is section ID
-# between 0 and 255. Use 0 if you don't want to index some of 
+# between 0 and 255. Use 0 if you don't want to index some of
 # these sections. It is better to use different sections IDs
-# for different documents parts. In this case during search 
+# for different documents parts. In this case during search
 # time you'll be able to give different weight to each part
 # or even disallow some sections at a search time.
 # <maxlen> argument contains a maximum length of section
@@ -104,4 +104,3 @@ Section Content-Language	14	16
 # Uncomment the following line if you fish to store geopositions found.
 #Section geo.lat                0     32
 #Section geo.lon                0     32
-

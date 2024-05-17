@@ -58,16 +58,16 @@
              <A HREF="http://site/test.html" TARGET="_blank">http://site/test.html</A>
              <font color="#008800">
               - 337 bytes [text/html]
-              - 
+              -
 	      	      <DD><small>[<a href="">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?np=0&amp;q=bosch&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

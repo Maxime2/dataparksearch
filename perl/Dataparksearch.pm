@@ -18,7 +18,7 @@ $VERSION = '4.53';
 bootstrap Dataparksearch;
 
 my %methods = map { $_ => 1 } qw( total_found page_number W WE
-                                  num_pages is_next work_time 
+                                  num_pages is_next work_time
 				  word_info word_info_ext first last );
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -30,7 +30,7 @@ sub AUTOLOAD {
   $AUTOLOAD =~ s/^.*:://;
 
   return $self->value( $AUTOLOAD ) if $methods{$AUTOLOAD};
-  
+
   warn(sprintf('%s error : "%s" is not a valid method !',ref($self||$self), $AUTOLOAD));
 
 }
@@ -60,8 +60,8 @@ sub new {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-sub query { 
- 
+sub query {
+
   my $self = shift;
   my %params = @_;
 
@@ -70,7 +70,7 @@ sub query {
 
   $self->{'mode'}  = $params{'mode'}  if $params{'mode'};
   $self->{'mode'}  = $params{'m'}     if $params{'m'};
-  $self->{'sort'}  = $params{'sort'}  if $params{'sort'}; 
+  $self->{'sort'}  = $params{'sort'}  if $params{'sort'};
   $self->{'ps'}    = $params{'ps'}    if $params{'ps'};
   $self->{'ul'}    = $params{'ul'}    if $params{'ul'};
 
@@ -90,10 +90,10 @@ sub query {
 sub records {
 
   my $self    = shift;
-  
+
   unless ( exists $self->{'result'} )
   { warn 'You Must query before.'; return; }
-  
+
   @{$self->{'result'}{'records'}};
 
 }
@@ -107,7 +107,7 @@ sub value {
 
   unless ( exists $self->{'result'} )
   { warn 'You Must query before.'; return; }
-  
+
   $self->{'result'}{$request};
 
 }
@@ -120,7 +120,7 @@ sub ShowReferers {
   my $stats  = $self->GetReferers();
   my $return = <<EOF;
 
-          URLs and referers 
+          URLs and referers
 
 EOF
 
@@ -129,7 +129,7 @@ EOF
   }
 
   return $return;
-  
+
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -213,7 +213,7 @@ Dataparksearch - Perl extension for DataparkSearch Engine
   # With two words, mode all,sort by rate, page size at 10 and page number at 1.
   $search->query('query' => 'perl apache',
                  'mode' => 'all',
-		 'sort' => 'rate', 
+		 'sort' => 'rate',
 		 'ps' => '10',
 		 'pn' => 1);
 
@@ -224,14 +224,14 @@ Dataparksearch - Perl extension for DataparkSearch Engine
   print 'Is next ?   : ', $search->is_next, "\n";
   print 'work time   : ', $search->work_time, " seconds\n";
   print 'word info   :',  $search->word_info, "\n";
-		 
+
   print sprintf('Results from %d to %d ', $search->{'first'}, $search->{'last'}),"\n\n";
 
   foreach my $result ( $search->records ) {
 
-    print sprintf('[%d] %s -> %s [%dKo]', 
-                  $result->{'url_id'}, 
-		  $result->{'url'}, 
+    print sprintf('[%d] %s -> %s [%dKo]',
+                  $result->{'url_id'},
+		  $result->{'url'},
 		  $result->{'title'},
 		  $result->{'size'}/1024),"\n";
   }
@@ -316,9 +316,9 @@ I<$search>->work_time : return the work time in seconds.
 
 =item word_info
 
-I<$search>->word_info : 
+I<$search>->word_info :
 
-=item first 
+=item first
 
 I<$search>->first : return the first result number of the current page.
 

@@ -172,7 +172,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-588703039	http://site/test5.html	charset	ISO-8859-1
 200	-588703039	http://site/test5.html	content-language	en
 200	-588703039	http://site/test5.html	content-type	text/html
-200	-474572546	http://site/test1.html	body	 This is the first test page. &#38; Here is the second one. 
+200	-474572546	http://site/test1.html	body	 This is the first test page. &#38; Here is the second one.
 200	-474572546	http://site/test1.html	charset	ISO-8859-1
 200	-474572546	http://site/test1.html	content-language	en
 200	-474572546	http://site/test1.html	content-type	text/html
@@ -182,12 +182,12 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-271113602	http://site/test3.html	content-language	en
 200	-271113602	http://site/test3.html	content-type	text/html
 200	-271113602	http://site/test3.html	title	Test 3 title
-200	1062648687	http://site/z-clone2.html	body	 This is the second test page. Here is the third one. 
+200	1062648687	http://site/z-clone2.html	body	 This is the second test page. Here is the third one.
 200	1062648687	http://site/z-clone2.html	charset	ISO-8859-1
 200	1062648687	http://site/z-clone2.html	content-language	en
 200	1062648687	http://site/z-clone2.html	content-type	text/html
 200	1062648687	http://site/z-clone2.html	title	Test 2 title
-200	1109760155	http://site/	body	 test1.html  test1.txt  z-clone2.html  test3.html  test4.html  .  z-clone1.txt  test2.html  ..  test5.html 
+200	1109760155	http://site/	body	 test1.html  test1.txt  z-clone2.html  test3.html  test4.html  .  z-clone1.txt  test2.html  ..  test5.html
 200	1109760155	http://site/	charset	ISO-8859-1
 200	1109760155	http://site/	content-language	en
 200	1109760155	http://site/	content-type	text/html

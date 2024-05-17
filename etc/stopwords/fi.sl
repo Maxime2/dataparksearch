@@ -38,210 +38,210 @@ ette
 eivät
 
 #|Nom   Gen    Acc    Part   Iness   Elat    Illat  Adess   Ablat   Allat   Ess    Trans
-minä   
-minun  
-minut  
-minua  
-minussa 
-minusta 
-minuun 
-minulla 
-minulta 
+minä
+minun
+minut
+minua
+minussa
+minusta
+minuun
+minulla
+minulta
 minulle               #| I
 
-sinä   
-sinun  
-sinut  
-sinua  
-sinussa 
-sinusta 
-sinuun 
-sinulla 
-sinulta 
+sinä
+sinun
+sinut
+sinua
+sinussa
+sinusta
+sinuun
+sinulla
+sinulta
 sinulle               #| you
 
-hän    
-hänen  
-hänet  
-häntä  
-hänessä 
-hänestä 
-häneen 
-hänellä 
-häneltä 
+hän
+hänen
+hänet
+häntä
+hänessä
+hänestä
+häneen
+hänellä
+häneltä
 hänelle               #| he she
 
-me     
-meidän 
-meidät 
-meitä  
-meissä  
-meistä  
-meihin 
-meillä  
-meiltä  
+me
+meidän
+meidät
+meitä
+meissä
+meistä
+meihin
+meillä
+meiltä
 meille                #| we
 
-te     
-teidän 
-teidät 
-teitä  
-teissä  
-teistä  
-teihin 
-teillä  
-teiltä  
+te
+teidän
+teidät
+teitä
+teissä
+teistä
+teihin
+teillä
+teiltä
 teille                #| you
 
-he     
-heidän 
-heidät 
-heitä  
-heissä  
-heistä  
-heihin 
-heillä  
-heiltä  
+he
+heidän
+heidät
+heitä
+heissä
+heistä
+heihin
+heillä
+heiltä
 heille                #| they
 
 
-tämä   
-tämän         
-tätä   
-tässä   
-tästä   
-tähän  
-tallä   
-tältä   
-tälle   
-tänä   
+tämä
+tämän
+tätä
+tässä
+tästä
+tähän
+tallä
+tältä
+tälle
+tänä
 täksi  #| this
 
-tuo    
-tuon          
-tuotä  
-tuossa  
-tuosta  
-tuohon 
-tuolla  
-tuolta  
-tuolle  
-tuona  
+tuo
+tuon
+tuotä
+tuossa
+tuosta
+tuohon
+tuolla
+tuolta
+tuolle
+tuona
 tuoksi #| that
 
-se     
-sen           
-sitä   
-siinä   
-siitä   
-siihen 
-sillä   
-siltä   
-sille   
-sinä   
+se
+sen
+sitä
+siinä
+siitä
+siihen
+sillä
+siltä
+sille
+sinä
 siksi  #| it
 
-nämä   
-näiden        
-näitä  
-näissä  
-näistä  
-näihin 
-näillä  
-näiltä  
-näille  
-näinä  
+nämä
+näiden
+näitä
+näissä
+näistä
+näihin
+näillä
+näiltä
+näille
+näinä
 näiksi #| these
 
-nuo    
-noiden        
-noita  
-noissa  
-noista  
-noihin 
-noilla  
-noilta  
-noille  
-noina  
+nuo
+noiden
+noita
+noissa
+noista
+noihin
+noilla
+noilta
+noille
+noina
 noiksi #| those
 
-ne     
-niiden        
-niitä  
-niissä  
-niistä  
-niihin 
-niillä  
-niiltä  
-niille  
-niinä  
+ne
+niiden
+niitä
+niissä
+niistä
+niihin
+niillä
+niiltä
+niille
+niinä
 niiksi #| they
 
 
-kuka   
-kenen 
-kenet   
-ketä   
-kenessä 
-kenestä 
-keneen 
-kenellä 
-keneltä 
-kenelle 
-kenenä 
+kuka
+kenen
+kenet
+ketä
+kenessä
+kenestä
+keneen
+kenellä
+keneltä
+kenelle
+kenenä
 keneksi	#| who
 
-ketkä  
-keiden 
-ketkä  
-keitä  
-keissä  
-keistä  
-keihin 
-keillä  
-keiltä  
-keille  
-keinä  
+ketkä
+keiden
+ketkä
+keitä
+keissä
+keistä
+keihin
+keillä
+keiltä
+keille
+keinä
 keiksi #| (pl)
 
-mikä   
-minkä 
-minkä   
-mitä   
-missä   
-mistä   
-mihin  
-millä   
-miltä   
-mille   
-minä   
+mikä
+minkä
+minkä
+mitä
+missä
+mistä
+mihin
+millä
+miltä
+mille
+minä
 miksi  #| which what
 
 mitkä                                                                                    #| (pl)
 
 
-joka   
-jonka         
-jota   
-jossa   
-josta   
-johon  
-jolla   
-jolta   
-jolle   
-jona   
+joka
+jonka
+jota
+jossa
+josta
+johon
+jolla
+jolta
+jolle
+jona
 joksi  #| who which
 
-jotka  
-joiden        
-joita  
-joissa  
-joista  
-joihin 
-joilla  
-joilta  
-joille  
-joina  
+jotka
+joiden
+joita
+joissa
+joista
+joihin
+joilla
+joilta
+joille
+joina
 joiksi #| (pl)
 
 
@@ -276,4 +276,3 @@ kun    #| when
 niin   #| so
 nyt    #| now
 itse   #| self
-

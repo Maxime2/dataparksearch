@@ -70,4 +70,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/ibase/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/ibase
-

@@ -113,4 +113,3 @@ uw             #|  your
 iemand         #|  somebody
 geweest        #|  been; past participle of 'be'
 andere         #|  other
-

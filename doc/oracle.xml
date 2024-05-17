@@ -29,7 +29,7 @@ achieve better quality of service. </para>
 		</sect3>
 		<sect3 id="oracle-req">
 			<title><application>DataparkSearch</application>+Oracle8 Installation Requirements</title>
-			<para>In order to install <application>DataparkSearch</application> with Oracle RDBMS support 
+			<para>In order to install <application>DataparkSearch</application> with Oracle RDBMS support
 you must ensure the following requirements:</para>
 			<itemizedlist>
 				<listitem>
@@ -110,7 +110,7 @@ OK (10 msec)
 
 </programlisting>
 			</para>
-			<para>Second, try to connect to Oracle Server with svrmgrl and check whether 
+			<para>Second, try to connect to Oracle Server with svrmgrl and check whether
 <application>DataparkSearch</application> tables were created
 			<programlisting>
 [oracle@ant oracle]$ svrmgrl command='connect scott/tiger@DataparkSearch'
@@ -204,4 +204,3 @@ information. <filename>search.cgi</filename> should work now. </para>
 		</sect3>
 	</sect2>
 </sect1>
-

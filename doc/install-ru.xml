@@ -59,7 +59,7 @@
 <application>DataparkSearch</application> почти на всех современных UNIX системах, имеющих копилятор C.
 Разработка ведётся на <application>FreeBSD 7.x</application> с использованием <application>PostgreSQL 8.3</application>. </para>
 
-<para>На даенный момент известно об успешных установках <application>DataparkSearch</application> на 
+<para>На даенный момент известно об успешных установках <application>DataparkSearch</application> на
 следующих опреационных системах:</para>
 		<itemizedlist>
 			<listitem>
@@ -101,11 +101,11 @@
 		</itemizedlist>
 
 		<para>Мы надеемся, что <application>DataparkSearch</application> будет работать и на других Unix платформах.
-Пожалуйста, сообщайте об успешных установках на других платформах по адресу 
+Пожалуйста, сообщайте об успешных установках на других платформах по адресу
 <ulink url="mailto:maxime@maxime.net.ru">maxime@maxime.net.ru</ulink>.</para>
 
-<para><emphasis>О NFS</emphasis>: Замечены проблемы при запуске <application>DataparkSearch</application> поверх 
-<application>NFS v4</application> на <application>Linux 2.6.17</application>. 
+<para><emphasis>О NFS</emphasis>: Замечены проблемы при запуске <application>DataparkSearch</application> поверх
+<application>NFS v4</application> на <application>Linux 2.6.17</application>.
 Однако все прекрасно работает при использовании на этой системе <application>NFS v3</application>.
 </para>
 
@@ -142,9 +142,9 @@
 <command>install.pl</command>.</para>
 </listitem>
 <listitem>
-<para>Для создания документации из XML-исходников, вам потребуется также установить 
-<filename>jade</filename> или <filename>openjade</filename>.</para> 
-<para>Для создания документации на английском языке в <application>PDF</application> формате, 
+<para>Для создания документации из XML-исходников, вам потребуется также установить
+<filename>jade</filename> или <filename>openjade</filename>.</para>
+<para>Для создания документации на английском языке в <application>PDF</application> формате,
 вам также потребуется <filename>jadetex</filename>.
 Используйте команду <userinput>make book.pdf</userinput> в поддиректории <filename>doc/</filename> чтобы скомпилировать её.
 </para>
@@ -259,15 +259,15 @@ sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
 						</tbody>
 					</tgroup>
 				</informaltable>
-				<para>Если у вас нет прав для создания этой директории, или вы хотите установить 
-<application>DataparkSearch</application> в другую директорию, используйте для <command>configure</command> ключ 
+				<para>Если у вас нет прав для создания этой директории, или вы хотите установить
+<application>DataparkSearch</application> в другую директорию, используйте для <command>configure</command> ключ
 <option>--prefix</option>,
 например,</para>
 
 				<para>
 					<userinput>./configure --prefix=/user/home/data --with-mysql</userinput>
 				</para>
-				<para>Для установки <application>DataparkSearch</application> с поддержкой HTTPS, 
+				<para>Для установки <application>DataparkSearch</application> с поддержкой HTTPS,
 используйте следующий ключ для <command>configure</command>:</para>
 				<para>
 					<userinput>./configure --with-https=PKG</userinput>
@@ -357,7 +357,7 @@ sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
 				<para>Для других баз данных см. документацию на соответствующую базу данных.</para>
 			</listitem>
 <listitem><para>Создайте файлы конфигурации.</para>
-<para>Для этого в директории конфигурационных файлов ( по умолчанию это <filename>/usr/local/dpsearch/etc/</filename>) скопируйте <filename>indexer.conf-dist</filename> 
+<para>Для этого в директории конфигурационных файлов ( по умолчанию это <filename>/usr/local/dpsearch/etc/</filename>) скопируйте <filename>indexer.conf-dist</filename>
 в <filename>indexer.conf</filename> и <filename>search.htm-dist</filename> в <filename>search.htm</filename>. Затем отредактируйте <filename>indexer.conf</filename> и <filename>search.htm</filename>
 согласно вашим потребностям. В основном вам необходимо только отредактировать команду <command>DBAddr</command> в обоих файлах указав соединение с SQL-сервером и необходимый dbmode.</para>
 </listitem>
@@ -376,7 +376,7 @@ sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
 			</listitem>
 			<listitem>
 				<para>Установка программы поиска</para>
-				<para>Скопируйте <filename>search.cgi</filename> в <literal>cgi-bin</literal> 
+				<para>Скопируйте <filename>search.cgi</filename> в <literal>cgi-bin</literal>
 директорию вашего веб-сервера или создайте алиас в Apache на поддиректорию <filename>bin/</filename>
 <application>DataparkSearch</application>. </para>
 
@@ -408,7 +408,7 @@ sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
 				</para>
 			</listitem>
 			<listitem>
-				<para>Завершение компиляции с ошибками иногда может быть связана с некорректной версией 
+				<para>Завершение компиляции с ошибками иногда может быть связана с некорректной версией
 <command>make</command>. Работа стандартной команды <command>make</command> под Solaris, FreeBSD, OpenBSD
 немного отличается от <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink>.
 Попробуйте использовать <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink> вместо стандартной версии,
@@ -442,8 +442,8 @@ sudo apt-get install libpq-dev libmysqlclient-dev libsqlite3-dev
 
 <sect1 id="quick-usage">
 <title>Простая рутина использования</title>
-<para>Перед первым запуском <command>indexer</command>, вам необходимо указать пространство индексирования (см. <xref linkend="follow" />). 
-В простом случае, когда вам необходимо индексировать один сайт, необходимо добавить команду <command>Server</command>, 
+<para>Перед первым запуском <command>indexer</command>, вам необходимо указать пространство индексирования (см. <xref linkend="follow" />).
+В простом случае, когда вам необходимо индексировать один сайт, необходимо добавить команду <command>Server</command>,
 аналогичную указанной ниже в ваш файл конфигурации <filename>indexer.conf</filename>:
 <programlisting>
 Server http://www.server.ext/

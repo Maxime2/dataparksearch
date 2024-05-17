@@ -3,7 +3,7 @@ dnl from freetype-1.2 distribution
 dnl
 dnl The following was written by jhawk@mit.edu
 dnl
-dnl AC_LIBRARY_NET: Id: net.m4,v 1.4 1997/10/25 20:49:53 jhawk Exp 
+dnl AC_LIBRARY_NET: Id: net.m4,v 1.4 1997/10/25 20:49:53 jhawk Exp
 dnl
 dnl This test is for network applications that need socket() and
 dnl gethostbyname() -ish functions.  Under Solaris, those applications need to
@@ -11,16 +11,16 @@ dnl link with "-lsocket -lnsl".  Under IRIX, they should *not* link with
 dnl "-lsocket" because libsocket.a breaks a number of things (for instance:
 dnl gethostbyname() under IRIX 5.2, and snoop sockets under most versions of
 dnl IRIX).
-dnl 
+dnl
 dnl Unfortunately, many application developers are not aware of this, and
 dnl mistakenly write tests that cause -lsocket to be used under IRIX.  It is
 dnl also easy to write tests that cause -lnsl to be used under operating
 dnl systems where neither are necessary (or useful), such as SunOS 4.1.4, which
 dnl uses -lnsl for TLI.
-dnl 
+dnl
 dnl This test exists so that every application developer does not test this in
 dnl a different, and subtly broken fashion.
-dnl 
+dnl
 dnl It has been argued that this test should be broken up into two seperate
 dnl tests, one for the resolver libraries, and one for the libraries necessary
 dnl for using Sockets API. Unfortunately, the two are carefully intertwined and
@@ -39,7 +39,7 @@ AC_DEFUN([AC_LIBRARY_NET], [
    # libraries (i.e. libc):
    AC_CHECK_FUNC(gethostbyname, ,
      # Some OSes (eg. Solaris) place it in libnsl:
-     AC_CHECK_LIB(nsl, gethostbyname, , 
+     AC_CHECK_LIB(nsl, gethostbyname, ,
        # Some strange OSes (SINIX) have it in libsocket:
        AC_CHECK_LIB(socket, gethostbyname, ,
           # Unfortunately libsocket sometimes depends on libnsl.

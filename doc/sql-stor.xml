@@ -30,7 +30,7 @@ DBAddr mysql://localhost/search/?dbmode=crc-multi
 	<sect2 id="sql-stor-single">
 		<title>Storage mode - single</title>
                  <indexterm><primary>Storage modes</primary><secondary>single mode</secondary></indexterm>
-                
+
 		<para>When "single" is specified, all words are stored
 in one table  with structure
 (url_id,word,weight), where url_id is  the ID of the document which is
@@ -41,7 +41,7 @@ char(32)</literal> SQL type.</para>
 	<sect2 id="sql-stor-multi">
 		<title>Storage mode - multi</title>
                  <indexterm><primary>Storage modes</primary><secondary>multi mode</secondary></indexterm>
-                
+
 		<para>If "multi" is selected, words will be located in
 different 13 tables depending of their lengths. Structures of these
 tables are the same with "single" mode, but fixed length char type is
@@ -52,7 +52,7 @@ used, which is usually faster in most databases. This fact makes
 	<sect2 id="sql-stor-crc">
 		<title>Storage mode - crc</title>
                  <indexterm><primary>Storage modes</primary><secondary>crc mode</secondary></indexterm>
-                
+
 		<para>If "crc" mode is selected, <application>DataparkSearch</application> will
 store 32 bit integer word IDs calculated by HASH32 algorithm instead of
 words. This mode requires less disc space and is faster than "single"
@@ -69,7 +69,7 @@ engines. </para>
 	<sect2 id="sql-stor-crcmulti">
 		<title>Storage mode - crc-multi</title>
                  <indexterm><primary>Storage modes</primary><secondary>crc-multi mode</secondary></indexterm>
-                
+
 		<para>When "crc-multi" mode is selected, <application>DataparkSearch</application>
 stores HASH32 word IDs in several tables with the same to "crc" structures depending on word lengths
 like in "multi" mode. This mode usually is the most fast and

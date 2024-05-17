@@ -15,8 +15,8 @@
 #VarDir /mnt/d/dpsearch/var/
 
 
-# set number of file-stores in var/store for documents archiving 
-# Note: this is *not* number of documents to store. 
+# set number of file-stores in var/store for documents archiving
+# Note: this is *not* number of documents to store.
 #
 #StoredFiles 4096
 
@@ -29,4 +29,3 @@
 # ATN: this is integer value
 # default value: 5
 #OptimizeRatio 5
-

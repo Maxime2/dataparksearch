@@ -2,8 +2,8 @@
 <title>Stopwords</title>
 <indexterm><primary>Stopwords</primary></indexterm>
 
-<para><literal>Stopwords</literal> - are the most frequently used words, i.e. words which appear in almost every document searched. 
-Stopwords are filtered out prior to index construction, what is allow to reduce the total size of the index without any 
+<para><literal>Stopwords</literal> - are the most frequently used words, i.e. words which appear in almost every document searched.
+Stopwords are filtered out prior to index construction, what is allow to reduce the total size of the index without any
 significant loss in quality of search.
 </para>
 
@@ -11,7 +11,7 @@ significant loss in quality of search.
 <sect2 id="stopwordfile_cmd">
 <title><command>StopwordFile</command> command</title>
 <indexterm><primary>Command</primary><secondary>StopwordFile</secondary></indexterm>
-<para>Load stop words from the given text file. You may specify either absolute 
+<para>Load stop words from the given text file. You may specify either absolute
 file name or a name relative to <application>DataparkSearch</application> <filename>/etc</filename> directory. You may use
 several <command>StopwordFile</command> commands.
 <programlisting>
@@ -26,7 +26,7 @@ StopwordFile stopwords/en.sl
 <title>Format of stopword file</title>
 <indexterm><primary>Stopwords</primary><secondary>file format</secondary></indexterm>
 
-	<para>You may create your own stopword lists. As an example you may take the English stopword file <filename>etc/stopwords/en.sl</filename>. 
+	<para>You may create your own stopword lists. As an example you may take the English stopword file <filename>etc/stopwords/en.sl</filename>.
 In the beginning of the list please specify the
 following two commands:
 	<programlisting>
@@ -69,8 +69,8 @@ Options of <command>Match:</command> command are the same as for <command>Allow<
 <title><command>FillDictionary</command> command.</title>
 <indexterm><primary>Command</primary><secondary>FillDictionary</secondary></indexterm>
 
-<para>With the command <userinput>"FillDictionary yes"</userinput> in <filename>indexer.conf</filename> 
-you can enable storage of all indexed words into <filename>"dict"</filename> table for dbmode cache. 
+<para>With the command <userinput>"FillDictionary yes"</userinput> in <filename>indexer.conf</filename>
+you can enable storage of all indexed words into <filename>"dict"</filename> table for dbmode cache.
 This is usefull to track down which words are stopwords for your installation.
 </para>
 
@@ -81,7 +81,7 @@ This is usefull to track down which words are stopwords for your installation.
 <title><command>StopwordsLoose</command> command.</title>
 <indexterm><primary>Command</primary><secondary>StopwordsLoose</secondary></indexterm>
 
-<para>With the command <userinput>"StopwordsLoose yes"</userinput> in <filename>indexer.conf</filename> and <filename>search.htm</filename> 
+<para>With the command <userinput>"StopwordsLoose yes"</userinput> in <filename>indexer.conf</filename> and <filename>search.htm</filename>
 only the stopwords of the same language as the language of a document indexing or the language of a search request are taken into accont as stopwords, i.e. the stopwords of different language are processed as regular words for this document indexing or search request executed.
 </para>
 
@@ -111,7 +111,7 @@ with identical titles will be considered as clones.
 DetectClones yes/no
 </programlisting>
 <para>
-Allow/disallow clone detection and eliminating. If allowed, indexer will 
+Allow/disallow clone detection and eliminating. If allowed, indexer will
 detect the same documents under different location, such as
 mirrors, and will index only one document from the group of
 such equal documents. "DetectClones yes" also allows to reduce space usage.

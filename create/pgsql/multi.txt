@@ -142,4 +142,3 @@ CREATE INDEX dict11_word_url_id ON dict11 (word bpchar_pattern_ops, url_id);
 CREATE INDEX dict12_word_url_id ON dict12 (word bpchar_pattern_ops, url_id);
 CREATE INDEX dict16_word_url_id ON dict16 (word bpchar_pattern_ops, url_id);
 CREATE INDEX dict32_word_url_id ON dict32 (word text_pattern_ops, url_id);
-

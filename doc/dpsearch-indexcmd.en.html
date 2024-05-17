@@ -211,7 +211,7 @@ CLASS="OPTION"
 > and <CODE
 CLASS="OPTION"
 >Pass</CODE
-> if you need use special characters 
+> if you need use special characters
 in user name or password. For example, if you have <KBD
 CLASS="USERINPUT"
 >ABC@DEF</KBD
@@ -240,7 +240,7 @@ CLASS="LITERAL"
 >, <TT
 CLASS="LITERAL"
 >mssql</TT
->, 
+>,
 <TT
 CLASS="LITERAL"
 >oracle</TT
@@ -261,7 +261,7 @@ CLASS="APPLICATION"
 > and <SPAN
 CLASS="APPLICATION"
 >PostgreSQL</SPAN
->users can specify path to Unix socket 
+>users can specify path to Unix socket
 when connecting to localhost:
 <KBD
 CLASS="USERINPUT"
@@ -380,7 +380,7 @@ CLASS="COMMAND"
 > command. So, if you pass <CODE
 CLASS="OPTION"
 >label</CODE
-> CGI-variable to 
+> CGI-variable to
 the <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -391,7 +391,7 @@ CLASS="COMMAND"
 Thus, you can use one <B
 CLASS="COMMAND"
 >searchd</B
-> daemon to answer queries for several search databases selectible by 
+> daemon to answer queries for several search databases selectible by
 <CODE
 CLASS="OPTION"
 >label</CODE
@@ -620,7 +620,7 @@ CLASS="COMMAND"
 NAME="AEN2202"
 ></A
 ><P
->Select at once this number of urls to write cache mode indexes, to preload url data or to calculate the Popularity Rank. 
+>Select at once this number of urls to write cache mode indexes, to preload url data or to calculate the Popularity Rank.
 Default value is 100000.
 <PRE
 CLASS="PROGRAMLISTING"
@@ -642,7 +642,7 @@ CLASS="COMMAND"
 NAME="AEN2210"
 ></A
 ><P
->Switch on or off the ID generation for URL using HASH32. 
+>Switch on or off the ID generation for URL using HASH32.
 Default value is "no".
 <PRE
 CLASS="PROGRAMLISTING"
@@ -710,7 +710,7 @@ comparison.
 Use <CODE
 CLASS="OPTION"
 >Regex</CODE
-> to choose regular expression comparison. 
+> to choose regular expression comparison.
 Use <CODE
 CLASS="OPTION"
 >String</CODE
@@ -733,7 +733,7 @@ CLASS="OPTION"
 >. Use <CODE
 CLASS="OPTION"
 >String</CODE
-> where it 
+> where it
 is possible.
 You may use several arguments for one <B
 CLASS="COMMAND"
@@ -778,7 +778,7 @@ CLASS="PROGRAMLISTING"
 >Disallow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
 ><P
 >Use this command to disallow URLs that match (doesn't match) given argument.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 with <B
 CLASS="COMMAND"
 >Allow</B
@@ -797,7 +797,7 @@ Disallow NoMatch *.udm.net/*
 Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
 # Exclude cgi-bin and non-parsed-headers using "string" match:
 Disallow */cgi-bin/* *.cgi */nph-*
-# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# Exclude anything with '?' sign in URL. Note that '?' sign has a
 # special meaning in "string" match, so we have to use "regex" match here:
 Disallow Regex  \?</PRE
 ></P
@@ -820,14 +820,14 @@ NAME="AEN2259"
 CLASS="PROGRAMLISTING"
 >CheckOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
 ><P
->The meaning of first three optional parameters is exactly the same 
+>The meaning of first three optional parameters is exactly the same
 with <B
 CLASS="COMMAND"
 >Allow</B
 > command.
 Indexer will use HEAD instead of GET HTTP method for URLs that
-match/do not match given regular expressions. It means that the file 
-will be checked only for being existing and will not be downloaded. 
+match/do not match given regular expressions. It means that the file
+will be checked only for being existing and will not be downloaded.
 Useful for zip,exe,arj and other binary files.
 Note that you can disallow those files with commands given below.
 You may use several arguments for one <B
@@ -864,7 +864,7 @@ NAME="AEN2270"
 CLASS="PROGRAMLISTING"
 >HrefOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]</PRE
 ><P
->The meaning of first three optional parameters is exactly the same 
+>The meaning of first three optional parameters is exactly the same
 with <B
 CLASS="COMMAND"
 >Allow</B
@@ -875,7 +875,7 @@ of the page with an URLs that match (doesn't match) given argument.
 Commands have global effect for all configuration file.
 
 When indexing large mail list archives for example, the index and thread
-index pages (like mail.10.html, thread.21.html, etc.) should be scanned 
+index pages (like mail.10.html, thread.21.html, etc.) should be scanned
 for links but shouldn't be indexed:
 <PRE
 CLASS="PROGRAMLISTING"
@@ -900,7 +900,7 @@ NAME="AEN2280"
 CLASS="PROGRAMLISTING"
 >CheckMp3 [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]</PRE
 ><P
->The meaning of first three optional parameters is exactly the same 
+>The meaning of first three optional parameters is exactly the same
 with <B
 CLASS="COMMAND"
 >Allow</B
@@ -935,7 +935,7 @@ NAME="AEN2290"
 CLASS="PROGRAMLISTING"
 >CheckMP3Only [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]</PRE
 ><P
->The meaning of first three optional parameters is exactly the same 
+>The meaning of first three optional parameters is exactly the same
 with <B
 CLASS="COMMAND"
 >Allow</B
@@ -945,7 +945,7 @@ CLASS="COMMAND"
 >CheckMP3</B
 > command,
 will download only a little part of the document and try to find MP3 tags.
-On success, indexer will parse MP3 tags, else it will NOT download whole 
+On success, indexer will parse MP3 tags, else it will NOT download whole
 document.
 <PRE
 CLASS="PROGRAMLISTING"
@@ -977,7 +977,7 @@ CLASS="OPTION"
 CLASS="OPTION"
 >arg</CODE
 > pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <B
 CLASS="COMMAND"
 >Allow</B
@@ -1018,7 +1018,7 @@ CLASS="OPTION"
 CLASS="OPTION"
 >arg</CODE
 > pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <B
 CLASS="COMMAND"
 >Allow</B
@@ -1065,7 +1065,7 @@ CLASS="OPTION"
 CLASS="OPTION"
 >arg</CODE
 > pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <B
 CLASS="COMMAND"
 >Allow</B
@@ -1109,7 +1109,7 @@ CLASS="OPTION"
 CLASS="OPTION"
 >arg</CODE
 > pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <B
 CLASS="COMMAND"
 >Allow</B
@@ -1146,7 +1146,7 @@ CLASS="PROGRAMLISTING"
 >How much time to hold URLs with erroneous status before deleting them
 from the database. For example, if host is down, indexer will not delete
 pages from this site immediately and search will use previous content
-of these pages. However if site doesn't respond for a month, probably 
+of these pages. However if site doesn't respond for a month, probably
 it's time to remove these pages from the database.
 For &lt;time&gt; format see description of <B
 CLASS="COMMAND"
@@ -1178,7 +1178,7 @@ NAME="AEN2371"
 CLASS="PROGRAMLISTING"
 >DeleteOlder &lt;time&gt;</PRE
 ><P
->How much time to hold URLs before deleting them from the database. For example, 
+>How much time to hold URLs before deleting them from the database. For example,
 for news sites indexing, you may delete automatically old news articles after specified period.
 For &lt;time&gt; format see description of <B
 CLASS="COMMAND"
@@ -1276,15 +1276,15 @@ CLASS="PROGRAMLISTING"
 >Period &lt;time&gt;</PRE
 ><P
 >Set reindex period.
-&lt;time&gt; is in the form 'xxxA[yyyB[zzzC]]'                                   
- (Spaces are allowed between xxx and A and yyy and so on)                     
-   there xxx, yyy, zzz are numbers (can be negative!)                         
-         A, B, C can be one of the following:                                 
-		s - second                                                      
-		M - minute                                                      
-		h - hour                                                        
-		d - day                                                         
-		m - month                                                       
+&lt;time&gt; is in the form 'xxxA[yyyB[zzzC]]'
+ (Spaces are allowed between xxx and A and yyy and so on)
+   there xxx, yyy, zzz are numbers (can be negative!)
+         A, B, C can be one of the following:
+		s - second
+		M - minute
+		h - hour
+		d - day
+		m - month
 		y - year
       (these letters are the same as in strptime/strftime functions).
 
@@ -1373,7 +1373,7 @@ NAME="AEN2430"
 CLASS="PROGRAMLISTING"
 >ExpireAt [ A [ B [ C [ D [ E ]]]]]</PRE
 ><P
->This command allow specify the exactly expiration time for documents. 
+>This command allow specify the exactly expiration time for documents.
 May be specified per Server/Realm basis and takes effect till the end of config file or till next <B
 CLASS="COMMAND"
 >ExpireAt</B
@@ -1434,7 +1434,7 @@ NAME="AEN2451"
 CLASS="PROGRAMLISTING"
 >LMDSection &lt;section name&gt;</PRE
 ><P
->This command specify the section which will be used as the document last modification date instead of Last-Modified header sent by remote web-server. 
+>This command specify the section which will be used as the document last modification date instead of Last-Modified header sent by remote web-server.
 Can be set many times before <B
 CLASS="COMMAND"
 >Server</B
@@ -1614,11 +1614,11 @@ CLASS="PROGRAMLISTING"
 ><P
 >Maximum network errors for each server.
 Default value is 16. Use 0 for unlimited errors number.
-If there too many network errors on some server 
+If there too many network errors on some server
 (server is down, host unreachable, etc) <B
 CLASS="COMMAND"
 >indexer</B
-> will try to do 
+> will try to do
 not more then <CODE
 CLASS="OPTION"
 >'number'</CODE
@@ -1802,9 +1802,9 @@ CLASS="OPTION"
 CLASS="OPTION"
 >&lt;number&gt;</CODE
 > is section ID
-between 0 and 255. Use 0 if you don't want to index some of 
+between 0 and 255. Use 0 if you don't want to index some of
 these sections. It is better to use different IDs
-for different sections. In this case during search 
+for different sections. In this case during search
 time you'll be able to give different weight to each section
 or even disallow some sections at a search time.
 <CODE
@@ -1827,8 +1827,8 @@ pattern and replacement to extract section value from document content.</P
 >You can specify <CODE
 CLASS="OPTION"
 >strict</CODE
-> option to set strict string tokenization for a section, which mean word break 
-at any non-character symbol despite the context. It's useful, for example, in indexing of URL, where hyphen, the character, 
+> option to set strict string tokenization for a section, which mean word break
+at any non-character symbol despite the context. It's useful, for example, in indexing of URL, where hyphen, the character,
 uses as delimiter between words.</P
 ><P
 >You can specify <CODE
@@ -1908,7 +1908,7 @@ CLASS="COMMAND"
 >" command is useful to speed-up the indexing when you have a huge list of <B
 CLASS="COMMAND"
 >Server/Realm/Subnet</B
-> commands as 
+> commands as
 it disables the href checking against server list during parsing.</P
 ></DIV
 ><DIV
@@ -2059,7 +2059,7 @@ CLASS="COMMAND"
 Examples:
 <PRE
 CLASS="PROGRAMLISTING"
->AuthBasic somebody:something  
+>AuthBasic somebody:something
 
 # If you have password protected directory(-ies), but whole server is open,use:
 AuthBasic login1:passwd1

@@ -105,7 +105,7 @@ NAME="AEN3718"
 If your <TT
 CLASS="FILENAME"
 >/var</TT
-> directory isn't changed since the indexing has been finished, you may disable file locking using 
+> directory isn't changed since the indexing has been finished, you may disable file locking using
 <B
 CLASS="COMMAND"
 >"ColdVar yes"</B
@@ -148,7 +148,7 @@ CLASS="COMMAND"
 > daemon for speed-up searches (See <A
 HREF="dpsearch-searchd.en.html"
 >Section 5.4</A
->&#62;). 
+>&#62;).
 <B
 CLASS="COMMAND"
 >searchd</B
@@ -158,7 +158,7 @@ and holds them in memory. This reduce average search query execution time.</P
 >Also, <B
 CLASS="COMMAND"
 >searchd</B
-> can preload url info data (20 bytes per URL indexed) and 
+> can preload url info data (20 bytes per URL indexed) and
 cache mode limits (4 or 8 bytes per URL depend on limit type). This allow reduce average search time.</P
 ></DIV
 ><DIV
@@ -204,7 +204,7 @@ NAME="MFS-REC"
 >5.3.3. Memory based filesystem (mfs) usage recommendation</A
 ></H2
 ><P
->If you use cache storage mode and you have enough RAM on your PC, 
+>If you use cache storage mode and you have enough RAM on your PC,
 you may place <TT
 CLASS="FILENAME"
 >/usr/local/dpsearch/var</TT
@@ -214,7 +214,7 @@ directory on memory based filesystem (mfs). This allow speedup both indexing and
 >If you haven't enough RAM to fit  <TT
 CLASS="FILENAME"
 >/usr/local/dpsearch/var</TT
->, 
+>,
 you may place on memory filesystem any of <TT
 CLASS="FILENAME"
 >/usr/local/dpsearch/var/tree</TT
@@ -299,7 +299,7 @@ This prevent possible simultaneous indexing of the same URL by different indexer
 can take some time for processing. You may switch off this markage using <B
 CLASS="COMMAND"
 >"MarkForIndex no"</B
-> in your 
+> in your
 <TT
 CLASS="FILENAME"
 >indexer.conf</TT
@@ -324,7 +324,7 @@ NAME="AEN3791"
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
 > trying to insert data into SQL database regardless it's already present there.
-On some systems this raise some error loggings. To avoid such errors, 
+On some systems this raise some error loggings. To avoid such errors,
 you may enable additional checks, is the inserting data new, by specifying
 <B
 CLASS="COMMAND"
@@ -397,7 +397,7 @@ NAME="ARES"
 HREF="http://c-ares.haxx.se/"
 TARGET="_top"
 >c-ares</A
->, 
+>,
 an asynchronous resolver library (dns/c-ares in FreeBSD ports collection), allow to perform DNS queries without blocking for every
 indexing thread. Please note, this also increase the number of concurrent queries to your DNS server.</P
 ></DIV

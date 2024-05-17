@@ -15,7 +15,7 @@ chomp($libs);
 chomp($cflags);
 chomp($dpsversion);
 
-die "Cant found DataparkSearch" unless $dpsversion && $libs && $cflags; 
+die "Cant found DataparkSearch" unless $dpsversion && $libs && $cflags;
 
 print "\nUsing DataparkSearch version : $dpsversion\n";
 print "\nUsing DataparkSearch libs    : $libs\n";

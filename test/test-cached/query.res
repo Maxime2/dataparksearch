@@ -22,7 +22,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-1926922661	http://site/testpage6.html	content-language	en
 200	-1926922661	http://site/testpage6.html	content-type	text/html
 200	-1926922661	http://site/testpage6.html	title	TestPage6 title1 title2 title3 title4 title5 title6 title7 title8 title9 title10 title11 title12 title13 title14 title15 title16
-200	-1889247529	http://site/	body	 testpage4.html  testpage11.html  testpage7.html  testpage2.html  testpage3.html  testpage5.html  ispattern.html  testpage13.html  testpage12.html  testpage8.html  testpage10.html  .  testpage6.html  ..  testpage1.html  testpage9.html 
+200	-1889247529	http://site/	body	 testpage4.html  testpage11.html  testpage7.html  testpage2.html  testpage3.html  testpage5.html  ispattern.html  testpage13.html  testpage12.html  testpage8.html  testpage10.html  .  testpage6.html  ..  testpage1.html  testpage9.html
 200	-1889247529	http://site/	charset	ISO-8859-1
 200	-1889247529	http://site/	content-language	en
 200	-1889247529	http://site/	content-type	text/html

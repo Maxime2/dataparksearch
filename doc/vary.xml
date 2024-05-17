@@ -7,7 +7,7 @@ In this case, for one URL exist several copies in different languages.
 </para>
 
 <para>For indexing all pages of such servers, <command>VaryLang</command> command is used.
-It specify list of languages separated by spaces. 
+It specify list of languages separated by spaces.
 These languages will used for indexing URL with multi-language versions.
 </para>
 

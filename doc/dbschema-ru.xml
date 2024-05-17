@@ -135,7 +135,7 @@
 <para>=CheckMP3, - документы будут проверяться на наличие тэгов MP3 несмотря на наличие <literal>Content-Type</literal>,
 отличного от <literal>audio/mpeg</literal>.</para>
 <para>=CheckMP3Only, - аналогично <literal>CheckMP3</literal>, однако при
-отсутствии тэгов MP3 <literal>indexer</literal> не будет запускать внутренний или внешний 
+отсутствии тэгов MP3 <literal>indexer</literal> не будет запускать внутренний или внешний
 парсер, предусмотренный для полученного <literal>Content-Type</literal>.</para>
 <para>=TagIf, - документы будут помечены заданым тэгом.</para>
 <para>=CategoryIf, - документы будут помечены заданой категорией.</para>

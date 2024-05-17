@@ -6,8 +6,6 @@
  * (C) 2000 Kir <kir@sever.net>, UdmSearch Developers Team
  */
 
-
-
 /* FIXME: should be taken from template somehow */
 #define DEFAULT_DT "back"
 #define DEFAULT_DP "0"
@@ -20,10 +18,11 @@
 
 #include <time.h>
 
-struct dps_stl_info_t{
-	int type;
-	time_t t1;
-	time_t t2;
+struct dps_stl_info_t
+{
+  int type;
+  time_t t1;
+  time_t t2;
 };
 
 /* Function prototypes */
@@ -31,14 +30,14 @@ struct dps_stl_info_t{
 /* converts string representation of time search type (option)
  * to integer
  */
-int getSTLType(char *type_str);
+int getSTLType (char *type_str);
 
 /* converts string in the form dd/mm/yyyy to time_t
  */
-time_t dmy2time_t(char * time_str);
+time_t dmy2time_t (char *time_str);
 
 /* converts day, month, year to time_t
  */
-time_t d_m_y2time_t(int d, int m, int y);
+time_t d_m_y2time_t (int d, int m, int y);
 
 #endif /* _DPS_SEARCH_TL_H */

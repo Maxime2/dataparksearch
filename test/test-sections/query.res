@@ -539,12 +539,12 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-113733434	http://site/directory/test.html	content-type	text/html
 200	-113733434	http://site/directory/test.html	meta.te_st	1
 200	-113733434	http://site/directory/test.html	title	Test Subdirectory
-200	248028426	http://site/directory/	body	 test-tz.html  .  test.html  .. 
+200	248028426	http://site/directory/	body	 test-tz.html  .  test.html  ..
 200	248028426	http://site/directory/	charset	ISO-8859-1
 200	248028426	http://site/directory/	content-language	en
 200	248028426	http://site/directory/	content-type	text/html
 200	248028426	http://site/directory/	title	http://site/directory/
-200	683409748	http://site/	body	 test1.html  test.xml  directory  .  test.pdf  test2.html  .. 
+200	683409748	http://site/	body	 test1.html  test.xml  directory  .  test.pdf  test2.html  ..
 200	683409748	http://site/	charset	ISO-8859-1
 200	683409748	http://site/	content-language	en
 200	683409748	http://site/	content-type	text/html
@@ -567,7 +567,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	1536027615	http://site/test2.html	meta.keywords	Cafe bar Lukomore
 200	1536027615	http://site/test2.html	phone	(8622) 62-12-12
 200	1536027615	http://site/test2.html	title	Test2
-200	1842377439	http://site/test.pdf	body	pdf1 pdf2 pdf3 1 
+200	1842377439	http://site/test.pdf	body	pdf1 pdf2 pdf3 1
 200	1842377439	http://site/test.pdf	charset	ISO-8859-1
 200	1842377439	http://site/test.pdf	content-language	en
 200	1842377439	http://site/test.pdf	content-type	application/pdf

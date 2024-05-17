@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_SIGNALS_H
@@ -26,8 +26,8 @@
  * (C) 2000 Kir <kir@sever.net>, UdmSearch Developers Team
  */
 
-extern int DpsSigHandlersInit(DPS_AGENT *Indexer);
-extern void (*DpsSignal(int signo, void (*handler)(int)))(int);
+extern int DpsSigHandlersInit (DPS_AGENT *Indexer);
+extern void (*DpsSignal (int signo, void (*handler) (int))) (int);
 
 extern int have_sighup;
 extern int have_sigterm;

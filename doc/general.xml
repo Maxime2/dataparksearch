@@ -16,8 +16,8 @@ directory, copy <filename>indexer.conf-dist</filename> to
 
 		<para>To configure search front-ends
 (<filename>search.cgi</filename> and/or
-<filename>search.php3</filename>, or other), you should copy <filename>search.htm-dist</filename> file in /etc directory 
-of <application>DataparkSearch</application> 
+<filename>search.php3</filename>, or other), you should copy <filename>search.htm-dist</filename> file in /etc directory
+of <application>DataparkSearch</application>
 installation to <filename>search.htm</filename> and edit it. See <xref linkend="templates"/> for detailed description.</para>
 
 	</sect2>
@@ -59,14 +59,14 @@ that was disallowed earlier.</para>
 		<title>How to create SQL table structure</title>
 <indexterm><primary>Creating SQL table structure</primary></indexterm>
 
-		<para>To create SQL tables required for 
-<application>DataparkSearch</application> functionality, 
-use <literal>indexer -Ecreate</literal>. Executed with this argument, 
+		<para>To create SQL tables required for
+<application>DataparkSearch</application> functionality,
+use <literal>indexer -Ecreate</literal>. Executed with this argument,
 indexer looks up a file containing SQL statements necessary for creating
 all SQL tables for the database type and storage mode given
-in <command>DBAddr</command> <filename>indexer.conf</filename> command. 
-Files are looking up at <filename>/share</filename> directory of 
-<application>DataparkSearch</application> installation, which is usually 
+in <command>DBAddr</command> <filename>indexer.conf</filename> command.
+Files are looking up at <filename>/share</filename> directory of
+<application>DataparkSearch</application> installation, which is usually
 <filename>/usr/local/dpsearch/share/</filename>. </para>
 	</sect2>
 
@@ -74,9 +74,9 @@ Files are looking up at <filename>/share</filename> directory of
 		<title>How to drop SQL table structure</title>
 <indexterm><primary>Dropping SQL table structure</primary></indexterm>
 
-		<para>To drop all SQL tables created by 
-<application>DataparkSearch</application>,  use <literal>indexer -Edrop</literal>. 
-A file with SQL statements required to drop tables are looking up at 
+		<para>To drop all SQL tables created by
+<application>DataparkSearch</application>,  use <literal>indexer -Edrop</literal>.
+A file with SQL statements required to drop tables are looking up at
 <filename>/share</filename> directory of <application>DataparkSearch</application>
 installation.</para>
 	</sect2>
@@ -180,7 +180,7 @@ resource that does not exist).</para>
 		<para>Take a look on <ulink
 					    url="http://www.w3.org/Protocols/">HTTP specific documentation</ulink> for further explanation of different HTTP status codes.</para>
 
-<para>Status codes <literal>2xxx</literal> are not in HTTP specification and they correspond to the documents marked as clones, 
+<para>Status codes <literal>2xxx</literal> are not in HTTP specification and they correspond to the documents marked as clones,
 where <literal>xxx</literal> - one of status codes described above.
 </para>
 

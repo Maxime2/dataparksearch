@@ -13,7 +13,7 @@ installed before installing <application>DataparkSearch</application>.</para>
 		<para>
 			<emphasis>MySQL notes</emphasis>: If you
 want to build <application>DataparkSearch</application> with <application>MySQL</application>, 4.1 or later release
-required. 
+required.
 <application>libz</application> library must be installed from <command>zlib-devel</command> RPM to successfully compile
 <application>DataparkSearch</application> with <application>MySQL</application>.</para>
 
@@ -58,7 +58,7 @@ so it is possible to compile and use
 system with a C compiler without any modifications. We develop the
 software on <application>FreeBSD 7.x</application> using <application>PostgreSQL 8.3</application>. </para>
 
-<para>Currently known systems where <application>DataparkSearch</application> has been successfully compiled and tested on 
+<para>Currently known systems where <application>DataparkSearch</application> has been successfully compiled and tested on
 are:</para>
 		<itemizedlist>
 			<listitem>
@@ -100,11 +100,11 @@ are:</para>
 		</itemizedlist>
 
 		<para>We hope <application>DataparkSearch</application> will work on other Unix
-platforms as well. Please report successful platforms 
+platforms as well. Please report successful platforms
 to <ulink url="mailto:dp.maxime@gmail.com">dp.maxime@gmail.com</ulink>.</para>
 
-<para><emphasis>NFS notes</emphasis>: There are some problems reported running <application>DataparkSearch</application> over 
-<application>NFS v4</application> on <application>Linux 2.6.17</application>. 
+<para><emphasis>NFS notes</emphasis>: There are some problems reported running <application>DataparkSearch</application> over
+<application>NFS v4</application> on <application>Linux 2.6.17</application>.
 Although, everything is OK on this system when <application>NFS v3</application> is used.
 </para>
 
@@ -129,7 +129,7 @@ distribution. <ulink
 				<para>A working ANSI C compiler. <ulink url="http://gcc.gnu.org/">GNU gcc</ulink> is known to work.</para>
 			</listitem>
 			<listitem>
-<para>A good make program. <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink> 
+<para>A good make program. <ulink url="http://www.gnu.org/software/make/make.html">GNU make</ulink>
 is recommended and sometimes required.</para>
 
 			</listitem>
@@ -141,7 +141,7 @@ is recommended and sometimes required.</para>
 </listitem>
 <listitem>
 <para>To build documentation from XML sources, you need <filename>jade</filename> or <filename>openjade</filename>
-installed.</para> 
+installed.</para>
 <para>You need also <filename>jadetex</filename> installed to build documentation in <application>PDF</application>.
 Use <userinput>make book.pdf</userinput> command in <filename>doc/</filename> subdirectory to make that documentation.
 </para>
@@ -333,7 +333,7 @@ argument.</para>
 or
 					<userinput>./configure --with-extra-charsets=chinese</userinput>
 				</para>
-				<para>To build <application>DataparkSearch</application> with support for several specified charsets, 
+				<para>To build <application>DataparkSearch</application> with support for several specified charsets,
 use a comma separated list of charsets you want:</para>
 
 				<para>
@@ -365,7 +365,7 @@ use a comma separated list of charsets you want:</para>
 				<para>See database specific information if you use another database.</para>
 			</listitem>
 <listitem><para>Create configuration files.</para>
-<para>Copy <filename>indexer.conf-dist</filename> to <filename>indexer.conf</filename> and <filename>search.htm-dist</filename> to <filename>search.htm</filename> in the configuration directory 
+<para>Copy <filename>indexer.conf-dist</filename> to <filename>indexer.conf</filename> and <filename>search.htm-dist</filename> to <filename>search.htm</filename> in the configuration directory
 (by default this directory is <filename>/usr/local/dpsearch/etc/</filename>). Then edit <filename>indexer.conf</filename> and <filename>search.htm</filename> according your needs.
 Basically your only have to edit <command>DBAddr</command> command in both of these files specifying a connection to SQL-server and desired dbmode.</para>
 </listitem>
@@ -425,9 +425,9 @@ different from <ulink
 				<para>GNU <filename>make</filename> version 3.77 is known to work.</para>
 			</listitem>
 <listitem>
-<para>If starting <application>Apache</application> with <application>mod_dpsearch</application> module, 
+<para>If starting <application>Apache</application> with <application>mod_dpsearch</application> module,
 you're getting the following error:
-<userinput>Undefined symbol "pthread_join"</userinput> (or something similar related to pthreads), 
+<userinput>Undefined symbol "pthread_join"</userinput> (or something similar related to pthreads),
 try to add the following commmand into <filename>httpd.conf</filename> file before loading <filename>mod_dpsearch.so</filename>:
 </para>
 <para><userinput>LoadFile /usr/lib/libpthread.so</userinput></para>
@@ -442,8 +442,8 @@ try to add the following commmand into <filename>httpd.conf</filename> file befo
 
 	<sect1 id="binarydistrib">
 		<title>Creating binary distribution</title>
-		<para>You can create a binary distribution (tar.bz2 archive, Debian or RPM package) for your platform. 
-To create a binary do please the command <command>make bin-dist</command> for tar.bz2 archive; <command>make pkg-deb</command> for Debian package; 
+		<para>You can create a binary distribution (tar.bz2 archive, Debian or RPM package) for your platform.
+To create a binary do please the command <command>make bin-dist</command> for tar.bz2 archive; <command>make pkg-deb</command> for Debian package;
 <command>make pkg-rpm</command> for RPM package.
 Please note, if you select the later option a Debian package will be created and then converted into RPM package with <application>alien</application> utility.
 </para>
@@ -452,7 +452,7 @@ Please note, if you select the later option a Debian package will be created and
 
 <sect1 id="quick-usage">
 <title>Quick usage tour</title>
-<para>Before running <command>indexer</command> first time, you need specify web space to index (see <xref linkend="follow" />). 
+<para>Before running <command>indexer</command> first time, you need specify web space to index (see <xref linkend="follow" />).
 Basically, if you want index one site, you should put a <command>Server</command> command similar to the following into your <filename>indexer.conf</filename> file:
 <programlisting>
 Server http://www.server.ext/

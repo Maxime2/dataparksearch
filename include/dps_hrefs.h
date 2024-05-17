@@ -13,14 +13,14 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_HREFS_H
 #define _DPS_HREFS_H
 
-extern __C_LINK void __DPSCALL DpsHrefListFree(DPS_HREFLIST * HList);
-extern __C_LINK int  __DPSCALL DpsHrefListAdd(DPS_AGENT *A, DPS_HREFLIST * HList, DPS_HREF * Href);
-extern __C_LINK DPS_HREFLIST * __DPSCALL DpsHrefListInit(DPS_HREFLIST * Hrefs);
-extern DPS_HREF *DpsHrefInit(DPS_HREF *Href);
+extern __C_LINK void __DPSCALL DpsHrefListFree (DPS_HREFLIST *HList);
+extern __C_LINK int __DPSCALL DpsHrefListAdd (DPS_AGENT *A, DPS_HREFLIST *HList, DPS_HREF *Href);
+extern __C_LINK DPS_HREFLIST *__DPSCALL DpsHrefListInit (DPS_HREFLIST *Hrefs);
+extern DPS_HREF *DpsHrefInit (DPS_HREF *Href);
 #endif

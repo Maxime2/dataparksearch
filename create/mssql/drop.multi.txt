@@ -11,5 +11,3 @@ DROP TABLE dict11;
 DROP TABLE dict12;
 DROP TABLE dict16;
 DROP TABLE dict32;
-
-

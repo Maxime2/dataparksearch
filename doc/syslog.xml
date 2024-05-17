@@ -3,7 +3,7 @@
 <indexterm><primary>Syslog</primary></indexterm>
 <indexterm><primary>Command</primary><secondary>LogLevel</secondary></indexterm>
 
-	<para><application>DataparkSearch</application> indexer uses syslog to log its messages. 
+	<para><application>DataparkSearch</application> indexer uses syslog to log its messages.
 Different verbose levels could be specified with -v option or by <command>LogLevel</command> command in config files:</para>
 	<table>
 		<title>Verbose levels</title>

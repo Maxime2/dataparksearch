@@ -19,7 +19,7 @@ Search quality and results presentation
 * Optional automatic URL limit by SERVER_NAME variable.
 * "Exclude" limits, for example "to search though everything except
   given site": ue=http://esite/
-* Rank URLs with long pathnames lower than direct hits on let's say a domain 
+* Rank URLs with long pathnames lower than direct hits on let's say a domain
 name with no directory path.
 
 
@@ -34,14 +34,14 @@ of full consecutive examination. Make in-memory cache for ServerTable part.
 * Fix that "posgreSQL.org" and "posgresql.org" are considered as a
 different sites.
 * FTP digest ls-lR.gz support. For example,ftp://ftp.chg.ru/ls-lR.gz
-* Make it possible for external parsers to return converted content 
+* Make it possible for external parsers to return converted content
 together with headers like Content-Type, Title and so on.
 
 
 Charset related stuff
 ---------------------
-* Remove "ForceIISCharset1251 yes/no"command. Replcase it with 
-enhanced "CharsetByServer <charset> <regexp> [<regexp>...]" 
+* Remove "ForceIISCharset1251 yes/no"command. Replcase it with
+enhanced "CharsetByServer <charset> <regexp> [<regexp>...]"
 commmand.
 * Stateful character sets support: UTF-7, Asian ISO-2022-XX
 and others. They will not be used as a LocalCharset because
@@ -65,25 +65,22 @@ Portability and code quality
 Remove warnings on various platforms. Currenly it is built without
 warnings on Linux and FreeBSD with these CFLAGS:
 
--Wall 
--Wconversion 
--Wshadow  
--Wpointer-arith 
--Wcast-qual 
--Wcast-align 
--Wwrite-strings  
--Waggregate-return  
--Wstrict-prototypes  
--Wmissing-prototypes 
--Wmissing-declarations 
--Wredundant-decls 
--Wnested-externs 
--Wlong-long 
+-Wall
+-Wconversion
+-Wshadow
+-Wpointer-arith
+-Wcast-qual
+-Wcast-align
+-Wwrite-strings
+-Waggregate-return
+-Wstrict-prototypes
+-Wmissing-prototypes
+-Wmissing-declarations
+-Wredundant-decls
+-Wnested-externs
+-Wlong-long
 -Winline
 
 However some other platform compilers do produce warnings.
-For example, mixed signed/unsigned chars on NetBSD Alpha compiler. 
+For example, mixed signed/unsigned chars on NetBSD Alpha compiler.
 Please report those warnings and suggetions to fix to maxime@sochi.net.ru
-
-
-

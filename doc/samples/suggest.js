@@ -11,17 +11,17 @@ var SuggestLoader = new HTMLHttpRequest('SuggestLoader', SuggestCopyContent);
 //////////////////////////////////////////
 function utf8_encode ( string ) {
   string = (string+'').replace(/\r\n/g, "\n").replace(/\r/g, "\n");
- 
+
   var utftext = "";
   var start, end;
   var stringl = 0;
- 
+
   start = end = 0;
   stringl = string.length;
   for (var n = 0; n < stringl; n++) {
     var c1 = string.charCodeAt(n);
     var enc = null;
- 
+
     if (c1 < 128) {
       end++;
     } else if((c1 > 127) && (c1 < 2048)) {
@@ -80,7 +80,7 @@ function SuggestCopyContent(domXML, domDoc, uri) {
       			}
 		}
 	}
-    	if (nsugg == 0 && g_slabel != old_slabel) { 
+    	if (nsugg == 0 && g_slabel != old_slabel) {
   		SuggestLoader.load('/cgi-bin/search.cgi?q=' + g_str + '&m=any&sp=1&sy=0&GroupBySite=yes&s=IRPD&&ps=10&tmplt=suggest.htm&label='+g_slabel);
 		old_slabel = g_slabel;
     	}
@@ -89,10 +89,10 @@ function SuggestCopyContent(domXML, domDoc, uri) {
   }
 }
 
-function searchSuggest(slabel) { 
+function searchSuggest(slabel) {
   if (disable) return;
   with(SuggestLoader) {
-    if (xmlhttp.readyState == 4 || xmlhttp.readyState == 0) {	
+    if (xmlhttp.readyState == 4 || xmlhttp.readyState == 0) {
       var clie = document.getElementById ? document.getElementById('q') : (document.all ? document.all['q'] : null);
       if (!clie) return;
       if (disable) return;
@@ -195,4 +195,3 @@ function register(e) {
 //                }
 //        }
 }
-

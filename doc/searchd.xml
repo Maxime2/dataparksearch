@@ -12,7 +12,7 @@
 ISpell, synonyms or segmenters for east asian languages. Related files are loaded into memory when searchd
 is started, while <filename>search.cgi</filename> loads data before
 every query.</para>
-<para>Also, <command>searchd</command> can preload url info data (20 bytes per URL indexed) and 
+<para>Also, <command>searchd</command> can preload url info data (20 bytes per URL indexed) and
 cache mode limits (4 or 8 bytes per URL depend on limit type). This allow reduce average search time.
 </para>
 			</listitem>

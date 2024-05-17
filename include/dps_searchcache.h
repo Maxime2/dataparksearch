@@ -13,16 +13,16 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_SEARCHCACHE_H
 #define _DPS_SEARCHCACHE_H
 
-extern __C_LINK int __DPSCALL DpsSearchCacheStore(DPS_AGENT *q, DPS_RESULT *Res);
-extern int DpsSearchCacheStore1(DPS_AGENT *q,DPS_RESULT *Res);
-extern __C_LINK int __DPSCALL DpsSearchCacheFind(DPS_AGENT *q, DPS_RESULT *Res);
-extern int DpsSearchCacheFind1(DPS_AGENT *q, DPS_RESULT *Res);
-extern int DpsSearchCacheClean(DPS_AGENT *query);
+extern __C_LINK int __DPSCALL DpsSearchCacheStore (DPS_AGENT *q, DPS_RESULT *Res);
+extern int DpsSearchCacheStore1 (DPS_AGENT *q, DPS_RESULT *Res);
+extern __C_LINK int __DPSCALL DpsSearchCacheFind (DPS_AGENT *q, DPS_RESULT *Res);
+extern int DpsSearchCacheFind1 (DPS_AGENT *q, DPS_RESULT *Res);
+extern int DpsSearchCacheClean (DPS_AGENT *query);
 
 #endif

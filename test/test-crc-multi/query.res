@@ -7,7 +7,7 @@ SQL>'SELECT status, docsize, hops, crc32, url FROM url ORDER BY status, crc32'
 200	164	1	445670373	http://site/test2.html
 200	87	1	2035244578	http://site/test1.txt
 SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,urlinfo WHERE url.rec_id=urlinfo.url_id ORDER BY url.status,url.crc32,lower(urlinfo.sname)'
-200	-2059195102	http://site/	body	 test1.html  test1.txt  test3.html  test4.html  .  test2.html  .. 
+200	-2059195102	http://site/	body	 test1.html  test1.txt  test3.html  test4.html  .  test2.html  ..
 200	-2059195102	http://site/	charset	ISO-8859-1
 200	-2059195102	http://site/	content-language	en
 200	-2059195102	http://site/	content-type	text/html

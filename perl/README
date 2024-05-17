@@ -20,4 +20,3 @@ Dataparksearch-perl provide perl interface for libdpsearch:
 - Support Search modes 'all', 'any' and 'bool'.
 - Support Affix & Spell
 - Partial template support
-

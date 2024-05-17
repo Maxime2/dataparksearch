@@ -7,7 +7,7 @@
 	для протоколирования своих действий, ошибок и прочих сообщений.
 	indexer поддерживает несколько уровней подробности выдачи сообщений,
 	которые могут быть заданы поцией -v или командой <command>LogLevel</command> в файле конфигурации:</para>
-	
+
 	<table>
 		<title>уровни подробности сообщений indexer'а</title>
 		<tgroup cols="3">
@@ -61,7 +61,7 @@ facility LOCAL7, который можно поменять во время сборки, указав configure опцию
 должен быть правильным именем facility, которые обычно перечислены в
 заголовочном файле <filename>/usr/include/sys/syslog.h</filename>
 	</para>
-	
+
 	<para>Вы можете отредактировать файл <filename>/etc/syslog.conf</filename>,
 	чтобы перенаправить сообщения <application>DataparkSearch</application> в желаемые файлы. Например,
 	<programlisting>
@@ -69,7 +69,7 @@ facility LOCAL7, который можно поменять во время сборки, указав configure опцию
 local7.*        -/var/log/DataparkSearch.log
 </programlisting>
 	</para>
-	
+
 	<para>Еще пример:
 	<programlisting>
 # Send all DataparkSearch messages to host named central

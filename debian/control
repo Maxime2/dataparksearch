@@ -11,7 +11,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Open source search engine for Internet and Intranet sites
  DataparkSearch Engine is a full-featured open sources web-based search
  engine released under the GNU General Public License and designed to organize search
- within a website, group of websites, intranet or local system. 
+ within a website, group of websites, intranet or local system.
  DataparkSearch consists of two parts. The first part
  is indexing mechanism (indexer). Indexer walks over html
  hypertext references and stores found words and new references

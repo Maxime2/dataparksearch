@@ -1228,7 +1228,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-111932412	http://site/testpage7.html	content-language	en
 200	-111932412	http://site/testpage7.html	content-type	text/html
 200	-111932412	http://site/testpage7.html	title	TestPage7 Search Body Content only
-200	286441695	http://site/test.html	body	 bosch Müller Mäher groß und grösser  Bosch 2320 G Sichelmäher-Rotak 
+200	286441695	http://site/test.html	body	 bosch Müller Mäher groß und grösser  Bosch 2320 G Sichelmäher-Rotak
 200	286441695	http://site/test.html	category	3
 200	286441695	http://site/test.html	charset	ISO-8859-1
 200	286441695	http://site/test.html	content-language	en
@@ -1241,7 +1241,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	316746425	http://site/testpage11.html	content-language	en
 200	316746425	http://site/testpage11.html	content-type	text/html
 200	316746425	http://site/testpage11.html	title	TestPage11 Long Words
-200	355337603	http://site/	body	 testpage4.html  testpage11.html  testpage7.html  testpage2.html  testpage3.html  testpage5.html  ispattern.html  testpage13.html  testpage12.html  testpage8.html  testpage10.html  .  test.html  testpage6.html  ..  testpage1.html  testpage9.html 
+200	355337603	http://site/	body	 testpage4.html  testpage11.html  testpage7.html  testpage2.html  testpage3.html  testpage5.html  ispattern.html  testpage13.html  testpage12.html  testpage8.html  testpage10.html  .  test.html  testpage6.html  ..  testpage1.html  testpage9.html
 200	355337603	http://site/	category	2
 200	355337603	http://site/	charset	UTF-8
 200	355337603	http://site/	content-language	en

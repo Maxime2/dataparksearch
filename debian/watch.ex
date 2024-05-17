@@ -6,7 +6,7 @@
 # Compulsory line, this is a version 3 file
 version=3
 
-# Uncomment to examine a Webpage 
+# Uncomment to examine a Webpage
 # <Webpage URL> <string match>
 #http://www.example.com/downloads.php dpsearch-(.*)\.tar\.gz
 
@@ -18,5 +18,3 @@ version=3
 
 # Uncomment to find new files on sourceforge, for debscripts >= 2.9
 # http://sf.net/dpsearch/dpsearch-(.*)\.tar\.gz
-
-

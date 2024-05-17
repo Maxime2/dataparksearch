@@ -70,4 +70,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/mimer/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/mimer
-

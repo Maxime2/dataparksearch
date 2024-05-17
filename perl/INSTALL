@@ -1,6 +1,6 @@
 INSTALLATION
 
-1. Install DataparkSearch at your system. You need enable threadsless 
+1. Install DataparkSearch at your system. You need enable threadsless
 version of libdpsearch (use --enable-threadsless option for confirure).
 
 

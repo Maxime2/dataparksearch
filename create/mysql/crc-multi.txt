@@ -101,5 +101,3 @@ CREATE TABLE ndict32 (
   KEY url_id32 (url_id),
   KEY word_id32 (word_id)
 );
-
-

@@ -115,4 +115,3 @@ CREATE TABLE dict32 (
   KEY url_id (url_id),
   KEY word_url (word)
 );
-

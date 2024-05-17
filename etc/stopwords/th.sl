@@ -1,4 +1,4 @@
-# 
+#
 # Thai stopwords
 # From punBB language packs
 
@@ -19,4 +19,3 @@ Charset: tis-620
 ดอ
 กระดอ
 หัวควย
-

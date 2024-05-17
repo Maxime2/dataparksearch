@@ -1,5 +1,5 @@
 #
-# Danish stoplist 
+# Danish stoplist
 # File created by Hans Kejser Hansen <hkh@netnords.dk> ,
 # August 31th, 2000
 #
@@ -109,4 +109,3 @@ to
 tre
 ud
 var
-

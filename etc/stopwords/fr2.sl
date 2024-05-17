@@ -180,4 +180,3 @@ quelle         #|  which
 quelles        #|  which
 sans           #|  without
 soi            #|  oneself
-

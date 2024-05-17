@@ -4,7 +4,7 @@ sbin_PROGRAMS= dpconv
 
 dpconv_SOURCES = dpconv.c
 dpconv_LDADD = libdpcharset.la @PTHREAD_LDADD@
-dpconv_LDFLAGS = @PTHREAD_LFLAGS@  
+dpconv_LDFLAGS = @PTHREAD_LFLAGS@
 
 CFLAGS = @CFLAGS@ -DDPS_CONF_DIR=\"@sysconfdir@\" -DDPS_VAR_DIR=\"@localstatedir@\"
 
@@ -35,4 +35,4 @@ include_HEADERS = \
 INCLUDES = -I$(srcdir)/../include
 
 LIBS = @STATIC_LFLAGS@ \
-@LIBS@ 
+@LIBS@

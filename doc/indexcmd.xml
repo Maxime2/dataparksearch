@@ -52,20 +52,20 @@ DBAddr &lt;Type&gt;:[//[User[:Pass]@]Host[:Port]]/DBName/[?[dbmode=mode]{&amp;&l
 </para>
 </note>
 
-<para>You may use CGI-like encoding for <option>User</option> and <option>Pass</option> if you need use special characters 
+<para>You may use CGI-like encoding for <option>User</option> and <option>Pass</option> if you need use special characters
 in user name or password. For example, if you have <userinput>ABC@DEF</userinput> as password, you should write it as
 <userinput>ABC%40DEF</userinput>.
 </para>
 
 <para> Currently supported <option>Type</option> values are
-<literal>mysql</literal>, <literal>pgsql</literal>, <literal>msql</literal>, <literal>solid</literal>, <literal>mssql</literal>, 
+<literal>mysql</literal>, <literal>pgsql</literal>, <literal>msql</literal>, <literal>solid</literal>, <literal>mssql</literal>,
 <literal>oracle</literal>, <literal>ibase</literal>, <literal>sqlite</literal>.
 Actually, it does not matter for native libraries support.
 But ODBC users should specify one of supported values.
 If your database type is not supported, you may use "unknown" instead.
 </para>
 
-<para><application>MySQL</application> and <application>PostgreSQL</application>users can specify path to Unix socket 
+<para><application>MySQL</application> and <application>PostgreSQL</application>users can specify path to Unix socket
 when connecting to localhost:
 <userinput>
 mysql://foo:bar@localhost/dpsearch/?socket=/tmp/mysql.sock
@@ -112,9 +112,9 @@ charset specified by <command>LocalCharset</command> command.
 
 <para><literal>label parameter</literal>. Format: <userinput>
 label=DBAlabel</userinput>.
-This parameter may be used to assign a label to <command>DBAddr</command> command. So, if you pass <option>label</option> CGI-variable to 
+This parameter may be used to assign a label to <command>DBAddr</command> command. So, if you pass <option>label</option> CGI-variable to
 the <application>DataparkSearch</application>, then only <command>DBAddr</command> marked by label value will be used to performing search.
-Thus, you can use one <command>searchd</command> daemon to answer queries for several search databases selectible by 
+Thus, you can use one <command>searchd</command> daemon to answer queries for several search databases selectible by
 <option>label</option> variable.
 </para>
 <note><para>If no <option>label</option> is passed as CGI-parameter, then only DBAddr without a <option>label</option> will be used
@@ -225,7 +225,7 @@ URLSelectCacheSize 10240
 <sect2 id="urldumpcachesize_cmd">
 <title><command>URLDumpCacheSize</command> command</title>
 <indexterm><primary>Command</primary><secondary>URLDumpCacheSize</secondary></indexterm>
-<para>Select at once this number of urls to write cache mode indexes, to preload url data or to calculate the Popularity Rank. 
+<para>Select at once this number of urls to write cache mode indexes, to preload url data or to calculate the Popularity Rank.
 Default value is 100000.
 <programlisting>
 URLDumpCacheSize 10240
@@ -237,7 +237,7 @@ URLDumpCacheSize 10240
 <sect2 id="usecrc32urlid_cmd">
 <title><command>UseCRC32URLId</command> command</title>
 <indexterm><primary>Command</primary><secondary>UseCRC32URLId</secondary></indexterm>
-<para>Switch on or off the ID generation for URL using HASH32. 
+<para>Switch on or off the ID generation for URL using HASH32.
 Default value is "no".
 <programlisting>
 UseCRC32URLId yes
@@ -274,12 +274,12 @@ First three optional parameters describe the type of comparison.
 Default values are Match, NoCase, String.
 Use <option>NoCase</option> or <option>Case</option> values to choose case sensitive or case insensitive
 comparison.
-Use <option>Regex</option> to choose regular expression comparison. 
+Use <option>Regex</option> to choose regular expression comparison.
 Use <option>String</option> to choose string with wildcards comparison.
 Wildcards are '*' for any number of characters and '?' for one character.
 Note that '?' and '*' have special meaning in <option>String</option> match type. Please use
 <option>Regex</option> to describe documents with '?' and '*' signs in URL.
-<option>String</option> match is much faster than <option>Regex</option>. Use <option>String</option> where it 
+<option>String</option> match is much faster than <option>Regex</option>. Use <option>String</option> where it
 is possible.
 You may use several arguments for one <command>Allow</command> command.
 You may use this command any times.
@@ -308,7 +308,7 @@ Disallow [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; .
 </programlisting>
 <para>
 Use this command to disallow URLs that match (doesn't match) given argument.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 with <command>Allow</command> command.
 You can use several arguments for one <command>Disallow</command> command.
 Takes global effect for config file.
@@ -320,7 +320,7 @@ Disallow NoMatch *.udm.net/*
 Disallow NoMatch Regex \/$|\.htm$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
 # Exclude cgi-bin and non-parsed-headers using "string" match:
 Disallow */cgi-bin/* *.cgi */nph-*
-# Exclude anything with '?' sign in URL. Note that '?' sign has a 
+# Exclude anything with '?' sign in URL. Note that '?' sign has a
 # special meaning in "string" match, so we have to use "regex" match here:
 Disallow Regex  \?
 </programlisting>
@@ -334,11 +334,11 @@ Disallow Regex  \?
 CheckOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
 </programlisting>
 <para>
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 with <command>Allow</command> command.
 Indexer will use HEAD instead of GET HTTP method for URLs that
-match/do not match given regular expressions. It means that the file 
-will be checked only for being existing and will not be downloaded. 
+match/do not match given regular expressions. It means that the file
+will be checked only for being existing and will not be downloaded.
 Useful for zip,exe,arj and other binary files.
 Note that you can disallow those files with commands given below.
 You may use several arguments for one <command>CheckOnly</command> commands.
@@ -362,7 +362,7 @@ CheckOnly NoMatch Regex \/$|\.html$|\.shtml$|\.phtml$|\.php$|\.txt$
 HrefOnly [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ... ]
 </programlisting>
 <para>
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 with <command>Allow</command> command.
 
 Use this to scan a HTML page for "href" attribute of tags but not to index the contents
@@ -370,7 +370,7 @@ of the page with an URLs that match (doesn't match) given argument.
 Commands have global effect for all configuration file.
 
 When indexing large mail list archives for example, the index and thread
-index pages (like mail.10.html, thread.21.html, etc.) should be scanned 
+index pages (like mail.10.html, thread.21.html, etc.) should be scanned
 for links but shouldn't be indexed:
 <programlisting>
 HrefOnly */mail*.html */thread*.html
@@ -386,7 +386,7 @@ HrefOnly */mail*.html */thread*.html
 CheckMp3 [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]
 </programlisting>
 <para>
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 with <command>Allow</command> command.
 If an URL matches given rules, indexer will download only a little part
 of the document and try to find MP3 tags in it. On success, indexer
@@ -408,11 +408,11 @@ CheckMp3 *.bin *.mp3
 CheckMP3Only [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;arg&gt; [&lt;arg&gt; ...]
 </programlisting>
 <para>
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 with <command>Allow</command> command.
 If an URL matches given rules, indexer, like in the case <command>CheckMP3</command> command,
 will download only a little part of the document and try to find MP3 tags.
-On success, indexer will parse MP3 tags, else it will NOT download whole 
+On success, indexer will parse MP3 tags, else it will NOT download whole
 document.
 <programlisting>
 CheckMP3Only *.bin *.mp3
@@ -429,7 +429,7 @@ IndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt;
 </programlisting>
 <para>
 Use this command to allow indexing, if the value of <option>section</option> match the <option>arg</option> pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>).
 </para>
 <para>Example
@@ -449,7 +449,7 @@ NoIndexIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&g
 </programlisting>
 <para>
 Use this command to disallow indexing, if the value of <option>section</option> match the <option>arg</option> pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>).
 </para>
 <para>Example
@@ -468,7 +468,7 @@ AllowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&gt;
 </programlisting>
 <para>
 This command is similar to the <command>Allow</command> command (see <xref linkend="allow_cmd"/>), but is applicable to any section of the document indexed, and it is appplied after the content of the document downloaded and indexed. Use this command to allow indexing, if the value of <option>section</option> match the <option>arg</option> pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <command>Allow</command> command.
 </para>
 <para>Example
@@ -488,7 +488,7 @@ DisallowIf [Match|NoMatch] [NoCase|Case] [String|Regex] &lt;section&gt; &lt;arg&
 </programlisting>
 <para>
 This command is similar to the <command>Disallow</command> command (see <xref linkend="disallow_cmd"/>), but is applicable to any section of the document indexed, and it is appplied after the content of the document downloaded and indexed. Use this command to delete corresponding document from the database, if the value of <option>section</option> match the <option>arg</option> pattern given.
-The meaning of first three optional parameters is exactly the same 
+The meaning of first three optional parameters is exactly the same
 as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>).
 </para>
 <para>Example
@@ -512,7 +512,7 @@ HoldBadHrefs &lt;time&gt;
 How much time to hold URLs with erroneous status before deleting them
 from the database. For example, if host is down, indexer will not delete
 pages from this site immediately and search will use previous content
-of these pages. However if site doesn't respond for a month, probably 
+of these pages. However if site doesn't respond for a month, probably
 it's time to remove these pages from the database.
 For &lt;time&gt; format see description of <command>Period</command> command in <xref linkend="period_cmd"/>.
 <programlisting>
@@ -529,7 +529,7 @@ HoldBadHrefs 30d
 DeleteOlder &lt;time&gt;
 </programlisting>
 <para>
-How much time to hold URLs before deleting them from the database. For example, 
+How much time to hold URLs before deleting them from the database. For example,
 for news sites indexing, you may delete automatically old news articles after specified period.
 For &lt;time&gt; format see description of <command>Period</command> command in <xref linkend="period_cmd"/>.
 Default value is 0. "0" value mean "do not check". You may specify several <command>DeleteOlder</command> commands,
@@ -588,15 +588,15 @@ Period &lt;time&gt;
 </programlisting>
 <para>
 Set reindex period.
-&lt;time&gt; is in the form 'xxxA[yyyB[zzzC]]'                                   
- (Spaces are allowed between xxx and A and yyy and so on)                     
-   there xxx, yyy, zzz are numbers (can be negative!)                         
-         A, B, C can be one of the following:                                 
-		s - second                                                      
-		M - minute                                                      
-		h - hour                                                        
-		d - day                                                         
-		m - month                                                       
+&lt;time&gt; is in the form 'xxxA[yyyB[zzzC]]'
+ (Spaces are allowed between xxx and A and yyy and so on)
+   there xxx, yyy, zzz are numbers (can be negative!)
+         A, B, C can be one of the following:
+		s - second
+		M - minute
+		h - hour
+		d - day
+		m - month
 		y - year
       (these letters are the same as in strptime/strftime functions).
 
@@ -645,7 +645,7 @@ defined in <command>Period</command> command is used.
 <programlisting>
 ExpireAt [ A [ B [ C [ D [ E ]]]]]
 </programlisting>
-<para>This command allow specify the exactly expiration time for documents. 
+<para>This command allow specify the exactly expiration time for documents.
 May be specified per Server/Realm basis and takes effect till the end of config file or till next <command>ExpireAt</command> command.
 <command>ExpireAt</command> specified without any arguments disable previously specified value.
 A - stand for minute, may be * or 0-59; B - stand for hour, may be * or 0-23; C - stand for day of month, may be * or 1-31;
@@ -673,7 +673,7 @@ Default value: no.
 <programlisting>
 LMDSection &lt;section name&gt;
 </programlisting>
-<para>This command specify the section which will be used as the document last modification date instead of Last-Modified header sent by remote web-server. 
+<para>This command specify the section which will be used as the document last modification date instead of Last-Modified header sent by remote web-server.
 Can be set many times before <command>Server</command> command and takes effect till the end of config file or till next <command>LMDSection</command> command.
 Default value is undefined. Use this command without any argument to make its value undefined.
 If the value of the section specified by this command is not defined for current document the value of Last-Modified header will be used.
@@ -779,8 +779,8 @@ MaxNetErrors &lt;number&gt;
 <para>
 Maximum network errors for each server.
 Default value is 16. Use 0 for unlimited errors number.
-If there too many network errors on some server 
-(server is down, host unreachable, etc) <command>indexer</command> will try to do 
+If there too many network errors on some server
+(server is down, host unreachable, etc) <command>indexer</command> will try to do
 not more then <option>'number'</option> attempts to connect to this server.
 Takes effect till the end of config file or till next <command>MaxNetErrors</command> command.
 <programlisting>
@@ -871,17 +871,17 @@ Section &lt;string&gt; &lt;number&gt; &lt;maxlen&gt; [strict] [ &lt;pattern&gt; 
 </programlisting>
 <para>
 where <option>&lt;string&gt;</option> is a section name and <option>&lt;number&gt;</option> is section ID
-between 0 and 255. Use 0 if you don't want to index some of 
+between 0 and 255. Use 0 if you don't want to index some of
 these sections. It is better to use different IDs
-for different sections. In this case during search 
+for different sections. In this case during search
 time you'll be able to give different weight to each section
 or even disallow some sections at a search time.
 <option>&lt;maxlen&gt;</option> argument contains a maximum length of section
 which will be stored in database. Use 0 for <option>&lt;maxlen&gt;</option>, if you don't want to store this section.
 <option>&lt;pattern&gt;</option> and <option>&lt;replacement&gt;</option> are a regex-like
 pattern and replacement to extract section value from document content.</para>
-<para>You can specify <option>strict</option> option to set strict string tokenization for a section, which mean word break 
-at any non-character symbol despite the context. It's useful, for example, in indexing of URL, where hyphen, the character, 
+<para>You can specify <option>strict</option> option to set strict string tokenization for a section, which mean word break
+at any non-character symbol despite the context. It's useful, for example, in indexing of URL, where hyphen, the character,
 uses as delimiter between words.
 </para>
 <para>
@@ -923,7 +923,7 @@ HrefSection     NewLink "&lt;newlink&gt;([^&lt;]*)&lt;/newlink&gt;" "$1"
 <sect2 id="FastHrefCheck">
 <title><command>FastHrefCheck</command> command</title>
 <indexterm><primary>Command</primary><secondary>FastHrefCheck</secondary></indexterm>
-<para>The "<command>FastHrefCheck yes</command>" command is useful to speed-up the indexing when you have a huge list of <command>Server/Realm/Subnet</command> commands as 
+<para>The "<command>FastHrefCheck yes</command>" command is useful to speed-up the indexing when you have a huge list of <command>Server/Realm/Subnet</command> commands as
 it disables the href checking against server list during parsing.</para>
 </sect2>
 
@@ -960,7 +960,7 @@ takes effect only for next one <command>Server</command> command!
 It should be also before <command>Proxy</command> command.
 Examples:
 <programlisting>
-ProxyAuthBasic somebody:something  
+ProxyAuthBasic somebody:something
 </programlisting>
 </para>
 </sect2>
@@ -1006,7 +1006,7 @@ Can be set before every <command>Server</command> command and
 takes effect only for next one <command>Server</command> command!
 Examples:
 <programlisting>
-AuthBasic somebody:something  
+AuthBasic somebody:something
 
 # If you have password protected directory(-ies), but whole server is open,use:
 AuthBasic login1:passwd1

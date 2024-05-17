@@ -120,8 +120,8 @@ table[align="right"] {
 table[rules] {
   border-collapse: collapse;
 }
-   
-/* caption inherits from table not table-outer */  
+
+/* caption inherits from table not table-outer */
 caption {
   display: table-caption;
   text-align: center;
@@ -168,7 +168,7 @@ tfoot {
   vertical-align: middle;
 }
 
-td { 
+td {
   display: table-cell;
 /*  vertical-align: inherit;*/
 /*  text-align: inherit; */
@@ -357,7 +357,7 @@ body {
 #topmenu, .topmenu, .therm {
 	font-size: smaller;
 }
-#topmenu, #topmenu A, #topmenu A:visited, .therm, 
+#topmenu, #topmenu A, #topmenu A:visited, .therm,
 .topmenu, .topmenu A, .topmenu A:visited{
 	color: #063; text-align: center;
 	background-color: #f4f4f4; white-space: nowrap;
@@ -442,7 +442,7 @@ form {
   color: #063; font-weight: bold;
 }
 #dir .result, .result {
-  color: #1e8100; /*#1f8101;*/ /*#080;*/ /*#0a5;*/ 
+  color: #1e8100; /*#1f8101;*/ /*#080;*/ /*#0a5;*/
 }
 #dir A.siteinfo, #dir A.siteinfo:visited {
   color: #999;
@@ -454,7 +454,7 @@ form {
   color: #257;
 }*/
 #dir .restop, #dir .restop A, .restop, A.restop {
-	color: #05a; font-weight: 400; 
+	color: #05a; font-weight: 400;
 }
 #dir A.restop:visited, A.restop:visited, A.serp1:visited, A.serp1.restop:visited {
         color: #25a;
@@ -469,14 +469,14 @@ form {
 #form .other, #form .other A, #form A.other:visited {
   color: #fff; background-color: #158000; /*#390;*/ font-weight: bold;
 }
-#dir .otherinverse, #dir .otherinverse A, #dir A.otherinverse:visited, 
+#dir .otherinverse, #dir .otherinverse A, #dir A.otherinverse:visited,
 #form .otherinverse, #form .otherinverse A, #form A.otherinverse:visited {
   /*background-color: #1F8C16; color: #f4faf4;*/ font-weight: bold;
 	color: white; background-color: #8ca3c3;
 	text-decoration: none;
 }
 #dir .leftmenuh3, #dir .leftmenuh3 A, #dir .leftmenuh3 A:visited {
-	display: block; margin: 0; padding: 5px; border: 0; 
+	display: block; margin: 0; padding: 5px; border: 0;
 	color: #225577; font-weight: bold; text-decoration: none; /*background-color: #f2f5f7;*/
 	font-size: 109%; line-height: 109%
 }
@@ -563,7 +563,7 @@ DIV.qsimilar {
 DIV.sea {
 	width: 34em;
 }
-.topimg { 
+.topimg {
   border-right: 1px dashed #666666; border-left: 1px dashed #666666;
 }
 .group {
@@ -595,9 +595,9 @@ span.cloud:first-letter { font-weight: bold; font-size: 112%; }
 #search_suggest {
 	position: absolute;
 	background-color: #FFFFFF;  color: #69C;
-	text-align: left; 
+	text-align: left;
 	border: 1px solid #000000;
-	z-index: 255;		
+	z-index: 255;
 }
 /* /suggest */
 
@@ -608,7 +608,7 @@ span.cloud:first-letter { font-weight: bold; font-size: 112%; }
 .r2 { margin: 0 3px; display: block; height: 1px; overflow: hidden; padding: 0; border: 0; font-size: 1px; }
 .r3 { margin: 0 2px; display: block; height: 1px; overflow: hidden; padding: 0; border: 0; font-size: 1px; }
 .r4 { margin: 0 1px; height: 2px; }
-a:hover, 
+a:hover,
 #dir .leftmenuh3 A:hover, #dir .leftmenuh3 A:visited:hover,
 #dir .leftmenuh3 SPAN:hover, #form A:hover, #form A:visited:hover,
 #topmenu A:hover, #topmenu A:visited:hover,
@@ -638,5 +638,3 @@ A {
 A:visited {
         color: #030303;/*#257;*/ /*#363;*/
 }
-
-

@@ -118,11 +118,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 SOURCES =
 DIST_SOURCES =
 am__can_run_installinfo = \
@@ -358,7 +358,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 #man_MANS = indexer.1 indexer.conf.5
-man_MANS = 
+man_MANS =
 XML_SRC_EN = aliases.xml \
 book.xml \
 bugs.xml \
@@ -507,13 +507,13 @@ dpsearch-htmlparser-bodypatterns.en.html dpsearch-srvtable.en.html dpsearch-pars
 
 HTML_OUT = $(HTML_OUT_RU) $(HTML_OUT_EN)
 HTML_FILES = $(HTML_OUT) README.html body-after.html body-before.html datapark.css
-PDF_FILES = 
+PDF_FILES =
 # book.pdf
 EXTRA_DIST = $(man_MANS) $(XML_SRC) $(PDF_FILES) $(HTML_FILES) catalog datapark-ru.dsl datapark.dsl datapark-pdf.dsl
 HTML_DEP_EN = $(XML_SRC_EN) datapark.dsl
-HTML_DEP_NOJADE_EN = 
+HTML_DEP_NOJADE_EN =
 HTML_DEP_RU = $(XML_SRC_RU) datapark-ru.dsl
-HTML_DEP_NOJADE_RU = 
+HTML_DEP_NOJADE_RU =
 all: all-am
 
 .SUFFIXES:

@@ -28,4 +28,3 @@ StopwordFile stopwords/tr.sl
 StopwordFile stopwords/uk.sl
 # Uncomment this if you have chinese charsets enabled
 #StopwordFile stopwords/zh.sl
-

@@ -54,7 +54,7 @@ function myCopyContent2(domDoc, uri) {
     </script>
 </head>
 <!-- BrowserCharset: $(BrowserCharset) -->
-<body id="dir"> 
+<body id="dir">
 <table border="0" cellpadding="2" cellspacing="0">
 <tr><td><div id="topmenu"><a href="http://sochi.org.ru/">sochi.org.ru<a/>: $(head.lng)</div></td><td rowspan="6" width="160" align="center" valign="top" style="border-left: 1px solid #EEE">
 <!-- ads here -->
@@ -176,5 +176,3 @@ $(notfound.lng)
 </CENTER>
 </td></tr>
 <!--/error-->
-
-

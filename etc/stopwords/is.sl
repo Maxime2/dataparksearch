@@ -61,7 +61,7 @@ rofl
 sinni
 síðan
 sjá
-smátt 
+smátt
 spurja
 spyrja
 staðar
@@ -110,4 +110,3 @@ code
 url
 img
 wrote
-

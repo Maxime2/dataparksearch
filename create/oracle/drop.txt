@@ -31,4 +31,3 @@ DROP SEQUENCE next_url_id
 /
 DROP SEQUENCE server_seq
 /
-

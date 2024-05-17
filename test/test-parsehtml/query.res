@@ -538,7 +538,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-452902092	http://site/ispattern.html	charset	UTF-8
 200	-452902092	http://site/ispattern.html	content-language	en
 200	-452902092	http://site/ispattern.html	content-type	text/html
-200	-452902092	http://site/ispattern.html	sea	U.S.A. is.  U.S.A.? He.  3.4. c.d. etc.)' the. etc.)' 
+200	-452902092	http://site/ispattern.html	sea	U.S.A. is.  U.S.A.? He.  3.4. c.d. etc.)' the. etc.)'
 200	-452902092	http://site/ispattern.html	tag	local
 200	-452902092	http://site/ispattern.html	title	isPattern
 200	-315612950	http://site/xhtml1-strict.xhtml	body	   This is a test XHTML 1.0 Strict document. See: W3C HTML Validation Service: Tests  valid HTML  Gerald Oskoboiny $Date: 1999/12/06 05:52:07 $
@@ -553,7 +553,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-313928143	http://site/no-newlines.html	content-type	text/html
 200	-313928143	http://site/no-newlines.html	tag	local
 200	-313928143	http://site/no-newlines.html	title	Jesse
-200	-19345923	http://site/refresh.html	body	 
+200	-19345923	http://site/refresh.html	body
 200	-19345923	http://site/refresh.html	charset	UTF-8
 200	-19345923	http://site/refresh.html	content-language	en
 200	-19345923	http://site/refresh.html	content-type	text/html

@@ -156,7 +156,7 @@ CREATE UNIQUE INDEX cookies_idx ON cookies (domain, path, name, secure);
 CREATE INDEX cookies_time ON cookies (expires);
 
 CREATE TABLE storedchk (
-       rec_id int, 
+       rec_id int,
        url_id int
 );
 CREATE INDEX storedchk_i ON storedchk (url_id);
@@ -170,4 +170,3 @@ CREATE TABLE "cachedchk2" (
        url_id integer
 );
 CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
-

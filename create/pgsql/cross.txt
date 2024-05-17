@@ -9,4 +9,3 @@ CREATE INDEX crossdict_url_id ON crossdict (url_id);
 CREATE INDEX crossdict_ref_id ON crossdict (ref_id);
 CREATE INDEX crossdict_word ON crossdict (word);
 CREATE INDEX crossdict_word_url_id ON crossdict (word, url_id);
-

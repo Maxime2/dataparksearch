@@ -13,16 +13,16 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_WILD_H
 #define _DPS_WILD_H
 
-extern int DpsWildCmp(const char *str, const char *expr);
-extern __C_LINK int __DPSCALL DpsWildCaseCmp(const char *str, const char *expr);
+extern int DpsWildCmp (const char *str, const char *expr);
+extern __C_LINK int __DPSCALL DpsWildCaseCmp (const char *str, const char *expr);
 
-extern int DpsUniWildCmp(const dpsunicode_t *str, const dpsunicode_t *expr);
-extern int DpsUniWildCaseCmp(const dpsunicode_t *str, const dpsunicode_t *expr);
+extern int DpsUniWildCmp (const dpsunicode_t *str, const dpsunicode_t *expr);
+extern int DpsUniWildCaseCmp (const dpsunicode_t *str, const dpsunicode_t *expr);
 
 #endif

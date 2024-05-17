@@ -309,4 +309,3 @@ CREATE TABLE bdict1F (
    coords  varchar(32765)        not null
 );
 CREATE INDEX bdict1F_word ON bdict1F (word);
-

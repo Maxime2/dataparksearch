@@ -8,24 +8,24 @@ you need maximal search speed.
 
 <para>
 <indexterm><primary>Command</primary><secondary>ColdVar</secondary></indexterm>
-If your <filename>/var</filename> directory isn't changed since the indexing has been finished, you may disable file locking using 
+If your <filename>/var</filename> directory isn't changed since the indexing has been finished, you may disable file locking using
 <command>"ColdVar yes"</command> command placed in <filename>search.htm</filename> (or in <filename>searchd.conf</filename>,
 if <command>searchd</command> is used). This allow you to save some time on file locking.
 </para>
 
 <para>Using <userinput>UseCRC32URLId yes</userinput> command (see <xref linkend="usecrc32urlid_cmd"/>) allow to speed up indexing, but
-small number of collisions is possible, especially on large database. 
+small number of collisions is possible, especially on large database.
 </para>
 
 
 <sect2 id="searchd-rec">
 <title><command>searchd</command> usage recommendation</title>
 <para>If you plan use ispell data, synonym or stopword lists, it's recommended setup
-the <command>searchd</command> daemon for speed-up searches (See <xref linkend="searchd"/>). 
+the <command>searchd</command> daemon for speed-up searches (See <xref linkend="searchd"/>).
 <command>searchd</command> daemon preload all these data and lists
 and holds them in memory. This reduce average search query execution time.
 </para>
-<para>Also, <command>searchd</command> can preload url info data (20 bytes per URL indexed) and 
+<para>Also, <command>searchd</command> can preload url info data (20 bytes per URL indexed) and
 cache mode limits (4 or 8 bytes per URL depend on limit type). This allow reduce average search time.
 </para>
 </sect2>
@@ -44,11 +44,11 @@ If you use search results caching, please note you need to empty <filename>var/c
 
 <sect2 id="mfs-rec">
 <title>Memory based filesystem (mfs) usage recommendation</title>
-<para>If you use cache storage mode and you have enough RAM on your PC, 
+<para>If you use cache storage mode and you have enough RAM on your PC,
 you may place <filename>/usr/local/dpsearch/var</filename>
 directory on memory based filesystem (mfs). This allow speedup both indexing and searching.
 </para>
-<para>If you haven't enough RAM to fit  <filename>/usr/local/dpsearch/var</filename>, 
+<para>If you haven't enough RAM to fit  <filename>/usr/local/dpsearch/var</filename>,
 you may place on memory filesystem any of <filename>/usr/local/dpsearch/var/tree</filename>,
 <filename>/usr/local/dpsearch/var/url</filename> or <filename>/usr/local/dpsearch/var/store</filename>
 directories as well.
@@ -77,7 +77,7 @@ In this case this table can not be used to load configuration with <command>Load
 <indexterm><primary>Command</primary><secondary>MarkForIndex</secondary></indexterm>
 <para>By default, <application>DataparkSearch</application> are marking all URLs selected for indexing as indexed for 4 hours.
 This prevent possible simultaneous indexing of the same URL by different indexer instance running. But for huge installation this feature
-can take some time for processing. You may switch off this markage using <command>"MarkForIndex no"</command> in your 
+can take some time for processing. You may switch off this markage using <command>"MarkForIndex no"</command> in your
 <filename>indexer.conf</filename> file.
 </para>
 </sect2>
@@ -87,7 +87,7 @@ can take some time for processing. You may switch off this markage using <comman
 <title><command>CheckInsertSQL</command> command</title>
 <indexterm><primary>Command</primary><secondary>CheckInsertSQL</secondary></indexterm>
 <para>By default, <application>DataparkSearch</application> trying to insert data into SQL database regardless it's already present there.
-On some systems this raise some error loggings. To avoid such errors, 
+On some systems this raise some error loggings. To avoid such errors,
 you may enable additional checks, is the inserting data new, by specifying
 <command>CheckInsertSQL yes</command> command in your <filename>indexer.conf</filename>.
 </para>
@@ -120,7 +120,7 @@ own risk.</para>
 
 <sect2 id="ares">
 <title>Asynchronous resolver library</title>
-<para>Using <ulink url="http://c-ares.haxx.se/">c-ares</ulink>, 
+<para>Using <ulink url="http://c-ares.haxx.se/">c-ares</ulink>,
 an asynchronous resolver library (dns/c-ares in FreeBSD ports collection), allow to perform DNS queries without blocking for every
 indexing thread. Please note, this also increase the number of concurrent queries to your DNS server.
 </para>

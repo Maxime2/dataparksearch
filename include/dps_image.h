@@ -12,13 +12,12 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_IMAGE_H
 #define _DPS_IMAGE_H
 
-extern int DpsGIFParse(DPS_AGENT *A, DPS_DOCUMENT *D);
-
+extern int DpsGIFParse (DPS_AGENT *A, DPS_DOCUMENT *D);
 
 #endif

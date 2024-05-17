@@ -17,7 +17,7 @@ directory. Each result is stored in a separate file.</para>
 <para><indexterm><primary>Command</primary><secondary>HoldCache</secondary></indexterm>
 By defaults, search results cache is not deleted
 automatically. You have to delete it every time after indexer's work
-to avoid displaying non-recent cached results. 
+to avoid displaying non-recent cached results.
 Or you may specify a refresh period for search results cache using
 <command>HoldCache</command> command:
 <programlisting>

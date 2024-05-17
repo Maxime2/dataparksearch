@@ -17,11 +17,11 @@ print <<EOF;
  <tr><th>Status</th><th>Expired</th><th>Total</th><th>&nbsp;</th></tr>
 EOF
 
-# EDIT - ME 
+# EDIT - ME
 
 my $DBAddr = "pgsql://user:passwd\@localhost/search/?dbmode=cache";
 
-# 
+#
 
 my $search = new Dataparksearch('DBAddr' => $DBAddr);
 my $stats  = $search->GetStatistics();
@@ -44,4 +44,3 @@ EOF
 $search->Free();
 
 exit;
-

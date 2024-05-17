@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #include "dps_common.h"
@@ -25,7 +25,6 @@
 #include <string.h>
 #include <sys/types.h>
 #include <ctype.h>
-
 
 #if 0
 
@@ -49,37 +48,47 @@ int DpsWildCmp(const char *str, const char *wexp) {
 }
 
 #else
-int DpsWildCmp(const char *str, const char *wexp) {
-    register size_t x, y;
+int
+DpsWildCmp (const char *str, const char *wexp)
+{
+  register size_t x, y;
 
-    for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x) {
-      switch(wexp[y]) {
-      case '*':
-	    while (wexp[++y] == '*');
-	    if (!wexp[y])return 0;
-	    while (str[x]) {
-		register int ret;
-		if ((ret = DpsWildCmp(&str[x++], &wexp[y])) != 1) return ret;
-	    }
-	    return -1;
-      case '?':
-	break;
-      case '\\':
-	y++; /* no break here by the design */
-      default:
-	if (str[x] != wexp[y]) return 1;
-	break;
-      }
+  for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x)
+    {
+      switch (wexp[y])
+        {
+        case '*':
+          while (wexp[++y] == '*')
+            ;
+          if (!wexp[y])
+            return 0;
+          while (str[x])
+            {
+              register int ret;
+              if ((ret = DpsWildCmp (&str[x++], &wexp[y])) != 1)
+                return ret;
+            }
+          return -1;
+        case '?':
+          break;
+        case '\\':
+          y++; /* no break here by the design */
+        default:
+          if (str[x] != wexp[y])
+            return 1;
+          break;
+        }
     }
-    if (str[x] != '\0') return 1;
-    while(wexp[y] == '*' /* || wexp[y] == '?'*/) y++;
-    if (wexp[y] == '\0' || wexp[y] == '$') return 0;
-    return -1;
+  if (str[x] != '\0')
+    return 1;
+  while (wexp[y] == '*' /* || wexp[y] == '?'*/)
+    y++;
+  if (wexp[y] == '\0' || wexp[y] == '$')
+    return 0;
+  return -1;
 }
 
 #endif
-
-
 
 #if 0
 
@@ -104,84 +113,120 @@ int DpsWildCaseCmp(const char *str, const char *wexp) {
 
 #else
 
-int DpsWildCaseCmp(const char *str, const char *wexp) {
-    register size_t x, y;
+int
+DpsWildCaseCmp (const char *str, const char *wexp)
+{
+  register size_t x, y;
 
-    for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x) {
-      switch(wexp[y]) {
-      case '*':
-	    while (wexp[++y] == '*');
-	    if (!wexp[y])return 0;
-	    while (str[x]) {
-		register int ret;
-		if ((ret = DpsWildCaseCmp(&str[x++], &wexp[y])) != 1) return ret;
-	    }
-	    return -1;
-      case '?':
-	break;
-      case '\\':
-	y++; /* no break here by the design */
-      default:
-	if (dps_tolower(str[x]) != dps_tolower(wexp[y])) return 1;
-	break;
-      }
+  for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x)
+    {
+      switch (wexp[y])
+        {
+        case '*':
+          while (wexp[++y] == '*')
+            ;
+          if (!wexp[y])
+            return 0;
+          while (str[x])
+            {
+              register int ret;
+              if ((ret = DpsWildCaseCmp (&str[x++], &wexp[y])) != 1)
+                return ret;
+            }
+          return -1;
+        case '?':
+          break;
+        case '\\':
+          y++; /* no break here by the design */
+        default:
+          if (dps_tolower (str[x]) != dps_tolower (wexp[y]))
+            return 1;
+          break;
+        }
     }
-    if (str[x] != '\0') return 1;
-    while(wexp[y] == '*' /* || wexp[y] == '?'*/) y++;
-    if (wexp[y] == '\0' || wexp[y] == '$') return 0;
-    return -1;
+  if (str[x] != '\0')
+    return 1;
+  while (wexp[y] == '*' /* || wexp[y] == '?'*/)
+    y++;
+  if (wexp[y] == '\0' || wexp[y] == '$')
+    return 0;
+  return -1;
 }
 
 #endif
 
-
 /* dpsunicode_t */
 
+int
+DpsUniWildCmp (const dpsunicode_t *str, const dpsunicode_t *wexp)
+{
+  register size_t x, y;
 
-int DpsUniWildCmp(const dpsunicode_t *str, const dpsunicode_t *wexp) {
-    register size_t x, y;
-
-    for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x) {
-      if (wexp[y] == (dpsunicode_t)'*') {
-	    while (wexp[++y] == '*');
-	    if (!wexp[y])return 0;
-	    while (str[x]) {
-		register int ret;
-		if ((ret = DpsUniWildCmp(&str[x++], &wexp[y])) != 1) return ret;
-	    }
-	    return -1;
-      } else if (wexp[y] != (dpsunicode_t)'?') {
-	    if (str[x] != wexp[y]) return 1;
-      }
+  for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x)
+    {
+      if (wexp[y] == (dpsunicode_t) '*')
+        {
+          while (wexp[++y] == '*')
+            ;
+          if (!wexp[y])
+            return 0;
+          while (str[x])
+            {
+              register int ret;
+              if ((ret = DpsUniWildCmp (&str[x++], &wexp[y])) != 1)
+                return ret;
+            }
+          return -1;
+        }
+      else if (wexp[y] != (dpsunicode_t) '?')
+        {
+          if (str[x] != wexp[y])
+            return 1;
+        }
     }
-    if (str[x] != (dpsunicode_t)'\0') return 1;
-    while(wexp[y] == (dpsunicode_t)'*' /* || wexp[y] == (dpsunicode_t)'?' */) y++;
-    if (wexp[y] == (dpsunicode_t)'\0' || wexp[y] == (dpsunicode_t)'$') return 0;
-    return -1;
+  if (str[x] != (dpsunicode_t) '\0')
+    return 1;
+  while (wexp[y] == (dpsunicode_t) '*' /* || wexp[y] == (dpsunicode_t)'?' */)
+    y++;
+  if (wexp[y] == (dpsunicode_t) '\0' || wexp[y] == (dpsunicode_t) '$')
+    return 0;
+  return -1;
 }
 
+int
+DpsUniWildCaseCmp (const dpsunicode_t *str, const dpsunicode_t *wexp)
+{
+  register size_t x, y;
 
-int DpsUniWildCaseCmp(const dpsunicode_t *str, const dpsunicode_t *wexp) {
-    register size_t x, y;
+  for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x)
+    {
 
-    for (x = 0, y = 0; str[x] && wexp[y]; ++y, ++x) {
-
-      if (wexp[y] == (dpsunicode_t)'*') {
-	    while (wexp[++y] == '*');
-	    if (!wexp[y])return 0;
-	    while (str[x]) {
-		register int ret;
-		if ((ret = DpsUniWildCaseCmp(&str[x++], &wexp[y])) != 1) return ret;
-	    }
-	    return -1;
-      } else if (wexp[y] != (dpsunicode_t)'?') {
-	    if (dps_tolower(str[x]) != dps_tolower(wexp[y])) return 1;
-      }
+      if (wexp[y] == (dpsunicode_t) '*')
+        {
+          while (wexp[++y] == '*')
+            ;
+          if (!wexp[y])
+            return 0;
+          while (str[x])
+            {
+              register int ret;
+              if ((ret = DpsUniWildCaseCmp (&str[x++], &wexp[y])) != 1)
+                return ret;
+            }
+          return -1;
+        }
+      else if (wexp[y] != (dpsunicode_t) '?')
+        {
+          if (dps_tolower (str[x]) != dps_tolower (wexp[y]))
+            return 1;
+        }
     }
 
-
-    if (str[x] != (dpsunicode_t)'\0') return 1;
-    while(wexp[y] == (dpsunicode_t)'*' /* || wexp[y] == (dpsunicode_t)'?' */) y++;
-    if (wexp[y] == (dpsunicode_t)'\0' || wexp[y] == (dpsunicode_t)'$') return 0;
-    return -1;
+  if (str[x] != (dpsunicode_t) '\0')
+    return 1;
+  while (wexp[y] == (dpsunicode_t) '*' /* || wexp[y] == (dpsunicode_t)'?' */)
+    y++;
+  if (wexp[y] == (dpsunicode_t) '\0' || wexp[y] == (dpsunicode_t) '$')
+    return 0;
+  return -1;
 }

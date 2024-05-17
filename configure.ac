@@ -174,7 +174,7 @@ AC_ARG_WITH(tre,
 [  --without-tre           disable support for libtre],
 [tre=$withval],
 [tre=yes])
-  
+
 AC_MSG_RESULT([$tre])
 
 if test "$tre" != "no" ; then
@@ -289,8 +289,8 @@ AC_RUN_IFELSE([AC_LANG_SOURCE([[
 )
 
 dnl Check for libraries
-dnl Next line was commented out by Kir 
-dnl Does inet_addr and inet_aton belongs to one lib? 
+dnl Next line was commented out by Kir
+dnl Does inet_addr and inet_aton belongs to one lib?
 dnl If so we don't need to check for inet_aton
 dnl AC_CHECK_FUNCS(inet_addr inet_aton)
 dnl sinclude(net.m4)
@@ -375,7 +375,7 @@ dnl check for paranoia support
 paranoia=no
 AC_MSG_CHECKING(for paranoia support)
 AC_ARG_ENABLE(paranoia,
-[  --enable-paranoia       Enable paranoia support. Stack will be checked like with libparanoia 
+[  --enable-paranoia       Enable paranoia support. Stack will be checked like with libparanoia
                           This works only on Intel architecture using gcc. Optimisation should be switched off.],
 [
   if test "$enableval" != "no"; then
@@ -401,7 +401,7 @@ if test "$sharedmem" = no; then
 #include <sys/mman.h>
 	    ]],
                [[shm_open("/tmp", 0, 0644);]])],
-            cok=yes 
+            cok=yes
    	    sharedmem=posix
    	    AC_DEFINE(HAVE_SHAREDMEM_POSIX)
    	    AC_MSG_RESULT(ok)
@@ -415,16 +415,16 @@ if test "$sharedmem" = no; then
 #include <sys/mman.h>
 	    ]],
                [[shm_open("/tmp", 0, 0644);]])],
-               			 cok=yes 
+               			 cok=yes
    	       			 sharedmem=posix
    	       			 AC_DEFINE(HAVE_SHAREDMEM_POSIX)
-   	       			 AC_MSG_RESULT(-lc), 
+   	       			 AC_MSG_RESULT(-lc),
    	       			 LIBS="$ac_save_libs"
 		)
 	fi
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
-		LIBS="$LIBS -lrt" 
+		LIBS="$LIBS -lrt"
 		AC_LINK_IFELSE([AC_LANG_PROGRAM(
 [[
 #include <sys/types.h>
@@ -432,14 +432,14 @@ if test "$sharedmem" = no; then
 ]], [[
  shm_open("/tmp", 0, 0644);
 ]])],
-   cok=yes 
+   cok=yes
    sharedmem=posix
    AC_DEFINE(HAVE_SHAREDMEM_POSIX)
    AC_MSG_RESULT(-lrt),
    LIBS="$ac_save_libs"
 )
 	fi
-fi 
+fi
 
 if test "$sharedmem" = no; then
 	AC_MSG_CHECKING(for SystemV shared memory library)
@@ -454,13 +454,13 @@ if test "$sharedmem" = no; then
   AC_MSG_RESULT(ok)],[])
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
-		LIBS="$LIBS -lc" 
+		LIBS="$LIBS -lc"
 		AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/shm.h>
 ]], [[
  shmat(1, 0, 0);
-]])],[cok=yes 
+]])],[cok=yes
   sharedmem=sysV
   AC_DEFINE(HAVE_SHAREDMEM_SYSV)
   AC_MSG_RESULT(-lc)],[LIBS="$ac_save_libs"
@@ -468,19 +468,19 @@ if test "$sharedmem" = no; then
 	fi
 	if test "$cok" = no; then
 		ac_save_libs="$LIBS"
-		LIBS="$LIBS -lrt" 
+		LIBS="$LIBS -lrt"
 		AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <sys/shm.h>
 ]], [[
  shmat(1, 0, 0);
-]])],[cok=yes 
+]])],[cok=yes
   sharedmem=sysV
   AC_DEFINE(HAVE_SHAREDMEM_SYSV)
   AC_MSG_RESULT(-lrt)],[LIBS="$ac_save_libs"
 ])
 	fi
-fi 
+fi
 
 if test "$sharedmem" = no; then
 	AC_MSG_ERROR([No shared memory support found])
@@ -580,7 +580,7 @@ AC_MSG_RESULT([$pophops])
 
 AC_MSG_CHECKING(for hops factor in the Neo PopRank)
 AC_ARG_WITH(pophopsfactor,
-[  --with-pophopsfactor=NUM   Define NUM as factor of hops in the Neo Popularity Rank calculation. 
+[  --with-pophopsfactor=NUM   Define NUM as factor of hops in the Neo Popularity Rank calculation.
                           Default value is 0.1.],
 [
 	if test "x$withval" != "x"; then
@@ -670,7 +670,7 @@ fi
 relposition=13
 AC_MSG_CHECKING(for best first word position in relevance)
 AC_ARG_WITH(bestpos,
-[  --with-bestpos=NUM      Define NUM as best first word position for relevance calculation. 
+[  --with-bestpos=NUM      Define NUM as best first word position for relevance calculation.
                           Default value is 13.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -686,7 +686,7 @@ AC_DEFINE_UNQUOTED(DPS_BEST_POSITION, $relposition)
 rel_avgpos=390
 AC_MSG_CHECKING(for best average word position in relevance)
 AC_ARG_WITH(avgpos,
-[  --with-avgpos=NUM       Define NUM as best average word position for relevance calculation. 
+[  --with-avgpos=NUM       Define NUM as best average word position for relevance calculation.
                           Default value is 390.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -702,7 +702,7 @@ AC_DEFINE_UNQUOTED(DPS_AVG_POSITION, $rel_avgpos)
 rel_wrd_cnt=30
 AC_MSG_CHECKING(for best words count in relevance)
 AC_ARG_WITH(bestwrdcnt,
-[  --with-bestwrdcnt=NUM   Define NUM as best words count for relevance calculation. 
+[  --with-bestwrdcnt=NUM   Define NUM as best words count for relevance calculation.
                           Default value is 30.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -718,7 +718,7 @@ AC_DEFINE_UNQUOTED(DPS_BEST_WRD_CNT, $rel_wrd_cnt)
 rel_best_dist=20
 AC_MSG_CHECKING(for best average distance between words in relevance)
 AC_ARG_WITH(avgdist,
-[  --with-avgdist=NUM   Define NUM as best words count for relevance calculation. 
+[  --with-avgdist=NUM   Define NUM as best words count for relevance calculation.
                           Default value is 20.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -733,7 +733,7 @@ AC_DEFINE_UNQUOTED(DPS_AVG_DISTANCE, $rel_best_dist)
 
 AC_MSG_CHECKING(for word distance factor in relevance)
 AC_ARG_WITH(distfactor,
-[  --with-distfactor=NUM   Define NUM as factor of word distance in relevance calculation. 
+[  --with-distfactor=NUM   Define NUM as factor of word distance in relevance calculation.
                           Default value is 25.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -748,7 +748,7 @@ AC_DEFINE_UNQUOTED(DPS_DISTANCE_FACTOR, $rel_distance_factor)
 rel_less_distance_factor="1.0"
 AC_MSG_CHECKING(for word less distance factor in relevance)
 AC_ARG_WITH(lessdistfactor,
-[  --with-lessdistfactor=NUM   Define NUM as factor of word distance in relevance calculation. 
+[  --with-lessdistfactor=NUM   Define NUM as factor of word distance in relevance calculation.
                           Default value is 1.0.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -763,7 +763,7 @@ AC_DEFINE_UNQUOTED(DPS_LESS_DISTANCE_FACTOR, $rel_less_distance_factor)
 
 AC_MSG_CHECKING(for first word position factor in relevance)
 AC_ARG_WITH(posfactor,
-[  --with-posfactor=NUM    Define NUM as factor of first word position in relevance calculation. 
+[  --with-posfactor=NUM    Define NUM as factor of first word position in relevance calculation.
                           Default value is 1.5.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -779,7 +779,7 @@ AC_DEFINE_UNQUOTED(DPS_POSITION_FACTOR, $rel_position_factor)
 rel_less_position_factor="0.31"
 AC_MSG_CHECKING(for first word less position factor in relevance)
 AC_ARG_WITH(lessposfactor,
-[  --with-lessposfactor=NUM    Define NUM as factor of first word position in relevance calculation. 
+[  --with-lessposfactor=NUM    Define NUM as factor of first word position in relevance calculation.
                           Default value is 0.31.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -794,7 +794,7 @@ AC_DEFINE_UNQUOTED(DPS_LESS_POSITION_FACTOR, $rel_less_position_factor)
 
 AC_MSG_CHECKING(for word count factor in relevance)
 AC_ARG_WITH(wrdcntfactor,
-[  --with-wrdcntfactor=NUM Define NUM as factor of word count in relevance calculation. 
+[  --with-wrdcntfactor=NUM Define NUM as factor of word count in relevance calculation.
                           Default value is 3.5.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -810,7 +810,7 @@ AC_DEFINE_UNQUOTED(DPS_WRD_CNT_FACTOR, $rel_wrd_cnt_factor)
 rel_less_wrd_cnt_factor="70.5"
 AC_MSG_CHECKING(for word less count factor in relevance)
 AC_ARG_WITH(lesswrdcntfactor,
-[  --with-lesswrdcntfactor=NUM Define NUM as factor of word count in relevance calculation. 
+[  --with-lesswrdcntfactor=NUM Define NUM as factor of word count in relevance calculation.
                           Default value is 70.5.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -826,7 +826,7 @@ AC_DEFINE_UNQUOTED(DPS_LESS_WRD_CNT_FACTOR, $rel_less_wrd_cnt_factor)
 rel_unicnt_border="10"
 AC_MSG_CHECKING(for non-uniform word count border value)
 AC_ARG_WITH(wrduniborder,
-[  --with-wrduniborder=NUM Define NUM as border value for non-uniform word count distribution in relevance calculation. 
+[  --with-wrduniborder=NUM Define NUM as border value for non-uniform word count distribution in relevance calculation.
                           Default value is 10.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -842,7 +842,7 @@ AC_DEFINE_UNQUOTED(DPS_UNICNT_BORDER, $rel_unicnt_border)
 rel_unicnt_factor="2000"
 AC_MSG_CHECKING(for non-uniform word count factor in relevance)
 AC_ARG_WITH(wrdunifactor,
-[  --with-wrdunifactor=NUM Define NUM as factor of non-uniform word count distribution in relevance calculation. 
+[  --with-wrdunifactor=NUM Define NUM as factor of non-uniform word count distribution in relevance calculation.
                           Default value is 2000.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -858,7 +858,7 @@ AC_DEFINE_UNQUOTED(DPS_UNICNT_FACTOR, $rel_unicnt_factor)
 rel_less_unicnt_factor="20"
 AC_MSG_CHECKING(for non-uniform words less count factor in relevance)
 AC_ARG_WITH(lesswrdunifactor,
-[  --with-lesswrdunifactor=NUM Define NUM as factor of non-uniform words count distribution in relevance calculation. 
+[  --with-lesswrdunifactor=NUM Define NUM as factor of non-uniform words count distribution in relevance calculation.
                           Default value is 20.],
 [
 	if test "x$withval" != "x" && test "x$withval" != "xyes"; then
@@ -878,7 +878,7 @@ AC_ARG_ENABLE(reltrack,
 
 if test "$reltrack" != no; then
 	AC_DEFINE(WITH_REL_TRACK)
-	
+
 fi
 AC_MSG_RESULT($reltrack)
 
@@ -989,8 +989,8 @@ dnl    ac_save_libs="$LIBS"
 dnl    ac_save_cflags="$CFLAGS"
 dnl    LIBS="$LIBS $PTHREAD_LFLAGS $PTHREAD_LDADD"
 dnl    CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
-dnl    
-dnl    AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <pthread.h>]], [[dnl	
+dnl
+dnl    AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <pthread.h>]], [[dnl
 dnl		pthread_attr_t type;
 dnl		pthread_attr_init(&type);
 dnl        ]])],[AC_MSG_RESULT(yes)],[dnl          AC_MSG_ERROR(POSIX thread support not found)
@@ -1411,9 +1411,9 @@ AC_ARG_WITH(zlib,
                             and cache mode indexes compression],
 [zlib=$withval],
 [zlib=yes])
-  
+
 AC_MSG_RESULT([$zlib])
-  
+
 if test "$zlib" = "no" ; then
   dnl to avoid bash error
   x=$x
@@ -1441,7 +1441,7 @@ AC_ARG_WITH(aspell,
 [  --with-aspell           enable automatic words correction using aspell],
 [aspell=$withval],
 [aspell=auto])
-  
+
 dnl AC_MSG_RESULT([$aspell])
 
 if test "$aspell" = "no" ; then
@@ -1549,7 +1549,7 @@ fi
 
 for cs in $CHARSETS
 do
-  case $cs in 
+  case $cs in
     chinese)
       AC_DEFINE(HAVE_CHARSET_chinese)
       ;;
@@ -1745,7 +1745,7 @@ if test "x$apache" != 'xno' && test "x$pthreads" != 'xno'; then
 fi
 AC_MSG_CHECKING(for threadsless version of libdpsearch)
 AC_ARG_ENABLE(threadsless,
-[  --enable-threadsless    enable threadsless version of libdpsearch.  
+[  --enable-threadsless    enable threadsless version of libdpsearch.
 			  This is mandatory for the perl interface.],
 [
 	threadsless="$enableval"
@@ -1809,7 +1809,7 @@ AM_CONDITIONAL(PHPMODULE, test "x$php" != 'xno')
 idn=no
 AC_MSG_CHECKING(for Internationalized Domain Names support)
 AC_ARG_ENABLE(idn,
-[  --enable-idn[[=DIR]]      enable support for Internationalized Domain Names.  
+[  --enable-idn[[=DIR]]      enable support for Internationalized Domain Names.
 			  DIR is the GNU libidn library base install directory.],
 [
   	if test "$enableval" != "no"; then
@@ -2065,7 +2065,7 @@ dnl 	    PGSQL_CF_LFLAGS=`$PGCONFIG --ldflags 2>/dev/null`
     AC_DEFINE(HAVE_DP_PGSQL)
     AC_MSG_RESULT(yes)
     have_db=yes
-    
+
     AC_CHECK_FUNC(crypt, , AC_CHECK_LIB(crypt, crypt, PGSQL_LFLAGS="$PGSQL_LFLAGS -lcrypt"))
 
     if test "x$DBTYPE" = "x" ; then
@@ -2276,7 +2276,7 @@ AC_SUBST(SOLID_INCLUDE)
 
 AC_MSG_CHECKING(for OpenLink ODBC support)
 AC_ARG_WITH(openlink,
-[  --with-openlink[=DIR]   Include OpenLink ODBC support. 
+[  --with-openlink[=DIR]   Include OpenLink ODBC support.
                           DIR is the base OpenLink ODBC install directory],
 [
   if test "$withval" != "no"; then
@@ -2331,7 +2331,7 @@ AC_SUBST(VIRT_INCLUDE)
 
 AC_MSG_CHECKING(for EasySoft ODBC support)
 AC_ARG_WITH(easysoft,
-[  --with-easysoft[=DIR]   Include EasySoft ODBC support. 
+[  --with-easysoft[=DIR]   Include EasySoft ODBC support.
                           DIR is the base EasySoft ODBC install directory],
 [
   if test "$withval" != "no"; then
@@ -2437,7 +2437,7 @@ AC_ARG_WITH(ibase,
 		dnl IB requires -ldl sometime
 		AC_CHECK_FUNC(dlopen, , AC_CHECK_LIB(dl, dlopen, IBASE_LFLAGS="$IBASE_LFLAGS -ldl"))
 
-		dnl InterBase lib on FreeBSD is in old aout format              
+		dnl InterBase lib on FreeBSD is in old aout format
 		dnl so we need to pass -aout flag to ranlib
 		dnl if echo $build_os | grep -q freebsdelf; then
 		dnl	RANLIB="$RANLIB -aout"
@@ -2649,7 +2649,7 @@ AC_ARG_WITH(oracle7,
         else
           ORA_SYSLIB="-lm"
         fi
-          
+
 		ORACLE7_LFLAGS="-L$ORACLE7_LIBDIR1 -L$ORACLE7_LIBDIR2 \
             -lclient -lsqlnet -lncr -lsqlnet -lclient -lcommon \
             -lgeneric \
@@ -2861,7 +2861,7 @@ DP_TAR_FLAGS
 dnl Check if one of databases was selected
 if test "$have_db" != "yes"; then
    db_PROGS="dpguesser$ac_exeext dpconv$ac_exeext dpurl2text$ac_exeext"
-else	
+else
    db_PROGS="indexer$ac_exeext searchd$ac_exeext splitter$ac_exeext stored$ac_exeext cached$ac_exeext dpguesser$ac_exeext dpconv$ac_exeext dpurl2text$ac_exeext"
 fi
 
@@ -2876,13 +2876,13 @@ CDIR=`pwd`
 AC_SUBST(CDIR)
 AC_CONFIG_FILES(Makefile build/Makefile include/Makefile src/Makefile doc/Makefile etc/Makefile dnl
   misc/Makefile scripts/Makefile create/Makefile dnl
-  dnl create/db2/Makefile 
-  create/ibase/Makefile 
+  dnl create/db2/Makefile
+  create/ibase/Makefile
   dnl create/msql/Makefile dnl
   create/mssql/Makefile create/mysql/Makefile create/oracle/Makefile dnl
-  create/pgsql/Makefile 
+  create/pgsql/Makefile
   dnl create/sapdb/Makefile create/solid/Makefile dnl
-  dnl create/sybase/Makefile create/virtuoso/Makefile 
+  dnl create/sybase/Makefile create/virtuoso/Makefile
   create/sqlite/Makefile dnl
   create/mimer/Makefile dnl
   scripts/dps-config scripts/run-splitter dnl
@@ -2908,4 +2908,3 @@ echo "*                                                *"
 echo "*   Thank you for using DataparkSearch Engine!   *"
 echo "**************************************************"
 echo
-

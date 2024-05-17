@@ -14,7 +14,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #include "dps_common.h"
@@ -40,176 +40,224 @@
 #include <ctype.h>
 #include <sys/types.h>
 
-static void DpsParseHTTPHeader(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *header) {
+static void
+DpsParseHTTPHeader (DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *header)
+{
   char *val, *header_name;
-  char	secname[128], savec;
-  DPS_VAR	*Sec;
+  char secname[128], savec;
+  DPS_VAR *Sec;
   DPS_TEXTITEM Item;
 
-  if ((val = strchr(header_name = header->data, ':'))) {
-/*
-  fprintf(stderr, "HEADER: %s\n", header_name);
-*/
-    *val++='\0';
-    val = DpsTrim(val," \t:");
-			
-    if (!strcasecmp(header_name, "Content-Type") || !strcasecmp(header_name, "Content-Encoding")) {
-      register char *v;
-      for(v=val ; *v ; v++) 
-	*v = (char)dps_tolower((int)*v);
-    } else if (Doc->Spider.use_robots && !strcasecmp(header_name, "X-Robots-Tag")) {
-        char * lt;
-	char * rtok;
-					
-	rtok = dps_strtok_r(val, " ,\r\n\t", &lt, &savec);
-	while(rtok){
-	  if(!strcasecmp(rtok, "ALL")){
-	    /* Left Server parameters unchanged */
-	  }else if(!strcasecmp(rtok, "NONE")){
-	    Doc->Spider.follow = DPS_FOLLOW_NO;
-	    Doc->Spider.index = 0;
-	    if (DpsNeedLog(DPS_LOG_DEBUG)) {
-	      DpsVarListReplaceInt(&Doc->Sections, "Index", 0);
-	      DpsVarListReplaceInt(&Doc->Sections, "Follow", DPS_FOLLOW_NO);
-	    }
-	  }else if(!strcasecmp(rtok, "NOINDEX")) {
-	    Doc->Spider.index = 0;
-/*          Doc->method = DPS_METHOD_DISALLOW;*/
-	    if (DpsNeedLog(DPS_LOG_DEBUG)) DpsVarListReplaceInt(&Doc->Sections, "Index", 0);
-	  }else if(!strcasecmp(rtok, "NOFOLLOW")) {
-	    Doc->Spider.follow = DPS_FOLLOW_NO;
-	    if (DpsNeedLog(DPS_LOG_DEBUG)) DpsVarListReplaceInt(&Doc->Sections, "Follow", DPS_FOLLOW_NO);
-	  }else if(!strcasecmp(rtok, "NOARCHIVE")) {
-	    DpsVarListReplaceStr(&Doc->Sections, "Z", "");
-	  }else if(!strcasecmp(rtok, "INDEX")) {
-            /* left server value unchanged */ 
-	    if (DpsNeedLog(DPS_LOG_DEBUG)) DpsVarListReplaceInt(&Doc->Sections, "Index", Doc->Spider.index);
-	  }else if(!strcasecmp(rtok, "FOLLOW")) {
-            /* left server value unchanged */ 
-	    if (DpsNeedLog(DPS_LOG_DEBUG)) DpsVarListReplaceInt(&Doc->Sections, "Follow", Doc->Spider.follow);
-	  }
-	  rtok = dps_strtok_r(NULL, " \r\n\t", &lt, &savec);
-	}
-      
-    } else if (Doc->Spider.use_cookies && !strcasecmp(header_name, "Set-Cookie")) {
+  if ((val = strchr (header_name = header->data, ':')))
+    {
+      /*
+        fprintf(stderr, "HEADER: %s\n", header_name);
+      */
+      *val++ = '\0';
+      val = DpsTrim (val, " \t:");
 
+      if (!strcasecmp (header_name, "Content-Type") || !strcasecmp (header_name, "Content-Encoding"))
+        {
+          register char *v;
+          for (v = val; *v; v++)
+            *v = (char) dps_tolower ((int) *v);
+        }
+      else if (Doc->Spider.use_robots && !strcasecmp (header_name, "X-Robots-Tag"))
+        {
+          char *lt;
+          char *rtok;
 
-      DpsCookiesAddStr(Indexer, &Doc->CurURL, val, 1);
+          rtok = dps_strtok_r (val, " ,\r\n\t", &lt, &savec);
+          while (rtok)
+            {
+              if (!strcasecmp (rtok, "ALL"))
+                {
+                  /* Left Server parameters unchanged */
+                }
+              else if (!strcasecmp (rtok, "NONE"))
+                {
+                  Doc->Spider.follow = DPS_FOLLOW_NO;
+                  Doc->Spider.index = 0;
+                  if (DpsNeedLog (DPS_LOG_DEBUG))
+                    {
+                      DpsVarListReplaceInt (&Doc->Sections, "Index", 0);
+                      DpsVarListReplaceInt (&Doc->Sections, "Follow", DPS_FOLLOW_NO);
+                    }
+                }
+              else if (!strcasecmp (rtok, "NOINDEX"))
+                {
+                  Doc->Spider.index = 0;
+                  /*          Doc->method = DPS_METHOD_DISALLOW;*/
+                  if (DpsNeedLog (DPS_LOG_DEBUG))
+                    DpsVarListReplaceInt (&Doc->Sections, "Index", 0);
+                }
+              else if (!strcasecmp (rtok, "NOFOLLOW"))
+                {
+                  Doc->Spider.follow = DPS_FOLLOW_NO;
+                  if (DpsNeedLog (DPS_LOG_DEBUG))
+                    DpsVarListReplaceInt (&Doc->Sections, "Follow", DPS_FOLLOW_NO);
+                }
+              else if (!strcasecmp (rtok, "NOARCHIVE"))
+                {
+                  DpsVarListReplaceStr (&Doc->Sections, "Z", "");
+                }
+              else if (!strcasecmp (rtok, "INDEX"))
+                {
+                  /* left server value unchanged */
+                  if (DpsNeedLog (DPS_LOG_DEBUG))
+                    DpsVarListReplaceInt (&Doc->Sections, "Index", Doc->Spider.index);
+                }
+              else if (!strcasecmp (rtok, "FOLLOW"))
+                {
+                  /* left server value unchanged */
+                  if (DpsNeedLog (DPS_LOG_DEBUG))
+                    DpsVarListReplaceInt (&Doc->Sections, "Follow", Doc->Spider.follow);
+                }
+              rtok = dps_strtok_r (NULL, " \r\n\t", &lt, &savec);
+            }
+        }
+      else if (Doc->Spider.use_cookies && !strcasecmp (header_name, "Set-Cookie"))
+        {
 
-      return;
+          DpsCookiesAddStr (Indexer, &Doc->CurURL, val, 1);
+
+          return;
+        }
     }
-  }
 
-  DpsVarListReplaceStr(&Doc->Sections, header_name, val ? val : "<NULL>");
+  DpsVarListReplaceStr (&Doc->Sections, header_name, val ? val : "<NULL>");
 
-  dps_snprintf(secname,sizeof(secname),"header.%s", header_name);
-  secname[sizeof(secname)-1]='\0';
-  if((Sec = DpsVarListFind(&Doc->Sections, secname)) && val ) {
-    bzero((void*)&Item, sizeof(Item));
-    Item.href = NULL;
-    Item.str = val;
-    Item.section = Sec->section;
-    Item.section_name = secname;
-    Item.strict = Sec->strict;
-    Item.len = 0;
-    (void)DpsTextListAdd(&Doc->TextList, &Item);
-  }
+  dps_snprintf (secname, sizeof (secname), "header.%s", header_name);
+  secname[sizeof (secname) - 1] = '\0';
+  if ((Sec = DpsVarListFind (&Doc->Sections, secname)) && val)
+    {
+      bzero ((void *) &Item, sizeof (Item));
+      Item.href = NULL;
+      Item.str = val;
+      Item.section = Sec->section;
+      Item.section_name = secname;
+      Item.strict = Sec->strict;
+      Item.len = 0;
+      (void) DpsTextListAdd (&Doc->TextList, &Item);
+    }
 }
 
-void DpsParseHTTPResponse(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc) {			
-    char *token, *lt, *headers, savec;
-    int status, oldstatus;
-    DPS_DSTR header;
-    time_t now, last_mod_time;
-	
-	Doc->Buf.content=NULL;
-	oldstatus = DpsVarListFindInt(&Doc->Sections, "Status", 0);
-	DpsVarListReplaceInt(&Doc->Sections, "ResponseSize", (int)Doc->Buf.size);
-	DpsVarListDel(&Doc->Sections, "Content-Length");
-/*	DpsVarListDel(&Doc->Sections, "Last-Modified");*/ /* if it's not deleted Lat-Modified equals to the first appearance in db */
+void
+DpsParseHTTPResponse (DPS_AGENT *Indexer, DPS_DOCUMENT *Doc)
+{
+  char *token, *lt, *headers, savec;
+  int status, oldstatus;
+  DPS_DSTR header;
+  time_t now, last_mod_time;
 
-	if (Doc->Buf.buf == NULL) return;
+  Doc->Buf.content = NULL;
+  oldstatus = DpsVarListFindInt (&Doc->Sections, "Status", 0);
+  DpsVarListReplaceInt (&Doc->Sections, "ResponseSize", (int) Doc->Buf.size);
+  DpsVarListDel (&Doc->Sections, "Content-Length");
+  /*	DpsVarListDel(&Doc->Sections, "Last-Modified");*/ /* if it's not deleted Lat-Modified equals to the first appearance in db */
 
-	/* Cut HTTP response header first        */
-	for(token=Doc->Buf.buf;*token;token++){
-	  if(!strncmp(token,"\r\n\r\n",4)){
-	    if (token <= Doc->Buf.buf + Doc->Buf.size - 4) {
-			*token='\0';
-			Doc->Buf.content = token + 4;
-	    }
-	    break;
-	  } else if(!strncmp(token,"\n\n",2)){
-	    if (token <= Doc->Buf.buf + Doc->Buf.size - 2) {
-			*token='\0';
-			Doc->Buf.content = token + 2;
-	    }
-	    break;
-	  }
-	}
-	
-	/* Bad response, return */
-	if(!Doc->Buf.content) {
-	  if (token <= Doc->Buf.buf + Doc->Buf.size - 4) {
-	    if (token[2] == CR_CHAR) Doc->Buf.content = token + 4;
-	    else Doc->Buf.content = token + 2;
-	  }
-	}
-	
-	/* Copy headers not to break them */
-	headers = (char*)DpsStrdup(Doc->Buf.buf);
-	
-	/* Now lets parse response header lines */
-	token = dps_strtok_r(headers, "\r\n", &lt, &savec);
-	
-	if(!token) {
-	  DpsFree(headers);
-	  return;
-	}
-	
-	if(!strncmp(token,"HTTP/",5)){
-		status = atoi(token + 8);
-		DpsVarListReplaceStr(&Doc->Sections,"ResponseLine",token);
-		DpsVarListReplaceInt(&Doc->Sections, "Status", (oldstatus > status) ? oldstatus : status );
-	}else{
-	        DpsFree(headers);
-		return;
-	}
-	token = dps_strtok_r(NULL, "\r\n", &lt, &savec);
-	DpsDSTRInit(&header, 128);
-	
-	while(token){
-	
-		if(strchr(token,':')) {
+  if (Doc->Buf.buf == NULL)
+    return;
 
-		  if (header.data_size) {
-		    DpsParseHTTPHeader(Indexer, Doc, &header);
-		    DpsDSTRFree(&header);
-		    DpsDSTRInit(&header, 128);
-		  }
+  /* Cut HTTP response header first        */
+  for (token = Doc->Buf.buf; *token; token++)
+    {
+      if (!strncmp (token, "\r\n\r\n", 4))
+        {
+          if (token <= Doc->Buf.buf + Doc->Buf.size - 4)
+            {
+              *token = '\0';
+              Doc->Buf.content = token + 4;
+            }
+          break;
+        }
+      else if (!strncmp (token, "\n\n", 2))
+        {
+          if (token <= Doc->Buf.buf + Doc->Buf.size - 2)
+            {
+              *token = '\0';
+              Doc->Buf.content = token + 2;
+            }
+          break;
+        }
+    }
 
-		}
-		DpsDSTRAppendStr(&header, token);
+  /* Bad response, return */
+  if (!Doc->Buf.content)
+    {
+      if (token <= Doc->Buf.buf + Doc->Buf.size - 4)
+        {
+          if (token[2] == CR_CHAR)
+            Doc->Buf.content = token + 4;
+          else
+            Doc->Buf.content = token + 2;
+        }
+    }
 
-		token = dps_strtok_r(NULL, "\r\n", &lt, &savec);
-	}
-	if (header.data_size) {
-	  DpsParseHTTPHeader(Indexer, Doc, &header);
-	}
-	DpsDSTRFree(&header);
-	DPS_FREE(headers);
-	
-	{
-	    now = Indexer->now;
-	    last_mod_time = DpsHttpDate2Time_t(DpsVarListFindStr(&Doc->Sections, "Last-Modified", ""));
-	    if (last_mod_time > now + 3600 * 4) { /* we have a document with Last-Modified time in the future */
-		DpsLog(Indexer, DPS_LOG_EXTRA, "Last-Modified date is deep in future (%d>%d), dropping it.", last_mod_time, now);
-		DpsVarListDel(&Doc->Sections, "Last-Modified");
-	    }
-	}
+  /* Copy headers not to break them */
+  headers = (char *) DpsStrdup (Doc->Buf.buf);
 
-	/* Bad response, return */
-	if(!Doc->Buf.content) {
-	    return;
-	}
-	DpsVarListReplaceInt(&Doc->Sections,"Content-Length", Doc->Buf.buf-Doc->Buf.content+(int)Doc->Buf.size + DpsVarListFindInt(&Doc->Sections,"Content-Length", 0));
+  /* Now lets parse response header lines */
+  token = dps_strtok_r (headers, "\r\n", &lt, &savec);
+
+  if (!token)
+    {
+      DpsFree (headers);
+      return;
+    }
+
+  if (!strncmp (token, "HTTP/", 5))
+    {
+      status = atoi (token + 8);
+      DpsVarListReplaceStr (&Doc->Sections, "ResponseLine", token);
+      DpsVarListReplaceInt (&Doc->Sections, "Status", (oldstatus > status) ? oldstatus : status);
+    }
+  else
+    {
+      DpsFree (headers);
+      return;
+    }
+  token = dps_strtok_r (NULL, "\r\n", &lt, &savec);
+  DpsDSTRInit (&header, 128);
+
+  while (token)
+    {
+
+      if (strchr (token, ':'))
+        {
+
+          if (header.data_size)
+            {
+              DpsParseHTTPHeader (Indexer, Doc, &header);
+              DpsDSTRFree (&header);
+              DpsDSTRInit (&header, 128);
+            }
+        }
+      DpsDSTRAppendStr (&header, token);
+
+      token = dps_strtok_r (NULL, "\r\n", &lt, &savec);
+    }
+  if (header.data_size)
+    {
+      DpsParseHTTPHeader (Indexer, Doc, &header);
+    }
+  DpsDSTRFree (&header);
+  DPS_FREE (headers);
+
+  {
+    now = Indexer->now;
+    last_mod_time = DpsHttpDate2Time_t (DpsVarListFindStr (&Doc->Sections, "Last-Modified", ""));
+    if (last_mod_time > now + 3600 * 4)
+      { /* we have a document with Last-Modified time in the future */
+        DpsLog (Indexer, DPS_LOG_EXTRA, "Last-Modified date is deep in future (%d>%d), dropping it.", last_mod_time, now);
+        DpsVarListDel (&Doc->Sections, "Last-Modified");
+      }
+  }
+
+  /* Bad response, return */
+  if (!Doc->Buf.content)
+    {
+      return;
+    }
+  DpsVarListReplaceInt (&Doc->Sections, "Content-Length", Doc->Buf.buf - Doc->Buf.content + (int) Doc->Buf.size + DpsVarListFindInt (&Doc->Sections, "Content-Length", 0));
 }

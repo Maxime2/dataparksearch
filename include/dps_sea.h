@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef DPS_SEA_H
@@ -22,28 +22,28 @@
 #include "dps_uniconv.h"
 #include "dps_utils.h"
 
-typedef struct {
+typedef struct
+{
   dpsunicode_t *sentence;
-  DPS_LANGMAP  LangMap;
-  double       Oi;
-  double       di;
-  size_t       len;
-  size_t       order; /* original order of the sentence in the document */
+  DPS_LANGMAP LangMap;
+  double Oi;
+  double di;
+  size_t len;
+  size_t order; /* original order of the sentence in the document */
 } DPS_SENTENCE;
 
-typedef struct {
+typedef struct
+{
   size_t nitems, mitems;
   DPS_SENTENCE *Sent;
 } DPS_SENTENCELIST;
 
-
-extern int DpsSEAMake(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *excerpt,  
-		      const char *content_lang, size_t *indexed_size, size_t *indexed_limit, 
-		      size_t max_word_len, size_t min_word_len, int crossec, int seasec
+extern int DpsSEAMake (DPS_AGENT *Indexer, DPS_DOCUMENT *Doc, DPS_DSTR *excerpt, const char *content_lang, size_t *indexed_size, size_t *indexed_limit, size_t max_word_len, size_t min_word_len, int crossec, int seasec
 #ifdef HAVE_ASPELL
-		      , int have_speller, AspellSpeller *speller
+                       ,
+                       int have_speller,
+                       AspellSpeller *speller
 #endif
-		      );
-
+);
 
 #endif

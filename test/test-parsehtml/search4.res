@@ -9,14 +9,14 @@ search.cgi[11892]: {00} DpsFind for pgsql://maxime@localhost/test/?dbmode=single
 search.cgi[11892]: {00} DpsGetWords for pgsql://maxime@localhost/test/?dbmode=single
 search.cgi[11892]: {00} .spell lang: en
 search.cgi[11892]: {00} Prepare query: @twitter #trend l'orex <3, ltxt:@twitter #trend l'orex <3
-search.cgi[11892]: {00} Segment lang: 
+search.cgi[11892]: {00} Segment lang:
 search.cgi[11892]: {00} 			wrd {len:8,class:30,forte:0}: @twitter
-search.cgi[11892]: {00} 			wrd {len:1,class:30,forte:0}: 
+search.cgi[11892]: {00} 			wrd {len:1,class:30,forte:0}:
 search.cgi[11892]: {00} 			wrd {len:6,class:30,forte:0}: #trend
-search.cgi[11892]: {00} 			wrd {len:1,class:30,forte:0}: 
+search.cgi[11892]: {00} 			wrd {len:1,class:30,forte:0}:
 search.cgi[11892]: {00} 			wrd {len:2,class:15,forte:1}: l'
 search.cgi[11892]: {00} 			wrd {len:4,class:15,forte:1}: orex
-search.cgi[11892]: {00} 			wrd {len:1,class:30,forte:0}: 
+search.cgi[11892]: {00} 			wrd {len:1,class:30,forte:0}:
 search.cgi[11892]: {00} 			wrd {len:2,class:15,forte:0}: <3
 search.cgi[11892]: {00} Start search for 'l''(0)
 search.cgi[11892]: {00} Stop search for 'l''	0.00  2 found

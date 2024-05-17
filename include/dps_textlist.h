@@ -13,12 +13,12 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_TEXTLIST_H
 #define _DPS_TEXTLIST_H
 
-extern __C_LINK DPS_TEXTITEM * __DPSCALL DpsTextListAdd(DPS_TEXTLIST *tlist, const DPS_TEXTITEM *item);
-extern __C_LINK void __DPSCALL DpsTextListFree(DPS_TEXTLIST *tlist);
+extern __C_LINK DPS_TEXTITEM *__DPSCALL DpsTextListAdd (DPS_TEXTLIST *tlist, const DPS_TEXTITEM *item);
+extern __C_LINK void __DPSCALL DpsTextListFree (DPS_TEXTLIST *tlist);
 #endif

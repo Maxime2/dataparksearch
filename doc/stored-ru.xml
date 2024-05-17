@@ -21,7 +21,7 @@
 выделив слова из поискового запроса.
 </para>
 
-<para> Для использования возможностей <command>stored</command>, 
+<para> Для использования возможностей <command>stored</command>,
 скомпилируйте <application>DataparkSearch</application> с поддержкой <literal>zlib</literal>:
 	<programlisting>
 ./configure --with-zlib &lt;other arguments&gt;
@@ -32,7 +32,7 @@
 <indexterm><primary>Команда</primary><secondary>Store</secondary></indexterm>
 <indexterm><primary>Команда</primary><secondary>NoStore</secondary></indexterm>
 Вы можете использовать команды <command>Store</command> и <command>NoStore</command> для разрешения или запрещения сохранения
-некоторых фалов по шаблону. Аргументы у этих команд точно такиеже, как и у команды <command>Allow</command> 
+некоторых фалов по шаблону. Аргументы у этих команд точно такиеже, как и у команды <command>Allow</command>
 (см. <xref linkend="allow_cmd"/>). Все документы сохраняются по умолчанию, если включена поддержка stored.
 </para>
 
@@ -91,7 +91,7 @@
 
 <listitem>
 <para><command><indexterm><primary>Команда</primary><secondary>OptimizeRatio</secondary></indexterm>OptimizeRatio</command>
-задаёт уровень дефрагментации в процентах, по достижении которого файл-хранилище оптимизируется, например:.  
+задаёт уровень дефрагментации в процентах, по достижении которого файл-хранилище оптимизируется, например:.
 </para>
 <para>
 <userinput>OptimizeRatio 3</userinput>

@@ -58,15 +58,15 @@
              <A HREF="http://site/testpage1.html" TARGET="_blank">http://site/testpage1.html</A>
              <font color="#008800">
               - 986 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=body1&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -92,15 +92,15 @@
              <A HREF="http://site/testpage2.html" TARGET="_blank">http://site/testpage2.html</A>
              <font color="#008800">
               - 992 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=body1&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

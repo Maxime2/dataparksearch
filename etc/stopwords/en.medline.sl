@@ -110,9 +110,9 @@ the
 their
 theirs
 them
-then 	
-there 	
-therefore 	
+then
+there
+therefore
 these
 they
 this
@@ -137,4 +137,3 @@ with
 within
 without
 would
-

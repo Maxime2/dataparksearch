@@ -93,7 +93,7 @@ $(rN)       - случайное число (здесь N - число)
 &lt;FORM METHOD=GET ACTION="$(self)"&gt;
  &lt;INPUT TYPE="hidden" NAME="ul" VALUE=""&gt;
  &lt;INPUT TYPE="hidden" NAME="ps" VALUE="20"&gt;
- Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30 
+ Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30
  VALUE="$&amp;(q)"&gt;
  &lt;INPUT TYPE="submit" VALUE="Search!"&gt;&lt;BR&gt;
 &lt;/FORM&gt;
@@ -133,7 +133,7 @@ Search through:
 
 		<para>
 			<option>pn</option> равно ps*np. Эта переменная не используется <application>DataparkSearch</application>,
-но может быть полезна, например, в директиве &lt;!INCLUDE CONTENT="..."&gt; если вы хотите включить результаты поиска другой 
+но может быть полезна, например, в директиве &lt;!INCLUDE CONTENT="..."&gt; если вы хотите включить результаты поиска другой
 поисковой системы.</para>
 
 				<para>В этом примере формы помогается выбрать различные ограничения по времени.
@@ -141,14 +141,14 @@ Search through:
 &lt;!-- 'search with time limits' options --&gt;
 &lt;TR&gt;&lt;TD&gt;
 &lt;TABLE CELLPADDING=2 CELLSPACING=0 BORDER=0&gt;
-&lt;CAPTION&gt; 
+&lt;CAPTION&gt;
 Limit results to pages published within
 a specified period of time.&lt;BR&gt;
 &lt;FONT SIZE=-1&gt;&lt;I&gt;(Please select only one option)
 &lt;/I&gt;&lt;/FONT&gt;
 &lt;/CAPTION&gt;
 &lt;TR&gt;
-&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" 
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt"
 VALUE="back" CHECKED&gt;&lt;/TD&gt;
 &lt;TD&gt;&lt;SELECT NAME="dp"&gt;
 &lt;OPTION VALUE="0" SELECTED="$(dp)"&gt;anytime
@@ -243,7 +243,7 @@ and
 &lt;HR&gt;
 &lt;DIV ALIGN=right&gt;
 &lt;A HREF="http://www.maxime.net.ru/"&gt;
-&lt;IMG SRC="dpsearch.gif" BORDER=0 
+&lt;IMG SRC="dpsearch.gif" BORDER=0
 ALT="[Powered by DataparkSearch search engine software]"&gt;
 &lt;/A&gt;
 &lt;/BODY&gt;
@@ -290,7 +290,7 @@ ALT="[Powered by DataparkSearch search engine software]"&gt;
 			<listitem>
 				<para>
 <indexterm><primary>Переменная шаблона</primary><secondary>$(WE)</secondary></indexterm>
-					<literal>$(WE)</literal> - результат поиска со всей статистикой по каждой словоформе 
+					<literal>$(WE)</literal> - результат поиска со всей статистикой по каждой словоформе
 поискового запроса</para>
 			</listitem>
 			<listitem>
@@ -306,7 +306,7 @@ ALT="[Powered by DataparkSearch search engine software]"&gt;
 			<listitem>
 				<para>
 <indexterm><primary>Переменная шаблона</primary><secondary>$(WS)</secondary></indexterm>
-			<literal>$(WS)</literal> - результат поиска в короткой форме с отображением числа всех словоформ каждого 
+			<literal>$(WS)</literal> - результат поиска в короткой форме с отображением числа всех словоформ каждого
 слова запроса.</para>
 			</listitem>
 <listitem>
@@ -424,7 +424,7 @@ $(PerSite)  При использовании группировки по сайту, число суммарное число докуме
 			<para>
     Возможно указывать максимальное сичло символов, возвращаемых любой из описаных выше переменной.
 Например,  <varname>$(URL)</varname> может возвращать длинный URL, который может разрушать табличный вывод результатов.
-Для указания максимального числа выводимых символов в отображаемом URL, используйте 
+Для указания максимального числа выводимых символов в отображаемом URL, используйте
 <literal>$(URL:xx)</literal>, где <literal>xx</literal> - максимальное число символов:
 				<userinput>$(URL:40)</userinput>
 			вернёт URL, и если он окажется длиннее 40 символов, только превые 40 символов будут показаны на странице
@@ -509,7 +509,7 @@ Result pages: $(NL)$(NB)$(NR)
 <xref linkend="navbar0-section" endterm="navbar0-name"/>,
 <xref linkend="navright-section" endterm="navright-name"/>,
 <xref linkend="navbar1-section" endterm="navbar1-name"/>.
-</para> 
+</para>
 
 <sect3 id="navleft-section">
 <title>Секция <emphasis>navleft, navleft_nop</emphasis></title>
@@ -696,12 +696,12 @@ TZ                Australia/Sydney
 </para>
 		<note>
 			<para> Так же как и в <filename>indexer.conf</filename>,
-имя хоста в DBAddr имеет значение только для поддерживаемых баз данных и не играет никакой роли при 
+имя хоста в DBAddr имеет значение только для поддерживаемых баз данных и не играет никакой роли при
 использовании ODBC баз данных. В случае ODBC, используйте имя базы в DBAddr для указания ODBC DSN.</para>
 		</note>
 		<para>
 <indexterm><primary>Команда</primary><secondary>VarDir</secondary></indexterm>
-			Команда <command>VarDir</command> задаёт альтернвтивный путь рабочей директории 
+			Команда <command>VarDir</command> задаёт альтернвтивный путь рабочей директории
 при использовании способа хранения cache. По умолчанию используется поддиректория
 <filename>/var</filename> относительно корневой директории установки <application>DataparkSearch</application>.</para>
 
@@ -731,7 +731,7 @@ TZ                Australia/Sydney
 Если же указана опция <option>full</option>, в этом случае группируются все результаты с того же самого сайта.
 </para>
 <note>
-<para>Если используется <filename>searchd</filename>, вы должны указывать <command>GroupBySite</command> в вашем файле 
+<para>Если используется <filename>searchd</filename>, вы должны указывать <command>GroupBySite</command> в вашем файле
 <filename>searchd.conf</filename>, или передавать его как CGI параметр.
 </para>
 <para>Если используется способ хранения cache, необходимо также создать лимит по сайту (см. <xref linkend="limits"/>).
@@ -743,7 +743,7 @@ TZ                Australia/Sydney
 <para><indexterm><primary>Команда</primary><secondary>MaxSiteLevel</secondary></indexterm>
 Вы можете использовать команду <command>MaxSiteLevel</command> для задания максимального уровня доменного имени, используемого для
 расчёта site_id. Значение по умолчанию: 2. Одно исключение: трёх и менее буквенные домены второго уровня считаются доменами первого уровня.
-Например: domain.ext - уровень 2, www.domain.ext - уровень 3, domain.com.ext - уровень 2. Отрицательное значение для 
+Например: domain.ext - уровень 2, www.domain.ext - уровень 3, domain.com.ext - уровень 2. Отрицательное значение для
 <command>MaxSiteLevel</command> означает группировку на уровне поддиректорий, т.е. при уровне -1 www.site.ru/dir1/ и
 www.site.ru/dir2/ группируются как разные сайты.
 </para>
@@ -775,7 +775,7 @@ $(R1) и $(R2).</para>
 При задании своего формата, используйте метапеременные функции <literal>strftime</literal>.
 </para>
 <note>
-<para>Если используется <filename>searchd</filename>, вы можете указывать <command>DateFormat</command> в вашем файле 
+<para>Если используется <filename>searchd</filename>, вы можете указывать <command>DateFormat</command> в вашем файле
 <filename>searchd.conf</filename> (отличие состоит в необходимости заключать строку фомата в кавычки <literal>&quot;</literal>),
 или передавать как CGI параметр.
 </para>
@@ -793,14 +793,14 @@ $(R1) и $(R2).</para>
 
 <para>
 <indexterm><primary>Команда</primary><secondary>ResultContentType</secondary></indexterm>
-Команда <command>ResultContentType</command> используется для указания заголовка Content-Type страницы с результатами. 
+Команда <command>ResultContentType</command> используется для указания заголовка Content-Type страницы с результатами.
 Значение по умолчанию: <literal>text/html</literal>.
 </para>
 
 <para>
 <indexterm><primary>Команда</primary><secondary>Locale</secondary></indexterm>
 Команда <command>Locale</command> используется для указания заголовка для задания LC_ALL локали при выдаче результатов
-поиска. 
+поиска.
 Значение по умолчанию: <literal>не определено</literal> (используется установленное ранее значение).
 </para>
 

@@ -16,11 +16,11 @@ print <<EOF;
  <tr><td colspan=3 align=center>URLs and referers</td></tr>
 EOF
 
-# EDIT - ME 
+# EDIT - ME
 
 my $DBAddr = "pgsql://user:passwd\@localhost/search/?dbmode=cache";
 
-# 
+#
 
 my $search = new Dataparksearch('DBAddr' => $DBAddr);
 my $stats  = $search->GetReferers();
@@ -39,4 +39,3 @@ EOF
 $search->Free();
 
 exit;
-

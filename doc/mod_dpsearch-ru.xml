@@ -13,13 +13,13 @@
 		<title>Для чего использовать <literal>mod_dpsearch</literal></title>
 		<itemizedlist>
 			<listitem>
-<para>Как и <command>searchd</command> (см. <xref linkend="searchd-why"/>), для ускорения поиска, <command>mod_dpsearch</command> может 
+<para>Как и <command>searchd</command> (см. <xref linkend="searchd-why"/>), для ускорения поиска, <command>mod_dpsearch</command> может
 держать в памяти предварительно загруженными некоторые данные.
 </para>
 </listitem>
 
 <listitem>
-<para>В дополнение, <command>mod_dpsearch</command> держит в памяти последний использованый шаблон поиска. 
+<para>В дополнение, <command>mod_dpsearch</command> держит в памяти последний использованый шаблон поиска.
 Тем саммым время поиска сокращается на время загрузки и разбора шаблона поиска для каждого поискового запроса начиная со второго.
 </para>
 </listitem>
@@ -61,13 +61,13 @@ DataparkSearchdConf /usr/local/dpsearch/etc/modsearchd.conf
 </para>
 
 <para>Этим модулем поддерживаются три директивы конфигурации: <option>DataparkSearchdConf</option>,
-<option>DataparkSearchTemplate</option> и <option>DataparkStoredocTemplate</option>. 
-Необязательная директива <option>DataparkSearchdConf</option> задаёт файл конфигурации, 
+<option>DataparkSearchTemplate</option> и <option>DataparkStoredocTemplate</option>.
+Необязательная директива <option>DataparkSearchdConf</option> задаёт файл конфигурации,
 аналогичный файлу конфигурации для <command>searchd</command>. Для сервера может быть указана только один такой файл.
 Директива <option>DataparkSearchdTemplate</option> указывает поисковый шаблон, аналогичный шаблону, используемому программой
-<command>search.cgi</command>. 
+<command>search.cgi</command>.
 Директива <option>DataparkStoredocTemplate</option> указывает шаблон, для отображения сохранённой копии документа,
-аналогичный шаблону, используемому программой <command>storedoc.cgi</command>. 
+аналогичный шаблону, используемому программой <command>storedoc.cgi</command>.
 Для сервера можут быть указано несколько директив <option>DataparkSearchdTemplate</option> и <option>DataparkStoredocTemplate</option>,
 по одной для каждого Location. Если указана директива <option>DataparkSearchdConf</option>, то в поисковых шаблонах не нужно указывать
 команды <option>DBAddr</option>.
@@ -76,4 +76,3 @@ DataparkSearchdConf /usr/local/dpsearch/etc/modsearchd.conf
 	</sect2>
 
 </sect1>
-

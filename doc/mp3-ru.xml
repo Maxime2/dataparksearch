@@ -52,7 +52,7 @@ IndexMP3TagOnly yes
 <xref linkend="search-changeweight"/>. Например, если необходимо ограничить поиск по наименованию композиции, используйте стандартное
  огрfничение поиска по заголовку.</para>
 
-		<para>Со стандартным порядком указания секций в <filename>indexer.conf-dist</filename>, 
+		<para>Со стандартным порядком указания секций в <filename>indexer.conf-dist</filename>,
 вы можете добавить следующий код в ваш <filename>search.htm</filename> для ограничения поиска по тэгам MP3:
 		<programlisting>
 &lt;SELECT NAME="wf"&gt;

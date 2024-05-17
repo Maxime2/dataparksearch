@@ -27,7 +27,7 @@
     <title>Структура таблицы серверов</title>
     <para>Таблица серверов содержит поля для описания всех необходимых параметров серверов.
 Имена полей соответсвуют командам в <filename>indexer.conf</filename>. Например, поле <literal>period</literal>
-соответсвует команде <command>Period</command> в <filename>indexer.conf</filename>. 
+соответсвует команде <command>Period</command> в <filename>indexer.conf</filename>.
 Значения полей по умолчанию равны значениям по умолчанию соответсвующих параметров из <filename>indexer.conf</filename>.
 </para>
 
@@ -51,7 +51,7 @@ URL в таблицу серверов, а администраторам - авторизовать добавленные записи.
 <indexterm><primary>Команда</primary><secondary>FlushServerTable</secondary></indexterm>
 </title>
 <para>
- Сбрасывает server.enabled в неактивное состояние для всех записей таблицы серверов. 
+ Сбрасывает server.enabled в неактивное состояние для всех записей таблицы серверов.
 Используйте эту команду для деактивирования всех команд в таблице серверов перед загрузкой новых из <filename>indexer.conf</filename>
 или из другой таблицы серверов.
 </para>

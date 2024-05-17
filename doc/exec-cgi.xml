@@ -42,7 +42,7 @@ URL after ? sign. For example, when indexing
 <literal>exec:/usr/local/bin/myprog?a=b&amp;d=e</literal>, this
 command will be executed:
 		<programlisting>
-/usr/local/bin/myprog "a=b&amp;d=e" 
+/usr/local/bin/myprog "a=b&amp;d=e"
 </programlisting>
 		</para>
 	</sect3>
@@ -73,7 +73,7 @@ Alias  https://  exec:/usr/local/dpsearch/etc/curl.sh?https://
 		</para>
 		<para>When indexing
 <filename>https://some.https.site/path/to/page.html</filename>,
-indexer will translate this URL to 
+indexer will translate this URL to
 		<programlisting>
 exec:/usr/local/dpsearch/etc/curl.sh?https://some.https.site/path/to/page.html
 </programlisting>

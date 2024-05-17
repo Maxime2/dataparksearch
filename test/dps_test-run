@@ -12,4 +12,3 @@ export SEARCHD="$DPS_TEST_ROOT/../src/searchd"
 export DPS_SHARE_DIR="$DPS_TEST_ROOT/../create/"
 
 $DPS_TEST $@
-

@@ -271,7 +271,7 @@ test-cache/search2.res \
 test-cache/search3.res \
 test-cache/search4.res \
 test-cache/search5.res \
-test-cache/search6.res 
+test-cache/search6.res
 
 
 test_cached_FILES =\
@@ -346,5 +346,3 @@ EXTRA_DIST = dps_test-run \
  ${test_cache_FILES} \
  ${test_cached_FILES} \
  ${test_searchd_FILES}
-
-

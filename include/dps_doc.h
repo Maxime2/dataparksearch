@@ -13,22 +13,22 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_DOC_H
 #define _DPS_DOC_H
 
-extern __C_LINK DPS_DOCUMENT * __DPSCALL DpsDocInit(DPS_DOCUMENT*);
-extern __C_LINK void __DPSCALL DpsDocFree(DPS_DOCUMENT*);
-extern char * DpsDocToTextBuf(DPS_DOCUMENT * Doc, int numsection_flag, int e_url_flag);
-extern __C_LINK int __DPSCALL DpsDocFromTextBuf(DPS_DOCUMENT * Doc, const char *d);
-extern int DpsDocLookupConn(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);
-extern int DpsDocAddDocExtraHeaders(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc);
-extern int DpsDocAddConfExtraHeaders(DPS_ENV *Conf, DPS_DOCUMENT *Doc);
-extern int DpsDocAddServExtraHeaders(DPS_SERVER *Server, DPS_DOCUMENT *Doc);
-extern int DpsDocProcessResponseHeaders(DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);
+extern __C_LINK DPS_DOCUMENT *__DPSCALL DpsDocInit (DPS_DOCUMENT *);
+extern __C_LINK void __DPSCALL DpsDocFree (DPS_DOCUMENT *);
+extern char *DpsDocToTextBuf (DPS_DOCUMENT *Doc, int numsection_flag, int e_url_flag);
+extern __C_LINK int __DPSCALL DpsDocFromTextBuf (DPS_DOCUMENT *Doc, const char *d);
+extern int DpsDocLookupConn (DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);
+extern int DpsDocAddDocExtraHeaders (DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc);
+extern int DpsDocAddConfExtraHeaders (DPS_ENV *Conf, DPS_DOCUMENT *Doc);
+extern int DpsDocAddServExtraHeaders (DPS_SERVER *Server, DPS_DOCUMENT *Doc);
+extern int DpsDocProcessResponseHeaders (DPS_AGENT *Indexer, DPS_DOCUMENT *Doc);
 
-extern void DpsURLCRDListListFree(DPS_URLCRDLISTLIST *Lst);
+extern void DpsURLCRDListListFree (DPS_URLCRDLISTLIST *Lst);
 
 #endif

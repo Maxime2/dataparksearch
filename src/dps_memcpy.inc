@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 /*
   memmove
@@ -35,12 +35,12 @@ typedef long dps_mword;  /* up to 32 bytes long */
 
 #ifdef DPS_MEMMOVE
 #ifdef DPS_CONFIGURE
-void *dps_memmove1(void *dst0, const void *src0, size_t length) 
+void *dps_memmove1(void *dst0, const void *src0, size_t length)
 #else
-void *dps_memmove(void *dst0, const void *src0, size_t length) 
+void *dps_memmove(void *dst0, const void *src0, size_t length)
 #endif
 #else
-void *dps_memcpy(void *dst0, const void *src0, size_t length) 
+void *dps_memcpy(void *dst0, const void *src0, size_t length)
 #endif
 {
 	size_t t;
@@ -95,7 +95,7 @@ void *dps_memcpy(void *dst0, const void *src0, size_t length)
 	}}}}}}}}}}}}}}}
 #endif
 	}}}}}}}}
-#endif 
+#endif
 	}}}}
 #endif
 	}}}}
@@ -170,7 +170,7 @@ void *dps_memcpy(void *dst0, const void *src0, size_t length)
 	}}}}}}}}}}}}}}}
 #endif
 	}}}}}}}}
-#endif 
+#endif
 	}}}}
 #endif
 	}}}}
@@ -307,4 +307,3 @@ void *dps_memcpy(void *dst0, const void *src0, size_t length)
 }
 
 #endif
-

@@ -158,7 +158,7 @@ libdp_la_OBJECTS = $(am_libdp_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-am__v_lt_1 = 
+am__v_lt_1 =
 libdp_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(libdp_la_LDFLAGS) $(LDFLAGS) -o $@
@@ -382,11 +382,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/include
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
@@ -542,7 +542,7 @@ LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CC = $(am__v_CC_@AM_V@)
 am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
 am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
+am__v_CC_1 =
 CCLD = $(CC)
 LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -550,7 +550,7 @@ LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
+am__v_CCLD_1 =
 SOURCES = $(libdp_la_SOURCES) $(libdpcharset_la_SOURCES) \
 	$(libdpsearch_la_SOURCES) $(libdpsearch_mod_la_SOURCES) \
 	$(cached_SOURCES) $(dpconv_SOURCES) $(dpguesser_SOURCES) \
@@ -658,7 +658,7 @@ AM_CPPFLAGS = -I$(srcdir)/../include @AM_CPPFLAGS@ \
 @CRYPTO_CFLAGS@ \
 @DMALLOC_INCLUDE@ \
 @BOEHMGC_INCLUDE@ \
-@MECAB_INCLUDE@ 
+@MECAB_INCLUDE@
 
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 APACHE_CFLAGS = @APACHE_CFLAGS@
@@ -915,48 +915,48 @@ EXTRA_DIST = mod_dpsearch.c sgml.entities sgml.inc uconv-8bit.inc unidata.ch php
 	timezones.lst timezones.inc charset-Makefile.am dp-Makefile.am dp.c dps_memcpy.inc
 
 splitter_SOURCES = splitter.c
-splitter_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+splitter_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 splitter_LDFLAGS = @PTHREAD_LFLAGS@
 splitter_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 searchd_SOURCES = searchd.c
-searchd_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+searchd_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 searchd_LDFLAGS = @PTHREAD_LFLAGS@
 searchd_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 stored_SOURCES = stored.c
-stored_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+stored_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 stored_LDFLAGS = @PTHREAD_LFLAGS@
 stored_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 indexer_SOURCES = main.c
-indexer_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+indexer_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 indexer_LDFLAGS = @PTHREAD_LFLAGS@
 indexer_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 search_cgi_SOURCES = search.c
-search_cgi_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+search_cgi_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 search_cgi_LDFLAGS = @PTHREAD_LFLAGS@
 search_cgi_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 storedoc_cgi_SOURCES = storedoc.c
-storedoc_cgi_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+storedoc_cgi_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 storedoc_cgi_LDFLAGS = @PTHREAD_LFLAGS@
 storedoc_cgi_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 filler_cgi_SOURCES = filler.c
-filler_cgi_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
+filler_cgi_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
 filler_cgi_LDFLAGS = @PTHREAD_LFLAGS@
 filler_cgi_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 dpguesser_SOURCES = dpguesser.c
-dpguesser_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
-dpguesser_LDFLAGS = @PTHREAD_LFLAGS@  
+dpguesser_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
+dpguesser_LDFLAGS = @PTHREAD_LFLAGS@
 dpguesser_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 dpconv_SOURCES = dpconv.c
-dpconv_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
-dpconv_LDFLAGS = @PTHREAD_LFLAGS@  
+dpconv_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
+dpconv_LDFLAGS = @PTHREAD_LFLAGS@
 dpconv_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 dpurl2text_SOURCES = dpurl2text.c
-dpurl2text_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
-dpurl2text_LDFLAGS = @PTHREAD_LFLAGS@  
+dpurl2text_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
+dpurl2text_LDFLAGS = @PTHREAD_LFLAGS@
 dpurl2text_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 cached_SOURCES = cached.c
-cached_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la 
-cached_LDFLAGS = @PTHREAD_LFLAGS@  
+cached_LDADD = libdpsearch.la libdpcharset.la @PTHREAD_LDADD@ libdp.la
+cached_LDFLAGS = @PTHREAD_LFLAGS@
 cached_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 libdp_la_SOURCES = dp.c
 libdp_la_LDFLAGS = -release @DPS_BASE_VERSION@
@@ -971,7 +971,7 @@ mirror.c sqldbms.c mkind.c chinese.c parsexml.c wild.c hash.c indexertool.c acro
 efence.c ef_page.c ef_print.c filence.c
 
 #EXTRA_libdpsearch_la_SOURCES = efence.c ef_page.c ef_print.c
-libdpsearch_la_LIBADD = libdp.la @LIBLIB@ @PTHREAD_LDADD@ 
+libdpsearch_la_LIBADD = libdp.la @LIBLIB@ @PTHREAD_LDADD@
 libdpsearch_la_LDFLAGS = @PTHREAD_LFLAGS@ -release @DPS_BASE_VERSION@
 libdpsearch_la_DEPENDENCIES = libdpcharset.la libdp.la
 libdpcharset_la_SOURCES = uconv.c unidata.c sgml.c unicode.c xmalloc.c \
@@ -979,7 +979,7 @@ uconv-8bit.c uconv-alias.c uconv-big5.c uconv-big5hkscs.c uconv-eucjp.c uconv-eu
 uconv-gb2312.c uconv-gbk.c uconv-sjis.c uconv-sys.c uconv-utf8.c uconv-gujarati.c \
 uconv-tscii.c charset-utils.c
 
-libdpcharset_la_LDFLAGS = -release @DPS_BASE_VERSION@ 
+libdpcharset_la_LDFLAGS = -release @DPS_BASE_VERSION@
 libdpcharset_la_DEPENDENCIES = libdp.la
 @THREADSLESS_TRUE@libdpsearch_mod_la_SOURCES = indexer.c url.c parser.c sql.c spell.c \
 @THREADSLESS_TRUE@log.c proto.c robots.c hrefs.c mutex.c conf.c utils.c cookies.c \
@@ -991,7 +991,7 @@ libdpcharset_la_DEPENDENCIES = libdp.la
 @THREADSLESS_TRUE@mirror.c sqldbms.c mkind.c chinese.c parsexml.c wild.c hash.c indexertool.c acronym.c sea.c \
 @THREADSLESS_TRUE@efence.c ef_page.c ef_print.c filence.c
 
-@THREADSLESS_TRUE@libdpsearch_mod_la_LIBADD = libdp.la @MODLIB@ 
+@THREADSLESS_TRUE@libdpsearch_mod_la_LIBADD = libdp.la @MODLIB@
 @APACHEMODULE_FALSE@@THREADSLESS_TRUE@libdpsearch_mod_la_CFLAGS = $(AM_CFLAGS)
 @APACHEMODULE_TRUE@@THREADSLESS_TRUE@libdpsearch_mod_la_CFLAGS = $(AM_CFLAGS) -DAPACHE@APACHE_VER@ -I@APACHE_INCDIR@ $(APACHE_CFLAGS) $(APACHE_NOTEST_CPPFLAGS) $(APACHE_EXTRA_CPPFLAGS) $(APACHE_EXTRA_CFLAGS)
 @THREADSLESS_TRUE@libdpsearch_mod_la_LDFLAGS = -release @DPS_BASE_VERSION@
@@ -1001,8 +1001,8 @@ libdpcharset_la_DEPENDENCIES = libdp.la
 @APACHEMODULE_TRUE@mod_dpsearch_so_SOURCES = mod_dpsearch.c
 @APACHEMODULE_TRUE@mod_dpsearch_so_CFLAGS = $(APACHE_CFLAGS)
 @APACHE2_TRUE@@APACHEMODULE_TRUE@mod_dpsearch_so_LDFLAGS = --shared
-@APACHEMODULE_TRUE@@THREADSLESS_FALSE@mod_dpsearch_so_LDADD = libdpsearch.la libdpcharset.la @APACHE_LIBS_SHLIB@ libdp.la 
-@APACHEMODULE_TRUE@@THREADSLESS_TRUE@mod_dpsearch_so_LDADD = libdpsearch_mod.la libdpcharset.la @APACHE_LIBS_SHLIB@ libdp.la 
+@APACHEMODULE_TRUE@@THREADSLESS_FALSE@mod_dpsearch_so_LDADD = libdpsearch.la libdpcharset.la @APACHE_LIBS_SHLIB@ libdp.la
+@APACHEMODULE_TRUE@@THREADSLESS_TRUE@mod_dpsearch_so_LDADD = libdpsearch_mod.la libdpcharset.la @APACHE_LIBS_SHLIB@ libdp.la
 @APACHEMODULE_FALSE@libdpsearch_la_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
 @APACHEMODULE_TRUE@@THREADSLESS_FALSE@libdpsearch_la_CFLAGS = @PTHREAD_CFLAGS@ -I@APACHE_INCDIR@ $(APACHE_CFLAGS) $(AM_CFLAGS)
 @APACHEMODULE_TRUE@@THREADSLESS_TRUE@libdpsearch_la_CFLAGS = @PTHREAD_CFLAGS@ $(AM_CFLAGS)
@@ -1012,7 +1012,7 @@ libdpcharset_la_DEPENDENCIES = libdp.la
 @PHPMODULE_TRUE@dpsearch_so_SOURCES = php.c
 @PHPMODULE_TRUE@dpsearch_so_CFLAGS = -fpic -DCOMPILE_DL=1 @PHP_INCLUDES@ $(AM_CFLAGS)
 @PHPMODULE_TRUE@dpsearch_so_LDFLAGS = -shared -L/usr/local/lib -rdynamic
-@PHPMODULE_TRUE@dpsearch_so_LDADD = libdpsearch.la libdpcharset.la libdp.la 
+@PHPMODULE_TRUE@dpsearch_so_LDADD = libdpsearch.la libdpcharset.la libdp.la
 gcov_FILES = ${libdpsearch_la_SOURCES} ${indexer_SOURCES}
 LDADD = @LDADD@ libdp.la
 lint_FILES = ${libdpsearch_la_SOURCES} ${indexer_SOURCES}
@@ -1192,67 +1192,67 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-libdp.la: $(libdp_la_OBJECTS) $(libdp_la_DEPENDENCIES) $(EXTRA_libdp_la_DEPENDENCIES) 
+libdp.la: $(libdp_la_OBJECTS) $(libdp_la_DEPENDENCIES) $(EXTRA_libdp_la_DEPENDENCIES)
 	$(AM_V_CCLD)$(libdp_la_LINK) -rpath $(libdir) $(libdp_la_OBJECTS) $(libdp_la_LIBADD) $(LIBS)
 
-libdpcharset.la: $(libdpcharset_la_OBJECTS) $(libdpcharset_la_DEPENDENCIES) $(EXTRA_libdpcharset_la_DEPENDENCIES) 
+libdpcharset.la: $(libdpcharset_la_OBJECTS) $(libdpcharset_la_DEPENDENCIES) $(EXTRA_libdpcharset_la_DEPENDENCIES)
 	$(AM_V_CCLD)$(libdpcharset_la_LINK) -rpath $(libdir) $(libdpcharset_la_OBJECTS) $(libdpcharset_la_LIBADD) $(LIBS)
 
-libdpsearch.la: $(libdpsearch_la_OBJECTS) $(libdpsearch_la_DEPENDENCIES) $(EXTRA_libdpsearch_la_DEPENDENCIES) 
+libdpsearch.la: $(libdpsearch_la_OBJECTS) $(libdpsearch_la_DEPENDENCIES) $(EXTRA_libdpsearch_la_DEPENDENCIES)
 	$(AM_V_CCLD)$(libdpsearch_la_LINK) -rpath $(libdir) $(libdpsearch_la_OBJECTS) $(libdpsearch_la_LIBADD) $(LIBS)
 
-libdpsearch_mod.la: $(libdpsearch_mod_la_OBJECTS) $(libdpsearch_mod_la_DEPENDENCIES) $(EXTRA_libdpsearch_mod_la_DEPENDENCIES) 
+libdpsearch_mod.la: $(libdpsearch_mod_la_OBJECTS) $(libdpsearch_mod_la_DEPENDENCIES) $(EXTRA_libdpsearch_mod_la_DEPENDENCIES)
 	$(AM_V_CCLD)$(libdpsearch_mod_la_LINK) $(am_libdpsearch_mod_la_rpath) $(libdpsearch_mod_la_OBJECTS) $(libdpsearch_mod_la_LIBADD) $(LIBS)
 
-cached$(EXEEXT): $(cached_OBJECTS) $(cached_DEPENDENCIES) $(EXTRA_cached_DEPENDENCIES) 
+cached$(EXEEXT): $(cached_OBJECTS) $(cached_DEPENDENCIES) $(EXTRA_cached_DEPENDENCIES)
 	@rm -f cached$(EXEEXT)
 	$(AM_V_CCLD)$(cached_LINK) $(cached_OBJECTS) $(cached_LDADD) $(LIBS)
 
-dpconv$(EXEEXT): $(dpconv_OBJECTS) $(dpconv_DEPENDENCIES) $(EXTRA_dpconv_DEPENDENCIES) 
+dpconv$(EXEEXT): $(dpconv_OBJECTS) $(dpconv_DEPENDENCIES) $(EXTRA_dpconv_DEPENDENCIES)
 	@rm -f dpconv$(EXEEXT)
 	$(AM_V_CCLD)$(dpconv_LINK) $(dpconv_OBJECTS) $(dpconv_LDADD) $(LIBS)
 
-dpguesser$(EXEEXT): $(dpguesser_OBJECTS) $(dpguesser_DEPENDENCIES) $(EXTRA_dpguesser_DEPENDENCIES) 
+dpguesser$(EXEEXT): $(dpguesser_OBJECTS) $(dpguesser_DEPENDENCIES) $(EXTRA_dpguesser_DEPENDENCIES)
 	@rm -f dpguesser$(EXEEXT)
 	$(AM_V_CCLD)$(dpguesser_LINK) $(dpguesser_OBJECTS) $(dpguesser_LDADD) $(LIBS)
 
-dpsearch.so$(EXEEXT): $(dpsearch_so_OBJECTS) $(dpsearch_so_DEPENDENCIES) $(EXTRA_dpsearch_so_DEPENDENCIES) 
+dpsearch.so$(EXEEXT): $(dpsearch_so_OBJECTS) $(dpsearch_so_DEPENDENCIES) $(EXTRA_dpsearch_so_DEPENDENCIES)
 	@rm -f dpsearch.so$(EXEEXT)
 	$(AM_V_CCLD)$(dpsearch_so_LINK) $(dpsearch_so_OBJECTS) $(dpsearch_so_LDADD) $(LIBS)
 
-dpurl2text$(EXEEXT): $(dpurl2text_OBJECTS) $(dpurl2text_DEPENDENCIES) $(EXTRA_dpurl2text_DEPENDENCIES) 
+dpurl2text$(EXEEXT): $(dpurl2text_OBJECTS) $(dpurl2text_DEPENDENCIES) $(EXTRA_dpurl2text_DEPENDENCIES)
 	@rm -f dpurl2text$(EXEEXT)
 	$(AM_V_CCLD)$(dpurl2text_LINK) $(dpurl2text_OBJECTS) $(dpurl2text_LDADD) $(LIBS)
 
-filler.cgi$(EXEEXT): $(filler_cgi_OBJECTS) $(filler_cgi_DEPENDENCIES) $(EXTRA_filler_cgi_DEPENDENCIES) 
+filler.cgi$(EXEEXT): $(filler_cgi_OBJECTS) $(filler_cgi_DEPENDENCIES) $(EXTRA_filler_cgi_DEPENDENCIES)
 	@rm -f filler.cgi$(EXEEXT)
 	$(AM_V_CCLD)$(filler_cgi_LINK) $(filler_cgi_OBJECTS) $(filler_cgi_LDADD) $(LIBS)
 
-indexer$(EXEEXT): $(indexer_OBJECTS) $(indexer_DEPENDENCIES) $(EXTRA_indexer_DEPENDENCIES) 
+indexer$(EXEEXT): $(indexer_OBJECTS) $(indexer_DEPENDENCIES) $(EXTRA_indexer_DEPENDENCIES)
 	@rm -f indexer$(EXEEXT)
 	$(AM_V_CCLD)$(indexer_LINK) $(indexer_OBJECTS) $(indexer_LDADD) $(LIBS)
 
-@APACHEMODULE_FALSE@mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_OBJECTS) $(mod_dpsearch_so_DEPENDENCIES) $(EXTRA_mod_dpsearch_so_DEPENDENCIES) 
+@APACHEMODULE_FALSE@mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_OBJECTS) $(mod_dpsearch_so_DEPENDENCIES) $(EXTRA_mod_dpsearch_so_DEPENDENCIES)
 @APACHEMODULE_FALSE@	@rm -f mod_dpsearch.so$(EXEEXT)
 @APACHEMODULE_FALSE@	$(AM_V_CCLD)$(mod_dpsearch_so_LINK) $(mod_dpsearch_so_OBJECTS) $(mod_dpsearch_so_LDADD) $(LIBS)
 
-search.cgi$(EXEEXT): $(search_cgi_OBJECTS) $(search_cgi_DEPENDENCIES) $(EXTRA_search_cgi_DEPENDENCIES) 
+search.cgi$(EXEEXT): $(search_cgi_OBJECTS) $(search_cgi_DEPENDENCIES) $(EXTRA_search_cgi_DEPENDENCIES)
 	@rm -f search.cgi$(EXEEXT)
 	$(AM_V_CCLD)$(search_cgi_LINK) $(search_cgi_OBJECTS) $(search_cgi_LDADD) $(LIBS)
 
-searchd$(EXEEXT): $(searchd_OBJECTS) $(searchd_DEPENDENCIES) $(EXTRA_searchd_DEPENDENCIES) 
+searchd$(EXEEXT): $(searchd_OBJECTS) $(searchd_DEPENDENCIES) $(EXTRA_searchd_DEPENDENCIES)
 	@rm -f searchd$(EXEEXT)
 	$(AM_V_CCLD)$(searchd_LINK) $(searchd_OBJECTS) $(searchd_LDADD) $(LIBS)
 
-splitter$(EXEEXT): $(splitter_OBJECTS) $(splitter_DEPENDENCIES) $(EXTRA_splitter_DEPENDENCIES) 
+splitter$(EXEEXT): $(splitter_OBJECTS) $(splitter_DEPENDENCIES) $(EXTRA_splitter_DEPENDENCIES)
 	@rm -f splitter$(EXEEXT)
 	$(AM_V_CCLD)$(splitter_LINK) $(splitter_OBJECTS) $(splitter_LDADD) $(LIBS)
 
-stored$(EXEEXT): $(stored_OBJECTS) $(stored_DEPENDENCIES) $(EXTRA_stored_DEPENDENCIES) 
+stored$(EXEEXT): $(stored_OBJECTS) $(stored_DEPENDENCIES) $(EXTRA_stored_DEPENDENCIES)
 	@rm -f stored$(EXEEXT)
 	$(AM_V_CCLD)$(stored_LINK) $(stored_OBJECTS) $(stored_LDADD) $(LIBS)
 
-storedoc.cgi$(EXEEXT): $(storedoc_cgi_OBJECTS) $(storedoc_cgi_DEPENDENCIES) $(EXTRA_storedoc_cgi_DEPENDENCIES) 
+storedoc.cgi$(EXEEXT): $(storedoc_cgi_OBJECTS) $(storedoc_cgi_DEPENDENCIES) $(EXTRA_storedoc_cgi_DEPENDENCIES)
 	@rm -f storedoc.cgi$(EXEEXT)
 	$(AM_V_CCLD)$(storedoc_cgi_LINK) $(storedoc_cgi_OBJECTS) $(storedoc_cgi_LDADD) $(LIBS)
 
@@ -3100,18 +3100,18 @@ utils.c: timezones.inc
 timezones.inc: timezones.lst
 	cat timezones.lst | perl -e '@l=<STDIN>;@s=sort(@l);foreach $$i (@s) { print $$i;}' > timezones.inc
 
-@APACHE2_TRUE@@APACHEMODULE_TRUE@mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_DEPENDENCIES) 
+@APACHE2_TRUE@@APACHEMODULE_TRUE@mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_DEPENDENCIES)
 @APACHE2_TRUE@@APACHEMODULE_TRUE@	$(APXS) -c -o $@ $(AM_CPPFLAGS) -Wc,"$(mod_dpsearch_so_CFLAGS)" -DAPACHE@APACHE_VER@ \
 @APACHE2_TRUE@@APACHEMODULE_TRUE@	     -DDPS_CONF_DIR=\\\"@sysconfdir@\\\" -DDPS_VAR_DIR=\\\"$(localstatedir)\\\" \
-@APACHE2_TRUE@@APACHEMODULE_TRUE@	     $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_LDFLAGS) $(mod_dpsearch_so_LDADD); 
+@APACHE2_TRUE@@APACHEMODULE_TRUE@	     $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_LDFLAGS) $(mod_dpsearch_so_LDADD);
 
-@APACHE2_FALSE@@APACHEMODULE_TRUE@mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_DEPENDENCIES) 
+@APACHE2_FALSE@@APACHEMODULE_TRUE@mod_dpsearch.so$(EXEEXT): $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_DEPENDENCIES)
 @APACHE2_FALSE@@APACHEMODULE_TRUE@	$(LIBTOOL) --tag=CC --mode=link "$(APXS) -Wc,\"$(mod_dpsearch_so_CFLAGS)\"" -c -o $@ $(AM_CPPFLAGS) -DAPACHE@APACHE_VER@ \
 @APACHE2_FALSE@@APACHEMODULE_TRUE@	     -DDPS_CONF_DIR=\\\"@sysconfdir@\\\" -DDPS_VAR_DIR=\\\"$(localstatedir)\\\" \
-@APACHE2_FALSE@@APACHEMODULE_TRUE@	     $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_LDFLAGS) $(mod_dpsearch_so_LDADD); 
+@APACHE2_FALSE@@APACHEMODULE_TRUE@	     $(mod_dpsearch_so_SOURCES) $(mod_dpsearch_so_LDFLAGS) $(mod_dpsearch_so_LDADD);
 
 install-exec-local: @APACHE_MODULE@ @PHP_MODULE@
-@APACHE2_TRUE@@APACHEMODULE_TRUE@	$(mkinstalldirs) $(DESTDIR)$(APACHE_MODDIR); 
+@APACHE2_TRUE@@APACHEMODULE_TRUE@	$(mkinstalldirs) $(DESTDIR)$(APACHE_MODDIR);
 @APACHE2_TRUE@@APACHEMODULE_TRUE@	$(APXS) -i -S LIBEXECDIR=$(DESTDIR)$(APACHE_MODDIR) -n dpsearch mod_dpsearch.la
 @APACHE2_FALSE@@APACHEMODULE_TRUE@	$(mkinstalldirs) $(DESTDIR)$(APACHE_MODDIR);
 @APACHE2_FALSE@@APACHEMODULE_TRUE@	$(LIBTOOL) --mode=install $(INSTALL) mod_dpsearch.so $(DESTDIR)$(APACHE_MODDIR);
@@ -3130,7 +3130,7 @@ lint-clean:
 	list='${lint_FILES}'; for p in $$list; do rm -f $$p.ln; done
 
 .c.splint:
-	splint +posixlib -mustfreefresh ${AM_CPPFLAGS} $< 
+	splint +posixlib -mustfreefresh ${AM_CPPFLAGS} $<
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

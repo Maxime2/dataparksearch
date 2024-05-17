@@ -21,7 +21,7 @@ Synonym synonym/russian.syn
 	<para>Имена файлов могут быть абсолютными (если имена начинаются с /),
 либо относительными поддиректории <filename>etc</filename> установки <application>DataparkSearch</application>.</para>
 
-	<para>Если используется <literal>searchd</literal>, добавьте эти команды вместо шаблона поиска в 
+	<para>Если используется <literal>searchd</literal>, добавьте эти команды вместо шаблона поиска в
 <filename>searchd.conf</filename>.</para>
 
 	<para>Вы можете создавать свои собственные списки синонимов.
@@ -36,7 +36,7 @@ Charset:  us-ascii
 	<itemizedlist>
 		<listitem>
 			<para>
-				<varname>Language</varname> - стандартный 
+				<varname>Language</varname> - стандартный
 (ISO 639) двубуквенный код языка.</para>
 		</listitem>
 		<listitem>
@@ -58,4 +58,3 @@ Thesaurus: yes
 </para>
 
 </sect2>
-

@@ -61,15 +61,15 @@
              <A HREF="http://site/test4.html" TARGET="_blank">http://site/test4.html</A>
              <font color="#008800">
               - 225 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=this&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -98,15 +98,15 @@
              <A HREF="http://site/z-clone2.html" TARGET="_blank">http://site/z-clone2.html</A>
              <font color="#008800">
               - 158 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=this&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -135,15 +135,15 @@
              <A HREF="http://site/test3.html" TARGET="_blank">http://site/test3.html</A>
              <font color="#008800">
               - 122 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=this&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -172,15 +172,15 @@
              <A HREF="http://site/test1.txt" TARGET="_blank">http://site/test1.txt</A>
              <font color="#008800">
               - 41 bytes [text/plain]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=this&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -209,15 +209,15 @@
              <A HREF="http://site/test1.html" TARGET="_blank">http://site/test1.html</A>
              <font color="#008800">
               - 175 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?np=0&amp;q=this&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

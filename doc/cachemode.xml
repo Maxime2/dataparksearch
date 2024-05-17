@@ -4,7 +4,7 @@
 
 	<sect2 id="cachemode-intro">
 		<title>Introduction</title>
-		<para><literal>cache</literal> words storage mode is able to index and search 
+		<para><literal>cache</literal> words storage mode is able to index and search
 quickly through several millions of documents.</para>
 	</sect2>
 
@@ -12,7 +12,7 @@ quickly through several millions of documents.</para>
 		<title>Cache mode word indexes structure</title>
 		<para>The main idea of cache storage mode is that word
 index and data for URL sorting is stored on disk rather than in a <application>SQL</application> database. Full URL information
-however is kept in <application>SQL</application> database (tables <literal>url</literal> and <literal>urlinfo</literal>). 
+however is kept in <application>SQL</application> database (tables <literal>url</literal> and <literal>urlinfo</literal>).
 <indexterm><primary>Command</primary><secondary>WrdFiles</secondary></indexterm>
 Word index is divided into number of files specified by <command>WrdFiles</command> command (default value is 0x300).
 <indexterm><primary>Command</primary><secondary>URLDataFiles</secondary></indexterm>
@@ -22,13 +22,13 @@ URLs sorting information is divided into number of files specified by <command>U
 </para>
 
 <para> Word index is located in files under <filename>/var/tree</filename> directory of <application>DataparkSearch</application>
-installation. URLs sorting information is located in files under <filename>/var/url</filename> directory of 
-<application>DataparkSearch</application> installation. 
+installation. URLs sorting information is located in files under <filename>/var/url</filename> directory of
+<application>DataparkSearch</application> installation.
 </para>
 
 <para><indexterm><primary>Command</primary><secondary>CacheLogWords</secondary></indexterm><indexterm><primary>Command</primary><secondary>CacheLogDels</secondary></indexterm>
 <application>indexer</application> and <application>cached</application> use memory buffers to cache some portion of cache mode data before flushing it to the disk.
-The size of such buffers can be adjusted by <command>CacheLogWords</command> and <command>CacheLogDels</command> commands in <filename>indexer.conf</filename> and <filename>cached.conf</filename> 
+The size of such buffers can be adjusted by <command>CacheLogWords</command> and <command>CacheLogDels</command> commands in <filename>indexer.conf</filename> and <filename>cached.conf</filename>
 config files respectively. Default values are 1024 for <command>CacheLogWords</command> and 10240 for <command>CacheLogDels</command>.
 An estimation of total memory used for such buffers can be calculated as follow:
 </para>
@@ -73,7 +73,7 @@ also creates a <filename>cached.pid</filename> file in /var directory of base
 connections and can accept several indexers from different
 machines. Theoretical number of indexers connections is equal to 128. In old mode <filename>cached</filename>
 stores information sent by indexers in <filename>/var/splitter/</filename>
-directory of <application>DataparkSearch</application> installation. 
+directory of <application>DataparkSearch</application> installation.
 In new mode it stores in <filename>/var/tree/</filename> directory.</para>
 
 <para>By default, <filename>cached</filename> starts in new mode. To run it in old mode, i.e. logs only mode, run it with
@@ -88,7 +88,7 @@ In new mode it stores in <filename>/var/tree/</filename> directory.</para>
 
 				<para>
 					<userinput>
-./cached -p8000 
+./cached -p8000
 </userinput>
 				</para>
 				<para>where <literal>8000</literal> is the port number you choose.</para>
@@ -103,7 +103,7 @@ default) with this command:</para>
 				</para>
 			</listitem>
 			<listitem>
-				<para>Configure your <filename>indexer.conf</filename> as usual and for <command>DBAddr</command> command 
+				<para>Configure your <filename>indexer.conf</filename> as usual and for <command>DBAddr</command> command
 add <literal>cache</literal> as value of <literal>dbmode</literal> parameter and <literal>localhost:7000</literal>
 as value of <literal>cached</literal> parameter (see <xref linkend="dbaddr_cmd"/>).
 				</para>
@@ -128,7 +128,7 @@ kill -HUP `cat /usr/local/dpsearch/var/cached.pid`
 </para>
 </listitem>
 			<listitem>
-				<para>Creating word index. This stage is no needs, if 
+				<para>Creating word index. This stage is no needs, if
 <filename>cached</filename> runs in new, i.e. combined, mode.
  When some
 information is gathered by indexers and collected in
@@ -234,7 +234,7 @@ edit as usually your <filename>search.htm</filename> template and add the "cache
 <title>Using search limits</title>
 <para><indexterm><primary>Command</primary><secondary>Limit</secondary></indexterm>
 To use search limits in cache mode, you should add appropriate
-<literal>Limit</literal> command(s) to your <filename>indexer.conf</filename> 
+<literal>Limit</literal> command(s) to your <filename>indexer.conf</filename>
 (or <filename>cached.conf</filename>, if <command>cached</command> is used) and to <filename>search.htm</filename>
 or <filename>searchd.conf</filename> (if <literal>searchd</literal> is used).
 <synopsis>
@@ -278,12 +278,12 @@ constraint, <literal>tag</literal> - type of constraint.
 </table>
 </para>
 
-<para>If the second, optional, parameter <option>SQL-Request</option> is specified for <command>Limit</command> command, then this SQL-query is executed for limit construction. 
+<para>If the second, optional, parameter <option>SQL-Request</option> is specified for <command>Limit</command> command, then this SQL-query is executed for limit construction.
 This SQL-query should return all possible pairs of limit value and url.rec_id. E.g.:
 <programlisting>
 Limit prm:strcrc32 "SELECT label, rec_id FROM labels" pgsql://u:p@localhost/sitedb/
 </programlisting>
-where prm - is the name of limit and the name of CGI-parameter is used for this limit; strcrc32 - is the type of limit, particularly for this limit is a string. 
+where prm - is the name of limit and the name of CGI-parameter is used for this limit; strcrc32 - is the type of limit, particularly for this limit is a string.
 Instead of strcrc32 it's possible to use any of the following limit types:
 <table>
 <title>SQL-based cache mode limit types</title>

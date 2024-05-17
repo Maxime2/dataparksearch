@@ -14,7 +14,7 @@
   ;; DESC
   ;; If true, the entire source document is formatted as a single HTML
   ;; document and output on stdout.
-  ;; (This option can conveniently be set with '-V nochunks' on the 
+  ;; (This option can conveniently be set with '-V nochunks' on the
   ;; Jade command line).
   ;; /DESC
   ;; AUTHOR N/A
@@ -24,7 +24,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(define %html-prefix% 
+(define %html-prefix%
   ;; Add the specified prefix to HTML output filenames
   "dpsearch-")
 
@@ -46,7 +46,7 @@
   ;; /REFENTRY
   #t)
 
-(define %html-ext% 
+(define %html-ext%
   ;; REFENTRY html-ext
   ;; PURP Default extension for HTML output files
   ;; DESC
@@ -63,7 +63,7 @@
   ;; If true, a chunk will be created for the root element, even though
   ;; nochunks is specified. This option has no effect if nochunks is not
   ;; true.
-  ;; (This option can conveniently be set with '-V rootchunk' on the 
+  ;; (This option can conveniently be set with '-V rootchunk' on the
   ;; Jade command line).
   ;; /DESC
   ;; AUTHOR N/A
@@ -120,15 +120,15 @@
   ;; Portion of the URL which identifies the fragment identifier
   "")
 
-(define %olink-pubid% 
+(define %olink-pubid%
   ;; Portion of the URL which identifies the public identifier
   "")
 
-(define %olink-resolution% 
+(define %olink-resolution%
   ;; URL script for OLink resolution
   "")
 
-(define %olink-sysid% 
+(define %olink-sysid%
   ;; Portion of the URL which identifies the system identifier
   "")
 
@@ -136,11 +136,11 @@
   ;; Should footnotes appear at the end of HTML pages?
   #t)
 
-(define %generate-part-toc% 
+(define %generate-part-toc%
   ;; Should a Table of Contents be produced for Parts?
   #t)
 
-(define %generate-article-toc% 
+(define %generate-article-toc%
   ;; Should a Table of Contents be produced for Articles?
   #t)
 

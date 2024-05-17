@@ -40,7 +40,7 @@ Alias  http://localhost/		file:/usr/local/apache/htdocs/
 URL после занка ?. Например, при индексировании
 <literal>exec:/usr/local/bin/myprog?a=b&amp;d=e</literal>, будет выполнена слудующая команда с параметрами:
 		<programlisting>
-/usr/local/bin/myprog "a=b&amp;d=e" 
+/usr/local/bin/myprog "a=b&amp;d=e"
 </programlisting>
 		</para>
 	</sect3>
@@ -69,7 +69,7 @@ Alias  https://  exec:/usr/local/dpsearch/etc/curl.sh?https://
 </programlisting>
 		</para>
 		<para>При индексировании <filename>https://some.https.site/path/to/page.html</filename>,
-<command>indexer</command> преобразует этот URL в 
+<command>indexer</command> преобразует этот URL в
 		<programlisting>
 exec:/usr/local/dpsearch/etc/curl.sh?https://some.https.site/path/to/page.html
 </programlisting>

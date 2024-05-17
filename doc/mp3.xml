@@ -21,7 +21,7 @@ IndexMP3TagOnly yes
 		</para>
 		<para>When this option is enabled only MP3 tags are indexed, all HTML documents are searched for links only. In other case HTML and TEXT documents are indexed in usual manner and will be searchable.
 		<programlisting>
-URLFileWeight 1  
+URLFileWeight 1
 </programlisting>
 		</para>
 		<para>You may find useful to activate this option to index MP3 file names. </para>
@@ -42,8 +42,8 @@ URLFileWeight 1
 	</sect3>
 	<sect3 id="mp3-search">
 		<title>Search through author, album, song name</title>
-		<para>If you want restricted search by author, album or song name, use standard mechanism described in the section 
-"Changing different document parts weights at search time" of Using search front-ends section. 
+		<para>If you want restricted search by author, album or song name, use standard mechanism described in the section
+"Changing different document parts weights at search time" of Using search front-ends section.
 For example, if you want to restrict search by song name use standard by title restriction.</para>
 		<para>With default weights configuration, given in <filename>indexer.conf-dist</filename>, you may find useful to add this into <filename>search.htm</filename> to restrict search area:
 		<programlisting>

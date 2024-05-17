@@ -17,7 +17,7 @@ ActionSQL [add | update | delete] &lt;section&gt; &lt;pattern&gt; &lt;sql-templa
 </para>
 
 <para>
-Таким образом, команда <command>ActionSQL</command> предназначена для поиска и сбора различной информации с индексируемых страниц. 
+Таким образом, команда <command>ActionSQL</command> предназначена для поиска и сбора различной информации с индексируемых страниц.
 Например, следующие команды будет собирать в таблицу phonedata все найденные номера телефонов и заголовки страниц, на которых эти номера указаны:
 <programlisting>
 ActionSQL add body "\(([0-9]{3})\)[ ]*([0-9]{3})[- \.]*([0-9]{2})[- \.]*([0-9]{2})" "INSERT INTO phonedata(phone,title,id)VALUES('+7$1$2$3$4','$(title)',$(dp_id))"

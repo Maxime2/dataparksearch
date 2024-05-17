@@ -2,7 +2,7 @@
 	<title>Acronyms and abbreviations</title>
 <indexterm><primary>Acronyms and abbreviations</primary></indexterm>
 
-	<para>Since version 4.30 <application>DataparkSearch</application> also support search fuzzying based on 
+	<para>Since version 4.30 <application>DataparkSearch</application> also support search fuzzying based on
 acronyms and abbreviation.</para>
 
 	<para>Acronyms files are installed into
@@ -26,7 +26,7 @@ directory of <application>DataparkSearch</application> installation or absolute 
 	<para>If you use <literal>searchd</literal>, add the same
 commands to <filename>searchd.conf</filename>.</para>
 
-	<para>You may create your own acronyms lists. As an example you may take the English acronyms file. 
+	<para>You may create your own acronyms lists. As an example you may take the English acronyms file.
 In the beginning of the list please specify the
 following two commands:
 	<programlisting>
@@ -55,7 +55,7 @@ charset supported by <application>DataparkSearch</application> (see <xref linken
 	<programlisting>
 #* regex last "([0-9]{2})[- \.]?([0-9]{2})[- \.]?([0-9]{2})" "+78622$1$2$3"
 </programlisting></para>
-<para>This specify a transformation from widely used format of local phone numbers, 99-99-99, into canonical format, +78622XXXXXX. 
+<para>This specify a transformation from widely used format of local phone numbers, 99-99-99, into canonical format, +78622XXXXXX.
 So the phone numbers become searchable regardless the format they were written.
 The <userinput>last</userinput> option here means that the process of regex application stops after applying this rule.
 </para>
@@ -65,4 +65,3 @@ Please send your own acronym files to <email>dp.maxime@gmail.com</email>, if you
 </para>
 
 </sect2>
-

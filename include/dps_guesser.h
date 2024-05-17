@@ -14,7 +14,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef DPS_GUESSER_H
@@ -23,55 +23,56 @@
 #include "dps_uniconv.h"
 
 /* Structure to sort guesser results */
-typedef struct {
-     DPS_LANGMAP * map;
+typedef struct
+{
+  DPS_LANGMAP *map;
   size_t hits, miss, diff;
 } DPS_MAPSTAT;
 
-
-typedef struct {
-  int        id;
+typedef struct
+{
+  int id;
   const char *name;
 } DPS_LANG_ALIAS;
 
-
-typedef struct {
-  const int  charset_id;
+typedef struct
+{
+  const int charset_id;
   const char *lang;
 } DPS_CHARSET_BY_LANG;
 
-
-enum {
-  DPS_LANG_AB  = 0,
+enum
+{
+  DPS_LANG_AB = 0,
   DPS_LANG_ADY = 1,
-  DPS_LANG_AF  = 2,
-  DPS_LANG_AM  = 3,
-  DPS_LANG_AN  = 4,
+  DPS_LANG_AF = 2,
+  DPS_LANG_AM = 3,
+  DPS_LANG_AN = 4,
   DPS_LANG_ANG = 5,
-  DPS_LANG_AR  = 6,
+  DPS_LANG_AR = 6,
   DPS_LANG_AST = 7,
-  DPS_LANG_AV  = 8,
-  DPS_LANG_AZ  = 9,
-  DPS_LANG_BA  = 10,
-  DPS_LANG_BE  = 11,
-  DPS_LANG_BG  = 12,
-  DPS_LANG_BM  = 13,
-  DPS_LANG_BN  = 14,
-  DPS_LANG_BR  = 15,
-  DPS_LANG_BS  = 16,
-  DPS_LANG_CA  = 17,
-  DPS_LANG_CE  = 18,
+  DPS_LANG_AV = 8,
+  DPS_LANG_AZ = 9,
+  DPS_LANG_BA = 10,
+  DPS_LANG_BE = 11,
+  DPS_LANG_BG = 12,
+  DPS_LANG_BM = 13,
+  DPS_LANG_BN = 14,
+  DPS_LANG_BR = 15,
+  DPS_LANG_BS = 16,
+  DPS_LANG_CA = 17,
+  DPS_LANG_CE = 18,
   DPS_LANG_CHR = 19,
-  DPS_LANG_CO  = 20,
-  DPS_LANG_CS  = 21,
+  DPS_LANG_CO = 20,
+  DPS_LANG_CS = 21,
   DPS_LANG_CSB = 22,
-  DPS_LANG_CV  = 23,
-  DPS_LANG_CY  = 24,
-  DPS_LANG_DA  = 25,
+  DPS_LANG_CV = 23,
+  DPS_LANG_CY = 24,
+  DPS_LANG_DA = 25,
   DPS_LANG_DE_AT = 26,
   DPS_LANG_DE_CH = 27,
-  DPS_LANG_DE  = 28,
-  DPS_LANG_EL  = 29,
+  DPS_LANG_DE = 28,
+  DPS_LANG_EL = 29,
   DPS_LANG_EN_AU = 30,
   DPS_LANG_EN_NZ = 31,
   DPS_LANG_EN_US = 32,
@@ -262,27 +263,27 @@ enum {
   DPS_LANG_RU_OLD = 217
 };
 
-extern int DpsLMstatcmp(const void * i1, const void * i2);
-extern int DpsLMcmpCount(const void * i1,const void * i2);
+extern int DpsLMstatcmp (const void *i1, const void *i2);
+extern int DpsLMcmpCount (const void *i1, const void *i2);
 /*extern int DpsLMcmpIndex(const void * i1,const void * i2);*/
-extern int DpsLMcmpIndex(const void *v1, const void *v2);
+extern int DpsLMcmpIndex (const void *v1, const void *v2);
 
-extern void  DpsBuildLangMap(DPS_LANGMAP * map, const char * text, size_t text_len, size_t max_nbytes, int StrFlag);
-extern void  DpsPrepareLangMap(DPS_LANGMAP * map);
-extern void  DpsCheckLangMap(DPS_LANGMAP * map, DPS_LANGMAP * text, DPS_MAPSTAT *mstat, size_t InfMiss, size_t InfHits);
+extern void DpsBuildLangMap (DPS_LANGMAP *map, const char *text, size_t text_len, size_t max_nbytes, int StrFlag);
+extern void DpsPrepareLangMap (DPS_LANGMAP *map);
+extern void DpsCheckLangMap (DPS_LANGMAP *map, DPS_LANGMAP *text, DPS_MAPSTAT *mstat, size_t InfMiss, size_t InfHits);
 
-extern void  DpsBuildLangMap6(DPS_LANGMAP * map, const char * text, size_t text_len, size_t max_nbytes, int StrFlag);
-extern void  DpsPrepareLangMap6(DPS_LANGMAP * map);
-extern void  DpsCheckLangMap6(DPS_LANGMAP * map, DPS_LANGMAP * text, DPS_MAPSTAT *mstat, size_t InfMiss, size_t InfHits);
+extern void DpsBuildLangMap6 (DPS_LANGMAP *map, const char *text, size_t text_len, size_t max_nbytes, int StrFlag);
+extern void DpsPrepareLangMap6 (DPS_LANGMAP *map);
+extern void DpsCheckLangMap6 (DPS_LANGMAP *map, DPS_LANGMAP *text, DPS_MAPSTAT *mstat, size_t InfMiss, size_t InfHits);
 
-extern void  DpsLangMapListFree(DPS_LANGMAPLIST *);
-extern void DpsLangMapListSave(DPS_LANGMAPLIST *List);
+extern void DpsLangMapListFree (DPS_LANGMAPLIST *);
+extern void DpsLangMapListSave (DPS_LANGMAPLIST *List);
 #ifdef _DPS_COMMON_H
-extern  int  DpsGuessCharSet(DPS_AGENT *Indexer, DPS_DOCUMENT * D, DPS_LANGMAPLIST *L);
+extern int DpsGuessCharSet (DPS_AGENT *Indexer, DPS_DOCUMENT *D, DPS_LANGMAPLIST *L);
 #endif
-extern const char *DpsLanguageCanonicalName(const char *name);
+extern const char *DpsLanguageCanonicalName (const char *name);
 
-extern __C_LINK int __DPSCALL DpsLoadLangMapList(DPS_LANGMAPLIST *L, const char * mapdir);
-extern __C_LINK int __DPSCALL DpsLoadLangMapFile(DPS_LANGMAPLIST *L, const char * mapname);
+extern __C_LINK int __DPSCALL DpsLoadLangMapList (DPS_LANGMAPLIST *L, const char *mapdir);
+extern __C_LINK int __DPSCALL DpsLoadLangMapFile (DPS_LANGMAPLIST *L, const char *mapname);
 
 #endif

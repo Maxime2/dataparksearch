@@ -73,7 +73,7 @@ CREATE TABLE "server" (
 	"pop_weight"		float		not null	default 0
 ) WITHOUT OIDS;
 
-ALTER TABLE ONLY server ADD CONSTRAINT server_pkey PRIMARY KEY (rec_id); 
+ALTER TABLE ONLY server ADD CONSTRAINT server_pkey PRIMARY KEY (rec_id);
 CREATE UNIQUE INDEX srv_url ON server (command, url);
 CREATE UNIQUE INDEX srv_urlike ON server (command, url text_pattern_ops);
 CREATE INDEX srv_tag ON server (tag text_pattern_ops);
@@ -92,7 +92,7 @@ CREATE TABLE "srvinfo" (
 CREATE INDEX srvinfo_id ON srvinfo (srv_id);
 
 
--- CREATE FUNCTION clean_srvinfo() RETURNS trigger 
+-- CREATE FUNCTION clean_srvinfo() RETURNS trigger
 -- AS 'begin DELETE FROM srvinfo WHERE srv_id=old.rec_id; UPDATE url SET next_index_time=0 WHERE server_id=old.rec_id OR site_id=old.rec_id return NULL; end;'
 -- LANGUAGE plpgsql;
 
@@ -106,7 +106,7 @@ CREATE TABLE "links" (
 	"weight" float not null default 0.05,
 	"valid"  char(1) default 't'
 ) WITHOUT OIDS;
-ALTER TABLE ONLY "links" ADD CONSTRAINT links_pkey PRIMARY KEY (ot,k); 
+ALTER TABLE ONLY "links" ADD CONSTRAINT links_pkey PRIMARY KEY (ot,k);
 CREATE INDEX links_ot ON links (ot);
 CREATE INDEX links_k ON links (k);
 CREATE INDEX links_otvalid ON links USING HASH (ot) WHERE ot!=k AND valid='f';
@@ -166,7 +166,7 @@ CREATE INDEX cookies_time ON cookies ("expires");
 
 
 CREATE TABLE "storedchk" (
-       rec_id integer, 
+       rec_id integer,
        url_id integer
 );
 CREATE INDEX storedchk_i ON storedchk (url_id);
@@ -180,4 +180,3 @@ CREATE TABLE "cachedchk2" (
        url_id integer
 );
 CREATE UNIQUE INDEX cachedchk2_i ON cachedchk2 (url_id);
-

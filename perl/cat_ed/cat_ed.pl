@@ -67,7 +67,7 @@ BODY {font-family: arial, helvetica, sans-serif;}
 <script language="JavaScript">
 function test(x,y) {
     		if (confirm("Sure?")) {window.location.href=x}
-		else {window.location.href=y} 
+		else {window.location.href=y}
 	}
 </script>
 E1
@@ -79,16 +79,16 @@ E1
 sub _php_math_basetolong {
 	my ($arg, $base) = @_;
 	my ($mult, $num, $digit, $i, $c, $s);
-	
+
 	$mult = 1;
 	$num = 0;
-	
+
 	if ( ($base < 2) || ($base > 36) ) {
 		return 0;
 	}
-	
+
 	$s = uc($arg);
-	
+
 	for ($i = length($s) - 1; $i >= 0; $i--) {
 		$c = substr($s, $i, 1);
 		$digit = index("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", $c);
@@ -105,29 +105,29 @@ sub _php_math_basetolong {
 sub _php_math_longtobase {
 	my ($arg, $base) =@_;
 	my ($result, $digit, $value);
-	
+
 	$value = $arg;
-	
-	
+
+
 	if ($base < 2 || $base > 36) {
 		return '';
 	}
-	
+
 	$result = '';
-	
+
 	do {
 		$digit = $value % $base;
 		$result = substr("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", $digit, 1) . $result;
 		$value = int ($value / $base);
-		} 
+		}
 	while ($value > 0);
-	
+
 	return $result;
-}	
+}
 
 sub base_convert {
 	my ($num, $from_base, $to_base) = @_;
-	
+
 	return _php_math_longtobase(
 		_php_math_basetolong($num, $from_base),
 		$to_base
@@ -150,7 +150,7 @@ sub urldecode {
 sub htmlspecialchars {
 	my $arg = $_[0];
 	my ($i, $r, $c, $o);
-	
+
 	$r = '';
 	for($i = 0; $i < length($arg); $i++) {
 		$c = substr($arg, $i, 1);
@@ -171,14 +171,14 @@ sub htmlspecialchars {
 # -----------------------------------------------------
 sub print_error_local {
 	my $msg = shift;
-	
+
 	print "<center><font color=\"#d00000\" size=\"+2\"><b>Error: </b></font><font size=\"+2\">$msg</font></center><br>\n";
 	exit;
 }
 
 
-#<?                        
-#require('config.inc');      
+#<?
+#require('config.inc');
 #require('db_func.inc');
 
 
@@ -188,20 +188,20 @@ sub print_error_local {
 sub get_new_path {
 	my $path = shift;
 	my ($query, $res, @row, $temp);
-	
+
 	$query="SELECT path
 	FROM categories
 	WHERE path LIKE '$path"."__'"."
 	AND path NOT LIKE '$path"."\@\@'
 	ORDER BY path ASC";
-	
+
 	if($DEBUG) {print "$query<BR><HR>"};
-	
+
 	$res = $dbh->prepare($query);
 	if (!$res->execute) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	if ($fill == 0) {
 		$new_path='00';
 		while ((@row)=$res->fetchrow) {
@@ -222,17 +222,17 @@ sub get_new_path {
 			}
 		} # while
 		$new_path = base_convert("$new_path",10,$path_base);
-	} # if 
-	
+	} # if
+
 	$res->finish;
-	
+
 	if (length($new_path)==1) {
 		$new_path = '0' . $new_path;
 	}
-	
+
 	$new_path = uc($path.$new_path);
 	return($new_path);
-	
+
 }
 
 # -----------------------------------------------------
@@ -240,59 +240,59 @@ sub get_new_path {
 # -----------------------------------------------------
 sub optimize_tree {
 	my $path = shift;
-	
+
 	my ($query, $new_path, $res, @row, $res2, @row2, $temp_16,
 		$new_path_16, $rec_id, $old_path, $new_path_to_insert);
-	
+
 	$query = "SELECT path FROM categories WHERE path LIKE '$path"."__'".
 	" AND path NOT LIKE '$path"."\@\@' ORDER BY path";
-	
+
 	if($DEBUG) {
 		print "$query<BR><HR>";
 	}
-	
+
 	$res = $dbh->prepare($query);
 	if (!$res->execute) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	$new_path = 1;
-	
+
 	while ((@row)=$res->fetchrow) {
 		if (get_link_count($row[0])) {
 			optimize_tree($row[0]);
 		}
-		
+
 		$temp_16 = uc(substr($row[0],length($row[0])-2,2));
 		$temp=base_convert($temp_16,$path_base,10);
-		
+
 		if ($new_path != $temp) {
 			$new_path_16 = uc(base_convert($new_path,10,$path_base));
-			
+
 			if (length($new_path_16)==1) {
 				$new_path_16 = '0' . $new_path_16;
 			}
 			if (length($temp_16)==1) {
 				$temp_16 = '0' . $temp_16;
 			}
-			
+
 			$query="SELECT rec_id, path FROM categories WHERE path LIKE '$path$temp_16%'";
-			
+
 			if($DEBUG) {
 				print "$query<BR><HR>";
 			}
-			
+
 			$res2 = $dbh->prepare($query);
 			if(!$res2->execute) {
 				print_error_local("Query error:".$dbh->err);
 			}
-			
+
 			while((@row2)=$res2->fetchrow) {
 				$rec_id=$row2[0];
 				$old_path=$row2[1];
-				
-				
-				
+
+
+
 #				$new_path_to_insert=uc(eregi_replace("^$path$temp_16","$path$new_path_16",$old_path));
 				$new_path_to_insert = $old_path;
 #				my $eexpr = "$new_path_to_insert =~ s/^$path$temp_16/$path$new_path_16/i;";
@@ -300,22 +300,22 @@ sub optimize_tree {
 
 			        $new_path_to_insert =~ s/^$path$temp_16/$path$new_path_16/i;
 				$new_path_to_insert = uc($new_path_to_insert);
-				
+
 				$query="UPDATE categories SET path='$new_path_to_insert' WHERE rec_id=$rec_id";
-				
+
 				if($DEBUG) {print "$query<BR><HR>"};
-				
+
 				if (!($dbh->do($query))) {
 					print_error_local("Query error:".$dbh->err);
 				}
-				
+
 				$query="UPDATE categories SET link='$new_path_to_insert' WHERE link='$old_path'";
-				
+
 				if($DEBUG) {print "$query<BR><HR>"};
-				
+
 				if (!($dbh->do($query))) {
 					print_error_local("Query error:".$dbh->err);
-				}					
+				}
 			}
 			$res2->finish;
 		}
@@ -331,19 +331,19 @@ sub optimize_tree {
 sub get_link_count {
 	my $path = shift;
 	my ($query, $res2, @row2);
-	
+
 	$query="SELECT count(*) FROM categories WHERE path LIKE '$path"."__'";
-	
+
 	if($DEBUG) {print "327: $query<BR><HR>";}
-	
+
 	$res2 = $dbh->prepare($query);
 	if (!($res2->execute)) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	@row2=$res2->fetchrow;
 	$res2->finish;
-	
+
 	return($row2[0]);
 }
 
@@ -353,51 +353,51 @@ sub get_link_count {
 sub get_link_name {
 	my $link = shift;
 	my ($link_path, $link_name, $query, $res, @row);
-	
+
 	$link_path=$link;
 	$link_name='';
-	
+
 	while ($link_path ne '') {
 		$query="SELECT name FROM categories WHERE path='$link_path'";
-		
+
 		if($DEBUG) {print $query,"<BR><HR>";}
-		
+
 		$res = $dbh->prepare($query);
 		if (!($res->execute)) {
 			print_error_local("Query error:".$dbh->err);
 		}
-		
+
 		@row=$res->fetchrow;
 		$res->finish;
-		
+
 		if (!@row) {
 			$link_path=substr($link_path,0,length($link_path)-2);
 			last;
 		}
-		
+
 		$link_name = " / $row[0]".$link_name;
-		
+
 		$link_path=substr($link_path,0,length($link_path)-2);
 	}
-	
+
 	$query="SELECT name FROM categories WHERE path='' OR path IS NULL";
-	
+
 	if($DEBUG) {print "357: $query<BR><HR>";}
-	
+
 	$res = $dbh->prepare($query);
 	if (!($res->execute)) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	@row=$res->fetchrow;
 	$res->finish;
-	
+
 	if (@row) {
 		$link_name = " / $row[0]".$link_name;
 	} else {
 		$link_name='';
 	}
-	
+
 	return $link_name;
 }
 
@@ -407,56 +407,56 @@ sub get_link_name {
 sub get_link_href_name {
 	my $link = $_[0];
 	my ($link_path, $link_name, $query, $lres, @row, $nrow);
-	
+
 	$link_path=$link;
 	$link_name='';
-	
+
 	while ($link_path ne '') {
 		$query="SELECT name FROM categories WHERE path='$link_path'";
-		
+
 		if($DEBUG) {print $query,"<BR><HR>";}
-		
+
 		$lres = $dbh->prepare($query);
 		if (!($lres->execute)) {
 			print_error_local("Query error:".$dbh->err);
 		}
-		
+
 		@row=$lres->fetchrow;
 		$lres->finish;
-		
+
 		if (!@row) {
 			$link_path=substr($link_path,0,length($link_path)-2);
 			last;
 		}
-		
+
 		$row[0]=htmlspecialchars($row[0]);
 		$link_name = " / <a href=\"$PHP_SELF?sel_path=$link_path&sort=$sort\">$row[0]</a>".$link_name;
-		
+
 		$link_path=substr($link_path,0,length($link_path)-2);
 	}
-	
+
 	$query="SELECT name FROM categories WHERE path='' OR path IS NULL";
-	
+
 	if($DEBUG) {
 		print "412: $query <BR><HR>";
 	}
-	
+
 	$lres = $dbh->prepare($query);
 	if (!($lres->execute)) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	@row = $lres->fetchrow;
 	$lres->finish;
-	
+
 	$nrow = @row;
 	if ($nrow > 0) {
-		$row[0]=htmlspecialchars($row[0]);	
+		$row[0]=htmlspecialchars($row[0]);
 		$link_name = " / <a href=\"$PHP_SELF?sel_path=&sort=$sort\">$row[0]</a>".$link_name;
 	} else {
 		$link_name='';
 	}
-	
+
 	return $link_name;
 }
 
@@ -502,41 +502,41 @@ if ($DEBUG) {
 if ($action eq 'del') {
 	$query="DELETE FROM categories
    	         WHERE path LIKE '$sel_path%'";
-	
+
 	if($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	if (!($dbh->do($query))) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	$query="DELETE FROM categories
 		WHERE link LIKE '$sel_path%'";
-	
+
 	if($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	if (!($dbh->do($query))) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	$sel_path=substr($sel_path,0,length($sel_path)-2);
 } elsif ($action eq 'del_link') {
 	$query="DELETE FROM categories
    	         WHERE rec_id = $id";
-	
+
 	if($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	if (!($dbh->do($query))) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	$sel_path=substr($sel_path,0,length($sel_path)-2);
 } elsif ($action eq 'rename') {
 	$query="UPDATE categories
 		SET name='$new_name'
 		WHERE path='$old_path'";
-	
+
 	if($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	if (!($dbh->do($query))) {
 		print_error_local("Query error:".$dbh->err);
 	}
@@ -544,9 +544,9 @@ if ($action eq 'del') {
 	$query="UPDATE categories
 		SET name='$new_name'
 		WHERE rec_id=$id";
-	
+
 	if($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	if (!($dbh->do($query))) {
 		print_error_local("Query error:".$dbh->err);
 	}
@@ -562,22 +562,22 @@ if ($action eq 'del') {
 			OR path IS NULL";
 	}
 	if($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	$res2 = $dbh->prepare($query);
 	if (!($res2->execute)) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	@row2 = $res2->fetchrow;
 	$res2->finish;
-	
+
 	if ($row2[0]) {
 		$query="UPDATE categories
 		SET link='$new_path'
 		WHERE rec_id=$id";
-		
+
 		if ($DEBUG) {print $query,"<BR><HR>";}
-		
+
 		if (!($dbh->do($query))) {
 			print_error_local("Query error:".$dbh->err);
 		}
@@ -591,61 +591,61 @@ if ($action eq 'del') {
 		print "new_path: $new_path new_cat: $new_cat sel_path: $sel_path<hr>";
 	}
 	$query="SELECT count(*) FROM categories";
-	
+
 	if ($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	$res2 = $dbh->prepare($query);
 	if (!($res2->execute)) {
 		print_error_local("Query error:".$dbh->err);
 	}
-	
+
 	@row2 = $res2->fetchrow;
 	if (!$row2[0]) {
 		if (($dbtype eq 'oracle') || ($dbtype eq 'oracle7') || ($dbtype eq 'oracle8')) {
 			$query="INSERT INTO categories (rec_id,path,link,name) VALUES ( SQ_category_id.nextval, '', '','$root_name')";
-			
+
 			if ($DEBUG) {print $query,"<BR><HR>";}
-			
+
 			if (!($dbh->do($query))) {
 				print_error_local("Query error:".$dbh->err($res));
 			}
 		} else {
 			$query="INSERT INTO categories (path,link,name) VALUES ( '', '','$root_name')";
-			
+
 			if ($DEBUG) {print $query,"<BR><HR>";}
-			
+
 			if (!($dbh->do($query))) {
 				print_error_local("Query error:".$dbh->err($res));
 			}
-		}		       
+		}
 	}
-	
+
 	$res2->finish;
-	
+
 	$new_path = get_new_path($sel_path);
-	
+
 	if (($dbtype eq 'oracle') || ($dbtype eq 'oracle7') || ($dbtype eq 'oracle8')) {
 		$query="INSERT INTO categories (rec_id,path,link,name) VALUES ( SQ_category_id.nextval, '$new_path', '','$new_cat')";
 	} else {
 		$query="INSERT INTO categories (path,link,name) VALUES ( '$new_path', '','$new_cat')";
 	}
 	if ($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	if (!($dbh->do($query))) {
 		print_error_local("Query error:".$dbh->err($res));
 	}
 } elsif ($action eq 'new_link') {
 	$query="SELECT count(*) FROM categories";
-	
+
 	if ($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	$res2 = $dbh->prepare($query);
 	if (!($res2->execute)) {
 		print_error_local("Query error:".$dbh->err($res2));
 	}
-	
+
 	@row2 = $res2->fetchrow;
-	
+
 	if (!$row2[0]) {
 		if (($dbtype eq 'oracle') || ($dbtype eq 'oracle7') || ($dbtype eq 'oracle8')) {
 			$query="INSERT INTO categories (rec_id,path,link,name)
@@ -653,16 +653,16 @@ if ($action eq 'del') {
 		} else {
 			$query="INSERT INTO categories (path,link,name)
 			VALUES ( '', '','$root_name')";
-		}		       
+		}
 		if ($DEBUG) {print $query,"<BR><HR>";}
-		
+
 		if (!($dbh->do($query))) {
 			print_error_local("Query error:".$dbh->err($res));
 		}
 	}
-	
+
 	$res2->finish;
-	
+
 	if (($dbtype eq 'oracle') || ($dbtype eq 'oracle7') || ($dbtype eq 'oracle8')) {
 		$query="INSERT INTO categories (rec_id,path,link,name)
     	            VALUES ( SQ_category_id.nextval, '$sel_path\@\@','','$new_link')";
@@ -671,7 +671,7 @@ if ($action eq 'del') {
    	            VALUES ( '$sel_path\@\@','','$new_link')";
 	}
 	if ($DEBUG) {print $query,"<BR><HR>";}
-	
+
 	$res = $dbh->prepare($query);
 	if (!$res->execute) {
 		print_error_local("Query error:".$dbh->err);
@@ -761,14 +761,14 @@ while(@row = $res->fetchrow) {
 	$link=$row[1];
 	$name=$row[2];
 	$rec_id=$row[3];
-	
+
 	$depth=length($path);
-	
+
 	if ($i==0) {$bgcolor='#ffffff';}
 	else {$bgcolor='#dddddd';}
-	
+
 	print "<tr bgcolor=\"$bgcolor\">";
-	
+
 	$old_name=$name;
 	$name=htmlspecialchars($name);
 	if (substr($path,$depth-2,2) eq '@@') {
@@ -777,11 +777,11 @@ while(@row = $res->fetchrow) {
 		$link_name=get_link_name($link);
 		$name = $name."  > <a href=\"$PHP_SELF?sel_path=$link&sort=$sort\">$link_name</a>";
 	} else {$islink=0;}
-	
+
 	$path = urlencode($path);
-	
+
 	$count = get_link_count($path);
-	
+
 	if ($count) {
 		if ($islink) {
 			print "<td colspan=2>&nbsp;<img src=$images_path"."folder.gif border=0> &nbsp; $name</td>\n";
@@ -795,9 +795,9 @@ while(@row = $res->fetchrow) {
 			print "<td colspan=2>&nbsp;<img src=$images_path"."unknown.gif border=0> &nbsp; <a href=\"$PHP_SELF?sel_path=$path&sort=$sort\">$name</a></td>\n";
 		}
 	}
-	
+
 	print '<td width="1%" align="center">'.urldecode($path)."</td>\n";
-	
+
         if ($islink) {
         	print "<td><form action=$PHP_SELF method=post>".
                       "<input type=hidden name=action value=edit_link>".
@@ -827,8 +827,8 @@ while(@row = $res->fetchrow) {
                    "<input type=submit value=\" Ok \">&nbsp;<input type=text size=14 name=new_name value=\"$old_name\"></td></form>\n";
 
                 print "<td align=center width=1%><form><input type=reset value=\"Del\" onClick=\"test('$PHP_SELF?action=del&sel_path=$path&sort=$sort', '$PHP_SELF?sel_path=$sel_path&sort=$sort')\"></td></form>";
-        }	
-	
+        }
+
 	print "</tr>\n";
 	$i=1-$i;
 }

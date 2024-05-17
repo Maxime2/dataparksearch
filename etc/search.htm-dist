@@ -313,8 +313,8 @@ HlEnd	</b>
            <small>
              <A HREF="$(URL)" TARGET="_blank">$(URL:40)</A>
              <font color="#008800">
-              - $(Content-Length) bytes [$(Content-Type)] 
-              - $(Last-Modified) 
+              - $(Content-Length) bytes [$(Content-Type)]
+              - $(Last-Modified)
 	      <!IFNOT NAME="stored_href" CONTENT="">
 	      [<a href="$(stored_href)">Cached copy</a>]
 	      <!ENDIF>
@@ -338,7 +338,7 @@ HlEnd	</b>
 <table width="100%" bgcolor="#FFFFFF">
   <tr>
    <td align="left">
-	<small>Search &laquo;$*(q)&raquo; at: 
+	<small>Search &laquo;$*(q)&raquo; at:
 <a href="http://www.google.com/search?ie=UTF-8&amp;hl=ru&amp;q=$%(q:UTF-8)">Google</a> &#8211;
 <a href="http://search.yahoo.com/bin/query?p=$%(q:UTF-8)&amp;ei=UTF-8">Yahoo!</a> &#8211;
 <a href="http://search.msn.com/results.aspx?q=$%(q:UTF-8)">MSN</a> &#8211;
@@ -365,7 +365,7 @@ HlEnd	</b>
   <A HREF="$(URL)" TARGET="_blank">$(URL:40)</A>
   <font color="#008800">
   - $(Content-Length) bytes
-  - $(Last-Modified) 
+  - $(Last-Modified)
   </font>
 </small>
 <!--/clone-->
@@ -418,7 +418,7 @@ Suggestions:
 <UL>
   <LI> Make sure all words are spelled correctly.
   <LI> Try different keywords.
-  <LI> Try more general keywords. 
+  <LI> Try more general keywords.
   Also, you can try <a href="$(self)?form=extended">extended search mode</a>.
 </UL>
 <!--/notfound-->

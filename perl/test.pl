@@ -23,20 +23,20 @@ print "ok 1\n";
   my $user = $ENV{'USER'} || 'nobody';
 
   print "Using dataparksearch-perl $Dataparksearch::VERSION with dataparksearch " . Dataparksearch::DpsVersion() . "\n" ;
-  
+
   my $DBAddr = "pgsql://$user:\@localhost/search/?dbmode=single";
   my $query  = "postgresql documentation";
 
   my $ans;
 
-  do { 
+  do {
 
     $DBAddr = prompt('What is your DBAddr ?', $DBAddr);
     $query  = prompt('What is your Query  ?', $query);
 
   print<<EOF;
 
-Test will be made with :  
+Test will be made with :
 
  DBAddr : $DBAddr
  Query  : $query
@@ -47,21 +47,21 @@ EOF
 
   } while lc $ans ne 'y';
 
- 
-  my $search = new Dataparksearch('DBAddr' => $DBAddr, 
+
+  my $search = new Dataparksearch('DBAddr' => $DBAddr,
 #                                'LocalCharset'=>'iso-8859-1',
 #                                'Affix'       => {'en' => 'en.aff'  },
 #                                'Spell'       => {'en' => 'en.dict' },
 			       );
-  
+
   print 'N Docs      : ', $search->DpsGetDocCount, "\n";
 
   #print $search->ShowStatistics; exit;
   #print $search->ShowReferers; exit;
-  
+
   unless ( $search ) { print "An error has occured!\n"; exit }
-  
-  $search->query('query' => $query, 
+
+  $search->query('query' => $query,
                  'mode'  => 'phrase',  # all / bool /any
 		 'sort'  => 'rate', # rate / date
 		 'ps'    => '10',    # page size
@@ -83,10 +83,10 @@ EOF
 
  foreach my $result ( $search->records ) {
 
-    print sprintf('[%d] %s -> %s [%dKo]', 
-                  $result->{'url_id'}, 
-		  $result->{'url'}, 
-		  $result->{'title'}, 
+    print sprintf('[%d] %s -> %s [%dKo]',
+                  $result->{'url_id'},
+		  $result->{'url'},
+		  $result->{'title'},
 		  $result->{'size'}/1024
 		 ),"\n";
     print sprintf('  last_mod_time [%s]', strftime($tformat, localtime($result->{'last_mod_time'}))),"\n";
@@ -97,5 +97,3 @@ EOF
   }
 
 }
-
-

@@ -58,15 +58,15 @@
              <A HREF="http://site/meta-ua.html" TARGET="_blank">http://site/meta-ua.html</A>
              <font color="#008800">
               - 1294 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?m=bool&amp;np=0&amp;q=body+OR+%22six+seven%22&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

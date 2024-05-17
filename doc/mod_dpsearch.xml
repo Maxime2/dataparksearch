@@ -12,13 +12,13 @@ module for <application>Apache</application> web server.</para>
 		<title>Why using <literal>mod_dpsearch</literal></title>
 		<itemizedlist>
 			<listitem>
-<para>As for <command>searchd</command> (see <xref linkend="searchd-why"/>), <command>mod_dpsearch</command> can hold preloaded in memory 
+<para>As for <command>searchd</command> (see <xref linkend="searchd-why"/>), <command>mod_dpsearch</command> can hold preloaded in memory
 some data to speed-up searches.
 </para>
 </listitem>
 
 <listitem>
-<para>In additional, <command>mod_dpsearch</command> hold in memory last used search template. 
+<para>In additional, <command>mod_dpsearch</command> hold in memory last used search template.
 This save time on template loading and parsing for every request since second.
 </para>
 </listitem>
@@ -36,7 +36,7 @@ search.cgi usualy loads from disk for every search request.
 		<title>Configuring <literal>mod_dpsearch</literal></title>
 
 <para>To enable this extension, add <option>--enable-apache-module</option> switch to <command>configure</command>.
-In addition, the <literal>mod_dpsearch.so</literal> shared library will be created and installed into 
+In addition, the <literal>mod_dpsearch.so</literal> shared library will be created and installed into
 <application>Apache</application> tree. Then you need activate this module by adding following line into
 <application>Apache</application> configuration file:
 
@@ -59,16 +59,15 @@ DataparkSearchdConf /usr/local/dpsearch/etc/modsearchd.conf
 </para>
 
 <para>There are three configuration directives supported by this module: <option>DataparkSearchdConf</option>,
-<option>DataparkSearchTemplate</option> and <option>DataparkStoredocTemplate</option> . 
+<option>DataparkSearchTemplate</option> and <option>DataparkStoredocTemplate</option> .
 The <option>DataparkSearchdConf</option> optional directive specify a <command>searchd</command>
-related configuration file. It may be only one per server. 
-The <option>DataparkSearchdTemplate</option> directive specify a search template file. 
-The <option>DataparkStoredocTemplate</option> directive specify a storedoc template file. 
-There can be several templates specified per servers, by one per location. 
+related configuration file. It may be only one per server.
+The <option>DataparkSearchdTemplate</option> directive specify a search template file.
+The <option>DataparkStoredocTemplate</option> directive specify a storedoc template file.
+There can be several templates specified per servers, by one per location.
 If <option>DataparkSearchdConf</option> directive specified, there no need specify <option>DBAddr</option> command in templates.
 </para>
 
 	</sect2>
 
 </sect1>
-

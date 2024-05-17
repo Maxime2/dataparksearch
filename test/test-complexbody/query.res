@@ -47,7 +47,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	1259310415	http://site/test2.html	charset	ISO-8859-1
 200	1259310415	http://site/test2.html	content-language	en
 200	1259310415	http://site/test2.html	content-type	text/html
-200	2037089450	http://site/	body	 test1.html  .  test2.html  .. 
+200	2037089450	http://site/	body	 test1.html  .  test2.html  ..
 200	2037089450	http://site/	charset	ISO-8859-1
 200	2037089450	http://site/	content-language	en
 200	2037089450	http://site/	content-type	text/html

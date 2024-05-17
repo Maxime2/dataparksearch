@@ -58,16 +58,16 @@
              <A HREF="http://site/ispattern.html" TARGET="_blank">http://site/ispattern.html</A>
              <font color="#008800">
               - 128 bytes [text/html]
-              - 
+              -
 	      	      <DD><small>[<a href="">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?np=0&amp;q=%40twitter+%23trend+l%27orex&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

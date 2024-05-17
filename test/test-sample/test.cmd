@@ -22,4 +22,3 @@ fail !0 mdiff $(DPS_TEST_DIR)/search2.rej $(DPS_TEST_DIR)/search2.res
 fail !0 exec rm -f $(DPS_TEST_DIR)/search2.rej
 
 pass 0 exec  $(INDEXER) -Edrop $(DPS_TEST_DIR)/indexer.conf >> $(DPS_TEST_LOG) 2>&1
-

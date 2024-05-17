@@ -174,7 +174,7 @@ CLASS="OPTION"
 >. Best documents having bigger
 weights will be displayed first.</P
 ><P
->To find a phrase, simple enclose it in quotas. For example: 
+>To find a phrase, simple enclose it in quotas. For example:
 <KBD
 CLASS="USERINPUT"
 >&quot;uncontrollable sphere&quot;</KBD
@@ -233,7 +233,7 @@ HREF="dpsearch-doingsearch.en.html#VQL"
 ><TD
 >s</TD
 ><TD
->characters sequence, specify results sorting order. 
+>characters sequence, specify results sorting order.
 Small caps specify ascendant sorting, upper caps - descendant.
 Following characters can be used: <TT
 CLASS="LITERAL"
@@ -241,7 +241,7 @@ CLASS="LITERAL"
 > or <TT
 CLASS="LITERAL"
 >r</TT
-> - for sorting by relevance, 
+> - for sorting by relevance,
 <TT
 CLASS="LITERAL"
 >P</TT
@@ -442,7 +442,7 @@ CLASS="LITERAL"
 > is set to <TT
 CLASS="LITERAL"
 >back</TT
->, 
+>,
 that means you want to limit result to recent pages, and you should specify this recentness in variable <TT
 CLASS="LITERAL"
 >dp</TT
@@ -455,7 +455,7 @@ CLASS="LITERAL"
 > is set to <TT
 CLASS="LITERAL"
 >er</TT
->, 
+>,
 that means the search will be limited to pages newer or older than date given.
 Variable <CODE
 CLASS="OPTION"
@@ -473,14 +473,14 @@ CLASS="LITERAL"
 > is set to <TT
 CLASS="LITERAL"
 >range</TT
->, 
+>,
 that means search within given range of dates. Variables <CODE
 CLASS="OPTION"
 >db</CODE
 > and <CODE
 CLASS="OPTION"
 >de</CODE
-> 
+>
 are used here and stands for beginning and end date.</P
 >
 
@@ -507,7 +507,7 @@ It should be specified in <TT
 CLASS="LITERAL"
 >xxxA[yyyB[zzzC]]</TT
 > format. Spaces are allowed between xxx and A and yyy and so on).
- xxx, yyy, zzz are numbers (can be negative!), A, B, C can be one of the following (the letters are the same as in 
+ xxx, yyy, zzz are numbers (can be negative!), A, B, C can be one of the following (the letters are the same as in
 strptime/strftime functions): s - second, M - minute, h - hour, d - day, m - month, y - year. Examples:
 				<PRE
 CLASS="PROGRAMLISTING"
@@ -520,7 +520,7 @@ CLASS="PROGRAMLISTING"
 ><TD
 >dx</TD
 ><TD
->is newer/older flag (1 means newer or after, -1 means older or before), 
+>is newer/older flag (1 means newer or after, -1 means older or before),
 if <TT
 CLASS="LITERAL"
 >dt</TT
@@ -539,7 +539,7 @@ CLASS="LITERAL"
 > value is <TT
 CLASS="LITERAL"
 >er</TT
->. 0 - January, 1 - February, ... 
+>. 0 - January, 1 - February, ...
 11 - December.</TD
 ></TR
 ><TR
@@ -576,7 +576,7 @@ CLASS="LITERAL"
 > value is <TT
 CLASS="LITERAL"
 >range</TT
->. 
+>.
 Each date is string in the form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits year.</TD
 ></TR
 ><TR
@@ -589,7 +589,7 @@ CLASS="LITERAL"
 > value is <TT
 CLASS="LITERAL"
 >range</TT
->. 
+>.
 Each date is string in the form dd/mm/yyyy, there dd is day, mm is month and yyyy is four-digits year.</TD
 ></TR
 ></TBODY
@@ -838,7 +838,7 @@ CLASS="FILENAME"
 > also supports Apache internal redirect. It checks REDIRECT_STATUS and REDIRECT_URL environment variables. To activate this way of template usage you may add these lines in Apache <TT
 CLASS="FILENAME"
 >srm.conf</TT
->: 
+>:
 
 				<PRE
 CLASS="PROGRAMLISTING"
@@ -927,22 +927,22 @@ NAME="SEARCH-OPERATORS"
 >The operator <B
 CLASS="COMMAND"
 >allin&lt;section&gt;:</B
->, 
+>,
 where &lt;section&gt; is the name of a section, defined in <TT
 CLASS="FILENAME"
 >sections.conf</TT
-> file 
+> file
 (or in any dpsearch's configuration file by <B
 CLASS="COMMAND"
 >Section</B
-> command) with non-zero section number 
+> command) with non-zero section number
 (see <A
 HREF="dpsearch-indexcmd.en.html#SECTION_CMD"
 >Section 3.10.43</A
->&#62;), 
+>&#62;),
 that operator allows to limit the search domain for a query word by the section specified.</P
 ><P
->This operator differ from limiting search domain using &amp;wf= CGI-variable in a way, 
+>This operator differ from limiting search domain using &amp;wf= CGI-variable in a way,
 that such limit is imposing only on query words specified after this operator.</P
 ><P
 >For example, if you have the following commands in <TT
@@ -961,7 +961,7 @@ CLASS="COMMAND"
 >, <B
 CLASS="COMMAND"
 >allintitle:</B
-> and 
+> and
 <B
 CLASS="COMMAND"
 >allinurl:</B
@@ -970,7 +970,7 @@ CLASS="COMMAND"
 >For the query <KBD
 CLASS="USERINPUT"
 >computer allintitle: science</KBD
-> it will be found the documents that contain the word 
+> it will be found the documents that contain the word
 "science" in the title and the word "computer" in any document section.</P
 ></DIV
 ><DIV
@@ -1000,14 +1000,14 @@ CLASS="USERINPUT"
 > or <KBD
 CLASS="USERINPUT"
 >&amp;</KBD
-> - logical AND. For example, 
+> - logical AND. For example,
 "<KBD
 CLASS="USERINPUT"
 >mysql &amp; odbc</KBD
 >" or "<KBD
 CLASS="USERINPUT"
 >mysql AND odbc</KBD
->" - 
+>" -
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -1017,12 +1017,12 @@ CLASS="APPLICATION"
 ><KBD
 CLASS="USERINPUT"
 >NEAR</KBD
-> - NEAR operator, identical to AND operator, but come true if both 
-words are within 16 words of each other. 
+> - NEAR operator, identical to AND operator, but come true if both
+words are within 16 words of each other.
 For example, "<KBD
 CLASS="USERINPUT"
 >mysql NEAR odbc</KBD
->"  - 
+>"  -
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -1035,12 +1035,12 @@ CLASS="USERINPUT"
 > or <KBD
 CLASS="USERINPUT"
 >*</KBD
-> - ANYWORD operator, 
-identical to AND operator, but come true if both words have any one word between and left operand have lesser position than right operand. 
+> - ANYWORD operator,
+identical to AND operator, but come true if both words have any one word between and left operand have lesser position than right operand.
 For example, "<KBD
 CLASS="USERINPUT"
 >mysql * odbc</KBD
->"  - 
+>"  -
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -1060,7 +1060,7 @@ CLASS="USERINPUT"
 >" or "<KBD
 CLASS="USERINPUT"
 >mysql OR odbc</KBD
->" - 
+>" -
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -1080,7 +1080,7 @@ CLASS="USERINPUT"
 >"  or "<KBD
 CLASS="USERINPUT"
 >mysql AND NOT odbc</KBD
->" - 
+>" -
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN

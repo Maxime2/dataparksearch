@@ -35,4 +35,3 @@ my $search = new Dataparksearch('template' => '/usr/local/dpsearch/etc/search.ht
 
 # Free allocations
 	$search->Free();
-

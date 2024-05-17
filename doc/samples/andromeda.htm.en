@@ -244,7 +244,7 @@ var destId; var dest; var srcId; var src;
 	if (dest && src) {
 		if (dest.innerHTML && src.innerHTML) {
 			dest.innerHTML = src.innerHTML;
-		
+
 			if (PrevL) {
 				if (BrowserDetect.browser == 'Explorer') {
 					PrevL.style.borderColor="#fff";
@@ -298,7 +298,7 @@ CommerceLoader.load('/cgi-bin/search.cgi?q=$%(q)&m=$&(m)&c=0B09&sp=1&sy=0&p=$&(p
 <!ELIF NAME="c" CONTENT="0D"><a href="http://www.43n39e.ru/oregon">$(Oregon.lng)</a>
 <!ELIF NAME="c" CONTENT="04"><a href="http://www.maxime.net.ru/">$(Compr.lng)</a>
 <!ELIF NAME="c" CONTENT="06"><a href="http://justine.43n39e.ru/">$(Justine.lng)</a>
-<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a> 
+<!ELIF NAME="site" CONTENT="-572280698"><a href="http://www.dataparksearch.org/">$(Dpsearch.lng)</a>
 <!ELSE><a href="http://www.43n39e.ru/andromeda">$(43N39E.lng)</a>
 <!ENDIF>
 </b></td>
@@ -326,8 +326,8 @@ CommerceLoader.load('/cgi-bin/search.cgi?q=$%(q)&m=$&(m)&c=0B09&sp=1&sy=0&p=$&(p
  <INPUT class="inputrev" TYPE="submit" VALUE="&gt;&gt;&gt;">
  <!--/td><td-->&nbsp;
  <select name="m" class="inputrev">
- <option value="all" selected="$&(m)"> $(all.lng) 
- <option value="near" selected="$&(m)"> $(near.lng) 
+ <option value="all" selected="$&(m)"> $(all.lng)
+ <option value="near" selected="$&(m)"> $(near.lng)
  <option value="any" selected="$&(m)"> $(any.lng)
  <option value="bool" selected="$&(m)"> $(bool.lng)
  </select>
@@ -492,7 +492,7 @@ CommerceLoader.load('/cgi-bin/search.cgi?q=$%(q)&m=$&(m)&c=0B09&sp=1&sy=0&p=$&(p
 <table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" valign="middle">
 <a onMouseDown="return clk($(DP_ID),$(Order))" href="$(URL)?partner=datapark"><img src="http://www.books.ru/img/$(url.file)s.jpg" border="0"></a>
 </td><td align="left" valign="top" style="padding-left: 0.5em;"><!ENDIF>
-<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span> 
+<!IF NAME="MP3.Album" CONTENT=""> <!ELSE><span class="result">$(album.lng): </span>
 $&(MP3.Album)<br><!ENDIF>
 <!IF NAME="MP3.Song" CONTENT=""> <!ELSE><span class="result">$(song.lng): </span>
 $&(MP3.Song)<br><!ENDIF>
@@ -625,8 +625,8 @@ $(sortedby.lng):&nbsp;
  <INPUT class="inputrev" TYPE="submit" VALUE="&gt;&gt;&gt;">
  &nbsp;
  <select name="m" class="inputrev">
- <option value="all" selected="$&(m)">$(all.lng)</option> 
- <option value="near" selected="$&(m)">$(near.lng)</option> 
+ <option value="all" selected="$&(m)">$(all.lng)</option>
+ <option value="near" selected="$&(m)">$(near.lng)</option>
  <option value="any" selected="$&(m)">$(any.lng)</option>
  <option value="bool" selected="$&(m)">$(bool.lng)</option>
  </select>

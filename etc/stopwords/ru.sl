@@ -1,6 +1,6 @@
 # Russian stopwords, charset koi8-r
 # By Alexander Barkov <bar@izhcom.ru>
-# 
+#
 # Updated by Maxime Zakharov <maxime@sochi.net.ru> 04 Mar. 2004, 24 Nov. 2004, 29 Jan. 2005
 #
 

@@ -113,4 +113,3 @@ CREATE TABLE ndict32 (
 );
 CREATE  INDEX n32_url   ON ndict32 (url_id);
 CREATE  INDEX n32_word  ON ndict32 (word_id);
-

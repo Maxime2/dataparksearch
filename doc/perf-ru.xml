@@ -21,7 +21,7 @@
 Демон <command>searchd</command> при запуске загружает эти данные и держит их в памяти.
 Это позволяет сократить среднее время выполнения запросов на поиск.
 </para>
-<para>Таже <command>searchd</command> может загружать предварительно в память некоторые данные об URL 
+<para>Таже <command>searchd</command> может загружать предварительно в память некоторые данные об URL
 (по 20 байт на каждую проиндекированую страницу) и лимиты cache mode (4 или 8 байт на каждый URL в зависимости от
 типа лимита). Это позволяет сократить среднее время обработки запроса.
 </para>
@@ -40,11 +40,11 @@
 
 <sect2 id="mfs-rec">
 <title>Рекомендация использовать файловую систему в памяти (mfs)</title>
-<para>Если вы планируете использовать cache mode и имеете достаточно оперативной памяти на вашем компьютере, 
+<para>Если вы планируете использовать cache mode и имеете достаточно оперативной памяти на вашем компьютере,
 вы можете разместить директорию <filename>/usr/local/dpsearch/var</filename>
 на файловой системе в памяти компьютера (mfs). Это ускорит как индексирование, так и поиск.
 </para>
-<para>Если памяти недостаточно, что поместить в ней <filename>/usr/local/dpsearch/var</filename> целиком, 
+<para>Если памяти недостаточно, что поместить в ней <filename>/usr/local/dpsearch/var</filename> целиком,
 вы можете разместить на mfs любую из директорий <filename>/usr/local/dpsearch/var/tree</filename>,
 <filename>/usr/local/dpsearch/var/url</filename> или <filename>/usr/local/dpsearch/var/store</filename>.
 </para>
@@ -70,7 +70,7 @@
 <title>Команда <command>MarkForIndex</command></title>
 <indexterm><primary>Команда</primary><secondary>MarkForIndex</secondary></indexterm>
 <para>По умолчанию, <application>DataparkSearch</application> помечает все URL, отбираемые к индексированию, как ожидающие индексирования
-через 4 часа. 
+через 4 часа.
 Это позволяет избежать возможного одновременного индексирования одно и того же URL двумя параллельно запущеными копиями indexer.
 Однако для больших поисковых баз эта операция пометки может занять некоторое время. Вы можете выключить такую пометку используя команду
 <command>"MarkForIndex no"</command> в вашем файле конфигурации <filename>indexer.conf</filename>.
@@ -81,7 +81,7 @@
 <sect2 id="checkinsertsql-cmd">
 <title>Команда <command>CheckInsertSQL</command></title>
 <indexterm><primary>Команда</primary><secondary>CheckInsertSQL</secondary></indexterm>
-<para>По умолчанию, <application>DataparkSearch</application> пытается добавлять данные в SQL-базу вне зависимости, 
+<para>По умолчанию, <application>DataparkSearch</application> пытается добавлять данные в SQL-базу вне зависимости,
 есть она уже там или нет. На некоторых системах, это может вызывать дополнительную обработку сообщений об ошибках.
 Чтобы избежать появления таких ошибок, вы можете добавить команду <command>CheckInsertSQL yes</command> в ваш файл конфигурации
 <filename>indexer.conf</filename>.
@@ -114,8 +114,8 @@
 
 <sect2 id="ares">
 <title>Библиотека асинхронного резолвера</title>
-<para>Использование <ulink url="http://c-ares.haxx.se/">c-ares</ulink>, 
-библиотеки асинхронного резолвера (dns/c-ares в коллекции портов FreeBSD), позволяет для каждой индексирующей нити выполнять 
+<para>Использование <ulink url="http://c-ares.haxx.se/">c-ares</ulink>,
+библиотеки асинхронного резолвера (dns/c-ares в коллекции портов FreeBSD), позволяет для каждой индексирующей нити выполнять
 запросы к DNS без блокировки. Пожалуйста учтите, это также повышает число одновременных запросов к вашему DNS серверу.
 </para>
 </sect2>

@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #include "dps_config.h"
@@ -21,35 +21,36 @@
 #include "dps_uniconv.h"
 #include "dps_charsetutils.h"
 
+int
+dps_wc_mb_sys_int (DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *wc, unsigned char *s, unsigned char *e)
+{
+  register dpsunicode_t *wb = (dpsunicode_t *) s;
 
-int dps_wc_mb_sys_int (DPS_CONV *conv, DPS_CHARSET *cs, const dpsunicode_t *wc, unsigned char *s, unsigned char *e) {
-  register dpsunicode_t *wb = (dpsunicode_t*)s;
-  
   conv->icodes = conv->ocodes = 1;
 
-  if ( s+sizeof(dpsunicode_t) > e)
+  if (s + sizeof (dpsunicode_t) > e)
     return DPS_CHARSET_TOOSMALL;
-  
+
   *wb = *wc;
 
-/*  dps_memcpy(s, wc, sizeof(dpsunicode_t));*/
-  
-  return sizeof(dpsunicode_t);
+  /*  dps_memcpy(s, wc, sizeof(dpsunicode_t));*/
+
+  return sizeof (dpsunicode_t);
 }
 
+int
+dps_mb_wc_sys_int (DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsigned char *s, const unsigned char *e)
+{
+  register dpsunicode_t *wb = (dpsunicode_t *) s;
 
-int dps_mb_wc_sys_int (DPS_CONV *conv, DPS_CHARSET *cs, dpsunicode_t *pwc, const unsigned char *s, const unsigned char *e) {
-  register dpsunicode_t *wb = (dpsunicode_t*)s;
-  
   conv->icodes = conv->ocodes = 1;
 
-  if (s+sizeof(dpsunicode_t) > e)
-    return DPS_CHARSET_TOOFEW(0);
-  
+  if (s + sizeof (dpsunicode_t) > e)
+    return DPS_CHARSET_TOOFEW (0);
+
   *pwc = *wb;
 
-/*  dps_memcpy(pwc, s, sizeof(dpsunicode_t)); */
-  
-  return sizeof(dpsunicode_t);
-}
+  /*  dps_memcpy(pwc, s, sizeof(dpsunicode_t)); */
 
+  return sizeof (dpsunicode_t);
+}

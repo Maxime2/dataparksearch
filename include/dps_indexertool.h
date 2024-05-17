@@ -12,7 +12,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_INDEXERTOOL_H
@@ -21,9 +21,8 @@
 #include "dps_config.h"
 
 extern int extended_stats;
-int DpsShowStatistics(DPS_AGENT *Indexer);
-const char *DpsVersion(void);
-void DpsAppendTarget(DPS_AGENT *Indexer, const char *url, const char *lang, const int hops, int parent);
-
+int DpsShowStatistics (DPS_AGENT *Indexer);
+const char *DpsVersion (void);
+void DpsAppendTarget (DPS_AGENT *Indexer, const char *url, const char *lang, const int hops, int parent);
 
 #endif

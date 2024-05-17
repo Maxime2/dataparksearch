@@ -70,4 +70,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/oracle/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/oracle
-

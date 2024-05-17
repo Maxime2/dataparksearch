@@ -319,7 +319,7 @@ CLASS="PROGRAMLISTING"
 &lt;FORM METHOD=GET ACTION="$(self)"&gt;
  &lt;INPUT TYPE="hidden" NAME="ul" VALUE=""&gt;
  &lt;INPUT TYPE="hidden" NAME="ps" VALUE="20"&gt;
- Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30 
+ Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30
  VALUE="$&amp;(q)"&gt;
  &lt;INPUT TYPE="submit" VALUE="Search!"&gt;&lt;BR&gt;
 &lt;/FORM&gt;
@@ -385,7 +385,7 @@ CLASS="OPTION"
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
 >,
-но может быть полезна, например, в директиве &lt;!INCLUDE CONTENT="..."&gt; если вы хотите включить результаты поиска другой 
+но может быть полезна, например, в директиве &lt;!INCLUDE CONTENT="..."&gt; если вы хотите включить результаты поиска другой
 поисковой системы.</P
 ><P
 >В этом примере формы помогается выбрать различные ограничения по времени.
@@ -394,14 +394,14 @@ CLASS="PROGRAMLISTING"
 >&lt;!-- 'search with time limits' options --&gt;
 &lt;TR&gt;&lt;TD&gt;
 &lt;TABLE CELLPADDING=2 CELLSPACING=0 BORDER=0&gt;
-&lt;CAPTION&gt; 
+&lt;CAPTION&gt;
 Limit results to pages published within
 a specified period of time.&lt;BR&gt;
 &lt;FONT SIZE=-1&gt;&lt;I&gt;(Please select only one option)
 &lt;/I&gt;&lt;/FONT&gt;
 &lt;/CAPTION&gt;
 &lt;TR&gt;
-&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" 
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt"
 VALUE="back" CHECKED&gt;&lt;/TD&gt;
 &lt;TD&gt;&lt;SELECT NAME="dp"&gt;
 &lt;OPTION VALUE="0" SELECTED="$(dp)"&gt;anytime
@@ -514,7 +514,7 @@ CLASS="PROGRAMLISTING"
 &lt;HR&gt;
 &lt;DIV ALIGN=right&gt;
 &lt;A HREF="http://www.maxime.net.ru/"&gt;
-&lt;IMG SRC="dpsearch.gif" BORDER=0 
+&lt;IMG SRC="dpsearch.gif" BORDER=0
 ALT="[Powered by DataparkSearch search engine software]"&gt;
 &lt;/A&gt;
 &lt;/BODY&gt;
@@ -598,7 +598,7 @@ NAME="AEN5670"
 					<TT
 CLASS="LITERAL"
 >$(WE)</TT
-> - результат поиска со всей статистикой по каждой словоформе 
+> - результат поиска со всей статистикой по каждой словоформе
 поискового запроса</P
 ></LI
 ><LI
@@ -629,7 +629,7 @@ NAME="AEN5683"
 			<TT
 CLASS="LITERAL"
 >$(WS)</TT
-> - результат поиска в короткой форме с отображением числа всех словоформ каждого 
+> - результат поиска в короткой форме с отображением числа всех словоформ каждого
 слова запроса.</P
 ></LI
 ><LI
@@ -856,7 +856,7 @@ CLASS="NOTE"
 CLASS="VARNAME"
 >$(URL)</CODE
 > может возвращать длинный URL, который может разрушать табличный вывод результатов.
-Для указания максимального числа выводимых символов в отображаемом URL, используйте 
+Для указания максимального числа выводимых символов в отображаемом URL, используйте
 <TT
 CLASS="LITERAL"
 >$(URL:xx)</TT
@@ -1308,7 +1308,7 @@ CLASS="NOTE"
 CLASS="FILENAME"
 >indexer.conf</TT
 >,
-имя хоста в DBAddr имеет значение только для поддерживаемых баз данных и не играет никакой роли при 
+имя хоста в DBAddr имеет значение только для поддерживаемых баз данных и не играет никакой роли при
 использовании ODBC баз данных. В случае ODBC, используйте имя базы в DBAddr для указания ODBC DSN.</P
 ></BLOCKQUOTE
 ></DIV
@@ -1320,7 +1320,7 @@ NAME="AEN5925"
 			Команда <B
 CLASS="COMMAND"
 >VarDir</B
-> задаёт альтернвтивный путь рабочей директории 
+> задаёт альтернвтивный путь рабочей директории
 при использовании способа хранения cache. По умолчанию используется поддиректория
 <TT
 CLASS="FILENAME"
@@ -1405,7 +1405,7 @@ CLASS="FILENAME"
 >, вы должны указывать <B
 CLASS="COMMAND"
 >GroupBySite</B
-> в вашем файле 
+> в вашем файле
 <TT
 CLASS="FILENAME"
 >searchd.conf</TT
@@ -1435,7 +1435,7 @@ CLASS="COMMAND"
 >MaxSiteLevel</B
 > для задания максимального уровня доменного имени, используемого для
 расчёта site_id. Значение по умолчанию: 2. Одно исключение: трёх и менее буквенные домены второго уровня считаются доменами первого уровня.
-Например: domain.ext - уровень 2, www.domain.ext - уровень 3, domain.com.ext - уровень 2. Отрицательное значение для 
+Например: domain.ext - уровень 2, www.domain.ext - уровень 3, domain.com.ext - уровень 2. Отрицательное значение для
 <B
 CLASS="COMMAND"
 >MaxSiteLevel</B
@@ -1536,7 +1536,7 @@ CLASS="FILENAME"
 >, вы можете указывать <B
 CLASS="COMMAND"
 >DateFormat</B
-> в вашем файле 
+> в вашем файле
 <TT
 CLASS="FILENAME"
 >searchd.conf</TT
@@ -1584,7 +1584,7 @@ NAME="AEN6034"
 Команда <B
 CLASS="COMMAND"
 >ResultContentType</B
-> используется для указания заголовка Content-Type страницы с результатами. 
+> используется для указания заголовка Content-Type страницы с результатами.
 Значение по умолчанию: <TT
 CLASS="LITERAL"
 >text/html</TT
@@ -1598,7 +1598,7 @@ NAME="AEN6040"
 CLASS="COMMAND"
 >Locale</B
 > используется для указания заголовка для задания LC_ALL локали при выдаче результатов
-поиска. 
+поиска.
 Значение по умолчанию: <TT
 CLASS="LITERAL"
 >не определено</TT

@@ -25,10 +25,10 @@
 		<para>Если <filename>indexer</filename> или <filename>search.cgi</filename>
 умирают во время своей работы и оставляют посмертный дамп, очень полезно сообщить нам
 вывод <filename>gdb</filename> (The GNU Debugger). Чтобы получить этот вывод, пожалуйста,
-выполните следующие шаги. Убедитесь, что <application>DataparkSearch</application> собран с опцией <option>--with-debug</option> для <command>configure</command>. 
-Если нет, пересоберите его с этой опцией и попытайтесь повторить ситуацию, приведшую к трапу. 
+выполните следующие шаги. Убедитесь, что <application>DataparkSearch</application> собран с опцией <option>--with-debug</option> для <command>configure</command>.
+Если нет, пересоберите его с этой опцией и попытайтесь повторить ситуацию, приведшую к трапу.
 Затем, пусть, например, умершей программой будет <filename>indexer</filename>,
-а файл посметрного дампа имеет имя <filename>indexer.core</filename> 
+а файл посметрного дампа имеет имя <filename>indexer.core</filename>
 (или просто <filename>core</filename> на некоторых платформах).</para>
 
 		<para>Запустите GNU Debugger вместе с именем программы в качестве первого аргумента и

@@ -5,7 +5,7 @@
 	<para>The <literal>libdpsearch</literal> is available
 for using it in third party applications. You can easily add search
 into your own application using library and include files installed in
-<filename>/lib</filename> and <filename>/include</filename> 
+<filename>/lib</filename> and <filename>/include</filename>
 <application>DataparkSearch</application> directories. Each application which uses
 <literal>libdpsearch</literal> must have <filename>dpsearch.h</filename> header file
 included.</para>

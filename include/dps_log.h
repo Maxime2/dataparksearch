@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_LOG_H
@@ -36,29 +36,29 @@
 #define LOG_FACILITY 0
 #endif
 
-/* According to some recommendations, try not to exceed about 800 bytes 
+/* According to some recommendations, try not to exceed about 800 bytes
    or you might have problems with old syslog implementations */
 #define DPS_LOG_BUF_LEN 480
 
 /* Verbose levels */
-#define DPS_LOG_NONE	0
-#define DPS_LOG_ERROR	1
-#define DPS_LOG_WARN	2
-#define DPS_LOG_INFO	3
-#define DPS_LOG_EXTRA	4
-#define DPS_LOG_DEBUG	5
+#define DPS_LOG_NONE 0
+#define DPS_LOG_ERROR 1
+#define DPS_LOG_WARN 2
+#define DPS_LOG_INFO 3
+#define DPS_LOG_EXTRA 4
+#define DPS_LOG_DEBUG 5
 
-extern int DpsOpenLog(const char * appname,DPS_ENV *Env, int log2stderr_fl);
+extern int DpsOpenLog (const char *appname, DPS_ENV *Env, int log2stderr_fl);
 
-extern void DpsLog(DPS_AGENT *Agent, int level, const char *fmt, ...);
+extern void DpsLog (DPS_AGENT *Agent, int level, const char *fmt, ...);
 /* if you do not have DPS_AGENT struct yet, use DpsLog_noagent */
-extern void DpsLog_noagent(DPS_ENV *Env, int level, const char *fmt, ...);
+extern void DpsLog_noagent (DPS_ENV *Env, int level, const char *fmt, ...);
 
-extern __C_LINK void __DPSCALL DpsSetLogLevel(DPS_AGENT *A, int level);
-extern __C_LINK void __DPSCALL DpsIncLogLevel(DPS_AGENT *A);
-extern __C_LINK void __DPSCALL DpsDecLogLevel(DPS_AGENT *A);
-extern __C_LINK int  __DPSCALL DpsSetThreadProc(DPS_ENV * Conf,void (*_ThreadInfo)(DPS_AGENT* A,const char *state, const char* str));
-extern __C_LINK int  __DPSCALL DpsSetRefProc(DPS_ENV * Conf,void (*_RefProc)(int code,const char *url, const char *ref));
-extern __C_LINK int  __DPSCALL DpsNeedLog(int level);
+extern __C_LINK void __DPSCALL DpsSetLogLevel (DPS_AGENT *A, int level);
+extern __C_LINK void __DPSCALL DpsIncLogLevel (DPS_AGENT *A);
+extern __C_LINK void __DPSCALL DpsDecLogLevel (DPS_AGENT *A);
+extern __C_LINK int __DPSCALL DpsSetThreadProc (DPS_ENV *Conf, void (*_ThreadInfo) (DPS_AGENT *A, const char *state, const char *str));
+extern __C_LINK int __DPSCALL DpsSetRefProc (DPS_ENV *Conf, void (*_RefProc) (int code, const char *url, const char *ref));
+extern __C_LINK int __DPSCALL DpsNeedLog (int level);
 
 #endif /* _DPS_LOG_H */

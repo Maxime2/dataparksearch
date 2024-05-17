@@ -15,4 +15,3 @@ DROP TABLE "cachedchk";
 DROP TABLE "cachedchk2";
 DROP TABLE "robots";
 DROP TABLE "cookies";
-

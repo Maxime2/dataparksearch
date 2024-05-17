@@ -29,7 +29,7 @@ Locale ru_RU.UTF-8
     <title>$&(q)</title>
 </head>
 <!-- BrowserCharset: $(BrowserCharset) --><!IF NAME="s_tmplt" CONTENT=""><!SET NAME="s_tmplt" CONTENT="janus.htm.ru"><!ENDIF>
-<body id="Content"> 
+<body id="Content">
 <!--/top-->
 
 <!--bottom-->
@@ -98,5 +98,3 @@ $&(query:128)</a></small><br/>
 <B>$(E)</B>
 </CENTER>
 <!--/error-->
-
-

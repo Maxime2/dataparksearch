@@ -10,10 +10,10 @@ libdp_la_LDFLAGS = -release @DPS_BASE_VERSION@
 EXTRA_DIST = dps_memcpy.inc
 
 include_HEADERS = \
-../include/dps_config.h 
+../include/dps_config.h
 
 
 INCLUDES = -I$(srcdir)/../include
 
 LIBS = @STATIC_LFLAGS@ \
-@LIBS@ 
+@LIBS@

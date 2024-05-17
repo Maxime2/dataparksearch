@@ -80,4 +80,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/sqlite/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/sqlite
-

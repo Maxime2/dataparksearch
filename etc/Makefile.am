@@ -9,7 +9,7 @@ searchd.conf-dist \
 stored.conf-dist \
 storedoc.htm-dist \
 cached.conf-dist \
-sections.conf-dist 
+sections.conf-dist
 
 langmap_FILES = \
 langmap/ab.cp1251.lm \
@@ -274,7 +274,7 @@ synonym/english.syn \
 synonym/english.big.syn \
 synonym/francais.syn \
 synonym/russian.syn \
-synonym/russian.big.syn 
+synonym/russian.big.syn
 
 acronym_FILES = \
 acronym/en.cs.acr \

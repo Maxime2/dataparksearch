@@ -128,4 +128,3 @@ CREATE  INDEX word16   ON dict16 (word);
 
 CREATE  INDEX url_id32 ON dict32 (url_id);
 CREATE  INDEX word32   ON dict32 (word);
-

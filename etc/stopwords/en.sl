@@ -1,5 +1,5 @@
 #
-# English stop-list 
+# English stop-list
 #
 
 

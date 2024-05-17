@@ -16,7 +16,7 @@ mirror while indexing. There are several ways of using aliases.</para>
 Alias &lt;masterURL&gt; &lt;mirrorURL&gt;
 </programlisting>
 </para>
-		
+
 		<para>E.g. you wish to index
 <literal>http://search.site.ru/</literal> using nearest German mirror
 <literal>http://www.other.com/mirrors/Search/</literal>. Add
@@ -214,7 +214,7 @@ ReverseAlias regex  (http://.*)&amp;PHPSESSION=[^&amp;]*(.*)         $1$2
 <indexterm><primary>Command</primary><secondary>ReverseAliasProg</secondary></indexterm>
 </title>
 		<para>
-			<command>ReverseAliasProg</command> - is a command similar to both <command>AliasProg</command> command and <command>ReverseAlias</command> command. 
+			<command>ReverseAliasProg</command> - is a command similar to both <command>AliasProg</command> command and <command>ReverseAlias</command> command.
 It takes agruments as <command>AliasProg</command> but maps URL before inserting it into database, as <command>ReverseAlias</command> command.
 </para>
 </sect2>
@@ -259,4 +259,3 @@ http://www.site.ext/news/article10.html
 		</para>
 	</sect2>
 </sect1>
-

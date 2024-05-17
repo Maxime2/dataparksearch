@@ -20,6 +20,3 @@ openjade -v -t sgml -wno-valid \
          -d ./mnogo.dsl \
          /usr/local/share/sgml/docbook/dsssl/modular/dtds/decls/xml.dcl \
          book.xml
-
-
-

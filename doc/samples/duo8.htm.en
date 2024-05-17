@@ -62,7 +62,7 @@ Locale en_US.ISO8859-1
 <table border="0" cellpadding="0" cellspacing="0"><tr><td align="center" valign="middle">
 <a href="$(URL)?partner=datapark"><img src="http://www.books.ru/img/$(url.file)s.jpg" border="0"></a>
 </td><td align="left" valign="top" style="padding-left: 0.5em;"><!ENDIF><small>
-<!IFNOT NAME="MP3.Album" CONTENT=""><span class="result">Album: </span> 
+<!IFNOT NAME="MP3.Album" CONTENT=""><span class="result">Album: </span>
 $&(MP3.Album)<br><!ENDIF>
 <!IFNOT NAME="MP3.Song" CONTENT=""><span class="result">Song: </span>
 $&(MP3.Song)<br><!ENDIF>
@@ -121,5 +121,3 @@ $&(MP3.Year)<br><!ENDIF>
 <B>$(E)</B>
 </CENTER>
 <!--/error-->
-
-

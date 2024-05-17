@@ -58,16 +58,16 @@
              <A HREF="http://site/directory/test-tz.html" TARGET="_blank">http://site/directory/test-tz.html</A>
              <font color="#008800">
               - 214 bytes [text/html]
-              - 
+              -
 	      	      <DD><small>[<a href="/cgi-bin/storedoc.cgi?rec_id=-562063921&amp;label=&amp;DM=Tue%2C+08+Sep+1970%2C+13%3A29%3A24+EST&amp;DS=214&amp;L=en&amp;CS=ISO-8859-1&amp;DU=http%3A%2F%2Fsite%2Fdirectory%2Ftest-tz.html&amp;CT=text%2Fhtml&amp;q=insurance+associated+press">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?m=bool&amp;np=0&amp;q=insurance+AND+%28+allinmeta.source%3A+%22+associated+press+%22+%29&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

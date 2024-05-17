@@ -34,8 +34,8 @@ support:
 <indexterm><primary>Command</primary><secondary>Store</secondary></indexterm>
 <indexterm><primary>Command</primary><secondary>NoStore</secondary></indexterm>
 You may use the <command>Store</command> and <command>NoStore</command> commands to allow or disallow storing several files by pattern.
-For arguments of those commands are exactly the same 
-as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>). All documents are stores by defaults, 
+For arguments of those commands are exactly the same
+as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>). All documents are stores by defaults,
 if support for stored is enabled.
 </para>
 
@@ -98,7 +98,7 @@ command specifies interval in seconds between attempts to optimize a stored data
 
 <listitem>
 <para><command><indexterm><primary>Command</primary><secondary>OptimizeRatio</secondary></indexterm>OptimizeRatio</command>
-command  specifies defragmentation threshold for a stored datafile optimization.  
+command  specifies defragmentation threshold for a stored datafile optimization.
 </para>
 <para>
 <userinput>OptimizeRatio 3</userinput>
@@ -115,7 +115,7 @@ command  specifies defragmentation threshold for a stored datafile optimization.
 			</listitem>
 			<listitem>
 				<para>Configure <filename>indexer.conf</filename> and <filename>search.htm</filename>
-(or <filename>searchd.conf</filename>, if <command>searchd</command> is used). Specify address and port that <literal>indexer</literal> will use to connect to <command>stored</command>. 
+(or <filename>searchd.conf</filename>, if <command>searchd</command> is used). Specify address and port that <literal>indexer</literal> will use to connect to <command>stored</command>.
 Use <literal>stored</literal> parameter for <command>DBAddr</command> command, e.g.:</para>
 				<para>
 					<userinput>DBAddr mysql://localhost/search/?dbmode=cache&amp;stored=localhost:7004</userinput>
@@ -204,7 +204,7 @@ With <command>ExcerptPadding</command> command you can specify average number of
 With <command>ExcerptMark</command> command you can alter the marking character sequence which delimits excerpt chunks; value by default: " ... " (a space, a dots, a space).</para>
 
 <para><indexterm><primary>Command</primary><secondary>DoExcerpt</secondary></indexterm>
-You may switch off document excerpts (but retain ability to show stored copies) 
+You may switch off document excerpts (but retain ability to show stored copies)
 with <command>DoExcerpt no</command> command in your search template.
 </para>
 

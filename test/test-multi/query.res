@@ -12,7 +12,7 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-2114798719	http://site/test4.html	content-language	ru
 200	-2114798719	http://site/test4.html	content-type	text/html
 200	-2114798719	http://site/test4.html	title	Test 4 title
-200	-2059195102	http://site/	body	 test1.html  test1.txt  test3.html  test4.html  .  test2.html  .. 
+200	-2059195102	http://site/	body	 test1.html  test1.txt  test3.html  test4.html  .  test2.html  ..
 200	-2059195102	http://site/	charset	KOI8-R
 200	-2059195102	http://site/	content-language	ru
 200	-2059195102	http://site/	content-type	text/html

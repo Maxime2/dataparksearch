@@ -26,7 +26,7 @@ Locale ru_RU.UTF-8
     <title>$&(q)</title>
 </head>
 <!-- BrowserCharset: $(BrowserCharset) -->
-<body id="Content"> 
+<body id="Content">
 <!--/top-->
 
 <!--bottom-->
@@ -44,7 +44,7 @@ Locale ru_RU.UTF-8
 <div class="serp1">
 <small class="restop"><a class="restop" href="$(url)">$&(title:128)</a></small><br>
 <small class="restop"><a class="restop" href="$(url)">
-<!IFNOT NAME="ytid" VALUE=""><img src="http://img.youtube.com/vi/$(ytid)/default.jpg" border="0"></a> 
+<!IFNOT NAME="ytid" VALUE=""><img src="http://img.youtube.com/vi/$(ytid)/default.jpg" border="0"></a>
 <!ELSEIFNOT NAME="myvi" VALUE=""><!IF NAME="ruid" VALUE=""><!SET NAME="ruid" CONTENT="a"><!ENDIF><img src="http://fs-$*(ruid).myvi.ru/$*(myvi).th1" border="0"></a>
 <!ELSE><img src="http://img.rutube.ru/thumbs/$&(ruid)-2.jpg" border="0"></a><!ENDIF>
 </small><br>
@@ -104,5 +104,3 @@ Locale ru_RU.UTF-8
 <B>$(E)</B>
 </CENTER>
 <!--/error-->
-
-

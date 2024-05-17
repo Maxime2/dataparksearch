@@ -82,17 +82,17 @@ SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,url
 200	-1302496456	http://site/test1.txt	charset	ISO-8859-1
 200	-1302496456	http://site/test1.txt	content-language	en
 200	-1302496456	http://site/test1.txt	content-type	text/plain
-200	1062648687	http://site/test2.html	body	 This is the second test page. Here is the third one. 
+200	1062648687	http://site/test2.html	body	 This is the second test page. Here is the third one.
 200	1062648687	http://site/test2.html	charset	ISO-8859-1
 200	1062648687	http://site/test2.html	content-language	en
 200	1062648687	http://site/test2.html	content-type	text/html
 200	1062648687	http://site/test2.html	title	Test 2 title
-200	1307380169	http://site/	body	 test1.html  test1.txt  .  test2.html  .. 
+200	1307380169	http://site/	body	 test1.html  test1.txt  .  test2.html  ..
 200	1307380169	http://site/	charset	ISO-8859-1
 200	1307380169	http://site/	content-language	en
 200	1307380169	http://site/	content-type	text/html
 200	1307380169	http://site/	title	http://site/
-200	2014493141	http://site/test1.html	body	 This is the first test page. Here is the second one. 
+200	2014493141	http://site/test1.html	body	 This is the first test page. Here is the second one.
 200	2014493141	http://site/test1.html	charset	ISO-8859-1
 200	2014493141	http://site/test1.html	content-language	en
 200	2014493141	http://site/test1.html	content-type	text/html

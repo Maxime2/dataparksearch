@@ -58,15 +58,15 @@
              <A HREF="http://site/test1.txt" TARGET="_blank">http://site/test1.txt</A>
              <font color="#008800">
               - 87 bytes [text/plain]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?g=en&amp;np=0&amp;q=ford+motor+company&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

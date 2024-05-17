@@ -61,15 +61,15 @@
              <A HREF="http://site/test4.html" TARGET="_blank">http://site/test4.html</A>
              <font color="#008800">
               - 225 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?GroupBySite=yes&amp;np=0&amp;q=this&amp;site=614987914">More result from this site
 		     (5 total)	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -98,15 +98,15 @@
              <A HREF="http://site/z-clone2.html" TARGET="_blank">http://site/z-clone2.html</A>
              <font color="#008800">
               - 158 bytes [text/html]
-              - 
+              -
 	      	      	      <DD><small>[<a href="?GroupBySite=yes&amp;np=0&amp;q=this&amp;site=614987914">More result from this site
 		     (5 total)	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

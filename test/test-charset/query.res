@@ -359,12 +359,12 @@ SQL>'SELECT status, docsize, hops, crc32, url FROM url ORDER BY status, crc32'
 2200	1007	1	-889585539	http://site/segmented.utf-8.txt
 2200	765	1	-373257518	http://site/unsegmented.gb2312.txt
 SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,urlinfo WHERE url.rec_id=urlinfo.url_id ORDER BY url.status,url.crc32,lower(urlinfo.sname)'
-200	-2067391837	http://site/	body	 segmented.gb2312.txt  unsegmented.utf-8.txt  ZH.html  segmented.utf-8.txt  JP.html  .  unsegmented.gb2312.txt  .. 
+200	-2067391837	http://site/	body	 segmented.gb2312.txt  unsegmented.utf-8.txt  ZH.html  segmented.utf-8.txt  JP.html  .  unsegmented.gb2312.txt  ..
 200	-2067391837	http://site/	charset	UTF-8
 200	-2067391837	http://site/	content-language	en
 200	-2067391837	http://site/	content-type	text/html
 200	-2067391837	http://site/	title	http://site/
-200	-889585539	http://site/segmented.gb2312.txt	body	本应 该是 圆满 美好 的 家庭 ， 在 母亲 与 父亲 相聚 不得志 而 前后 离世 下 ， 翠 翠 从小就 过着 与 爷爷 相依为命 的 生活 ， 他们 的 孤单 与 悲凉 时不时 的 涌流 心头 。 “ 黄昏 来时 ， 
+200	-889585539	http://site/segmented.gb2312.txt	body	本应 该是 圆满 美好 的 家庭 ， 在 母亲 与 父亲 相聚 不得志 而 前后 离世 下 ， 翠 翠 从小就 过着 与 爷爷 相依为命 的 生活 ， 他们 的 孤单 与 悲凉 时不时 的 涌流 心头 。 “ 黄昏 来时 ，
 200	-889585539	http://site/segmented.gb2312.txt	charset	GB2312
 200	-889585539	http://site/segmented.gb2312.txt	content-language	zh
 200	-889585539	http://site/segmented.gb2312.txt	content-type	text/plain

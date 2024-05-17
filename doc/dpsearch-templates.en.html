@@ -312,7 +312,7 @@ CLASS="PROGRAMLISTING"
 &lt;FORM METHOD=GET ACTION="$(self)"&gt;
  &lt;INPUT TYPE="hidden" NAME="ul" VALUE=""&gt;
  &lt;INPUT TYPE="hidden" NAME="ps" VALUE="20"&gt;
- Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30 
+ Search for: &lt;INPUT TYPE="text" NAME="q" SIZE=30
  VALUE="$&amp;(q)"&gt;
  &lt;INPUT TYPE="submit" VALUE="Search!"&gt;&lt;BR&gt;
 &lt;/FORM&gt;
@@ -462,14 +462,14 @@ CLASS="PROGRAMLISTING"
 >&lt;!-- 'search with time limits' options --&gt;
 &lt;TR&gt;&lt;TD&gt;
 &lt;TABLE CELLPADDING=2 CELLSPACING=0 BORDER=0&gt;
-&lt;CAPTION&gt; 
+&lt;CAPTION&gt;
 Limit results to pages published within
 a specified period of time.&lt;BR&gt;
 &lt;FONT SIZE=-1&gt;&lt;I&gt;(Please select only one option)
 &lt;/I&gt;&lt;/FONT&gt;
 &lt;/CAPTION&gt;
 &lt;TR&gt;
-&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt" 
+&lt;TD VALIGN=center&gt;&lt;INPUT TYPE=radio NAME="dt"
 VALUE="back" CHECKED&gt;&lt;/TD&gt;
 &lt;TD&gt;&lt;SELECT NAME="dp"&gt;
 &lt;OPTION VALUE="0" SELECTED="$(dp)"&gt;anytime
@@ -578,7 +578,7 @@ CLASS="PROGRAMLISTING"
 &lt;HR&gt;
 &lt;DIV ALIGN=right&gt;
 &lt;A HREF="http://www.maxime.net.ru/"&gt;
-&lt;IMG SRC="dpsearch.gif" BORDER=0 
+&lt;IMG SRC="dpsearch.gif" BORDER=0
 ALT="[Powered by DataparkSearch search engine software]"&gt;
 &lt;/A&gt;
 &lt;/BODY&gt;
@@ -980,7 +980,7 @@ NAME="AEN5550"
 ></A
 ><P
 >The content of this section is inserted between search results shown with RES section.
-You can use it if the format of your search result page requires a separator between records, as in JSON, eg. (see 
+You can use it if the format of your search result page requires a separator between records, as in JSON, eg. (see
 <TT
 CLASS="FILENAME"
 >doc/samples/json.htm</TT
@@ -1448,7 +1448,7 @@ CLASS="FILENAME"
 > is used you should place <B
 CLASS="COMMAND"
 >GroupBySite</B
-> in your 
+> in your
 <TT
 CLASS="FILENAME"
 >searchd.conf</TT
@@ -1476,12 +1476,12 @@ NAME="AEN5707"
 You may use <B
 CLASS="COMMAND"
 >MaxSiteLevel</B
-> command to specify maximal domain name level using for site_id calculation. 
+> command to specify maximal domain name level using for site_id calculation.
 Default value: 2. One exception: three or less letter domains at level 2 count as domain names at level 1. For example:
 domain.ext - level 2, www.domain.ext - level 3, domain.com.ext - level 2. A negative value for <B
 CLASS="COMMAND"
 >MaxSiteLevel</B
-> mean 
+> mean
 grouping performs on per directory basis, i.e. for level -1 www.site.ext/dir1/ and www.site.ext/dir2 group as different sites.</P
 ></BLOCKQUOTE
 ></DIV
@@ -1622,7 +1622,7 @@ NAME="AEN5768"
 <B
 CLASS="COMMAND"
 >ResultContentType</B
-> command is uses to specify Content-Type header for results page. 
+> command is uses to specify Content-Type header for results page.
 Default value: <TT
 CLASS="LITERAL"
 >text/html</TT
@@ -1635,7 +1635,7 @@ NAME="AEN5774"
 <B
 CLASS="COMMAND"
 >Locale</B
-> command is used to specify LC_ALL locale settings for search results output. 
+> command is used to specify LC_ALL locale settings for search results output.
 Default value: <TT
 CLASS="LITERAL"
 >unspecified</TT

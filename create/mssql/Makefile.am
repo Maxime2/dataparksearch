@@ -70,4 +70,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/mssql/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/mssql
-

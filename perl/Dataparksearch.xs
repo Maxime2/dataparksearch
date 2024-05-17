@@ -1,5 +1,5 @@
 /* Copyright (C) 2004-2009 Datapark corp. All rights reserved.
- 
+
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; either version 2 of the License, or
@@ -12,7 +12,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA 
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 #include "dps_config.h"
 
@@ -104,7 +104,7 @@ static void dosearch(HV *result,char *query_words,DPS_AGENT *Agent) {
   DpsVarListReplaceStr(&Agent->Vars, "QUERY_STRING", query_words);
 
   DpsAgentStoredConnect(Agent);
-	
+
   if((Res = DpsFind(Agent)) != NULL){
 
     if(Res->num_rows){
@@ -114,13 +114,13 @@ static void dosearch(HV *result,char *query_words,DPS_AGENT *Agent) {
       page_size   = DpsVarListFindInt(&Agent->Conf->Vars, "ps", DEFAULT_PS);
       page_number = DpsVarListFindInt(&Agent->Conf->Vars, "np", 0);
 
-      num_pages = (Res->total_found / (page_size ? page_size : DEFAULT_PS)) + 
+      num_pages = (Res->total_found / (page_size ? page_size : DEFAULT_PS)) +
 	((Res->total_found % (page_size ? page_size : DEFAULT_PS) != 0 ) ?  1 : 0);
 
       is_next = last < Res->total_found;
-      
+
       for(i = 0; i < Res->num_rows; i++) {
-      
+
 	HV* found = newHV();
 	DPS_DOCUMENT *Doc = &Res->Doc[i];
 
@@ -132,7 +132,7 @@ static void dosearch(HV *result,char *query_words,DPS_AGENT *Agent) {
 			   newSVpv(Doc->Sections.Root[r].Var[j].val, 0), 0);
 	  }
 	}
-	
+
         /* int values */
  /*       hv_store(found, "url_id", strlen("url_id"), newSViv(DpsVarListFindInt(&Doc->Sections, "DP_ID", 0)), 0);
         hv_store(found,"status",strlen("status"),newSViv(Res->Doc[i].status),0);
@@ -143,7 +143,7 @@ static void dosearch(HV *result,char *query_words,DPS_AGENT *Agent) {
         hv_store(found,"tag",strlen("tag"),newSViv(Res->Doc[i].tag),0);
         hv_store(found,"hops",strlen("hops"),newSViv(Res->Doc[i].hops),0);
         hv_store(found,"indexed",strlen("indexed"),newSViv(Res->Doc[i].indexed),0);*/
-        
+
 	/* char values */
  /*       hv_store(found,"url",strlen("url"),newSVpv(Res->Doc[i].url,0),0);
         hv_store(found,"content_type",strlen("content_type"),newSVpv(Res->Doc[i].content_type,0),0);
@@ -152,19 +152,19 @@ static void dosearch(HV *result,char *query_words,DPS_AGENT *Agent) {
         hv_store(found,"description",strlen("description"),newSVpv(Res->Doc[i].description,0),0);
         hv_store(found,"text",strlen("text"),newSVpv(Res->Doc[i].text,0),0);
         hv_store(found,"category",strlen("category"),newSVpv(Res->Doc[i].category,0),0);*/
-  
+
         /* time_t values */
  /*       hv_store(found,"last_mod_time",strlen("last_mod_time"),newSViv(Res->Doc[i].last_mod_time),0);
         hv_store(found,"last_index_time",strlen("last_index_time"),newSViv(Res->Doc[i].last_index_time),0);
         hv_store(found,"next_index_time",strlen("next_index_time"),newSViv(Res->Doc[i].next_index_time),0);*/
-    
+
         /* push record's ref in AV records */
         av_push(records, newRV_inc((SV*) found));
-      
+
       }
 
     }
-    
+
     hv_store(result, "work_time", strlen("work_time"), newSVpv(DpsVarListFindStr(&Agent->Conf->Vars, "SearchTime", "<>"), 0), 0);
 
     DpsResultFree(Res);
@@ -198,12 +198,12 @@ static void dosearch(HV *result,char *query_words,DPS_AGENT *Agent) {
 
 }
 
-/* 
+/*
  * CallBack Func for Referers
  */
 
-static void DpsRefProc(int code, 
-		       const char *Purl, 
+static void DpsRefProc(int code,
+		       const char *Purl,
 		       const char *Pref) {
   AV *records = newAV();
   SV *SVcode;
@@ -404,14 +404,14 @@ static void InitAgent(SV *self, DPS_AGENT *Agent) {
         Agent->track_mode=DPS_TRACK_DISABLED;
     }
   }*/
-  
+
   /* Check for mode */
    if ( hv_exists(hash,"mode",strlen("mode"))){
     hashentry = hv_fetch_ent(hash,newSVpv("mode",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "m", value);
    }
- 
+
   /* Check for sort */
   if ( hv_exists(hash,"sort",strlen("sort"))){
     hashentry = hv_fetch_ent(hash,newSVpv("sort",0), 0, 0);
@@ -425,49 +425,49 @@ static void InitAgent(SV *self, DPS_AGENT *Agent) {
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "pn", value);
   }
-  
+
   /* Check for ps */
   if ( hv_exists(hash,"ps",strlen("ps"))){
     hashentry = hv_fetch_ent(hash,newSVpv("ps",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "ps", value);
   }
-  
+
   /* Check for LocalCharset */
   if ( hv_exists(hash,"LocalCharset",strlen("LocalCharset"))){
     hashentry = hv_fetch_ent(hash,newSVpv("LocalCharset",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "LocalCharset", value);
   }
-  
+
   /* Check for BrowserCharset */
   if ( hv_exists(hash,"BrowserCharset",strlen("BrowserCharset"))){
     hashentry = hv_fetch_ent(hash,newSVpv("BrowserCharset",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "BrowserCharset", value);
   }
-  
+
   /* Check for ul */
   if ( hv_exists(hash,"ul",strlen("ul"))){
     hashentry = hv_fetch_ent(hash,newSVpv("ul",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "ul", value);
   }
-  
+
   /* Check for Weight Factor wf */
   if ( hv_exists(hash,"wf",strlen("wf"))){
     hashentry = hv_fetch_ent(hash,newSVpv("wf",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "wf", value);
   }
-  
+
   /* Check for Word Match wm */
   if ( hv_exists(hash,"wm",strlen("wm"))){
     hashentry = hv_fetch_ent(hash,newSVpv("wm",0), 0, 0);
     value = (char *)SvPV(HeVAL(hashentry), n_a);
     DpsVarListReplaceStr(&Agent->Conf->Vars, "wm", value);
   }
-  
+
   /* Check for IspellMode */
 /*  if ( hv_exists(hash,"IspellMode",strlen("IspellMode"))){
     hashentry = hv_fetch_ent(hash,newSVpv("IspellMode",0), 0, 0);
@@ -480,13 +480,13 @@ static void InitAgent(SV *self, DPS_AGENT *Agent) {
 
   /* check Affix & Spell only if not IspellMode db */
 /*  if(!(Agent->Conf->ispell_mode&DPS_ISPELL_MODE_DB)){*/
-    
+
     /* Check for Affix */
 /*    if ( hv_exists(hash,"Affix",strlen("Affix"))){
       hashentry = hv_fetch_ent(hash,newSVpv("Affix",0), 0, 0);
       assign_hash(Agent,"Affix",(SV*)HeVAL(hashentry));
     }
-  */  
+  */
     /* Check for Spell*/
 /*    if ( hv_exists(hash,"Spell",strlen("Spell"))){
       hashentry = hv_fetch_ent(hash,newSVpv("Spell",0), 0, 0);
@@ -501,7 +501,7 @@ static void InitAgent(SV *self, DPS_AGENT *Agent) {
 
 
 /*
- * Return an DPS_ENV, if defined, or initialize new otherwise with 
+ * Return an DPS_ENV, if defined, or initialize new otherwise with
  * $self->{'DBAddr'} & $self->{'DBMode'}
  *
  */
@@ -523,7 +523,7 @@ static DPS_ENV * LoadConf(SV *self){
   	/* define callback funcs */
   	DpsSetRefProc(Conf,DpsRefProc);
 	Conf->flags = DPS_FLAG_UNOCON;
-  
+
 /*  	if (! hv_exists(hash,"DBAddr",strlen("DBAddr")))
 		croak("Error: Dataparksearch need a DBAddr");
   */
@@ -623,7 +623,7 @@ static DPS_AGENT *LoadAgent(SV *self, DPS_ENV *Conf) {
   	HV* hash = (HV*)SvRV((SV*)self);
   	HE* hashentry;
   	STRLEN n_a;
-  
+
 	if (! hv_exists(hash, "Agent", strlen("Agent"))) {
 		Agent = DpsAgentInit(NULL, Conf, 0);
 		InitAgent(self, Agent);
@@ -720,11 +720,11 @@ _DpsQuery( ... )
 	PPCODE:
 	 words[0] = '\0';
 
-	 if (items != 2) 
-	   croak("Usage: Dataparksearch $self->_DpsQuery(\"words\")"); 
+	 if (items != 2)
+	   croak("Usage: Dataparksearch $self->_DpsQuery(\"words\")");
 
 	 self = ST(0);
- 
+
 	 Conf = LoadConf(self);
 	 Agent = LoadAgent(self, Conf);
 
@@ -732,18 +732,18 @@ _DpsQuery( ... )
 	 query = (char *)SvPV(ST(1),n_a);
 
  /*         strncpy(words,query,MAX_QUERY_SIZE);*/
-         if (!strcmp(query, "")) 
+         if (!strcmp(query, ""))
 	   croak("Error: Dataparksearch Need a query argument");
 
 	 dps_snprintf(words, MAX_QUERY_SIZE, "q=%s", query);
 	 words[MAX_QUERY_SIZE] = '\0';
 
 	 dosearch(result,words,Agent);
-         
+
  /*	 for(i=0;i<affix_num;i++) free(Affix[i].path);
 	 for(i=0;i<spell_num;i++) free(Spell[i].path);
- */	 
-	      
+ */
+
 	 EXTEND(SP,1);
 	 PUSHs(newRV_inc((SV*) result));
 
@@ -925,7 +925,7 @@ _WordNormalize( ... )
 	 WRD = (char*)SvPV(ST(1), n_a);
          Conf = LoadConf(self);
 	 Agent = LoadAgent(self, Conf);
-	
+
 	 if (!(browser_cs = Agent->Conf->bcs)) {
 		if (!(browser_cs = Agent->Conf->lcs)) {
 			browser_cs = DpsGetCharSet("iso-8859-1");
@@ -959,14 +959,14 @@ _WordNormalize( ... )
 	   if ((NORM = (char*)DpsMalloc(sizeof(char*) * (14 * NORMlen + 1))) == NULL) {
 		goto Norm_exit;
            }
-     	   DpsUniStrRCpy(uwrd, (*cur)->word); 
+     	   DpsUniStrRCpy(uwrd, (*cur)->word);
 	   DpsConv(&uni_bc, NORM, 14 * NORMlen + 1, (char*)uwrd, sizeof(dpsunicode_t) * (NORMlen + 1));
 	 } else if (FZ.nspell > Agent->WordParam.min_word_len) {
 	   NORMlen = DpsUniLen(s_p.word);
 	   if ((NORM = (char*)DpsMalloc(sizeof(char*) * (14 * NORMlen + 1))) == NULL) {
 		goto Norm_exit;
            }
-     	   DpsUniStrRCpy(uwrd, s_p.word); 
+     	   DpsUniStrRCpy(uwrd, s_p.word);
 	   DpsConv(&uni_bc, NORM, 14 * NORMlen + 1, (char*)uwrd, sizeof(dpsunicode_t) * (NORMlen + 1));
 	 }
  Norm_exit:
@@ -980,4 +980,3 @@ _WordNormalize( ... )
 		 PUSHs(newSVpv(NORM, dps_strlen(NORM)));
 	         DPS_FREE(NORM);
 	 }
-

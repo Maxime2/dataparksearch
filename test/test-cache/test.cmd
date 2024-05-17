@@ -76,4 +76,3 @@ fail !0 exec rm -f $(DPS_TEST_DIR)/search6.rej
 
 #fail !0 exec  $(INDEXER) -Edrop $(DPS_TEST_DIR)/indexer.conf >> $(DPS_TEST_LOG) 2>&1
 pass 0 exec rm -rf $(DPS_TEST_DIR)/var/
-

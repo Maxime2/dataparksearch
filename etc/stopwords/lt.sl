@@ -1,8 +1,8 @@
 #
-# Lithuanian stopwords lt.sl file for mnoGoSearch 
+# Lithuanian stopwords lt.sl file for mnoGoSearch
 # Created 2003-01-03 by Arnoldas Lukaðevièius
 # Email: hobby@takas.lt
-# 
+#
 
 Charset:  cp1257
 Language:  lt
@@ -441,7 +441,7 @@ deja
 ech
 irgi
 maþne
-mat 
+mat
 per
 dar
 dargi

@@ -124,7 +124,7 @@ given in table below.
 <para>=Allow, - all corresponding documents will be indexed and scanned for new links.</para>
 <para>=Disallow, - all corresponding documents will be ignored and deleted from database.</para>
 <para>=HrefOnly, - all corresponding documents will be only scanned for new links (not indexed).</para>
-<para>=CheckOnly, - all corresponding documents will be requested by HTTP HEAD request, not HTTP GET, 
+<para>=CheckOnly, - all corresponding documents will be requested by HTTP HEAD request, not HTTP GET,
 i.e. inly brief info about documents (size, last modified, content type) will be fetched.</para>
 <para>=Skip, - all corresponding documents will be skipped while indexing.</para>
 <para>=CheckMP3, - all corresponding documents will be checked for MP3 tags along if its Content-Type is equal to audio/mpeg.</para>
@@ -146,4 +146,3 @@ i.e. inly brief info about documents (size, last modified, content type) will be
 
 
 </sect1>
-

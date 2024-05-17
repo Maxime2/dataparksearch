@@ -106,4 +106,3 @@ taux
 années
 temps
 groupe
-

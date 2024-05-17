@@ -125,7 +125,7 @@
 	{"DisableRelNofollow",  1,1,    env_rpl_bool_var},
 	{"LocalCharset",	1,1,	env_rpl_charset},
 	{"BrowserCharset",	1,1,	env_rpl_charset},
-	
+
 	{"HTDBAddr",		0,1,	srv_rpl_var},
 	{"HTDBList",		0,1,	srv_rpl_var},
 	{"HTDBDoc",		0,2,	srv_htdb},
@@ -174,14 +174,14 @@
 	{"MirrorPeriod",	0,1,	srv_rpl_mirror},
 	{"RemoteCharset",	0,1,	srv_rpl_charset},
 	{"URLCharset",	        0,1,	srv_rpl_charset},
-	
+
 	{"Disallow",		1,100,	add_filter},
 	{"Allow",		1,100,	add_filter},
 	{"CheckMP3Only",	1,100,	add_filter},
 	{"CheckMP3",		1,100,	add_filter},
 	{"CheckOnly",		1,100,	add_filter},
 	{"HrefOnly",		1,100,	add_filter},
-	
+
 	{"Store",               1,100,  add_store_filter},
 	{"NoStore",             1,100,  add_store_filter},
 
@@ -191,15 +191,15 @@
 	{"DisallowIf",		1,100,	add_section_filter},
 	{"TagIf",               3,100,  add_subsection_match},
 	{"CategoryIf",          3,100,  add_subsection_match},
-  
+
 	{"Server",		1,100,	add_srv},
 	{"Realm",		1,100,	add_srv},
 	{"Subnet",		1,100,	add_srv},
 	{"URL",			1,1,	add_url},
-	
+
 	{"Alias",		1,100,	add_alias},
 	{"ReverseAlias",	1,100,	add_alias},
-	
+
 	{"AddType",		1,100,	add_type},
 	{"Mime",		2,3,	add_parser},
 	{"Section",		2,7,	add_section},
@@ -240,4 +240,3 @@
 
 	{"CategoryTable",	1,1,	add_cat_table},
 	{"FlushCategoryTable",	0,0,	flush_cat_table},
-

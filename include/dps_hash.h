@@ -13,7 +13,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_HASH_H
@@ -22,14 +22,11 @@
 #include "dps_config.h"
 
 /* Returns unsigned  hash64 of data block */
-extern dpshash64_t DpsHash64(const char * buf, size_t size);
-extern __C_LINK dpshash32_t __DPSCALL DpsHash32(const char * buf, size_t size);
-extern __C_LINK dpshash32_t __DPSCALL DpsHash32Update(const dpshash32_t prev, const char * buf, size_t size);
+extern dpshash64_t DpsHash64 (const char *buf, size_t size);
+extern __C_LINK dpshash32_t __DPSCALL DpsHash32 (const char *buf, size_t size);
+extern __C_LINK dpshash32_t __DPSCALL DpsHash32Update (const dpshash32_t prev, const char *buf, size_t size);
 
-#define DpsStrHash64(buf)		DpsHash64((buf), dps_strlen(buf))
-#define DpsStrHash32(buf)		DpsHash32((buf), dps_strlen(buf))
-
-
-
+#define DpsStrHash64(buf) DpsHash64 ((buf), dps_strlen (buf))
+#define DpsStrHash32(buf) DpsHash32 ((buf), dps_strlen (buf))
 
 #endif

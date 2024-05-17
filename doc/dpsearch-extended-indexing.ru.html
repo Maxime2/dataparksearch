@@ -348,7 +348,7 @@ CLASS="APPLICATION"
 >Вы можете использовать несколько команд <TT
 CLASS="LITERAL"
 >HTDBDoc/List</TT
-> в одном файле 
+> в одном файле
 <TT
 CLASS="FILENAME"
 >indexer.conf</TT
@@ -515,7 +515,7 @@ CLASS="PROGRAMLISTING"
 >Для команды <B
 CLASS="COMMAND"
 >HTDBText</B
-> можно использовать и мета-переменные шаблона страницы выдачи (например, $(DP_ID), $(URL)) для формирования SQL-запроса, например: 
+> можно использовать и мета-переменные шаблона страницы выдачи (например, $(DP_ID), $(URL)) для формирования SQL-запроса, например:
 <PRE
 CLASS="PROGRAMLISTING"
 >HTDBText hint "SELECT hint FROM hints WHERE url = '$(url)'"</PRE
@@ -559,7 +559,7 @@ CLASS="PROGRAMLISTING"
 >Используя <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> вы можете создать текстовый индекс по таблице 
+> вы можете создать текстовый индекс по таблице
 <TT
 CLASS="LITERAL"
 >message</TT
@@ -625,9 +625,9 @@ CLASS="APPLICATION"
 >:
 		<PRE
 CLASS="PROGRAMLISTING"
->SELECT url.url 
-FROM url,dict 
-WHERE dict.url_id=url.rec_id 
+>SELECT url.url
+FROM url,dict
+WHERE dict.url_id=url.rec_id
 AND dict.word='someword';</PRE
 >
 		</P
@@ -638,9 +638,9 @@ AND dict.word='someword';</PRE
 >Вы также можете задать несколько слов при поиске:
 		<PRE
 CLASS="PROGRAMLISTING"
->SELECT url.url, count(*) as c 
+>SELECT url.url, count(*) as c
 FROM url,dict
-WHERE dict.url_id=url.rec_id 
+WHERE dict.url_id=url.rec_id
 AND dict.word IN ('some','word')
 GROUP BY url.url
 ORDER BY c DESC;</PRE
@@ -668,7 +668,7 @@ CLASS="LITERAL"
  </P
 ><P
 >Основная идея похожа на создание текстового индекса, за исключением того, что поиск должен
-давать реальные URL вместо URL в виде 'htdb:/...'. 
+давать реальные URL вместо URL в виде 'htdb:/...'.
 Это достигается при помощи механизма алиасов <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -957,7 +957,7 @@ CLASS="FILENAME"
 <B
 CLASS="COMMAND"
 >indexer</B
-> преобразует этот URL в 
+> преобразует этот URL в
 		<PRE
 CLASS="PROGRAMLISTING"
 >exec:/usr/local/dpsearch/etc/curl.sh?https://some.https.site/path/to/page.html</PRE
@@ -1027,7 +1027,7 @@ CLASS="PROGRAMLISTING"
 >
 	</P
 ><P
->Зеркалирование очень полезно когда вы экспериментируете с индексированием 
+>Зеркалирование очень полезно когда вы экспериментируете с индексированием
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -1081,7 +1081,7 @@ CLASS="PROGRAMLISTING"
 1h-10M+1s - 1 час минус 10 минут плюс 1 секунда</PRE
 ></P
 ><P
->Если указано только число без какой-либо буквы, считается, что время указано в секундах 
+>Если указано только число без какой-либо буквы, считается, что время указано в секундах
 (это сделано для совместимости с версиями, младше 3.1.7).</P
 ><P
 >Следующая команда задаёт использование локальных копий в течении одного дня:
@@ -1167,7 +1167,7 @@ CLASS="OPTION"
 >Таким образом, команда <B
 CLASS="COMMAND"
 >ActionSQL</B
-> предназначена для поиска и сбора различной информации с индексируемых страниц. 
+> предназначена для поиска и сбора различной информации с индексируемых страниц.
 Например, следующие команды будет собирать в таблицу phonedata все найденные номера телефонов и заголовки страниц, на которых эти номера указаны:
 <PRE
 CLASS="PROGRAMLISTING"

@@ -81,7 +81,7 @@ NAME="Robots" Content="xxx"&gt;</literal>, где Content содержит
 			</listitem>
 <listitem>
 <para><indexterm><primary>META</primary><secondary>DP.PopRank</secondary></indexterm>
-<literal>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</literal> где значение Content - вещественное число. 
+<literal>&lt;META NAME="DP.PopRank" Content="xxx"&gt;</literal> где значение Content - вещественное число.
 Этот тэг используется для задания начального значения <link linkend="poprank">PopularityRank</link> для страницы.
 </para>
 </listitem>
@@ -110,7 +110,7 @@ NAME="Robots" Content="xxx"&gt;</literal>, где Content содержит
 				<para>&lt;AREA HREF="xxx"&gt;</para>
 			</listitem>
 			<listitem>
-				<para>&lt;BASE HREF="xxx"&gt; 
+				<para>&lt;BASE HREF="xxx"&gt;
 <note>
 						<para>Если &lt;BASE HREF&gt;
 содержит некорректно сформированный URL, то для формирования относительных
@@ -127,14 +127,14 @@ SkipHrefIn "img, link, script"
 </para>
 
 <para><indexterm><primary>Команда</primary><secondary>DisableRelNoFollow</secondary></indexterm>
-По умолчанию, <application>DataparkSearch</application> не учитывает ссылки с атрибутом rel=nofollow. 
+По умолчанию, <application>DataparkSearch</application> не учитывает ссылки с атрибутом rel=nofollow.
 Но вы можете изменить это поведение при помощи команды <command>"DisableRelNoFollow yes"</command>, которую необходимо указать в файле конфигурации <filename>indexer.conf</filename>.
 </para>
 	</sect1>
 
 	<sect1 id="htmlparser-comments">
 		<title>Комментарии</title>
-		<para>Если Вы индексируете свои собственные ресурсы и 
+		<para>Если Вы индексируете свои собственные ресурсы и
 		имеете возможность отредактировать их, то, возможно,
 		для более оптимальной работы индексации и поиска,
 		имеет смысл специальным образом подготовить документы,
@@ -150,7 +150,7 @@ SkipHrefIn "img, link, script"
 				<para>
 				Текст между тэгами
 &lt;!--UdmComment--&gt; .... &lt;!--/UdmComment--&gt; становится невидимым
-для индексации. 
+для индексации.
 				</para>
 			</listitem>
 			<listitem>
@@ -173,7 +173,7 @@ SkipHrefIn "img, link, script"
 <sect1 id="htmlparser-bodypatterns">
 <indexterm><primary>Команда</primary><secondary>BodyPattern</secondary></indexterm>
 <title>Шаблоны для индексирования</title>
-<para>Если вам нужно индексировать не всю страницу целиком, например, чтобы исключить навигацию, рекламу и т.п., 
+<para>Если вам нужно индексировать не всю страницу целиком, например, чтобы исключить навигацию, рекламу и т.п.,
 вы можете использовать команду <command>BodyPattern</command> чтобы указать шаблон для извлечения контента для индексирования.
 Например:
 <programlisting>
@@ -184,7 +184,7 @@ BodyPattern "&lt;!--content--&gt;(.*)&lt;!--/content--&gt;" "$1"
 </para>
 <para>Вы можете задать несколько команд <command>BodyPattern</command>, но только первая по порядку подходящая будет применена к
 странице.
-Эти команды пытаются примениться к каждой индексируемой странице. 
+Эти команды пытаются примениться к каждой индексируемой странице.
 Осторожно, большое число таких команд может замедлить скорость индексирования.
 </para>
 

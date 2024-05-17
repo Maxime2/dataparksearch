@@ -13,18 +13,18 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_ID3_H
 #define _DPS_ID3_H
 
-#define DPS_MP3_UNKNOWN	0
-#define DPS_MP3_TAG	1
-#define DPS_MP3_ID3	2
-#define DPS_MP3_RIFF	3
+#define DPS_MP3_UNKNOWN 0
+#define DPS_MP3_TAG 1
+#define DPS_MP3_ID3 2
+#define DPS_MP3_RIFF 3
 
-int DpsMP3Type(DPS_DOCUMENT *Doc);
-int DpsMP3Parse(DPS_AGENT *A, DPS_DOCUMENT *D);
+int DpsMP3Type (DPS_DOCUMENT *Doc);
+int DpsMP3Parse (DPS_AGENT *A, DPS_DOCUMENT *D);
 
 #endif

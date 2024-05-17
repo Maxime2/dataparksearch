@@ -7,4 +7,3 @@ CREATE TABLE ncrossdict (
 CREATE INDEX ncrossdict_url_id ON ncrossdict (url_id);
 CREATE INDEX ncrossdict_ref_id ON ncrossdict (ref_id);
 CREATE INDEX ncrossdict_word_id ON ncrossdict (word_id);
-

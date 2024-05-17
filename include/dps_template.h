@@ -13,17 +13,15 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_TEMPLATE_H
 #define _DPS_TEMPLATE_H
 
-extern int  DpsTemplateLoad(DPS_AGENT *Agent, DPS_ENV * Env, DPS_TEMPLATE *tmplt, const char *tname);
-extern __C_LINK void __DPSCALL DpsTemplatePrint(DPS_AGENT * Agent, DPS_OUTPUTFUNCTION dps_out, void *stream, char *dst, size_t dst_len, 
-						DPS_TEMPLATE *tmplt, const char *where);
-extern size_t DpsPrintTextTemplate(DPS_AGENT *A, DPS_OUTPUTFUNCTION dps_out, void * stream, char * dst, size_t dst_len, 
-				   DPS_TEMPLATE *tmplt, const char * templ);
-extern void DpsTemplateFree(DPS_TEMPLATE *tmplt);
+extern int DpsTemplateLoad (DPS_AGENT *Agent, DPS_ENV *Env, DPS_TEMPLATE *tmplt, const char *tname);
+extern __C_LINK void __DPSCALL DpsTemplatePrint (DPS_AGENT *Agent, DPS_OUTPUTFUNCTION dps_out, void *stream, char *dst, size_t dst_len, DPS_TEMPLATE *tmplt, const char *where);
+extern size_t DpsPrintTextTemplate (DPS_AGENT *A, DPS_OUTPUTFUNCTION dps_out, void *stream, char *dst, size_t dst_len, DPS_TEMPLATE *tmplt, const char *templ);
+extern void DpsTemplateFree (DPS_TEMPLATE *tmplt);
 
 #endif

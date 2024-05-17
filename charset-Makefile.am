@@ -1,12 +1,12 @@
-## Process this file with automake to produce Makefile.in 
+## Process this file with automake to produce Makefile.in
 AUTOMAKE_OPTIONS = foreign no-installinfo
-SUBDIRS = src 
+SUBDIRS = src
 
 # copy dirs w/out Makefile.am into dist
 dist-hook:
 #	mkdir $(distdir)/include
 	cp -r $(srcdir)/include/ $(distdir)/include/
-	rm -f $(distdir)/include/dps_config.h $(distdir)/include/stamp.h 
+	rm -f $(distdir)/include/dps_config.h $(distdir)/include/stamp.h
 
 install-data-local:
 	$(mkinstalldirs) $(localstatedir)
@@ -23,4 +23,3 @@ EXTRA_DIST = LICENSE src/uconv-8bit.h src/sgml.entities src/uconv-8bit.inc src/s
 
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
-

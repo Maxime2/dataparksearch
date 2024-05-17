@@ -66,7 +66,7 @@ fi
 
 if test "$echo_libs" = "yes"; then
 	echo $dpsearch_libs
-fi      
+fi
 
 if test "$echo_tl_cflags" = "yes"; then
 	echo $dpsearch_tl_cflags
@@ -74,5 +74,4 @@ fi
 
 if test "$echo_tl_libs" = "yes"; then
 	echo $dpsearch_tl_libs
-fi      
-
+fi

@@ -10,7 +10,7 @@
 DBAddr mysql://foo:bar@localhost/search/?dbmode=cache
 
 #
-# Specify how many file-stores will be used for word index 
+# Specify how many file-stores will be used for word index
 #
 #WrdFiles 4096
 
@@ -63,4 +63,3 @@ OptimizeAtUpdate yes
 #Limit g:language
 #Limit type:content
 #Limit dt:time
-

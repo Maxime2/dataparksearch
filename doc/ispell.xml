@@ -108,7 +108,7 @@ line:</para>
 			<literal>webmaster/MS</literal>
 		</para>
 		<para>Then copy this file to <filename>/etc</filename> directory of
-<application>DataparkSearch</application> and add this file by <command>Spell</command> command in 
+<application>DataparkSearch</application> and add this file by <command>Spell</command> command in
 <application>DataparkSearch</application> configuration:</para>
 
 		<para>During next reindexing using of all documents

@@ -41,4 +41,3 @@ mica
 preguntar
 qui
 amb
-

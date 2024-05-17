@@ -80,7 +80,7 @@ Mime application/msword text/plain "/usr/bin/catdoc -a $1"
 				</para>
 
 				<para>Если парсер записывает результат своей работы в файл, используйте макро <option>$2</option>.
-<command>indexer</command> заменить <option>$2</option> на имя временного файла, запустит парсер, 
+<command>indexer</command> заменить <option>$2</option> на имя временного файла, запустит парсер,
 прочитает результат из этого временного файла, а затем удалит его. Например:
 				<programlisting>
 Mime application/msword text/plain "/usr/bin/catdoc -a $1 >$2"
@@ -89,11 +89,11 @@ Mime application/msword text/plain "/usr/bin/catdoc -a $1 >$2"
 
 				<para>Парсер выше будет читать данные из первого временного файла и записывать результат во
 второй временный файл. Оба временных файла будут удалены по окончании  работы парсера. Заметим, что результат использования
-этого парсера будет абсолютно таким же, как и предыдущего, они отличаютя только сопсобом выполнения: 
+этого парсера будет абсолютно таким же, как и предыдущего, они отличаютя только сопсобом выполнения:
 файл-&gt;<literal>stdout</literal> и файл-&gt;файл соответственно.</para>
 
-<para>Если параметр &lt;command line&gt; опущен, это означает, что два MIME-типа являются синонимами. 
-Например, некоторые сайты отдают MP3 файлы с неправильным MIME-типом <userinput>application/mp3</userinput>. 
+<para>Если параметр &lt;command line&gt; опущен, это означает, что два MIME-типа являются синонимами.
+Например, некоторые сайты отдают MP3 файлы с неправильным MIME-типом <userinput>application/mp3</userinput>.
 Вы можете исправить его на корректный <userinput>audio/mpeg</userinput> и тем самым обработать его:
 				<programlisting>
 Mime application/mp3 audio/mpeg
@@ -274,7 +274,7 @@ Mime  application/vnd.ms-word  text/html  "/usr/local/dpsearch/sbin/0wvHtml.pl $
 </para>
 			</listitem>
 			<listitem>
-				<para><command>swf2html</command> из 
+				<para><command>swf2html</command> из
 <ulink url="http://www.macromedia.com/software/flash/download/search_engine/">Flash Search Engine SDK</ulink>
 </para>
         <para><filename>indexer.conf</filename>:
@@ -285,7 +285,7 @@ Mime  application/x-shockwave-flash  text/html  "/usr/local/dpsearch/sbin/swf2ht
 </para>
 			</listitem>
 			<listitem>
-				<para>djvutxt из 
+				<para>djvutxt из
 <ulink url="http://djvu.sourceforge.net/">djvuLibre</ulink>
 </para>
         <para><filename>indexer.conf</filename>:
@@ -303,7 +303,7 @@ Mime  image/vnd.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
 
 		</itemizedlist>
 
-	<para>Пожалуйста, присылайте Ваши скрипты и конфигурации для новых парсеров на адрес 
+	<para>Пожалуйста, присылайте Ваши скрипты и конфигурации для новых парсеров на адрес
 <email>dataparksearch@datapark.ru</email>.</para>
 
 	</sect2>
@@ -312,7 +312,7 @@ Mime  image/vnd.djvu  text/plain  "/usr/local/bin/djvutxt $1 $2"
 		<title>Библиотека libextractor</title>
 <indexterm><primary>libextractor</primary></indexterm>
 
-<para><application>DataparkSearch</application> может быть собран с <ulink url="http://gnunet.org/libextractor/">библиотекой libextractor</ulink>. 
+<para><application>DataparkSearch</application> может быть собран с <ulink url="http://gnunet.org/libextractor/">библиотекой libextractor</ulink>.
 При помощи этой бибилиотеки <application>DataparkSearch</application> может индексировать ключевые слова из файлов следующих форматов: PDF, PS, OLE2 (DOC, XLS, PPT), OpenOffice (sxw), StarOffice (sdw), DVI, MAN, FLAC, MP3 (ID3v1 and ID3v2), NSF(E) (NES music), SID (C64 music), OGG, WAV, EXIV2, JPEG, GIF, PNG, TIFF, DEB, RPM, TAR(.GZ), ZIP, ELF, S3M (Scream Tracker 3), XM (eXtended Module), IT (Impulse Tracker), FLV, REAL, RIFF (AVI), MPEG, QT и ASF.</para>
 
 <para>Чтобы собрать <application>DataparkSearch</application> с библиотекой <application>libextractor</application>, установите библиотеку, а затем сконфигурируйте и соберите <application>DataparkSearch</application>.

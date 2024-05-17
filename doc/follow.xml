@@ -21,7 +21,7 @@ Server/Realm/Subnet commands from <filename>indexer.conf</filename>.</para>
 		<para>
 			Optional parameter <option>method</option> specify an document action for this command.
 May take values:
-			<literal>Allow</literal>, <literal>Disallow</literal>, <literal>HrefOnly</literal>, 
+			<literal>Allow</literal>, <literal>Disallow</literal>, <literal>HrefOnly</literal>,
 			<literal>CheckOnly</literal>, <literal>Skip</literal>, 	<literal>CheckMP3</literal>,
 			<literal>CheckMP3Only</literal>. By default, the value <literal>Allow</literal> is used.
 		<orderedlist numeration="arabic">
@@ -53,7 +53,7 @@ deleted from database, if its was placed into before.
 				<para>
 					Value <literal>HrefOnly</literal> specify that all corresponding documents will be only
 scanned for new links (not indexed). This is useful, for example, for getting new documents from a feed, when the feed page is only scanned to
-detect new messages for indexing. 
+detect new messages for indexing.
 <programlisting>
 Server HrefOnly Page http://www.site.ext/feed.xml
 Server Allow    Path http://www.site.ext/
@@ -99,7 +99,7 @@ These documents will marked as expired.
 				<para>
 					Value <literal>CheckMP3</literal> specify that corresponding documents will be checked
 for MP3 tags along if its <literal>Content-Type</literal> is equal to <literal>audio/mpeg</literal>.
-This is useful, for example, if remote server supply <literal>application/octet-stream</literal> as 
+This is useful, for example, if remote server supply <literal>application/octet-stream</literal> as
 <literal>Content-Type</literal> for MP3 files. If this tag is present, these files will indexed as MP3 file, otherwise its
 will be processed according to <literal>Content-Type</literal>.
 				</para>
@@ -136,7 +136,7 @@ URL corresponds to some Server command.
   Use optional <option>subsection</option>
 parameter to specify server's checking behavior. <!--Values of subsection
 are the same with "Follow" command arguments.--> Subsection value must be
-one of the following: <literal>nofollow</literal>, <literal>page</literal>, <literal>path</literal>, 
+one of the following: <literal>nofollow</literal>, <literal>page</literal>, <literal>path</literal>,
 <literal>site</literal>, <literal>world</literal> and has "path" value by
 default. <!--If subsection is not specified, current "Follow" value will
 be used. So, the only <literal>Server site http://localhost/</literal>
@@ -207,7 +207,7 @@ all messages from "udm" hierarchy.</para>
 <!--	</sect3> -->
 
 <para>
-Optional parameter <literal>CaseType</literal> is specify the case sensivity for string comparison, it can take one of follow value: 
+Optional parameter <literal>CaseType</literal> is specify the case sensivity for string comparison, it can take one of follow value:
 <literal>case</literal> - case insensitive comparison, or <literal>nocase</literal> - case sensitive comparison.
 </para>
 
@@ -216,19 +216,19 @@ Optional parameter <literal>CaseType</literal> is specify the case sensivity for
 Optional parameter <literal>CmpType</literal> is specify the type of comparison and can take two value:
 <literal>Regex</literal> and <literal>String</literal>.
 <literal>String</literal> wildcards is default
-match type. You can use ? and * signs in URLMask parameters, they means "one character" and "any number of characters" respectively. 
+match type. You can use ? and * signs in URLMask parameters, they means "one character" and "any number of characters" respectively.
 Use \ character to escape these characters in you patterns.
 For example, if you want to index all HTTP sites in .ru domain, use this
 command:<programlisting>Realm http://*.ru/*</programlisting>
 		</para>
-		
+
 		<para>Regex comparison type takes a regular expression
 as it's argument. Activate regex comparison type using <option>Regex</option>
 keyword. For example, you can describe everything in .ru domain using
 regex comparison type: <programlisting>Realm Regex ^http://.*\.ru/</programlisting>
 		</para>
 
-		
+
 		<para>Optional parameter <literal>MatchType</literal> means match type. There
 are <literal>Match</literal> and <literal>NoMatch</literal> possible values with <literal>Match</literal> as
 default. <literal>Realm NoMatch</literal> has reverse effect. It means
@@ -236,7 +236,7 @@ that URL that does not match given <option>pattern</option> will correspond to t
 <command>Realm</command> command. For example, use this command to index everything
 without .com domain:<programlisting>Realm NoMatch http://*.com/*</programlisting>
 		</para>
-		
+
 		<para>Optional <option>alias</option> argument allows providing very
 complicated URL rewrite more powerful than other aliasing
 mechanism. Take a look <xref linkend="aliases"/> for <option>alias</option> argument usage
@@ -256,7 +256,7 @@ effect with <option>String</option> type.</para>
 
 		<para>This is the main command of the
 <filename>indexer.conf</filename> file. It is used to add servers or
-their parts to be indexed. 
+their parts to be indexed.
 <!--
 The format of Server command is:</para>
 
@@ -539,7 +539,7 @@ URL http://localhost/path/to/page.html
 <para>
 This command inserts given <option>URL</option> into database. This is usefull to add
 several entry points to one server. Has no effect if an URL is already
-in the database. 
+in the database.
 </para>
 </sect2>
 
@@ -554,8 +554,8 @@ in the database.
 URLDB pgsql://foo:bar@localhost/portal/links?field=url
 </programlisting>
 <para>
-These commands are equal to <command>Server</command>, <command>Realm</command>, <command>Subnet</command> and 
-<command>URL</command> commands respectively, but takes arguments from field of SQL-table specified. 
+These commands are equal to <command>Server</command>, <command>Realm</command>, <command>Subnet</command> and
+<command>URL</command> commands respectively, but takes arguments from field of SQL-table specified.
 In example above, URLs are takes from database <option>portal</option>, SQL-table <option>links</option>
 and filed <option>url</option>.
 </para>
@@ -572,9 +572,9 @@ and filed <option>url</option>.
 URLFile url.lst
 </programlisting>
 <para>
-These commands are equal to <command>Server</command>, <command>Realm</command>, <command>Subnet</command> and 
-<command>URL</command> commands respectively, but takes arguments from a text file specified. 
-In example above, URLs are takes from the text file <option>url.lst</option> located in 
+These commands are equal to <command>Server</command>, <command>Realm</command>, <command>Subnet</command> and
+<command>URL</command> commands respectively, but takes arguments from a text file specified.
+In example above, URLs are takes from the text file <option>url.lst</option> located in
 <filename>/usr/local/dpsearch/etc</filename> directory, but the full path to a file can be specified as well.
 </para>
 </sect2>
@@ -584,7 +584,7 @@ In example above, URLs are takes from the text file <option>url.lst</option> loc
 <title>Robots exclusion standard</title>
 <indexterm><primary>Robots exclustion standard</primary></indexterm>
 <indexterm><primary>robots.txt</primary></indexterm>
-<para><application>DataparkSearch</application> obeys <ulink url="http://www.robotstxt.org/">the robots.txt standard</ulink>. 
+<para><application>DataparkSearch</application> obeys <ulink url="http://www.robotstxt.org/">the robots.txt standard</ulink>.
 <ulink url="http://www.robotstxt.org/robotstxt.html"><filename>robots.txt</filename></ulink> is a file that you place in your web server's root directory that tells search engines what pages you do not want to be indexed.</para>
 
 <para>
@@ -594,7 +594,7 @@ In example above, URLs are takes from the text file <option>url.lst</option> loc
 <para>
 <indexterm><primary>robots.txt</primary><secondary>Crawl-Delay</secondary></indexterm>
 <indexterm><primary>robots.txt</primary><secondary>Host</secondary></indexterm>
-<application>DataparkSearch</application> also supports 
+<application>DataparkSearch</application> also supports
 <ulink url="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"><option>Crawl-delay</option></ulink>,
 <ulink url="http://help.yandex.ru/webmaster/?id=996567#996574"><option>Host</option></ulink>
 and <ulink url="http://www.sitemaps.org/"><option>Sitemap</option></ulink>
@@ -638,11 +638,11 @@ RobotsPeriod 30d
 <sect3 id="crawldelay_cmd">
 <title><command>CrawlDelay</command> command</title>
 <para><indexterm><primary>Command</primary><secondary>CrawlDelay</secondary></indexterm>
-Use this command to specify default pause in seconds between consecutive fetches from same server. 
-This is similar to crawl-delay command in <filename>robots.txt</filename> file, but can specified in <filename>indexer.conf</filename> 
-file on per server basis. If no crawl-delay value is specified in <filename>robots.txt</filename>, 
-the value of <command>CrawlDelay</command> is used. 
-If crawl-delay is specified in robots.txt, then the maximum of <command>CrawlDelay</command> and crawl-delay is used as 
+Use this command to specify default pause in seconds between consecutive fetches from same server.
+This is similar to crawl-delay command in <filename>robots.txt</filename> file, but can specified in <filename>indexer.conf</filename>
+file on per server basis. If no crawl-delay value is specified in <filename>robots.txt</filename>,
+the value of <command>CrawlDelay</command> is used.
+If crawl-delay is specified in robots.txt, then the maximum of <command>CrawlDelay</command> and crawl-delay is used as
 interval between consecutive fetches.
 </para>
 </sect3>
@@ -650,7 +650,7 @@ interval between consecutive fetches.
 <sect3 id="maxcrawldelay_cmd">
 <title><command>MaxCrawlDelay</command> command</title>
 <para><indexterm><primary>Command</primary><secondary>MaxCrawlDelay</secondary></indexterm>
-When <application>indexer</application> is ready to index an URL from a server for which the Crawl-deley interval isn't expired yet since previous access, it waits until this period will be expired, 
+When <application>indexer</application> is ready to index an URL from a server for which the Crawl-deley interval isn't expired yet since previous access, it waits until this period will be expired,
 if waiting peiod is less than amount of time specified by <command>MaxCrawlDelay</command> command. If the waiting period is greater or equal to this value, selected URL is posponed in indexing for the time remained.
 </para>
 <programlisting>

@@ -100,7 +100,7 @@ NAME="CACHEMODE-INTRO"
 ><TT
 CLASS="LITERAL"
 >cache</TT
-> words storage mode is able to index and search 
+> words storage mode is able to index and search
 quickly through several millions of documents.</P
 ></DIV
 ><DIV
@@ -126,7 +126,7 @@ CLASS="LITERAL"
 > and <TT
 CLASS="LITERAL"
 >urlinfo</TT
->). 
+>).
 <A
 NAME="AEN3457"
 ></A
@@ -165,7 +165,7 @@ CLASS="APPLICATION"
 installation. URLs sorting information is located in files under <TT
 CLASS="FILENAME"
 >/var/url</TT
-> directory of 
+> directory of
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
@@ -197,7 +197,7 @@ CLASS="FILENAME"
 > and <TT
 CLASS="FILENAME"
 >cached.conf</TT
-> 
+>
 config files respectively. Default values are 1024 for <B
 CLASS="COMMAND"
 >CacheLogWords</B
@@ -324,7 +324,7 @@ CLASS="FILENAME"
 directory of <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> installation. 
+> installation.
 In new mode it stores in <TT
 CLASS="FILENAME"
 >/var/tree/</TT
@@ -391,7 +391,7 @@ CLASS="FILENAME"
 > as usual and for <B
 CLASS="COMMAND"
 >DBAddr</B
-> command 
+> command
 add <TT
 CLASS="LITERAL"
 >cache</TT
@@ -449,7 +449,7 @@ CLASS="USERINPUT"
 ></LI
 ><LI
 ><P
->Creating word index. This stage is no needs, if 
+>Creating word index. This stage is no needs, if
 <TT
 CLASS="FILENAME"
 >cached</TT
@@ -682,7 +682,7 @@ CLASS="LITERAL"
 > command(s) to your <TT
 CLASS="FILENAME"
 >indexer.conf</TT
-> 
+>
 (or <TT
 CLASS="FILENAME"
 >cached.conf</TT
@@ -808,13 +808,13 @@ CLASS="OPTION"
 > is specified for <B
 CLASS="COMMAND"
 >Limit</B
-> command, then this SQL-query is executed for limit construction. 
+> command, then this SQL-query is executed for limit construction.
 This SQL-query should return all possible pairs of limit value and url.rec_id. E.g.:
 <PRE
 CLASS="PROGRAMLISTING"
 >Limit prm:strcrc32 "SELECT label, rec_id FROM labels" pgsql://u:p@localhost/sitedb/</PRE
 >
-where prm - is the name of limit and the name of CGI-parameter is used for this limit; strcrc32 - is the type of limit, particularly for this limit is a string. 
+where prm - is the name of limit and the name of CGI-parameter is used for this limit; strcrc32 - is the type of limit, particularly for this limit is a string.
 Instead of strcrc32 it's possible to use any of the following limit types:
 <DIV
 CLASS="TABLE"

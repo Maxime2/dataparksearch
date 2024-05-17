@@ -30,7 +30,7 @@ DBAddr mysql://foo:bar@localhost/search/?dbmode=cache
 #LocalCharset koi8-r
 
 
-# Load synonyms. File names are either absolute or 
+# Load synonyms. File names are either absolute or
 # relative to /etc directory of DataparkSearch installation.
 #
 #Synonym synonym/english.syn
@@ -38,7 +38,7 @@ DBAddr mysql://foo:bar@localhost/search/?dbmode=cache
 #Synonym synonym/francais.syn
 
 
-# Ispell files. File names are either absolute or 
+# Ispell files. File names are either absolute or
 # relative to /etc directory of DataparkSearch installation.
 #
 #Spell en us-ascii ispell/british.xlg
@@ -48,7 +48,7 @@ DBAddr mysql://foo:bar@localhost/search/?dbmode=cache
 #Affix ru koi8-r ispell/russian.aff
 
 # Load stopwords
-# 
+#
 #Include stopwords.conf
 
 
@@ -69,7 +69,7 @@ NumSections 47
 ##### Cache mode related parameters. #####
 ##### Use same values as in cached.conf #####
 
-# Specify how many file-stores will be used for word index 
+# Specify how many file-stores will be used for word index
 #
 #WrdFiles 4096
 
@@ -85,4 +85,3 @@ DetectClones	no
 # Uncomment this line to enable aspell based suggestions for mistyped words
 #AspellExtensions yes
 #
-

@@ -14,16 +14,16 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_ROBOTS_H
 #define _DPS_ROBOTS_H
 
-extern DPS_ROBOT* DpsRobotFind(DPS_ROBOTS *Robots, const char *hostinfo);
-extern DPS_ROBOT_RULE* DpsRobotRuleFind(DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc, DPS_URL * URL, int make_pause, int aliased);
-extern int DpsRobotListFree(DPS_AGENT *Indexer, DPS_ROBOTS *Robots);
-extern int DpsRobotParse(DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, const char *hostinfo, int hops);
-extern void DpsRobotClean(DPS_AGENT *Indexer);
+extern DPS_ROBOT *DpsRobotFind (DPS_ROBOTS *Robots, const char *hostinfo);
+extern DPS_ROBOT_RULE *DpsRobotRuleFind (DPS_AGENT *Indexer, DPS_SERVER *Server, DPS_DOCUMENT *Doc, DPS_URL *URL, int make_pause, int aliased);
+extern int DpsRobotListFree (DPS_AGENT *Indexer, DPS_ROBOTS *Robots);
+extern int DpsRobotParse (DPS_AGENT *Indexer, DPS_SERVER *Srv, const char *content, const char *hostinfo, int hops);
+extern void DpsRobotClean (DPS_AGENT *Indexer);
 
 #endif

@@ -22,4 +22,3 @@
        (autoload 'dpsearch-mode "dpsearch-mode"
          "Major mode for editing dpsearch files." t)
        (add-to-list 'auto-mode-alist '("\\.dpsearch$" . dpsearch-mode))))
-

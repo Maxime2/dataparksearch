@@ -14,7 +14,7 @@ dnl Macro to check for a function prototype in a given header.
 dnl
 AC_DEFUN([AC_CHECK_FUNC_PROTO],
         [AC_CACHE_CHECK(for $1 function prototype in $2, ac_cv_have_$1_proto,
-                AC_EGREP_CPP([$1], 
+                AC_EGREP_CPP([$1],
 [
 #define _GNU_SOURCE
 #define __USE_GNU

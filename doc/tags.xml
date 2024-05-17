@@ -51,7 +51,7 @@ TagIf &lt;tag&gt; [Match|NoMatch] [NoCase|Case] [String|Regex] [loose] &lt;secti
 </programlisting>
 <para>
 Mark document by &lt;tag&gt; tag, if the value of <option>section</option> match the <option>arg</option> pattern given.
-The meaning of first three optional parameters are exactly the same 
+The meaning of first three optional parameters are exactly the same
 as for the <command>Allow</command> command (see <xref linkend="allow_cmd"/>). Optional parameter <option>loose</option> specify
 to do not override the tag value if it has been already set from server parameters.
 </para>

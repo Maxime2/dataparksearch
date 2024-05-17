@@ -11,4 +11,3 @@ DROP TABLE ndict11;
 DROP TABLE ndict12;
 DROP TABLE ndict16;
 DROP TABLE ndict32;
-

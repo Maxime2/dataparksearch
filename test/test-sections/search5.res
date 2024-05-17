@@ -58,16 +58,16 @@
              <A HREF="http://site/test.xml" TARGET="_blank">http://site/test.xml</A>
              <font color="#008800">
               - 2893 bytes [text/xml]
-              - 
+              -
 	      	      <DD><small>[<a href="/cgi-bin/storedoc.cgi?rec_id=1346304065&amp;label=&amp;DM=Tue%2C+08+Sep+1970%2C+16%3A29%3A24+EST&amp;DS=2893&amp;L=en&amp;CS=ISO-8859-1&amp;DU=http%3A%2F%2Fsite%2Ftest.xml&amp;CT=text%2Fxml&amp;q=press+press">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?m=bool&amp;np=0&amp;q=press+AND+NOT+%28+allinmeta.source%3A+press+%29&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>
@@ -95,16 +95,16 @@
              <A HREF="http://site/directory/test.html" TARGET="_blank">http://site/directory/test.html</A>
              <font color="#008800">
               - 248 bytes [text/html]
-              - 
+              -
 	      	      <DD><small>[<a href="/cgi-bin/storedoc.cgi?rec_id=-1413435903&amp;label=&amp;DM=Sat%2C+31+Mar+2012%2C+12%3A35%3A05+EST&amp;DS=248&amp;L=en&amp;CS=ISO-8859-1&amp;DU=http%3A%2F%2Fsite%2Fdirectory%2Ftest.html&amp;CT=text%2Fhtml&amp;q=press+press">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?m=bool&amp;np=0&amp;q=press+AND+NOT+%28+allinmeta.source%3A+press+%29&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

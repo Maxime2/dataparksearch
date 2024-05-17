@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-  
+
 DEB_CONFIGURE_USER_FLAGS=--with-pgsql --with-openssl --disable-apache-module --with-readline --enable-multidbaddr --datadir=$(DEB_CONFIGURE_DATADIR) --sbindir=$(DEB_CONFIGURE_SBINDIR)
 
 include /usr/share/cdbs/1/rules/debhelper.mk

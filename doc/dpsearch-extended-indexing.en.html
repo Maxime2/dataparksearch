@@ -158,7 +158,7 @@ CLASS="LITERAL"
 >With News extensions enable, the <B
 CLASS="COMMAND"
 >indexer</B
-> try to detect Parent-ID for each article indexed and 
+> try to detect Parent-ID for each article indexed and
 also put the pairs (<TT
 CLASS="LITERAL"
 >Parent-ID</TT
@@ -185,7 +185,7 @@ NAME="AEN2749"
 ><SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> can index SQL database text fields - the 
+> can index SQL database text fields - the
 so called  htdb: virtual URL scheme.</P
 ><P
 >Using htdb:/ virtual scheme you can build full text
@@ -213,7 +213,7 @@ NAME="HTDB-INDEXER"
 >Five <TT
 CLASS="FILENAME"
 >indexer.conf</TT
-> commands provide HTDB. They are 
+> commands provide HTDB. They are
 <B
 CLASS="COMMAND"
 >HTDBAddr</B
@@ -239,7 +239,7 @@ NAME="AEN2767"
 			<B
 CLASS="COMMAND"
 >HTDBAddr</B
-> is used to specify database connection. 
+> is used to specify database connection.
 It's syntax identical to <B
 CLASS="COMMAND"
 >DBAddr</B
@@ -332,7 +332,7 @@ NAME="AEN2799"
 <B
 CLASS="COMMAND"
 >HTDBText &lt;section&gt;</B
-> is a query to get raw text data from database using PRIMARY key value 
+> is a query to get raw text data from database using PRIMARY key value
 collected via <B
 CLASS="COMMAND"
 >HTDBList</B
@@ -444,7 +444,7 @@ htdb:/path1/path2/path3/path4/idN</PRE
 >It's possible to specify a regex-based pattern to match the URL into HTDB variables for <B
 CLASS="COMMAND"
 >HTDBDoc</B
-> and 
+> and
 <B
 CLASS="COMMAND"
 >HTDBtext</B
@@ -550,9 +550,9 @@ CLASS="APPLICATION"
 > tables to perform search:
 		<PRE
 CLASS="PROGRAMLISTING"
->SELECT url.url 
-FROM url,dict 
-WHERE dict.url_id=url.rec_id 
+>SELECT url.url
+FROM url,dict
+WHERE dict.url_id=url.rec_id
 AND dict.word='someword';</PRE
 >
 		</P
@@ -567,9 +567,9 @@ which use SQL LIKE search on 'messages' table.</P
 >You can also use several words in search:
 		<PRE
 CLASS="PROGRAMLISTING"
->SELECT url.url, count(*) as c 
+>SELECT url.url, count(*) as c
 FROM url,dict
-WHERE dict.url_id=url.rec_id 
+WHERE dict.url_id=url.rec_id
 AND dict.word IN ('some','word')
 GROUP BY url.url
 ORDER BY c DESC;</PRE
@@ -808,7 +808,7 @@ Alias  https://  exec:/usr/local/dpsearch/etc/curl.sh?https://</PRE
 CLASS="FILENAME"
 >https://some.https.site/path/to/page.html</TT
 >,
-indexer will translate this URL to 
+indexer will translate this URL to
 		<PRE
 CLASS="PROGRAMLISTING"
 >exec:/usr/local/dpsearch/etc/curl.sh?https://some.https.site/path/to/page.html</PRE
@@ -976,14 +976,14 @@ CLASS="OPTION"
 > or <CODE
 CLASS="OPTION"
 >delete</CODE
-> specify when this command is executed, on indexinf of a new document, 
+> specify when this command is executed, on indexinf of a new document,
 on reindexing of a document or on delettion of a document.
 If none of such option specified, the <CODE
 CLASS="OPTION"
 >add</CODE
 > option is assumed by default.</P
 ><P
->Thus you can use ActionSQL commands to mind and collect the data on pages while indexing. 
+>Thus you can use ActionSQL commands to mind and collect the data on pages while indexing.
 For example, the following commands collect phone numbers (in Russian local notation) along with titles of pages where these phone numbers have been discovered:
 <PRE
 CLASS="PROGRAMLISTING"

@@ -144,7 +144,7 @@ $template_file = "/etc/somewhere" . $template_file;
 		<listitem>
 			<para>Конфигурирование <application>Apache</application></para>
 			<para>Теперь нужно научить <literal>apache</literal> понимать, что надо здесь делать.
-Вам нужно включить процесс определения содержимого (negotiation) и изменить индексы. Я использовал файл 
+Вам нужно включить процесс определения содержимого (negotiation) и изменить индексы. Я использовал файл
 <filename>.htaccess</filename>, но вы можете задать это и в файле конфигурации <literal>apache</literal>.
 			<programlisting>
 AddLanguage en .en
@@ -191,7 +191,7 @@ Options FollowSymlinks MultiViews
 		</orderedlist>
 
 		<para>Что случится, если пользователь, к примеру, захочет немецкий ?
-У нас нет <filename>search.de.cgi</filename> (<filename>search.de.php</filename>), т.е. первый элемент в списке 
+У нас нет <filename>search.de.cgi</filename> (<filename>search.de.php</filename>), т.е. первый элемент в списке
 DirectoryIndex не отработает, тогда сервер попробует второй,
 <filename>search.php</filename>  Да, он получит страницу на английском, но это лучше, чем 404.</para>
 

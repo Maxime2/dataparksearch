@@ -18,5 +18,3 @@ Files: /usr/share/doc/dpsearch/dpsearch.text.gz
 Format: HTML
 Index: /usr/share/doc/dpsearch/html/index.html
 Files: /usr/share/doc/dpsearch/html/*.html
-
-  

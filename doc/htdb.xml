@@ -2,7 +2,7 @@
 	<title>Indexing SQL database tables (htdb: virtual URL scheme)</title>
 <indexterm><primary>HTDB</primary><secondary>Indexing SQL database tables</secondary></indexterm>
 
-	<para><application>DataparkSearch</application> can index SQL database text fields - the 
+	<para><application>DataparkSearch</application> can index SQL database text fields - the
 so called  htdb: virtual URL scheme.</para>
 	<para>Using htdb:/ virtual scheme you can build full text
 index of your SQL tables as well as index your database driven WWW
@@ -12,13 +12,13 @@ server.</para>
 	</note>
 	<sect3 id="htdb-indexer">
 		<title>HTDB indexer.conf commands</title>
-		<para>Five <filename>indexer.conf</filename> commands provide HTDB. They are 
+		<para>Five <filename>indexer.conf</filename> commands provide HTDB. They are
 <command>HTDBAddr</command>, <command>HTDBList</command>, <command>HTDBLimit</command>, <command>HTDBDoc</command> and
-<command>HTDBText</command>. 
+<command>HTDBText</command>.
 </para>
 <para id="htdbaddr-cmd">
 <indexterm><primary>Command</primary><secondary>HTDBAddr</secondary></indexterm>
-			<command>HTDBAddr</command> is used to specify database connection. 
+			<command>HTDBAddr</command> is used to specify database connection.
 It's syntax identical to <command>DBAddr</command> command.
 </para>
 
@@ -70,7 +70,7 @@ commands.</para>
 
 <para id="htdbtext-cmd">
 <indexterm><primary>Command</primary><secondary>HTDBText</secondary></indexterm>
-<command>HTDBText &lt;section&gt;</command> is a query to get raw text data from database using PRIMARY key value 
+<command>HTDBText &lt;section&gt;</command> is a query to get raw text data from database using PRIMARY key value
 collected via <command>HTDBList</command> command.
 The &lt;section&gt; parameter is specify the section name useing for storing this data. This query may return as many rows as required.
 You may specify several <command>HTDBText</command> commands per <command>Server</command> or <command>Realm</command> command.
@@ -131,8 +131,8 @@ htdb:/path1/path2/path3/path4/idN
 </programlisting>
 </para>
 		<para>for all values of the field "id" which are in HTDBList output.</para>
-		
-		<para>It's possible to specify a regex-based pattern to match the URL into HTDB variables for <command>HTDBDoc</command> and 
+
+		<para>It's possible to specify a regex-based pattern to match the URL into HTDB variables for <command>HTDBDoc</command> and
 <command>HTDBtext</command> commands:
 <programlisting>
 HTDBText header "SELECT header FROM news WHERE section=$1 AND article=$2" "^/section/([0-9]+)/art/([0-9]+)\.html"
@@ -202,9 +202,9 @@ index using words from 'message' fields. Words will be stored in
 'dict' table assuming that we are using 'single' storage mode.</para>
 		<para>After indexing you can use <application>DataparkSearch</application> tables to perform search:
 		<programlisting>
-SELECT url.url 
-FROM url,dict 
-WHERE dict.url_id=url.rec_id 
+SELECT url.url
+FROM url,dict
+WHERE dict.url_id=url.rec_id
 AND dict.word='someword';
 </programlisting>
 		</para>
@@ -213,9 +213,9 @@ on 'word' field this query will be executed much faster than queries
 which use SQL LIKE search on 'messages' table.</para>
 		<para>You can also use several words in search:
 		<programlisting>
-SELECT url.url, count(*) as c 
+SELECT url.url, count(*) as c
 FROM url,dict
-WHERE dict.url_id=url.rec_id 
+WHERE dict.url_id=url.rec_id
 AND dict.word IN ('some','word')
 GROUP BY url.url
 ORDER BY c DESC;

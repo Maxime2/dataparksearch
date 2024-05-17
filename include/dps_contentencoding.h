@@ -13,21 +13,20 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_CONTENTENCODING_H
 #define _DPS_CONTENTENCODING_H
 
-
 #ifdef HAVE_ZLIB
 
-extern __C_LINK int __DPSCALL DpsUnGzip(DPS_AGENT *query, DPS_DOCUMENT *Doc);
-extern __C_LINK int __DPSCALL DpsInflate(DPS_AGENT *query, DPS_DOCUMENT *Doc);
-extern __C_LINK int __DPSCALL DpsUncompress(DPS_AGENT *query, DPS_DOCUMENT *Doc);
+extern __C_LINK int __DPSCALL DpsUnGzip (DPS_AGENT *query, DPS_DOCUMENT *Doc);
+extern __C_LINK int __DPSCALL DpsInflate (DPS_AGENT *query, DPS_DOCUMENT *Doc);
+extern __C_LINK int __DPSCALL DpsUncompress (DPS_AGENT *query, DPS_DOCUMENT *Doc);
 
 #endif
 
-extern int DpsUnchunk(DPS_AGENT *query, DPS_DOCUMENT *Doc, const char *ce);
+extern int DpsUnchunk (DPS_AGENT *query, DPS_DOCUMENT *Doc, const char *ce);
 
 #endif

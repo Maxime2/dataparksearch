@@ -70,7 +70,7 @@ HTDBLimit 512
 <command>HoldBadHrefs 0</command> для удаления информации о таких записях и из таблиц <application>DataparkSearch</application>.
 </para>
 
-		<para>Вы можете использовать несколько команд <literal>HTDBDoc/List</literal> в одном файле 
+		<para>Вы можете использовать несколько команд <literal>HTDBDoc/List</literal> в одном файле
 <filename>indexer.conf</filename> с различными соответсвующими им командами <command>Server</command>.
 </para>
 
@@ -152,14 +152,14 @@ HTDBText header "SELECT header FROM news WHERE section=$1 AND article=$2" "^/sec
 		<para>
 		в этом случае regex-шаблон сопоставляется с полным путем и именем файла индексируемого URL.
 		</para>
-		
-		<para>Для команды <command>HTDBText</command> можно использовать и мета-переменные шаблона страницы выдачи (например, $(DP_ID), $(URL)) для формирования SQL-запроса, например: 
+
+		<para>Для команды <command>HTDBText</command> можно использовать и мета-переменные шаблона страницы выдачи (например, $(DP_ID), $(URL)) для формирования SQL-запроса, например:
 <programlisting>
 HTDBText hint "SELECT hint FROM hints WHERE url = '$(url)'"
 </programlisting>
 		</para>
-		
-		
+
+
 	</sect3>
 	<sect3 id="htdb-fulltext">
 		<title>Создание текстового индекса</title>
@@ -175,7 +175,7 @@ SELECT id, message FROM message WHERE message LIKE '%someword%'
 </programlisting>
 		</para>
 
-		<para>Используя <application>DataparkSearch</application> вы можете создать текстовый индекс по таблице 
+		<para>Используя <application>DataparkSearch</application> вы можете создать текстовый индекс по таблице
 <literal>message</literal>. Установите <application>DataparkSearch</application> обычным образом. Затем отредактируйте ваш
 <filename>indexer.conf</filename>:
 		<programlisting>
@@ -214,9 +214,9 @@ Content-Type: text/plain
 
 		<para>После индексирования, вы можете использовать для поиска таблицы <application>DataparkSearch</application>:
 		<programlisting>
-SELECT url.url 
-FROM url,dict 
-WHERE dict.url_id=url.rec_id 
+SELECT url.url
+FROM url,dict
+WHERE dict.url_id=url.rec_id
 AND dict.word='someword';
 </programlisting>
 		</para>
@@ -226,9 +226,9 @@ AND dict.word='someword';
 
 		<para>Вы также можете задать несколько слов при поиске:
 		<programlisting>
-SELECT url.url, count(*) as c 
+SELECT url.url, count(*) as c
 FROM url,dict
-WHERE dict.url_id=url.rec_id 
+WHERE dict.url_id=url.rec_id
 AND dict.word IN ('some','word')
 GROUP BY url.url
 ORDER BY c DESC;
@@ -247,7 +247,7 @@ ORDER BY c DESC;
 Т.е. намного быстрее и используя меньше ресурсов процессора нежели индексируя обращаясь к веб-серверу.
  </para>
 		<para>Основная идея похожа на создание текстового индекса, за исключением того, что поиск должен
-давать реальные URL вместо URL в виде 'htdb:/...'. 
+давать реальные URL вместо URL в виде 'htdb:/...'.
 Это достигается при помощи механизма алиасов <application>DataparkSearch</application>.
 </para>
 

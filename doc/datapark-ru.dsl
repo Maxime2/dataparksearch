@@ -207,15 +207,15 @@
 	    (equal? (gi author) (normalize "editor"))
 	    (equal? (gi author) (normalize "othercredit")))
 	(string-append
-	 (if has_h (string-append (data-of (node-list-first h_nl)) 
+	 (if has_h (string-append (data-of (node-list-first h_nl))
 				  %honorific-punctuation%) "")
-	 (if has_f (string-append 
-		    (if has_h " " "") 
+	 (if has_f (string-append
+		    (if has_h " " "")
 		    (data-of (node-list-first f_nl))) "")
 	 (if has_o (string-append
 		    (if (or has_h has_f) " " "")
 		    (data-of (node-list-first o_nl))) "")
-	 (if has_s (string-append 
+	 (if has_s (string-append
 		    (if (or has_h has_f has_o) " " "")
 		    (data-of (node-list-first s_nl))) "")
 	 (if has_l (string-append ", " (data-of (node-list-first l_nl))) ""))
@@ -280,14 +280,14 @@
 	       (err    (node-list-error msg (current-node))))
 	  msg))))
 
-(define (auto-xref-indirect-connector before) 
+(define (auto-xref-indirect-connector before)
   (literal " &in; "))
 
 ;; Should the TOC come first or last?
 ;;
 (define %generate-toc-in-front% #t)
 
-;; gentext-element-name returns the generated text that should be 
+;; gentext-element-name returns the generated text that should be
 ;; used to make reference to the selected element.
 ;;
 
@@ -359,13 +359,13 @@
 	 (pname  (assoc name (element-name))))
     (if pname
 	(car (cdr pname))
-	(let* ((msg (string-append 
+	(let* ((msg (string-append
 		     "gentext-element-name: &unexpectedelementname;: "
 		     name))
 	       (err (node-list-error msg (current-node))))
 	  msg))))
 
-;; gentext-element-name-space returns gentext-element-name with a 
+;; gentext-element-name-space returns gentext-element-name with a
 ;; trailing space, if gentext-element-name isn't "".
 ;;
 (define (gentext-element-name-space giname)
@@ -567,10 +567,10 @@
 (define %gentext-index-seealso% "&SeeAlso;")
 
 
-(define (gentext-nav-prev prev) 
+(define (gentext-nav-prev prev)
   (make sequence (literal "&nav-prev;")))
 
-(define (gentext-nav-prev-sibling prevsib) 
+(define (gentext-nav-prev-sibling prevsib)
   (make sequence (literal "&nav-prev-sibling;")))
 
 (define (gentext-nav-next-sibling nextsib)
@@ -593,7 +593,7 @@
 
 
 
-(define %html-prefix% 
+(define %html-prefix%
   ;; Add the specified prefix to HTML output filenames
   "dpsearch-")
 
@@ -615,7 +615,7 @@
   ;; /REFENTRY
   #t)
 
-(define %html-ext% 
+(define %html-ext%
   ;; REFENTRY html-ext
   ;; PURP Default extension for HTML output files
   ;; DESC
@@ -631,7 +631,7 @@
   ;; DESC
   ;; If true, the entire source document is formatted as a single HTML
   ;; document and output on stdout.
-  ;; (This option can conveniently be set with '-V nochunks' on the 
+  ;; (This option can conveniently be set with '-V nochunks' on the
   ;; Jade command line).
   ;; /DESC
   ;; AUTHOR N/A
@@ -645,7 +645,7 @@
   ;; If true, a chunk will be created for the root element, even though
   ;; nochunks is specified. This option has no effect if nochunks is not
   ;; true.
-  ;; (This option can conveniently be set with '-V rootchunk' on the 
+  ;; (This option can conveniently be set with '-V rootchunk' on the
   ;; Jade command line).
   ;; /DESC
   ;; AUTHOR N/A
@@ -702,15 +702,15 @@
   ;; Portion of the URL which identifies the fragment identifier
   "")
 
-(define %olink-pubid% 
+(define %olink-pubid%
   ;; Portion of the URL which identifies the public identifier
   "")
 
-(define %olink-resolution% 
+(define %olink-resolution%
   ;; URL script for OLink resolution
   "")
 
-(define %olink-sysid% 
+(define %olink-sysid%
   ;; Portion of the URL which identifies the system identifier
   "")
 
@@ -718,7 +718,7 @@
   ;; Enable CSS decoration of elements
   #t)
 
-(define %body-attr% 
+(define %body-attr%
   ;; What attributes should be hung off of BODY?
   (list
    (list "BGCOLOR" "#FFFFFF")
@@ -727,7 +727,7 @@
    (list "VLINK" "#1200B2")
    (list "ALINK" "#C40000")))
 
-(define %html-header-tags% 
+(define %html-header-tags%
   ;; What additional HEAD tags should be generated?
   '(
 	("META" ("NAME" "Description") ("CONTENT" "DataparkSearch - Полнофункциональная поисковая машина для Интернета и Интранета с открытым исходным кодом. Распространяется по лицензии GNU."))
@@ -744,11 +744,11 @@
   ;; Should footnotes appear at the end of HTML pages?
   #t)
 
-(define %generate-part-toc% 
+(define %generate-part-toc%
   ;; Should a Table of Contents be produced for Parts?
   #t)
 
-(define %generate-article-toc% 
+(define %generate-article-toc%
   ;; Should a Table of Contents be produced for Articles?
   #t)
 

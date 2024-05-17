@@ -1,4 +1,4 @@
-## Process this file with automake to produce Makefile.in 
+## Process this file with automake to produce Makefile.in
 ACLOCAL_AMFLAGS = -I build/m4
 AUTOMAKE_OPTIONS = foreign no-installinfo dist-bzip2 no-dist-gzip
 SUBDIRS = build include src doc etc create misc scripts test #php @BINDINGS@

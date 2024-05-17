@@ -144,7 +144,7 @@ CLASS="LITERAL"
 >, <TT
 CLASS="LITERAL"
 >HrefOnly</TT
->, 
+>,
 			<TT
 CLASS="LITERAL"
 >CheckOnly</TT
@@ -224,7 +224,7 @@ CLASS="LITERAL"
 >HrefOnly</TT
 > specify that all corresponding documents will be only
 scanned for new links (not indexed). This is useful, for example, for getting new documents from a feed, when the feed page is only scanned to
-detect new messages for indexing. 
+detect new messages for indexing.
 <PRE
 CLASS="PROGRAMLISTING"
 >Server HrefOnly Page http://www.site.ext/feed.xml
@@ -316,7 +316,7 @@ CLASS="LITERAL"
 This is useful, for example, if remote server supply <TT
 CLASS="LITERAL"
 >application/octet-stream</TT
-> as 
+> as
 <TT
 CLASS="LITERAL"
 >Content-Type</TT
@@ -367,7 +367,7 @@ CLASS="LITERAL"
 >, <TT
 CLASS="LITERAL"
 >path</TT
->, 
+>,
 <TT
 CLASS="LITERAL"
 >site</TT
@@ -375,7 +375,7 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >world</TT
 > and has "path" value by
-default. 
+default.
 		<P
 ></P
 ><OL
@@ -486,7 +486,7 @@ all messages from "udm" hierarchy.</P
 >Optional parameter <TT
 CLASS="LITERAL"
 >CaseType</TT
-> is specify the case sensivity for string comparison, it can take one of follow value: 
+> is specify the case sensivity for string comparison, it can take one of follow value:
 <TT
 CLASS="LITERAL"
 >case</TT
@@ -510,7 +510,7 @@ CLASS="LITERAL"
 CLASS="LITERAL"
 >String</TT
 > wildcards is default
-match type. You can use ? and * signs in URLMask parameters, they means "one character" and "any number of characters" respectively. 
+match type. You can use ? and * signs in URLMask parameters, they means "one character" and "any number of characters" respectively.
 Use \ character to escape these characters in you patterns.
 For example, if you want to index all HTTP sites in .ru domain, use this
 command:<PRE
@@ -606,7 +606,7 @@ NAME="AEN1050"
 CLASS="FILENAME"
 >indexer.conf</TT
 > file. It is used to add servers or
-their parts to be indexed. 
+their parts to be indexed.
 This command also says indexer to insert given URL into database at startup.</P
 ><P
 >E.g. command <TT
@@ -893,11 +893,11 @@ CLASS="COMMAND"
 >, <B
 CLASS="COMMAND"
 >Subnet</B
-> and 
+> and
 <B
 CLASS="COMMAND"
 >URL</B
-> commands respectively, but takes arguments from field of SQL-table specified. 
+> commands respectively, but takes arguments from field of SQL-table specified.
 In example above, URLs are takes from database <CODE
 CLASS="OPTION"
 >portal</CODE
@@ -946,15 +946,15 @@ CLASS="COMMAND"
 >, <B
 CLASS="COMMAND"
 >Subnet</B
-> and 
+> and
 <B
 CLASS="COMMAND"
 >URL</B
-> commands respectively, but takes arguments from a text file specified. 
+> commands respectively, but takes arguments from a text file specified.
 In example above, URLs are takes from the text file <CODE
 CLASS="OPTION"
 >url.lst</CODE
-> located in 
+> located in
 <TT
 CLASS="FILENAME"
 >/usr/local/dpsearch/etc</TT
@@ -982,7 +982,7 @@ CLASS="APPLICATION"
 HREF="http://www.robotstxt.org/"
 TARGET="_top"
 >the robots.txt standard</A
->. 
+>.
 <A
 HREF="http://www.robotstxt.org/robotstxt.html"
 TARGET="_top"
@@ -1025,7 +1025,7 @@ NAME="AEN1191"
 <SPAN
 CLASS="APPLICATION"
 >DataparkSearch</SPAN
-> also supports 
+> also supports
 <A
 HREF="http://help.yahoo.com/l/us/yahoo/search/webcrawler/slurp-03.html"
 TARGET="_top"
@@ -1154,26 +1154,26 @@ CLASS="COMMAND"
 NAME="AEN1235"
 ></A
 >
-Use this command to specify default pause in seconds between consecutive fetches from same server. 
+Use this command to specify default pause in seconds between consecutive fetches from same server.
 This is similar to crawl-delay command in <TT
 CLASS="FILENAME"
 >robots.txt</TT
 > file, but can specified in <TT
 CLASS="FILENAME"
 >indexer.conf</TT
-> 
+>
 file on per server basis. If no crawl-delay value is specified in <TT
 CLASS="FILENAME"
 >robots.txt</TT
->, 
+>,
 the value of <B
 CLASS="COMMAND"
 >CrawlDelay</B
-> is used. 
+> is used.
 If crawl-delay is specified in robots.txt, then the maximum of <B
 CLASS="COMMAND"
 >CrawlDelay</B
-> and crawl-delay is used as 
+> and crawl-delay is used as
 interval between consecutive fetches.</P
 ></DIV
 ><DIV
@@ -1195,7 +1195,7 @@ NAME="AEN1247"
 When <SPAN
 CLASS="APPLICATION"
 >indexer</SPAN
-> is ready to index an URL from a server for which the Crawl-deley interval isn't expired yet since previous access, it waits until this period will be expired, 
+> is ready to index an URL from a server for which the Crawl-deley interval isn't expired yet since previous access, it waits until this period will be expired,
 if waiting peiod is less than amount of time specified by <B
 CLASS="COMMAND"
 >MaxCrawlDelay</B

@@ -106,4 +106,3 @@ alle
 Als
 Er
 ייn
-

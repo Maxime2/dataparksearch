@@ -59,7 +59,7 @@ SQL>'SELECT status, docsize, hops, crc32, site_id, server_id, last_mod_time, url
 304	56	1	-269291223	614987914	614987914	1333157702	http://site/test2.html
 304	130	1	1562739290	614987914	614987914	1333157702	http://site/test4.html
 SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,urlinfo WHERE url.rec_id=urlinfo.url_id ORDER BY url.status,url.crc32,lower(urlinfo.sname)'
-200	-352834897	http://site/	body	 test1.html  test3.html  test4.html  .  test2.html  .. 
+200	-352834897	http://site/	body	 test1.html  test3.html  test4.html  .  test2.html  ..
 200	-352834897	http://site/	charset	ISO-8859-1
 200	-352834897	http://site/	content-language	en
 200	-352834897	http://site/	content-type	text/html

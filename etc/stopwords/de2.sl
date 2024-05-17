@@ -286,4 +286,3 @@ zum            #|  zu + dem
 zur            #|  zu + der
 zwar           #|  indeed
 zwischen       #|  between
-

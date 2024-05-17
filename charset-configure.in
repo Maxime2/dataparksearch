@@ -127,12 +127,12 @@ if test "$pthreads" != no; then
     ac_save_libs="$LIBS"
     LIBS="$LIBS $PTHREAD_LFLAGS $PTHREAD_LDADD"
     CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
-    
+
     AC_TRY_LINK([#include <pthread.h>],
 	[
 		pthread_attr_t type;
 		pthread_attr_init(&type);
-        ],AC_MSG_RESULT([yes]), 
+        ],AC_MSG_RESULT([yes]),
           AC_MSG_ERROR([POSIX thread support not found])
     )
 
@@ -178,7 +178,7 @@ fi
 
 for cs in $CHARSETS
 do
-  case $cs in 
+  case $cs in
     big5)
       AC_DEFINE(HAVE_CHARSET_big5)
       ;;
@@ -227,4 +227,3 @@ echo "*                                             *"
 echo "*     Thank you for using libdpcharset!       *"
 echo "***********************************************"
 echo
-

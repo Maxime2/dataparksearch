@@ -81,4 +81,3 @@ uninstall-local:
 		rm -f $(DESTDIR)$(dpstodir)/mysql/$$p; \
 	done
 	-rmdir $(DESTDIR)$(dpstodir)/mysql
-

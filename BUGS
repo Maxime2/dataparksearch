@@ -1,5 +1,5 @@
 * Occasionally coredumps on spell-checking some Russian words. This is aspell bug.
-Please build without aspell to avoid. Or try apply patches to 0.60.3 version, see: 
+Please build without aspell to avoid. Or try apply patches to 0.60.3 version, see:
      http://sourceforge.net/tracker/index.php?func=detail&aid=1276512&group_id=245&atid=100245
      http://sourceforge.net/tracker/index.php?func=detail&aid=1274670&group_id=245&atid=100245
 
@@ -7,4 +7,3 @@ Please build without aspell to avoid. Or try apply patches to 0.60.3 version, se
 
 See also: http://code.google.com/p/dataparksearch/issues/list (prefered place to put a new bug report)
 The old bug tracking system: http://www.dataparksearch.org/cgi-bin/bt.pl
-

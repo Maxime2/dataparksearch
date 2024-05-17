@@ -14,7 +14,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA 
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
 #ifndef _DPS_HOST_H
@@ -22,11 +22,11 @@
 
 #include "dps_common.h"
 
-int             DpsHostLookup(DPS_AGENT *, DPS_CONN *);
-void            DpsHostListFree(DPS_HOSTLIST *);
-int DpsResolverStart(DPS_AGENT *Indexer);
-int DpsResolverFinish(DPS_AGENT *Indexer);
-void Read(int p, void* buf, size_t len);
-void Write(int p, const void* buf, size_t len);
+int DpsHostLookup (DPS_AGENT *, DPS_CONN *);
+void DpsHostListFree (DPS_HOSTLIST *);
+int DpsResolverStart (DPS_AGENT *Indexer);
+int DpsResolverFinish (DPS_AGENT *Indexer);
+void Read (int p, void *buf, size_t len);
+void Write (int p, const void *buf, size_t len);
 
 #endif

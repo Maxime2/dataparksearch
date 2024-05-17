@@ -6,7 +6,7 @@
 		<application>DataparkSearch</application> is a
 full-featured web search engine. <application>DataparkSearch</application> consists of two
 parts. The first part is an indexing mechanism (the <command>indexer</command>). The indexer walks
-over hypertext references and stores found words and new references into the database. 
+over hypertext references and stores found words and new references into the database.
 The second part is a CGI front-end to
 provide the search service using the data collected by the indexer.
 </para>
@@ -30,13 +30,13 @@ Follow <ulink url="http://twitter.com/dataparksearch">@dataparksearch</ulink> to
 	<sect1 id="features">
 		<title>DataparkSearch Features</title>
                 <indexterm><primary>Features</primary></indexterm>
-                
+
 		<para>Main <application>DataparkSearch</application> features are as follows:</para>
 		<itemizedlist>
 			<listitem>
 				<para>MySQL (<literal>libz</literal>
 library required), PostgreSQL, <!--mySQL,--> <!--Solid,--> iODBC, unixODBC, EasySoft
-ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (see <xref linkend="oracle"/>), 
+ODBC-ODBC bridge, <!--Virtuoso,--> InterBase, Oracle (see <xref linkend="oracle"/>),
 <!--SyBase,--> MS SQL<!--, SAPDB SQL--><!--, DB2 (see <xref linkend="db2"/>)--> back-ends support.</para>
 
 			</listitem>
@@ -103,12 +103,12 @@ same database. Multi-threaded indexing support.</para>
 				<para>Boolean query language support.</para>
 			</listitem>
 			<listitem>
-				<para>Results sorting by relevance, popularity rank, last modified date and by importance 
+				<para>Results sorting by relevance, popularity rank, last modified date and by importance
 (a multiplication of relevance and popularity rank).</para>
 			</listitem>
 			<listitem>
-				<para>Fuzzy search: different word forms, spelling corrections, 
-<link linkend="synonyms">synonyms</link>, 
+				<para>Fuzzy search: different word forms, spelling corrections,
+<link linkend="synonyms">synonyms</link>,
 <link linkend="acronym">acronyms and abbreviations</link>.</para>
 			</listitem>
 			<listitem>
@@ -141,7 +141,7 @@ same database. Multi-threaded indexing support.</para>
 	<sect1 id="get">
 		<title>Where to get <application>DataparkSearch</application>.</title>
                  <indexterm><primary>Where to get <application>DataparkSearch</application></primary></indexterm>
-                
+
 		<para>Check for the latest version of <application>DataparkSearch</application> in Download section at:
 <ulink url="http://www.dataparksearch.org/">http://www.dataparksearch.org/</ulink>.</para>
 
@@ -159,7 +159,7 @@ git clone https://github.com/Maxime2/dataparksearch.git
 	<sect1 id="disclaimer">
 		<title>Disclaimer</title>
                 <indexterm><primary>Disclaimer of DataparkSearch</primary></indexterm>
-                
+
 		<para>This program is free software; you can
 redistribute it and/or modify it under the terms of the GNU General
 Public License as published by the Free Software Foundation; either
@@ -200,7 +200,7 @@ Testing on <application>OpenBSD</application>.
 </para>
 <para>
 	<author><firstname>Amit</firstname><surname>Joshi</surname></author>:
-Testing on <application>CentOS</application>, packaging for <application>Debian</application>, 
+Testing on <application>CentOS</application>, packaging for <application>Debian</application>,
 some ideas to improve the scalability for several PC and using several DBAddr.
 </para>
 

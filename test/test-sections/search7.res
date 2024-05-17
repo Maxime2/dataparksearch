@@ -58,16 +58,16 @@
              <A HREF="http://site/test.pdf" TARGET="_blank">http://site/test.pdf</A>
              <font color="#008800">
               - 20 bytes [application/pdf]
-              - 
+              -
 	      	      <DD><small>[<a href="/cgi-bin/storedoc.cgi?rec_id=-1363280949&amp;label=&amp;DM=Sat%2C+31+Mar+2012%2C+12%3A35%3A05+EST&amp;DS=20&amp;L=en&amp;CS=ISO-8859-1&amp;DU=http%3A%2F%2Fsite%2Ftest.pdf&amp;CT=application%2Fpdf&amp;q=pdf2">Cached copy</a>]</small></DD>
 	      	      	      <DD><small>[<a href="?m=bool&amp;np=0&amp;q=pdf2&amp;site=614987914">More result from this site
 		    	        </a>]</small></DD>
 	                   </font>
            </small>
            <BR>
-           
+
         </UL>
-        
+
 
       </td>
     </tr>

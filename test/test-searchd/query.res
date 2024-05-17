@@ -18,7 +18,7 @@ SQL>'SELECT status, docsize, hops, crc32, pop_rank, url FROM url ORDER BY status
 200	807	1	1813831224	0.03125	http://site/testpage12.html
 404	0	0	0	0	http://site/test.html
 SQL>'SELECT url.status,url.crc32,url.url,urlinfo.sname,urlinfo.sval FROM url,urlinfo WHERE url.rec_id=urlinfo.url_id ORDER BY url.status,url.crc32,lower(urlinfo.sname)'
-200	-1889247529	http://site/	body	 testpage4.html  testpage11.html  testpage7.html  testpage2.html  testpage3.html  testpage5.html  ispattern.html  testpage13.html  testpage12.html  testpage8.html  testpage10.html  .  testpage6.html  ..  testpage1.html  testpage9.html 
+200	-1889247529	http://site/	body	 testpage4.html  testpage11.html  testpage7.html  testpage2.html  testpage3.html  testpage5.html  ispattern.html  testpage13.html  testpage12.html  testpage8.html  testpage10.html  .  testpage6.html  ..  testpage1.html  testpage9.html
 200	-1889247529	http://site/	charset	UTF-8
 200	-1889247529	http://site/	content-language	en
 200	-1889247529	http://site/	content-type	text/html
