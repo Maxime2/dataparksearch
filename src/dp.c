@@ -18,6 +18,7 @@
 
 #ifdef DPS_CONFIGURE
 
+#define _GNU_SOURCE
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -2053,7 +2054,7 @@ main ()
     a[N] = 0;
     {
       char set[3] = { a[5], a[6], 0 };
-      int res;
+      char *res;
       TimerStart ();
       for (i = N - 1; i > STARTLEN; i--)
         {
