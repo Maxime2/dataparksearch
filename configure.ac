@@ -1989,6 +1989,8 @@ What DBMS support do you want (you may select several):
     AC_CHECK_FUNC(aio_init, , AC_CHECK_LIB(rt, aio_init, MYSQL_LFLAGS="$MYSQL_LFLAGS -lrt"))
     dnl MySQL requires -ldl sometime
     AC_CHECK_FUNC(dl_open, , AC_CHECK_LIB(dl, dlopen, MYSQL_LFLAGS="$MYSQL_LFLAGS -ldl"))
+    dnl MariaDB 10.6+ and OpenSSL 3 use zstd internally; needed for static builds
+    AC_CHECK_LIB(zstd, ZSTD_compress, [MYSQL_LFLAGS="$MYSQL_LFLAGS -lzstd"])
     if test "x$DBTYPE" = "x" ; then
        DBTYPE="mysql"
     else
