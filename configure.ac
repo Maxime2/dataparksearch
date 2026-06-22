@@ -5,6 +5,7 @@ dnl AC_INIT([DataparkSearch Engine],[4.53],[dataparksearch@googlegroups.com],[dp
 AC_CONFIG_SRCDIR([TODO])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
+AC_USE_SYSTEM_EXTENSIONS
 AM_MAINTAINER_MODE
 AC_CONFIG_HEADERS(include/dps_config.h)
 AC_PROG_MAKE_SET
